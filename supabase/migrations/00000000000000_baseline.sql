@@ -1,8 +1,7 @@
--- Reactor Lang schema — MANUAL FALLBACK REFERENCE ONLY.
--- The source of truth for automated deploys is supabase/migrations/ (see the
--- GitHub Action). This file is kept as a full up-to-date snapshot in case you
--- ever need to paste the whole schema into the SQL Editor by hand.
--- Safe to re-run: uses "if not exists" / "or replace" everywhere.
+-- Reactor Lang: baseline migration
+-- This captures the schema as of the point migrations were adopted. Applied
+-- automatically by the GitHub Action on push to main (see .github/workflows).
+-- Safe to re-run/re-apply: every statement uses "if not exists" / "or replace".
 
 -- One row per (user, track): xp, level, streak, etc.
 create table if not exists progress (

@@ -62,6 +62,39 @@ on your phone, your Windows machine, or your friend's phone. Everyone signs in w
 own account, and everyone's progress is private to them (enforced at the database level,
 not just in the app).
 
+## Automating database migrations on push (optional but recommended)
+
+Instead of copy-pasting SQL into the dashboard every time something changes, schema
+changes can now deploy automatically whenever you push to `main` — same idea as
+Vercel auto-deploying your app code, but for the database.
+
+**One-time setup:**
+
+1. Install the Supabase CLI locally (`npm install -g supabase` or see
+   [supabase.com/docs/guides/cli](https://supabase.com/docs/guides/cli))
+2. Get three values and add them as **GitHub repo secrets**
+   (your repo → Settings → Secrets and variables → Actions → New repository secret):
+   - `SUPABASE_ACCESS_TOKEN` — Supabase Dashboard → your account icon → **Access Tokens** → generate one
+   - `SUPABASE_PROJECT_ID` — Project Settings → General → **Reference ID** (also visible in your project's URL)
+   - `SUPABASE_DB_PASSWORD` — the database password you set when creating the project
+     (reset it under Project Settings → Database if you don't remember it)
+3. That's it — the workflow file (`.github/workflows/supabase-migrations.yml`) is already
+   included and will run automatically.
+
+**Going forward**, don't hand-edit `supabase/schema.sql` for new changes — instead:
+```bash
+supabase link --project-ref <your-project-ref>   # one-time, per machine
+supabase migration new some_short_description
+```
+That creates a new timestamped file under `supabase/migrations/`. Put your SQL in it,
+commit, and push to `main` — the GitHub Action applies it automatically. `schema.sql`
+stays around as a manual-fallback reference (kept in sync by hand), in case you ever
+want to paste the whole thing into the SQL Editor directly instead.
+
+The current migrations already include everything from previous updates (accounts,
+profiles/usernames, etc.) as one baseline file, so this is safe to set up at any point
+— it won't try to re-create anything that already exists.
+
 ## Security notification emails (optional but recommended)
 
 Changing your username, email, or password now sends a heads-up email — this is a
@@ -96,9 +129,9 @@ https://your-deployed-url.vercel.app/reset-password
 
 ## If you already deployed this before these changes
 
-Re-run the (updated) `supabase/schema.sql` in the SQL Editor — it's safe to re-run in
-full; it only adds the new `profiles` table and username-lookup functions, it won't
-touch your existing data.
+Either re-run the (updated) `supabase/schema.sql` in the SQL Editor by hand — it's
+safe to re-run in full — or set up the automated migrations workflow above, which
+will apply the same changes on your next push to `main`.
 
 ## Version tag & changelog
 
