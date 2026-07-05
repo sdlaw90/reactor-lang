@@ -154,6 +154,21 @@ The small `vX.Y.Z` tag at the bottom of the home screen and Settings links to a 
 changelog. To ship a new version: bump `CURRENT_VERSION` and add an entry at the top
 of `CHANGELOG` in `lib/version.js` — that's the only file that needs touching.
 
+## Skill levels & progress dashboard
+
+Every track now has a **skill level** (No experience / Beginner / Intermediate /
+Advanced / Native), based on the real-world CEFR framework (A1–C2) under the hood —
+the same scale used by actual language certifications like DELE and Cambridge/IELTS.
+
+- Every question is tagged with a CEFR difficulty. Rounds bias toward your current
+  level (without hard-excluding anything, so a round is never short on content)
+- Answer consistently well (85%+ over 30+ questions) at your current level and a
+  "ready to advance?" prompt appears — accept it or dismiss it, your choice
+- Not sure where you stand? Take the **placement quiz** (per track) — a short,
+  untimed sample across difficulty tiers that recommends a starting level
+- The **dashboard** (bar-chart icon, home screen) shows total XP/streak/rounds
+  across every track, plus a per-language breakdown
+
 ## Profile pictures & native country/flag
 
 Settings now has a **Profile picture** section — upload a photo, pick a generic fun

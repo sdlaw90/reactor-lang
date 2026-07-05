@@ -179,3 +179,11 @@ create policy "Users can delete their own avatar" on storage.objects
 
 alter table profiles add column if not exists avatar_type text;
 alter table profiles add column if not exists avatar_value text;
+
+-- ---------------------------------------------------------------
+-- Skill levels (CEFR-based) and rolling accuracy tracking
+-- ---------------------------------------------------------------
+
+alter table progress add column if not exists skill_level text not null default 'none';
+alter table progress add column if not exists level_correct_count int not null default 0;
+alter table progress add column if not exists level_total_count int not null default 0;

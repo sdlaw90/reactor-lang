@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Settings } from "lucide-react";
+import { Settings, BarChart2 } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import { tracksForNativeLang, listTracks } from "../data/tracks";
 import { HOME_GRADIENT, animatedBackgroundStyle } from "../lib/theme";
@@ -56,6 +56,15 @@ export default function HomePage() {
             REACTOR<span style={{ color: "#FF8FB1" }}>.</span>LANG
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <button
+              className="rj"
+              style={styles.iconBtn}
+              title="Progress dashboard"
+              aria-label="Progress dashboard"
+              onClick={() => router.push("/dashboard")}
+            >
+              <BarChart2 size={18} />
+            </button>
             <button
               className="rj"
               style={styles.iconBtn}

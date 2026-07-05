@@ -12,6 +12,7 @@ import {
   timeFor,
   todayStr,
 } from "../../../lib/gameEngine";
+import { cefrSetForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
 import {
   loadProgress,
   saveProgress,
@@ -41,6 +42,9 @@ export default function PlayPage({ params }) {
     best_combo: 0,
     last_played: null,
     rounds_completed: 0,
+    skill_level: "none",
+    level_correct_count: 0,
+    level_total_count: 0,
   });
   const [missedIds, setMissedIds] = useState([]);
   const [seenAt, setSeenAt] = useState({});
@@ -48,6 +52,8 @@ export default function PlayPage({ params }) {
   const [archiveLog, setArchiveLog] = useState([]);
   const [archiveCount, setArchiveCount] = useState(0);
   const [archiveLoading, setArchiveLoading] = useState(false);
+  const [showLevelPicker, setShowLevelPicker] = useState(false);
+  const [advanceDismissed, setAdvanceDismissed] = useState(false);
 
   const [round, setRound] = useState([]);
   const [roundMode, setRoundMode] = useState("daily");
@@ -64,6 +70,7 @@ export default function PlayPage({ params }) {
   const timerRef = useRef(null);
   const newlyMissed = useRef(new Set());
   const newlyResolved = useRef(new Set());
+  const levelAnswered = useRef({ correct: 0, total: 0 });
 
   // ---- auth + initial load ----
   useEffect(() => {
@@ -100,8 +107,10 @@ export default function PlayPage({ params }) {
   const startRound = (mode = "daily") => {
     newlyMissed.current = new Set();
     newlyResolved.current = new Set();
+    levelAnswered.current = { correct: 0, total: 0 };
     setRoundMode(mode);
-    const newRound = buildRound(track, mode, missedIds, seenAt);
+    const cefrSet = mode === "daily" ? cefrSetForSkillLevel(progress.skill_level) : null;
+    const newRound = buildRound(track, mode, missedIds, seenAt, cefrSet);
     setRound(newRound);
 
     if (mode === "daily") {
@@ -170,6 +179,11 @@ export default function PlayPage({ params }) {
       }
     }
 
+    if (roundMode === "daily" && progress.skill_level !== "none") {
+      levelAnswered.current.total += 1;
+      if (isCorrect) levelAnswered.current.correct += 1;
+    }
+
     setSessionLog((log) => [
       ...log,
       {
@@ -219,6 +233,9 @@ export default function PlayPage({ params }) {
       best_combo: Math.max(progress.best_combo, finalCombo),
       last_played: today,
       rounds_completed: progress.rounds_completed + (completed ? 1 : 0),
+      skill_level: progress.skill_level,
+      level_correct_count: progress.level_correct_count + levelAnswered.current.correct,
+      level_total_count: progress.level_total_count + levelAnswered.current.total,
     };
     setProgress(next);
     saveProgress(userId, track.id, next).catch((e) => console.error("saveProgress failed", e));
@@ -249,6 +266,14 @@ export default function PlayPage({ params }) {
   };
 
   const exitRound = () => endRound(false, combo, sessionXP, sessionCorrect);
+
+  const changeSkillLevel = (newLevel) => {
+    const next = { ...progress, skill_level: newLevel, level_correct_count: 0, level_total_count: 0 };
+    setProgress(next);
+    saveProgress(userId, track.id, next).catch((e) => console.error("saveProgress failed", e));
+    setShowLevelPicker(false);
+    setAdvanceDismissed(false);
+  };
 
   const openArchive = async () => {
     setScreen("archive");
@@ -333,6 +358,49 @@ export default function PlayPage({ params }) {
               <StatChip label="XP total" value={progress.xp} color="#3DDBFF" />
               <StatChip label="Mejor combo" value={progress.best_combo} color="#FF8FB1" />
               <StatChip label="Rondas" value={progress.rounds_completed} color="#FFB84D" />
+            </div>
+
+            <div style={styles.skillCard}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ color: "#B4ABC9", fontSize: 12 }}>
+                  Nivel: <strong style={{ color: "#F3F0FA" }}>{skillLevelInfo(progress.skill_level).label}</strong>
+                </span>
+                <button className="rj" style={styles.skillEditBtn} onClick={() => setShowLevelPicker((v) => !v)}>
+                  {showLevelPicker ? "Cerrar" : "Cambiar"}
+                </button>
+              </div>
+
+              {showLevelPicker && (
+                <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 6 }}>
+                  {SKILL_LEVELS.map((s) => (
+                    <button
+                      key={s.id}
+                      className="rj"
+                      onClick={() => changeSkillLevel(s.id)}
+                      style={{ ...styles.skillOption, borderColor: progress.skill_level === s.id ? "#FF8FB1" : "#3A3452" }}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                  <button className="rj" style={styles.placementLinkBtn} onClick={() => router.push(`/placement/${track.id}`)}>
+                    ¿No estás seguro? Hacer prueba de nivel
+                  </button>
+                </div>
+              )}
+
+              {!showLevelPicker && !advanceDismissed && readyToAdvance(progress.level_correct_count, progress.level_total_count) && nextSkillLevel(progress.skill_level) && (
+                <div style={styles.advanceBanner}>
+                  <span>¿Listo para subir a {skillLevelInfo(nextSkillLevel(progress.skill_level)).label}?</span>
+                  <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                    <button className="rj" style={styles.advanceYesBtn} onClick={() => changeSkillLevel(nextSkillLevel(progress.skill_level))}>
+                      Sí, avanzar
+                    </button>
+                    <button className="rj" style={styles.advanceNoBtn} onClick={() => setAdvanceDismissed(true)}>
+                      Todavía no
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
 
             <button className="rj" style={styles.primaryBtn} onClick={() => startRound("daily")}>
@@ -620,6 +688,13 @@ function TimerRing({ timeLeft, total }) {
 }
 
 const styles = {
+  skillCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
+  skillEditBtn: { background: "transparent", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "4px 12px", fontSize: 11, fontWeight: 700, cursor: "pointer" },
+  skillOption: { textAlign: "left", background: "#171423", border: "1px solid", borderRadius: 8, padding: "8px 12px", color: "#F3F0FA", fontSize: 13, fontWeight: 600, cursor: "pointer" },
+  placementLinkBtn: { background: "transparent", color: "#3DDBFF", border: "1px solid #3DDBFF", borderRadius: 8, padding: "8px 12px", fontSize: 12, fontWeight: 700, cursor: "pointer", marginTop: 4 },
+  advanceBanner: { marginTop: 10, background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "10px 12px", color: "#E4D6FF", fontSize: 13 },
+  advanceYesBtn: { flex: 1, background: "#B98EFF", color: "#171423", border: "none", borderRadius: 8, padding: "7px 0", fontSize: 12, fontWeight: 700, cursor: "pointer" },
+  advanceNoBtn: { flex: 1, background: "transparent", color: "#B4ABC9", border: "1px solid #3A3452", borderRadius: 8, padding: "7px 0", fontSize: 12, fontWeight: 600, cursor: "pointer" },
   bg: { position: "relative", minHeight: "100vh", width: "100%", background: "#171423", display: "flex", justifyContent: "center", padding: "20px 14px", overflow: "hidden" },
   wrap: { position: "relative", zIndex: 1, width: "100%", maxWidth: 460 },
   hud: { display: "flex", alignItems: "center", gap: 10, marginBottom: 22, fontSize: 12 },
