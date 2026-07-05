@@ -1,11 +1,12 @@
 # Reactor Lang
 
 A fast, ADHD-friendly language practice app with real accounts and a real database —
-your progress syncs across every device. Currently has three tracks:
+your progress syncs across every device. Currently has four tracks:
 
 - **Spanish (Latin America)** — full content
 - **Spanish (Spain / Castilian)** — starter content, distinct vosotros/distinción grammar
-- **English** (for Spanish speakers) — starter content, see "Adding content" below
+- **English (US)** (for Spanish speakers) — starter content
+- **English (UK)** (for Spanish speakers) — starter content, distinct vocabulary/idioms/non-rhotic phonetics from American English
 
 ## Stack
 
@@ -152,6 +153,18 @@ remember. If there's nothing new to commit, it just pulls/pushes and skips the c
 The small `vX.Y.Z` tag at the bottom of the home screen and Settings links to a full
 changelog. To ship a new version: bump `CURRENT_VERSION` and add an entry at the top
 of `CHANGELOG` in `lib/version.js` — that's the only file that needs touching.
+
+## Profile pictures & native country/flag
+
+Settings now has a **Profile picture** section — upload a photo, pick a generic fun
+icon, or use a country flag as your avatar. Uploaded photos go through Supabase
+Storage (a new `avatars` bucket, set up automatically by the migrations) — public
+read, but only you can upload/replace your own.
+
+There's also a **Native country** setting (separate from native language). Combined,
+these infer a regional label + flag shown on the home screen — e.g. Spanish + Venezuela
+shows "Español (Latinoamérica) 🇻🇪"; English + United Kingdom shows "English (UK) 🇬🇧".
+No separate "region" picker needed — it's inferred from the country you pick.
 
 ## Account features
 

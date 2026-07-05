@@ -4,13 +4,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Settings } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
-import { listNativeLanguages, tracksForNativeLang, listTracks } from "../data/tracks";
+import { tracksForNativeLang, listTracks } from "../data/tracks";
 import { HOME_GRADIENT, animatedBackgroundStyle } from "../lib/theme";
+import { flagEmoji, regionalLanguageLabel } from "../lib/countries";
+import { loadProfile } from "../lib/db";
+import Avatar from "../lib/Avatar";
 import VersionFooter from "../lib/VersionFooter";
 
 export default function HomePage() {
   const router = useRouter();
   const [session, setSession] = useState(undefined); // undefined = loading, null = signed out
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
@@ -19,7 +23,13 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (session === null) router.push("/auth");
+    if (session === null) {
+      router.push("/auth");
+    } else if (session) {
+      loadProfile(session.user.id)
+        .then(setProfile)
+        .catch((e) => console.error("failed to load profile", e));
+    }
   }, [session, router]);
 
   if (session === undefined || session === null) {
@@ -31,10 +41,11 @@ export default function HomePage() {
   }
 
   const nativeLang = session.user.user_metadata?.native_lang ?? null;
-  const options = listNativeLanguages();
-  const currentLabel = options.find((o) => o.code === nativeLang)?.label;
+  const nativeCountry = session.user.user_metadata?.native_country ?? null;
   // Until a native language is set, show every track so the app is still usable.
   const tracks = nativeLang ? tracksForNativeLang(nativeLang) : listTracks();
+  const displayName = profile?.username || session.user.email;
+  const regionLabel = nativeLang ? regionalLanguageLabel(nativeLang, nativeCountry) : null;
 
   return (
     <div style={styles.wrap}>
@@ -65,15 +76,16 @@ export default function HomePage() {
             </button>
           </div>
         </div>
-        <p style={styles.subtitle}>Signed in as {session.user.email}</p>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 6 }}>
+          <Avatar type={profile?.avatar_type} value={profile?.avatar_value} fallbackText={displayName} size={36} />
+          <p style={{ ...styles.subtitle, marginTop: 0 }}>Signed in as {displayName}</p>
+        </div>
 
         {!nativeLang && (
           <p style={styles.hintBanner}>
             Showing every track for now — set your native language in Settings to personalize this list.
           </p>
-        )}
-        {nativeLang && (
-          <p style={{ color: "#7C7395", fontSize: 12, marginTop: 6 }}>Learning as a {currentLabel} speaker</p>
         )}
 
         <p className="rj" style={{ ...styles.subtitle, marginTop: 22, marginBottom: 10, color: "#F3F0FA", fontWeight: 700 }}>
@@ -87,6 +99,13 @@ export default function HomePage() {
             </button>
           ))}
         </div>
+
+        {regionLabel && (
+          <div style={styles.identityTag}>
+            {regionLabel}
+            {nativeCountry && <span style={{ marginLeft: 6 }}>{flagEmoji(nativeCountry)}</span>}
+          </div>
+        )}
         <VersionFooter />
       </div>
     </div>
@@ -138,5 +157,19 @@ const styles = {
     cursor: "pointer",
     flex: "1 1 auto",
     minWidth: 160,
+  },
+  identityTag: {
+    marginTop: 26,
+    textAlign: "center",
+    color: "#B4ABC9",
+    fontSize: 12,
+    background: "rgba(34,30,51,0.7)",
+    border: "1px solid #3A3452",
+    borderRadius: 999,
+    padding: "6px 14px",
+    display: "inline-block",
+    position: "relative",
+    left: "50%",
+    transform: "translateX(-50%)",
   },
 };

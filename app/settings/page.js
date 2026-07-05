@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabaseClient";
 import { listNativeLanguages } from "../../data/tracks";
-import { loadProfile, isUsernameTaken, setUsername as saveUsername } from "../../lib/db";
+import { loadProfile, isUsernameTaken, setUsername as saveUsername, saveAvatar } from "../../lib/db";
 import { notifyAccountChange } from "../../lib/notify";
 import { verifyCurrentPassword } from "../../lib/reauth";
+import { countriesForLang, flagEmoji } from "../../lib/countries";
+import { uploadAvatarPhoto, AVATAR_EMOJIS } from "../../lib/avatarUpload";
+import Avatar from "../../lib/Avatar";
 import PasswordInput from "../../lib/PasswordInput";
 import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
 import VersionFooter from "../../lib/VersionFooter";
@@ -51,13 +54,177 @@ export default function SettingsPage() {
           Settings
         </h1>
 
+        <ProfilePictureSection session={session} profile={profile} setProfile={setProfile} />
         <UsernameSection session={session} profile={profile} setProfile={setProfile} />
         <EmailSection session={session} setSession={setSession} />
         <PasswordSection session={session} />
         <NativeLanguageSection session={session} setSession={setSession} />
+        <NativeCountrySection session={session} setSession={setSession} />
         <VersionFooter />
       </div>
     </div>
+  );
+}
+
+// ---------------- Profile picture ----------------
+
+function ProfilePictureSection({ session, profile, setProfile }) {
+  const [editing, setEditing] = useState(false);
+  const [mode, setMode] = useState("emoji"); // 'photo' | 'emoji' | 'flag'
+  const [emojiChoice, setEmojiChoice] = useState("");
+  const [flagChoice, setFlagChoice] = useState("");
+  const [photoFile, setPhotoFile] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [saved, setSaved] = useState(false);
+
+  const nativeLang = session.user.user_metadata?.native_lang;
+  const flagCountries = nativeLang ? countriesForLang(nativeLang) : countriesForLang("es").concat(countriesForLang("en"));
+
+  const startEdit = () => {
+    setMode(profile?.avatar_type || "emoji");
+    setEmojiChoice(profile?.avatar_type === "emoji" ? profile.avatar_value : "");
+    setFlagChoice(profile?.avatar_type === "flag" ? profile.avatar_value : "");
+    setPhotoFile(null);
+    setPhotoPreview(profile?.avatar_type === "photo" ? profile.avatar_value : "");
+    setError("");
+    setSaved(false);
+    setEditing(true);
+  };
+
+  const onPickPhoto = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 3 * 1024 * 1024) {
+      setError("Photo must be under 3MB.");
+      return;
+    }
+    setError("");
+    setPhotoFile(file);
+    setPhotoPreview(URL.createObjectURL(file));
+  };
+
+  const save = async () => {
+    setError("");
+    setBusy(true);
+    try {
+      let avatarType = mode;
+      let avatarValue = "";
+
+      if (mode === "emoji") {
+        if (!emojiChoice) {
+          setError("Pick an icon.");
+          setBusy(false);
+          return;
+        }
+        avatarValue = emojiChoice;
+      } else if (mode === "flag") {
+        if (!flagChoice) {
+          setError("Pick a flag.");
+          setBusy(false);
+          return;
+        }
+        avatarValue = flagChoice;
+      } else if (mode === "photo") {
+        if (photoFile) {
+          avatarValue = await uploadAvatarPhoto(session.user.id, photoFile);
+        } else if (profile?.avatar_type === "photo") {
+          avatarValue = profile.avatar_value; // keep existing photo
+        } else {
+          setError("Choose a photo to upload.");
+          setBusy(false);
+          return;
+        }
+      }
+
+      await saveAvatar(session.user.id, avatarType, avatarValue);
+      setProfile((p) => ({ ...(p || {}), avatar_type: avatarType, avatar_value: avatarValue }));
+      setSaved(true);
+      setEditing(false);
+    } catch (e) {
+      setError(e.message || "Something went wrong.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <Section title="Profile picture" saved={saved}>
+      {!editing ? (
+        <div style={styles.row}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <Avatar type={profile?.avatar_type} value={profile?.avatar_value} fallbackText={profile?.username || session.user.email} size={40} />
+            <span style={styles.rowValue}>
+              {profile?.avatar_type === "photo" ? "Custom photo" : profile?.avatar_type === "flag" ? "Flag" : profile?.avatar_type === "emoji" ? "Icon" : "(not set)"}
+            </span>
+          </div>
+          <button className="rj" style={styles.editBtn} onClick={startEdit}>
+            Edit
+          </button>
+        </div>
+      ) : (
+        <>
+          <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
+            {["photo", "emoji", "flag"].map((m) => (
+              <button
+                key={m}
+                type="button"
+                className="rj"
+                onClick={() => setMode(m)}
+                style={{ ...styles.modeTab, ...(mode === m ? styles.modeTabActive : {}) }}
+              >
+                {m === "photo" ? "Photo" : m === "emoji" ? "Icon" : "Flag"}
+              </button>
+            ))}
+          </div>
+
+          {mode === "photo" && (
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
+              <Avatar type={photoPreview ? "photo" : null} value={photoPreview} size={56} />
+              <label className="rj" style={styles.uploadBtn}>
+                Choose file…
+                <input type="file" accept="image/*" onChange={onPickPhoto} style={{ display: "none" }} />
+              </label>
+            </div>
+          )}
+
+          {mode === "emoji" && (
+            <div style={styles.emojiGrid}>
+              {AVATAR_EMOJIS.map((e) => (
+                <button
+                  key={e}
+                  type="button"
+                  onClick={() => setEmojiChoice(e)}
+                  style={{ ...styles.emojiBtn, borderColor: emojiChoice === e ? "#FF8FB1" : "#3A3452" }}
+                >
+                  {e}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {mode === "flag" && (
+            <div style={styles.emojiGrid}>
+              {flagCountries.map((c) => (
+                <button
+                  key={c.code}
+                  type="button"
+                  title={c.name}
+                  onClick={() => setFlagChoice(c.code)}
+                  style={{ ...styles.emojiBtn, borderColor: flagChoice === c.code ? "#FF8FB1" : "#3A3452" }}
+                >
+                  {flagEmoji(c.code)}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {error && <p style={styles.error}>{error}</p>}
+          <EditActions busy={busy} onSave={save} onCancel={() => setEditing(false)} />
+        </>
+      )}
+    </Section>
   );
 }
 
@@ -373,6 +540,92 @@ function NativeLanguageSection({ session, setSession }) {
   );
 }
 
+// ---------------- Native country ----------------
+
+function NativeCountrySection({ session, setSession }) {
+  const [editing, setEditing] = useState(false);
+  const [choice, setChoice] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const nativeLang = session.user.user_metadata?.native_lang ?? null;
+  const currentCountry = session.user.user_metadata?.native_country ?? null;
+  const countryOptions = nativeLang ? countriesForLang(nativeLang) : [];
+  const currentName = countryOptions.find((c) => c.code === currentCountry)?.name;
+
+  const startEdit = () => {
+    setChoice(currentCountry);
+    setSaved(false);
+    setEditing(true);
+  };
+
+  const save = async () => {
+    if (!choice) {
+      setEditing(false);
+      return;
+    }
+    setBusy(true);
+    try {
+      const { data, error } = await supabase.auth.updateUser({ data: { native_country: choice } });
+      if (error) throw error;
+      setSession((s) => ({ ...s, user: data.user }));
+      setSaved(true);
+      setEditing(false);
+    } catch (e) {
+      console.error("failed to save native country", e);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  if (!nativeLang) {
+    return (
+      <Section title="Native country">
+        <p style={{ color: "#7C7395", fontSize: 13 }}>Set your native language above first.</p>
+      </Section>
+    );
+  }
+
+  return (
+    <Section title="Native country" saved={saved}>
+      {!editing ? (
+        <Row
+          value={
+            currentCountry ? (
+              <>
+                {flagEmoji(currentCountry)} {currentName}
+              </>
+            ) : (
+              "(not set)"
+            )
+          }
+          onEdit={startEdit}
+        />
+      ) : (
+        <>
+          <div style={styles.emojiGrid}>
+            {countryOptions.map((c) => (
+              <button
+                key={c.code}
+                type="button"
+                title={c.name}
+                onClick={() => setChoice(c.code)}
+                style={{ ...styles.emojiBtn, borderColor: choice === c.code ? "#FF8FB1" : "#3A3452" }}
+              >
+                {flagEmoji(c.code)}
+              </button>
+            ))}
+          </div>
+          <p style={{ color: "#7C7395", fontSize: 12, margin: "4px 0 12px" }}>
+            {countryOptions.find((c) => c.code === choice)?.name || "Pick a country above"}
+          </p>
+          <EditActions busy={busy} onSave={save} onCancel={() => setEditing(false)} />
+        </>
+      )}
+    </Section>
+  );
+}
+
 // ---------------- shared bits ----------------
 
 function Section({ title, children, saved, savedNote }) {
@@ -482,4 +735,39 @@ const styles = {
   },
   error: { color: "#FF7B8A", fontSize: 13, marginBottom: 8 },
   saved: { color: "#5EE0A0", fontSize: 12, marginTop: 8 },
+  modeTab: {
+    flex: 1,
+    background: "#171423",
+    color: "#B4ABC9",
+    border: "1px solid #3A3452",
+    borderRadius: 8,
+    padding: "8px 0",
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+  },
+  modeTabActive: { background: "#FF8FB1", color: "#171423", borderColor: "#FF8FB1" },
+  uploadBtn: {
+    background: "transparent",
+    color: "#FF8FB1",
+    border: "1px solid #FF8FB1",
+    borderRadius: 8,
+    padding: "8px 14px",
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+  },
+  emojiGrid: { display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 10 },
+  emojiBtn: {
+    width: 44,
+    height: 44,
+    fontSize: 20,
+    background: "#171423",
+    border: "1px solid",
+    borderRadius: 10,
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 };

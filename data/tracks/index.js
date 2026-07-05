@@ -1,11 +1,13 @@
 import esForEn from "./esForEn";
 import esSpainForEn from "./esSpainForEn";
-import enForEs from "./enForEs";
+import enUsForEs from "./enUsForEs";
+import enGbForEs from "./enGbForEs";
 
 export const TRACKS = {
   [esForEn.id]: esForEn,
   [esSpainForEn.id]: esSpainForEn,
-  [enForEs.id]: enForEs,
+  [enUsForEs.id]: enUsForEs,
+  [enGbForEs.id]: enGbForEs,
 };
 
 const NATIVE_LANG_LABELS = {
