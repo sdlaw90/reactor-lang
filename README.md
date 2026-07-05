@@ -151,10 +151,14 @@ remember. If there's nothing new to commit, it just pulls/pushes and skips the c
 ## Update popup (new version detection)
 
 The app checks for a newer deployed version every minute (and whenever you switch
-back to the tab). If one's found, a popup appears — **"Update now"** reloads
-immediately, **"Wait"** dismisses it so you can finish what you're doing; it won't
-nag again for that same version, but will reappear if an even newer version ships
-before you've updated.
+back to the tab). Behavior depends on where the person is:
+
+- **On the sign-in screen:** a **mandatory** update popup — no "Wait" option, sign-in
+  is blocked until they update. Same idea as a mobile app requiring an update before
+  it'll launch.
+- **Anywhere else (already inside the app):** a **dismissible** popup — "Update now"
+  reloads immediately, "Wait" lets them finish what they're doing. Won't nag again for
+  that same version, but reappears if an even newer version ships before they update.
 
 This works via `public/version.json`, which is **auto-generated from
 `CURRENT_VERSION`** every time you run `npm run build` (or `npm run dev`) — bump the
