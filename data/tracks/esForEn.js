@@ -165,6 +165,7 @@ const esForEn = {
   label: "Español (Latinoamérica)",
   sublabel: "For English speakers · Latin American Spanish",
   nativeLang: "en",
+  theme: "latam-sun",
   cats: CATS,
   bank: BANK,
   extraCatId: "fono",

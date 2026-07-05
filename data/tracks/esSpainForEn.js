@@ -55,6 +55,7 @@ const esSpainForEn = {
   label: "Español (España)",
   sublabel: "For English speakers · Castilian Spanish · vosotros, distinción",
   nativeLang: "en",
+  theme: "spain-warm",
   cats: CATS,
   bank: BANK,
   extraCatId: "fono",

@@ -57,6 +57,7 @@ const enForEs = {
   label: "English",
   sublabel: "Para hispanohablantes · starter content — add more!",
   nativeLang: "es",
+  theme: "english-cool",
   cats: CATS,
   bank: BANK,
   extraCatId: "fono",

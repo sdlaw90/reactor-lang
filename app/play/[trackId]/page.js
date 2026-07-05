@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Flame, Zap, Check, X, ChevronRight, RotateCcw, Trophy } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
 import { getTrack } from "../../../data/tracks";
+import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import {
   buildRound,
   seenIdsForRound,
@@ -281,7 +282,7 @@ export default function PlayPage({ params }) {
   if (!track) {
     return (
       <div style={styles.bg}>
-        <p style={{ color: "#FF5C5C" }}>Unknown track: {params.trackId}</p>
+        <p style={{ color: "#FF7B8A" }}>Unknown track: {params.trackId}</p>
       </div>
     );
   }
@@ -289,7 +290,7 @@ export default function PlayPage({ params }) {
   if (!loaded) {
     return (
       <div style={styles.bg}>
-        <p style={{ color: "#7A7F8C" }} className="jm">
+        <p style={{ color: "#7C7395" }} className="jm">
           Cargando…
         </p>
       </div>
@@ -298,9 +299,11 @@ export default function PlayPage({ params }) {
 
   const q = round[qIndex];
   const xpIntoLevel = progress.xp % 100;
+  const trackTheme = TRACK_THEMES[track.theme];
 
   return (
     <div style={styles.bg}>
+      {trackTheme && <div style={animatedBackgroundStyle(trackTheme.gradient)} />}
       <div style={styles.wrap}>
         <div style={styles.hud} className="jm">
           <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
@@ -314,7 +317,7 @@ export default function PlayPage({ params }) {
             <div style={{ ...styles.xpBarInner, width: `${xpIntoLevel}%` }} />
           </div>
           <div style={styles.hudItem}>
-            <Flame size={14} color="#FF5C5C" />
+            <Flame size={14} color="#FF7B8A" />
             <span style={{ marginLeft: 6 }}>{progress.streak}d</span>
           </div>
         </div>
@@ -328,7 +331,7 @@ export default function PlayPage({ params }) {
 
             <div style={styles.statRow} className="jm">
               <StatChip label="XP total" value={progress.xp} color="#3DDBFF" />
-              <StatChip label="Mejor combo" value={progress.best_combo} color="#FF3D7F" />
+              <StatChip label="Mejor combo" value={progress.best_combo} color="#FF8FB1" />
               <StatChip label="Rondas" value={progress.rounds_completed} color="#FFB84D" />
             </div>
 
@@ -361,7 +364,7 @@ export default function PlayPage({ params }) {
                 <X size={14} />
                 <span style={{ marginLeft: 4 }}>Salir</span>
               </button>
-              <div className="jm" style={{ color: "#7A7F8C", fontSize: 13 }}>
+              <div className="jm" style={{ color: "#7C7395", fontSize: 13 }}>
                 {qIndex + 1} / {round.length}
               </div>
               <div style={styles.comboWrap}>
@@ -380,7 +383,7 @@ export default function PlayPage({ params }) {
                 ...styles.card,
                 borderColor: track.cats[q.cat].color,
                 boxShadow:
-                  feedback === "correct" ? "0 0 0 3px #4ADE80" : feedback === "wrong" ? "0 0 0 3px #FF5C5C" : `0 0 0 1px ${track.cats[q.cat].color}55`,
+                  feedback === "correct" ? "0 0 0 3px #5EE0A0" : feedback === "wrong" ? "0 0 0 3px #FF7B8A" : `0 0 0 1px ${track.cats[q.cat].color}55`,
               }}
             >
               <div className="rj" style={{ ...styles.catTag, color: track.cats[q.cat].color, borderColor: track.cats[q.cat].color }}>
@@ -400,14 +403,14 @@ export default function PlayPage({ params }) {
               <div style={styles.optionsGrid}>
                 {q.options.map((opt, i) => {
                   let bg = "#1D212B";
-                  let border = "#2A2F3B";
+                  let border = "#3A3452";
                   if (feedback) {
                     if (i === q.correctIdx) {
                       bg = "#1B3A2A";
-                      border = "#4ADE80";
+                      border = "#5EE0A0";
                     } else if (i === selected) {
                       bg = "#3A1B1F";
-                      border = "#FF5C5C";
+                      border = "#FF7B8A";
                     }
                   }
                   return (
@@ -419,8 +422,8 @@ export default function PlayPage({ params }) {
                       style={{ ...styles.optionBtn, background: bg, borderColor: border }}
                     >
                       <span>{opt}</span>
-                      {feedback && i === q.correctIdx && <Check size={18} color="#4ADE80" />}
-                      {feedback && i === selected && i !== q.correctIdx && <X size={18} color="#FF5C5C" />}
+                      {feedback && i === q.correctIdx && <Check size={18} color="#5EE0A0" />}
+                      {feedback && i === selected && i !== q.correctIdx && <X size={18} color="#FF7B8A" />}
                     </button>
                   );
                 })}
@@ -435,12 +438,12 @@ export default function PlayPage({ params }) {
               {roundMode === "review" ? "REPASO COMPLETO" : "RONDA COMPLETA"}
             </h2>
             <div style={styles.statRow} className="jm">
-              <StatChip label="Correctas" value={`${sessionCorrect}/${round.length}`} color="#4ADE80" />
+              <StatChip label="Correctas" value={`${sessionCorrect}/${round.length}`} color="#5EE0A0" />
               <StatChip label="XP ganado" value={`+${sessionXP}`} color="#3DDBFF" />
               {roundMode === "review" ? (
-                <StatChip label="Fallos resueltos" value={resolvedCount} color="#FF3D7F" />
+                <StatChip label="Fallos resueltos" value={resolvedCount} color="#FF8FB1" />
               ) : (
-                <StatChip label="Racha diaria" value={`${progress.streak}d`} color="#FF5C5C" />
+                <StatChip label="Racha diaria" value={`${progress.streak}d`} color="#FF7B8A" />
               )}
             </div>
             <button className="rj" style={styles.primaryBtn} onClick={() => startRound("daily")}>
@@ -476,7 +479,7 @@ export default function PlayPage({ params }) {
               {explanationLog.map((item, i) => (
                 <ExplanationCard item={item} track={track} key={item.id || i} />
               ))}
-              {explanationLog.length === 0 && <p style={{ color: "#7A7F8C", fontSize: 14 }}>Aún no hay explicaciones — juega una ronda primero.</p>}
+              {explanationLog.length === 0 && <p style={{ color: "#7C7395", fontSize: 14 }}>Aún no hay explicaciones — juega una ronda primero.</p>}
             </div>
             <button className="rj" style={{ ...styles.secondaryBtn, marginTop: 18 }} onClick={() => setScreen("start")}>
               Cerrar
@@ -489,7 +492,7 @@ export default function PlayPage({ params }) {
             {explanationLog.length > 0 && (
               <button
                 className="rj"
-                style={{ ...styles.secondaryBtn, marginTop: 8, color: "#FF5C5C", borderColor: "#3A1B1F" }}
+                style={{ ...styles.secondaryBtn, marginTop: 8, color: "#FF7B8A", borderColor: "#3A1B1F" }}
                 onClick={async () => {
                   await clearExplanations(userId, track.id);
                   setExplanationLog([]);
@@ -513,7 +516,7 @@ export default function PlayPage({ params }) {
               {archiveLog.map((item, i) => (
                 <ExplanationCard item={item} track={track} key={item.id || i} />
               ))}
-              {archiveLog.length === 0 && !archiveLoading && <p style={{ color: "#7A7F8C", fontSize: 14 }}>El archivo está vacío.</p>}
+              {archiveLog.length === 0 && !archiveLoading && <p style={{ color: "#7C7395", fontSize: 14 }}>El archivo está vacío.</p>}
             </div>
             {archiveLog.length < archiveCount && (
               <button className="rj" style={{ ...styles.secondaryBtn, marginTop: 12 }} onClick={loadMoreArchive} disabled={archiveLoading}>
@@ -531,14 +534,14 @@ export default function PlayPage({ params }) {
 }
 
 function ExplanationCard({ item, track }) {
-  const catInfo = track.cats[item.cat] || { label: item.cat, color: "#7A7F8C" };
+  const catInfo = track.cats[item.cat] || { label: item.cat, color: "#7C7395" };
   return (
-    <div style={{ ...styles.card, borderColor: item.isCorrect || item.is_correct ? "#4ADE80" : "#FF5C5C", textAlign: "left" }}>
+    <div style={{ ...styles.card, borderColor: item.isCorrect || item.is_correct ? "#5EE0A0" : "#FF7B8A", textAlign: "left" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
         <div className="rj" style={{ ...styles.catTag, color: catInfo.color, borderColor: catInfo.color, marginBottom: 0 }}>
           {catInfo.label}
         </div>
-        {item.isCorrect || item.is_correct ? <Check size={18} color="#4ADE80" /> : <X size={18} color="#FF5C5C" />}
+        {item.isCorrect || item.is_correct ? <Check size={18} color="#5EE0A0" /> : <X size={18} color="#FF7B8A" />}
       </div>
       <p style={{ ...styles.prompt, fontSize: 17 }}>{item.prompt}</p>
 
@@ -568,12 +571,12 @@ function ExplanationCard({ item, track }) {
                 fontSize: 14,
                 fontWeight: 600,
                 background: isCorrectOpt ? "#1B3A2A" : "#3A1B1F",
-                border: `1px solid ${isCorrectOpt ? "#4ADE80" : "#FF5C5C"}`,
+                border: `1px solid ${isCorrectOpt ? "#5EE0A0" : "#FF7B8A"}`,
               }}
             >
               {isCorrectOpt ? "✓ " : "✗ "}
               {opt}
-              {isYourWrongPick && <span style={{ color: "#9BA0AD", fontWeight: 500 }}> — tu respuesta</span>}
+              {isYourWrongPick && <span style={{ color: "#B4ABC9", fontWeight: 500 }}> — tu respuesta</span>}
             </div>
           );
         })}
@@ -599,17 +602,17 @@ function StatChip({ label, value, color }) {
   return (
     <div style={{ ...styles.chip, borderColor: color + "55" }}>
       <div style={{ fontSize: 20, fontWeight: 600, color }}>{value}</div>
-      <div style={{ fontSize: 10, color: "#7A7F8C", marginTop: 2, textTransform: "uppercase" }}>{label}</div>
+      <div style={{ fontSize: 10, color: "#7C7395", marginTop: 2, textTransform: "uppercase" }}>{label}</div>
     </div>
   );
 }
 
 function TimerRing({ timeLeft, total }) {
   const pct = (timeLeft / total) * 100;
-  const color = pct > 50 ? "#3DDBFF" : pct > 20 ? "#FFB84D" : "#FF5C5C";
+  const color = pct > 50 ? "#3DDBFF" : pct > 20 ? "#FFB84D" : "#FF7B8A";
   return (
     <div style={{ width: 34, height: 34, borderRadius: "50%", background: `conic-gradient(${color} ${pct}%, #23272F ${pct}%)`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div className="jm" style={{ width: 26, height: 26, borderRadius: "50%", background: "#0E1016", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11 }}>
+      <div className="jm" style={{ width: 26, height: 26, borderRadius: "50%", background: "#171423", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11 }}>
         {timeLeft}
       </div>
     </div>
@@ -617,27 +620,27 @@ function TimerRing({ timeLeft, total }) {
 }
 
 const styles = {
-  bg: { minHeight: "100vh", width: "100%", background: "#0E1016", display: "flex", justifyContent: "center", padding: "20px 14px" },
-  wrap: { width: "100%", maxWidth: 460 },
+  bg: { position: "relative", minHeight: "100vh", width: "100%", background: "#171423", display: "flex", justifyContent: "center", padding: "20px 14px", overflow: "hidden" },
+  wrap: { position: "relative", zIndex: 1, width: "100%", maxWidth: 460 },
   hud: { display: "flex", alignItems: "center", gap: 10, marginBottom: 22, fontSize: 12 },
-  backBtn: { background: "transparent", color: "#7A7F8C", border: "1px solid #2A2F3B", borderRadius: 8, padding: "4px 10px", cursor: "pointer" },
+  backBtn: { background: "transparent", color: "#7C7395", border: "1px solid #3A3452", borderRadius: 8, padding: "4px 10px", cursor: "pointer" },
   hudItem: { display: "flex", alignItems: "center", whiteSpace: "nowrap" },
   xpBarOuter: { flex: 1, height: 6, background: "#1D212B", borderRadius: 3, overflow: "hidden" },
   xpBarInner: { height: "100%", background: "linear-gradient(90deg,#3DDBFF,#FFB84D)", borderRadius: 3, transition: "width 0.4s ease" },
   centerCol: { display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" },
   title: { fontSize: 30, fontWeight: 700, margin: "10px 0 4px" },
-  subtitle: { color: "#9BA0AD", fontSize: 14, margin: "0 0 20px", maxWidth: 340 },
+  subtitle: { color: "#B4ABC9", fontSize: 14, margin: "0 0 20px", maxWidth: 340 },
   statRow: { display: "flex", gap: 10, marginBottom: 26, width: "100%" },
-  chip: { flex: 1, border: "1px solid", borderRadius: 12, padding: "10px 6px", background: "#171B24" },
-  primaryBtn: { background: "#FF3D7F", color: "#0E1016", border: "none", padding: "14px 28px", borderRadius: 10, fontSize: 18, fontWeight: 700, cursor: "pointer", width: "100%" },
-  reviewBtn: { background: "transparent", color: "#FF3D7F", border: "1px solid #FF3D7F", padding: "12px 24px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 10, display: "flex", alignItems: "center", justifyContent: "center" },
-  missedBadge: { marginLeft: 10, background: "#FF3D7F", color: "#0E1016", borderRadius: 20, padding: "1px 8px", fontSize: 12, fontWeight: 700 },
+  chip: { flex: 1, border: "1px solid", borderRadius: 12, padding: "10px 6px", background: "#221E33" },
+  primaryBtn: { background: "#FF8FB1", color: "#171423", border: "none", padding: "14px 28px", borderRadius: 10, fontSize: 18, fontWeight: 700, cursor: "pointer", width: "100%" },
+  reviewBtn: { background: "transparent", color: "#FF8FB1", border: "1px solid #FF8FB1", padding: "12px 24px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 10, display: "flex", alignItems: "center", justifyContent: "center" },
+  missedBadge: { marginLeft: 10, background: "#FF8FB1", color: "#171423", borderRadius: 20, padding: "1px 8px", fontSize: 12, fontWeight: 700 },
   explainOpenBtn: { background: "transparent", color: "#3DDBFF", border: "1px solid #3DDBFF", padding: "12px 24px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 10 },
-  secondaryBtn: { background: "transparent", color: "#7A7F8C", border: "1px solid #2A2F3B", padding: "10px 20px", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", width: "100%" },
+  secondaryBtn: { background: "transparent", color: "#7C7395", border: "1px solid #3A3452", padding: "10px 20px", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", width: "100%" },
   topRow: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: 14, gap: 10 },
-  exitBtn: { display: "flex", alignItems: "center", background: "transparent", color: "#7A7F8C", border: "1px solid #2A2F3B", borderRadius: 8, padding: "5px 10px", fontSize: 13, fontWeight: 600, cursor: "pointer" },
+  exitBtn: { display: "flex", alignItems: "center", background: "transparent", color: "#7C7395", border: "1px solid #3A3452", borderRadius: 8, padding: "5px 10px", fontSize: 13, fontWeight: 600, cursor: "pointer" },
   comboWrap: { display: "flex", alignItems: "center" },
-  card: { width: "100%", background: "#171B24", border: "1px solid", borderRadius: 16, padding: "22px 20px", textAlign: "left" },
+  card: { width: "100%", background: "#221E33", border: "1px solid", borderRadius: 16, padding: "22px 20px", textAlign: "left" },
   catTag: { display: "inline-block", fontSize: 12, fontWeight: 700, textTransform: "uppercase", border: "1px solid", borderRadius: 20, padding: "3px 10px", marginBottom: 14 },
   prompt: { fontSize: 19, fontWeight: 500, lineHeight: 1.4, marginBottom: 18 },
   soundBox: { background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "16px 14px", marginBottom: 16, textAlign: "center" },
@@ -645,8 +648,8 @@ const styles = {
   soundLegend: { color: "#8A7FA3", fontSize: 11, marginTop: 10, marginBottom: 0 },
   optionsGrid: { display: "flex", flexDirection: "column", gap: 10 },
   optionBtn: { border: "1px solid", borderRadius: 10, padding: "13px 16px", fontSize: 16, fontWeight: 600, textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between" },
-  explainBox: { background: "#11141B", border: "1px solid #2A2F3B", borderRadius: 10, padding: "12px 14px" },
+  explainBox: { background: "#11141B", border: "1px solid #3A3452", borderRadius: 10, padding: "12px 14px" },
   explainLangRow: { display: "flex", alignItems: "flex-start", gap: 8 },
-  explainLangTag: { flexShrink: 0, fontSize: 10, fontWeight: 700, color: "#7A7F8C", border: "1px solid #2A2F3B", borderRadius: 4, padding: "1px 5px", marginTop: 2 },
+  explainLangTag: { flexShrink: 0, fontSize: 10, fontWeight: 700, color: "#7C7395", border: "1px solid #3A3452", borderRadius: 4, padding: "1px 5px", marginTop: 2 },
   explainText: { color: "#C7CAD3", fontSize: 13.5, lineHeight: 1.5, margin: 0 },
 };

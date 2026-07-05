@@ -8,8 +8,8 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #0e1016;
-  color: #ededf2;
+  background: #171423;
+  color: #f3f0fa;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
@@ -50,11 +50,25 @@ button {
     transform: translateY(0);
   }
 }
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 .fadein {
   animation: floatUp 0.25s ease-out;
 }
 @media (prefers-reduced-motion: reduce) {
   .fadein {
     animation: none;
+  }
+  [style*="gradientShift"] {
+    animation: none !important;
   }
 }

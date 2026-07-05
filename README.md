@@ -1,10 +1,11 @@
 # Reactor Lang
 
 A fast, ADHD-friendly language practice app with real accounts and a real database —
-your progress syncs across every device. Currently has two tracks:
+your progress syncs across every device. Currently has three tracks:
 
-- **Spanish, for you** (Latin American Spanish — full content, ported from the original prototype)
-- **English, for your friend** (starter content — see "Adding content" below)
+- **Spanish (Latin America)** — full content
+- **Spanish (Spain / Castilian)** — starter content, distinct vosotros/distinción grammar
+- **English** (for Spanish speakers) — starter content, see "Adding content" below
 
 ## Stack
 
@@ -18,9 +19,10 @@ your progress syncs across every device. Currently has two tracks:
 2. Once it's created, go to **SQL Editor** → New query
 3. Paste the entire contents of `supabase/schema.sql` and run it — this creates all the
    tables and locks them down so each user can only ever see their own data
-4. Go to **Project Settings → API** and copy:
-   - `Project URL`
-   - `anon` `public` key
+4. Click the **Connect** button near the top of your project page — it shows your
+   Project URL and anon/publishable key together in one place. (If you don't see it
+   there, the URL is under **Project Settings → Data API**, and the key is under
+   **Project Settings → API Keys**.)
 
 ## 2. Configure the app locally
 
@@ -47,22 +49,83 @@ confirmation email step.
 1. Push this folder to a new GitHub repo
 2. Go to [vercel.com](https://vercel.com) → New Project → import that repo
 3. In the deployment settings, add the two environment variables from your `.env.local`
+   (plus `RESEND_API_KEY` if you're using the security notification emails below)
 4. Deploy
+
+**Tip:** if you add environment variables *after* the fact via Project → Settings →
+Environment Variables, make sure they're checked for the **Production** environment
+specifically (not just a custom one you might create) — and you'll need to trigger a
+**Redeploy** afterward, since env var changes don't apply retroactively.
 
 That's it — you'll get a real URL (e.g. `reactor-lang.vercel.app`) that works identically
 on your phone, your Windows machine, or your friend's phone. Everyone signs in with their
 own account, and everyone's progress is private to them (enforced at the database level,
 not just in the app).
 
+## Security notification emails (optional but recommended)
+
+Changing your username, email, or password now sends a heads-up email — this is a
+security measure so you'd notice if someone else changed something on your account.
+This uses **Resend** (a transactional email API, free tier: 100/day, 3,000/month).
+
+1. Create a free account at [resend.com](https://resend.com)
+2. Create an API key
+3. Add it as an environment variable (both locally in `.env.local` and in Vercel):
+   ```
+   RESEND_API_KEY=re_your_key_here
+   ```
+
+**Important real-world limitation:** without verifying your own domain in Resend, you
+can only send emails to the address you signed up to Resend with — not to your friend's
+address. For two people to actually receive these notifications, verify a domain in
+Resend's dashboard (any domain you control) and set:
+```
+RESEND_FROM_EMAIL=notifications@yourdomain.com
+```
+If you skip this whole section, the app still works fine — it just silently skips
+sending the notification email rather than failing the actual account change.
+
+## Password reset — one extra Supabase setting
+
+For "Forgot password" to redirect correctly, add your reset-password URL to Supabase's
+allowlist: **Authentication → URL Configuration → Redirect URLs**, add both:
+```
+http://localhost:3000/reset-password
+https://your-deployed-url.vercel.app/reset-password
+```
+
+## If you already deployed this before these changes
+
+Re-run the (updated) `supabase/schema.sql` in the SQL Editor — it's safe to re-run in
+full; it only adds the new `profiles` table and username-lookup functions, it won't
+touch your existing data.
+
+## Version tag & changelog
+
+The small `vX.Y.Z` tag at the bottom of the home screen and Settings links to a full
+changelog. To ship a new version: bump `CURRENT_VERSION` and add an entry at the top
+of `CHANGELOG` in `lib/version.js` — that's the only file that needs touching.
+
+## Account features
+
+- **Sign in with email or username** — username is optional at sign-up; leave it
+  blank to just use email. Add or change it anytime in Settings.
+- **Forgot password** — link on the sign-in screen, standard email reset flow.
+- **Existing-email detection** — signing up with an email that's already registered
+  gives a clear message instead of silently "succeeding."
+- **Security notification emails** — changing your username, email, or password
+  sends a heads-up (see the Resend setup section above).
+
 ## How language selection works
 
-Sign-up only grants access — no language questions there. The first time someone
-lands on the home screen after signing in, they pick their **native/base language**
-(stored on their account, changeable anytime from **Settings**). Based on that choice,
-the home screen shows bubble-style options for what to learn. Spanish is split into
-two separate tracks — **Latin American** and **Spain (Castilian)** — since they differ
-enough (vosotros, distinción, vocabulary) to warrant separate content rather than
-being treated as one language.
+Sign-up only grants access — no language questions there. Native/base language and
+every other account setting live in **Settings** (the gear icon, top-right of the
+home screen). The home screen shows bubble-style options for what to learn, filtered
+by whichever native language you've set — until you set one, it just shows every
+track so the app is still usable. Spanish is split into two separate tracks —
+**Latin American** and **Spain (Castilian)** — since they differ enough (vosotros,
+distinción, vocabulary) to warrant separate content rather than being treated as one
+language.
 
 ## Adding more content
 
