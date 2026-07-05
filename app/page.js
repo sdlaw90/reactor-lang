@@ -6,7 +6,7 @@ import { Settings, BarChart2 } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import { tracksForNativeLang, listTracks } from "../data/tracks";
 import { HOME_GRADIENT, animatedBackgroundStyle } from "../lib/theme";
-import { flagEmoji, regionalLanguageLabel } from "../lib/countries";
+import { flagImageUrl, regionalLanguageLabel } from "../lib/countries";
 import { loadProfile } from "../lib/db";
 import Avatar from "../lib/Avatar";
 import VersionFooter from "../lib/VersionFooter";
@@ -112,7 +112,13 @@ export default function HomePage() {
         {regionLabel && (
           <div style={styles.identityTag}>
             {regionLabel}
-            {nativeCountry && <span style={{ marginLeft: 6 }}>{flagEmoji(nativeCountry)}</span>}
+            {nativeCountry && (
+              <img
+                src={flagImageUrl(nativeCountry)}
+                alt={nativeCountry}
+                style={{ width: 18, height: 13, objectFit: "cover", borderRadius: 2, marginLeft: 6, verticalAlign: "middle" }}
+              />
+            )}
           </div>
         )}
         <VersionFooter />

@@ -176,10 +176,14 @@ icon, or use a country flag as your avatar. Uploaded photos go through Supabase
 Storage (a new `avatars` bucket, set up automatically by the migrations) — public
 read, but only you can upload/replace your own.
 
-There's also a **Native country** setting (separate from native language). Combined,
-these infer a regional label + flag shown on the home screen — e.g. Spanish + Venezuela
-shows "Español (Latinoamérica) 🇻🇪"; English + United Kingdom shows "English (UK) 🇬🇧".
-No separate "region" picker needed — it's inferred from the country you pick.
+There's also a **Native country** setting (separate from native language) — a full
+searchable dropdown of ~195 countries. Combined with native language, it infers a
+regional label + flag shown on the home screen — e.g. Spanish + Venezuela shows
+"Español (Latinoamérica)" plus the Venezuelan flag; English + United Kingdom shows
+"English (UK)" plus the UK flag. No separate "region" picker needed — it's inferred
+from the country you pick. Flags render as real images (via a flag CDN), not emoji —
+Windows in particular doesn't ship flag emoji glyphs in its default font, so relying
+on emoji would've shown plain two-letter codes there instead of actual flags.
 
 ## Account features
 

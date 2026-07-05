@@ -7,7 +7,7 @@ import { listNativeLanguages } from "../../data/tracks";
 import { loadProfile, isUsernameTaken, setUsername as saveUsername, saveAvatar } from "../../lib/db";
 import { notifyAccountChange } from "../../lib/notify";
 import { verifyCurrentPassword } from "../../lib/reauth";
-import { countriesForLang, flagEmoji } from "../../lib/countries";
+import { COUNTRIES, flagImageUrl, countryName } from "../../lib/countries";
 import { uploadAvatarPhoto, AVATAR_EMOJIS } from "../../lib/avatarUpload";
 import Avatar from "../../lib/Avatar";
 import PasswordInput from "../../lib/PasswordInput";
@@ -78,9 +78,6 @@ function ProfilePictureSection({ session, profile, setProfile }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
-
-  const nativeLang = session.user.user_metadata?.native_lang;
-  const flagCountries = nativeLang ? countriesForLang(nativeLang) : countriesForLang("es").concat(countriesForLang("en"));
 
   const startEdit = () => {
     setMode(profile?.avatar_type || "emoji");
@@ -205,18 +202,21 @@ function ProfilePictureSection({ session, profile, setProfile }) {
           )}
 
           {mode === "flag" && (
-            <div style={styles.emojiGrid}>
-              {flagCountries.map((c) => (
-                <button
-                  key={c.code}
-                  type="button"
-                  title={c.name}
-                  onClick={() => setFlagChoice(c.code)}
-                  style={{ ...styles.emojiBtn, borderColor: flagChoice === c.code ? "#FF8FB1" : "#3A3452" }}
-                >
-                  {flagEmoji(c.code)}
-                </button>
-              ))}
+            <div style={{ marginBottom: 12 }}>
+              <select className="jm" style={styles.input} value={flagChoice} onChange={(e) => setFlagChoice(e.target.value)}>
+                <option value="">Select a country…</option>
+                {COUNTRIES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+              {flagChoice && (
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
+                  <img src={flagImageUrl(flagChoice)} alt={flagChoice} style={{ width: 32, height: 22, objectFit: "cover", borderRadius: 3 }} />
+                  <span style={{ color: "#B4ABC9", fontSize: 13 }}>{countryName(flagChoice)}</span>
+                </div>
+              )}
             </div>
           )}
 
@@ -550,8 +550,6 @@ function NativeCountrySection({ session, setSession }) {
 
   const nativeLang = session.user.user_metadata?.native_lang ?? null;
   const currentCountry = session.user.user_metadata?.native_country ?? null;
-  const countryOptions = nativeLang ? countriesForLang(nativeLang) : [];
-  const currentName = countryOptions.find((c) => c.code === currentCountry)?.name;
 
   const startEdit = () => {
     setChoice(currentCountry);
@@ -592,9 +590,10 @@ function NativeCountrySection({ session, setSession }) {
         <Row
           value={
             currentCountry ? (
-              <>
-                {flagEmoji(currentCountry)} {currentName}
-              </>
+              <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <img src={flagImageUrl(currentCountry)} alt={currentCountry} style={{ width: 24, height: 17, objectFit: "cover", borderRadius: 2 }} />
+                {countryName(currentCountry)}
+              </span>
             ) : (
               "(not set)"
             )
@@ -603,25 +602,26 @@ function NativeCountrySection({ session, setSession }) {
         />
       ) : (
         <>
-          <div style={styles.emojiGrid}>
-            {countryOptions.map((c) => (
-              <button
-                key={c.code}
-                type="button"
-                title={c.name}
-                onClick={() => setChoice(c.code)}
-                style={{ ...styles.emojiBtn, borderColor: choice === c.code ? "#FF8FB1" : "#3A3452" }}
-              >
-                {flagEmoji(c.code)}
-              </button>
+          <select className="jm" style={styles.input} value={choice || ""} onChange={(e) => setChoice(e.target.value)}>
+            <option value="">Select a country…</option>
+            {COUNTRIES.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.name}
+              </option>
             ))}
-          </div>
-          <p style={{ color: "#7C7395", fontSize: 12, margin: "4px 0 12px" }}>
-            {countryOptions.find((c) => c.code === choice)?.name || "Pick a country above"}
-          </p>
+          </select>
+          {choice && (
+            <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "8px 0 12px" }}>
+              <img src={flagImageUrl(choice)} alt={choice} style={{ width: 32, height: 22, objectFit: "cover", borderRadius: 3 }} />
+              <span style={{ color: "#B4ABC9", fontSize: 13 }}>{countryName(choice)}</span>
+            </div>
+          )}
           <EditActions busy={busy} onSave={save} onCancel={() => setEditing(false)} />
         </>
       )}
+      <p style={{ color: "#7C7395", fontSize: 12, marginTop: 8 }}>
+        Combined with your native language, this determines the regional label shown on the home screen (e.g. Spanish + Venezuela → "Español (Latinoamérica)").
+      </p>
     </Section>
   );
 }
