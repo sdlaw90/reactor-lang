@@ -148,6 +148,18 @@ as the commit message (e.g. `v1.5.0`), pulls, then pushes. If you bump `CURRENT_
 before running it, that becomes the commit message automatically — one less thing to
 remember. If there's nothing new to commit, it just pulls/pushes and skips the commit step.
 
+## Update popup (new version detection)
+
+The app checks for a newer deployed version every minute (and whenever you switch
+back to the tab). If one's found, a popup appears — **"Update now"** reloads
+immediately, **"Wait"** dismisses it so you can finish what you're doing; it won't
+nag again for that same version, but will reappear if an even newer version ships
+before you've updated.
+
+This works via `public/version.json`, which is **auto-generated from
+`CURRENT_VERSION`** every time you run `npm run build` (or `npm run dev`) — bump the
+version in `lib/version.js` as usual, nothing else to remember.
+
 ## Version tag & changelog
 
 The small `vX.Y.Z` tag at the bottom of the home screen and Settings links to a full

@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import VersionWatcher from "../lib/VersionWatcher";
 
 export const metadata = {
   title: "Reactor Lang",
@@ -8,7 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <VersionWatcher />
+      </body>
     </html>
   );
 }
