@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #0e1016;
+  color: #ededf2;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.rj {
+  font-family: "Rajdhani", sans-serif;
+}
+.jm {
+  font-family: "JetBrains Mono", monospace;
+}
+
+button {
+  font-family: inherit;
+}
+
+@keyframes pulseGood {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 18px rgba(74, 222, 128, 0);
+  }
+}
+@keyframes pulseBad {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 92, 92, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 18px rgba(255, 92, 92, 0);
+  }
+}
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fadein {
+  animation: floatUp 0.25s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fadein {
+    animation: none;
+  }
+}
