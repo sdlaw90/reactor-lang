@@ -133,6 +133,20 @@ Either re-run the (updated) `supabase/schema.sql` in the SQL Editor by hand — 
 safe to re-run in full — or set up the automated migrations workflow above, which
 will apply the same changes on your next push to `main`.
 
+## One-command deploy
+
+Instead of `git add` / `git commit` / `git push` by hand (and forgetting a step — like
+last time), run:
+
+```bash
+npm run deploy
+```
+
+This stages everything, commits using your current version number from `lib/version.js`
+as the commit message (e.g. `v1.5.0`), pulls, then pushes. If you bump `CURRENT_VERSION`
+before running it, that becomes the commit message automatically — one less thing to
+remember. If there's nothing new to commit, it just pulls/pushes and skips the commit step.
+
 ## Version tag & changelog
 
 The small `vX.Y.Z` tag at the bottom of the home screen and Settings links to a full
