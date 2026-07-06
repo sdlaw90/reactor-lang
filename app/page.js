@@ -141,12 +141,12 @@ export default function HomePage() {
             </button>
             <button
               className="rj"
-              style={styles.iconBtn}
+              style={{ ...styles.iconBtn, padding: 0, width: 34, height: 34, justifyContent: "center" }}
               title="User Settings"
               aria-label="User Settings"
               onClick={() => router.push("/settings")}
             >
-              <Avatar type={profile?.avatar_type} value={profile?.avatar_value} fallbackText={displayName} size={22} />
+              <Avatar type={profile?.avatar_type} value={profile?.avatar_value} fallbackText={displayName} size={34} />
             </button>
           </div>
         </div>
