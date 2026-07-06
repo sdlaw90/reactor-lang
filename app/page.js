@@ -29,6 +29,10 @@ export default function HomePage() {
     if (session === null) {
       router.push("/auth");
     } else if (session) {
+      if (!session.user.user_metadata?.native_lang) {
+        router.push("/onboarding");
+        return;
+      }
       loadProfile(session.user.id)
         .then(setProfile)
         .catch((e) => console.error("failed to load profile", e));
@@ -103,15 +107,6 @@ export default function HomePage() {
               onClick={() => router.push("/settings")}
             >
               <Settings size={18} />
-            </button>
-            <button
-              className="rj"
-              style={styles.signOutBtn}
-              onClick={async () => {
-                await supabase.auth.signOut();
-              }}
-            >
-              Sign out
             </button>
           </div>
         </div>
@@ -213,15 +208,6 @@ const styles = {
     borderRadius: "50%",
     background: "#FF3D7F",
     border: "2px solid #171423",
-  },
-  signOutBtn: {
-    background: "rgba(34,30,51,0.85)",
-    color: "#B4ABC9",
-    border: "1px solid #3A3452",
-    borderRadius: 8,
-    padding: "6px 12px",
-    fontSize: 12,
-    cursor: "pointer",
   },
   bubbleWrap: { display: "flex", flexWrap: "wrap", gap: 10 },
   bubble: {

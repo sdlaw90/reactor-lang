@@ -61,6 +61,19 @@ export default function SettingsPage() {
         <PasswordSection session={session} />
         <NativeLanguageSection session={session} setSession={setSession} />
         <NativeCountrySection session={session} setSession={setSession} />
+        <GameplaySettingsSection session={session} setSession={setSession} />
+
+        <button
+          className="rj"
+          style={styles.signOutBtn}
+          onClick={async () => {
+            await supabase.auth.signOut();
+            router.push("/auth");
+          }}
+        >
+          Sign out
+        </button>
+
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <VersionFooter />
         </div>
@@ -637,6 +650,151 @@ function NativeCountrySection({ session, setSession }) {
   );
 }
 
+// ---------------- Gameplay settings (review mode + round length/timer) ----------------
+
+function GameplaySettingsSection({ session, setSession }) {
+  const [editing, setEditing] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const currentReviewMode = session.user.user_metadata?.review_mode ?? false;
+  const rs = session.user.user_metadata?.round_settings || {};
+  const currentPerCat = rs.perCat ?? 2;
+  const currentExtraPairs = rs.extraPairs ?? 2;
+  const currentQuestionTime = rs.questionTime ?? 30;
+  const currentExtraQuestionTime = rs.extraQuestionTime ?? 30;
+  const currentSameTimer = currentQuestionTime === currentExtraQuestionTime;
+
+  const [reviewMode, setReviewMode] = useState(currentReviewMode);
+  const [perCat, setPerCat] = useState(currentPerCat);
+  const [extraPairs, setExtraPairs] = useState(currentExtraPairs);
+  const [sameTimer, setSameTimer] = useState(currentSameTimer);
+  const [questionTime, setQuestionTime] = useState(currentQuestionTime);
+  const [extraQuestionTime, setExtraQuestionTime] = useState(currentExtraQuestionTime);
+
+  const startEdit = () => {
+    setReviewMode(currentReviewMode);
+    setPerCat(currentPerCat);
+    setExtraPairs(currentExtraPairs);
+    setSameTimer(currentSameTimer);
+    setQuestionTime(currentQuestionTime);
+    setExtraQuestionTime(currentExtraQuestionTime);
+    setSaved(false);
+    setEditing(true);
+  };
+
+  const save = async () => {
+    setBusy(true);
+    try {
+      const finalExtraTime = sameTimer ? questionTime : extraQuestionTime;
+      const { data, error } = await supabase.auth.updateUser({
+        data: {
+          review_mode: reviewMode,
+          round_settings: {
+            perCat: Math.max(1, Math.min(10, Number(perCat) || 2)),
+            extraPairs: Math.max(0, Math.min(10, Number(extraPairs) || 2)),
+            questionTime: Math.max(5, Math.min(120, Number(questionTime) || 30)),
+            extraQuestionTime: Math.max(5, Math.min(120, Number(finalExtraTime) || 30)),
+          },
+        },
+      });
+      if (error) throw error;
+      setSession((s) => ({ ...s, user: data.user }));
+      setSaved(true);
+      setEditing(false);
+    } catch (e) {
+      console.error("failed to save gameplay settings", e);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <Section title="Gameplay" saved={saved}>
+      {!editing ? (
+        <>
+          <Row value={currentReviewMode ? "Review mode: on" : "Review mode: off"} onEdit={startEdit} />
+          <p style={{ color: "#7C7395", fontSize: 12, marginTop: 8 }}>
+            {currentPerCat} questions/category · {currentExtraPairs} phonetics pairs · {currentQuestionTime}s
+            {currentQuestionTime !== currentExtraQuestionTime ? ` (${currentExtraQuestionTime}s phonetics)` : ""} per question
+          </p>
+        </>
+      ) : (
+        <>
+          <label style={styles.toggleRow}>
+            <input type="checkbox" checked={reviewMode} onChange={(e) => setReviewMode(e.target.checked)} />
+            <span>Pause after each answer to review the explanation (tap "Next" to continue)</span>
+          </label>
+
+          <div style={{ marginTop: 14 }}>
+            <label style={styles.numberLabel}>Questions per category (mixed rounds)</label>
+            <input
+              type="number"
+              min={1}
+              max={10}
+              className="jm"
+              style={styles.input}
+              value={perCat}
+              onChange={(e) => setPerCat(e.target.value)}
+            />
+          </div>
+
+          <div style={{ marginTop: 10 }}>
+            <label style={styles.numberLabel}>Phonetics pairs per round</label>
+            <input
+              type="number"
+              min={0}
+              max={10}
+              className="jm"
+              style={styles.input}
+              value={extraPairs}
+              onChange={(e) => setExtraPairs(e.target.value)}
+            />
+          </div>
+
+          <label style={{ ...styles.toggleRow, marginTop: 14 }}>
+            <input type="checkbox" checked={sameTimer} onChange={(e) => setSameTimer(e.target.checked)} />
+            <span>Same time limit for every question type</span>
+          </label>
+
+          <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
+            <div style={{ flex: 1 }}>
+              <label style={styles.numberLabel}>{sameTimer ? "Seconds per question" : "Seconds (regular)"}</label>
+              <input
+                type="number"
+                min={5}
+                max={120}
+                className="jm"
+                style={styles.input}
+                value={questionTime}
+                onChange={(e) => setQuestionTime(e.target.value)}
+              />
+            </div>
+            {!sameTimer && (
+              <div style={{ flex: 1 }}>
+                <label style={styles.numberLabel}>Seconds (phonetics)</label>
+                <input
+                  type="number"
+                  min={5}
+                  max={120}
+                  className="jm"
+                  style={styles.input}
+                  value={extraQuestionTime}
+                  onChange={(e) => setExtraQuestionTime(e.target.value)}
+                />
+              </div>
+            )}
+          </div>
+
+          <div style={{ marginTop: 14 }}>
+            <EditActions busy={busy} onSave={save} onCancel={() => setEditing(false)} />
+          </div>
+        </>
+      )}
+    </Section>
+  );
+}
+
 // ---------------- shared bits ----------------
 
 function Section({ title, children, saved, savedNote }) {
@@ -676,6 +834,20 @@ function EditActions({ busy, onSave, onCancel }) {
 }
 
 const styles = {
+  toggleRow: { display: "flex", alignItems: "flex-start", gap: 10, color: "#F3F0FA", fontSize: 13.5, lineHeight: 1.4, cursor: "pointer" },
+  numberLabel: { display: "block", color: "#7C7395", fontSize: 12, marginBottom: 4 },
+  signOutBtn: {
+    width: "100%",
+    background: "transparent",
+    color: "#FF7B8A",
+    border: "1px solid #4A1E24",
+    borderRadius: 10,
+    padding: "12px",
+    fontSize: 14,
+    fontWeight: 700,
+    cursor: "pointer",
+    marginBottom: 14,
+  },
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
   backBtn: {
     background: "transparent",

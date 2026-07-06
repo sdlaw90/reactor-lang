@@ -33,6 +33,7 @@ export default function PlayPage({ params }) {
   const track = getTrack(params.trackId);
 
   const [userId, setUserId] = useState(null);
+  const [session, setSession] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [screen, setScreen] = useState("start"); // start | playing | result | explain | archive
   const [progress, setProgress] = useState({
@@ -54,6 +55,8 @@ export default function PlayPage({ params }) {
   const [archiveLoading, setArchiveLoading] = useState(false);
   const [showLevelPicker, setShowLevelPicker] = useState(false);
   const [advanceDismissed, setAdvanceDismissed] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState(null); // null = mixed
+  const [awaitingNext, setAwaitingNext] = useState(false); // review-mode: paused after answer, waiting for "Next"
 
   const [round, setRound] = useState([]);
   const [roundMode, setRoundMode] = useState("daily");
@@ -82,6 +85,7 @@ export default function PlayPage({ params }) {
       }
       const uid = data.session.user.id;
       setUserId(uid);
+      setSession(data.session);
       const [p, missed, seen, recent] = await Promise.all([
         loadProgress(uid, track.id),
         loadMissedIds(uid, track.id),
@@ -104,13 +108,18 @@ export default function PlayPage({ params }) {
     }
   };
 
+  const reviewMode = session?.user?.user_metadata?.review_mode ?? false;
+  const roundSettings = session?.user?.user_metadata?.round_settings || {};
+  const buildOptions = { perCat: roundSettings.perCat, extraPairs: roundSettings.extraPairs, categoryFilter };
+  const timerOverrides = { questionTime: roundSettings.questionTime, extraQuestionTime: roundSettings.extraQuestionTime };
+
   const startRound = (mode = "daily") => {
     newlyMissed.current = new Set();
     newlyResolved.current = new Set();
     levelAnswered.current = { correct: 0, total: 0 };
     setRoundMode(mode);
     const cefrSet = mode === "daily" ? cefrSetForSkillLevel(progress.skill_level) : null;
-    const newRound = buildRound(track, mode, missedIds, seenAt, cefrSet);
+    const newRound = buildRound(track, mode, missedIds, seenAt, cefrSet, mode === "daily" ? buildOptions : {});
     setRound(newRound);
 
     if (mode === "daily") {
@@ -130,7 +139,8 @@ export default function PlayPage({ params }) {
     setSessionLog([]);
     setFeedback(null);
     setSelected(null);
-    setTimeLeft(timeFor(track, newRound[0]));
+    setAwaitingNext(false);
+    setTimeLeft(timeFor(track, newRound[0], timerOverrides));
     setScreen("playing");
   };
 
@@ -199,16 +209,36 @@ export default function PlayPage({ params }) {
       },
     ]);
 
+    if (reviewMode) {
+      setAwaitingNext(true);
+      return;
+    }
+
     setTimeout(() => {
       if (qIndex + 1 < round.length) {
         setQIndex((i) => i + 1);
         setFeedback(null);
         setSelected(null);
-        setTimeLeft(timeFor(track, round[qIndex + 1]));
+        setTimeLeft(timeFor(track, round[qIndex + 1], timerOverrides));
       } else {
         endRound(true, newCombo, sessionXP + gained, sessionCorrect + (isCorrect ? 1 : 0));
       }
     }, 750);
+  };
+
+  // Review mode: called when the person taps "Next" after reading the explanation.
+  // Reads combo/sessionXP/sessionCorrect directly since they're already updated by
+  // handleAnswer by the time this can be clicked (a render has already happened).
+  const handleNext = () => {
+    setAwaitingNext(false);
+    if (qIndex + 1 < round.length) {
+      setQIndex((i) => i + 1);
+      setFeedback(null);
+      setSelected(null);
+      setTimeLeft(timeFor(track, round[qIndex + 1], timerOverrides));
+    } else {
+      endRound(true, combo, sessionXP, sessionCorrect);
+    }
   };
 
   const endRound = async (completed, finalCombo, finalXP, finalCorrect) => {
@@ -403,6 +433,33 @@ export default function PlayPage({ params }) {
               )}
             </div>
 
+            <div style={styles.categoryPicker}>
+              <span style={{ color: "#7C7395", fontSize: 12 }}>Enfoque de la ronda:</span>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
+                <button
+                  className="rj"
+                  style={{ ...styles.catChip, borderColor: !categoryFilter ? "#FF8FB1" : "#3A3452", color: !categoryFilter ? "#FF8FB1" : "#B4ABC9" }}
+                  onClick={() => setCategoryFilter(null)}
+                >
+                  Mixto
+                </button>
+                {Object.keys(track.cats).map((catId) => (
+                  <button
+                    key={catId}
+                    className="rj"
+                    style={{
+                      ...styles.catChip,
+                      borderColor: categoryFilter === catId ? track.cats[catId].color : "#3A3452",
+                      color: categoryFilter === catId ? track.cats[catId].color : "#B4ABC9",
+                    }}
+                    onClick={() => setCategoryFilter(catId)}
+                  >
+                    {track.cats[catId].label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <button className="rj" style={styles.primaryBtn} onClick={() => startRound("daily")}>
               EMPEZAR RONDA <ChevronRight size={20} style={{ verticalAlign: "middle" }} />
             </button>
@@ -441,7 +498,7 @@ export default function PlayPage({ params }) {
                   x{combo}
                 </span>
               </div>
-              <TimerRing timeLeft={timeLeft} total={timeFor(track, q)} />
+              <TimerRing timeLeft={timeLeft} total={timeFor(track, q, timerOverrides)} />
             </div>
 
             <div
@@ -503,6 +560,25 @@ export default function PlayPage({ params }) {
                   );
                 })}
               </div>
+
+              {awaitingNext && q.explain && (
+                <div style={styles.reviewExplainBox}>
+                  <div style={styles.explainLangRow}>
+                    <span style={styles.explainLangTag}>EN</span>
+                    <p style={styles.explainText}>{q.explain.en}</p>
+                  </div>
+                  <div style={{ ...styles.explainLangRow, marginTop: 8 }}>
+                    <span style={styles.explainLangTag}>ES</span>
+                    <p style={styles.explainText}>{q.explain.es}</p>
+                  </div>
+                </div>
+              )}
+
+              {awaitingNext && (
+                <button className="rj" style={styles.nextBtn} onClick={handleNext}>
+                  Siguiente <ChevronRight size={18} style={{ verticalAlign: "middle" }} />
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -696,6 +772,16 @@ function TimerRing({ timeLeft, total }) {
 
 const styles = {
   skillCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
+  categoryPicker: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
+  catChip: {
+    background: "#171423",
+    border: "1px solid",
+    borderRadius: 999,
+    padding: "6px 14px",
+    fontSize: 12,
+    fontWeight: 700,
+    cursor: "pointer",
+  },
   skillEditBtn: { background: "transparent", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "4px 12px", fontSize: 11, fontWeight: 700, cursor: "pointer" },
   skillOption: { textAlign: "left", background: "#171423", border: "1px solid", borderRadius: 8, padding: "8px 12px", color: "#F3F0FA", fontSize: 13, fontWeight: 600, cursor: "pointer" },
   placementLinkBtn: { background: "transparent", color: "#3DDBFF", border: "1px solid #3DDBFF", borderRadius: 8, padding: "8px 12px", fontSize: 12, fontWeight: 700, cursor: "pointer", marginTop: 4 },
@@ -731,6 +817,19 @@ const styles = {
   optionsGrid: { display: "flex", flexDirection: "column", gap: 10 },
   optionBtn: { border: "1px solid", borderRadius: 10, padding: "13px 16px", fontSize: 16, fontWeight: 600, textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between" },
   explainBox: { background: "#11141B", border: "1px solid #3A3452", borderRadius: 10, padding: "12px 14px" },
+  reviewExplainBox: { background: "#11141B", border: "1px solid #3A3452", borderRadius: 10, padding: "12px 14px", marginTop: 16 },
+  nextBtn: {
+    width: "100%",
+    background: "#FF8FB1",
+    color: "#171423",
+    border: "none",
+    borderRadius: 10,
+    padding: "12px",
+    fontSize: 15,
+    fontWeight: 700,
+    cursor: "pointer",
+    marginTop: 14,
+  },
   explainLangRow: { display: "flex", alignItems: "flex-start", gap: 8 },
   explainLangTag: { flexShrink: 0, fontSize: 10, fontWeight: 700, color: "#7C7395", border: "1px solid #3A3452", borderRadius: 4, padding: "1px 5px", marginTop: 2 },
   explainText: { color: "#C7CAD3", fontSize: 13.5, lineHeight: 1.5, margin: 0 },

@@ -221,6 +221,22 @@ from the country you pick. Flags render as real images (via a flag CDN), not emo
 Windows in particular doesn't ship flag emoji glyphs in its default font, so relying
 on emoji would've shown plain two-letter codes there instead of actual flags.
 
+## Gameplay customization & onboarding
+
+- **Category picker** — before starting a round, choose a single category to focus on
+  (vocab-only, grammar-only, etc.) or leave it on "Mixto" for the default blend
+- **Review mode** (Settings → Gameplay) — pauses after each answer to show the bilingual
+  explanation inline, with a "Next" button, instead of auto-advancing after 750ms
+- **Configurable round shape** (Settings → Gameplay) — questions-per-category, phonetics
+  pairs per round, and the per-question timer (same for everything, or set phonetics
+  separately) are all adjustable per account
+- **Guided onboarding** — first-time sign-ups now go through a short wizard (native
+  language → native country → profile picture) instead of landing on a "showing every
+  track" fallback. Native language is the only required step; country and picture can be
+  skipped and set later in Settings
+
+Sign out lives at the bottom of Settings now, not on the home screen.
+
 ## Account features
 
 - **Sign in with email or username** — username is optional at sign-up; leave it
