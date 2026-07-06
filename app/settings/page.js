@@ -48,7 +48,7 @@ export default function SettingsPage() {
 
   return (
     <div style={styles.wrap}>
-      <div style={{ width: "100%", maxWidth: 460 }}>
+      <div style={{ width: "100%", maxWidth: 460, paddingBottom: 90 }}>
         <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
           ← Back
         </button>

@@ -11,6 +11,7 @@ import {
   seenIdsForRound,
   timeFor,
   todayStr,
+  computeMastery,
 } from "../../../lib/gameEngine";
 import { cefrSetForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
 import { uiLangForSkill, t } from "../../../lib/playStrings";
@@ -58,6 +59,7 @@ export default function PlayPage({ params }) {
   const [advanceDismissed, setAdvanceDismissed] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState([]); // empty = Mixto (all categories)
   const [awaitingNext, setAwaitingNext] = useState(false); // review-mode: paused after answer, waiting for "Next"
+  const [showMastery, setShowMastery] = useState(false);
 
   const [round, setRound] = useState([]);
   const [roundMode, setRoundMode] = useState("daily");
@@ -124,6 +126,7 @@ export default function PlayPage({ params }) {
   const displayCatLabel = (catId) => (useAltPrompt && track.cats[catId].labelEn ? track.cats[catId].labelEn : track.cats[catId].label);
   const uiLang = uiLangForSkill(progress.skill_level, viewerNativeLang, track);
   const T = (key, vars) => t(uiLang, key, vars);
+  const mastery = computeMastery(track, seenAt, missedIds);
 
   const startRound = (mode = "daily") => {
     newlyMissed.current = new Set();
@@ -477,6 +480,42 @@ export default function PlayPage({ params }) {
               </div>
             </div>
 
+            <div style={styles.masteryCard}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ color: "#7C7395", fontSize: 12 }}>{T("masteryLabel")}</span>
+                <button className="rj" style={styles.skillEditBtn} onClick={() => setShowMastery((v) => !v)}>
+                  {showMastery ? T("close") : T("viewDetails")}
+                </button>
+              </div>
+
+              {showMastery && (
+                <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 12 }}>
+                  {Object.keys(track.cats).map((catId) => {
+                    const m = mastery[catId];
+                    if (!m) return null;
+                    const pct = m.total > 0 ? Math.round((m.learned / m.total) * 100) : 0;
+                    const diffEntries = Object.entries(m.byDifficulty).sort((a, b) => a[0].localeCompare(b[0]));
+                    return (
+                      <div key={catId}>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5 }}>
+                          <span style={{ color: track.cats[catId].color, fontWeight: 700 }}>{displayCatLabel(catId)}</span>
+                          <span className="jm" style={{ color: "#B4ABC9" }}>
+                            {T("learnedOf", { learned: m.learned, total: m.total })}
+                          </span>
+                        </div>
+                        <div style={styles.masteryBarOuter}>
+                          <div style={{ ...styles.masteryBarInner, width: `${pct}%`, background: track.cats[catId].color }} />
+                        </div>
+                        <div className="jm" style={{ fontSize: 10.5, color: "#7C7395", marginTop: 4 }}>
+                          {diffEntries.map(([diff, d]) => `${diff}: ${d.learned}/${d.total}`).join(" · ")}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
             <button className="rj" style={styles.primaryBtn} onClick={() => startRound("daily")}>
               {T("startRound")} <ChevronRight size={20} style={{ verticalAlign: "middle" }} />
             </button>
@@ -790,6 +829,9 @@ function TimerRing({ timeLeft, total }) {
 const styles = {
   skillCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
   categoryPicker: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
+  masteryCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
+  masteryBarOuter: { width: "100%", height: 6, background: "#171423", borderRadius: 3, overflow: "hidden", marginTop: 5 },
+  masteryBarInner: { height: "100%", borderRadius: 3, transition: "width 0.4s ease" },
   catChip: {
     background: "#171423",
     border: "1px solid",

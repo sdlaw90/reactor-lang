@@ -69,6 +69,10 @@ export default function HelpPage() {
           <P>Every question you've ever answered — right or wrong — gets logged with an explanation of the correct answer in both your native language and the language you're learning, viewable anytime from the round-result screen. Older entries move to an "Archivo" section automatically so the main list stays fast to scroll — nothing is ever deleted unless you choose to clear it.</P>
         </Section>
 
+        <Section title="Mastery tracker">
+          <P>Each language's start screen has a "Progress by category" card — tap "View details" to see how many items you've learned vs. the total that exist for each category, plus a breakdown by difficulty level so progress shows in smaller chunks instead of one big number. "Learned" means you've seen it and it's not currently sitting in your missed-questions pile. Note: the total is based on this app's own content for that track, not an external word-frequency list — starter-set tracks will show smaller totals until more content gets added.</P>
+        </Section>
+
         <Section title="Skill levels & placement quiz">
           <P>
             Each language track has its own skill level: No experience, Beginner, Intermediate, Advanced, or Native —

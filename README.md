@@ -268,6 +268,17 @@ Each track declares an explicit `targetLang` field (rather than inferring it fro
 English (US)/(UK) cross-dialect track, where "native" and "target" can end up
 being the same language.
 
+## Per-category mastery tracker
+
+Each language's start screen has a "Progress by category" card (`computeMastery`
+in `lib/gameEngine.js`) showing learned-vs-total items per category, broken down by
+CEFR difficulty too. "Learned" = seen at least once and not currently in the
+missed-questions pool — reusing data the app already tracks (`seen_questions` /
+`missed_questions`), rather than an external word-frequency list, which the app
+doesn't have access to. This means totals reflect the app's own content depth per
+track — starter-set tracks will show smaller numbers until more content is added
+(see backlog item #1).
+
 ## Mix-and-match category picker
 
 The category picker (play page start screen) now supports selecting any
