@@ -139,7 +139,7 @@ export default function AuthPage() {
     <div style={styles.wrap}>
       <div style={styles.card}>
         <h1 className="rj" style={styles.title}>
-          REACTOR<span style={{ color: "#FF8FB1" }}>.</span>LANG
+          Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
         </h1>
         <p style={styles.subtitle}>{mode === "signin" ? "Sign in to continue" : "Create an account"}</p>
 

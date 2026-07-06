@@ -1,4 +1,4 @@
-# Reactor Lang
+# SquirreLingo
 
 A fast, ADHD-friendly language practice app with real accounts and a real database —
 your progress syncs across every device. Currently has four tracks:
@@ -58,7 +58,7 @@ Environment Variables, make sure they're checked for the **Production** environm
 specifically (not just a custom one you might create) — and you'll need to trigger a
 **Redeploy** afterward, since env var changes don't apply retroactively.
 
-That's it — you'll get a real URL (e.g. `reactor-lang.vercel.app`) that works identically
+That's it — you'll get a real URL (e.g. `squirrelingo.vercel.app`) that works identically
 on your phone, your Windows machine, or your friend's phone. Everyone signs in with their
 own account, and everyone's progress is private to them (enforced at the database level,
 not just in the app).

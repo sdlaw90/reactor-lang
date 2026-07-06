@@ -53,7 +53,7 @@ export default function HomePage() {
       <div style={styles.content}>
         <div style={styles.topRow}>
           <h1 className="rj" style={styles.title}>
-            REACTOR<span style={{ color: "#FF8FB1" }}>.</span>LANG
+            Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <button

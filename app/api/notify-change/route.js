@@ -16,21 +16,21 @@ function messageFor(type, meta) {
   switch (type) {
     case "email_changed":
       return {
-        subject: "Your Reactor Lang email is being changed",
-        text: `Someone (hopefully you) requested to change the email on your Reactor Lang account to ${meta?.newEmail || "a new address"}. If this wasn't you, your password may be compromised — sign in and change it immediately.`,
+        subject: "Your SquirreLingo email is being changed",
+        text: `Someone (hopefully you) requested to change the email on your SquirreLingo account to ${meta?.newEmail || "a new address"}. If this wasn't you, your password may be compromised — sign in and change it immediately.`,
       };
     case "password_changed":
       return {
-        subject: "Your Reactor Lang password was changed",
-        text: "Your Reactor Lang account password was just changed. If this wasn't you, someone else may have access to your account — reset your password immediately using 'Forgot password' on the sign-in screen.",
+        subject: "Your SquirreLingo password was changed",
+        text: "Your SquirreLingo account password was just changed. If this wasn't you, someone else may have access to your account — reset your password immediately using 'Forgot password' on the sign-in screen.",
       };
     case "username_changed":
       return {
-        subject: "Your Reactor Lang username was changed",
-        text: `Your Reactor Lang username was just changed to "${meta?.newUsername || "a new username"}". If this wasn't you, your account may be compromised — sign in and change your password immediately.`,
+        subject: "Your SquirreLingo username was changed",
+        text: `Your SquirreLingo username was just changed to "${meta?.newUsername || "a new username"}". If this wasn't you, your account may be compromised — sign in and change your password immediately.`,
       };
     default:
-      return { subject: "Reactor Lang account change", text: "A change was made to your Reactor Lang account." };
+      return { subject: "SquirreLingo account change", text: "A change was made to your SquirreLingo account." };
   }
 }
 

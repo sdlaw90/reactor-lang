@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import VersionWatcher from "../lib/VersionWatcher";
 
 export const metadata = {
-  title: "Reactor Lang",
+  title: "SquirreLingo",
   description: "Fast, ADHD-friendly language practice",
 };
 
