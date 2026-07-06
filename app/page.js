@@ -88,7 +88,9 @@ export default function HomePage() {
 
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 6 }}>
           <Avatar type={profile?.avatar_type} value={profile?.avatar_value} fallbackText={displayName} size={36} />
-          <p style={{ ...styles.subtitle, marginTop: 0 }}>Signed in as {displayName}</p>
+          <p className="rj" style={styles.usernameDisplay}>
+            {displayName}
+          </p>
         </div>
 
         {!nativeLang && (
@@ -128,6 +130,17 @@ export default function HomePage() {
 }
 
 const styles = {
+  usernameDisplay: {
+    margin: 0,
+    fontSize: 17,
+    fontWeight: 700,
+    color: "#F3F0FA",
+    letterSpacing: 0.3,
+    background: "linear-gradient(90deg, #FF8FB1, #B98EFF)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+  },
   wrap: { position: "relative", minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423", overflow: "hidden" },
   content: { position: "relative", zIndex: 1, width: "100%", maxWidth: 460 },
   topRow: { display: "flex", justifyContent: "space-between", alignItems: "center" },
