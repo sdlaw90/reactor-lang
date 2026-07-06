@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { BarChart2, HelpCircle } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import { tracksForNativeLang, listTracks } from "../data/tracks";
@@ -12,6 +12,7 @@ import { skillLevelInfo } from "../lib/skillLevels";
 import { CURRENT_VERSION } from "../lib/version";
 import Avatar from "../lib/Avatar";
 import VersionFooter from "../lib/VersionFooter";
+import Logo from "../lib/Logo";
 
 const GREETINGS = {
   es: "¡Bienvenido/a",
@@ -24,15 +25,26 @@ function welcomeGreeting(nativeLang) {
 
 export default function HomePage() {
   const router = useRouter();
+  const pathname = usePathname();
   const [session, setSession] = useState(undefined); // undefined = loading, null = signed out
   const [profile, setProfile] = useState(null);
   const [progressByTrack, setProgressByTrack] = useState({});
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const refetch = () => supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    refetch();
     const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => setSession(s));
-    return () => sub.subscription.unsubscribe();
-  }, []);
+    // Next.js's client-side navigation cache can restore a cached Home page
+    // without re-running this effect, so a change made on another page (like
+    // native country in Settings) wouldn't otherwise show up here until a hard
+    // refresh. Re-fetching whenever we land back on "/" or the tab regains
+    // focus covers that gap.
+    window.addEventListener("focus", refetch);
+    return () => {
+      sub.subscription.unsubscribe();
+      window.removeEventListener("focus", refetch);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (session === null) {
@@ -75,9 +87,12 @@ export default function HomePage() {
       <div style={animatedBackgroundStyle(HOME_GRADIENT)} />
       <div style={styles.content}>
         <div style={styles.topRow}>
-          <h1 className="rj" style={styles.title}>
-            Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
-          </h1>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Logo size={28} />
+            <h1 className="rj" style={styles.title}>
+              Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
+            </h1>
+          </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             {nativeCountry && (
               <button
@@ -137,8 +152,10 @@ export default function HomePage() {
 
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 10 }}>
           <p className="rj greeting-flair" style={styles.welcomeText}>
-            {welcomeGreeting(nativeLang)}, <span style={styles.usernameDisplay}>{displayName}</span>!
-            <span style={{ marginLeft: 6 }}>👋</span>
+            {welcomeGreeting(nativeLang)}, <span className="shimmer-text" style={styles.usernameDisplay}>{displayName}</span>!
+            <span className="wave-emoji" style={{ marginLeft: 6, display: "inline-block" }}>
+              👋
+            </span>
           </p>
         </div>
 
@@ -177,8 +194,8 @@ const styles = {
   welcomeText: {
     marginTop: 10,
     marginBottom: 0,
-    fontSize: 19,
-    fontWeight: 700,
+    fontSize: 24,
+    fontWeight: 800,
     color: "#F3F0FA",
     textAlign: "center",
   },
@@ -207,9 +224,9 @@ const styles = {
   iconBtn: {
     background: "rgba(34,30,51,0.85)",
     color: "#F3F0FA",
-    border: "1px solid #3A3452",
-    borderRadius: 8,
-    padding: "7px 9px",
+    border: "none",
+    borderRadius: "50%",
+    padding: "8px 10px",
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
@@ -250,9 +267,9 @@ const styles = {
     alignItems: "center",
     background: "rgba(34,30,51,0.85)",
     color: "#F3F0FA",
-    border: "1px solid #3A3452",
-    borderRadius: 8,
-    padding: "7px 9px",
+    border: "none",
+    borderRadius: 999,
+    padding: "8px 12px",
     fontSize: 12,
     fontWeight: 700,
     cursor: "pointer",

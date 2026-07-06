@@ -7,6 +7,7 @@ import { isUsernameTaken, emailForUsername, setUsername as saveUsername } from "
 import UsernameAvailabilityField from "../../lib/UsernameAvailabilityField";
 import PasswordInput from "../../lib/PasswordInput";
 import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
+import Logo from "../../lib/Logo";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -163,9 +164,12 @@ export default function AuthPage() {
   return (
     <div style={styles.wrap}>
       <div style={styles.card}>
-        <h1 className="rj" style={styles.title}>
-          Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
-        </h1>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+          <Logo size={30} />
+          <h1 className="rj" style={{ ...styles.title, marginBottom: 0 }}>
+            Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
+          </h1>
+        </div>
         <p style={styles.subtitle}>{mode === "signin" ? "Sign in to continue" : "Create an account"}</p>
 
         {mode === "signin" ? (
