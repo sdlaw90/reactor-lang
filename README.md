@@ -227,37 +227,40 @@ from the country you pick. Flags render as real images (via a flag CDN), not emo
 Windows in particular doesn't ship flag emoji glyphs in its default font, so relying
 on emoji would've shown plain two-letter codes there instead of actual flags.
 
-## New language expansion
+## New language expansion — complete
 
 Shipped: **Italian**, **French (France)**, **French (Canada/Québécois)**,
-**Portuguese (Brazil)**, and **Portuguese (Portugal)** — all for English
+**Portuguese (Brazil)**, **Portuguese (Portugal)**, **German**, **Russian**,
+**Japanese**, **Mandarin Chinese**, and **Korean** — all for English
 speakers, all at full depth (36 items each — vocab, grammar, idioms,
-phonetics, spanning CEFR A1-B2).
+phonetics, spanning CEFR A1-B2). This completes the original 8-language
+backlog item.
 
-Both regional pairs were built genuinely distinct from each other, not
-reskins with a different flag:
-- **Canadian vs. France French**: the déjeuner/dîner/souper meal-name shift
-  (the same word means a different meal in each dialect), false-friends
-  *within* French itself (char = car in Quebec, tank in France), the
-  Québécois "-tu" question particle and "chu" contraction, and distinct
-  phonetics (t/d affrication in Quebec vs. liaison/nasal vowels generally)
-- **Brazilian vs. European Portuguese**: almost entirely different everyday
-  vocabulary (ônibus/autocarro, celular/telemóvel, banheiro/casa de banho),
-  gerund ("estou escrevendo") vs. infinitive ("estou a escrever")
-  constructions, você vs. tu as the default "you," object pronoun placement
-  before vs. after the verb, and very different phonetics (Brazilian
-  palatalizes d/t before i into "dj"/"tch"; European Portuguese reduces
-  unstressed vowels heavily and turns final 's' into an English "sh" sound)
+German was the first track needing real grammatical departure from the
+Romance-language pattern (three genders, full case system, verb-second word
+order). Russian needed zero architecture changes despite Cyrillic — just a
+different single alphabet, no tone system.
 
-All five follow the same shape as every other track — `nativeLang`,
-`targetLang`, CEFR-tagged bank items, a phonetics extraBank — so each needed
-zero changes to the game engine, just a content file, a registration line in
+**Japanese, Mandarin, and Korean** raised a genuine design question before
+any content was written: how to show non-Latin script. Decision (confirmed
+directly rather than guessed): **native script + romanization together**,
+in every prompt and option. This needed zero engine changes — both are just
+embedded in the same content strings every other track already uses for
+parenthetical glosses. Mandarin's tones are written with standard pinyin
+diacritics (ā á ǎ à), the normal way tones are represented in pinyin, so no
+new phonetic system was needed either.
+
+Each of these three covers what's structurally distinctive about it:
+Japanese (SOV order, particles, no person/number conjugation, pitch accent),
+Mandarin (zero verb conjugation, aspect particles instead of tense, required
+measure words, tone sandhi), and Korean (SOV order, particles, adjectives
+that conjugate like verbs, honorific speech levels, batchim linking).
+
+All fourteen tracks follow the same shape — `nativeLang`, `targetLang`,
+CEFR-tagged bank items, a phonetics extraBank — so every one of them needed
+zero game-engine changes, just a content file, a registration line in
 `data/tracks/index.js`, a theme gradient (`lib/theme.js`), and an icon
 (`lib/trackIcons.js`).
-
-The roster now covers 9 tracks across 5 language families. Remaining in the
-backlog: the reverse English (US) cross-learning content (see to-do list item
-#32), and whichever languages come after this batch.
 
 ## Gameplay customization & onboarding
 
