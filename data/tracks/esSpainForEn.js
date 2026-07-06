@@ -53,6 +53,8 @@ const FONO_BANK = [
 const esSpainForEn = {
   id: "es-spain-for-en",
   label: "Español (España)",
+  nameEn: "Spanish (Spain)",
+  nameEs: "Español (España)",
   sublabel: "For English speakers · Castilian Spanish · vosotros, distinción",
   nativeLang: "en",
   targetLang: "es",

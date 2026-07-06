@@ -108,6 +108,8 @@ const FONO_BANK = [
 const frCaForEn = {
   id: "fr-ca-for-en",
   label: "Français (Québec)",
+  nameEn: "French (Canada)",
+  nameEs: "Francés (Canadá)",
   sublabel: "For English speakers · Canadian French",
   nativeLang: "en",
   targetLang: "fr",

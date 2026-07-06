@@ -107,6 +107,8 @@ const FONO_BANK = [
 const itForEn = {
   id: "it-for-en",
   label: "Italiano",
+  nameEn: "Italian",
+  nameEs: "Italiano",
   sublabel: "For English speakers · Italian",
   nativeLang: "en",
   targetLang: "it",

@@ -108,6 +108,8 @@ const FONO_BANK = [
 const ptPtForEn = {
   id: "pt-pt-for-en",
   label: "Português (Portugal)",
+  nameEn: "Portuguese (Portugal)",
+  nameEs: "Portugués (Portugal)",
   sublabel: "For English speakers · European Portuguese",
   nativeLang: "en",
   targetLang: "pt",

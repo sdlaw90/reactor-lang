@@ -65,6 +65,8 @@ const FONO_BANK = [
 const enGbForEs = {
   id: "en-gb-for-es",
   label: "English (UK)",
+  nameEn: "English (UK)",
+  nameEs: "Inglés (Reino Unido)",
   sublabel: "Para hispanohablantes · British English · starter content",
   sublabelEn: "For American English speakers · British English · starter content",
   nativeLang: "es",

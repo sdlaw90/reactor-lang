@@ -27,8 +27,9 @@ export default function HelpPage() {
           <P>
             Your <b>native language</b> (set in Settings) decides which languages show up as bubbles to learn — for
             example, English speakers see Spanish tracks, Spanish speakers see English tracks, and more language pairs
-            keep getting added over time. Your <b>native country</b> is separate — it just personalizes the badge in
-            the top icon row.
+            keep getting added over time. Each bubble's name shows in your native language too (e.g. "Italian" rather
+            than "Italiano") — no need to recognize a language from its flag or name in its own script. Your
+            <b> native country</b> is separate — it just personalizes the badge in the top icon row.
           </P>
           <P>Each language bubble shows your current skill level and XP progress toward the next one. Tap any bubble to start practicing that language — progress is tracked independently per language.</P>
         </Section>

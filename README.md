@@ -227,6 +227,25 @@ from the country you pick. Flags render as real images (via a flag CDN), not emo
 Windows in particular doesn't ship flag emoji glyphs in its default font, so relying
 on emoji would've shown plain two-letter codes there instead of actual flags.
 
+## Track names shown in your native language
+
+Every track has `nameEn`/`nameEs` fields (in addition to `label`, its own
+name for itself in the target language) — the home screen, dashboard, and
+play page title all pick whichever matches the viewer's native language,
+falling back to `label` if neither is set. Someone might not recognize a
+language from its flag or its self-name, so this shows "Italian" to an
+English speaker rather than assuming they'll recognize "Italiano."
+
+## Content-depth pass (in progress)
+
+Started deepening existing tracks well beyond the initial 36-item bar,
+rather than continuing to add new languages — more languages with thin
+content isn't as useful as fewer languages covered thoroughly. **French
+(France)** is the first track taken through this pass: 36 → 69 items,
+including the first C1-tier content of any track. The rest of the 14 tracks
+are queued for the same treatment across future sessions — see the to-do
+list for current status.
+
 ## New language expansion — complete
 
 Shipped: **Italian**, **French (France)**, **French (Canada/Québécois)**,

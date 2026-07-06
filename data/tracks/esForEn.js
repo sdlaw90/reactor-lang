@@ -163,6 +163,8 @@ const FONO_BANK = [
 const esForEn = {
   id: "es-latam-for-en",
   label: "Español (Latinoamérica)",
+  nameEn: "Spanish (Latin America)",
+  nameEs: "Español (Latinoamérica)",
   sublabel: "For English speakers · Latin American Spanish",
   nativeLang: "en",
   targetLang: "es",

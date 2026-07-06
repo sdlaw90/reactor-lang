@@ -395,7 +395,7 @@ export default function PlayPage({ params }) {
         {screen === "start" && (
           <div style={styles.centerCol} className="fadein">
             <h1 className="rj" style={styles.title}>
-              {track.label}
+              {viewerNativeLang === "es" ? track.nameEs || track.label : track.nameEn || track.label}
             </h1>
             <p style={styles.subtitle}>{useAltPrompt && track.sublabelEn ? track.sublabelEn : track.sublabel}</p>
 

@@ -108,6 +108,8 @@ const FONO_BANK = [
 const koForEn = {
   id: "ko-for-en",
   label: "한국어",
+  nameEn: "Korean",
+  nameEs: "Coreano",
   sublabel: "For English speakers · Korean",
   nativeLang: "en",
   targetLang: "ko",

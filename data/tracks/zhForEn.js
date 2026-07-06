@@ -110,6 +110,8 @@ const FONO_BANK = [
 const zhForEn = {
   id: "zh-for-en",
   label: "中文",
+  nameEn: "Mandarin Chinese",
+  nameEs: "Chino Mandarín",
   sublabel: "For English speakers · Mandarin Chinese",
   nativeLang: "en",
   targetLang: "zh",

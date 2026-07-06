@@ -56,6 +56,8 @@ const FONO_BANK = [
 const enForEs = {
   id: "en-us-for-es",
   label: "English (US)",
+  nameEn: "English (US)",
+  nameEs: "Inglés (EE. UU.)",
   sublabel: "Para hispanohablantes · American English · starter content",
   nativeLang: "es",
   targetLang: "en",

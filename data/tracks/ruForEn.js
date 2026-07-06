@@ -110,6 +110,8 @@ const FONO_BANK = [
 const ruForEn = {
   id: "ru-for-en",
   label: "Русский",
+  nameEn: "Russian",
+  nameEs: "Ruso",
   sublabel: "For English speakers · Russian",
   nativeLang: "en",
   targetLang: "ru",

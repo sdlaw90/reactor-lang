@@ -112,6 +112,8 @@ const FONO_BANK = [
 const jaForEn = {
   id: "ja-for-en",
   label: "日本語",
+  nameEn: "Japanese",
+  nameEs: "Japonés",
   sublabel: "For English speakers · Japanese",
   nativeLang: "en",
   targetLang: "ja",

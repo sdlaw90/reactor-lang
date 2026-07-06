@@ -107,6 +107,8 @@ const FONO_BANK = [
 const ptBrForEn = {
   id: "pt-br-for-en",
   label: "Português (Brasil)",
+  nameEn: "Portuguese (Brazil)",
+  nameEs: "Portugués (Brasil)",
   sublabel: "For English speakers · Brazilian Portuguese",
   nativeLang: "en",
   targetLang: "pt",

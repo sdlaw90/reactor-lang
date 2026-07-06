@@ -180,7 +180,7 @@ export default function HomePage() {
                   <TrackIcon trackId={t.id} size={64} />
                 </div>
                 <div style={styles.bubbleContent}>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>{t.label}</div>
+                  <div style={{ fontSize: 14, fontWeight: 700 }}>{nativeLang === "es" ? t.nameEs || t.label : t.nameEn || t.label}</div>
                   <div className="jm" style={{ fontSize: 10.5, color: "#B4ABC9", marginTop: 2 }}>
                     {p ? `${skillLabel} · ${xpInLevel}/100 XP` : "Not started"}
                   </div>

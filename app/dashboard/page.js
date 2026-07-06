@@ -41,6 +41,8 @@ export default function DashboardPage() {
     );
   }
 
+  const nativeLang = session?.user?.user_metadata?.native_lang ?? null;
+  const trackDisplayName = (t) => (nativeLang === "es" ? t.nameEs || t.label : t.nameEn || t.label);
   const totalXP = rows.reduce((sum, r) => sum + (r.xp || 0), 0);
   const totalRounds = rows.reduce((sum, r) => sum + (r.rounds_completed || 0), 0);
   const bestStreak = rows.reduce((max, r) => Math.max(max, r.streak || 0), 0);
@@ -97,7 +99,7 @@ export default function DashboardPage() {
           {playedTracks.map((r) => (
             <button key={r.track_id} className="rj" style={styles.trackRow} onClick={() => router.push(`/play/${r.track_id}`)}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontWeight: 700, color: "#F3F0FA" }}>{r.trackInfo.label}</span>
+                <span style={{ fontWeight: 700, color: "#F3F0FA" }}>{trackDisplayName(r.trackInfo)}</span>
                 <span style={{ color: "#7C7395", fontSize: 11 }}>{skillLevelInfo(r.skill_level).label}</span>
               </div>
               <div className="jm" style={styles.trackStatsRow}>
@@ -113,7 +115,7 @@ export default function DashboardPage() {
             .filter((t) => !rows.find((r) => r.track_id === t.id))
             .map((t) => (
               <button key={t.id} className="rj" style={{ ...styles.trackRow, opacity: 0.6 }} onClick={() => router.push(`/play/${t.id}`)}>
-                <span style={{ fontWeight: 700, color: "#F3F0FA" }}>{t.label}</span>
+                <span style={{ fontWeight: 700, color: "#F3F0FA" }}>{trackDisplayName(t)}</span>
                 <div style={{ color: "#7C7395", fontSize: 12, marginTop: 4 }}>Not started yet</div>
               </button>
             ))}
