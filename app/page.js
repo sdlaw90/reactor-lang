@@ -9,6 +9,7 @@ import { HOME_GRADIENT, animatedBackgroundStyle } from "../lib/theme";
 import { flagImageUrl, regionalLanguageLabel } from "../lib/countries";
 import { loadProfile, loadAllProgress } from "../lib/db";
 import { skillLevelInfo } from "../lib/skillLevels";
+import { CURRENT_VERSION } from "../lib/version";
 import Avatar from "../lib/Avatar";
 import VersionFooter from "../lib/VersionFooter";
 
@@ -55,6 +56,7 @@ export default function HomePage() {
   const tracks = nativeLang ? tracksForNativeLang(nativeLang) : listTracks();
   const displayName = profile?.username || session.user.email;
   const regionLabel = nativeLang ? regionalLanguageLabel(nativeLang, nativeCountry) : null;
+  const hasUnseenWhatsNew = (session.user.user_metadata?.last_seen_version ?? null) !== CURRENT_VERSION;
 
   return (
     <div style={styles.wrap}>
@@ -65,6 +67,16 @@ export default function HomePage() {
             Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <button
+              className="rj"
+              style={{ ...styles.iconBtn, position: "relative", fontSize: 18, fontWeight: 800, lineHeight: 1, justifyContent: "center", minWidth: 34 }}
+              title="What's new"
+              aria-label="What's new"
+              onClick={() => router.push("/whats-new")}
+            >
+              !
+              {hasUnseenWhatsNew && <span style={styles.notifDot} />}
+            </button>
             <button
               className="rj"
               style={styles.iconBtn}
@@ -136,7 +148,7 @@ export default function HomePage() {
           })}
         </div>
 
-        <div style={{ textAlign: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           {regionLabel && (
             <div style={styles.identityTag}>
               {regionLabel}
@@ -191,6 +203,16 @@ const styles = {
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
+  },
+  notifDot: {
+    position: "absolute",
+    top: -3,
+    right: -3,
+    width: 10,
+    height: 10,
+    borderRadius: "50%",
+    background: "#FF3D7F",
+    border: "2px solid #171423",
   },
   signOutBtn: {
     background: "rgba(34,30,51,0.85)",

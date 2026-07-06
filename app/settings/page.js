@@ -61,7 +61,7 @@ export default function SettingsPage() {
         <PasswordSection session={session} />
         <NativeLanguageSection session={session} setSession={setSession} />
         <NativeCountrySection session={session} setSession={setSession} />
-        <div style={{ textAlign: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <VersionFooter />
         </div>
       </div>

@@ -185,6 +185,11 @@ The small `vX.Y.Z` tag at the bottom of the home screen and Settings links to a 
 changelog. To ship a new version: bump `CURRENT_VERSION` and add an entry at the top
 of `CHANGELOG` in `lib/version.js` — that's the only file that needs touching.
 
+There's also a **"What's New" page** (the `!` icon on the home screen) that shows just
+the most recent entry — the version tag still opens the full history. A small red dot
+appears on the `!` icon whenever someone hasn't seen the current version's notes yet
+(tracked per-account via `last_seen_version`), and clears once they open the page.
+
 ## Skill levels & progress dashboard
 
 Every track now has a **skill level** (No experience / Beginner / Intermediate /

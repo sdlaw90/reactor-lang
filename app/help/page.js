@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Settings, BarChart2, HelpCircle } from "lucide-react";
+import { Settings, BarChart2 } from "lucide-react";
 
 export default function HelpPage() {
   const router = useRouter();
@@ -19,15 +19,14 @@ export default function HelpPage() {
         <Section title="Home screen icons">
           <IconRow icon={<BarChart2 size={16} />} label="Dashboard" text="Your total XP, streak, and rounds across every language, plus a breakdown per language." />
           <IconRow icon={<Settings size={16} />} label="Settings" text="Change your username, email, password, native language, native country, and profile picture." />
-          <IconRow icon={<HelpCircle size={16} />} label="Help" text="This page." />
         </Section>
 
         <Section title="Choosing what to learn">
           <P>
-            Your <b>native language</b> (set in Settings) decides which languages show up as bubbles to learn — English
-            speakers see Spanish tracks, Spanish speakers see English tracks. Your <b>native country</b> is separate: it
-            just personalizes the little flag/region tag shown on the home screen (e.g. Spanish + Venezuela shows
-            "Español (Latinoamérica)").
+            Your <b>native language</b> (set in Settings) decides which languages show up as bubbles to learn — for
+            example, English speakers see Spanish tracks, Spanish speakers see English tracks, and more language pairs
+            keep getting added over time. Your <b>native country</b> is separate: it just personalizes the little
+            flag/region tag shown on the home screen (e.g. Spanish + Venezuela shows "Español (Latinoamérica)").
           </P>
           <P>Tap any bubble to start practicing that language. Each language tracks its own progress independently.</P>
         </Section>
@@ -43,7 +42,7 @@ export default function HelpPage() {
         </Section>
 
         <Section title="Explanations & archive">
-          <P>Every question you've ever answered — right or wrong — gets logged with a bilingual (EN/ES) explanation of the correct answer, viewable anytime from the round-result screen. Older entries move to an "Archivo" section automatically so the main list stays fast to scroll — nothing is ever deleted unless you choose to clear it.</P>
+          <P>Every question you've ever answered — right or wrong — gets logged with an explanation of the correct answer in both your native language and the language you're learning, viewable anytime from the round-result screen. Older entries move to an "Archivo" section automatically so the main list stays fast to scroll — nothing is ever deleted unless you choose to clear it.</P>
         </Section>
 
         <Section title="Skill levels & placement quiz">
@@ -61,10 +60,6 @@ export default function HelpPage() {
 
         <Section title="Account & security">
           <P>You can sign in with either your email or a username. Changing your email or password requires re-entering your current password first, and changing your password automatically signs out any other devices you're logged into, for security. You'll also get an email notification whenever your username, email, or password changes.</P>
-        </Section>
-
-        <Section title="Updates">
-          <P>A small "v1.x.x" tag at the bottom of the home screen links to the full changelog. If a new version is deployed while you're using the app, you'll see a popup — you can reload right away or finish what you're doing first.</P>
         </Section>
       </div>
     </div>
