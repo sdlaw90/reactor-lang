@@ -181,9 +181,15 @@ version in `lib/version.js` as usual, nothing else to remember.
 
 ## Version tag & changelog
 
-The small `vX.Y.Z` tag at the bottom of the home screen and Settings links to a full
-changelog. To ship a new version: bump `CURRENT_VERSION` and add an entry at the top
-of `CHANGELOG` in `lib/version.js` — that's the only file that needs touching.
+The small `vX.Y.Z` tag is fixed to the bottom of the viewport at all times (on the home
+screen and Settings) and links to a full changelog. To ship a new version: bump
+`CURRENT_VERSION` and add an entry at the top of `CHANGELOG` in `lib/version.js`.
+
+**Standing practice:** whenever a change is user-facing enough to belong in the
+changelog, also check whether `app/help/page.js` needs updating in the same pass —
+new settings, new pages, changed icons/labels, changed flows. There's a reminder
+comment directly above `CHANGELOG` in `lib/version.js` for exactly this. The Help page
+fell noticeably out of date once already before this practice was written down.
 
 There's also a **"What's New" page** (the `!` icon on the home screen) that shows just
 the most recent entry — the version tag still opens the full history. A small red dot

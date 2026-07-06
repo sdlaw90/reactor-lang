@@ -6,7 +6,7 @@ import { BarChart2, HelpCircle } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import { tracksForNativeLang, listTracks } from "../data/tracks";
 import { HOME_GRADIENT, animatedBackgroundStyle } from "../lib/theme";
-import { flagImageUrl, regionalLanguageLabel } from "../lib/countries";
+import { flagImageUrl } from "../lib/countries";
 import { loadProfile, loadAllProgress } from "../lib/db";
 import { skillLevelInfo } from "../lib/skillLevels";
 import { CURRENT_VERSION } from "../lib/version";
@@ -68,7 +68,6 @@ export default function HomePage() {
   // Until a native language is set, show every track so the app is still usable.
   const tracks = nativeLang ? tracksForNativeLang(nativeLang) : listTracks();
   const displayName = profile?.username || session.user.email;
-  const regionLabel = nativeLang ? regionalLanguageLabel(nativeLang, nativeCountry) : null;
   const hasUnseenWhatsNew = (session.user.user_metadata?.last_seen_version ?? null) !== CURRENT_VERSION;
 
   return (
@@ -80,6 +79,22 @@ export default function HomePage() {
             Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            {nativeCountry && (
+              <button
+                className="rj jm"
+                style={styles.langBadge}
+                title="Native language & country (change in Settings)"
+                aria-label="Native language and country"
+                onClick={() => router.push("/settings")}
+              >
+                {nativeCountry}
+                <img
+                  src={flagImageUrl(nativeCountry)}
+                  alt={nativeCountry}
+                  style={{ width: 16, height: 11, objectFit: "cover", borderRadius: 2, marginLeft: 5 }}
+                />
+              </button>
+            )}
             <button
               className="rj"
               style={{ ...styles.iconBtn, position: "relative", fontSize: 18, fontWeight: 800, lineHeight: 1, justifyContent: "center", minWidth: 34 }}
@@ -121,7 +136,6 @@ export default function HomePage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 10 }}>
-          <Avatar type={profile?.avatar_type} value={profile?.avatar_value} fallbackText={displayName} size={64} />
           <p className="rj greeting-flair" style={styles.welcomeText}>
             {welcomeGreeting(nativeLang)}, <span style={styles.usernameDisplay}>{displayName}</span>!
             <span style={{ marginLeft: 6 }}>👋</span>
@@ -134,7 +148,7 @@ export default function HomePage() {
           </p>
         )}
 
-        <p className="rj" style={{ ...styles.subtitle, marginTop: 22, marginBottom: 10, color: "#F3F0FA", fontWeight: 700 }}>
+        <p className="rj" style={styles.quickWinPrompt}>
           Pick your next quick win ⚡
         </p>
         <div style={styles.bubbleWrap}>
@@ -153,21 +167,7 @@ export default function HomePage() {
           })}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          {regionLabel && (
-            <div style={styles.identityTag}>
-              {regionLabel}
-              {nativeCountry && (
-                <img
-                  src={flagImageUrl(nativeCountry)}
-                  alt={nativeCountry}
-                  style={{ width: 18, height: 13, objectFit: "cover", borderRadius: 2, marginLeft: 6, verticalAlign: "middle" }}
-                />
-              )}
-            </div>
-          )}
-          <VersionFooter />
-        </div>
+        <VersionFooter />
       </div>
     </div>
   );
@@ -236,15 +236,25 @@ const styles = {
     flex: "1 1 auto",
     minWidth: 160,
   },
-  identityTag: {
+  quickWinPrompt: {
+    fontSize: 22,
+    fontWeight: 800,
+    color: "#F3F0FA",
+    textAlign: "center",
     marginTop: 26,
-    marginBottom: 6,
-    display: "inline-block",
-    color: "#B4ABC9",
-    fontSize: 12,
-    background: "rgba(34,30,51,0.7)",
+    marginBottom: 14,
+    letterSpacing: 0.2,
+  },
+  langBadge: {
+    display: "flex",
+    alignItems: "center",
+    background: "rgba(34,30,51,0.85)",
+    color: "#F3F0FA",
     border: "1px solid #3A3452",
-    borderRadius: 999,
-    padding: "6px 14px",
+    borderRadius: 8,
+    padding: "7px 9px",
+    fontSize: 12,
+    fontWeight: 700,
+    cursor: "pointer",
   },
 };

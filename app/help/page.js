@@ -17,24 +17,44 @@ export default function HelpPage() {
         </h1>
 
         <Section title="Home screen icons">
+          <IconRow label="Native language badge" text='A small pill (top-left of the icon row) showing your native country code and flag — e.g. "US 🇺🇸". Tap it to change your native language/country in Settings.' />
+          <IconRow label="What's New (!)" text="Shows the latest release's notes. A red dot appears whenever there's a version you haven't seen yet, and clears once you open it." />
           <IconRow icon={<BarChart2 size={16} />} label="Dashboard" text="Your total XP, streak, and rounds across every language, plus a breakdown per language." />
-          <IconRow label="User Settings" text="Your profile picture (top-right) opens Settings — change your username, email, password, native language, native country, and profile picture." icon={<Settings size={16} />} />
+          <IconRow label="User Settings" text="Your profile picture opens Settings — username, email, password, native language/country, profile picture, and gameplay preferences." icon={<Settings size={16} />} />
+        </Section>
+
+        <Section title="Signing up & usernames">
+          <P>
+            Usernames are required — type one and tap <b>Verify</b>; if it's taken, you'll see a few genuinely-available
+            alternatives to pick from with one tap. If you ever end up signed in without a username (an older account,
+            for instance), you'll get a one-time popup requiring you to set one before continuing anywhere else.
+          </P>
+          <P>First time signing up? A short guided setup walks you through native language (required), native country, and profile picture (both optional, changeable later in Settings).</P>
         </Section>
 
         <Section title="Choosing what to learn">
           <P>
             Your <b>native language</b> (set in Settings) decides which languages show up as bubbles to learn — for
             example, English speakers see Spanish tracks, Spanish speakers see English tracks, and more language pairs
-            keep getting added over time. Your <b>native country</b> is separate: it just personalizes the little
-            flag/region tag shown on the home screen (e.g. Spanish + Venezuela shows "Español (Latinoamérica)").
+            keep getting added over time. Your <b>native country</b> is separate — it just personalizes the badge in
+            the top icon row.
           </P>
-          <P>Tap any bubble to start practicing that language. Each language tracks its own progress independently.</P>
+          <P>Each language bubble shows your current skill level and XP progress toward the next one. Tap any bubble to start practicing that language — progress is tracked independently per language.</P>
+        </Section>
+
+        <Section title="Category picker">
+          <P>Before starting a round, choose a single category to focus on (vocabulary-only, grammar-only, translation-only, phonetics-only) or leave it on "Mixto" for the default blend of everything.</P>
         </Section>
 
         <Section title="Playing a round">
-          <P>Each round mixes several question types — you'll see a colored tag on each question card showing which type it is (vocabulary, verbs/grammar, translation, or phonetics).</P>
-          <P>You get 30 seconds per question, no penalty for wrong answers — just answer and move on. A combo counter (⚡) builds as you chain correct answers in a row, and resets on a miss (with no other penalty).</P>
+          <P>Each round mixes several question types — you'll see a colored tag on each question card showing which type it is.</P>
+          <P>You get a set number of seconds per question (adjustable in Settings → Gameplay), no penalty for wrong answers — just answer and move on. A combo counter (⚡) builds as you chain correct answers in a row, and resets on a miss with no other penalty.</P>
           <P><b>Phonetics questions</b> show a written respelling of how a phrase sounds (CAPS = stressed syllable, ‿ = words that blend together in fast speech) instead of real audio, so it works everywhere without needing sound.</P>
+          <P>Right and wrong answers are deliberately hard to miss — a green pulse for correct, a red shake for wrong.</P>
+        </Section>
+
+        <Section title="Review mode">
+          <P>Turn this on in Settings → Gameplay to pause after each answer, read the bilingual explanation right there on the card, and tap "Next" whenever you're ready — instead of auto-advancing after less than a second.</P>
         </Section>
 
         <Section title="Missed questions & review">
@@ -47,19 +67,23 @@ export default function HelpPage() {
 
         <Section title="Skill levels & placement quiz">
           <P>
-            Each language track has its own skill level: No experience, Beginner, Intermediate, Advanced, or Native. This
-            is based on the real CEFR framework used by actual language certifications — rounds are biased toward
+            Each language track has its own skill level: No experience, Beginner, Intermediate, Advanced, or Native —
+            based on the real CEFR framework used by actual language certifications. Rounds are biased toward
             questions matching your level, without ever running short on content.
           </P>
           <P>Answer consistently well at your current level and you'll be offered a chance to advance. Not sure where you stand? Take the short, untimed <b>placement quiz</b> from that language's start screen.</P>
         </Section>
 
-        <Section title="Profile picture & identity">
-          <P>In Settings → Profile picture, choose a photo upload, a generic fun icon, or a country flag as your avatar. Your username (if you've set one) shows on the home screen instead of your email.</P>
+        <Section title="Gameplay settings">
+          <P>In Settings → Gameplay: turn review mode on/off, adjust how many questions come from each category per round, how many phonetics pairs appear, and the per-question timer — either one shared time limit or separate limits for regular questions vs. phonetics.</P>
+        </Section>
+
+        <Section title="Settings, organized">
+          <P>Settings is grouped into <b>Profile</b> (picture, username), <b>Account</b> (email, password), <b>Language & Learning</b> (native language/country, gameplay preferences), and <b>Subscription</b> (reserved for later).</P>
         </Section>
 
         <Section title="Account & security">
-          <P>You can sign in with either your email or a username. Changing your email or password requires re-entering your current password first, and changing your password automatically signs out any other devices you're logged into, for security. You'll also get an email notification whenever your username, email, or password changes.</P>
+          <P>Sign in with either your email or username. Changing your email or password requires re-entering your current password first, and changing your password automatically signs out any other devices you're logged into, for security. You'll also get an email notification whenever your username, email, or password changes.</P>
         </Section>
       </div>
     </div>
@@ -84,7 +108,7 @@ function P({ children }) {
 function IconRow({ icon, label, text }) {
   return (
     <div style={styles.iconRow}>
-      <div style={styles.iconBadge}>{icon}</div>
+      {icon && <div style={styles.iconBadge}>{icon}</div>}
       <div>
         <span style={{ fontWeight: 700, color: "#F3F0FA" }}>{label}</span>
         <p style={{ ...styles.p, marginTop: 2 }}>{text}</p>

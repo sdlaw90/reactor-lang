@@ -85,9 +85,7 @@ export default function SettingsPage() {
           Sign out
         </button>
 
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <VersionFooter />
-        </div>
+        <VersionFooter />
       </div>
     </div>
   );
