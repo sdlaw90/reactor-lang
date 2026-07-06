@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Settings, BarChart2 } from "lucide-react";
+import { Settings, BarChart2, Languages } from "lucide-react";
 
 export default function HelpPage() {
   const router = useRouter();
@@ -17,19 +17,10 @@ export default function HelpPage() {
         </h1>
 
         <Section title="Home screen icons">
-          <IconRow label="Native language badge" text='A small pill (top-left of the icon row) showing your native country code and flag — e.g. "US 🇺🇸". Tap it to change your native language/country in Settings.' />
-          <IconRow label="What's New (!)" text="Shows the latest release's notes. A red dot appears whenever there's a version you haven't seen yet, and clears once you open it." />
+          <IconRow icon={<Languages size={16} />} label="Native language badge" text='A small pill (top-left of the icon row) showing your native country code and flag — e.g. "US 🇺🇸". Tap it to change your native language/country in Settings.' />
+          <IconRow icon={<span style={{ fontWeight: 900, fontSize: 15 }}>!</span>} label="What's New (!)" text="Shows the latest release's notes. A red dot appears whenever there's a version you haven't seen yet, and clears once you open it." />
           <IconRow icon={<BarChart2 size={16} />} label="Dashboard" text="Your total XP, streak, and rounds across every language, plus a breakdown per language." />
           <IconRow label="User Settings" text="Your profile picture opens Settings — username, email, password, native language/country, profile picture, and gameplay preferences." icon={<Settings size={16} />} />
-        </Section>
-
-        <Section title="Signing up & usernames">
-          <P>
-            Usernames are required — type one and tap <b>Verify</b>; if it's taken, you'll see a few genuinely-available
-            alternatives to pick from with one tap. If you ever end up signed in without a username (an older account,
-            for instance), you'll get a one-time popup requiring you to set one before continuing anywhere else.
-          </P>
-          <P>First time signing up? A short guided setup walks you through native language (required), native country, and profile picture (both optional, changeable later in Settings).</P>
         </Section>
 
         <Section title="Choosing what to learn">
@@ -84,10 +75,6 @@ export default function HelpPage() {
 
         <Section title="Gameplay settings">
           <P>In Settings → Gameplay: turn review mode on/off, adjust how many questions come from each category per round, how many phonetics pairs appear, and the per-question timer — either one shared time limit or separate limits for regular questions vs. phonetics.</P>
-        </Section>
-
-        <Section title="Settings, organized">
-          <P>Settings is grouped into <b>Profile</b> (picture, username), <b>Account</b> (email, password), <b>Language & Learning</b> (native language/country, gameplay preferences), and <b>Subscription</b> (reserved for later). Terms of Service and Privacy Policy links live in the Settings footer, just above the version tag, if you need to re-review either.</P>
         </Section>
 
         <Section title="Account & security">
