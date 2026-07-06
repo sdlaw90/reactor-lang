@@ -176,8 +176,10 @@ export default function HomePage() {
             const skillLabel = skillLevelInfo(p?.skill_level || "none").label;
             return (
               <button key={t.id} className="rj" style={styles.bubble} onClick={() => router.push(`/play/${t.id}`)}>
-                <TrackIcon trackId={t.id} size={26} />
-                <div style={{ textAlign: "left" }}>
+                <div style={styles.bubbleIconBg}>
+                  <TrackIcon trackId={t.id} size={64} />
+                </div>
+                <div style={styles.bubbleContent}>
                   <div style={{ fontSize: 14, fontWeight: 700 }}>{t.label}</div>
                   <div className="jm" style={{ fontSize: 10.5, color: "#B4ABC9", marginTop: 2 }}>
                     {p ? `${skillLabel} · ${xpInLevel}/100 XP` : "Not started"}
@@ -198,7 +200,7 @@ const styles = {
   welcomeText: {
     marginTop: 10,
     marginBottom: 0,
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 800,
     color: "#F3F0FA",
     textAlign: "center",
@@ -230,10 +232,11 @@ const styles = {
     color: "#F3F0FA",
     border: "none",
     borderRadius: "50%",
-    padding: "8px 10px",
+    padding: "8px",
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
   },
   notifDot: {
     position: "absolute",
@@ -245,20 +248,32 @@ const styles = {
     background: "#FF3D7F",
     border: "2px solid #171423",
   },
-  bubbleWrap: { display: "flex", flexWrap: "wrap", gap: 8 },
+  bubbleWrap: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 8 },
   bubble: {
+    position: "relative",
+    overflow: "hidden",
     display: "flex",
     alignItems: "center",
-    gap: 10,
     textAlign: "left",
     background: "rgba(34,30,51,0.9)",
     border: "1px solid #3A3452",
     borderRadius: 14,
-    padding: "9px 14px",
+    padding: "12px 14px",
+    height: 64,
     color: "#F3F0FA",
     cursor: "pointer",
-    flex: "1 1 auto",
-    minWidth: 150,
+  },
+  bubbleIconBg: {
+    position: "absolute",
+    top: "50%",
+    right: -6,
+    transform: "translateY(-50%)",
+    opacity: 0.22,
+    pointerEvents: "none",
+  },
+  bubbleContent: {
+    position: "relative",
+    zIndex: 1,
   },
   quickWinPrompt: {
     fontSize: 22,
