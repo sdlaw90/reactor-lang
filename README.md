@@ -227,6 +227,20 @@ from the country you pick. Flags render as real images (via a flag CDN), not emo
 Windows in particular doesn't ship flag emoji glyphs in its default font, so relying
 on emoji would've shown plain two-letter codes there instead of actual flags.
 
+## New language expansion (in progress)
+
+First of the new-language batch: **Italian** (`data/tracks/itForEn.js`), for
+English speakers. Follows the same shape as every other track — `nativeLang`,
+`targetLang`, CEFR-tagged bank items, a phonetics extraBank — so it needed zero
+changes to the game engine, just a new content file plus a registration line in
+`data/tracks/index.js`, a theme gradient (`italy-fresca` in `lib/theme.js`), and
+an icon (`lib/trackIcons.js`).
+
+Next up: **French** (France and Canadian French as separate tracks, since
+they're genuinely different — different vocabulary, different phonetics) and
+**Portuguese** (Brazilian and European Portuguese, same reasoning) — see the
+to-do list.
+
 ## Gameplay customization & onboarding
 
 - **Category picker** — before starting a round, choose a single category to focus on
