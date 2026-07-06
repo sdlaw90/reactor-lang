@@ -3,6 +3,10 @@ import esSpainForEn from "./esSpainForEn";
 import enUsForEs from "./enUsForEs";
 import enGbForEs from "./enGbForEs";
 import itForEn from "./itForEn";
+import frForEn from "./frForEn";
+import frCaForEn from "./frCaForEn";
+import ptBrForEn from "./ptBrForEn";
+import ptPtForEn from "./ptPtForEn";
 
 export const TRACKS = {
   [esForEn.id]: esForEn,
@@ -10,6 +14,10 @@ export const TRACKS = {
   [enUsForEs.id]: enUsForEs,
   [enGbForEs.id]: enGbForEs,
   [itForEn.id]: itForEn,
+  [frForEn.id]: frForEn,
+  [frCaForEn.id]: frCaForEn,
+  [ptBrForEn.id]: ptBrForEn,
+  [ptPtForEn.id]: ptPtForEn,
 };
 
 const NATIVE_LANG_LABELS = {
