@@ -40,10 +40,25 @@ npm run dev
 
 Open `http://localhost:3000` — sign up with an email/password, and you're playing.
 
-By default Supabase requires email confirmation for new sign-ups. For personal/friend use,
-you can turn this off: **Authentication → Providers → Email → "Confirm email" → off**.
-That way you and your friend can sign up and start playing immediately without a
-confirmation email step.
+**Important — turn off email confirmation** (this is the fix for both "new users can't
+sign up" and "email rate limit exceeded" errors): by default, Supabase's built-in email
+service only delivers to email addresses on your own Supabase account team, and is
+capped at ~2 emails/hour regardless. That means anyone who isn't you literally cannot
+receive a confirmation email — signups for anyone else will fail or hang.
+
+Turn it off: **Authentication → Sign In / Providers → Email → "Confirm email" → off**.
+With this off, `signUp()` logs someone in immediately — no email step at all, no rate
+limit involved for sign-up. The app already handles this automatically (see
+`app/auth/page.js`) — it checks whether a session came back from sign-up and skips
+straight into the app if so.
+
+**Note:** this only fixes sign-up. Password-reset emails still go through Supabase's
+built-in sender and are still capped at ~2/hour, since those emails have to prove
+account ownership and can't just be skipped. If you want those unrestricted too (and to
+support real password resets for more than a couple of people), configure **Custom
+SMTP** — reuse the Resend account you already set up for security notifications:
+**Authentication → Emails → SMTP Settings**, host `smtp.resend.com`, port `465`,
+username `resend`, password = your Resend API key.
 
 ## 3. Deploy it for real (so it works from any device)
 

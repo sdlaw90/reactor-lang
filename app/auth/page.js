@@ -76,6 +76,24 @@ export default function AuthPage() {
         return;
       }
 
+      // If email confirmation is turned OFF in Supabase, signUp() returns an
+      // active session immediately — no need to make them sign in separately.
+      if (data?.session) {
+        // First login right here at sign-up: claim a pending username the same
+        // way the sign-in flow does.
+        if (username.trim()) {
+          try {
+            const taken = await isUsernameTaken(username.trim());
+            if (!taken) await saveUsername(data.user.id, username.trim());
+            await supabase.auth.updateUser({ data: { pending_username: null } });
+          } catch (e) {
+            console.error("failed to claim username at sign-up", e);
+          }
+        }
+        router.push("/");
+        return;
+      }
+
       setInfo("Check your email to confirm your account, then sign in.");
       setMode("signin");
     } catch (err) {
