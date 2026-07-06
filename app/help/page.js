@@ -79,7 +79,7 @@ export default function HelpPage() {
             based on the real CEFR framework used by actual language certifications. Rounds are biased toward
             questions matching your level, without ever running short on content.
           </P>
-          <P>Answer consistently well at your current level and you'll be offered a chance to advance. Not sure where you stand? Take the short, untimed <b>placement quiz</b> from that language's start screen.</P>
+          <P>Answer consistently well at your current level and you'll be offered a chance to advance. Not sure where you stand? Take the short, untimed <b>placement quiz</b> from that language's start screen — it samples questions across all six CEFR tiers (A1 through C2) that the track has content for, so it can place true beginners and advanced learners accurately, not just people in the middle.</P>
         </Section>
 
         <Section title="Gameplay settings">

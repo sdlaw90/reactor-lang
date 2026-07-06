@@ -9,20 +9,23 @@ import { buildPlacementQuiz } from "../../../lib/gameEngine";
 import { loadProgress, saveProgress } from "../../../lib/db";
 import { SKILL_LEVELS } from "../../../lib/skillLevels";
 
-const TIER_ORDER = ["A2", "B1", "B2", "C1"];
+const TIER_ORDER = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
-// Highest tier passed (>=50% correct) determines the recommendation; if even
-// A2 isn't cleared, "beginner" is still the floor — everyone starts somewhere.
+// Highest tier passed (>=60% correct — comfortably 2/3 with the new 3-per-tier
+// sampling) determines the recommendation; if even A1 isn't cleared,
+// "beginner" is still the floor — everyone starts somewhere. Tiers with no
+// available questions (a track with no C1/C2 content yet, for instance) are
+// simply skipped rather than counted as failed.
 function recommendLevel(tierResults) {
   let highestPassed = null;
   TIER_ORDER.forEach((tier) => {
     const r = tierResults[tier];
-    if (r && r.total > 0 && r.correct / r.total >= 0.5) {
+    if (r && r.total > 0 && r.correct / r.total >= 0.6) {
       highestPassed = tier;
     }
   });
   if (!highestPassed) return "beginner";
-  if (highestPassed === "A2") return "beginner";
+  if (highestPassed === "A1" || highestPassed === "A2") return "beginner";
   if (highestPassed === "B1" || highestPassed === "B2") return "intermediate";
   return "expert";
 }
@@ -49,7 +52,7 @@ export default function PlacementQuizPage({ params }) {
       }
       setUserId(data.session.user.id);
       setViewerNativeLang(data.session.user.user_metadata?.native_lang || null);
-      setQuiz(buildPlacementQuiz(track, 2));
+      setQuiz(buildPlacementQuiz(track, 3));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
