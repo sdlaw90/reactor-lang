@@ -446,10 +446,11 @@ export default function PlayPage({ params }) {
 
             <div
               key={qIndex}
-              className="fadein"
+              className={`fadein${feedback === "correct" ? " pulse-correct" : feedback === "wrong" ? " pulse-wrong" : ""}`}
               style={{
                 ...styles.card,
-                borderColor: track.cats[q.cat].color,
+                borderColor: feedback === "correct" ? "#5EE0A0" : feedback === "wrong" ? "#FF7B8A" : track.cats[q.cat].color,
+                borderWidth: feedback ? 3 : 1,
                 boxShadow:
                   feedback === "correct" ? "0 0 0 3px #5EE0A0" : feedback === "wrong" ? "0 0 0 3px #FF7B8A" : `0 0 0 1px ${track.cats[q.cat].color}55`,
               }}
@@ -472,13 +473,19 @@ export default function PlayPage({ params }) {
                 {q.options.map((opt, i) => {
                   let bg = "#1D212B";
                   let border = "#3A3452";
+                  let borderWidth = 1;
+                  let textColor = "#F3F0FA";
                   if (feedback) {
                     if (i === q.correctIdx) {
-                      bg = "#1B3A2A";
+                      bg = "#1E4A32";
                       border = "#5EE0A0";
+                      borderWidth = 3;
+                      textColor = "#B9FFDA";
                     } else if (i === selected) {
-                      bg = "#3A1B1F";
+                      bg = "#4A1E24";
                       border = "#FF7B8A";
+                      borderWidth = 3;
+                      textColor = "#FFC7CD";
                     }
                   }
                   return (
@@ -487,11 +494,11 @@ export default function PlayPage({ params }) {
                       onClick={() => handleAnswer(i)}
                       disabled={!!feedback}
                       className="rj"
-                      style={{ ...styles.optionBtn, background: bg, borderColor: border }}
+                      style={{ ...styles.optionBtn, background: bg, borderColor: border, borderWidth, color: textColor }}
                     >
                       <span>{opt}</span>
-                      {feedback && i === q.correctIdx && <Check size={18} color="#5EE0A0" />}
-                      {feedback && i === selected && i !== q.correctIdx && <X size={18} color="#FF7B8A" />}
+                      {feedback && i === q.correctIdx && <Check size={22} color="#5EE0A0" strokeWidth={3} />}
+                      {feedback && i === selected && i !== q.correctIdx && <X size={22} color="#FF7B8A" strokeWidth={3} />}
                     </button>
                   );
                 })}

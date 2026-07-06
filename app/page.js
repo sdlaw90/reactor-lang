@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Settings, BarChart2 } from "lucide-react";
+import { Settings, BarChart2, HelpCircle } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import { tracksForNativeLang, listTracks } from "../data/tracks";
 import { HOME_GRADIENT, animatedBackgroundStyle } from "../lib/theme";
 import { flagImageUrl, regionalLanguageLabel } from "../lib/countries";
-import { loadProfile } from "../lib/db";
+import { loadProfile, loadAllProgress } from "../lib/db";
+import { skillLevelInfo } from "../lib/skillLevels";
 import Avatar from "../lib/Avatar";
 import VersionFooter from "../lib/VersionFooter";
 
@@ -15,6 +16,7 @@ export default function HomePage() {
   const router = useRouter();
   const [session, setSession] = useState(undefined); // undefined = loading, null = signed out
   const [profile, setProfile] = useState(null);
+  const [progressByTrack, setProgressByTrack] = useState({});
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
@@ -29,6 +31,13 @@ export default function HomePage() {
       loadProfile(session.user.id)
         .then(setProfile)
         .catch((e) => console.error("failed to load profile", e));
+      loadAllProgress(session.user.id)
+        .then((rows) => {
+          const map = {};
+          rows.forEach((r) => (map[r.track_id] = r));
+          setProgressByTrack(map);
+        })
+        .catch((e) => console.error("failed to load progress", e));
     }
   }, [session, router]);
 
@@ -56,6 +65,15 @@ export default function HomePage() {
             Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <button
+              className="rj"
+              style={styles.iconBtn}
+              title="Help"
+              aria-label="Help"
+              onClick={() => router.push("/help")}
+            >
+              <HelpCircle size={18} />
+            </button>
             <button
               className="rj"
               style={styles.iconBtn}
@@ -103,27 +121,36 @@ export default function HomePage() {
           What do you want to learn?
         </p>
         <div style={styles.bubbleWrap}>
-          {tracks.map((t) => (
-            <button key={t.id} className="rj" style={styles.bubble} onClick={() => router.push(`/play/${t.id}`)}>
-              <div style={{ fontSize: 17, fontWeight: 700 }}>{t.label}</div>
-              <div style={{ fontSize: 11, color: "#B4ABC9", marginTop: 3 }}>{t.sublabel}</div>
-            </button>
-          ))}
+          {tracks.map((t) => {
+            const p = progressByTrack[t.id];
+            const xpInLevel = p ? p.xp % 100 : 0;
+            const skillLabel = skillLevelInfo(p?.skill_level || "none").label;
+            return (
+              <button key={t.id} className="rj" style={styles.bubble} onClick={() => router.push(`/play/${t.id}`)}>
+                <div style={{ fontSize: 16, fontWeight: 700 }}>{t.label}</div>
+                <div className="jm" style={{ fontSize: 11, color: "#B4ABC9", marginTop: 3 }}>
+                  {p ? `${skillLabel} · ${xpInLevel}/100 XP` : "Not started"}
+                </div>
+              </button>
+            );
+          })}
         </div>
 
-        {regionLabel && (
-          <div style={styles.identityTag}>
-            {regionLabel}
-            {nativeCountry && (
-              <img
-                src={flagImageUrl(nativeCountry)}
-                alt={nativeCountry}
-                style={{ width: 18, height: 13, objectFit: "cover", borderRadius: 2, marginLeft: 6, verticalAlign: "middle" }}
-              />
-            )}
-          </div>
-        )}
-        <VersionFooter />
+        <div style={{ textAlign: "center" }}>
+          {regionLabel && (
+            <div style={styles.identityTag}>
+              {regionLabel}
+              {nativeCountry && (
+                <img
+                  src={flagImageUrl(nativeCountry)}
+                  alt={nativeCountry}
+                  style={{ width: 18, height: 13, objectFit: "cover", borderRadius: 2, marginLeft: 6, verticalAlign: "middle" }}
+                />
+              )}
+            </div>
+          )}
+          <VersionFooter />
+        </div>
       </div>
     </div>
   );
@@ -188,16 +215,13 @@ const styles = {
   },
   identityTag: {
     marginTop: 26,
-    textAlign: "center",
+    marginBottom: 6,
+    display: "inline-block",
     color: "#B4ABC9",
     fontSize: 12,
     background: "rgba(34,30,51,0.7)",
     border: "1px solid #3A3452",
     borderRadius: 999,
     padding: "6px 14px",
-    display: "inline-block",
-    position: "relative",
-    left: "50%",
-    transform: "translateX(-50%)",
   },
 };

@@ -8,6 +8,7 @@ import { loadProfile, isUsernameTaken, setUsername as saveUsername, saveAvatar }
 import { notifyAccountChange } from "../../lib/notify";
 import { verifyCurrentPassword } from "../../lib/reauth";
 import { COUNTRIES, flagImageUrl, countryName } from "../../lib/countries";
+import SearchableSelect from "../../lib/SearchableSelect";
 import { uploadAvatarPhoto, AVATAR_EMOJIS } from "../../lib/avatarUpload";
 import Avatar from "../../lib/Avatar";
 import PasswordInput from "../../lib/PasswordInput";
@@ -60,7 +61,9 @@ export default function SettingsPage() {
         <PasswordSection session={session} />
         <NativeLanguageSection session={session} setSession={setSession} />
         <NativeCountrySection session={session} setSession={setSession} />
-        <VersionFooter />
+        <div style={{ textAlign: "center" }}>
+          <VersionFooter />
+        </div>
       </div>
     </div>
   );
@@ -203,14 +206,18 @@ function ProfilePictureSection({ session, profile, setProfile }) {
 
           {mode === "flag" && (
             <div style={{ marginBottom: 12 }}>
-              <select className="jm" style={styles.input} value={flagChoice} onChange={(e) => setFlagChoice(e.target.value)}>
-                <option value="">Select a country…</option>
-                {COUNTRIES.map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
+              <SearchableSelect
+                options={COUNTRIES.map((c) => ({ value: c.code, label: c.name }))}
+                value={flagChoice}
+                onChange={setFlagChoice}
+                placeholder="Search countries…"
+                renderOption={(o) => (
+                  <>
+                    <img src={flagImageUrl(o.value)} alt={o.value} style={{ width: 20, height: 14, objectFit: "cover", borderRadius: 2, flexShrink: 0 }} />
+                    {o.label}
+                  </>
+                )}
+              />
               {flagChoice && (
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
                   <img src={flagImageUrl(flagChoice)} alt={flagChoice} style={{ width: 32, height: 22, objectFit: "cover", borderRadius: 3 }} />
@@ -602,14 +609,18 @@ function NativeCountrySection({ session, setSession }) {
         />
       ) : (
         <>
-          <select className="jm" style={styles.input} value={choice || ""} onChange={(e) => setChoice(e.target.value)}>
-            <option value="">Select a country…</option>
-            {COUNTRIES.map((c) => (
-              <option key={c.code} value={c.code}>
-                {c.name}
-              </option>
-            ))}
-          </select>
+          <SearchableSelect
+            options={COUNTRIES.map((c) => ({ value: c.code, label: c.name }))}
+            value={choice}
+            onChange={setChoice}
+            placeholder="Search countries…"
+            renderOption={(o) => (
+              <>
+                <img src={flagImageUrl(o.value)} alt={o.value} style={{ width: 20, height: 14, objectFit: "cover", borderRadius: 2, flexShrink: 0 }} />
+                {o.label}
+              </>
+            )}
+          />
           {choice && (
             <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "8px 0 12px" }}>
               <img src={flagImageUrl(choice)} alt={choice} style={{ width: 32, height: 22, objectFit: "cover", borderRadius: 3 }} />
