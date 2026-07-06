@@ -13,6 +13,7 @@ import { CURRENT_VERSION } from "../lib/version";
 import Avatar from "../lib/Avatar";
 import VersionFooter from "../lib/VersionFooter";
 import Logo from "../lib/Logo";
+import TrackIcon from "../lib/trackIcons";
 
 const GREETINGS = {
   es: "¡Bienvenido/a",
@@ -78,7 +79,7 @@ export default function HomePage() {
   const nativeLang = session.user.user_metadata?.native_lang ?? null;
   const nativeCountry = session.user.user_metadata?.native_country ?? null;
   // Until a native language is set, show every track so the app is still usable.
-  const tracks = nativeLang ? tracksForNativeLang(nativeLang) : listTracks();
+  const tracks = nativeLang ? tracksForNativeLang(nativeLang, nativeCountry) : listTracks();
   const displayName = profile?.username || session.user.email;
   const hasUnseenWhatsNew = (session.user.user_metadata?.last_seen_version ?? null) !== CURRENT_VERSION;
 
@@ -175,9 +176,12 @@ export default function HomePage() {
             const skillLabel = skillLevelInfo(p?.skill_level || "none").label;
             return (
               <button key={t.id} className="rj" style={styles.bubble} onClick={() => router.push(`/play/${t.id}`)}>
-                <div style={{ fontSize: 16, fontWeight: 700 }}>{t.label}</div>
-                <div className="jm" style={{ fontSize: 11, color: "#B4ABC9", marginTop: 3 }}>
-                  {p ? `${skillLabel} · ${xpInLevel}/100 XP` : "Not started"}
+                <TrackIcon trackId={t.id} size={26} />
+                <div style={{ textAlign: "left" }}>
+                  <div style={{ fontSize: 14, fontWeight: 700 }}>{t.label}</div>
+                  <div className="jm" style={{ fontSize: 10.5, color: "#B4ABC9", marginTop: 2 }}>
+                    {p ? `${skillLabel} · ${xpInLevel}/100 XP` : "Not started"}
+                  </div>
                 </div>
               </button>
             );
@@ -241,17 +245,20 @@ const styles = {
     background: "#FF3D7F",
     border: "2px solid #171423",
   },
-  bubbleWrap: { display: "flex", flexWrap: "wrap", gap: 10 },
+  bubbleWrap: { display: "flex", flexWrap: "wrap", gap: 8 },
   bubble: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
     textAlign: "left",
     background: "rgba(34,30,51,0.9)",
     border: "1px solid #3A3452",
-    borderRadius: 999,
-    padding: "14px 22px",
+    borderRadius: 14,
+    padding: "9px 14px",
     color: "#F3F0FA",
     cursor: "pointer",
     flex: "1 1 auto",
-    minWidth: 160,
+    minWidth: 150,
   },
   quickWinPrompt: {
     fontSize: 22,

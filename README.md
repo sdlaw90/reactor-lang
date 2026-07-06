@@ -257,6 +257,45 @@ Everywhere a username gets entered (sign-up, Settings, the forced popup) uses th
 you'll see a few genuinely-available alternatives to pick from with one tap, rather
 than guessing and resubmitting.
 
+## Terms of Service & Privacy Policy
+
+`app/terms/page.js` and `app/privacy/page.js` are standard boilerplate — genuinely
+useful as a starting point, but not a substitute for legal review, especially once
+there's a real user base. Bracketed placeholders (`[YOUR NAME/COMPANY]`, `[DATE]`,
+etc.) need filling in before relying on these for real.
+
+Acceptance works the same way as required usernames: a checkbox at sign-up
+(`agreed_to_terms` gate in the sign-up form), tracked per-account via
+`legal_accepted_version` in `lib/legalVersions.js`. Bump `LEGAL_VERSION` whenever the
+documents change enough to require re-acceptance — existing accounts get a mandatory
+(but not app-breaking) popup the next time they use the app, mirroring
+`RequireUsernameGate.js`.
+
+## Compact bubbles & track icons
+
+Language bubbles are smaller and denser now, each with a small illustrated icon
+(`lib/trackIcons.js`) representing its country/region — hand-drawn flat SVG icons
+rather than real photos, to avoid licensing questions entirely.
+
+## English (US) ↔ English (UK) cross-learning
+
+Native English speakers who aren't UK-based can also learn English (UK) — it shows up
+as a bonus bubble automatically. This only goes one direction on purpose: the English
+(UK) track's content (tag questions, "have got" vs. "do you have", non-rhotic
+pronunciation, British slang) is genuinely comparative between the two dialects, so it
+works well for a US-native learner. The English (US) track's content, by contrast, is
+Spanish-learner-specific (false friends, generic prepositions) and doesn't actually
+teach anything US-specific — enabling the reverse direction with that content as-is
+would just be confusing, not useful. A proper reverse direction would need dedicated
+Americanism-specific content, which is a real content-authoring task, not a quick fix.
+
+Where prompts, category labels, and the track sublabel needed to differ for an
+English-native audience vs. the track's original Spanish-learner audience, each
+question in `data/tracks/enGbForEs.js` carries an optional English-native variant
+(6th tuple element for bank questions, `identifyPromptEn`/`respondPromptEn` for
+phonetics, `labelEn` per category, `sublabelEn` on the track) that the play and
+placement pages pick automatically based on the viewer's native language.
+
 ## Account features
 
 - **Sign in with email or username** — username is optional at sign-up; leave it

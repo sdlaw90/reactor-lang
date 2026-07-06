@@ -38,6 +38,7 @@ export default function PlacementQuizPage({ params }) {
   const [tierResults, setTierResults] = useState({});
   const [done, setDone] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [viewerNativeLang, setViewerNativeLang] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -47,6 +48,7 @@ export default function PlacementQuizPage({ params }) {
         return;
       }
       setUserId(data.session.user.id);
+      setViewerNativeLang(data.session.user.user_metadata?.native_lang || null);
       setQuiz(buildPlacementQuiz(track, 2));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,6 +86,8 @@ export default function PlacementQuizPage({ params }) {
   }
 
   const q = quiz[qIndex];
+  const useAltPrompt = viewerNativeLang === "en" && track.nativeLang !== "en";
+  const displayPrompt = q && useAltPrompt && q.promptEn ? q.promptEn : q?.prompt;
 
   const answer = (optIdx) => {
     if (feedback) return;
@@ -134,7 +138,7 @@ export default function PlacementQuizPage({ params }) {
               {qIndex + 1} / {quiz.length} · sin cronómetro
             </p>
             <div style={{ ...styles.card, borderColor: feedback === "correct" ? "#5EE0A0" : feedback === "wrong" ? "#FF7B8A" : "#3A3452" }}>
-              <p style={styles.prompt}>{q.prompt}</p>
+              <p style={styles.prompt}>{displayPrompt}</p>
               {q.sound && (
                 <div style={styles.soundBox}>
                   <p className="rj" style={styles.soundText}>

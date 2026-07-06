@@ -8,6 +8,7 @@ import UsernameAvailabilityField from "../../lib/UsernameAvailabilityField";
 import PasswordInput from "../../lib/PasswordInput";
 import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
 import Logo from "../../lib/Logo";
+import { LEGAL_VERSION } from "../../lib/legalVersions";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function AuthPage() {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
@@ -57,6 +59,10 @@ export default function AuthPage() {
       setError("Username must be at least 3 characters.");
       return;
     }
+    if (!agreedToTerms) {
+      setError("You need to agree to the Terms of Service and Privacy Policy to continue.");
+      return;
+    }
 
     setBusy(true);
     try {
@@ -70,7 +76,7 @@ export default function AuthPage() {
       const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { pending_username: username.trim() } },
+        options: { data: { pending_username: username.trim(), legal_accepted_version: LEGAL_VERSION } },
       });
       if (signUpError) throw signUpError;
 
@@ -235,6 +241,19 @@ export default function AuthPage() {
               style={styles.input}
             />
             <p style={styles.hint}>You can sign in with either your username or your email — either works.</p>
+            <label style={styles.agreeRow}>
+              <input type="checkbox" checked={agreedToTerms} onChange={(e) => setAgreedToTerms(e.target.checked)} />
+              <span>
+                I agree to the{" "}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" style={styles.legalLink}>
+                  Terms of Service
+                </a>{" "}
+                and{" "}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" style={styles.legalLink}>
+                  Privacy Policy
+                </a>
+              </span>
+            </label>
             {error && <p style={styles.error}>{error}</p>}
             {info && <p style={styles.info}>{info}</p>}
             <button type="submit" disabled={busy} className="rj" style={styles.primaryBtn}>
@@ -259,6 +278,17 @@ export default function AuthPage() {
 }
 
 const styles = {
+  agreeRow: {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: 8,
+    color: "#B4ABC9",
+    fontSize: 12.5,
+    lineHeight: 1.4,
+    margin: "10px 0",
+    cursor: "pointer",
+  },
+  legalLink: { color: "#3DDBFF", textDecoration: "underline" },
   wrap: { minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 20, background: "#171423" },
   card: {
     width: "100%",

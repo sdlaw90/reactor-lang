@@ -112,6 +112,15 @@ export default function PlayPage({ params }) {
   const roundSettings = session?.user?.user_metadata?.round_settings || {};
   const buildOptions = { perCat: roundSettings.perCat, extraPairs: roundSettings.extraPairs, categoryFilter };
   const timerOverrides = { questionTime: roundSettings.questionTime, extraQuestionTime: roundSettings.extraQuestionTime };
+  // If the viewer's native language differs from what this track was
+  // originally designed for (e.g. a native English speaker cross-learning
+  // English UK content normally written for Spanish speakers), prefer the
+  // English-native prompt/label variant where one exists, falling back to
+  // the original otherwise.
+  const viewerNativeLang = session?.user?.user_metadata?.native_lang;
+  const useAltPrompt = viewerNativeLang === "en" && track.nativeLang !== "en";
+  const displayPrompt = (q) => (useAltPrompt && q.promptEn ? q.promptEn : q.prompt);
+  const displayCatLabel = (catId) => (useAltPrompt && track.cats[catId].labelEn ? track.cats[catId].labelEn : track.cats[catId].label);
 
   const startRound = (mode = "daily") => {
     newlyMissed.current = new Set();
@@ -382,7 +391,7 @@ export default function PlayPage({ params }) {
             <h1 className="rj" style={styles.title}>
               {track.label}
             </h1>
-            <p style={styles.subtitle}>{track.sublabel}</p>
+            <p style={styles.subtitle}>{useAltPrompt && track.sublabelEn ? track.sublabelEn : track.sublabel}</p>
 
             <div style={styles.statRow} className="jm">
               <StatChip label="XP total" value={progress.xp} color="#3DDBFF" />
@@ -454,7 +463,7 @@ export default function PlayPage({ params }) {
                     }}
                     onClick={() => setCategoryFilter(catId)}
                   >
-                    {track.cats[catId].label}
+                    {displayCatLabel(catId)}
                   </button>
                 ))}
               </div>
@@ -513,9 +522,9 @@ export default function PlayPage({ params }) {
               }}
             >
               <div className="rj" style={{ ...styles.catTag, color: track.cats[q.cat].color, borderColor: track.cats[q.cat].color }}>
-                {track.cats[q.cat].label}
+                {displayCatLabel(q.cat)}
               </div>
-              <p style={styles.prompt}>{q.prompt}</p>
+              <p style={styles.prompt}>{displayPrompt(q)}</p>
 
               {q.cat === track.extraCatId && q.sound && (
                 <div style={styles.soundBox}>
