@@ -237,6 +237,20 @@ on emoji would've shown plain two-letter codes there instead of actual flags.
 
 Sign out lives at the bottom of Settings now, not on the home screen.
 
+## Required usernames
+
+Usernames are required at sign-up, and any pre-existing account without one gets a
+mandatory, non-dismissible popup (`lib/RequireUsernameGate.js`, mounted globally in
+the root layout) prompting them to pick one before continuing anywhere in the app —
+so this is covered both going forward and retroactively, no separate migration script
+needed. Excluded from the gate: `/auth`, `/forgot-password`, `/reset-password`,
+`/onboarding` (no session yet, or already mid-flow).
+
+Everywhere a username gets entered (sign-up, Settings, the forced popup) uses the same
+`lib/UsernameAvailabilityField.js` — type a name, tap **Verify**, and if it's taken
+you'll see a few genuinely-available alternatives to pick from with one tap, rather
+than guessing and resubmitting.
+
 ## Account features
 
 - **Sign in with email or username** — username is optional at sign-up; leave it

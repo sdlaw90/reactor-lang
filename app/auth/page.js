@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabaseClient";
 import { isUsernameTaken, emailForUsername, setUsername as saveUsername } from "../../lib/db";
+import UsernameAvailabilityField from "../../lib/UsernameAvailabilityField";
 import PasswordInput from "../../lib/PasswordInput";
 import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
 
@@ -47,22 +48,28 @@ export default function AuthPage() {
       setError("Password must be at least 6 characters.");
       return;
     }
+    if (!username.trim()) {
+      setError("Username is required.");
+      return;
+    }
+    if (username.trim().length < 3) {
+      setError("Username must be at least 3 characters.");
+      return;
+    }
 
     setBusy(true);
     try {
-      if (username.trim()) {
-        const taken = await isUsernameTaken(username.trim());
-        if (taken) {
-          setError("That username is already taken.");
-          setBusy(false);
-          return;
-        }
+      const taken = await isUsernameTaken(username.trim());
+      if (taken) {
+        setError("That username is already taken — try Verify above for some available alternatives.");
+        setBusy(false);
+        return;
       }
 
       const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
-        options: username.trim() ? { data: { pending_username: username.trim() } } : undefined,
+        options: { data: { pending_username: username.trim() } },
       });
       if (signUpError) throw signUpError;
 
@@ -189,13 +196,7 @@ export default function AuthPage() {
           </form>
         ) : (
           <form onSubmit={submitSignUp} style={{ width: "100%" }}>
-            <input
-              type="text"
-              placeholder="Username (optional)"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              style={styles.input}
-            />
+            <UsernameAvailabilityField value={username} onChange={setUsername} placeholder="Username" />
             <input
               type="email"
               placeholder="Email"
@@ -229,7 +230,7 @@ export default function AuthPage() {
               minLength={6}
               style={styles.input}
             />
-            <p style={styles.hint}>Leave username blank to sign in with your email instead — you can add one later in Settings.</p>
+            <p style={styles.hint}>You can sign in with either your username or your email — either works.</p>
             {error && <p style={styles.error}>{error}</p>}
             {info && <p style={styles.info}>{info}</p>}
             <button type="submit" disabled={busy} className="rj" style={styles.primaryBtn}>

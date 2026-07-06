@@ -791,7 +791,7 @@ const styles = {
   bg: { position: "relative", minHeight: "100vh", width: "100%", background: "#171423", display: "flex", justifyContent: "center", padding: "20px 14px", overflow: "hidden" },
   wrap: { position: "relative", zIndex: 1, width: "100%", maxWidth: 460 },
   hud: { display: "flex", alignItems: "center", gap: 10, marginBottom: 22, fontSize: 12 },
-  backBtn: { background: "transparent", color: "#7C7395", border: "1px solid #3A3452", borderRadius: 8, padding: "4px 10px", cursor: "pointer" },
+  backBtn: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "6px 14px", fontSize: 15, fontWeight: 700, cursor: "pointer" },
   hudItem: { display: "flex", alignItems: "center", whiteSpace: "nowrap" },
   xpBarOuter: { flex: 1, height: 6, background: "#1D212B", borderRadius: 3, overflow: "hidden" },
   xpBarInner: { height: "100%", background: "linear-gradient(90deg,#3DDBFF,#FFB84D)", borderRadius: 3, transition: "width 0.4s ease" },

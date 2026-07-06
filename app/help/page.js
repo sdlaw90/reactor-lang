@@ -18,7 +18,7 @@ export default function HelpPage() {
 
         <Section title="Home screen icons">
           <IconRow icon={<BarChart2 size={16} />} label="Dashboard" text="Your total XP, streak, and rounds across every language, plus a breakdown per language." />
-          <IconRow icon={<Settings size={16} />} label="Settings" text="Change your username, email, password, native language, native country, and profile picture." />
+          <IconRow label="User Settings" text="Your profile picture (top-right) opens Settings — change your username, email, password, native language, native country, and profile picture." icon={<Settings size={16} />} />
         </Section>
 
         <Section title="Choosing what to learn">
@@ -96,12 +96,13 @@ function IconRow({ icon, label, text }) {
 const styles = {
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
   backBtn: {
-    background: "transparent",
-    color: "#B4ABC9",
-    border: "1px solid #3A3452",
+    background: "rgba(255,143,177,0.12)",
+    color: "#FF8FB1",
+    border: "1px solid #FF8FB1",
     borderRadius: 8,
-    padding: "6px 12px",
-    fontSize: 13,
+    padding: "7px 14px",
+    fontSize: 14,
+    fontWeight: 700,
     cursor: "pointer",
     marginBottom: 16,
   },

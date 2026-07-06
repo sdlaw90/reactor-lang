@@ -9,6 +9,7 @@ import { notifyAccountChange } from "../../lib/notify";
 import { verifyCurrentPassword } from "../../lib/reauth";
 import { COUNTRIES, flagImageUrl, countryName } from "../../lib/countries";
 import SearchableSelect from "../../lib/SearchableSelect";
+import UsernameAvailabilityField from "../../lib/UsernameAvailabilityField";
 import { uploadAvatarPhoto, AVATAR_EMOJIS } from "../../lib/avatarUpload";
 import Avatar from "../../lib/Avatar";
 import PasswordInput from "../../lib/PasswordInput";
@@ -55,13 +56,23 @@ export default function SettingsPage() {
           Settings
         </h1>
 
+        <GroupHeader label="Profile" />
         <ProfilePictureSection session={session} profile={profile} setProfile={setProfile} />
         <UsernameSection session={session} profile={profile} setProfile={setProfile} />
+
+        <GroupHeader label="Account" />
         <EmailSection session={session} setSession={setSession} />
         <PasswordSection session={session} />
+
+        <GroupHeader label="Language & Learning" />
         <NativeLanguageSection session={session} setSession={setSession} />
         <NativeCountrySection session={session} setSession={setSession} />
         <GameplaySettingsSection session={session} setSession={setSession} />
+
+        <GroupHeader label="Subscription" />
+        <div style={styles.comingSoonCard}>
+          <p style={{ color: "#7C7395", fontSize: 13, margin: 0 }}>Coming soon.</p>
+        </div>
 
         <button
           className="rj"
@@ -301,7 +312,7 @@ function UsernameSection({ session, profile, setProfile }) {
         <Row value={profile?.username || "(not set)"} onEdit={startEdit} />
       ) : (
         <>
-          <input className="jm" style={styles.input} value={value} onChange={(e) => setValue(e.target.value)} placeholder="Username" />
+          <UsernameAvailabilityField value={value} onChange={setValue} placeholder="Username" />
           {error && <p style={styles.error}>{error}</p>}
           <EditActions busy={busy} onSave={save} onCancel={() => setEditing(false)} />
         </>
@@ -797,6 +808,17 @@ function GameplaySettingsSection({ session, setSession }) {
 
 // ---------------- shared bits ----------------
 
+function GroupHeader({ label }) {
+  return (
+    <div style={styles.groupHeader}>
+      <span className="rj" style={styles.groupHeaderText}>
+        {label}
+      </span>
+      <div style={styles.groupHeaderLine} />
+    </div>
+  );
+}
+
 function Section({ title, children, saved, savedNote }) {
   return (
     <div style={styles.section}>
@@ -834,6 +856,16 @@ function EditActions({ busy, onSave, onCancel }) {
 }
 
 const styles = {
+  groupHeader: { display: "flex", alignItems: "center", gap: 10, margin: "22px 0 10px" },
+  groupHeaderText: { color: "#FF8FB1", fontSize: 12, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", whiteSpace: "nowrap" },
+  groupHeaderLine: { flex: 1, height: 1, background: "#3A3452" },
+  comingSoonCard: {
+    background: "#221E33",
+    border: "1px dashed #3A3452",
+    borderRadius: 12,
+    padding: "16px 18px",
+    marginBottom: 14,
+  },
   toggleRow: { display: "flex", alignItems: "flex-start", gap: 10, color: "#F3F0FA", fontSize: 13.5, lineHeight: 1.4, cursor: "pointer" },
   numberLabel: { display: "block", color: "#7C7395", fontSize: 12, marginBottom: 4 },
   signOutBtn: {
@@ -850,12 +882,13 @@ const styles = {
   },
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
   backBtn: {
-    background: "transparent",
-    color: "#B4ABC9",
-    border: "1px solid #3A3452",
+    background: "rgba(255,143,177,0.12)",
+    color: "#FF8FB1",
+    border: "1px solid #FF8FB1",
     borderRadius: 8,
-    padding: "6px 12px",
-    fontSize: 13,
+    padding: "7px 14px",
+    fontSize: 14,
+    fontWeight: 700,
     cursor: "pointer",
     marginBottom: 16,
   },

@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import VersionWatcher from "../lib/VersionWatcher";
+import RequireUsernameGate from "../lib/RequireUsernameGate";
 
 export const metadata = {
   title: "SquirreLingo",
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         {children}
         <VersionWatcher />
+        <RequireUsernameGate />
       </body>
     </html>
   );

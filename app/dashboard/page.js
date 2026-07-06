@@ -125,7 +125,7 @@ export default function DashboardPage() {
 
 const styles = {
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
-  backBtn: { background: "transparent", color: "#B4ABC9", border: "1px solid #3A3452", borderRadius: 8, padding: "6px 12px", fontSize: 13, cursor: "pointer", marginBottom: 16 },
+  backBtn: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "7px 14px", fontSize: 14, fontWeight: 700, cursor: "pointer", marginBottom: 16 },
   title: { fontSize: 24, fontWeight: 700, color: "#F3F0FA", margin: "0 0 16px" },
   overallCard: { background: "#221E33", border: "1px solid #3A3452", borderRadius: 14, padding: "18px 16px", marginBottom: 24 },
   overallRow: { display: "flex", justifyContent: "space-around" },

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Settings, BarChart2, HelpCircle } from "lucide-react";
+import { BarChart2, HelpCircle } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import { tracksForNativeLang, listTracks } from "../data/tracks";
 import { HOME_GRADIENT, animatedBackgroundStyle } from "../lib/theme";
@@ -12,6 +12,15 @@ import { skillLevelInfo } from "../lib/skillLevels";
 import { CURRENT_VERSION } from "../lib/version";
 import Avatar from "../lib/Avatar";
 import VersionFooter from "../lib/VersionFooter";
+
+const GREETINGS = {
+  es: "¡Bienvenido/a",
+  en: "Welcome",
+};
+
+function welcomeGreeting(nativeLang) {
+  return GREETINGS[nativeLang] || "Welcome";
+}
 
 export default function HomePage() {
   const router = useRouter();
@@ -102,19 +111,20 @@ export default function HomePage() {
             <button
               className="rj"
               style={styles.iconBtn}
-              title="Settings"
-              aria-label="Settings"
+              title="User Settings"
+              aria-label="User Settings"
               onClick={() => router.push("/settings")}
             >
-              <Settings size={18} />
+              <Avatar type={profile?.avatar_type} value={profile?.avatar_value} fallbackText={displayName} size={22} />
             </button>
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 6 }}>
-          <Avatar type={profile?.avatar_type} value={profile?.avatar_value} fallbackText={displayName} size={36} />
-          <p className="rj" style={styles.usernameDisplay}>
-            {displayName}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 10 }}>
+          <Avatar type={profile?.avatar_type} value={profile?.avatar_value} fallbackText={displayName} size={64} />
+          <p className="rj greeting-flair" style={styles.welcomeText}>
+            {welcomeGreeting(nativeLang)}, <span style={styles.usernameDisplay}>{displayName}</span>!
+            <span style={{ marginLeft: 6 }}>👋</span>
           </p>
         </div>
 
@@ -125,7 +135,7 @@ export default function HomePage() {
         )}
 
         <p className="rj" style={{ ...styles.subtitle, marginTop: 22, marginBottom: 10, color: "#F3F0FA", fontWeight: 700 }}>
-          What do you want to learn?
+          Pick your next quick win ⚡
         </p>
         <div style={styles.bubbleWrap}>
           {tracks.map((t) => {
@@ -164,11 +174,16 @@ export default function HomePage() {
 }
 
 const styles = {
-  usernameDisplay: {
-    margin: 0,
-    fontSize: 17,
+  welcomeText: {
+    marginTop: 10,
+    marginBottom: 0,
+    fontSize: 19,
     fontWeight: 700,
     color: "#F3F0FA",
+    textAlign: "center",
+  },
+  usernameDisplay: {
+    fontWeight: 800,
     letterSpacing: 0.3,
     background: "linear-gradient(90deg, #FF8FB1, #B98EFF)",
     WebkitBackgroundClip: "text",
