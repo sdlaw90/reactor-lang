@@ -257,6 +257,23 @@ Everywhere a username gets entered (sign-up, Settings, the forced popup) uses th
 you'll see a few genuinely-available alternatives to pick from with one tap, rather
 than guessing and resubmitting.
 
+## Play-page language switches with skill level
+
+The play page's UI chrome (buttons, labels, stats — not the actual question
+content) is bilingual and picks automatically via `lib/playStrings.js`:
+**No experience/Beginner/Intermediate** shows everything in the person's native
+language; **Advanced/Native** shows it in the language they're learning instead.
+Each track declares an explicit `targetLang` field (rather than inferring it from
+`nativeLang`) specifically so this stays correct even in edge cases like the
+English (US)/(UK) cross-dialect track, where "native" and "target" can end up
+being the same language.
+
+## Mix-and-match category picker
+
+The category picker (play page start screen) now supports selecting any
+combination of categories, not just one at a time. Picking "Mixto" clears
+whatever specific categories were selected, back to the full default blend.
+
 ## Terms of Service & Privacy Policy
 
 `app/terms/page.js` and `app/privacy/page.js` are standard boilerplate — genuinely

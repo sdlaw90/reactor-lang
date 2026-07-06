@@ -43,7 +43,11 @@ export default function HelpPage() {
         </Section>
 
         <Section title="Category picker">
-          <P>Before starting a round, choose a single category to focus on (vocabulary-only, grammar-only, translation-only, phonetics-only) or leave it on "Mixto" for the default blend of everything.</P>
+          <P>Before starting a round, mix and match any combination of categories to focus on (vocabulary, grammar, translation, phonetics — any subset), or leave it on "Mixto" for the default blend of everything. Picking "Mixto" clears any specific selections back to the full mix.</P>
+        </Section>
+
+        <Section title="Language switches with your skill level">
+          <P>On each language's play page, the on-screen buttons/labels/stats show in your <b>native language</b> while you're at No experience, Beginner, or Intermediate — no need to read instructions in a language you don't know yet. Once you reach Advanced or Native, that same chrome switches to the <b>language you're learning</b>, since by then reading it is good practice.</P>
         </Section>
 
         <Section title="Playing a round">
@@ -79,7 +83,7 @@ export default function HelpPage() {
         </Section>
 
         <Section title="Settings, organized">
-          <P>Settings is grouped into <b>Profile</b> (picture, username), <b>Account</b> (email, password), <b>Language & Learning</b> (native language/country, gameplay preferences), and <b>Subscription</b> (reserved for later).</P>
+          <P>Settings is grouped into <b>Profile</b> (picture, username), <b>Account</b> (email, password), <b>Language & Learning</b> (native language/country, gameplay preferences), and <b>Subscription</b> (reserved for later). Terms of Service and Privacy Policy links live in the Settings footer, just above the version tag, if you need to re-review either.</P>
         </Section>
 
         <Section title="Account & security">

@@ -68,6 +68,7 @@ const enGbForEs = {
   sublabel: "Para hispanohablantes · British English · starter content",
   sublabelEn: "For American English speakers · British English · starter content",
   nativeLang: "es",
+  targetLang: "en",
   theme: "english-uk",
   cats: CATS,
   bank: BANK,

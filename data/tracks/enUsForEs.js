@@ -58,6 +58,7 @@ const enForEs = {
   label: "English (US)",
   sublabel: "Para hispanohablantes · American English · starter content",
   nativeLang: "es",
+  targetLang: "en",
   theme: "english-us",
   cats: CATS,
   bank: BANK,

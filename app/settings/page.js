@@ -86,6 +86,15 @@ export default function SettingsPage() {
         </button>
 
         <VersionFooter />
+        <div style={styles.legalFooter}>
+          <a href="/terms" style={styles.legalFooterLink}>
+            Terms of Service
+          </a>
+          <span style={{ color: "#3A3452" }}>·</span>
+          <a href="/privacy" style={styles.legalFooterLink}>
+            Privacy Policy
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -854,6 +863,18 @@ function EditActions({ busy, onSave, onCancel }) {
 }
 
 const styles = {
+  legalFooter: {
+    position: "fixed",
+    bottom: 44,
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: 500,
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    fontSize: 11,
+  },
+  legalFooterLink: { color: "#7C7395", textDecoration: "underline" },
   groupHeader: { display: "flex", alignItems: "center", gap: 10, margin: "22px 0 10px" },
   groupHeaderText: { color: "#FF8FB1", fontSize: 12, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", whiteSpace: "nowrap" },
   groupHeaderLine: { flex: 1, height: 1, background: "#3A3452" },

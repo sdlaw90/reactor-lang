@@ -13,6 +13,7 @@ import {
   todayStr,
 } from "../../../lib/gameEngine";
 import { cefrSetForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
+import { uiLangForSkill, t } from "../../../lib/playStrings";
 import {
   loadProgress,
   saveProgress,
@@ -55,7 +56,7 @@ export default function PlayPage({ params }) {
   const [archiveLoading, setArchiveLoading] = useState(false);
   const [showLevelPicker, setShowLevelPicker] = useState(false);
   const [advanceDismissed, setAdvanceDismissed] = useState(false);
-  const [categoryFilter, setCategoryFilter] = useState(null); // null = mixed
+  const [categoryFilter, setCategoryFilter] = useState([]); // empty = Mixto (all categories)
   const [awaitingNext, setAwaitingNext] = useState(false); // review-mode: paused after answer, waiting for "Next"
 
   const [round, setRound] = useState([]);
@@ -121,6 +122,8 @@ export default function PlayPage({ params }) {
   const useAltPrompt = viewerNativeLang === "en" && track.nativeLang !== "en";
   const displayPrompt = (q) => (useAltPrompt && q.promptEn ? q.promptEn : q.prompt);
   const displayCatLabel = (catId) => (useAltPrompt && track.cats[catId].labelEn ? track.cats[catId].labelEn : track.cats[catId].label);
+  const uiLang = uiLangForSkill(progress.skill_level, viewerNativeLang, track);
+  const T = (key, vars) => t(uiLang, key, vars);
 
   const startRound = (mode = "daily") => {
     newlyMissed.current = new Set();
@@ -355,7 +358,7 @@ export default function PlayPage({ params }) {
     return (
       <div style={styles.bg}>
         <p style={{ color: "#7C7395" }} className="jm">
-          Cargando…
+          {t(viewerNativeLang || "en", "loading")}
         </p>
       </div>
     );
@@ -375,7 +378,7 @@ export default function PlayPage({ params }) {
           </button>
           <div style={styles.hudItem}>
             <Trophy size={14} color="#FFB84D" />
-            <span style={{ marginLeft: 6 }}>Nv.{progress.level}</span>
+            <span style={{ marginLeft: 6 }}>{T("levelAbbrev")}{progress.level}</span>
           </div>
           <div style={styles.xpBarOuter}>
             <div style={{ ...styles.xpBarInner, width: `${xpIntoLevel}%` }} />
@@ -394,18 +397,18 @@ export default function PlayPage({ params }) {
             <p style={styles.subtitle}>{useAltPrompt && track.sublabelEn ? track.sublabelEn : track.sublabel}</p>
 
             <div style={styles.statRow} className="jm">
-              <StatChip label="XP total" value={progress.xp} color="#3DDBFF" />
-              <StatChip label="Mejor combo" value={progress.best_combo} color="#FF8FB1" />
-              <StatChip label="Rondas" value={progress.rounds_completed} color="#FFB84D" />
+              <StatChip label={T("statXpTotal")} value={progress.xp} color="#3DDBFF" />
+              <StatChip label={T("statBestCombo")} value={progress.best_combo} color="#FF8FB1" />
+              <StatChip label={T("statRounds")} value={progress.rounds_completed} color="#FFB84D" />
             </div>
 
             <div style={styles.skillCard}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ color: "#B4ABC9", fontSize: 12 }}>
-                  Nivel: <strong style={{ color: "#F3F0FA" }}>{skillLevelInfo(progress.skill_level).label}</strong>
+                  {T("levelLabel")} <strong style={{ color: "#F3F0FA" }}>{skillLevelInfo(progress.skill_level).label}</strong>
                 </span>
                 <button className="rj" style={styles.skillEditBtn} onClick={() => setShowLevelPicker((v) => !v)}>
-                  {showLevelPicker ? "Cerrar" : "Cambiar"}
+                  {showLevelPicker ? T("close") : T("change")}
                 </button>
               </div>
 
@@ -422,20 +425,20 @@ export default function PlayPage({ params }) {
                     </button>
                   ))}
                   <button className="rj" style={styles.placementLinkBtn} onClick={() => router.push(`/placement/${track.id}`)}>
-                    ¿No estás seguro? Hacer prueba de nivel
+                    {T("notSureTakeQuiz")}
                   </button>
                 </div>
               )}
 
               {!showLevelPicker && !advanceDismissed && readyToAdvance(progress.level_correct_count, progress.level_total_count) && nextSkillLevel(progress.skill_level) && (
                 <div style={styles.advanceBanner}>
-                  <span>¿Listo para subir a {skillLevelInfo(nextSkillLevel(progress.skill_level)).label}?</span>
+                  <span>{T("readyToAdvance", { level: skillLevelInfo(nextSkillLevel(progress.skill_level)).label })}</span>
                   <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
                     <button className="rj" style={styles.advanceYesBtn} onClick={() => changeSkillLevel(nextSkillLevel(progress.skill_level))}>
-                      Sí, avanzar
+                      {T("yesAdvance")}
                     </button>
                     <button className="rj" style={styles.advanceNoBtn} onClick={() => setAdvanceDismissed(true)}>
-                      Todavía no
+                      {T("notYet")}
                     </button>
                   </div>
                 </div>
@@ -443,40 +446,45 @@ export default function PlayPage({ params }) {
             </div>
 
             <div style={styles.categoryPicker}>
-              <span style={{ color: "#7C7395", fontSize: 12 }}>Enfoque de la ronda:</span>
+              <span style={{ color: "#7C7395", fontSize: 12 }}>{T("roundFocus")}</span>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                 <button
                   className="rj"
-                  style={{ ...styles.catChip, borderColor: !categoryFilter ? "#FF8FB1" : "#3A3452", color: !categoryFilter ? "#FF8FB1" : "#B4ABC9" }}
-                  onClick={() => setCategoryFilter(null)}
+                  style={{ ...styles.catChip, borderColor: categoryFilter.length === 0 ? "#FF8FB1" : "#3A3452", color: categoryFilter.length === 0 ? "#FF8FB1" : "#B4ABC9" }}
+                  onClick={() => setCategoryFilter([])}
                 >
-                  Mixto
+                  {T("mixed")}
                 </button>
-                {Object.keys(track.cats).map((catId) => (
-                  <button
-                    key={catId}
-                    className="rj"
-                    style={{
-                      ...styles.catChip,
-                      borderColor: categoryFilter === catId ? track.cats[catId].color : "#3A3452",
-                      color: categoryFilter === catId ? track.cats[catId].color : "#B4ABC9",
-                    }}
-                    onClick={() => setCategoryFilter(catId)}
-                  >
-                    {displayCatLabel(catId)}
-                  </button>
-                ))}
+                {Object.keys(track.cats).map((catId) => {
+                  const selected = categoryFilter.includes(catId);
+                  return (
+                    <button
+                      key={catId}
+                      className="rj"
+                      style={{
+                        ...styles.catChip,
+                        borderColor: selected ? track.cats[catId].color : "#3A3452",
+                        color: selected ? track.cats[catId].color : "#B4ABC9",
+                      }}
+                      onClick={() =>
+                        setCategoryFilter((prev) => (prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId]))
+                      }
+                    >
+                      {displayCatLabel(catId)}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             <button className="rj" style={styles.primaryBtn} onClick={() => startRound("daily")}>
-              EMPEZAR RONDA <ChevronRight size={20} style={{ verticalAlign: "middle" }} />
+              {T("startRound")} <ChevronRight size={20} style={{ verticalAlign: "middle" }} />
             </button>
 
             {missedIds.length > 0 && (
               <button className="rj" style={styles.reviewBtn} onClick={() => startRound("review")}>
                 <RotateCcw size={16} style={{ verticalAlign: "middle", marginRight: 8 }} />
-                REPASAR FALLOS
+                {T("reviewMistakes")}
                 <span style={styles.missedBadge} className="jm">
                   {missedIds.length}
                 </span>
@@ -485,7 +493,7 @@ export default function PlayPage({ params }) {
 
             {explanationLog.length > 0 && (
               <button className="rj" style={styles.explainOpenBtn} onClick={() => setScreen("explain")}>
-                Ver explicaciones ({explanationLog.length})
+                {T("viewExplanations", { n: explanationLog.length })}
               </button>
             )}
           </div>
@@ -496,7 +504,7 @@ export default function PlayPage({ params }) {
             <div style={styles.topRow}>
               <button onClick={exitRound} className="rj" style={styles.exitBtn}>
                 <X size={14} />
-                <span style={{ marginLeft: 4 }}>Salir</span>
+                <span style={{ marginLeft: 4 }}>{T("exit")}</span>
               </button>
               <div className="jm" style={{ color: "#7C7395", fontSize: 13 }}>
                 {qIndex + 1} / {round.length}
@@ -531,7 +539,7 @@ export default function PlayPage({ params }) {
                   <p className="rj" style={styles.soundText}>
                     {q.sound}
                   </p>
-                  <p style={styles.soundLegend}>MAYÚSCULAS = sílaba con más fuerza · ‿ = las palabras se unen al hablar rápido</p>
+                  <p style={styles.soundLegend}>{T("soundLegend")}</p>
                 </div>
               )}
 
@@ -585,7 +593,7 @@ export default function PlayPage({ params }) {
 
               {awaitingNext && (
                 <button className="rj" style={styles.nextBtn} onClick={handleNext}>
-                  Siguiente <ChevronRight size={18} style={{ verticalAlign: "middle" }} />
+                  {T("next")} <ChevronRight size={18} style={{ verticalAlign: "middle" }} />
                 </button>
               )}
             </div>
@@ -595,36 +603,36 @@ export default function PlayPage({ params }) {
         {screen === "result" && (
           <div style={styles.centerCol} className="fadein">
             <h2 className="rj" style={styles.title}>
-              {roundMode === "review" ? "REPASO COMPLETO" : "RONDA COMPLETA"}
+              {roundMode === "review" ? T("reviewComplete") : T("roundComplete")}
             </h2>
             <div style={styles.statRow} className="jm">
-              <StatChip label="Correctas" value={`${sessionCorrect}/${round.length}`} color="#5EE0A0" />
-              <StatChip label="XP ganado" value={`+${sessionXP}`} color="#3DDBFF" />
+              <StatChip label={T("statCorrect")} value={`${sessionCorrect}/${round.length}`} color="#5EE0A0" />
+              <StatChip label={T("statXpEarned")} value={`+${sessionXP}`} color="#3DDBFF" />
               {roundMode === "review" ? (
-                <StatChip label="Fallos resueltos" value={resolvedCount} color="#FF8FB1" />
+                <StatChip label={T("statMistakesResolved")} value={resolvedCount} color="#FF8FB1" />
               ) : (
-                <StatChip label="Racha diaria" value={`${progress.streak}d`} color="#FF7B8A" />
+                <StatChip label={T("statDailyStreak")} value={`${progress.streak}d`} color="#FF7B8A" />
               )}
             </div>
             <button className="rj" style={styles.primaryBtn} onClick={() => startRound("daily")}>
               <RotateCcw size={18} style={{ verticalAlign: "middle", marginRight: 8 }} />
-              OTRA RONDA
+              {T("anotherRound")}
             </button>
             {explanationLog.length > 0 && (
               <button className="rj" style={styles.explainOpenBtn} onClick={() => setScreen("explain")}>
-                Ver explicaciones ({explanationLog.length})
+                {T("viewExplanations", { n: explanationLog.length })}
               </button>
             )}
             {missedIds.length > 0 && (
               <button className="rj" style={styles.reviewBtn} onClick={() => startRound("review")}>
-                REPASAR FALLOS
+                {T("reviewMistakes")}
                 <span style={styles.missedBadge} className="jm">
                   {missedIds.length}
                 </span>
               </button>
             )}
             <button className="rj" style={{ ...styles.secondaryBtn, marginTop: 8 }} onClick={() => setScreen("start")}>
-              Volver al inicio
+              {T("backToStart")}
             </button>
           </div>
         )}
@@ -632,21 +640,21 @@ export default function PlayPage({ params }) {
         {screen === "explain" && (
           <div style={styles.centerCol} className="fadein">
             <h2 className="rj" style={{ ...styles.title, fontSize: 24 }}>
-              EXPLICACIONES
+              {T("explanationsTitle")}
             </h2>
-            <p style={styles.subtitle}>Tu historial reciente — se acumula con cada ronda. Sin cronómetro.</p>
+            <p style={styles.subtitle}>{T("explanationsSubtitle")}</p>
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12 }}>
               {explanationLog.map((item, i) => (
-                <ExplanationCard item={item} track={track} key={item.id || i} />
+                <ExplanationCard item={item} track={track} uiLang={uiLang} key={item.id || i} />
               ))}
-              {explanationLog.length === 0 && <p style={{ color: "#7C7395", fontSize: 14 }}>Aún no hay explicaciones — juega una ronda primero.</p>}
+              {explanationLog.length === 0 && <p style={{ color: "#7C7395", fontSize: 14 }}>{T("noExplanationsYet")}</p>}
             </div>
             <button className="rj" style={{ ...styles.secondaryBtn, marginTop: 18 }} onClick={() => setScreen("start")}>
-              Cerrar
+              {T("close")}
             </button>
             {archiveCount > 0 && (
               <button className="rj" style={{ ...styles.explainOpenBtn, marginTop: 10 }} onClick={openArchive}>
-                Ver archivo ({archiveCount})
+                {T("viewArchive", { n: archiveCount })}
               </button>
             )}
             {explanationLog.length > 0 && (
@@ -660,7 +668,7 @@ export default function PlayPage({ params }) {
                   setArchiveCount(0);
                 }}
               >
-                Limpiar todo (historial + archivo)
+                {T("clearAll")}
               </button>
             )}
           </div>
@@ -669,22 +677,22 @@ export default function PlayPage({ params }) {
         {screen === "archive" && (
           <div style={styles.centerCol} className="fadein">
             <h2 className="rj" style={{ ...styles.title, fontSize: 24 }}>
-              ARCHIVO
+              {T("archiveTitle")}
             </h2>
-            <p style={styles.subtitle}>Explicaciones más antiguas.</p>
+            <p style={styles.subtitle}>{T("archiveSubtitle")}</p>
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12 }}>
               {archiveLog.map((item, i) => (
-                <ExplanationCard item={item} track={track} key={item.id || i} />
+                <ExplanationCard item={item} track={track} uiLang={uiLang} key={item.id || i} />
               ))}
-              {archiveLog.length === 0 && !archiveLoading && <p style={{ color: "#7C7395", fontSize: 14 }}>El archivo está vacío.</p>}
+              {archiveLog.length === 0 && !archiveLoading && <p style={{ color: "#7C7395", fontSize: 14 }}>{T("archiveEmpty")}</p>}
             </div>
             {archiveLog.length < archiveCount && (
               <button className="rj" style={{ ...styles.secondaryBtn, marginTop: 12 }} onClick={loadMoreArchive} disabled={archiveLoading}>
-                {archiveLoading ? "Cargando…" : "Cargar más"}
+                {archiveLoading ? T("loading") : T("loadMore")}
               </button>
             )}
             <button className="rj" style={{ ...styles.secondaryBtn, marginTop: 18 }} onClick={() => setScreen("explain")}>
-              Volver al historial
+              {T("backToHistory")}
             </button>
           </div>
         )}
@@ -693,7 +701,7 @@ export default function PlayPage({ params }) {
   );
 }
 
-function ExplanationCard({ item, track }) {
+function ExplanationCard({ item, track, uiLang }) {
   const catInfo = track.cats[item.cat] || { label: item.cat, color: "#7C7395" };
   return (
     <div style={{ ...styles.card, borderColor: item.isCorrect || item.is_correct ? "#5EE0A0" : "#FF7B8A", textAlign: "left" }}>
@@ -736,7 +744,7 @@ function ExplanationCard({ item, track }) {
             >
               {isCorrectOpt ? "✓ " : "✗ "}
               {opt}
-              {isYourWrongPick && <span style={{ color: "#B4ABC9", fontWeight: 500 }}> — tu respuesta</span>}
+              {isYourWrongPick && <span style={{ color: "#B4ABC9", fontWeight: 500 }}> {t(uiLang || "es", "yourAnswer")}</span>}
             </div>
           );
         })}
