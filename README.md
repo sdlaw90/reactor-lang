@@ -250,6 +250,30 @@ modes work, linked from Help. A one-time **welcome popup**
 `RequireLegalGate` versions ToS acceptance) introduces both modes right after
 onboarding completes, with a link to the full About page.
 
+## Both forms expanded to match the original Google Forms design (v2.21.0)
+
+The initial in-app beta-application and feedback forms were much thinner than
+what had already been designed for the (broken) Google Forms version
+(`create_squirrelingo_forms.gs`, uploaded separately) — device/browser,
+native language and current level, practice habits and time commitment,
+per-session experience, bug reporting, and NPS-style likelihood-to-recommend
+scoring were all missing. Rebuilt both as short multi-step wizards (matching
+the original's section/page-break structure) rather than one long scrolling
+form:
+
+- **Beta application** (`app/beta-apply/page.js`): 4 steps — About You,
+  Language Background, Practice Habits & Fit, Beta Commitment (~20
+  questions total)
+- **Feedback** (`app/feedback/page.js`): 5 steps — The Basics, First
+  Impressions, Core Experience, Bugs & Performance, The Big Picture (~20
+  questions total)
+
+Schema (`00000000000006_expand_forms.sql`) uses a hybrid approach: the most
+commonly-filtered answers (native language, current level, sessions
+completed, continued-use likelihood, recommend likelihood) got real columns;
+everything else lives in a `details` jsonb column so no answer is lost
+without needing a 20-column migration.
+
 ## Beta application form + more real-user-testing fixes (v2.20.0)
 
 - **Public beta-test application** (`app/beta-apply/page.js`, `beta_applications`

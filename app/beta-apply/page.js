@@ -2,30 +2,127 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "../../lib/supabaseClient";
 import { submitBetaApplication } from "../../lib/db";
 import Logo from "../../lib/Logo";
 
+const STEPS = ["About You", "Language Background", "Practice Habits & Fit", "Beta Commitment"];
+
+const DEVICE_OPTIONS = ["Android phone", "iPhone", "Tablet (Android or iPad)", "Desktop/laptop browser (Windows or Mac)", "Chromebook"];
+const BROWSER_OPTIONS = ["Chrome", "Safari", "Firefox", "Edge", "Samsung Internet", "Other"];
+const AGE_OPTIONS = ["Under 18", "18–24", "25–34", "35–44", "45–54", "55+"];
+const LEVEL_OPTIONS = [
+  "Complete beginner (a few words at most)",
+  "Beginner (basic phrases, simple vocabulary)",
+  "Intermediate (can hold simple conversations)",
+  "Advanced (comfortable in most conversations)",
+  "Native/fluent",
+];
+const APPS_OPTIONS = ["Duolingo", "Babbel", "Rosetta Stone", "Anki / flashcards", "Classes or tutoring", "Immersion (family, friends, travel, work)", "None — this would be my first"];
+const FREQUENCY_OPTIONS = ["Multiple times a day", "Once a day", "A few times a week", "Once a week", "Sporadically"];
+const SESSION_LENGTH_OPTIONS = ["Under 5 minutes", "5–10 minutes", "10–20 minutes", "20+ minutes"];
+const FOCUS_OPTIONS = ["Yes, very much", "Somewhat", "Not really", "Not sure"];
+const COMMITMENT_OPTIONS = ["15+ minutes most days", "A few sessions per week", "One or two sessions per week", "Only occasional use"];
+const PRIOR_BETA_OPTIONS = ["Yes, several times", "Once or twice", "No, this would be my first"];
+const OPEN_TO_CALL_OPTIONS = ["Yes", "Maybe", "No, written feedback only"];
+
 export default function BetaApplyPage() {
   const router = useRouter();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [reason, setReason] = useState("");
-  const [languages, setLanguages] = useState("");
+  const [step, setStep] = useState(0);
   const [busy, setBusy] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    ageRange: "",
+    devices: [],
+    browser: "",
+    nativeLanguage: "",
+    targetLanguages: "",
+    currentLevel: "",
+    dialectPreference: "",
+    appsUsed: [],
+    biggestFrustration: "",
+    practiceFrequency: "",
+    sessionLengthPref: "",
+    appealScore: null,
+    focusDifficulty: "",
+    timeCommitment: "",
+    priorBetaExperience: "",
+    bugReportComfort: null,
+    openToCall: "",
+    reason: "",
+    anythingElse: "",
+  });
+
+  const set = (key) => (value) => setForm((f) => ({ ...f, [key]: value }));
+  const toggleMulti = (key) => (value) =>
+    setForm((f) => ({ ...f, [key]: f[key].includes(value) ? f[key].filter((v) => v !== value) : [...f[key], value] }));
+
+  const validateStep = () => {
+    if (step === 0) {
+      if (!form.name.trim() || !form.email.trim() || form.devices.length === 0) {
+        return "Name, email, and at least one device are needed to move on.";
+      }
+    }
+    if (step === 1) {
+      if (!form.nativeLanguage.trim() || !form.targetLanguages.trim() || !form.currentLevel) {
+        return "Your native language, target language(s), and current level are needed to move on.";
+      }
+    }
+    if (step === 2) {
+      if (!form.practiceFrequency || !form.sessionLengthPref) {
+        return "Practice frequency and session length are needed to move on.";
+      }
+    }
+    return "";
+  };
+
+  const next = () => {
+    const err = validateStep();
+    if (err) {
+      setError(err);
+      return;
+    }
+    setError("");
+    setStep((s) => Math.min(s + 1, STEPS.length - 1));
+  };
+  const back = () => {
+    setError("");
+    setStep((s) => Math.max(s - 1, 0));
+  };
+
   const submit = async (e) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim()) {
-      setError("Name and email are both needed so we know who to invite.");
+    if (!form.timeCommitment) {
+      setError("How much time you could commit is needed before submitting.");
       return;
     }
     setError("");
     setBusy(true);
     try {
-      await submitBetaApplication(name.trim(), email.trim(), reason.trim(), languages.trim());
+      await submitBetaApplication(form.name.trim(), form.email.trim(), form.reason.trim(), form.targetLanguages.trim(), {
+        nativeLanguage: form.nativeLanguage.trim(),
+        currentLevel: form.currentLevel,
+        details: {
+          age_range: form.ageRange,
+          devices: form.devices,
+          browser: form.browser,
+          dialect_preference: form.dialectPreference.trim(),
+          apps_used: form.appsUsed,
+          biggest_frustration: form.biggestFrustration.trim(),
+          practice_frequency: form.practiceFrequency,
+          session_length_pref: form.sessionLengthPref,
+          appeal_score: form.appealScore,
+          focus_difficulty: form.focusDifficulty,
+          time_commitment: form.timeCommitment,
+          prior_beta_experience: form.priorBetaExperience,
+          bug_report_comfort: form.bugReportComfort,
+          open_to_call: form.openToCall,
+          anything_else: form.anythingElse.trim(),
+        },
+      });
       setSubmitted(true);
     } catch (e) {
       console.error("submitBetaApplication failed", e);
@@ -38,7 +135,7 @@ export default function BetaApplyPage() {
   if (submitted) {
     return (
       <div style={styles.wrap}>
-        <div style={{ width: "100%", maxWidth: 420, textAlign: "center" }}>
+        <div style={{ width: "100%", maxWidth: 440, textAlign: "center" }}>
           <Logo size={44} />
           <h1 className="rj" style={styles.title}>
             Thanks for applying! 🐿️
@@ -57,53 +154,126 @@ export default function BetaApplyPage() {
 
   return (
     <div style={styles.wrap}>
-      <div style={{ width: "100%", maxWidth: 420 }}>
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
-          <Logo size={40} />
+      <div style={{ width: "100%", maxWidth: 460 }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 10 }}>
+          <Logo size={36} />
         </div>
         <h1 className="rj" style={styles.title}>
           Apply to beta test
         </h1>
-        <p style={styles.subtitle}>
-          SquirreLingo is in active beta testing. Tell us a bit about yourself, and we'll reach out if there's
-          a spot for you in the current round.
+        <p style={styles.subtitle}>Takes about 3 minutes. Tell us about you and how you like to practice.</p>
+
+        <div style={styles.progressRow}>
+          {STEPS.map((s, i) => (
+            <div key={s} style={{ ...styles.progressDot, ...(i <= step ? styles.progressDotActive : {}) }} />
+          ))}
+        </div>
+        <p style={styles.stepLabel}>
+          {step + 1}. {STEPS[step]}
         </p>
 
-        <form onSubmit={submit}>
-          <label style={styles.label}>Your name</label>
-          <input value={name} onChange={(e) => setName(e.target.value)} style={styles.input} placeholder="Jane Doe" />
+        <form onSubmit={step === STEPS.length - 1 ? submit : (e) => e.preventDefault()}>
+          {step === 0 && (
+            <>
+              <Field label="Name or nickname" required>
+                <input value={form.name} onChange={(e) => set("name")(e.target.value)} style={styles.input} />
+              </Field>
+              <Field label="Email" required>
+                <input type="email" value={form.email} onChange={(e) => set("email")(e.target.value)} style={styles.input} />
+              </Field>
+              <Field label="How old are you?">
+                <RadioGroup options={AGE_OPTIONS} value={form.ageRange} onChange={set("ageRange")} />
+              </Field>
+              <Field label="What device(s) would you test SquirreLingo on?" required>
+                <CheckboxGroup options={DEVICE_OPTIONS} value={form.devices} onToggle={toggleMulti("devices")} />
+              </Field>
+              <Field label="Which browser do you use most on that device?">
+                <RadioGroup options={BROWSER_OPTIONS} value={form.browser} onChange={set("browser")} />
+              </Field>
+            </>
+          )}
 
-          <label style={styles.label}>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={styles.input}
-            placeholder="you@example.com"
-          />
+          {step === 1 && (
+            <>
+              <Field label="What is your native language (or strongest language)?" required>
+                <input value={form.nativeLanguage} onChange={(e) => set("nativeLanguage")(e.target.value)} style={styles.input} />
+              </Field>
+              <Field label="Which language(s) do you want to practice with SquirreLingo?" required>
+                <input value={form.targetLanguages} onChange={(e) => set("targetLanguages")(e.target.value)} style={styles.input} />
+              </Field>
+              <Field label="How would you rate your current level in that language?" required>
+                <RadioGroup options={LEVEL_OPTIONS} value={form.currentLevel} onChange={set("currentLevel")} />
+              </Field>
+              <Field label="Any preference for a specific regional variety or dialect (e.g. Latin American vs. European Spanish)?">
+                <input value={form.dialectPreference} onChange={(e) => set("dialectPreference")(e.target.value)} style={styles.input} />
+              </Field>
+              <Field label="Which language-learning apps or methods have you used before?">
+                <CheckboxGroup options={APPS_OPTIONS} value={form.appsUsed} onToggle={toggleMulti("appsUsed")} />
+              </Field>
+              <Field label="What's your biggest frustration with the language apps you've tried?">
+                <textarea value={form.biggestFrustration} onChange={(e) => set("biggestFrustration")(e.target.value)} style={styles.textarea} rows={3} />
+              </Field>
+            </>
+          )}
 
-          <label style={styles.label}>Which language(s) are you most interested in? (optional)</label>
-          <input
-            value={languages}
-            onChange={(e) => setLanguages(e.target.value)}
-            style={styles.input}
-            placeholder="e.g. Italian, Japanese"
-          />
+          {step === 2 && (
+            <>
+              <Field label="How often do you realistically see yourself practicing?" required>
+                <RadioGroup options={FREQUENCY_OPTIONS} value={form.practiceFrequency} onChange={set("practiceFrequency")} />
+              </Field>
+              <Field label="How long is your ideal practice session?" required>
+                <RadioGroup options={SESSION_LENGTH_OPTIONS} value={form.sessionLengthPref} onChange={set("sessionLengthPref")} />
+              </Field>
+              <Field label="SquirreLingo uses short rounds, instant feedback, and streak/combo mechanics instead of penalties (plus a calmer no-timer mode). How appealing does that sound?">
+                <ScaleInput value={form.appealScore} onChange={set("appealScore")} min={1} max={5} lowLabel="Not my style" highLabel="Exactly what I want" />
+              </Field>
+              <Field label="Do you find it hard to stay focused or consistent with traditional study methods?">
+                <RadioGroup options={FOCUS_OPTIONS} value={form.focusDifficulty} onChange={set("focusDifficulty")} />
+              </Field>
+            </>
+          )}
 
-          <label style={styles.label}>Anything else we should know? (optional)</label>
-          <textarea
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            placeholder="Why you're interested, your experience with language learning, device you'd test on, etc."
-            rows={5}
-            style={styles.textarea}
-          />
+          {step === 3 && (
+            <>
+              <Field label="During the beta period (about 2–4 weeks), how much time could you commit to testing?" required>
+                <RadioGroup options={COMMITMENT_OPTIONS} value={form.timeCommitment} onChange={set("timeCommitment")} />
+              </Field>
+              <Field label="Have you beta tested apps or software before?">
+                <RadioGroup options={PRIOR_BETA_OPTIONS} value={form.priorBetaExperience} onChange={set("priorBetaExperience")} />
+              </Field>
+              <Field label="How comfortable are you reporting bugs with details (what you did, what happened, screenshots)?">
+                <ScaleInput value={form.bugReportComfort} onChange={set("bugReportComfort")} min={1} max={5} lowLabel="Not comfortable" highLabel="Very comfortable" />
+              </Field>
+              <Field label="Would you be open to a short follow-up chat or video call about your experience?">
+                <RadioGroup options={OPEN_TO_CALL_OPTIONS} value={form.openToCall} onChange={set("openToCall")} />
+              </Field>
+              <Field label="Why do you want to beta test SquirreLingo?">
+                <textarea value={form.reason} onChange={(e) => set("reason")(e.target.value)} style={styles.textarea} rows={3} />
+              </Field>
+              <Field label="Anything else we should know about you?">
+                <textarea value={form.anythingElse} onChange={(e) => set("anythingElse")(e.target.value)} style={styles.textarea} rows={3} />
+              </Field>
+            </>
+          )}
 
           {error && <p style={styles.error}>{error}</p>}
 
-          <button type="submit" className="rj" style={styles.primaryBtn} disabled={busy}>
-            {busy ? "Sending..." : "Submit application"}
-          </button>
+          <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
+            {step > 0 && (
+              <button type="button" className="rj" style={styles.secondaryBtn} onClick={back}>
+                Back
+              </button>
+            )}
+            {step < STEPS.length - 1 ? (
+              <button type="button" className="rj" style={styles.primaryBtn} onClick={next}>
+                Next
+              </button>
+            ) : (
+              <button type="submit" className="rj" style={styles.primaryBtn} disabled={busy}>
+                {busy ? "Sending..." : "Submit application"}
+              </button>
+            )}
+          </div>
         </form>
 
         <p style={styles.footer}>
@@ -114,12 +284,90 @@ export default function BetaApplyPage() {
   );
 }
 
+function Field({ label, required, children }) {
+  return (
+    <div style={{ marginBottom: 18 }}>
+      <label style={styles.label}>
+        {label} {required && <span style={{ color: "#FF7B8A" }}>*</span>}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+function RadioGroup({ options, value, onChange }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      {options.map((opt) => (
+        <button
+          key={opt}
+          type="button"
+          className="rj"
+          style={{ ...styles.choiceBtn, ...(value === opt ? styles.choiceBtnActive : {}) }}
+          onClick={() => onChange(opt)}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function CheckboxGroup({ options, value, onToggle }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      {options.map((opt) => (
+        <button
+          key={opt}
+          type="button"
+          className="rj"
+          style={{ ...styles.choiceBtn, ...(value.includes(opt) ? styles.choiceBtnActive : {}) }}
+          onClick={() => onToggle(opt)}
+        >
+          {value.includes(opt) ? "☑ " : "☐ "}
+          {opt}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function ScaleInput({ value, onChange, min, max, lowLabel, highLabel }) {
+  const nums = [];
+  for (let i = min; i <= max; i++) nums.push(i);
+  return (
+    <div>
+      <div style={{ display: "flex", gap: 6 }}>
+        {nums.map((n) => (
+          <button
+            key={n}
+            type="button"
+            className="rj"
+            style={{ ...styles.scaleBtn, ...(value === n ? styles.scaleBtnActive : {}) }}
+            onClick={() => onChange(n)}
+          >
+            {n}
+          </button>
+        ))}
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
+        <span style={styles.scaleLabel}>{lowLabel}</span>
+        <span style={styles.scaleLabel}>{highLabel}</span>
+      </div>
+    </div>
+  );
+}
+
 const styles = {
-  wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "50px 20px", background: "#171423" },
-  title: { fontSize: 23, fontWeight: 700, color: "#F3F0FA", margin: "0 0 8px", textAlign: "center" },
-  subtitle: { color: "#B4ABC9", fontSize: 13.5, lineHeight: 1.6, marginBottom: 24, textAlign: "center" },
+  wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
+  title: { fontSize: 22, fontWeight: 700, color: "#F3F0FA", margin: "0 0 6px", textAlign: "center" },
+  subtitle: { color: "#B4ABC9", fontSize: 13, lineHeight: 1.5, marginBottom: 20, textAlign: "center" },
   body: { color: "#B4ABC9", fontSize: 14, lineHeight: 1.6, margin: "12px 0 24px" },
-  label: { display: "block", color: "#7C7395", fontSize: 12.5, fontWeight: 600, marginBottom: 6, marginTop: 14 },
+  progressRow: { display: "flex", gap: 6, justifyContent: "center", marginBottom: 10 },
+  progressDot: { width: 28, height: 4, borderRadius: 2, background: "#3A3452" },
+  progressDotActive: { background: "#FF8FB1" },
+  stepLabel: { color: "#7C7395", fontSize: 12, fontWeight: 700, textAlign: "center", marginBottom: 20, textTransform: "uppercase", letterSpacing: 0.5 },
+  label: { display: "block", color: "#B4ABC9", fontSize: 13, fontWeight: 600, marginBottom: 8, lineHeight: 1.4 },
   input: {
     width: "100%",
     background: "#221E33",
@@ -142,9 +390,33 @@ const styles = {
     resize: "vertical",
     fontFamily: "inherit",
   },
+  choiceBtn: {
+    textAlign: "left",
+    background: "#221E33",
+    color: "#B4ABC9",
+    border: "1px solid #3A3452",
+    borderRadius: 10,
+    padding: "10px 14px",
+    fontSize: 13.5,
+    cursor: "pointer",
+  },
+  choiceBtnActive: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", borderColor: "#FF8FB1" },
+  scaleBtn: {
+    flex: 1,
+    background: "#221E33",
+    color: "#B4ABC9",
+    border: "1px solid #3A3452",
+    borderRadius: 8,
+    padding: "10px 0",
+    fontSize: 14,
+    fontWeight: 700,
+    cursor: "pointer",
+  },
+  scaleBtnActive: { background: "#FF8FB1", color: "#171423", borderColor: "#FF8FB1" },
+  scaleLabel: { color: "#7C7395", fontSize: 11 },
   error: { color: "#FF7B8A", fontSize: 13, marginTop: 14 },
   primaryBtn: {
-    width: "100%",
+    flex: 1,
     background: "#FF8FB1",
     color: "#171423",
     border: "none",
@@ -153,10 +425,9 @@ const styles = {
     fontSize: 15,
     fontWeight: 700,
     cursor: "pointer",
-    marginTop: 22,
   },
   secondaryBtn: {
-    width: "100%",
+    flex: 1,
     background: "transparent",
     color: "#3DDBFF",
     border: "1px solid #3DDBFF",
@@ -165,7 +436,6 @@ const styles = {
     fontSize: 14,
     fontWeight: 700,
     cursor: "pointer",
-    marginTop: 8,
   },
   footer: { color: "#7C7395", fontSize: 12.5, textAlign: "center", marginTop: 20 },
   link: { color: "#3DDBFF", textDecoration: "underline" },
