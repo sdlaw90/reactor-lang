@@ -250,6 +250,48 @@ modes work, linked from Help. A one-time **welcome popup**
 `RequireLegalGate` versions ToS acceptance) introduces both modes right after
 onboarding completes, with a link to the full About page.
 
+## Real-user-testing fixes (v2.18.0)
+
+Beta testers surfaced two genuine bugs, fixed here:
+- **Lessons mode wasn't saving XP incrementally** — it only called `saveProgress`
+  once, at full lesson completion, unlike Quick Quiz mode which saves after
+  every answer. Stopping partway through a lesson (which the app is explicitly
+  designed to allow) silently lost any XP already earned. Fixed by saving
+  incrementally in `handleAnswer`, matching Quick Quiz mode's pattern —
+  streak/`last_played` now also apply on the first answer of a session rather
+  than waiting for full completion.
+- **Category names ignored skill-level-based native-language chrome** — they
+  only switched language for the narrow English US/UK cross-dialect case
+  (`track.cats[catId].labelEn`), never for the general `uiLangForSkill` system
+  everything else respects. Fixed with a shared `CATEGORY_NAMES` table in
+  `lib/playStrings.js` (`categoryDisplayName`) — the 4 category concepts mean
+  the same thing regardless of which of the 14 tracks they're attached to, so
+  one shared en/es table covers all of them, rather than per-track labels.
+
+Also: the Quick Quiz ↔ Lessons switch is now a real toggle
+(`lib/ModeToggle.js`) at the top of each screen instead of a small link at the
+bottom; both start screens have a collapsible "What's on this page?" section;
+and the Help page no longer hardcodes "Mixto" as if that's always the literal
+button text.
+
+## Navigation drawer replaces the top icon row
+
+The language badge, What's New, Help, Dashboard, and Settings icons were
+cluttering the top of the home screen, especially on mobile. Replaced with a
+single slide-out drawer (`lib/NavDrawer.js`) triggered by tapping the profile
+picture — a real full-height drawer, not a compact dropdown. The What's New
+notification dot now lives on the profile picture itself. The language badge
+was dropped entirely (not migrated into the drawer) since Settings, already
+one tap away in the drawer, covers the same thing.
+
+## In-app feedback form
+
+Settings → Feedback (`app/feedback/page.js`) replaces external Google Forms,
+which weren't importing/styling well. Responses write directly to a new
+`feedback_submissions` table (`supabase/migrations/00000000000004_feedback_submissions.sql`)
+via `submitFeedback` in `lib/db.js` — no external tool, no import step, styled
+consistently with the rest of the app.
+
 ## Track names shown in your native language
 
 Every track has `nameEn`/`nameEs` fields (in addition to `label`, its own

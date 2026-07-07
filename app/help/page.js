@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Settings, BarChart2, Languages } from "lucide-react";
 
 export default function HelpPage() {
   const router = useRouter();
@@ -23,11 +22,14 @@ export default function HelpPage() {
           .
         </p>
 
-        <Section title="Home screen icons">
-          <IconRow icon={<Languages size={16} />} label="Native language badge" text='A small pill (top-left of the icon row) showing your native country code and flag — e.g. "US 🇺🇸". Tap it to change your native language/country in Settings.' />
-          <IconRow icon={<span style={{ fontWeight: 900, fontSize: 15 }}>!</span>} label="What's New (!)" text="Shows the latest release's notes. A red dot appears whenever there's a version you haven't seen yet, and clears once you open it." />
-          <IconRow icon={<BarChart2 size={16} />} label="Dashboard" text="Your total XP, streak, and rounds across every language, plus a breakdown per language." />
-          <IconRow label="User Settings" text="Your profile picture opens Settings — username, email, password, native language/country, profile picture, and gameplay preferences." icon={<Settings size={16} />} />
+        <Section title="The menu (tap your profile picture)">
+          <P>
+            Your profile picture, top-right of the home screen, opens a slide-out menu with everything that
+            used to be spread across separate icons: <b>What's New</b> (a dot appears when there's a release
+            you haven't seen yet), <b>Help</b> (this page), <b>Dashboard</b> (your total XP, streak, and
+            rounds across every language), and <b>Settings</b> (username, email, password, native
+            language/country, profile picture, gameplay preferences).
+          </P>
         </Section>
 
         <Section title="Choosing what to learn">
@@ -53,7 +55,7 @@ export default function HelpPage() {
         </Section>
 
         <Section title="Category picker (Quick Quiz mode)">
-          <P>Before starting a round, mix and match any combination of categories to focus on (vocabulary, grammar, translation, phonetics — any subset), or leave it on "Mixto" for the default blend of everything. Picking "Mixto" clears any specific selections back to the full mix. In Lessons mode, you pick one topic at a time instead — see the mode explanation above.</P>
+          <P>Before starting a round, mix and match any combination of categories to focus on (vocabulary, grammar, translation, phonetics — any subset), or leave it on the "Mixed" option for the default blend of everything (its label shows in whichever language your other buttons are currently in). Picking it clears any specific selections back to the full mix. In Lessons mode, you pick one topic at a time instead — see the mode explanation above.</P>
         </Section>
 
         <Section title="Language switches with your skill level">
@@ -94,6 +96,10 @@ export default function HelpPage() {
 
         <Section title="Gameplay settings">
           <P>In Settings → Gameplay: turn review mode on/off, adjust how many questions come from each category per round, how many phonetics pairs appear, and the per-question timer — either one shared time limit or separate limits for regular questions vs. phonetics.</P>
+        </Section>
+
+        <Section title="Feedback">
+          <P>Found a bug, or have an idea? Settings → Feedback has a short in-app form — it goes straight to the developer, no external site required.</P>
         </Section>
 
         <Section title="Account & security">

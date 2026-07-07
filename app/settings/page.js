@@ -74,6 +74,11 @@ export default function SettingsPage() {
           <p style={{ color: "#7C7395", fontSize: 13, margin: 0 }}>Coming soon.</p>
         </div>
 
+        <GroupHeader label="Feedback" />
+        <button className="rj" style={styles.feedbackBtn} onClick={() => router.push("/feedback")}>
+          Send feedback or report a bug
+        </button>
+
         <button
           className="rj"
           style={styles.signOutBtn}
@@ -887,6 +892,18 @@ const styles = {
   },
   toggleRow: { display: "flex", alignItems: "flex-start", gap: 10, color: "#F3F0FA", fontSize: 13.5, lineHeight: 1.4, cursor: "pointer" },
   numberLabel: { display: "block", color: "#7C7395", fontSize: 12, marginBottom: 4 },
+  feedbackBtn: {
+    width: "100%",
+    background: "transparent",
+    color: "#3DDBFF",
+    border: "1px solid #3DDBFF",
+    borderRadius: 10,
+    padding: "12px",
+    fontSize: 14,
+    fontWeight: 700,
+    cursor: "pointer",
+    marginBottom: 14,
+  },
   signOutBtn: {
     width: "100%",
     background: "transparent",

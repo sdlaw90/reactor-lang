@@ -2,18 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { BarChart2, HelpCircle } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import { tracksForNativeLang, listTracks } from "../data/tracks";
 import { HOME_GRADIENT, animatedBackgroundStyle } from "../lib/theme";
-import { flagImageUrl } from "../lib/countries";
 import { loadProfile, loadAllProgress } from "../lib/db";
 import { skillLevelInfo } from "../lib/skillLevels";
 import { CURRENT_VERSION } from "../lib/version";
-import Avatar from "../lib/Avatar";
 import VersionFooter from "../lib/VersionFooter";
 import Logo from "../lib/Logo";
 import TrackIcon from "../lib/trackIcons";
+import NavDrawer from "../lib/NavDrawer";
 
 const GREETINGS = {
   es: "¡Bienvenido/a",
@@ -95,59 +93,7 @@ export default function HomePage() {
             </h1>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            {nativeCountry && (
-              <button
-                className="rj jm"
-                style={styles.langBadge}
-                title="Native language & country (change in Settings)"
-                aria-label="Native language and country"
-                onClick={() => router.push("/settings")}
-              >
-                {nativeCountry}
-                <img
-                  src={flagImageUrl(nativeCountry)}
-                  alt={nativeCountry}
-                  style={{ width: 16, height: 11, objectFit: "cover", borderRadius: 2, marginLeft: 5 }}
-                />
-              </button>
-            )}
-            <button
-              className="rj"
-              style={{ ...styles.iconBtn, position: "relative", fontSize: 18, fontWeight: 800, lineHeight: 1, justifyContent: "center", minWidth: 34 }}
-              title="What's new"
-              aria-label="What's new"
-              onClick={() => router.push("/whats-new")}
-            >
-              !
-              {hasUnseenWhatsNew && <span style={styles.notifDot} />}
-            </button>
-            <button
-              className="rj"
-              style={styles.iconBtn}
-              title="Help"
-              aria-label="Help"
-              onClick={() => router.push("/help")}
-            >
-              <HelpCircle size={18} />
-            </button>
-            <button
-              className="rj"
-              style={styles.iconBtn}
-              title="Progress dashboard"
-              aria-label="Progress dashboard"
-              onClick={() => router.push("/dashboard")}
-            >
-              <BarChart2 size={18} />
-            </button>
-            <button
-              className="rj"
-              style={{ ...styles.iconBtn, padding: 0, width: 34, height: 34, justifyContent: "center" }}
-              title="User Settings"
-              aria-label="User Settings"
-              onClick={() => router.push("/settings")}
-            >
-              <Avatar type={profile?.avatar_type} value={profile?.avatar_value} fallbackText={displayName} size={34} />
-            </button>
+            <NavDrawer profile={profile} displayName={displayName} hasUnseenWhatsNew={hasUnseenWhatsNew} />
           </div>
         </div>
 

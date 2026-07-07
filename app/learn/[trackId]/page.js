@@ -7,7 +7,8 @@ import { supabase } from "../../../lib/supabaseClient";
 import { getTrack } from "../../../data/tracks";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import { buildLessonSequence, computeMastery, todayStr } from "../../../lib/gameEngine";
-import { uiLangForSkill, t } from "../../../lib/playStrings";
+import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
+import ModeToggle from "../../../lib/ModeToggle";
 import {
   loadProgress,
   saveProgress,
@@ -40,6 +41,8 @@ export default function LessonsPage({ params }) {
   const [answered, setAnswered] = useState(false);
   const [sessionCorrect, setSessionCorrect] = useState(0);
   const [sessionXP, setSessionXP] = useState(0);
+  const [streakApplied, setStreakApplied] = useState(false);
+  const [showPageHelp, setShowPageHelp] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -74,7 +77,7 @@ export default function LessonsPage({ params }) {
   const viewerNativeLang = session?.user?.user_metadata?.native_lang;
   const useAltPrompt = viewerNativeLang === "en" && track.nativeLang !== "en";
   const displayPrompt = (q) => (useAltPrompt && q.promptEn ? q.promptEn : q.prompt);
-  const displayCatLabel = (catId) => (useAltPrompt && track.cats[catId].labelEn ? track.cats[catId].labelEn : track.cats[catId].label);
+  const displayCatLabel = (catId) => categoryDisplayName(uiLang, viewerNativeLang, track, catId);
   const uiLang = progress ? uiLangForSkill(progress.skill_level, viewerNativeLang, track) : "en";
   const T = (key, vars) => t(uiLang, key, vars);
 
@@ -109,7 +112,32 @@ export default function LessonsPage({ params }) {
     setSelected(i);
     setAnswered(true);
     const isCorrect = i === q.correctIdx;
+
+    // Build the updated progress incrementally and save immediately, the
+    // same way Quick Quiz mode does -- this was a real bug: previously XP
+    // (and streak) only saved once, at full lesson completion, so stopping
+    // partway through (which the app is explicitly designed to allow)
+    // silently lost any progress already earned.
+    let nextProgress = progress;
+    if (!streakApplied) {
+      const today = todayStr();
+      let newStreak = progress.streak;
+      if (progress.last_played !== today) {
+        if (progress.last_played) {
+          const last = new Date(progress.last_played);
+          const diffDays = Math.round((new Date(today) - last) / 86400000);
+          newStreak = diffDays === 1 ? progress.streak + 1 : 1;
+        } else {
+          newStreak = 1;
+        }
+      }
+      nextProgress = { ...nextProgress, streak: newStreak, last_played: today };
+      setStreakApplied(true);
+    }
+
     if (isCorrect) {
+      const totalXP = nextProgress.xp + XP_PER_CORRECT;
+      nextProgress = { ...nextProgress, xp: totalXP, level: Math.floor(totalXP / 100) + 1 };
       setSessionCorrect((c) => c + 1);
       setSessionXP((xp) => xp + XP_PER_CORRECT);
       if (missedIds.includes(q.id)) {
@@ -122,6 +150,9 @@ export default function LessonsPage({ params }) {
         setMissedIds((prev) => [...prev, q.id]);
       }
     }
+    setProgress(nextProgress);
+    saveProgress(userId, track.id, nextProgress).catch((e) => console.error("saveProgress failed", e));
+
     markSeen(userId, track.id, [q.id]).catch((e) => console.error("markSeen failed", e));
     setSeenAt((prev) => ({ ...prev, [q.id]: Date.now() }));
     insertExplanations(userId, track.id, [
@@ -145,29 +176,10 @@ export default function LessonsPage({ params }) {
       setSelected(null);
       setAnswered(false);
     } else {
-      // Lesson finished -- save progress the same way Quick Quiz mode does,
-      // so both modes contribute to the same unified XP/level/streak.
-      const today = todayStr();
-      let newStreak = progress.streak;
-      if (progress.last_played !== today) {
-        if (progress.last_played) {
-          const last = new Date(progress.last_played);
-          const diffDays = Math.round((new Date(today) - last) / 86400000);
-          newStreak = diffDays === 1 ? progress.streak + 1 : 1;
-        } else {
-          newStreak = 1;
-        }
-      }
-      const totalXP = progress.xp + sessionXP;
-      const newLevel = Math.floor(totalXP / 100) + 1;
-      const next = {
-        ...progress,
-        xp: totalXP,
-        level: newLevel,
-        streak: newStreak,
-        last_played: today,
-        rounds_completed: progress.rounds_completed + 1,
-      };
+      // XP/streak are already saved incrementally above -- only
+      // rounds_completed still needs finalizing, since a "round" here means
+      // an actually-finished lesson, not a partial one.
+      const next = { ...progress, rounds_completed: progress.rounds_completed + 1 };
       setProgress(next);
       saveProgress(userId, track.id, next).catch((e) => console.error("saveProgress failed", e));
       setScreen("complete");
@@ -192,6 +204,24 @@ export default function LessonsPage({ params }) {
             </h1>
             <p style={styles.subtitle}>Lessons mode — no timer, step by step.</p>
 
+            <ModeToggle trackId={track.id} active="lessons" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} />
+
+            <button className="rj" style={styles.pageHelpToggle} onClick={() => setShowPageHelp((v) => !v)}>
+              {showPageHelp ? "▾" : "▸"} What's on this page?
+            </button>
+            {showPageHelp && (
+              <div style={styles.pageHelpBox}>
+                <p style={styles.pageHelpLine}>Pick a topic below to work through it, easiest items first.</p>
+                <p style={styles.pageHelpLine}>
+                  The number next to each topic (like "3/12") shows how many items you've already learned there.
+                </p>
+                <p style={styles.pageHelpLine}>
+                  No timer, no combo scoring here — answer at your own pace, and the explanation shows right
+                  after each question.
+                </p>
+              </div>
+            )}
+
             <p style={{ ...styles.chooseText }}>{T("chooseLesson")}</p>
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 10 }}>
               {Object.keys(track.cats).map((catId) => {
@@ -210,10 +240,6 @@ export default function LessonsPage({ params }) {
                 );
               })}
             </div>
-
-            <button className="rj" style={styles.switchModeBtn} onClick={() => router.push(`/play/${track.id}`)}>
-              {T("switchToQuickQuiz")} {T("tryQuickQuiz")} →
-            </button>
           </div>
         )}
 
@@ -316,6 +342,25 @@ function StatChip({ label, value, color }) {
 }
 
 const styles = {
+  pageHelpToggle: {
+    alignSelf: "flex-start",
+    background: "transparent",
+    color: "#7C7395",
+    border: "none",
+    fontSize: 12.5,
+    cursor: "pointer",
+    padding: 0,
+    marginBottom: 10,
+  },
+  pageHelpBox: {
+    width: "100%",
+    background: "#1C1830",
+    border: "1px solid #3A3452",
+    borderRadius: 10,
+    padding: "12px 14px",
+    marginBottom: 16,
+  },
+  pageHelpLine: { color: "#B4ABC9", fontSize: 12.5, lineHeight: 1.5, margin: "0 0 6px", textAlign: "left" },
   bg: { minHeight: "100vh", background: "#171423", display: "flex", justifyContent: "center" },
   container: { width: "100%", maxWidth: 480, padding: "20px 20px 60px" },
   hudRow: { display: "flex", alignItems: "center", marginBottom: 16 },

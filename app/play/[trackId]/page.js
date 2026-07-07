@@ -14,7 +14,8 @@ import {
   computeMastery,
 } from "../../../lib/gameEngine";
 import { cefrSetForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
-import { uiLangForSkill, t } from "../../../lib/playStrings";
+import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
+import ModeToggle from "../../../lib/ModeToggle";
 import {
   loadProgress,
   saveProgress,
@@ -56,6 +57,7 @@ export default function PlayPage({ params }) {
   const [archiveCount, setArchiveCount] = useState(0);
   const [archiveLoading, setArchiveLoading] = useState(false);
   const [showLevelPicker, setShowLevelPicker] = useState(false);
+  const [showPageHelp, setShowPageHelp] = useState(false);
   const [advanceDismissed, setAdvanceDismissed] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState([]); // empty = Mixto (all categories)
   const [awaitingNext, setAwaitingNext] = useState(false); // review-mode: paused after answer, waiting for "Next"
@@ -123,7 +125,7 @@ export default function PlayPage({ params }) {
   const viewerNativeLang = session?.user?.user_metadata?.native_lang;
   const useAltPrompt = viewerNativeLang === "en" && track.nativeLang !== "en";
   const displayPrompt = (q) => (useAltPrompt && q.promptEn ? q.promptEn : q.prompt);
-  const displayCatLabel = (catId) => (useAltPrompt && track.cats[catId].labelEn ? track.cats[catId].labelEn : track.cats[catId].label);
+  const displayCatLabel = (catId) => categoryDisplayName(uiLang, viewerNativeLang, track, catId);
   const uiLang = uiLangForSkill(progress.skill_level, viewerNativeLang, track);
   const T = (key, vars) => t(uiLang, key, vars);
   const mastery = computeMastery(track, seenAt, missedIds);
@@ -399,6 +401,31 @@ export default function PlayPage({ params }) {
             </h1>
             <p style={styles.subtitle}>{useAltPrompt && track.sublabelEn ? track.sublabelEn : track.sublabel}</p>
 
+            <ModeToggle trackId={track.id} active="quiz" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} />
+
+            <button className="rj" style={styles.pageHelpToggle} onClick={() => setShowPageHelp((v) => !v)}>
+              {showPageHelp ? "▾" : "▸"} What's on this page?
+            </button>
+            {showPageHelp && (
+              <div style={styles.pageHelpBox}>
+                <p style={styles.pageHelpLine}>
+                  <b>XP / Best combo / Rounds</b> — your all-time stats for this language.
+                </p>
+                <p style={styles.pageHelpLine}>
+                  <b>Level</b> — your current skill level; tap "Change" if it doesn't feel right, or take the
+                  placement quiz if you're not sure.
+                </p>
+                <p style={styles.pageHelpLine}>
+                  <b>Round focus</b> — pick which categories to practice, or leave it Mixed for a bit of
+                  everything.
+                </p>
+                <p style={styles.pageHelpLine}>
+                  <b>START ROUND</b> — begins a short, timed round of questions with combo scoring. Prefer no
+                  timer? Switch to Lessons above.
+                </p>
+              </div>
+            )}
+
             <div style={styles.statRow} className="jm">
               <StatChip label={T("statXpTotal")} value={progress.xp} color="#3DDBFF" />
               <StatChip label={T("statBestCombo")} value={progress.best_combo} color="#FF8FB1" />
@@ -535,14 +562,6 @@ export default function PlayPage({ params }) {
                 {T("viewExplanations", { n: explanationLog.length })}
               </button>
             )}
-
-            <button
-              className="rj"
-              style={{ marginTop: 20, background: "transparent", color: "#7C7395", border: "none", fontSize: 12.5, cursor: "pointer", textDecoration: "underline" }}
-              onClick={() => router.push(`/learn/${track.id}`)}
-            >
-              {T("switchToLessons")} {T("tryLessonsMode")} →
-            </button>
           </div>
         )}
 
@@ -835,6 +854,25 @@ function TimerRing({ timeLeft, total }) {
 }
 
 const styles = {
+  pageHelpToggle: {
+    alignSelf: "flex-start",
+    background: "transparent",
+    color: "#7C7395",
+    border: "none",
+    fontSize: 12.5,
+    cursor: "pointer",
+    padding: 0,
+    marginBottom: 10,
+  },
+  pageHelpBox: {
+    width: "100%",
+    background: "#1C1830",
+    border: "1px solid #3A3452",
+    borderRadius: 10,
+    padding: "12px 14px",
+    marginBottom: 16,
+  },
+  pageHelpLine: { color: "#B4ABC9", fontSize: 12.5, lineHeight: 1.5, margin: "0 0 6px", textAlign: "left" },
   skillCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
   categoryPicker: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
   masteryCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
