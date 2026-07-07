@@ -272,12 +272,18 @@ export default function AuthPage() {
         >
           {mode === "signin" ? "Need an account? Sign up" : "Already have an account? Sign in"}
         </button>
+
+        <p style={styles.betaApplyRow}>
+          Don't have an invite yet? <a href="/beta-apply" style={styles.betaApplyLink}>Apply to beta test</a>.
+        </p>
       </div>
     </div>
   );
 }
 
 const styles = {
+  betaApplyRow: { textAlign: "center", color: "#7C7395", fontSize: 12.5, marginTop: 18 },
+  betaApplyLink: { color: "#3DDBFF", textDecoration: "underline" },
   agreeRow: {
     display: "flex",
     alignItems: "flex-start",

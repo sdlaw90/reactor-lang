@@ -27,6 +27,7 @@ export default function HomePage() {
   const pathname = usePathname();
   const [session, setSession] = useState(undefined); // undefined = loading, null = signed out
   const [profile, setProfile] = useState(null);
+  const [profileLoaded, setProfileLoaded] = useState(false);
   const [progressByTrack, setProgressByTrack] = useState({});
 
   useEffect(() => {
@@ -50,12 +51,14 @@ export default function HomePage() {
       router.push("/auth");
     } else if (session) {
       if (!session.user.user_metadata?.native_lang) {
+        setProfileLoaded(true);
         router.push("/onboarding");
         return;
       }
       loadProfile(session.user.id)
         .then(setProfile)
-        .catch((e) => console.error("failed to load profile", e));
+        .catch((e) => console.error("failed to load profile", e))
+        .finally(() => setProfileLoaded(true));
       loadAllProgress(session.user.id)
         .then((rows) => {
           const map = {};
@@ -66,7 +69,7 @@ export default function HomePage() {
     }
   }, [session, router]);
 
-  if (session === undefined || session === null) {
+  if (session === undefined || session === null || !profileLoaded) {
     return (
       <div style={styles.wrap}>
         <p style={{ color: "#B4ABC9" }}>Loading…</p>

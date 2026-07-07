@@ -66,7 +66,8 @@ export default function AboutPage() {
         <p style={styles.footer}>
           Questions about how something specific works? The <a href="/help" style={styles.link}>Help page</a>{" "}
           has a full walkthrough of every screen and icon. Found a bug, or have an idea? There's a{" "}
-          <a href="/feedback" style={styles.link}>feedback form</a> for that too.
+          <a href="/feedback" style={styles.link}>feedback form</a> for that too. Know someone who'd like to{" "}
+          <a href="/beta-apply" style={styles.link}>apply to beta test</a>?
         </p>
       </div>
     </div>

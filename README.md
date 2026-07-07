@@ -250,6 +250,31 @@ modes work, linked from Help. A one-time **welcome popup**
 `RequireLegalGate` versions ToS acceptance) introduces both modes right after
 onboarding completes, with a link to the full About page.
 
+## Beta application form + more real-user-testing fixes (v2.20.0)
+
+- **Public beta-test application** (`app/beta-apply/page.js`, `beta_applications`
+  table via `00000000000005_beta_applications.sql`) — genuinely different from
+  the feedback form: no login required, since applicants don't have an
+  account yet. This is the "application" half of the original `#48`
+  ("in-app application/feedback forms") that got silently dropped when only
+  the feedback half was actually built — caught via direct user feedback
+  rather than by me noticing. RLS allows `anon` inserts specifically because
+  of this. Linked from `/auth` (where prospective testers actually land) and
+  `/about`.
+- **Fixed a real bug**: the home screen's `displayName` falls back to
+  `session.user.email` before `profile.username` loads, since profile loads
+  in a separate async call after session resolves — that fallback flashed
+  visibly on every load. Added a `profileLoaded` flag so the page waits for
+  both before rendering, rather than showing the email momentarily.
+- **Old-branding audit**: checked the whole codebase for "Reactor Lang" or
+  stale URLs. `package.json` was already correctly `"squirrelingo"`; no
+  hardcoded old deployment URLs exist anywhere. The one remaining "Reactor
+  Lang" mention is a historical changelog entry documenting the actual
+  rename — kept intentionally, since erasing real project history isn't the
+  same as removing a stale reference. The GitHub repository itself is still
+  named `reactor-lang`, which is outside this codebase to fix (renaming it
+  directly on GitHub auto-redirects the old URL, no code changes needed).
+
 ## Second round of real-user-testing fixes (v2.19.0)
 
 - **Migration failure fixed**: `00000000000004_feedback_submissions.sql` originally

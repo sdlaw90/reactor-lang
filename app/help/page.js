@@ -100,7 +100,7 @@ export default function HelpPage() {
         </Section>
 
         <Section title="Feedback">
-          <P>Found a bug, or have an idea? Settings → Feedback has a short in-app form — it goes straight to the developer, no external site required.</P>
+          <P>Found a bug, or have an idea? Settings → Feedback has a short in-app form — it goes straight to the developer, no external site required. Know someone who'd like to help test? They can apply at /beta-apply, no account needed.</P>
         </Section>
 
         <Section title="Account & security">
