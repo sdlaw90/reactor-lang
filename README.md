@@ -250,6 +250,39 @@ modes work, linked from Help. A one-time **welcome popup**
 `RequireLegalGate` versions ToS acceptance) introduces both modes right after
 onboarding completes, with a link to the full About page.
 
+## Second round of real-user-testing fixes (v2.19.0)
+
+- **Migration failure fixed**: `00000000000004_feedback_submissions.sql` originally
+  used `gen_random_uuid()`, which needs the `pgcrypto` extension explicitly
+  enabled — very likely why it failed to apply (confirmed via an email
+  notification from the beta tester). Switched to `bigint generated always as
+  identity`, the exact pattern the `explanations` table already uses in the
+  baseline migration, with zero extension dependency.
+- **Settings moved into the drawer itself**, not just linked from it — actual
+  clarification of the original `#39` request. `lib/SettingsPanel.js` is now
+  a reusable component (extracted from the old `app/settings/page.js`,
+  imports adjusted, page-chrome like the back button/title/fixed footer
+  stripped since the drawer provides its own) rendered directly inside
+  `lib/NavDrawer.js` when its internal view state switches to `'settings'`,
+  with its own back arrow back to the main menu. `/settings` still exists as
+  a route, now just a client-side redirect to `/`, in case anything had it
+  bookmarked.
+- **Lessons mode's "super dark" background, fixed**: `animatedBackgroundStyle`
+  takes a gradient *string*, but Lessons mode was passing the whole theme
+  *object* (`{label, gradient}`), and spreading the fixed-position background
+  styles directly into the main content container instead of rendering them
+  as a separate layer like Quick Quiz mode correctly does. Verified the exact
+  broken vs. fixed CSS output directly rather than assuming the fix worked.
+- **Category-label chrome, fully audited**: pulled every category key across
+  all 14 tracks to check for gaps beyond the original English US/UK case.
+  Found exactly one: `esForEn`/`esSpainForEn` use a legacy `verbo` key (not
+  `gram`) for grammar, which `CATEGORY_NAMES` didn't cover. Fixed; confirmed
+  no other tracks have non-standard category keys.
+- **"What's on this page?" and the placement quiz link** both got
+  discoverability fixes — a prominent bordered button with a real icon
+  instead of small subtle text, and the placement quiz link moved before
+  (not after) the skill-level list.
+
 ## Real-user-testing fixes (v2.18.0)
 
 Beta testers surfaced two genuine bugs, fixed here:

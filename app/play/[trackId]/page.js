@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Flame, Zap, Check, X, ChevronRight, RotateCcw, Trophy } from "lucide-react";
+import { Flame, Zap, Check, X, ChevronRight, ChevronDown, RotateCcw, Trophy, Info } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
 import { getTrack } from "../../../data/tracks";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
@@ -404,7 +404,9 @@ export default function PlayPage({ params }) {
             <ModeToggle trackId={track.id} active="quiz" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} />
 
             <button className="rj" style={styles.pageHelpToggle} onClick={() => setShowPageHelp((v) => !v)}>
-              {showPageHelp ? "▾" : "▸"} What's on this page?
+              <Info size={16} />
+              <span style={{ flex: 1, textAlign: "left" }}>What's on this page?</span>
+              <ChevronDown size={16} style={{ transform: showPageHelp ? "rotate(180deg)" : "none", transition: "transform 0.15s" }} />
             </button>
             {showPageHelp && (
               <div style={styles.pageHelpBox}>
@@ -444,6 +446,9 @@ export default function PlayPage({ params }) {
 
               {showLevelPicker && (
                 <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 6 }}>
+                  <button className="rj" style={styles.placementLinkBtn} onClick={() => router.push(`/placement/${track.id}`)}>
+                    {T("notSureTakeQuiz")}
+                  </button>
                   {SKILL_LEVELS.map((s) => (
                     <button
                       key={s.id}
@@ -454,9 +459,6 @@ export default function PlayPage({ params }) {
                       {s.label}
                     </button>
                   ))}
-                  <button className="rj" style={styles.placementLinkBtn} onClick={() => router.push(`/placement/${track.id}`)}>
-                    {T("notSureTakeQuiz")}
-                  </button>
                 </div>
               )}
 
@@ -855,14 +857,19 @@ function TimerRing({ timeLeft, total }) {
 
 const styles = {
   pageHelpToggle: {
-    alignSelf: "flex-start",
-    background: "transparent",
-    color: "#7C7395",
-    border: "none",
-    fontSize: 12.5,
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    background: "rgba(61,219,255,0.1)",
+    color: "#3DDBFF",
+    border: "1px solid #3DDBFF",
+    borderRadius: 10,
+    fontSize: 14,
+    fontWeight: 700,
     cursor: "pointer",
-    padding: 0,
-    marginBottom: 10,
+    padding: "12px 14px",
+    marginBottom: 12,
   },
   pageHelpBox: {
     width: "100%",

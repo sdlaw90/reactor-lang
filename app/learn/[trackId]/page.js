@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Check, X, ChevronRight, RotateCcw } from "lucide-react";
+import { Check, X, ChevronRight, ChevronDown, RotateCcw, Info } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
 import { getTrack } from "../../../data/tracks";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
@@ -186,10 +186,11 @@ export default function LessonsPage({ params }) {
     }
   };
 
-  const theme = TRACK_THEMES[track.theme] || {};
+  const trackTheme = TRACK_THEMES[track.theme];
 
   return (
-    <div style={{ ...styles.bg, ...animatedBackgroundStyle(theme) }}>
+    <div style={styles.bg}>
+      {trackTheme && <div style={animatedBackgroundStyle(trackTheme.gradient)} />}
       <div style={styles.container}>
         <div style={styles.hudRow}>
           <button className="rj" style={styles.backBtn} onClick={() => router.push(`/play/${track.id}`)}>
@@ -207,7 +208,9 @@ export default function LessonsPage({ params }) {
             <ModeToggle trackId={track.id} active="lessons" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} />
 
             <button className="rj" style={styles.pageHelpToggle} onClick={() => setShowPageHelp((v) => !v)}>
-              {showPageHelp ? "▾" : "▸"} What's on this page?
+              <Info size={16} />
+              <span style={{ flex: 1, textAlign: "left" }}>What's on this page?</span>
+              <ChevronDown size={16} style={{ transform: showPageHelp ? "rotate(180deg)" : "none", transition: "transform 0.15s" }} />
             </button>
             {showPageHelp && (
               <div style={styles.pageHelpBox}>
@@ -343,14 +346,19 @@ function StatChip({ label, value, color }) {
 
 const styles = {
   pageHelpToggle: {
-    alignSelf: "flex-start",
-    background: "transparent",
-    color: "#7C7395",
-    border: "none",
-    fontSize: 12.5,
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    background: "rgba(61,219,255,0.1)",
+    color: "#3DDBFF",
+    border: "1px solid #3DDBFF",
+    borderRadius: 10,
+    fontSize: 14,
+    fontWeight: 700,
     cursor: "pointer",
-    padding: 0,
-    marginBottom: 10,
+    padding: "12px 14px",
+    marginBottom: 12,
   },
   pageHelpBox: {
     width: "100%",
@@ -361,8 +369,8 @@ const styles = {
     marginBottom: 16,
   },
   pageHelpLine: { color: "#B4ABC9", fontSize: 12.5, lineHeight: 1.5, margin: "0 0 6px", textAlign: "left" },
-  bg: { minHeight: "100vh", background: "#171423", display: "flex", justifyContent: "center" },
-  container: { width: "100%", maxWidth: 480, padding: "20px 20px 60px" },
+  bg: { position: "relative", minHeight: "100vh", width: "100%", background: "#171423", display: "flex", justifyContent: "center", overflow: "hidden" },
+  container: { position: "relative", zIndex: 1, width: "100%", maxWidth: 480, padding: "20px 20px 60px" },
   hudRow: { display: "flex", alignItems: "center", marginBottom: 16 },
   backBtn: {
     background: "rgba(255,143,177,0.12)",
