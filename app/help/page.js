@@ -15,6 +15,13 @@ export default function HelpPage() {
         <h1 className="rj" style={styles.title}>
           How SquirreLingo works
         </h1>
+        <p style={{ color: "#7C7395", fontSize: 12.5, marginTop: -8, marginBottom: 20 }}>
+          Looking for the bigger picture instead? See the{" "}
+          <a href="/about" style={{ color: "#3DDBFF", textDecoration: "underline" }}>
+            About page
+          </a>
+          .
+        </p>
 
         <Section title="Home screen icons">
           <IconRow icon={<Languages size={16} />} label="Native language badge" text='A small pill (top-left of the icon row) showing your native country code and flag — e.g. "US 🇺🇸". Tap it to change your native language/country in Settings.' />
@@ -34,8 +41,19 @@ export default function HelpPage() {
           <P>Each language bubble shows your current skill level and XP progress toward the next one. Tap any bubble to start practicing that language — progress is tracked independently per language.</P>
         </Section>
 
-        <Section title="Category picker">
-          <P>Before starting a round, mix and match any combination of categories to focus on (vocabulary, grammar, translation, phonetics — any subset), or leave it on "Mixto" for the default blend of everything. Picking "Mixto" clears any specific selections back to the full mix.</P>
+        <Section title="Two ways to practice: Quick Quiz vs. Lessons">
+          <P>
+            <b>Quick Quiz</b> is the original game-style mode — short, randomly mixed rounds with a timer,
+            combo scoring, and streaks. <b>Lessons</b> is a calmer alternative — no timer, no combo pressure,
+            walking through one topic at a time (easiest items first), showing the explanation right after
+            each answer. Switch between them any time using the link at the bottom of either mode's start
+            screen — both count toward the same XP, level, and mastery progress, so nothing is lost by
+            switching.
+          </P>
+        </Section>
+
+        <Section title="Category picker (Quick Quiz mode)">
+          <P>Before starting a round, mix and match any combination of categories to focus on (vocabulary, grammar, translation, phonetics — any subset), or leave it on "Mixto" for the default blend of everything. Picking "Mixto" clears any specific selections back to the full mix. In Lessons mode, you pick one topic at a time instead — see the mode explanation above.</P>
         </Section>
 
         <Section title="Language switches with your skill level">

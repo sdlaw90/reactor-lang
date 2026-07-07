@@ -535,6 +535,14 @@ export default function PlayPage({ params }) {
                 {T("viewExplanations", { n: explanationLog.length })}
               </button>
             )}
+
+            <button
+              className="rj"
+              style={{ marginTop: 20, background: "transparent", color: "#7C7395", border: "none", fontSize: 12.5, cursor: "pointer", textDecoration: "underline" }}
+              onClick={() => router.push(`/learn/${track.id}`)}
+            >
+              {T("switchToLessons")} {T("tryLessonsMode")} →
+            </button>
           </div>
         )}
 

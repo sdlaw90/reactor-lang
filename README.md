@@ -227,6 +227,29 @@ from the country you pick. Flags render as real images (via a flag CDN), not emo
 Windows in particular doesn't ship flag emoji glyphs in its default font, so relying
 on emoji would've shown plain two-letter codes there instead of actual flags.
 
+## Two practice modes: Quick Quiz + Lessons
+
+Direct response to real user-testing feedback (a first-time tester, 50+, no
+language-learning background, found the game-style format not self-
+explanatory). **Lessons mode** (`app/learn/[trackId]/page.js`) is a calmer
+alternative to the original **Quick Quiz** mode: no timer, no combo scoring,
+walks through every item in one category at a time in a fixed order
+(easiest CEFR tier first, via `buildLessonSequence` in `lib/gameEngine.js`),
+showing the bilingual explanation immediately after each answer rather than
+only in Review mode.
+
+Both modes write to the exact same `progress`/`seen_questions`/
+`missed_questions` data via the same `lib/db.js` functions Quick Quiz already
+used — switching modes never resets or fragments progress, and the mastery
+tracker reflects activity from both. Each mode's start screen links to the
+other (`switchToLessons`/`switchToQuickQuiz` in `lib/playStrings.js`).
+
+**About page** (`app/about/page.js`) explains what the app is and how both
+modes work, linked from Help. A one-time **welcome popup**
+(`lib/WelcomePopup.js`, versioned via `lib/welcomeVersion.js` the same way
+`RequireLegalGate` versions ToS acceptance) introduces both modes right after
+onboarding completes, with a link to the full About page.
+
 ## Track names shown in your native language
 
 Every track has `nameEn`/`nameEs` fields (in addition to `label`, its own
