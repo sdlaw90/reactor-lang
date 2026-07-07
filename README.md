@@ -259,14 +259,15 @@ onboarding completes, with a link to the full About page.
   identity`, the exact pattern the `explanations` table already uses in the
   baseline migration, with zero extension dependency.
 - **Settings moved into the drawer itself**, not just linked from it — actual
-  clarification of the original `#39` request. `lib/SettingsPanel.js` is now
-  a reusable component (extracted from the old `app/settings/page.js`,
-  imports adjusted, page-chrome like the back button/title/fixed footer
-  stripped since the drawer provides its own) rendered directly inside
-  `lib/NavDrawer.js` when its internal view state switches to `'settings'`,
-  with its own back arrow back to the main menu. `/settings` still exists as
-  a route, now just a client-side redirect to `/`, in case anything had it
-  bookmarked.
+  clarification of the original `#39` request. Refined once more after initial
+  feedback: Settings is now **always visible** in the drawer body, below a
+  divider under Dashboard, rather than a click-to-expand sub-view — no extra
+  tap needed. `lib/SettingsPanel.js` is a reusable component (extracted from
+  the old `app/settings/page.js`, imports adjusted, page-chrome like the back
+  button/title/fixed footer stripped since the drawer provides its own)
+  rendered directly inside `lib/NavDrawer.js`'s scrollable body. `/settings`
+  still exists as a route, now just a client-side redirect to `/`, in case
+  anything had it bookmarked.
 - **Lessons mode's "super dark" background, fixed**: `animatedBackgroundStyle`
   takes a gradient *string*, but Lessons mode was passing the whole theme
   *object* (`{label, gradient}`), and spreading the fixed-position background
