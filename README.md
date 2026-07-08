@@ -157,6 +157,19 @@ npm run test:e2e                  # in another
 Environment, same as the migrations workflow -- see that section above for
 why the environment declaration matters, not just the secrets existing.
 
+## A note on package-lock.json
+
+Real incident: an E2E workflow using `npm ci` (which requires `package.json`
+and `package-lock.json` to be in exact sync, unlike the more forgiving `npm
+install`) failed because the delivered lockfile predated a dependency
+(Playwright) that had since been added. Worth knowing that **Vercel's own
+production deployments likely also use `npm ci` by default** for the same
+reproducibility guarantees `npm ci` is designed for — so an out-of-sync
+lockfile isn't just a test-workflow risk, it's a real deployment risk.
+Going forward, a freshly-generated, verified-synced `package-lock.json`
+(confirmed with an actual `npm ci` run, not just `npm install`) is always
+included rather than stripped before delivery.
+
 ## Release process: production vs. beta channels
 
 Until now, every push to `main` reached every user immediately — a beta tester and a
