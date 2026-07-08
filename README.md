@@ -111,6 +111,83 @@ The current migrations already include everything from previous updates (account
 profiles/usernames, etc.) as one baseline file, so this is safe to set up at any point
 — it won't try to re-create anything that already exists.
 
+## Real browser-based E2E tests
+
+Verification throughout this project's history has mostly been "the build
+succeeds and pages return HTTP 200" -- solid for catching build errors, but
+structurally unable to catch client-side JS crashes, React hydration
+mismatches, or interactive elements silently breaking, since `curl` never
+runs any JavaScript. `e2e/` (Playwright) closes that specific gap.
+
+**Honest limitation**: the sandboxed environment used to build this suite
+couldn't actually run it -- its network config blocks downloading a real
+browser binary. The tests are real and should work, but they got their
+first actual run in CI (`.github/workflows/e2e-tests.yml`), not during
+development, which is worth knowing if something in there turns out to be
+wrong in a way code review wouldn't catch.
+
+**Running locally:**
+```bash
+npm install
+npx playwright install chromium   # one-time, downloads the browser
+npm run build && npm run start    # in one terminal
+npm run test:e2e                  # in another
+```
+
+**Two test files:**
+- `e2e/public-pages.spec.js` -- no test account needed (sign-in page, About,
+  beta application form including its multi-step navigation and the
+  selection-highlighting regression a real beta tester flagged, redirects
+  for gated pages). Runs in any environment, including CI, with just the
+  public Supabase URL/anon key.
+- `e2e/authenticated-flow.spec.js` -- needs a real dedicated test account
+  (never a personal or beta-tester account). Set `E2E_TEST_EMAIL` /
+  `E2E_TEST_PASSWORD` as environment variables; the suite skips these tests
+  cleanly (not a failure) if they're not set, so the public-page tests can
+  still run without a test account existing yet. To create one: temporarily
+  set `SIGNUPS_ENABLED = true` in `app/auth/page.js`, sign up a throwaway
+  account, set it back to `false`.
+
+**For CI** (`.github/workflows/e2e-tests.yml`, runs on push to `main` or
+`beta`): add the same env vars as GitHub repo secrets
+(Settings → Secrets and variables → Actions) --
+`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
+`NEXT_PUBLIC_ADMIN_EMAIL`, `NEXT_PUBLIC_SITE_URL`, and optionally
+`E2E_TEST_EMAIL`/`E2E_TEST_PASSWORD`. Uses the `Production` GitHub
+Environment, same as the migrations workflow -- see that section above for
+why the environment declaration matters, not just the secrets existing.
+
+## Release process: production vs. beta channels
+
+Until now, every push to `main` reached every user immediately — a beta tester and a
+future paying customer would see the exact same in-progress code at the exact same
+moment. That's fine at the very start, but not once there's a real distinction between
+"people who signed up to test rough edges" and "people who just want it to work."
+Two lightweight pieces, not new infrastructure:
+
+**1. A dedicated `beta` branch.** Vercel already auto-generates a stable preview
+deployment for any branch you push, no extra config needed for that part —
+`vercel.com` → your project → **Settings → Domains** lets you also assign a
+memorable domain to a specific branch (e.g. `beta.squirrelingo.app` → the `beta`
+branch), rather than sharing an unpredictable auto-generated preview URL with testers.
+Workflow: build/test on `beta`, merge to `main` only once something's actually
+confirmed working — `main` becomes the promotion target, not the default place new
+work lands first.
+
+**2. Version-suffix convention.** `lib/version.js`'s `CURRENT_VERSION` can now carry a
+`-beta.N` suffix (e.g. `"2.23.0-beta.1"`) while something's still being tested on the
+`beta` branch; drop the suffix (`"2.23.0"`) in the commit that promotes to `main`.
+`VersionFooter.js` automatically shows a small **BETA** badge next to the version
+number whenever the suffix is present — testers can tell at a glance which channel
+they're on without asking. `public/version.json` generation and `VersionWatcher.js`'s
+new-version detection both already work with any string (they don't parse semver),
+so the suffix doesn't need any other code changes to keep working.
+
+Deliberately **not** doing yet (per the to-do list, until there's a concrete case for
+it): feature flags for per-user in-progress features, or a fully separate Supabase
+project isolating beta data from production data. Both are real options once the
+lightweight version above stops being enough.
+
 ## Security notification emails (optional but recommended)
 
 Changing your username, email, or password now sends a heads-up email — this is a
