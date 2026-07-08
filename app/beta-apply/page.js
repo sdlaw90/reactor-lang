@@ -23,7 +23,6 @@ const SESSION_LENGTH_OPTIONS = ["Under 5 minutes", "5–10 minutes", "10–20 mi
 const FOCUS_OPTIONS = ["Yes, very much", "Somewhat", "Not really", "Not sure"];
 const COMMITMENT_OPTIONS = ["15+ minutes most days", "A few sessions per week", "One or two sessions per week", "Only occasional use"];
 const PRIOR_BETA_OPTIONS = ["Yes, several times", "Once or twice", "No, this would be my first"];
-const OPEN_TO_CALL_OPTIONS = ["Yes", "Maybe", "No, written feedback only"];
 
 export default function BetaApplyPage() {
   const router = useRouter();
@@ -51,7 +50,6 @@ export default function BetaApplyPage() {
     timeCommitment: "",
     priorBetaExperience: "",
     bugReportComfort: null,
-    openToCall: "",
     reason: "",
     anythingElse: "",
   });
@@ -119,7 +117,6 @@ export default function BetaApplyPage() {
           time_commitment: form.timeCommitment,
           prior_beta_experience: form.priorBetaExperience,
           bug_report_comfort: form.bugReportComfort,
-          open_to_call: form.openToCall,
           anything_else: form.anythingElse.trim(),
         },
       });
@@ -243,9 +240,6 @@ export default function BetaApplyPage() {
               </Field>
               <Field label="How comfortable are you reporting bugs with details (what you did, what happened, screenshots)?">
                 <ScaleInput value={form.bugReportComfort} onChange={set("bugReportComfort")} min={1} max={5} lowLabel="Not comfortable" highLabel="Very comfortable" />
-              </Field>
-              <Field label="Would you be open to a short follow-up chat or video call about your experience?">
-                <RadioGroup options={OPEN_TO_CALL_OPTIONS} value={form.openToCall} onChange={set("openToCall")} />
               </Field>
               <Field label="Why do you want to beta test SquirreLingo?">
                 <textarea value={form.reason} onChange={(e) => set("reason")(e.target.value)} style={styles.textarea} rows={3} />
