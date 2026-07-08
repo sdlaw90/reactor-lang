@@ -31,13 +31,22 @@ export default function BetaApplicationsAdminPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const parseResponse = async (res) => {
+    const rawText = await res.text();
+    try {
+      return JSON.parse(rawText);
+    } catch {
+      throw new Error(`Server returned HTTP ${res.status} with a non-JSON response (likely a route/deployment issue): ${rawText.slice(0, 120)}`);
+    }
+  };
+
   const loadApplications = async (token) => {
     try {
       const res = await fetch("/api/approve-beta-application", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const body = await res.json();
-      if (!res.ok) throw new Error(body.error || "Failed to load applications");
+      const body = await parseResponse(res);
+      if (!res.ok) throw new Error(body.error || `Failed to load applications (HTTP ${res.status})`);
       setApplications(body.applications);
     } catch (e) {
       setError(e.message);
@@ -54,8 +63,8 @@ export default function BetaApplicationsAdminPage() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${data.session.access_token}` },
         body: JSON.stringify({ applicationId: app.id, email: app.email, action }),
       });
-      const body = await res.json();
-      if (!res.ok) throw new Error(body.error || `Failed to ${action}`);
+      const body = await parseResponse(res);
+      if (!res.ok) throw new Error(body.error || `Failed to ${action} (HTTP ${res.status})`);
       await loadApplications(data.session.access_token);
     } catch (e) {
       setError(e.message);

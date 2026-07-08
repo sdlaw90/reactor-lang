@@ -24,11 +24,11 @@ export async function POST(req) {
     return Response.json({ error: "SUPABASE_SERVICE_ROLE_KEY is not set" }, { status: 500 });
   }
 
-  const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, serviceRoleKey, {
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
-
   try {
+    const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, serviceRoleKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+
     // No direct "get user by email" in the stable admin API -- list and
     // match. Fine at beta scale; paginate if this ever needs to scale up.
     const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
@@ -48,6 +48,6 @@ export async function POST(req) {
     return Response.json({ ok: true });
   } catch (e) {
     console.error("admin-set-password failed", e);
-    return Response.json({ error: "Unexpected error setting password" }, { status: 500 });
+    return Response.json({ error: `Unexpected error: ${e?.message || String(e)}` }, { status: 500 });
   }
 }

@@ -27,17 +27,23 @@ export async function GET(req) {
       { status: 500 }
     );
   }
-  const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, serviceRoleKey, {
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
-  const { data, error } = await supabaseAdmin
-    .from("beta_applications")
-    .select("*")
-    .order("created_at", { ascending: false });
-  if (error) {
-    return Response.json({ error: error.message }, { status: 500 });
+
+  try {
+    const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, serviceRoleKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+    const { data, error } = await supabaseAdmin
+      .from("beta_applications")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) {
+      return Response.json({ error: error.message }, { status: 500 });
+    }
+    return Response.json({ applications: data });
+  } catch (e) {
+    console.error("approve-beta-application GET failed", e);
+    return Response.json({ error: `Unexpected error: ${e?.message || String(e)}` }, { status: 500 });
   }
-  return Response.json({ applications: data });
 }
 
 export async function POST(req) {
@@ -59,25 +65,25 @@ export async function POST(req) {
     );
   }
 
-  // Service-role client: full admin access, only ever used server-side here.
-  const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, serviceRoleKey, {
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
-
-  if (action === "reject") {
-    const { error: updateError } = await supabaseAdmin
-      .from("beta_applications")
-      .update({ status: "rejected", reviewed_at: new Date().toISOString() })
-      .eq("id", applicationId);
-    if (updateError) {
-      return Response.json({ error: updateError.message }, { status: 500 });
-    }
-    return Response.json({ ok: true });
-  }
-
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-
   try {
+    // Service-role client: full admin access, only ever used server-side here.
+    const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, serviceRoleKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+
+    if (action === "reject") {
+      const { error: updateError } = await supabaseAdmin
+        .from("beta_applications")
+        .update({ status: "rejected", reviewed_at: new Date().toISOString() })
+        .eq("id", applicationId);
+      if (updateError) {
+        return Response.json({ error: updateError.message }, { status: 500 });
+      }
+      return Response.json({ ok: true });
+    }
+
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
     // Creates the account (with this exact email) and sends Supabase's own
     // invite email -- accepting it requires setting a password, so that's
     // handled for free, no custom email-sending needed.
@@ -98,7 +104,7 @@ export async function POST(req) {
 
     return Response.json({ ok: true });
   } catch (e) {
-    console.error("approve-beta-application failed", e);
-    return Response.json({ error: "Unexpected error approving application" }, { status: 500 });
+    console.error("approve-beta-application POST failed", e);
+    return Response.json({ error: `Unexpected error: ${e?.message || String(e)}` }, { status: 500 });
   }
 }
