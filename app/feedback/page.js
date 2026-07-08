@@ -130,7 +130,7 @@ export default function FeedbackPage() {
       setSubmitted(true);
     } catch (e) {
       console.error("submitFeedback failed", e);
-      setError("Something went wrong sending that — mind trying again?");
+      setError(`Something went wrong sending that: ${e?.message || "unknown error"} — mind trying again? If this keeps happening, screenshot this message and send it to the developer.`);
     } finally {
       setBusy(false);
     }

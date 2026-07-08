@@ -126,7 +126,7 @@ export default function BetaApplyPage() {
       setSubmitted(true);
     } catch (e) {
       console.error("submitBetaApplication failed", e);
-      setError("Something went wrong sending that — mind trying again?");
+      setError(`Something went wrong sending that: ${e?.message || "unknown error"} — mind trying again?`);
     } finally {
       setBusy(false);
     }
