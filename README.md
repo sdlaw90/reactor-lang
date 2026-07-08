@@ -250,6 +250,50 @@ modes work, linked from Help. A one-time **welcome popup**
 `RequireLegalGate` versions ToS acceptance) introduces both modes right after
 onboarding completes, with a link to the full About page.
 
+## Closed beta: real bug fix, sign-up gating, and admin approval flow (v2.22.0)
+
+- **Fixed a real bug**: `buildLessonSequence` (Lessons mode) never called
+  `shuffleOptions()`, unlike `buildRound` and `buildPlacementQuiz` which
+  already did. Since nearly every content item across all 14 tracks was
+  authored with the correct answer as the first option (a pure authoring
+  convention, not intentional), every single Lessons-mode question showed
+  the correct answer in position 0. Confirmed empirically before and after
+  the fix (Node script counting the actual `correctIdx` distribution across
+  real runs) rather than assuming the one-line fix worked.
+- **Changelog now distinguishes user-facing from internal-only entries**:
+  a per-entry `internal: true` flag (see the comment above the `CHANGELOG`
+  array in `lib/version.js`) marks purely backend/infra/CI entries (like the
+  GitHub Actions environment-secrets fix), and both `app/whats-new/page.js`
+  and `app/changelog/page.js` filter them out. `CURRENT_VERSION` still bumps
+  for these, so version numbers stay technically accurate, but the
+  user-facing changelog only shows things users would actually care about.
+  Audited and retroactively marked/pruned several historical entries too.
+- **Closed beta gating**: `app/auth/page.js` has a `SIGNUPS_ENABLED` flag
+  (currently `false`) — self-serve sign-up is hidden entirely, leaving only
+  sign-in plus the "Apply to beta test" link. Flip the flag back once ready
+  to open sign-ups publicly; the sign-up form itself is untouched, just
+  unreachable while the flag is off.
+- **Admin beta-application approval flow**
+  (`app/admin/beta-applications/page.js`, gated by `NEXT_PUBLIC_ADMIN_EMAIL`
+  matching the signed-in user): lists applications, lets you approve or
+  reject. Approving calls Supabase's built-in `auth.admin.inviteUserByEmail`
+  via a service-role-authenticated API route
+  (`app/api/approve-beta-application/route.js`) — this creates the account
+  with the applicant's exact email and sends Supabase's own invite email
+  (works out of the box, no SMTP/Resend setup needed, just rate-limited on
+  the free tier). Accepting the invite requires setting a password, which
+  satisfies the "force password creation" requirement without any custom
+  code, and the existing username-required gate already handles forcing
+  username creation for any account that doesn't have one yet. Deliberately
+  did *not* build a custom Gmail-SMTP-based notification system as
+  originally discussed, since this built-in path avoids needing Gmail
+  credentials in the codebase at all.
+- **New required env vars** (see `.env.local.example`):
+  `SUPABASE_SERVICE_ROLE_KEY` (secret, server-only, powers the admin API
+  route), `NEXT_PUBLIC_ADMIN_EMAIL` (not sensitive, just gates the admin UI),
+  `NEXT_PUBLIC_SITE_URL` (used to redirect people back into the app after
+  accepting an invite).
+
 ## Both forms expanded to match the original Google Forms design (v2.21.0)
 
 The initial in-app beta-application and feedback forms were much thinner than

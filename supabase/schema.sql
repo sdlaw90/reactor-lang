@@ -187,3 +187,52 @@ alter table profiles add column if not exists avatar_value text;
 alter table progress add column if not exists skill_level text not null default 'none';
 alter table progress add column if not exists level_correct_count int not null default 0;
 alter table progress add column if not exists level_total_count int not null default 0;
+
+-- ---------------------------------------------------------------
+-- In-app feedback (Settings -> Feedback, existing users only)
+-- ---------------------------------------------------------------
+
+create table if not exists feedback_submissions (
+  id bigint generated always as identity primary key,
+  user_id uuid references auth.users(id) on delete cascade not null,
+  type text not null default 'general', -- 'bug' | 'feedback' | 'feature_request' | 'general' | 'beta_survey'
+  message text not null,
+  page_context text,
+  sessions_completed text,
+  continued_use_likelihood int,
+  recommend_likelihood int,
+  details jsonb, -- device_browser, signup_ease, categories_used[], bugs_encountered, etc. -- see app/feedback/page.js
+  created_at timestamptz not null default now()
+);
+
+alter table feedback_submissions enable row level security;
+
+drop policy if exists "own feedback inserts" on feedback_submissions;
+create policy "own feedback inserts"
+  on feedback_submissions for insert
+  with check (auth.uid() = user_id);
+
+-- ---------------------------------------------------------------
+-- Public beta-test applications (/beta-apply, no account needed)
+-- ---------------------------------------------------------------
+
+create table if not exists beta_applications (
+  id bigint generated always as identity primary key,
+  name text not null,
+  email text not null,
+  reason text,
+  languages_interested text,
+  native_language text,
+  current_level text,
+  details jsonb, -- age_range, devices[], apps_used[], practice_frequency, etc. -- see app/beta-apply/page.js
+  created_at timestamptz not null default now()
+);
+
+alter table beta_applications enable row level security;
+
+-- Public insert (anon role, no auth) since applicants don't have accounts.
+drop policy if exists "anyone can apply" on beta_applications;
+create policy "anyone can apply"
+  on beta_applications for insert
+  to anon, authenticated
+  with check (true);

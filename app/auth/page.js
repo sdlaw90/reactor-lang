@@ -10,6 +10,11 @@ import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
 import Logo from "../../lib/Logo";
 import { LEGAL_VERSION } from "../../lib/legalVersions";
 
+// Closed beta: public self-serve sign-up is disabled until launch. Flip this
+// back to true once ready to open sign-ups to everyone -- the sign-up form
+// itself is untouched, just not reachable while this is false.
+const SIGNUPS_ENABLED = false;
+
 export default function AuthPage() {
   const router = useRouter();
   const [mode, setMode] = useState("signin"); // 'signin' | 'signup'
@@ -262,16 +267,18 @@ export default function AuthPage() {
           </form>
         )}
 
-        <button
-          className="rj"
-          style={styles.linkBtn}
-          onClick={() => {
-            setMode(mode === "signin" ? "signup" : "signin");
-            resetMessages();
-          }}
-        >
-          {mode === "signin" ? "Need an account? Sign up" : "Already have an account? Sign in"}
-        </button>
+        {SIGNUPS_ENABLED && (
+          <button
+            className="rj"
+            style={styles.linkBtn}
+            onClick={() => {
+              setMode(mode === "signin" ? "signup" : "signin");
+              resetMessages();
+            }}
+          >
+            {mode === "signin" ? "Need an account? Sign up" : "Already have an account? Sign in"}
+          </button>
+        )}
 
         <p style={styles.betaApplyRow}>
           Don't have an invite yet? <a href="/beta-apply" style={styles.betaApplyLink}>Apply to beta test</a>.

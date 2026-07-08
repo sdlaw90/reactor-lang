@@ -96,7 +96,7 @@ export default function HomePage() {
             </h1>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <NavDrawer profile={profile} displayName={displayName} hasUnseenWhatsNew={hasUnseenWhatsNew} />
+            <NavDrawer profile={profile} displayName={displayName} hasUnseenWhatsNew={hasUnseenWhatsNew} userEmail={session?.user?.email} />
           </div>
         </div>
 
