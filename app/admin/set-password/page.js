@@ -19,14 +19,26 @@ export default function AdminSetPasswordPage() {
         headers: { "Content-Type": "application/json", "X-Admin-Secret": secret },
         body: JSON.stringify({ email: email.trim(), newPassword }),
       });
-      const body = await res.json();
+      const rawText = await res.text();
+      let body;
+      try {
+        body = JSON.parse(rawText);
+      } catch {
+        // Response wasn't JSON at all -- most commonly a 404 (route not
+        // deployed yet) or a platform error page. Surface the real status
+        // instead of a generic "network error" that hides what happened.
+        setResult({
+          error: `Server returned an unexpected response (HTTP ${res.status}). This usually means the API route isn't deployed yet, or crashed before it could respond. First 120 characters of the response: ${rawText.slice(0, 120)}`,
+        });
+        return;
+      }
       if (!res.ok) {
-        setResult({ error: body.error || "Failed to set password" });
+        setResult({ error: body.error || `Failed to set password (HTTP ${res.status})` });
       } else {
         setResult({ ok: true });
       }
     } catch (e) {
-      setResult({ error: "Network error — try again" });
+      setResult({ error: "Network error (request never reached the server) — check your connection and try again" });
     } finally {
       setBusy(false);
     }
