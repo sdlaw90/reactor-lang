@@ -20,7 +20,7 @@ export default function ChangelogPage() {
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 20 }}>
-          {CHANGELOG.filter((entry) => !entry.internal).map((entry) => (
+          {CHANGELOG.map((entry) => (
             <div key={entry.version} style={styles.entry}>
               <div style={styles.entryHeader}>
                 <span className="jm" style={styles.entryVersion}>

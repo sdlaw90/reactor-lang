@@ -8,7 +8,7 @@ import { CURRENT_VERSION, CHANGELOG } from "../../lib/version";
 export default function WhatsNewPage() {
   const router = useRouter();
   const [marked, setMarked] = useState(false);
-  const latest = CHANGELOG.find((e) => !e.internal) || CHANGELOG[0];
+  const latest = CHANGELOG[0];
 
   useEffect(() => {
     (async () => {
