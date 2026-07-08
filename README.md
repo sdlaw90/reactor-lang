@@ -250,6 +250,25 @@ modes work, linked from Help. A one-time **welcome popup**
 `RequireLegalGate` versions ToS acceptance) introduces both modes right after
 onboarding completes, with a link to the full About page.
 
+## Break-glass password tool (v2.22.1)
+
+Real incident: Supabase's Site URL / Redirect URL configuration was pointed
+at `localhost:3000`, so password-reset emails redirected to a dead link.
+Fixing the URL config helped, but Redirect URLs needs a wildcard suffix
+(`https://your-domain/**`, not just the bare domain) to permit redirecting
+to `/reset-password` specifically rather than falling back to the bare
+Site URL root — worth checking if this ever recurs.
+
+`app/admin/set-password` (+ `app/api/admin-set-password/route.js`) sets a
+user's password directly via the Supabase admin API, skipping the
+email-based flow entirely. Deliberately **not** gated by "must already be
+signed in as admin" like the other admin page — that would be useless for
+the exact scenario this exists for (being locked out of your own account).
+Gated by a separate `ADMIN_API_SECRET` instead (any long random string, e.g.
+`openssl rand -hex 32`), checked via request header, so it works
+independently of any app session state. Marked `internal: true` in the
+changelog since it's a dev/ops tool, not a user-facing feature.
+
 ## Closed beta: real bug fix, sign-up gating, and admin approval flow (v2.22.0)
 
 - **Fixed a real bug**: `buildLessonSequence` (Lessons mode) never called
