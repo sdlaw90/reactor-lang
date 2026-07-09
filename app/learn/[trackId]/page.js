@@ -6,9 +6,11 @@ import { Check, X, ChevronRight, ChevronDown, RotateCcw, Info } from "lucide-rea
 import { supabase } from "../../../lib/supabaseClient";
 import { getTrack } from "../../../data/tracks";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
-import { buildLessonSequence, computeMastery, todayStr } from "../../../lib/gameEngine";
+import { buildLessonSequence, computeMastery, todayStr, computeStreakUpdate } from "../../../lib/gameEngine";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
+import { trackDisplayName } from "../../../lib/languageNames";
+import StreakMilestoneCelebration from "../../../lib/StreakMilestoneCelebration";
 import {
   loadProgress,
   saveProgress,
@@ -42,6 +44,7 @@ export default function LessonsPage({ params }) {
   const [sessionCorrect, setSessionCorrect] = useState(0);
   const [sessionXP, setSessionXP] = useState(0);
   const [streakApplied, setStreakApplied] = useState(false);
+  const [milestoneHit, setMilestoneHit] = useState(null);
   const [showPageHelp, setShowPageHelp] = useState(false);
 
   useEffect(() => {
@@ -121,17 +124,12 @@ export default function LessonsPage({ params }) {
     let nextProgress = progress;
     if (!streakApplied) {
       const today = todayStr();
-      let newStreak = progress.streak;
-      if (progress.last_played !== today) {
-        if (progress.last_played) {
-          const last = new Date(progress.last_played);
-          const diffDays = Math.round((new Date(today) - last) / 86400000);
-          newStreak = diffDays === 1 ? progress.streak + 1 : 1;
-        } else {
-          newStreak = 1;
-        }
-      }
+      const { newStreak, milestone } = computeStreakUpdate(progress, today);
       nextProgress = { ...nextProgress, streak: newStreak, last_played: today };
+      if (milestone) {
+        nextProgress = { ...nextProgress, xp: nextProgress.xp + milestone.bonusXP };
+        setMilestoneHit(milestone);
+      }
       setStreakApplied(true);
     }
 
@@ -201,7 +199,7 @@ export default function LessonsPage({ params }) {
         {screen === "start" && (
           <div style={styles.centerCol} className="fadein">
             <h1 className="rj" style={styles.title}>
-              {viewerNativeLang === "es" ? track.nameEs || track.label : track.nameEn || track.label}
+              {trackDisplayName(track, viewerNativeLang)}
             </h1>
             <p style={styles.subtitle}>Lessons mode — no timer, step by step.</p>
 
@@ -331,6 +329,7 @@ export default function LessonsPage({ params }) {
           </div>
         )}
       </div>
+      <StreakMilestoneCelebration milestone={milestoneHit} onClose={() => setMilestoneHit(null)} />
     </div>
   );
 }

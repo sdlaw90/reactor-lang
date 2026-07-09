@@ -79,7 +79,7 @@ export default function HelpPage() {
         </Section>
 
         <Section title="Explanations & archive">
-          <P>Every question you've ever answered — right or wrong — gets logged with an explanation of the correct answer in both your native language and the language you're learning, viewable anytime from the round-result screen. Older entries move to an "Archivo" section automatically so the main list stays fast to scroll — nothing is ever deleted unless you choose to clear it.</P>
+          <P>Every question you've ever answered — right or wrong — gets logged with an explanation of the correct answer, viewable anytime from the round-result screen. Explanations currently show in English and Spanish specifically (not yet your actual native + target language for tracks outside that pair — a known limitation, on the roadmap to fix). Older entries move to an "Archivo" section automatically so the main list stays fast to scroll — nothing is ever deleted unless you choose to clear it.</P>
         </Section>
 
         <Section title="Mastery tracker">

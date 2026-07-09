@@ -179,7 +179,7 @@ export default function FeedbackPage() {
                 <input value={form.name} onChange={(e) => set("name")(e.target.value)} style={styles.input} />
               </Field>
               <Field label="What device and browser did you mainly use?" required>
-                <input value={form.deviceBrowser} onChange={(e) => set("deviceBrowser")(e.target.value)} style={styles.input} placeholder="e.g. iPhone, Safari" />
+                <input value={form.deviceBrowser} onChange={(e) => set("deviceBrowser")(e.target.value)} style={styles.input} placeholder="e.g. iPhone, Safari" aria-label="What device and browser did you mainly use?" />
               </Field>
               <Field label="Roughly how many sessions did you complete during the beta?" required>
                 <RadioGroup options={SESSIONS_OPTIONS} value={form.sessionsCompleted} onChange={set("sessionsCompleted")} />

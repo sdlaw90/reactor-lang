@@ -188,6 +188,7 @@ export default function AuthPage() {
             <input
               type="text"
               placeholder="Email or username"
+              aria-label="Email or username"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               required
@@ -215,6 +216,7 @@ export default function AuthPage() {
             <input
               type="email"
               placeholder="Email"
+              aria-label="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -223,6 +225,7 @@ export default function AuthPage() {
             <input
               type="email"
               placeholder="Confirm email"
+              aria-label="Confirm email"
               value={confirmEmail}
               onChange={(e) => setConfirmEmail(e.target.value)}
               required

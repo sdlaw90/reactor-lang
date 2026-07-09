@@ -12,6 +12,7 @@ import ruForEn from "./ruForEn";
 import jaForEn from "./jaForEn";
 import zhForEn from "./zhForEn";
 import koForEn from "./koForEn";
+import enForIt from "./enForIt";
 
 export const TRACKS = {
   [esForEn.id]: esForEn,
@@ -28,11 +29,20 @@ export const TRACKS = {
   [jaForEn.id]: jaForEn,
   [zhForEn.id]: zhForEn,
   [koForEn.id]: koForEn,
+  [enForIt.id]: enForIt,
 };
 
 const NATIVE_LANG_LABELS = {
   en: "English",
   es: "Español",
+  it: "Italiano",
+  fr: "Français",
+  de: "Deutsch",
+  pt: "Português",
+  ru: "Русский",
+  ja: "日本語",
+  zh: "中文",
+  ko: "한국어",
 };
 
 export function getTrack(trackId) {

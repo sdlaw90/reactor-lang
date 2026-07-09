@@ -7,6 +7,7 @@ import { supabase } from "../../lib/supabaseClient";
 import { getTrack, listTracks } from "../../data/tracks";
 import { loadAllProgress } from "../../lib/db";
 import { skillLevelInfo } from "../../lib/skillLevels";
+import { trackDisplayName as sharedTrackDisplayName } from "../../lib/languageNames";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function DashboardPage() {
   }
 
   const nativeLang = session?.user?.user_metadata?.native_lang ?? null;
-  const trackDisplayName = (t) => (nativeLang === "es" ? t.nameEs || t.label : t.nameEn || t.label);
+  const trackDisplayName = (t) => sharedTrackDisplayName(t, nativeLang);
   const totalXP = rows.reduce((sum, r) => sum + (r.xp || 0), 0);
   const totalRounds = rows.reduce((sum, r) => sum + (r.rounds_completed || 0), 0);
   const bestStreak = rows.reduce((max, r) => Math.max(max, r.streak || 0), 0);

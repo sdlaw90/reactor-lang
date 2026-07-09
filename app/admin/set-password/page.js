@@ -59,6 +59,7 @@ export default function AdminSetPasswordPage() {
           <input
             type="password"
             placeholder="Admin secret"
+            aria-label="Admin secret"
             value={secret}
             onChange={(e) => setSecret(e.target.value)}
             required
@@ -67,6 +68,7 @@ export default function AdminSetPasswordPage() {
           <input
             type="email"
             placeholder="Account email"
+            aria-label="Account email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -75,6 +77,7 @@ export default function AdminSetPasswordPage() {
           <input
             type="password"
             placeholder="New password (6+ characters)"
+            aria-label="New password, minimum 6 characters"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required

@@ -12,10 +12,13 @@ import {
   timeFor,
   todayStr,
   computeMastery,
+  computeStreakUpdate,
 } from "../../../lib/gameEngine";
 import { cefrSetForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
+import { trackDisplayName } from "../../../lib/languageNames";
+import StreakMilestoneCelebration from "../../../lib/StreakMilestoneCelebration";
 import {
   loadProgress,
   saveProgress,
@@ -58,6 +61,7 @@ export default function PlayPage({ params }) {
   const [archiveLoading, setArchiveLoading] = useState(false);
   const [showLevelPicker, setShowLevelPicker] = useState(false);
   const [showPageHelp, setShowPageHelp] = useState(false);
+  const [milestoneHit, setMilestoneHit] = useState(null);
   const [advanceDismissed, setAdvanceDismissed] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState([]); // empty = Mixto (all categories)
   const [awaitingNext, setAwaitingNext] = useState(false); // review-mode: paused after answer, waiting for "Next"
@@ -261,17 +265,8 @@ export default function PlayPage({ params }) {
   const endRound = async (completed, finalCombo, finalXP, finalCorrect) => {
     clearTimer();
     const today = todayStr();
-    let newStreak = progress.streak;
-    if (progress.last_played !== today) {
-      if (progress.last_played) {
-        const last = new Date(progress.last_played);
-        const diffDays = Math.round((new Date(today) - last) / 86400000);
-        newStreak = diffDays === 1 ? progress.streak + 1 : 1;
-      } else {
-        newStreak = 1;
-      }
-    }
-    const totalXP = progress.xp + finalXP;
+    const { newStreak, milestone } = computeStreakUpdate(progress, today);
+    const totalXP = progress.xp + finalXP + (milestone ? milestone.bonusXP : 0);
     const newLevel = Math.floor(totalXP / 100) + 1;
     const next = {
       xp: totalXP,
@@ -286,6 +281,7 @@ export default function PlayPage({ params }) {
     };
     setProgress(next);
     saveProgress(userId, track.id, next).catch((e) => console.error("saveProgress failed", e));
+    if (milestone) setMilestoneHit(milestone);
 
     // Persist missed/resolved question state
     const missedArr = Array.from(newlyMissed.current);
@@ -397,7 +393,7 @@ export default function PlayPage({ params }) {
         {screen === "start" && (
           <div style={styles.centerCol} className="fadein">
             <h1 className="rj" style={styles.title}>
-              {viewerNativeLang === "es" ? track.nameEs || track.label : track.nameEn || track.label}
+              {trackDisplayName(track, viewerNativeLang)}
             </h1>
             <p style={styles.subtitle}>{useAltPrompt && track.sublabelEn ? track.sublabelEn : track.sublabel}</p>
 
@@ -830,6 +826,7 @@ function ExplanationCard({ item, track, uiLang }) {
           </div>
         </div>
       )}
+      <StreakMilestoneCelebration milestone={milestoneHit} onClose={() => setMilestoneHit(null)} />
     </div>
   );
 }

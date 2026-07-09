@@ -24,6 +24,23 @@ button {
   font-family: inherit;
 }
 
+/* Keyboard focus indicators -- :focus-visible only shows for keyboard
+   navigation (Tab), not mouse clicks, so this doesn't add visual noise for
+   mouse/touch users while still giving keyboard users a clear, visible
+   indication of where they are. Nothing like this existed before; with
+   fully custom-styled buttons/links (no default browser appearance),
+   keyboard users previously had zero visual indication of focus at all. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #3ddbff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 @keyframes correctPulse {
   0% {
     box-shadow: 0 0 0 0 rgba(94, 224, 160, 0.65);

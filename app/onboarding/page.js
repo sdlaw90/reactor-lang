@@ -125,17 +125,13 @@ export default function OnboardingPage() {
               What's your native language?
             </h1>
             <p style={styles.subtitle}>This decides which languages show up for you to learn.</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
-              {langOptions.map((o) => (
-                <button
-                  key={o.code}
-                  className="rj"
-                  style={{ ...styles.optionCard, borderColor: nativeLang === o.code ? "#FF8FB1" : "#3A3452" }}
-                  onClick={() => setNativeLang(o.code)}
-                >
-                  {o.label}
-                </button>
-              ))}
+            <div style={{ marginTop: 20 }}>
+              <SearchableSelect
+                options={langOptions.map((o) => ({ value: o.code, label: o.label }))}
+                value={nativeLang}
+                onChange={setNativeLang}
+                placeholder="Search languages…"
+              />
             </div>
             <button className="rj" style={styles.primaryBtn} disabled={!nativeLang || busy} onClick={finishStepLanguage}>
               {busy ? "..." : "Continue"}
