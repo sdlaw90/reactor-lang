@@ -11,6 +11,7 @@ export default function BetaApplicationsAdminPage() {
   const [session, setSession] = useState(undefined);
   const [applications, setApplications] = useState(null);
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
   const [busyId, setBusyId] = useState(null);
   const [filter, setFilter] = useState("pending");
 
@@ -56,6 +57,7 @@ export default function BetaApplicationsAdminPage() {
   const act = async (app, action) => {
     setBusyId(app.id);
     setError("");
+    setInfo("");
     try {
       const { data } = await supabase.auth.getSession();
       const res = await fetch("/api/approve-beta-application", {
@@ -65,6 +67,7 @@ export default function BetaApplicationsAdminPage() {
       });
       const body = await parseResponse(res);
       if (!res.ok) throw new Error(body.error || `Failed to ${action} (HTTP ${res.status})`);
+      if (body.note) setInfo(body.note);
       await loadApplications(data.session.access_token);
     } catch (e) {
       setError(e.message);
@@ -107,6 +110,7 @@ export default function BetaApplicationsAdminPage() {
         </div>
 
         {error && <p style={styles.error}>{error}</p>}
+        {info && <p style={styles.info}>{info}</p>}
 
         {filtered.length === 0 && <p style={{ color: "#7C7395" }}>No applications here.</p>}
 
@@ -200,6 +204,7 @@ const styles = {
     textTransform: "capitalize",
   },
   filterChipActive: { background: "#FF8FB1", color: "#171423", borderColor: "#FF8FB1" },
+  info: { color: "#5EE0A0", fontSize: 13, marginTop: 14 },
   error: { color: "#FF7B8A", fontSize: 13, marginBottom: 14 },
   card: { background: "#221E33", border: "1px solid #3A3452", borderRadius: 14, padding: 18, marginBottom: 14 },
   name: { color: "#F3F0FA", fontWeight: 700, fontSize: 15 },
