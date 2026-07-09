@@ -172,11 +172,11 @@ export default function BetaApplyPage() {
         <form onSubmit={step === STEPS.length - 1 ? submit : (e) => e.preventDefault()}>
           {step === 0 && (
             <>
-              <Field label="Name or nickname" required>
-                <input value={form.name} onChange={(e) => set("name")(e.target.value)} style={styles.input} />
+              <Field label="Name or nickname" required htmlFor="ba-name">
+                <input id="ba-name" value={form.name} onChange={(e) => set("name")(e.target.value)} style={styles.input} />
               </Field>
-              <Field label="Email" required>
-                <input type="email" value={form.email} onChange={(e) => set("email")(e.target.value)} style={styles.input} />
+              <Field label="Email" required htmlFor="ba-email">
+                <input id="ba-email" type="email" value={form.email} onChange={(e) => set("email")(e.target.value)} style={styles.input} />
               </Field>
               <Field label="How old are you?">
                 <RadioGroup options={AGE_OPTIONS} value={form.ageRange} onChange={set("ageRange")} />
@@ -192,23 +192,23 @@ export default function BetaApplyPage() {
 
           {step === 1 && (
             <>
-              <Field label="What is your native language (or strongest language)?" required>
-                <input value={form.nativeLanguage} onChange={(e) => set("nativeLanguage")(e.target.value)} style={styles.input} />
+              <Field label="What is your native language (or strongest language)?" required htmlFor="ba-native-language">
+                <input id="ba-native-language" value={form.nativeLanguage} onChange={(e) => set("nativeLanguage")(e.target.value)} style={styles.input} />
               </Field>
-              <Field label="Which language(s) do you want to practice with SquirreLingo?" required>
-                <input value={form.targetLanguages} onChange={(e) => set("targetLanguages")(e.target.value)} style={styles.input} />
+              <Field label="Which language(s) do you want to practice with SquirreLingo?" required htmlFor="ba-target-languages">
+                <input id="ba-target-languages" value={form.targetLanguages} onChange={(e) => set("targetLanguages")(e.target.value)} style={styles.input} />
               </Field>
               <Field label="How would you rate your current level in that language?" required>
                 <RadioGroup options={LEVEL_OPTIONS} value={form.currentLevel} onChange={set("currentLevel")} />
               </Field>
-              <Field label="Any preference for a specific regional variety or dialect (e.g. Latin American vs. European Spanish)?">
-                <input value={form.dialectPreference} onChange={(e) => set("dialectPreference")(e.target.value)} style={styles.input} />
+              <Field label="Any preference for a specific regional variety or dialect (e.g. Latin American vs. European Spanish)?" htmlFor="ba-dialect">
+                <input id="ba-dialect" value={form.dialectPreference} onChange={(e) => set("dialectPreference")(e.target.value)} style={styles.input} />
               </Field>
               <Field label="Which language-learning apps or methods have you used before?">
                 <CheckboxGroup options={APPS_OPTIONS} value={form.appsUsed} onToggle={toggleMulti("appsUsed")} />
               </Field>
-              <Field label="What's your biggest frustration with the language apps you've tried?">
-                <textarea value={form.biggestFrustration} onChange={(e) => set("biggestFrustration")(e.target.value)} style={styles.textarea} rows={3} />
+              <Field label="What's your biggest frustration with the language apps you've tried?" htmlFor="ba-frustration">
+                <textarea id="ba-frustration" value={form.biggestFrustration} onChange={(e) => set("biggestFrustration")(e.target.value)} style={styles.textarea} rows={3} />
               </Field>
             </>
           )}
@@ -241,11 +241,11 @@ export default function BetaApplyPage() {
               <Field label="How comfortable are you reporting bugs with details (what you did, what happened, screenshots)?">
                 <ScaleInput value={form.bugReportComfort} onChange={set("bugReportComfort")} min={1} max={5} lowLabel="Not comfortable" highLabel="Very comfortable" />
               </Field>
-              <Field label="Why do you want to beta test SquirreLingo?">
-                <textarea value={form.reason} onChange={(e) => set("reason")(e.target.value)} style={styles.textarea} rows={3} />
+              <Field label="Why do you want to beta test SquirreLingo?" htmlFor="ba-reason">
+                <textarea id="ba-reason" value={form.reason} onChange={(e) => set("reason")(e.target.value)} style={styles.textarea} rows={3} />
               </Field>
-              <Field label="Anything else we should know about you?">
-                <textarea value={form.anythingElse} onChange={(e) => set("anythingElse")(e.target.value)} style={styles.textarea} rows={3} />
+              <Field label="Anything else we should know about you?" htmlFor="ba-anything-else">
+                <textarea id="ba-anything-else" value={form.anythingElse} onChange={(e) => set("anythingElse")(e.target.value)} style={styles.textarea} rows={3} />
               </Field>
             </>
           )}
@@ -278,10 +278,10 @@ export default function BetaApplyPage() {
   );
 }
 
-function Field({ label, required, children }) {
+function Field({ label, required, htmlFor, children }) {
   return (
     <div style={{ marginBottom: 18 }}>
-      <label style={styles.label}>
+      <label htmlFor={htmlFor} style={styles.label}>
         {label} {required && <span style={{ color: "#FF7B8A" }}>*</span>}
       </label>
       {children}

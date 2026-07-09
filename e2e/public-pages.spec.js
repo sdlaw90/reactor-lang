@@ -54,8 +54,8 @@ test.describe("Beta application form", () => {
     await page.getByRole("button", { name: /^next$/i }).click();
     await expect(page.getByText(/1\. about you/i)).toBeVisible(); // still on step 1
 
-    await page.getByPlaceholder(/^name/i).fill("Test User");
-    await page.getByPlaceholder(/email/i).fill("test@example.com");
+    await page.getByLabel(/^name or nickname/i).fill("Test User");
+    await page.getByLabel(/^email/i).fill("test@example.com");
     await page.getByText("Desktop/laptop browser").click();
     await page.getByRole("button", { name: /^next$/i }).click();
     await expect(page.getByText(/2\. language background/i)).toBeVisible();
@@ -63,17 +63,17 @@ test.describe("Beta application form", () => {
     await page.getByRole("button", { name: /^back$/i }).click();
     await expect(page.getByText(/1\. about you/i)).toBeVisible();
     // Values should persist across Back/Next, not reset.
-    await expect(page.getByPlaceholder(/^name/i)).toHaveValue("Test User");
+    await expect(page.getByLabel(/^name or nickname/i)).toHaveValue("Test User");
   });
 
   test("radio selection updates correctly when changed", async ({ page }) => {
     await page.goto("/beta-apply");
-    await page.getByPlaceholder(/^name/i).fill("Test User");
-    await page.getByPlaceholder(/email/i).fill("test@example.com");
+    await page.getByLabel(/^name or nickname/i).fill("Test User");
+    await page.getByLabel(/^email/i).fill("test@example.com");
     await page.getByText("Desktop/laptop browser").click();
     await page.getByRole("button", { name: /^next$/i }).click();
-    await page.getByPlaceholder(/native language/i).fill("English");
-    await page.getByPlaceholder(/language\(s\) do you want/i).fill("Spanish");
+    await page.getByLabel(/native language/i).fill("English");
+    await page.getByLabel(/language\(s\) do you want/i).fill("Spanish");
     await page.getByText("Beginner (basic phrases").click();
     await page.getByRole("button", { name: /^next$/i }).click();
     await page.getByText("A few times a week").click();
