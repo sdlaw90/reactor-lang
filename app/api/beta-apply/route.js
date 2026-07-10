@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { cleanEmail, looksLikeEmail } from "../../../lib/emailUtils";
+import { brandedEmail, detailRows, escapeHtml } from "../../../lib/emailTemplate";
 
 // Public beta application submissions, moved server-side (previously a
 // direct client insert from lib/db.js). Server-side gives us three things a
@@ -35,6 +36,19 @@ async function notifyAdminOfApplication(application) {
       `Review it here: ${siteUrl}/admin/beta-applications`,
     ];
 
+    const bodyHtml =
+      detailRows([
+        ["From", `${application.name} <${application.email}>`],
+        ["Native language", application.native_language],
+        ["Wants to learn", application.languages_interested],
+        ["Level", application.current_level],
+        ["Devices", (application.details?.devices || []).join(", ")],
+      ]) +
+      (application.reason
+        ? `<p style="margin: 14px 0 6px;"><strong style="color: #F3F0FA;">Why they want in:</strong></p>
+           <p style="margin: 0; white-space: pre-wrap;">${escapeHtml(application.reason)}</p>`
+        : "");
+
     const resp = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -45,6 +59,11 @@ async function notifyAdminOfApplication(application) {
         from: fromAddress,
         to: adminEmail,
         subject: `SquirreLingo beta application: ${application.name}`,
+        html: brandedEmail({
+          heading: "🌰 New beta application",
+          bodyHtml,
+          cta: { label: "Review application", url: `${siteUrl}/admin/beta-applications` },
+        }),
         text: lines.join("\n"),
       }),
     });

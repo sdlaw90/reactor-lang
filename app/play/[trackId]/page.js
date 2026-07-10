@@ -761,6 +761,7 @@ export default function PlayPage({ params }) {
           </div>
         )}
       </div>
+      <StreakMilestoneCelebration milestone={milestoneHit} onClose={() => setMilestoneHit(null)} />
     </div>
   );
 }
@@ -826,7 +827,6 @@ function ExplanationCard({ item, track, uiLang }) {
           </div>
         </div>
       )}
-      <StreakMilestoneCelebration milestone={milestoneHit} onClose={() => setMilestoneHit(null)} />
     </div>
   );
 }

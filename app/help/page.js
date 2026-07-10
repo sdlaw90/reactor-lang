@@ -100,7 +100,7 @@ export default function HelpPage() {
         </Section>
 
         <Section title="Feedback">
-          <P>Found a bug, or have an idea? Settings → Feedback has an in-app form (about 5–7 minutes, several short steps) — it goes straight to the developer, no external site required. Know someone who'd like to help test? They can apply at /beta-apply (about 3 minutes), no account needed.</P>
+          <P>Found a bug? Settings → "Report a bug" — a quick one-box form where you can also attach a screenshot and an error code (if something crashes, the error screen shows a code like SQ-XXXXXX; the form fills it in for you automatically). Have an idea instead? Settings → "Suggest a feature". Both go straight to the developer, no external site required. Know someone who'd like to help test? They can apply at /beta-apply (about 3 minutes), no account needed.</P>
         </Section>
 
         <Section title="Account & security">

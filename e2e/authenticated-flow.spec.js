@@ -74,4 +74,45 @@ test.describe("Authenticated flow", () => {
     await page.waitForLoadState("networkidle");
     expect(errors).toEqual([]);
   });
+
+  test("explanations view opens without crashing after a completed round", async ({ page }) => {
+    // Regression for v2.24.0-beta.4: a component referencing PlayPage state
+    // was accidentally rendered inside ExplanationCard, so the explanations
+    // view crashed for ANY account with at least one history row -- and the
+    // suite stayed green because no spec ever completed a round and opened
+    // it. This one does both, seeding its own history in the process.
+    const errors = [];
+    page.on("pageerror", (err) => errors.push(err.message));
+
+    await page.locator("a, button").filter({ hasText: /spanish|italian|french/i }).first().click();
+    await expect(page).toHaveURL(/\/play\//);
+    await page.getByRole("button", { name: /start round/i }).click();
+
+    // Play the round to completion: answer with the first option; in
+    // Lessons/review pacing a "Next" button appears between questions.
+    // Bounded loop -- if the round somehow never ends, the assertion below
+    // fails rather than hanging.
+    for (let i = 0; i < 40; i++) {
+      if (await page.getByText(/round complete|ronda completa/i).isVisible().catch(() => false)) break;
+      const next = page.getByRole("button", { name: /^(next|siguiente)/i });
+      if (await next.isVisible().catch(() => false)) {
+        await next.click();
+        await page.waitForTimeout(150);
+        continue;
+      }
+      const option = page
+        .locator("button.rj")
+        .filter({ hasNotText: /exit|salir|start round|empezar/i })
+        .first();
+      if (await option.isVisible().catch(() => false)) await option.click();
+      await page.waitForTimeout(250);
+    }
+    await expect(page.getByText(/round complete|ronda completa/i)).toBeVisible({ timeout: 5000 });
+
+    // Now the part that used to crash: open the explanations view, which
+    // renders one ExplanationCard per history row.
+    await page.getByRole("button", { name: /view explanations|ver explicaciones/i }).click();
+    await expect(page.getByText(/explanations|explicaciones/i).first()).toBeVisible();
+    expect(errors).toEqual([]);
+  });
 });
