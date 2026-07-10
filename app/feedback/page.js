@@ -1,13 +1,33 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "../../lib/supabaseClient";
 
 // The old beta-survey wizard that lived here has been retired from the app;
 // that questionnaire now goes out as an email at the end of each beta round
 // (docs/beta-feedback-email-draft.md). This route stays as a chooser so
 // existing links and habits still land somewhere useful.
+//
+// Guarded like /feedback/bug and /feedback/feature: signed-out visitors are
+// sent to /auth (the beta.4 rework moved the old survey's guard into the two
+// destination pages and left this chooser unguarded -- regression fix).
 export default function FeedbackChooserPage() {
   const router = useRouter();
+  const [session, setSession] = useState(undefined);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase.auth.getSession();
+      if (!data.session) {
+        router.push("/auth");
+        return;
+      }
+      setSession(data.session);
+    })();
+  }, [router]);
+
+  if (!session) return null;
 
   return (
     <div style={styles.wrap}>
