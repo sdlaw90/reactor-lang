@@ -26,7 +26,8 @@ export default function HelpPage() {
           <P>
             Your profile picture, top-right of the home screen, opens a slide-out menu with everything that
             used to be spread across separate icons: <b>What's New</b> (a dot appears when there's a release
-            you haven't seen yet), <b>Help</b> (this page), and <b>Dashboard</b> (your total XP, streak, and
+            you haven't seen yet), <b>Help</b> (this page), <b>About</b> (what the app is, how both modes
+            work, and what's planned next), and <b>Dashboard</b> (your total XP, streak, and
             rounds across every language). Below a divider, the full <b>Settings</b> section sits right there
             too — username, email, password, native language/country, profile picture, gameplay preferences —
             no extra tap needed to open it.
