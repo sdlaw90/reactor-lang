@@ -61,6 +61,7 @@ export default function HelpPage() {
 
         <Section title="Language switches with your skill level">
           <P>On each language's play page, the on-screen buttons/labels/stats show in your <b>native language</b> while you're at No experience, Beginner, or Intermediate — no need to read instructions in a language you don't know yet. Once you reach Advanced or Native, that same chrome switches to the <b>language you're learning</b>, since by then reading it is good practice.</P>
+          <P>Questions themselves follow the same rule where available: the question appears in the language you're learning, with a small <b>translation in your native language</b> right underneath while you're at the lower skill levels — so you always know what's being asked without the translation ever giving away the answer. At Advanced/Native the subtitle disappears along with the rest of the native-language chrome. Translations are being added track by track alongside the deeper-content passes, starting with Latin American Spanish.</P>
         </Section>
 
         <Section title="Playing a round">

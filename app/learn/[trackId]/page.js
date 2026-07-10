@@ -83,6 +83,16 @@ export default function LessonsPage({ params }) {
   const displayCatLabel = (catId) => categoryDisplayName(uiLang, viewerNativeLang, track, catId);
   const uiLang = progress ? uiLangForSkill(progress.skill_level, viewerNativeLang, track) : "en";
   const T = (key, vars) => t(uiLang, key, vars);
+  // Native-language subtitle under the question — same rule as Quick Quiz:
+  // shown while the chrome is in the viewer's native language, hidden at
+  // Advanced/Native (immersive), skipped when unauthored or duplicative.
+  const displayPromptNative = (q) => {
+    if (!q.promptNative) return null;
+    const nativeLang = viewerNativeLang || track.nativeLang;
+    if (uiLang !== nativeLang) return null;
+    const txt = q.promptNative[nativeLang] || q.promptNative[track.nativeLang];
+    return txt && txt !== displayPrompt(q) ? txt : null;
+  };
 
   if (!loaded || !progress) {
     return (
@@ -253,6 +263,7 @@ export default function LessonsPage({ params }) {
               {displayCatLabel(q.cat)}
             </div>
             <p style={styles.prompt}>{displayPrompt(q)}</p>
+            {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}
 
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>
               {q.options.map((opt, i) => {
@@ -414,6 +425,7 @@ const styles = {
     marginBottom: 12,
   },
   prompt: { fontSize: 18, fontWeight: 600, color: "#F3F0FA", lineHeight: 1.4, marginBottom: 4 },
+  promptNative: { fontSize: 13, fontWeight: 400, lineHeight: 1.45, margin: "0 0 4px", color: "#9B93B8" },
   optionBtn: {
     display: "flex",
     justifyContent: "space-between",

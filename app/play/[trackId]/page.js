@@ -132,6 +132,20 @@ export default function PlayPage({ params }) {
   const displayCatLabel = (catId) => categoryDisplayName(uiLang, viewerNativeLang, track, catId);
   const uiLang = uiLangForSkill(progress.skill_level, viewerNativeLang, track);
   const T = (key, vars) => t(uiLang, key, vars);
+  // Small native-language subtitle under the question (target language stays
+  // the primary prompt on top). Follows the same skill-level rule as the rest
+  // of the page's chrome: shown while the UI is in the viewer's native
+  // language (No experience/Beginner/Intermediate); Advanced/Native stays
+  // immersive. Skipped when no translation is authored for the item, or when
+  // it would duplicate the prompt (e.g. promptEn already substituted in
+  // native-language text for a cross-native viewer).
+  const displayPromptNative = (q) => {
+    if (!q.promptNative) return null;
+    const nativeLang = viewerNativeLang || track.nativeLang;
+    if (uiLang !== nativeLang) return null;
+    const txt = q.promptNative[nativeLang] || q.promptNative[track.nativeLang];
+    return txt && txt !== displayPrompt(q) ? txt : null;
+  };
   const mastery = computeMastery(track, seenAt, missedIds);
 
   const startRound = (mode = "daily") => {
@@ -597,6 +611,7 @@ export default function PlayPage({ params }) {
                 {displayCatLabel(q.cat)}
               </div>
               <p style={styles.prompt}>{displayPrompt(q)}</p>
+              {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}
 
               {q.cat === track.extraCatId && q.sound && (
                 <div style={styles.soundBox}>
@@ -920,6 +935,7 @@ const styles = {
   card: { width: "100%", background: "#221E33", border: "1px solid", borderRadius: 16, padding: "22px 20px", textAlign: "left" },
   catTag: { display: "inline-block", fontSize: 12, fontWeight: 700, textTransform: "uppercase", border: "1px solid", borderRadius: 20, padding: "3px 10px", marginBottom: 14 },
   prompt: { fontSize: 19, fontWeight: 500, lineHeight: 1.4, marginBottom: 18 },
+  promptNative: { fontSize: 14, fontWeight: 400, lineHeight: 1.45, margin: "-12px 0 18px", color: "#9B93B8" },
   soundBox: { background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "16px 14px", marginBottom: 16, textAlign: "center" },
   soundText: { color: "#E4D6FF", fontSize: 21, fontWeight: 600, margin: 0, lineHeight: 1.6 },
   soundLegend: { color: "#8A7FA3", fontSize: 11, marginTop: 10, marginBottom: 0 },
