@@ -55,6 +55,15 @@ export default function HelpPage() {
           </P>
         </Section>
 
+        <Section title="Listen & Speak (coming soon)">
+          <P>
+            Above the Quick Quiz / Lessons toggle you'll also see a <b>Practice / Listen / Speak</b> switch.
+            Practice is everything the app does today. Listening and speaking practice aren't built yet — those
+            two tabs are marked "Soon" and open a short Coming Soon page for now, so you can see where the app
+            is headed. The About page has a fuller "What's next" list.
+          </P>
+        </Section>
+
         <Section title="Category picker (Quick Quiz mode)">
           <P>Before starting a round, mix and match any combination of categories to focus on (vocabulary, grammar, translation, phonetics — any subset), or leave it on the "Mixed" option for the default blend of everything (its label shows in whichever language your other buttons are currently in). Picking it clears any specific selections back to the full mix. In Lessons mode, you pick one topic at a time instead — see the mode explanation above.</P>
         </Section>
