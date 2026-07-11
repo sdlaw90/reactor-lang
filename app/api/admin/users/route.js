@@ -1,4 +1,4 @@
-import { adminGate } from "../../../../lib/adminAuth";
+import { adminGate, isOwnerEmail } from "../../../../lib/adminAuth";
 
 // GET: every account, joined with profile (username, avatar, is_admin) and
 // a per-user progress rollup (total XP, best streak, tracks started, last
@@ -45,6 +45,7 @@ export async function GET(req) {
         email: u.email,
         username: profile.username || null,
         isAdmin: profile.is_admin === true || (Boolean(bootstrapAdminEmail) && u.email?.toLowerCase() === bootstrapAdminEmail),
+        isOwner: isOwnerEmail(u.email),
         createdAt: u.created_at,
         lastSignInAt: u.last_sign_in_at || null,
         banned,
@@ -57,7 +58,7 @@ export async function GET(req) {
     })
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-  return Response.json({ users, requesterId: ctx.user.id });
+  return Response.json({ users, requesterId: ctx.user.id, requesterIsOwner: isOwnerEmail(ctx.user.email) });
 }
 
 // POST: one action per call, always on a userId (never an email — emails
@@ -70,6 +71,11 @@ export async function GET(req) {
 //                                   progress, explanations, etc.
 //   set_admin { value }           — grant/revoke the is_admin flag
 // Self-protection: you can't ban, delete, or de-admin your own account.
+// #76 Owner protection (server-side, decided 2026-07-11/12):
+//   * set_admin (role management) is OWNER-only.
+//   * NO action may target the owner account unless the requester IS the
+//     owner (the owner managing their own account is still bounded by the
+//     self-protection rules above).
 export async function POST(req) {
   const { response, ctx } = await adminGate(req);
   if (response) return response;
@@ -83,6 +89,22 @@ export async function POST(req) {
   const isSelf = userId === ctx.user.id;
   if (isSelf && (action === "ban" || action === "delete" || (action === "set_admin" && value !== true))) {
     return Response.json({ error: "You can't do that to your own account (self-lockout protection)." }, { status: 400 });
+  }
+
+  // #76 owner protection. Resolve the target's email first — the rule keys
+  // on the account, not on who's asking about it.
+  const requesterIsOwner = isOwnerEmail(ctx.user.email);
+  if (action === "set_admin" && !requesterIsOwner) {
+    return Response.json({ error: "Only the owner can change admin roles." }, { status: 403 });
+  }
+  if (!isSelf) {
+    const { data: targetData, error: targetError } = await db.auth.admin.getUserById(userId);
+    if (targetError || !targetData?.user) {
+      return Response.json({ error: "Target account not found." }, { status: 404 });
+    }
+    if (isOwnerEmail(targetData.user.email) && !requesterIsOwner) {
+      return Response.json({ error: "The owner account can't be modified by other admins." }, { status: 403 });
+    }
   }
 
   try {

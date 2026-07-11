@@ -1,15 +1,33 @@
 name: Deploy Supabase migrations
 
-# Runs whenever a push to main changes anything under supabase/migrations/,
-# and applies any not-yet-applied migrations to the linked Supabase project.
+# #80 (+#82 dual-target): applies any not-yet-applied migration files to the
+# right Supabase project, keyed off the branch pushed.
+#
+#   beta → PRODUCTION project (secrets from the "Production" environment)
+#   dev  → STAGING project    (secrets from the "Staging" environment — #82;
+#                              until that environment + project exist, the
+#                              staging job simply fails fast on missing
+#                              secrets without touching anything)
+#
+# History note: the prod migration baseline was repaired 2026-07-12
+# (migrations 000-011 marked applied via `supabase migration repair`), so
+# `db push` only ever applies NEW files. Originally this workflow watched
+# `main`, which the app never deploys from — that's why it sat dormant while
+# migrations were applied by hand.
+#
+# Convention (state-of-app Decisions): migrations are idempotent;
+# DESTRUCTIVE operations (drops, data rewrites) stay manual — never merged
+# as migration files for this workflow to pick up.
+
 on:
   push:
-    branches: [main]
+    branches: [beta, dev]
     paths:
       - "supabase/migrations/**"
 
 jobs:
-  migrate:
+  migrate-production:
+    if: github.ref == 'refs/heads/beta'
     runs-on: ubuntu-latest
     environment: Production
     steps:
@@ -28,6 +46,30 @@ jobs:
 
       - name: Push migrations
         # "yes |" auto-answers the CLI's confirmation prompt, since this runs non-interactively.
+        run: yes | supabase db push
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+
+  migrate-staging:
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    environment: Staging
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v3
+        with:
+          version: latest
+
+      - name: Link project
+        run: supabase link --project-ref "$SUPABASE_PROJECT_ID"
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+
+      - name: Push migrations
         run: yes | supabase db push
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}

@@ -468,7 +468,8 @@ export default function PlayPage({ params }) {
                       onClick={() => changeSkillLevel(s.id)}
                       style={{ ...styles.skillOption, borderColor: progress.skill_level === s.id ? "#FF8FB1" : "#3A3452" }}
                     >
-                      {s.label}
+                      <span style={{ display: "block" }}>{s.label}</span>
+                      <span className="jm" style={styles.skillOptionDesc}>{s.description}</span>
                     </button>
                   ))}
                 </div>
@@ -712,6 +713,37 @@ export default function PlayPage({ params }) {
                 </span>
               </button>
             )}
+            <div style={{ ...styles.categoryPicker, marginTop: 14 }}>
+              <span style={{ color: "#9B93B8", fontSize: 12 }}>{T("roundFocus")}</span>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8, justifyContent: "center" }}>
+                <button
+                  className="rj"
+                  style={{ ...styles.catChip, borderColor: categoryFilter.length === 0 ? "#FF8FB1" : "#3A3452", color: categoryFilter.length === 0 ? "#FF8FB1" : "#B4ABC9" }}
+                  onClick={() => setCategoryFilter([])}
+                >
+                  {T("mixed")}
+                </button>
+                {Object.keys(track.cats).map((catId) => {
+                  const selected = categoryFilter.includes(catId);
+                  return (
+                    <button
+                      key={catId}
+                      className="rj"
+                      style={{
+                        ...styles.catChip,
+                        borderColor: selected ? track.cats[catId].color : "#3A3452",
+                        color: selected ? track.cats[catId].color : "#B4ABC9",
+                      }}
+                      onClick={() =>
+                        setCategoryFilter((prev) => (prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId]))
+                      }
+                    >
+                      {displayCatLabel(catId)}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
             <button className="rj" style={{ ...styles.secondaryBtn, marginTop: 8 }} onClick={() => setScreen("start")}>
               {T("backToStart")}
             </button>
@@ -909,6 +941,7 @@ const styles = {
     cursor: "pointer",
   },
   skillEditBtn: { background: "transparent", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "4px 12px", fontSize: 11, fontWeight: 700, cursor: "pointer" },
+  skillOptionDesc: { display: "block", color: "#9B93B8", fontSize: 11, fontWeight: 400, marginTop: 3, lineHeight: 1.4 },
   skillOption: { textAlign: "left", background: "#171423", border: "1px solid", borderRadius: 8, padding: "8px 12px", color: "#F3F0FA", fontSize: 13, fontWeight: 600, cursor: "pointer" },
   placementLinkBtn: { background: "transparent", color: "#3DDBFF", border: "1px solid #3DDBFF", borderRadius: 8, padding: "8px 12px", fontSize: 12, fontWeight: 700, cursor: "pointer", marginTop: 4 },
   advanceBanner: { marginTop: 10, background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "10px 12px", color: "#E4D6FF", fontSize: 13 },

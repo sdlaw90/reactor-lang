@@ -104,10 +104,12 @@ export default function DashboardPage() {
                 <span style={{ color: "#7C7395", fontSize: 11 }}>{skillLevelInfo(r.skill_level).label}</span>
               </div>
               <div className="jm" style={styles.trackStatsRow}>
-                <span>Nv.{r.level}</span>
-                <span>{r.xp} XP</span>
+                <span>Lv. {r.level}</span>
                 <span>🔥{r.streak}d</span>
-                <span>{r.rounds_completed} rondas</span>
+                <span>{r.rounds_completed} rounds</span>
+              </div>
+              <div style={styles.rowXpBarOuter}>
+                <div style={{ ...styles.rowXpBarInner, width: `${(r.xp || 0) % 100}%` }} />
               </div>
             </button>
           ))}
@@ -138,4 +140,6 @@ const styles = {
   sectionTitle: { fontSize: 15, fontWeight: 700, color: "#F3F0FA", margin: "0 0 10px" },
   trackRow: { textAlign: "left", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "14px 16px", cursor: "pointer" },
   trackStatsRow: { display: "flex", gap: 14, marginTop: 6, color: "#B4ABC9", fontSize: 12 },
+  rowXpBarOuter: { width: "100%", height: 4, background: "#171423", borderRadius: 2, marginTop: 8, overflow: "hidden" },
+  rowXpBarInner: { height: "100%", background: "linear-gradient(90deg, #FF8FB1, #B98EFF)", borderRadius: 2 },
 };

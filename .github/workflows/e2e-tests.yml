@@ -7,9 +7,9 @@ name: E2E tests
 # access.
 on:
   push:
-    branches: [main, beta]
+    branches: [main, beta, dev]
   pull_request:
-    branches: [main, beta]
+    branches: [main, beta, dev]
 
 jobs:
   e2e:

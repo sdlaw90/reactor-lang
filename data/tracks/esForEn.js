@@ -422,6 +422,10 @@ const esForEn = {
   theme: "latam-sun",
   cats: CATS,
   bank: { ...BANK, fvocab: buildFrequencyBank(WORDS) },
+  // #78: marks fvocab as the Word Bank category — the round-draw engine caps
+  // its share of mixed rounds (default 30%) instead of letting a 609-item
+  // bank inflate or dominate the draw. Every future WB-carrying track sets this.
+  wbCatId: "fvocab",
   extraCatId: "fono",
   extraBank: FONO_BANK.map((item) => ({
     sound: item.sound,

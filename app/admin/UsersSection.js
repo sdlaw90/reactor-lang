@@ -32,6 +32,7 @@ export default function UsersSection() {
   }, []);
 
   const requesterId = data?.requesterId;
+  const requesterIsOwner = data?.requesterIsOwner === true;
 
   const filtered = useMemo(() => {
     const users = data?.users || [];
@@ -77,6 +78,9 @@ export default function UsersSection() {
       {filtered.map((user) => {
         const expanded = expandedId === user.id;
         const isSelf = user.id === requesterId;
+        // #76: owner rows are locked for everyone but the owner; the server
+        // enforces this too — hiding the buttons just keeps the UI honest.
+        const ownerLocked = user.isOwner && !requesterIsOwner;
         return (
           <div key={user.id} style={styles.card}>
             <button
@@ -94,7 +98,8 @@ export default function UsersSection() {
                 <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
                   <span style={styles.username}>{user.username || "(no username)"}</span>
                   {isSelf && <span style={{ ...styles.tag, ...styles.youTag }}>you</span>}
-                  {user.isAdmin && <span style={{ ...styles.tag, ...styles.adminTag }}>admin</span>}
+                  {user.isOwner && <span style={{ ...styles.tag, ...styles.ownerTag }}>owner</span>}
+                  {user.isAdmin && !user.isOwner && <span style={{ ...styles.tag, ...styles.adminTag }}>admin</span>}
                   {user.banned && <span style={{ ...styles.tag, ...styles.bannedTag }}>banned</span>}
                 </div>
                 <div style={styles.email}>{user.email}</div>
@@ -114,7 +119,14 @@ export default function UsersSection() {
                   <Detail label="Last sign-in" value={user.lastSignInAt ? new Date(user.lastSignInAt).toLocaleString() : "never"} />
                 </div>
 
+                {ownerLocked && (
+                  <p style={{ color: c.muted, fontSize: 12, marginTop: 12 }}>
+                    This is the owner account — it can't be modified by other admins.
+                  </p>
+                )}
+
                 {/* Set password */}
+                {!ownerLocked && (
                 <div style={styles.actionBlock}>
                   <div style={styles.actionTitle}>Set a new password</div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -136,8 +148,10 @@ export default function UsersSection() {
                     </button>
                   </div>
                 </div>
+                )}
 
                 {/* Ban / unban + admin toggle */}
+                {!ownerLocked && (
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 14 }}>
                   {user.banned ? (
                     <button className="rj" style={styles.secondaryBtn} disabled={busy} onClick={() => act(user, "unban")}>
@@ -154,7 +168,7 @@ export default function UsersSection() {
                       Ban
                     </button>
                   )}
-                  {user.isAdmin ? (
+                  {requesterIsOwner && !user.isOwner && (user.isAdmin ? (
                     <button
                       className="rj"
                       style={styles.secondaryBtn}
@@ -168,11 +182,12 @@ export default function UsersSection() {
                     <button className="rj" style={styles.secondaryBtn} disabled={busy} onClick={() => act(user, "set_admin", { value: true })}>
                       Make admin
                     </button>
-                  )}
+                  ))}
                 </div>
+                )}
 
                 {/* Delete, type-to-confirm */}
-                {!isSelf && (
+                {!isSelf && !ownerLocked && (
                   <div style={styles.dangerBlock}>
                     <div style={styles.actionTitle}>Delete account (permanent — wipes all their data)</div>
                     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -251,6 +266,7 @@ const styles = {
   tag: { fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 999, textTransform: "uppercase" },
   youTag: { background: "rgba(94,224,160,0.15)", color: c.green },
   adminTag: { background: "rgba(185,142,255,0.15)", color: c.purple },
+  ownerTag: { background: "rgba(255,196,107,0.15)", color: c.amber },
   bannedTag: { background: "rgba(255,123,138,0.15)", color: c.red },
   email: { color: c.muted, fontSize: 12.5, marginTop: 3 },
   statsLine: { color: c.body, fontSize: 12, marginTop: 6 },

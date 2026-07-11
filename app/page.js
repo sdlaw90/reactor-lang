@@ -122,7 +122,10 @@ export default function HomePage() {
         <div style={styles.bubbleWrap}>
           {tracks.map((t) => {
             const p = progressByTrack[t.id];
-            const xpInLevel = p ? p.xp % 100 : 0;
+            // #74: level is the headline; progress toward the next level is a
+            // fill-only bar — no "x/100" style numbers anywhere (flat 100
+            // XP/level stays permanent under the hood, so the fill is xp % 100).
+            const xpFillPct = p ? p.xp % 100 : 0;
             const skillLabel = skillLevelInfo(p?.skill_level || "none").label;
             return (
               <button key={t.id} className="rj" style={styles.bubble} onClick={() => router.push(`/play/${t.id}`)}>
@@ -132,8 +135,13 @@ export default function HomePage() {
                 <div style={styles.bubbleContent}>
                   <div style={{ fontSize: 14, fontWeight: 700 }}>{trackDisplayName(t, nativeLang)}</div>
                   <div className="jm" style={{ fontSize: 10.5, color: "#B4ABC9", marginTop: 2 }}>
-                    {p ? `${skillLabel} · ${xpInLevel}/100 XP` : "Not started"}
+                    {p ? `Level ${p.level || 1} · ${skillLabel}` : "Not started"}
                   </div>
+                  {p && (
+                    <div style={styles.bubbleXpBarOuter}>
+                      <div style={{ ...styles.bubbleXpBarInner, width: `${xpFillPct}%` }} />
+                    </div>
+                  )}
                 </div>
               </button>
             );
@@ -225,6 +233,8 @@ const styles = {
     position: "relative",
     zIndex: 1,
   },
+  bubbleXpBarOuter: { width: "100%", height: 5, background: "#171423", borderRadius: 3, marginTop: 6, overflow: "hidden" },
+  bubbleXpBarInner: { height: "100%", background: "linear-gradient(90deg, #FF8FB1, #B98EFF)", borderRadius: 3, transition: "width 0.3s" },
   quickWinPrompt: {
     fontSize: 22,
     fontWeight: 800,

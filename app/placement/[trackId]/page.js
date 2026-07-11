@@ -8,6 +8,7 @@ import { getTrack } from "../../../data/tracks";
 import { buildPlacementQuiz } from "../../../lib/gameEngine";
 import { loadProgress, saveProgress } from "../../../lib/db";
 import { SKILL_LEVELS } from "../../../lib/skillLevels";
+import { t } from "../../../lib/playStrings";
 
 const TIER_ORDER = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
@@ -42,6 +43,7 @@ export default function PlacementQuizPage({ params }) {
   const [done, setDone] = useState(false);
   const [saving, setSaving] = useState(false);
   const [viewerNativeLang, setViewerNativeLang] = useState(null);
+  const T = (key, vars) => t(viewerNativeLang || track?.nativeLang || "en", key, vars);
 
   useEffect(() => {
     (async () => {
@@ -68,7 +70,7 @@ export default function PlacementQuizPage({ params }) {
   if (!quiz) {
     return (
       <div style={styles.wrap}>
-        <p style={{ color: "#B4ABC9" }}>Cargando…</p>
+        <p style={{ color: "#B4ABC9" }}>{T("loading")}</p>
       </div>
     );
   }
@@ -77,11 +79,9 @@ export default function PlacementQuizPage({ params }) {
     return (
       <div style={styles.wrap}>
         <div style={{ maxWidth: 420 }}>
-          <p style={{ color: "#B4ABC9" }}>
-            This track doesn't have enough difficulty-tagged content yet for a placement quiz. Pick a level manually instead.
-          </p>
+          <p style={{ color: "#B4ABC9" }}>{T("placementNotEnough")}</p>
           <button className="rj" style={styles.primaryBtn} onClick={() => router.push(`/play/${track.id}`)}>
-            Volver
+            {T("placementBack")}
           </button>
         </div>
       </div>
@@ -138,7 +138,7 @@ export default function PlacementQuizPage({ params }) {
         {!done ? (
           <>
             <p style={{ color: "#7C7395", fontSize: 12 }} className="jm">
-              {qIndex + 1} / {quiz.length} · sin cronómetro
+              {qIndex + 1} / {quiz.length} · {T("placementNoTimer")}
             </p>
             <div style={{ ...styles.card, borderColor: feedback === "correct" ? "#5EE0A0" : feedback === "wrong" ? "#FF7B8A" : "#3A3452" }}>
               <p style={styles.prompt}>{displayPrompt}</p>
@@ -182,16 +182,16 @@ export default function PlacementQuizPage({ params }) {
         ) : (
           <div style={styles.card}>
             <h2 className="rj" style={{ color: "#F3F0FA", fontSize: 22, marginTop: 0 }}>
-              Resultado
+              {T("placementResult")}
             </h2>
             <p style={{ color: "#B4ABC9", fontSize: 14, lineHeight: 1.6 }}>
-              Nivel recomendado: <strong style={{ color: "#FF8FB1" }}>{SKILL_LEVELS.find((s) => s.id === recommended)?.label}</strong>
+              {T("placementRecommended")} <strong style={{ color: "#FF8FB1" }}>{SKILL_LEVELS.find((s) => s.id === recommended)?.label}</strong>
             </p>
             <button className="rj" style={styles.primaryBtn} onClick={acceptRecommendation} disabled={saving}>
-              {saving ? "..." : "Usar este nivel"}
+              {saving ? "..." : T("placementUseLevel")}
             </button>
             <button className="rj" style={styles.secondaryBtn} onClick={() => router.push(`/play/${track.id}`)}>
-              Volver sin guardar
+              {T("placementBackNoSave")}
             </button>
           </div>
         )}
