@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { submitBetaApplication } from "../../lib/db";
 import Logo from "../../lib/Logo";
 
 const STEPS = ["About You", "Language Background", "Practice Habits & Fit", "Beta Commitment"];
@@ -29,6 +28,10 @@ export default function BetaApplyPage() {
   const [step, setStep] = useState(0);
   const [busy, setBusy] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  // Set when the interim auto-approve flow (#65 workaround) returns login
+  // credentials with the response. Shown ONCE — never stored anywhere else.
+  const [credentials, setCredentials] = useState(null);
+  const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
 
   const [form, setForm] = useState({
@@ -100,34 +103,96 @@ export default function BetaApplyPage() {
     setError("");
     setBusy(true);
     try {
-      await submitBetaApplication(form.name.trim(), form.email.trim(), form.reason.trim(), form.targetLanguages.trim(), {
-        nativeLanguage: form.nativeLanguage.trim(),
-        currentLevel: form.currentLevel,
-        details: {
-          age_range: form.ageRange,
-          devices: form.devices,
-          browser: form.browser,
-          dialect_preference: form.dialectPreference.trim(),
-          apps_used: form.appsUsed,
-          biggest_frustration: form.biggestFrustration.trim(),
-          practice_frequency: form.practiceFrequency,
-          session_length_pref: form.sessionLengthPref,
-          appeal_score: form.appealScore,
-          focus_difficulty: form.focusDifficulty,
-          time_commitment: form.timeCommitment,
-          prior_beta_experience: form.priorBetaExperience,
-          bug_report_comfort: form.bugReportComfort,
-          anything_else: form.anythingElse.trim(),
-        },
+      const resp = await fetch("/api/beta-apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          reason: form.reason.trim(),
+          languagesInterested: form.targetLanguages.trim(),
+          nativeLanguage: form.nativeLanguage.trim(),
+          currentLevel: form.currentLevel,
+          details: {
+            age_range: form.ageRange,
+            devices: form.devices,
+            browser: form.browser,
+            dialect_preference: form.dialectPreference.trim(),
+            apps_used: form.appsUsed,
+            biggest_frustration: form.biggestFrustration.trim(),
+            practice_frequency: form.practiceFrequency,
+            session_length_pref: form.sessionLengthPref,
+            appeal_score: form.appealScore,
+            focus_difficulty: form.focusDifficulty,
+            time_commitment: form.timeCommitment,
+            prior_beta_experience: form.priorBetaExperience,
+            bug_report_comfort: form.bugReportComfort,
+            anything_else: form.anythingElse.trim(),
+          },
+        }),
       });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        throw new Error(data?.error || `Request failed (${resp.status})`);
+      }
+      if (data.autoApproved && data.credentials) {
+        setCredentials(data.credentials);
+      }
       setSubmitted(true);
     } catch (e) {
-      console.error("submitBetaApplication failed", e);
+      console.error("beta application submit failed", e);
       setError(`Something went wrong sending that: ${e?.message || "unknown error"} — mind trying again?`);
     } finally {
       setBusy(false);
     }
   };
+
+  const copyCredentials = async () => {
+    try {
+      await navigator.clipboard.writeText(`Email: ${credentials.email}\nPassword: ${credentials.password}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      // Clipboard can be unavailable (permissions, non-secure context) —
+      // the credentials are still visible on screen, so fail quietly.
+    }
+  };
+
+  if (submitted && credentials) {
+    return (
+      <div style={styles.wrap}>
+        <div style={{ width: "100%", maxWidth: 440, textAlign: "center" }}>
+          <Logo size={44} />
+          <h1 className="rj" style={styles.title}>
+            You're in! 🐿️
+          </h1>
+          <p style={styles.body}>
+            Your beta account is ready. Here's your login — <strong style={{ color: "#F3F0FA" }}>save it now</strong>,
+            it won't be shown again.
+          </p>
+          <div style={styles.credentialsBox}>
+            <div style={styles.credentialRow}>
+              <span style={styles.credentialLabel}>Email</span>
+              <span style={styles.credentialValue}>{credentials.email}</span>
+            </div>
+            <div style={styles.credentialRow}>
+              <span style={styles.credentialLabel}>Password</span>
+              <span style={styles.credentialValue}>{credentials.password}</span>
+            </div>
+          </div>
+          <button className="rj" style={{ ...styles.primaryBtn, width: "100%" }} onClick={copyCredentials}>
+            {copied ? "Copied ✓" : "Copy login details"}
+          </button>
+          <p style={styles.credentialHint}>
+            You can change your password any time in Settings after signing in.
+          </p>
+          <button className="rj" style={{ ...styles.secondaryBtn, width: "100%" }} onClick={() => router.push("/auth")}>
+            Go to sign in
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (submitted) {
     return (
@@ -431,6 +496,27 @@ const styles = {
     fontWeight: 700,
     cursor: "pointer",
   },
+  credentialsBox: {
+    background: "#221E33",
+    border: "1px solid #3A3452",
+    borderRadius: 12,
+    padding: "14px 16px",
+    margin: "0 0 14px",
+    textAlign: "left",
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+  credentialRow: { display: "flex", flexDirection: "column", gap: 2 },
+  credentialLabel: { color: "#9B93B8", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5 },
+  credentialValue: {
+    color: "#F3F0FA",
+    fontSize: 15,
+    fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+    wordBreak: "break-all",
+    userSelect: "all",
+  },
+  credentialHint: { color: "#9B93B8", fontSize: 12, margin: "10px 0 14px" },
   footer: { color: "#7C7395", fontSize: 12.5, textAlign: "center", marginTop: 20 },
   link: { color: "#3DDBFF", textDecoration: "underline" },
 };
