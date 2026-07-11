@@ -8,11 +8,18 @@
 // (bank slot 6) for the native-language question subtitle feature.
 // ⚠️ PENDING: native-speaker review pass (#41) — LatAm reviewer confirmed.
 
+import { buildFrequencyBank } from "../../lib/frequencyVocab";
+import WORDS from "../vocab/esLatAmWords";
+
 const CATS = {
   vocab: { label: "Vocabulario", color: "#3DDBFF" },
   verbo: { label: "Verbos", color: "#FFB84D" },
   trad: { label: "Traducción", color: "#FF3D7F" },
   fono: { label: "Fonética", color: "#B98EFF" },
+  // Pilot (2026-07-10): frequency Word Bank — 609 questions generated at
+  // module load from a 609-entry frequency-ranked word list. Standard bank
+  // entries, so mastery/freshness/subtitles/placement need no engine changes.
+  fvocab: { label: "Palabras", color: "#7BE495" },
 };
 
 const BANK = {
@@ -414,7 +421,7 @@ const esForEn = {
   targetLang: "es",
   theme: "latam-sun",
   cats: CATS,
-  bank: BANK,
+  bank: { ...BANK, fvocab: buildFrequencyBank(WORDS) },
   extraCatId: "fono",
   extraBank: FONO_BANK.map((item) => ({
     sound: item.sound,
