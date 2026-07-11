@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #171423;
+  color: #f3f0fa;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.rj {
+  font-family: "Rajdhani", sans-serif;
+}
+.jm {
+  font-family: "JetBrains Mono", monospace;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Keyboard focus indicators -- :focus-visible only shows for keyboard
+   navigation (Tab), not mouse clicks, so this doesn't add visual noise for
+   mouse/touch users while still giving keyboard users a clear, visible
+   indication of where they are. Nothing like this existed before; with
+   fully custom-styled buttons/links (no default browser appearance),
+   keyboard users previously had zero visual indication of focus at all. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #3ddbff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@keyframes correctPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(94, 224, 160, 0.65);
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.02);
+  }
+  100% {
+    box-shadow: 0 0 0 24px rgba(94, 224, 160, 0);
+    transform: scale(1);
+  }
+}
+@keyframes wrongShake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(3px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-6px);
+  }
+  40%,
+  60% {
+    transform: translateX(6px);
+  }
+}
+.pulse-correct {
+  animation: correctPulse 0.5s ease-out;
+}
+.pulse-wrong {
+  animation: wrongShake 0.4s ease-in-out;
+}
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes greetingPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(4px);
+  }
+  60% {
+    transform: scale(1.03) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+@keyframes waveHand {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(18deg);
+  }
+  30% {
+    transform: rotate(-8deg);
+  }
+  45% {
+    transform: rotate(18deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+}
+.wave-emoji {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: waveHand 1.2s ease-in-out 0.3s;
+}
+@keyframes shimmerSweep {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+.shimmer-text {
+  background-size: 200% auto;
+  animation: shimmerSweep 1.4s ease-out 0.15s;
+}
+.greeting-flair {
+  animation: greetingPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.fadein {
+  animation: floatUp 0.25s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fadein {
+    animation: none;
+  }
+  .pulse-correct,
+  .pulse-wrong,
+  .greeting-flair,
+  .wave-emoji,
+  .shimmer-text {
+    animation: none !important;
+  }
+  [style*="gradientShift"] {
+    animation: none !important;
+  }
+}
