@@ -1,38 +1,17 @@
-import { createClient } from "@supabase/supabase-js";
 import { cleanEmail, looksLikeEmail } from "../../../lib/emailUtils";
+import { adminGate } from "../../../lib/adminAuth";
 
-// Verifies the caller is signed in AND is the configured admin -- this route
-// uses the service role key (full DB access, bypasses RLS), so it must never
-// be reachable by anyone else.
-async function getRequestingAdmin(req) {
-  const authHeader = req.headers.get("authorization") || "";
-  const token = authHeader.replace("Bearer ", "");
-  if (!token) return null;
-  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
-  const { data, error } = await supabase.auth.getUser(token);
-  if (error || !data?.user) return null;
-  const adminEmail = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").toLowerCase();
-  if (!adminEmail || data.user.email?.toLowerCase() !== adminEmail) return null;
-  return data.user;
-}
+// Admin verification moved to the shared lib/adminAuth helper (profiles
+// .is_admin OR the ADMIN_EMAIL env bootstrap) so every admin route gates
+// identically. This route uses the service role key (full DB access,
+// bypasses RLS), so it must never be reachable by anyone else.
 
 export async function GET(req) {
-  const admin = await getRequestingAdmin(req);
-  if (!admin) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
-  }
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!serviceRoleKey) {
-    return Response.json(
-      { error: "SUPABASE_SERVICE_ROLE_KEY is not set — see README for setup instructions." },
-      { status: 500 }
-    );
-  }
+  const { response, ctx } = await adminGate(req);
+  if (response) return response;
 
   try {
-    const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, serviceRoleKey, {
-      auth: { autoRefreshToken: false, persistSession: false },
-    });
+    const supabaseAdmin = ctx.supabaseAdmin;
     const { data, error } = await supabaseAdmin
       .from("beta_applications")
       .select("*")
@@ -48,29 +27,17 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  const admin = await getRequestingAdmin(req);
-  if (!admin) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const { response, ctx } = await adminGate(req);
+  if (response) return response;
 
   const { applicationId, email, action } = await req.json().catch(() => ({}));
   if (!applicationId || (action === "approve" && !email)) {
     return Response.json({ error: "Missing applicationId (or email, for approval)" }, { status: 400 });
   }
 
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!serviceRoleKey) {
-    return Response.json(
-      { error: "SUPABASE_SERVICE_ROLE_KEY is not set — see README for setup instructions." },
-      { status: 500 }
-    );
-  }
-
   try {
     // Service-role client: full admin access, only ever used server-side here.
-    const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, serviceRoleKey, {
-      auth: { autoRefreshToken: false, persistSession: false },
-    });
+    const supabaseAdmin = ctx.supabaseAdmin;
 
     if (action === "reject") {
       const { error: updateError } = await supabaseAdmin

@@ -236,3 +236,65 @@ create policy "anyone can apply"
   on beta_applications for insert
   to anon, authenticated
   with check (true);
+
+-- ---------------------------------------------------------------
+-- Sync note (2026-07-10): this snapshot had drifted — migrations 008 and
+-- 009 were never reflected here. The blocks below bring it current through
+-- migration 010 (admin hub). All idempotent, same as everything above.
+-- ---------------------------------------------------------------
+
+-- Migration 008: beta application review status
+alter table beta_applications add column if not exists status text not null default 'pending';
+alter table beta_applications add column if not exists reviewed_at timestamptz;
+
+-- Migration 009: feedback rework + error logs (see the migration file for
+-- the bug-screenshots storage bucket + policies, omitted here for brevity —
+-- run the real migration if setting up storage from scratch)
+alter table feedback_submissions
+  add column if not exists username text,
+  add column if not exists email text,
+  add column if not exists error_code text,
+  add column if not exists screenshot_path text;
+
+create table if not exists error_logs (
+  id bigint generated always as identity primary key,
+  error_code text not null,
+  message text,
+  stack text,
+  url text,
+  user_agent text,
+  user_id uuid references auth.users (id) on delete set null,
+  created_at timestamptz not null default now()
+);
+
+alter table error_logs enable row level security;
+
+drop policy if exists error_logs_insert_any on error_logs;
+create policy error_logs_insert_any
+  on error_logs for insert
+  to anon, authenticated
+  with check (true);
+
+-- Migration 010: admin hub (is_admin, feedback triage, error review flag)
+alter table profiles add column if not exists is_admin boolean not null default false;
+
+do $$
+begin
+  revoke update on public.profiles from anon, authenticated;
+  grant update (username, avatar_type, avatar_value, updated_at) on public.profiles to authenticated;
+exception when others then
+  raise notice 'profiles column-level grant adjustment skipped: %', sqlerrm;
+end $$;
+
+alter table feedback_submissions
+  add column if not exists status text not null default 'new',
+  add column if not exists admin_notes text,
+  add column if not exists reviewed_at timestamptz;
+
+alter table error_logs add column if not exists reviewed boolean not null default false;
+
+update beta_applications
+   set status = 'approved',
+       reviewed_at = coalesce(reviewed_at, now())
+ where status = 'pending'
+   and (details ->> 'auto_approved') = 'true';

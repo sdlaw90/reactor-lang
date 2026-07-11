@@ -103,6 +103,11 @@ test.describe("Feedback and admin routes redirect when signed out", () => {
     await expect(page).not.toHaveURL(/\/admin\/beta-applications$/);
   });
 
+  test("/admin hub redirects to /auth when signed out", async ({ page }) => {
+    await page.goto("/admin");
+    await expect(page).toHaveURL(/\/auth/);
+  });
+
   test("/settings redirects to home", async ({ page }) => {
     await page.goto("/settings");
     await expect(page).toHaveURL(/\/$|\/auth/);

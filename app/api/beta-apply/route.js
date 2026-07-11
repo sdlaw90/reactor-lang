@@ -97,7 +97,7 @@ async function notifyAdminOfApplication(application, autoApproved) {
       `Level: ${application.current_level || "—"}`,
       `Devices: ${(application.details?.devices || []).join(", ") || "—"}`,
       "",
-      `Review it here: ${siteUrl}/admin/beta-applications`,
+      `Review it here: ${siteUrl}/admin?tab=applications`,
     ];
 
     const bodyHtml =
@@ -127,7 +127,7 @@ async function notifyAdminOfApplication(application, autoApproved) {
         html: brandedEmail({
           heading: "🌰 New beta application",
           bodyHtml,
-          cta: { label: "Review application", url: `${siteUrl}/admin/beta-applications` },
+          cta: { label: "Review application", url: `${siteUrl}/admin?tab=applications` },
         }),
         text: lines.join("\n"),
       }),
@@ -205,9 +205,26 @@ export async function POST(req) {
       details: { ...(details || {}), auto_approved: autoApproving },
     };
 
-    const { error } = await supabase.from("beta_applications").insert(row);
-    if (error) {
-      return Response.json({ error: error.message }, { status: 500 });
+    // With the service key, .select() returns the row id — the auto-approve
+    // path below flips that row to 'approved' once the account actually
+    // exists (before this, auto-approved rows stayed 'pending' forever and
+    // the admin list showed them wrong; migration 010 backfills historical
+    // ones). On the anon-key fallback the .select() is skipped: the table
+    // has an INSERT policy but deliberately no SELECT policy, so RETURNING
+    // would fail the whole insert — and the fallback never auto-approves
+    // anyway, so the id isn't needed.
+    let insertedId = null;
+    if (serviceKey) {
+      const { data: inserted, error } = await supabase.from("beta_applications").insert(row).select("id").single();
+      if (error) {
+        return Response.json({ error: error.message }, { status: 500 });
+      }
+      insertedId = inserted?.id ?? null;
+    } else {
+      const { error } = await supabase.from("beta_applications").insert(row);
+      if (error) {
+        return Response.json({ error: error.message }, { status: 500 });
+      }
     }
 
     // --- Interim auto-approve: create the account directly, no email -------
@@ -262,6 +279,21 @@ export async function POST(req) {
           }
         } catch (e) {
           console.error("profile username claim failed; RequireUsernameGate will handle it", e);
+        }
+
+        // Reflect reality in the application row: the account exists, so
+        // this application is approved, not pending. Service-role client,
+        // so RLS isn't in the way. Failure here is cosmetic (admin list
+        // shows it as pending) — never fail the submission over it.
+        if (insertedId != null) {
+          try {
+            await supabase
+              .from("beta_applications")
+              .update({ status: "approved", reviewed_at: new Date().toISOString() })
+              .eq("id", insertedId);
+          } catch (e) {
+            console.error("auto-approve status update failed (cosmetic)", e);
+          }
         }
       }
     }
