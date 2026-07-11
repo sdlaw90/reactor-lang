@@ -3,8 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Logo from "../../lib/Logo";
+import { supabase } from "../../lib/supabaseClient";
+import PasswordInput from "../../lib/PasswordInput";
+import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
+import UsernameAvailabilityField from "../../lib/UsernameAvailabilityField";
+import { isUsernameTaken } from "../../lib/db";
 
-const STEPS = ["About You", "Language Background", "Practice Habits & Fit", "Beta Commitment"];
+const STEPS = ["About You", "Language Background", "Practice Habits & Fit", "Beta Commitment", "Your Account"];
 
 const DEVICE_OPTIONS = ["Android phone", "iPhone", "Tablet (Android or iPad)", "Desktop/laptop browser (Windows or Mac)", "Chromebook"];
 const BROWSER_OPTIONS = ["Chrome", "Safari", "Firefox", "Edge", "Samsung Internet", "Other"];
@@ -28,15 +33,19 @@ export default function BetaApplyPage() {
   const [step, setStep] = useState(0);
   const [busy, setBusy] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  // Set when the interim auto-approve flow (#65 workaround) returns login
-  // credentials with the response. Shown ONCE — never stored anywhere else.
-  const [credentials, setCredentials] = useState(null);
-  const [copied, setCopied] = useState(false);
+  // Auto-approve flow (#65 workaround): the applicant chooses their own
+  // username + password on the last step and is signed in immediately.
+  // accountCreated covers the rare case where the account exists but the
+  // automatic sign-in failed — they can sign in manually with what they chose.
+  const [accountCreated, setAccountCreated] = useState(false);
   const [error, setError] = useState("");
 
   const [form, setForm] = useState({
     name: "",
     email: "",
+    username: "",
+    password: "",
+    passwordConfirm: "",
     ageRange: "",
     devices: [],
     browser: "",
@@ -77,6 +86,11 @@ export default function BetaApplyPage() {
         return "Practice frequency and session length are needed to move on.";
       }
     }
+    if (step === 3) {
+      if (!form.timeCommitment) {
+        return "How much time you could commit is needed to move on.";
+      }
+    }
     return "";
   };
 
@@ -96,19 +110,41 @@ export default function BetaApplyPage() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (!form.timeCommitment) {
-      setError("How much time you could commit is needed before submitting.");
+    const uname = form.username.trim();
+    if (uname.length < 3 || !/^[A-Za-z0-9_]+$/.test(uname)) {
+      setError("Username must be at least 3 characters (letters, numbers, and _ only).");
+      return;
+    }
+    if (form.password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+    if (form.password !== form.passwordConfirm) {
+      setError("Passwords don't match.");
       return;
     }
     setError("");
     setBusy(true);
     try {
+      // Best-effort availability pre-check (the API re-checks authoritatively).
+      try {
+        if (await isUsernameTaken(uname)) {
+          setError("That username is already taken — try Verify above for available alternatives.");
+          setBusy(false);
+          return;
+        }
+      } catch {
+        // Non-fatal: the server performs the authoritative check.
+      }
+
       const resp = await fetch("/api/beta-apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: form.name.trim(),
           email: form.email.trim(),
+          username: uname,
+          password: form.password,
           reason: form.reason.trim(),
           languagesInterested: form.targetLanguages.trim(),
           nativeLanguage: form.nativeLanguage.trim(),
@@ -133,32 +169,39 @@ export default function BetaApplyPage() {
       });
       const data = await resp.json().catch(() => ({}));
       if (!resp.ok) {
-        throw new Error(data?.error || `Request failed (${resp.status})`);
+        setError(data.error || "Something went wrong submitting your application — please try again.");
+        setBusy(false);
+        return;
       }
-      if (data.autoApproved && data.credentials) {
-        setCredentials(data.credentials);
+      if (data.autoApproved) {
+        // Account exists with the password they chose — sign them straight in.
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email: form.email.trim(),
+          password: form.password,
+        });
+        if (!signInError) {
+          router.push("/");
+          return;
+        }
+        // Account created but auto sign-in hiccuped: they know their own
+        // credentials, so hand them to the sign-in page instead of erroring.
+        console.error("auto sign-in after beta apply failed", signInError);
+        setAccountCreated(true);
+        setSubmitted(true);
+        setBusy(false);
+        return;
       }
       setSubmitted(true);
-    } catch (e) {
-      console.error("beta application submit failed", e);
-      setError(`Something went wrong sending that: ${e?.message || "unknown error"} — mind trying again?`);
-    } finally {
+      setBusy(false);
+    } catch (e2) {
+      console.error("beta application submit failed", e2);
+      setError("Something went wrong submitting your application — please try again.");
       setBusy(false);
     }
   };
 
-  const copyCredentials = async () => {
-    try {
-      await navigator.clipboard.writeText(`Email: ${credentials.email}\nPassword: ${credentials.password}`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    } catch {
-      // Clipboard can be unavailable (permissions, non-secure context) —
-      // the credentials are still visible on screen, so fail quietly.
-    }
-  };
 
-  if (submitted && credentials) {
+  if (submitted && accountCreated) {
     return (
       <div style={styles.wrap}>
         <div style={{ width: "100%", maxWidth: 440, textAlign: "center" }}>
@@ -167,26 +210,9 @@ export default function BetaApplyPage() {
             You're in! 🐿️
           </h1>
           <p style={styles.body}>
-            Your beta account is ready. Here's your login — <strong style={{ color: "#F3F0FA" }}>save it now</strong>,
-            it won't be shown again.
+            Your beta account is ready — sign in with the email and password you just chose.
           </p>
-          <div style={styles.credentialsBox}>
-            <div style={styles.credentialRow}>
-              <span style={styles.credentialLabel}>Email</span>
-              <span style={styles.credentialValue}>{credentials.email}</span>
-            </div>
-            <div style={styles.credentialRow}>
-              <span style={styles.credentialLabel}>Password</span>
-              <span style={styles.credentialValue}>{credentials.password}</span>
-            </div>
-          </div>
-          <button className="rj" style={{ ...styles.primaryBtn, width: "100%" }} onClick={copyCredentials}>
-            {copied ? "Copied ✓" : "Copy login details"}
-          </button>
-          <p style={styles.credentialHint}>
-            You can change your password any time in Settings after signing in.
-          </p>
-          <button className="rj" style={{ ...styles.secondaryBtn, width: "100%" }} onClick={() => router.push("/auth")}>
+          <button className="rj" style={{ ...styles.primaryBtn, width: "100%" }} onClick={() => router.push("/auth")}>
             Go to sign in
           </button>
         </div>
@@ -311,6 +337,35 @@ export default function BetaApplyPage() {
               </Field>
               <Field label="Anything else we should know about you?" htmlFor="ba-anything-else">
                 <textarea id="ba-anything-else" value={form.anythingElse} onChange={(e) => set("anythingElse")(e.target.value)} style={styles.textarea} rows={3} />
+              </Field>
+            </>
+          )}
+
+          {step === 4 && (
+            <>
+              <p style={styles.body}>
+                Last step — set up your login. Your account is created the moment you submit, and you'll be
+                signed in right away.
+              </p>
+              <Field label="Pick a username" required>
+                <UsernameAvailabilityField value={form.username} onChange={set("username")} />
+              </Field>
+              <Field label="Choose a password" required>
+                <PasswordInput
+                  placeholder="Password (min 6 characters)"
+                  value={form.password}
+                  onChange={(e) => set("password")(e.target.value)}
+                  style={styles.input}
+                />
+                <PasswordStrengthMeter password={form.password} />
+              </Field>
+              <Field label="Confirm password" required>
+                <PasswordInput
+                  placeholder="Repeat password"
+                  value={form.passwordConfirm}
+                  onChange={(e) => set("passwordConfirm")(e.target.value)}
+                  style={styles.input}
+                />
               </Field>
             </>
           )}

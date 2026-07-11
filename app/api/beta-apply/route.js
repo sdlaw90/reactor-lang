@@ -55,6 +55,9 @@ function isRateLimited(ip) {
 // crypto-random, ambiguity-free charset (no 0/O, 1/l/I), 14 chars ≈ 80 bits.
 // Rejection sampling keeps the distribution uniform (no modulo bias).
 const PASSWORD_CHARSET = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+// RETIRED (beta.8): the applicant now chooses their own password. Kept only
+// in case a generated-credential fallback is ever needed again.
+// eslint-disable-next-line no-unused-vars
 function generatePassword(length = 14) {
   const out = [];
   while (out.length < length) {
@@ -139,7 +142,7 @@ async function notifyAdminOfApplication(application, autoApproved) {
 
 export async function POST(req) {
   const body = await req.json().catch(() => ({}));
-  const { name, email, reason, languagesInterested, nativeLanguage, currentLevel, details } = body;
+  const { name, email, reason, languagesInterested, nativeLanguage, currentLevel, details, username, password } = body;
 
   const ip = (req.headers.get("x-forwarded-for") || "unknown").split(",")[0].trim();
   if (isRateLimited(ip)) {
@@ -155,6 +158,27 @@ export async function POST(req) {
   }
   if (!looksLikeEmail(cleanedEmail)) {
     return Response.json({ error: "That email address doesn't look valid — double-check it for typos." }, { status: 400 });
+  }
+
+  // Account fields for the auto-approve flow: the applicant chooses their own
+  // username + password and is signed in immediately client-side (no more
+  // one-time generated-password screen). Validated up front so a rejection
+  // never leaves an orphaned application row behind. The password is used
+  // ONLY for createUser below — it must never be stored in the application
+  // row or logged.
+  const chosenUsername = typeof username === "string" ? username.trim() : "";
+  const chosenPassword = typeof password === "string" ? password : "";
+  if (details && typeof details === "object") {
+    delete details.password;
+    delete details.username;
+  }
+  if (AUTO_APPROVE_BETA) {
+    if (chosenUsername.length < 3 || !/^[A-Za-z0-9_]+$/.test(chosenUsername)) {
+      return Response.json({ error: "Username must be at least 3 characters (letters, numbers, and _ only)." }, { status: 400 });
+    }
+    if (chosenPassword.length < 6) {
+      return Response.json({ error: "Password must be at least 6 characters." }, { status: 400 });
+    }
   }
 
   try {
@@ -187,13 +211,25 @@ export async function POST(req) {
     }
 
     // --- Interim auto-approve: create the account directly, no email -------
-    let credentials = null;
+    // The applicant's own password is used; the response carries no secrets.
+    let accountCreated = false;
     if (autoApproving) {
-      const password = generatePassword();
-      const { error: createError } = await supabase.auth.admin.createUser({
+      // Server-side availability check (client checks too, but this is the
+      // authoritative one). Same RPC the rest of the app uses.
+      try {
+        const { data: taken } = await supabase.rpc("is_username_taken", { p_username: chosenUsername });
+        if (taken) {
+          return Response.json({ error: "That username is already taken — go back a step and pick another." }, { status: 409 });
+        }
+      } catch (e) {
+        console.error("username availability check failed; proceeding (gate will catch collisions)", e);
+      }
+
+      const { data: created, error: createError } = await supabase.auth.admin.createUser({
         email: cleanedEmail,
-        password,
+        password: chosenPassword,
         email_confirm: true, // marks the address confirmed WITHOUT sending anything
+        user_metadata: { pending_username: chosenUsername },
       });
 
       if (createError) {
@@ -213,13 +249,26 @@ export async function POST(req) {
         // old pending flow rather than erroring the whole submission.
         console.error("Auto-approve createUser failed; application left pending", createError);
       } else {
-        credentials = { email: cleanedEmail, password };
+        accountCreated = true;
+        // Claim the username right away (service role bypasses RLS). If this
+        // races or fails, pending_username stays set and RequireUsernameGate
+        // catches it on first login — same fallback the auth page relies on.
+        try {
+          const userId = created?.user?.id;
+          if (userId) {
+            await supabase
+              .from("profiles")
+              .upsert({ user_id: userId, username: chosenUsername, updated_at: new Date().toISOString() }, { onConflict: "user_id" });
+          }
+        } catch (e) {
+          console.error("profile username claim failed; RequireUsernameGate will handle it", e);
+        }
       }
     }
 
-    await notifyAdminOfApplication(row, Boolean(credentials));
+    await notifyAdminOfApplication(row, accountCreated);
 
-    return Response.json({ ok: true, autoApproved: Boolean(credentials), credentials });
+    return Response.json({ ok: true, autoApproved: accountCreated });
   } catch (e) {
     console.error("beta-apply POST failed", e);
     return Response.json({ error: `Unexpected error: ${e?.message || String(e)}` }, { status: 500 });
