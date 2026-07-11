@@ -1,4 +1,7 @@
 import { KANA_JA } from "./kanaJa";
+import { HANGUL_KO } from "./hangulKo";
+import { CYRILLIC_RU } from "./cyrillicRu";
+import { MANDARIN_ZH } from "./mandarinZh";
 
 // Registry for #62 writing-system definitions. One data file per script,
 // all consumed by the single generic /script/[trackId] page — adding a new
@@ -9,7 +12,7 @@ import { KANA_JA } from "./kanaJa";
 // simply don't show the third mode toggle, and regular content never gates
 // on script practice.
 
-const SCRIPTS = [KANA_JA];
+const SCRIPTS = [KANA_JA, HANGUL_KO, CYRILLIC_RU, MANDARIN_ZH];
 
 export function scriptForTrack(trackId) {
   return SCRIPTS.find((s) => s.forTracks.includes(trackId)) || null;
