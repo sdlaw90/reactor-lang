@@ -11,7 +11,9 @@ const STATUS_OPTIONS = [
   { value: "new", label: "New" },
   { value: "in_progress", label: "In progress" },
   { value: "resolved", label: "Resolved" },
-  { value: "wont_fix", label: "Won't fix" },
+  // Label is generic across bugs AND features; the stored value stays
+  // 'wont_fix' (no migration, existing rows unaffected).
+  { value: "wont_fix", label: "Won't do" },
 ];
 
 const TYPE_FILTERS = [
@@ -28,6 +30,7 @@ export default function FeedbackSection() {
   const [typeFilter, setTypeFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [busyId, setBusyId] = useState(null);
+  const [savedId, setSavedId] = useState(null);
   const [expandedId, setExpandedId] = useState(null);
   const [notesDraft, setNotesDraft] = useState({});
 
@@ -55,6 +58,10 @@ export default function FeedbackSection() {
     try {
       await adminFetch("/api/admin/feedback", { method: "PATCH", body: { id: row.id, ...patch } });
       await load();
+      // Status chips save the moment they're clicked (no separate save
+      // button) — say so on screen instead of leaving it to be guessed.
+      setSavedId(row.id);
+      setTimeout(() => setSavedId((current) => (current === row.id ? null : current)), 2000);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -136,7 +143,11 @@ export default function FeedbackSection() {
                   <Detail label="Recommend likelihood" value={String(row.recommend_likelihood)} />
                 )}
                 {row.details && Object.keys(row.details).length > 0 && (
-                  <pre style={styles.detailsJson}>{JSON.stringify(row.details, null, 2)}</pre>
+                  <div style={{ marginBottom: 8 }}>
+                    {Object.entries(row.details).map(([key, value]) => (
+                      <Detail key={key} label={prettifyKey(key)} value={prettifyValue(value)} />
+                    ))}
+                  </div>
                 )}
                 {row.screenshotUrl && (
                   <a href={row.screenshotUrl} target="_blank" rel="noreferrer" style={styles.screenshotLink}>
@@ -159,7 +170,9 @@ export default function FeedbackSection() {
                       {s.label}
                     </button>
                   ))}
+                  {savedId === row.id && <span style={styles.savedFlash}>Saved ✓</span>}
                 </div>
+                <p style={styles.autosaveHint}>Status saves instantly when clicked — only notes need the button.</p>
 
                 <label style={styles.notesLabel} htmlFor={`notes-${row.id}`}>
                   Admin notes (private)
@@ -192,9 +205,25 @@ function Detail({ label, value }) {
   return (
     <div style={{ marginBottom: 8 }}>
       <div style={styles.metaLabel}>{label}</div>
-      <div style={{ color: c.body, fontSize: 13, marginTop: 2 }}>{value}</div>
+      <div style={{ color: c.body, fontSize: 13, marginTop: 2, whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{value}</div>
     </div>
   );
+}
+
+// details is free-form jsonb captured by the bug/feature forms — keys vary
+// by form version. Render every key as a labeled row (snake_case → words)
+// instead of the raw JSON dump the first version showed.
+function prettifyKey(key) {
+  const label = String(key).replace(/_/g, " ");
+  return label.charAt(0).toUpperCase() + label.slice(1);
+}
+
+function prettifyValue(value) {
+  if (value === null || value === undefined || value === "") return "—";
+  if (Array.isArray(value)) return value.map(prettifyValue).join(", ");
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (typeof value === "object") return JSON.stringify(value);
+  return String(value);
 }
 
 function typeColor(type) {
@@ -250,18 +279,10 @@ const styles = {
   expandBody: { padding: "0 16px 16px", borderTop: `1px solid ${c.border}` },
   fullMessage: { color: c.body, fontSize: 13.5, lineHeight: 1.55, whiteSpace: "pre-wrap", margin: "14px 0" },
   metaLabel: { color: c.muted, fontSize: 10.5, textTransform: "uppercase", letterSpacing: 0.5 },
-  detailsJson: {
-    background: c.cardInner,
-    border: `1px solid ${c.border}`,
-    borderRadius: 8,
-    color: c.body,
-    fontSize: 11.5,
-    padding: 10,
-    overflowX: "auto",
-    margin: "8px 0",
-  },
   screenshotLink: { color: c.purple, fontSize: 13, display: "inline-block", margin: "6px 0" },
-  triageRow: { display: "flex", gap: 8, flexWrap: "wrap", margin: "14px 0 4px" },
+  triageRow: { display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", margin: "14px 0 4px" },
+  savedFlash: { color: c.green, fontSize: 12.5, fontWeight: 700 },
+  autosaveHint: { color: c.muted, fontSize: 11, margin: "4px 0 0" },
   statusBtn: {
     background: c.cardInner,
     color: c.body,

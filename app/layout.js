@@ -3,6 +3,7 @@ import VersionWatcher from "../lib/VersionWatcher";
 import RequireUsernameGate from "../lib/RequireUsernameGate";
 import RequireLegalGate from "../lib/RequireLegalGate";
 import WelcomePopup from "../lib/WelcomePopup";
+import GlobalErrorLogger from "../lib/GlobalErrorLogger";
 
 export const metadata = {
   title: "SquirreLingo",
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
         <RequireUsernameGate />
         <RequireLegalGate />
         <WelcomePopup />
+        <GlobalErrorLogger />
       </body>
     </html>
   );

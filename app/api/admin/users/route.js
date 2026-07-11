@@ -19,6 +19,12 @@ export async function GET(req) {
   ]);
 
   const profileById = new Map((profiles || []).map((p) => [p.user_id, p]));
+
+  // The env-bootstrap admin (ADMIN_EMAIL / NEXT_PUBLIC_ADMIN_EMAIL) is an
+  // admin even with profiles.is_admin = false — mirror the exact rule
+  // lib/adminAuth.js applies, so the list shows the admin tag correctly and
+  // the UI's own-row logic (which hides self-targeting actions) kicks in.
+  const bootstrapAdminEmail = (process.env.ADMIN_EMAIL || process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").toLowerCase();
   const progressById = new Map();
   for (const row of progressRows || []) {
     const agg = progressById.get(row.user_id) || { totalXp: 0, bestStreak: 0, tracks: 0, lastPlayed: null };
@@ -38,7 +44,7 @@ export async function GET(req) {
         id: u.id,
         email: u.email,
         username: profile.username || null,
-        isAdmin: profile.is_admin === true,
+        isAdmin: profile.is_admin === true || (Boolean(bootstrapAdminEmail) && u.email?.toLowerCase() === bootstrapAdminEmail),
         createdAt: u.created_at,
         lastSignInAt: u.last_sign_in_at || null,
         banned,
