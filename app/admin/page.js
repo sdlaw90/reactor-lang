@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { LayoutDashboard, ClipboardList, MessageSquareWarning, Users, Bug } from "lucide-react";
+import { LayoutDashboard, ClipboardList, MessageSquareWarning, Users, Bug, KeyRound } from "lucide-react";
 import { supabase } from "../../lib/supabaseClient";
 import { adminFetch, adminColors as c } from "./adminApi";
 import DashboardSection from "./DashboardSection";
@@ -10,6 +10,7 @@ import ApplicationsSection from "./ApplicationsSection";
 import FeedbackSection from "./FeedbackSection";
 import UsersSection from "./UsersSection";
 import ErrorsSection from "./ErrorsSection";
+import ResetRequestsSection from "./ResetRequestsSection";
 
 // The admin hub: one page for everything administrative — dashboard counts,
 // beta applications, feedback triage, user management, and error logs.
@@ -22,6 +23,7 @@ const TABS = [
   { key: "applications", label: "Applications", icon: ClipboardList },
   { key: "feedback", label: "Feedback", icon: MessageSquareWarning },
   { key: "users", label: "Users", icon: Users },
+  { key: "resets", label: "Reset Requests", icon: KeyRound },
   { key: "errors", label: "Error Logs", icon: Bug },
 ];
 
@@ -111,6 +113,7 @@ function AdminHub() {
         {tab === "applications" && <ApplicationsSection />}
         {tab === "feedback" && <FeedbackSection />}
         {tab === "users" && <UsersSection />}
+        {tab === "resets" && <ResetRequestsSection />}
         {tab === "errors" && <ErrorsSection />}
       </div>
     </div>

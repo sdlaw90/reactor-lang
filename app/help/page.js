@@ -116,6 +116,7 @@ export default function HelpPage() {
 
         <Section title="Account & security">
           <P>Sign in with either your email or username. Changing your email or password requires re-entering your current password first, and changing your password automatically signs out any other devices you're logged into, for security. You'll also get an email notification whenever your username, email, or password changes.</P>
+          <P>Forgot your password? The reset page walks you through your security questions — answer 2 of 3 correctly and you can set a new password on the spot. Set them up (plus an optional password hint) in Settings → Password recovery, or when you first apply for the beta. Without questions on file, resets go through an admin request instead, which can take a while — setting up the questions is strongly recommended.</P>
         </Section>
       </div>
     </div>

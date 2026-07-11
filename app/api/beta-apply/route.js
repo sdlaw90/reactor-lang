@@ -2,6 +2,8 @@ import crypto from "crypto";
 import { createClient } from "@supabase/supabase-js";
 import { cleanEmail, looksLikeEmail } from "../../../lib/emailUtils";
 import { brandedEmail, detailRows, escapeHtml } from "../../../lib/emailTemplate";
+import { isValidQuestionKey, normalizeAnswer, REQUIRED_QUESTION_COUNT } from "../../../lib/securityQuestions";
+import { hashAnswer } from "../../../lib/securityAnswerHash";
 
 // Public beta application submissions, moved server-side (previously a
 // direct client insert from lib/db.js). Server-side gives us three things a
@@ -142,7 +144,7 @@ async function notifyAdminOfApplication(application, autoApproved) {
 
 export async function POST(req) {
   const body = await req.json().catch(() => ({}));
-  const { name, email, reason, languagesInterested, nativeLanguage, currentLevel, details, username, password } = body;
+  const { name, email, reason, languagesInterested, nativeLanguage, currentLevel, details, username, password, passwordHint, securityQuestions } = body;
 
   const ip = (req.headers.get("x-forwarded-for") || "unknown").split(",")[0].trim();
   if (isRateLimited(ip)) {
@@ -171,6 +173,32 @@ export async function POST(req) {
   if (details && typeof details === "object") {
     delete details.password;
     delete details.username;
+  }
+
+  // Password recovery (#79) — optional, all-or-nothing, validated up front
+  // like the credentials above. Answers are credentials: hashed below,
+  // never stored in the application row or logged.
+  const chosenHint = typeof passwordHint === "string" ? passwordHint.trim().slice(0, 200) : "";
+  let chosenQuestions = null;
+  if (Array.isArray(securityQuestions) && securityQuestions.length > 0) {
+    if (securityQuestions.length !== REQUIRED_QUESTION_COUNT) {
+      return Response.json(
+        { error: `Security questions: exactly ${REQUIRED_QUESTION_COUNT} are required (or none at all).` },
+        { status: 400 }
+      );
+    }
+    const keys = securityQuestions.map((q) => q?.key);
+    if (new Set(keys).size !== keys.length || !keys.every(isValidQuestionKey)) {
+      return Response.json({ error: "Security questions: pick three different questions from the list." }, { status: 400 });
+    }
+    if (!securityQuestions.every((q) => normalizeAnswer(q?.answer).length > 0)) {
+      return Response.json({ error: "Security questions: every chosen question needs an answer." }, { status: 400 });
+    }
+    chosenQuestions = securityQuestions.map((q) => ({ key: q.key, answer: q.answer }));
+  }
+  if (details && typeof details === "object") {
+    delete details.passwordHint;
+    delete details.securityQuestions;
   }
   if (AUTO_APPROVE_BETA) {
     if (chosenUsername.length < 3 || !/^[A-Za-z0-9_]+$/.test(chosenUsername)) {
@@ -279,6 +307,35 @@ export async function POST(req) {
           }
         } catch (e) {
           console.error("profile username claim failed; RequireUsernameGate will handle it", e);
+        }
+
+        // Store password recovery (#79) if the applicant set it up. Failure
+        // is non-fatal — they can redo it in Settings → Password recovery —
+        // but log it, since a silent miss here strands them on the admin
+        // reset path without knowing it.
+        try {
+          const userId = created?.user?.id;
+          if (userId && (chosenHint || chosenQuestions)) {
+            if (chosenHint) {
+              await supabase
+                .from("profiles")
+                .upsert(
+                  { user_id: userId, password_hint: chosenHint, updated_at: new Date().toISOString() },
+                  { onConflict: "user_id" }
+                );
+            }
+            if (chosenQuestions) {
+              await supabase.from("security_questions").insert(
+                chosenQuestions.map((q) => ({
+                  user_id: userId,
+                  question_key: q.key,
+                  answer_hash: hashAnswer(normalizeAnswer(q.answer)),
+                }))
+              );
+            }
+          }
+        } catch (e) {
+          console.error("password recovery setup during beta-apply failed (user can redo in Settings)", e);
         }
 
         // Reflect reality in the application row: the account exists, so

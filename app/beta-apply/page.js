@@ -8,6 +8,7 @@ import PasswordInput from "../../lib/PasswordInput";
 import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
 import UsernameAvailabilityField from "../../lib/UsernameAvailabilityField";
 import { isUsernameTaken } from "../../lib/db";
+import { SECURITY_QUESTIONS } from "../../lib/securityQuestions";
 
 const STEPS = ["About You", "Language Background", "Practice Habits & Fit", "Beta Commitment", "Your Account"];
 
@@ -46,6 +47,12 @@ export default function BetaApplyPage() {
     username: "",
     password: "",
     passwordConfirm: "",
+    passwordHint: "",
+    securityQuestions: [
+      { key: "", answer: "" },
+      { key: "", answer: "" },
+      { key: "", answer: "" },
+    ],
     ageRange: "",
     devices: [],
     browser: "",
@@ -123,6 +130,18 @@ export default function BetaApplyPage() {
       setError("Passwords don't match.");
       return;
     }
+    // Password recovery (#79) is optional, but all-or-nothing: three complete
+    // question+answer pairs with distinct questions, or none at all.
+    const sqFilled = form.securityQuestions.filter((q) => q.key || q.answer.trim());
+    const sqComplete = form.securityQuestions.every((q) => q.key && q.answer.trim());
+    if (sqFilled.length > 0 && !sqComplete) {
+      setError("Security questions: fill in all three questions and answers, or leave all three empty to skip.");
+      return;
+    }
+    if (sqComplete && new Set(form.securityQuestions.map((q) => q.key)).size !== 3) {
+      setError("Security questions: pick three different questions.");
+      return;
+    }
     setError("");
     setBusy(true);
     try {
@@ -145,6 +164,10 @@ export default function BetaApplyPage() {
           email: form.email.trim(),
           username: uname,
           password: form.password,
+          passwordHint: form.passwordHint.trim(),
+          securityQuestions: sqComplete
+            ? form.securityQuestions.map((q) => ({ key: q.key, answer: q.answer }))
+            : null,
           reason: form.reason.trim(),
           languagesInterested: form.targetLanguages.trim(),
           nativeLanguage: form.nativeLanguage.trim(),
@@ -367,6 +390,59 @@ export default function BetaApplyPage() {
                   style={styles.input}
                 />
               </Field>
+
+              <p style={{ ...styles.body, marginTop: 18 }}>
+                <strong>Password recovery (optional, recommended):</strong> we can&apos;t email reset links during the
+                beta, so a password hint and three security questions are the only way to reset a forgotten password
+                yourself. Skip them and you&apos;d have to request an admin reset instead. You can also set these up
+                later in Settings.
+              </p>
+              <Field label="Password hint" htmlFor="ba-password-hint">
+                <input
+                  id="ba-password-hint"
+                  type="text"
+                  placeholder="A hint only you understand (shown on the reset page)"
+                  value={form.passwordHint}
+                  onChange={(e) => set("passwordHint")(e.target.value)}
+                  maxLength={200}
+                  style={styles.input}
+                />
+              </Field>
+              {form.securityQuestions.map((q, idx) => {
+                const takenElsewhere = new Set(
+                  form.securityQuestions.filter((_, i) => i !== idx).map((sq) => sq.key)
+                );
+                const setSq = (patch) =>
+                  set("securityQuestions")(
+                    form.securityQuestions.map((sq, i) => (i === idx ? { ...sq, ...patch } : sq))
+                  );
+                return (
+                  <Field key={idx} label={`Security question ${idx + 1}`}>
+                    <select
+                      aria-label={`Security question ${idx + 1}`}
+                      value={q.key}
+                      onChange={(e) => setSq({ key: e.target.value })}
+                      style={{ ...styles.input, marginBottom: 8 }}
+                    >
+                      <option value="">— Choose a question —</option>
+                      {SECURITY_QUESTIONS.filter((opt) => !takenElsewhere.has(opt.key)).map((opt) => (
+                        <option key={opt.key} value={opt.key}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="text"
+                      aria-label={`Answer to security question ${idx + 1}`}
+                      placeholder="Answer (not case-sensitive)"
+                      value={q.answer}
+                      onChange={(e) => setSq({ answer: e.target.value })}
+                      autoComplete="off"
+                      style={styles.input}
+                    />
+                  </Field>
+                );
+              })}
             </>
           )}
 

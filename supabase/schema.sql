@@ -298,3 +298,47 @@ update beta_applications
        reviewed_at = coalesce(reviewed_at, now())
  where status = 'pending'
    and (details ->> 'auto_approved') = 'true';
+
+-- Migration 011: security-question password reset (#79) — questions, one-time
+-- reset tokens, admin reset requests, hint + lockout columns on profiles.
+-- All three tables are service-role-only (RLS on, no policies).
+create table if not exists security_questions (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users (id) on delete cascade,
+  question_key text not null,
+  answer_hash text not null,
+  created_at timestamptz not null default now(),
+  unique (user_id, question_key)
+);
+alter table security_questions enable row level security;
+create index if not exists security_questions_user_idx on security_questions (user_id);
+
+create table if not exists password_reset_tokens (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users (id) on delete cascade,
+  token_hash text not null unique,
+  expires_at timestamptz not null,
+  used_at timestamptz,
+  created_at timestamptz not null default now()
+);
+alter table password_reset_tokens enable row level security;
+create index if not exists password_reset_tokens_user_idx on password_reset_tokens (user_id);
+
+create table if not exists password_reset_requests (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users (id) on delete cascade,
+  status text not null default 'pending',
+  requested_at timestamptz not null default now(),
+  resolved_at timestamptz,
+  resolved_by uuid references auth.users (id),
+  note text
+);
+alter table password_reset_requests enable row level security;
+create index if not exists password_reset_requests_pending_idx
+  on password_reset_requests (requested_at desc)
+  where status = 'pending';
+
+alter table profiles
+  add column if not exists password_hint text,
+  add column if not exists sq_failed_attempts integer not null default 0,
+  add column if not exists sq_locked_until timestamptz;

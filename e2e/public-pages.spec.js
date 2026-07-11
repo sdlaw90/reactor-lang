@@ -17,7 +17,7 @@ function trackConsoleErrors(page) {
 }
 
 test.describe("Public pages load without JS errors", () => {
-  for (const path of ["/auth", "/about", "/beta-apply", "/terms", "/privacy"]) {
+  for (const path of ["/auth", "/about", "/beta-apply", "/terms", "/privacy", "/forgot-password"]) {
     test(`${path} loads cleanly`, async ({ page }) => {
       const errors = trackConsoleErrors(page);
       const response = await page.goto(path);
