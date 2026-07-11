@@ -9,6 +9,7 @@ import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import { buildLessonSequence, computeMastery, todayStr, computeStreakUpdate } from "../../../lib/gameEngine";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
+import { scriptForTrack } from "../../../data/scripts";
 import SectionToggle from "../../../lib/SectionToggle";
 import { trackDisplayName } from "../../../lib/languageNames";
 import StreakMilestoneCelebration from "../../../lib/StreakMilestoneCelebration";
@@ -215,7 +216,7 @@ export default function LessonsPage({ params }) {
             <p style={styles.subtitle}>Lessons mode — no timer, step by step.</p>
 
             <SectionToggle trackId={track.id} active="practice" practiceLabel={T("sectionPractice")} listenLabel={T("sectionListen")} speakLabel={T("sectionSpeak")} soonLabel={T("soonTag")} />
-            <ModeToggle trackId={track.id} active="lessons" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} />
+            <ModeToggle trackId={track.id} active="lessons" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} scriptLabel={scriptForTrack(track.id) ? T("modeScript") : null} />
 
             <button className="rj" style={styles.pageHelpToggle} onClick={() => setShowPageHelp((v) => !v)}>
               <Info size={16} />

@@ -17,6 +17,7 @@ import {
 import { cefrSetForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
+import { scriptForTrack } from "../../../data/scripts";
 import SectionToggle from "../../../lib/SectionToggle";
 import { trackDisplayName } from "../../../lib/languageNames";
 import StreakMilestoneCelebration from "../../../lib/StreakMilestoneCelebration";
@@ -61,6 +62,24 @@ export default function PlayPage({ params }) {
   const [archiveCount, setArchiveCount] = useState(0);
   const [archiveLoading, setArchiveLoading] = useState(false);
   const [showLevelPicker, setShowLevelPicker] = useState(false);
+  // #62: gentle low-skill suggestion for script-carrying tracks — a nudge,
+  // never a gate (decision 2026-07-11). Dismissal persists per track.
+  const [scriptNoticeDismissed, setScriptNoticeDismissed] = useState(true);
+  useEffect(() => {
+    try {
+      setScriptNoticeDismissed(localStorage.getItem(`sq-script-notice-${track?.id}`) === "1");
+    } catch {
+      setScriptNoticeDismissed(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const trackScript = scriptForTrack(track?.id);
+  const dismissScriptNotice = () => {
+    setScriptNoticeDismissed(true);
+    try {
+      localStorage.setItem(`sq-script-notice-${track.id}`, "1");
+    } catch {}
+  };
   const [showPageHelp, setShowPageHelp] = useState(false);
   const [milestoneHit, setMilestoneHit] = useState(null);
   const [advanceDismissed, setAdvanceDismissed] = useState(false);
@@ -413,7 +432,22 @@ export default function PlayPage({ params }) {
             <p style={styles.subtitle}>{useAltPrompt && track.sublabelEn ? track.sublabelEn : track.sublabel}</p>
 
             <SectionToggle trackId={track.id} active="practice" practiceLabel={T("sectionPractice")} listenLabel={T("sectionListen")} speakLabel={T("sectionSpeak")} soonLabel={T("soonTag")} />
-            <ModeToggle trackId={track.id} active="quiz" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} />
+            <ModeToggle trackId={track.id} active="quiz" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} scriptLabel={trackScript ? T("modeScript") : null} />
+
+            {trackScript && !scriptNoticeDismissed && ["none", "beginner"].includes(progress.skill_level) && (
+              <div style={styles.scriptNotice}>
+                <p style={styles.scriptNoticeTitle} className="rj">{T("scriptNoticeTitle", { script: trackScript.name })}</p>
+                <p style={styles.scriptNoticeBody}>{T("scriptNotice")}</p>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <button className="rj" style={styles.scriptNoticeCta} onClick={() => router.push(`/script/${track.id}`)}>
+                    {T("scriptNoticeCta")}
+                  </button>
+                  <button className="rj" style={styles.scriptNoticeDismiss} onClick={dismissScriptNotice}>
+                    {T("scriptNoticeDismiss")}
+                  </button>
+                </div>
+              </div>
+            )}
 
             <button className="rj" style={styles.pageHelpToggle} onClick={() => setShowPageHelp((v) => !v)}>
               <Info size={16} />
@@ -941,6 +975,11 @@ const styles = {
     cursor: "pointer",
   },
   skillEditBtn: { background: "transparent", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "4px 12px", fontSize: 11, fontWeight: 700, cursor: "pointer" },
+  scriptNotice: { width: "100%", background: "#241B36", border: "1px solid #B98EFF", borderRadius: 12, padding: "12px 14px", marginBottom: 16, boxSizing: "border-box" },
+  scriptNoticeTitle: { color: "#E4D6FF", fontSize: 14, fontWeight: 700, margin: 0 },
+  scriptNoticeBody: { color: "#B4ABC9", fontSize: 12.5, lineHeight: 1.5, margin: "6px 0 10px" },
+  scriptNoticeCta: { background: "#B98EFF", color: "#171423", border: "none", borderRadius: 8, padding: "7px 14px", fontSize: 12, fontWeight: 700, cursor: "pointer" },
+  scriptNoticeDismiss: { background: "transparent", color: "#9B93B8", border: "1px solid #3A3452", borderRadius: 8, padding: "7px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer" },
   skillOptionDesc: { display: "block", color: "#9B93B8", fontSize: 11, fontWeight: 400, marginTop: 3, lineHeight: 1.4 },
   skillOption: { textAlign: "left", background: "#171423", border: "1px solid", borderRadius: 8, padding: "8px 12px", color: "#F3F0FA", fontSize: 13, fontWeight: 600, cursor: "pointer" },
   placementLinkBtn: { background: "transparent", color: "#3DDBFF", border: "1px solid #3DDBFF", borderRadius: 8, padding: "8px 12px", fontSize: 12, fontWeight: 700, cursor: "pointer", marginTop: 4 },
