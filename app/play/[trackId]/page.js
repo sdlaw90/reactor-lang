@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Flame, Zap, Check, X, ChevronRight, ChevronDown, RotateCcw, Trophy, Info } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
+import AudioButton from "../../../lib/AudioButton";
 import { getTrack } from "../../../data/tracks";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import {
@@ -138,6 +139,7 @@ export default function PlayPage({ params }) {
   };
 
   const reviewMode = session?.user?.user_metadata?.review_mode ?? false;
+  const questionAudio = session?.user?.user_metadata?.question_audio ?? true;
   const roundSettings = session?.user?.user_metadata?.round_settings || {};
   const buildOptions = { perCat: roundSettings.perCat, extraPairs: roundSettings.extraPairs, categoryFilter };
   const timerOverrides = { questionTime: roundSettings.questionTime, extraQuestionTime: roundSettings.extraQuestionTime };
@@ -264,7 +266,10 @@ export default function PlayPage({ params }) {
       },
     ]);
 
-    if (reviewMode) {
+    // Timeouts always pause on the explanation, even with review mode off —
+    // a 750ms flash of the correct answer teaches nothing (never-punish:
+    // the miss should become a micro-lesson, not just a silent penalty).
+    if (reviewMode || optIdx === -1) {
       setAwaitingNext(true);
       return;
     }
@@ -408,9 +413,11 @@ export default function PlayPage({ params }) {
       {trackTheme && <div style={animatedBackgroundStyle(trackTheme.gradient)} />}
       <div style={styles.wrap}>
         <div style={styles.hud} className="jm">
-          <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
-            ←
-          </button>
+          {screen !== "playing" && (
+            <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
+              ←
+            </button>
+          )}
           <div style={styles.hudItem}>
             <Trophy size={14} color="#FFB84D" />
             <span style={{ marginLeft: 6 }}>{T("levelAbbrev")}{progress.level}</span>
@@ -618,8 +625,7 @@ export default function PlayPage({ params }) {
           <div style={styles.centerCol}>
             <div style={styles.topRow}>
               <button onClick={exitRound} className="rj" style={styles.exitBtn}>
-                <X size={14} />
-                <span style={{ marginLeft: 4 }}>{T("exit")}</span>
+                ← {T("exit")}
               </button>
               <div className="jm" style={{ color: "#7C7395", fontSize: 13 }}>
                 {qIndex + 1} / {round.length}
@@ -647,7 +653,10 @@ export default function PlayPage({ params }) {
               <div className="rj" style={{ ...styles.catTag, color: track.cats[q.cat].color, borderColor: track.cats[q.cat].color }}>
                 {displayCatLabel(q.cat)}
               </div>
-              <p style={styles.prompt}>{displayPrompt(q)}</p>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, margin: "19px 0 18px" }}>
+                <p style={{ ...styles.prompt, margin: 0 }}>{displayPrompt(q)}</p>
+                <AudioButton trackId={track.id} text={displayPrompt(q)} enabled={questionAudio} />
+              </div>
               {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}
 
               {q.cat === track.extraCatId && q.sound && (
@@ -693,6 +702,10 @@ export default function PlayPage({ params }) {
                   );
                 })}
               </div>
+
+              {awaitingNext && selected === -1 && (
+                <p style={{ color: "#FFB84D", fontSize: 13.5, fontWeight: 600, marginTop: 12 }}>{T("timeUp")}</p>
+              )}
 
               {awaitingNext && q.explain && (
                 <div style={styles.reviewExplainBox}>
@@ -869,6 +882,9 @@ function ExplanationCard({ item, track, uiLang }) {
         </div>
       )}
 
+      {(item.selectedIdx ?? item.selected_idx) === -1 && (
+        <p style={{ color: "#FFB84D", fontSize: 12.5, fontWeight: 600, margin: "0 0 8px" }}>{t(uiLang, "noAnswer")}</p>
+      )}
       <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 }}>
         {item.options.map((opt, oi) => {
           const correctIdx = item.correctIdx ?? item.correct_idx;
@@ -1004,12 +1020,14 @@ const styles = {
   explainOpenBtn: { background: "transparent", color: "#3DDBFF", border: "1px solid #3DDBFF", padding: "12px 24px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 10 },
   secondaryBtn: { background: "transparent", color: "#7C7395", border: "1px solid #3A3452", padding: "10px 20px", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", width: "100%" },
   topRow: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: 14, gap: 10 },
-  exitBtn: { display: "flex", alignItems: "center", background: "transparent", color: "#7C7395", border: "1px solid #3A3452", borderRadius: 8, padding: "5px 10px", fontSize: 13, fontWeight: 600, cursor: "pointer" },
+  // Matches Lessons' exit styling — mid-round Exit is the single escape
+  // route, so it gets the same prominent treatment, not muted chrome.
+  exitBtn: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
   comboWrap: { display: "flex", alignItems: "center" },
   card: { width: "100%", background: "#221E33", border: "1px solid", borderRadius: 16, padding: "22px 20px", textAlign: "left" },
   catTag: { display: "inline-block", fontSize: 12, fontWeight: 700, textTransform: "uppercase", border: "1px solid", borderRadius: 20, padding: "3px 10px", marginBottom: 14 },
   prompt: { fontSize: 19, fontWeight: 500, lineHeight: 1.4, marginBottom: 18 },
-  promptNative: { fontSize: 14, fontWeight: 400, lineHeight: 1.45, margin: "-12px 0 18px", color: "#9B93B8" },
+  promptNative: { fontSize: 14, fontWeight: 400, lineHeight: 1.45, margin: "-12px 0 18px", color: "#9B93B8", textAlign: "center" },
   soundBox: { background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "16px 14px", marginBottom: 16, textAlign: "center" },
   soundText: { color: "#E4D6FF", fontSize: 21, fontWeight: 600, margin: 0, lineHeight: 1.6 },
   soundLegend: { color: "#8A7FA3", fontSize: 11, marginTop: 10, marginBottom: 0 },

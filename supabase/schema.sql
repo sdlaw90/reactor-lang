@@ -342,3 +342,16 @@ alter table profiles
   add column if not exists password_hint text,
   add column if not exists sq_failed_attempts integer not null default 0,
   add column if not exists sq_locked_until timestamptz;
+
+-- Migration 012: explicit client grants (staging-discovered — migrations must
+-- be self-sufficient; platform default privileges are not assumed).
+-- grant usage on schema public to authenticated;
+-- grant select, insert on profiles + column-level update (010's list);
+-- grant CRUD on progress/seen_questions/missed_questions/explanations;
+-- grant usage, select on all sequences in schema public to authenticated.
+
+-- Migration 013: profiles UPDATE grant gains user_id — supabase-js upserts
+-- include the conflict column in DO UPDATE SET; RLS still pins it to self.
+
+-- Migration 014: tts-audio storage bucket (public read, service-role-only
+-- writes — no client write policies by design; see the migration file).

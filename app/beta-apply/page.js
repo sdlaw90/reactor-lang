@@ -389,6 +389,7 @@ export default function BetaApplyPage() {
               </p>
               <Field label="Pick a username" required>
                 <UsernameAvailabilityField value={form.username} onChange={set("username")} />
+                <p style={styles.fieldHint}>At least 3 characters — letters, numbers, and _ only.</p>
               </Field>
               <Field label="Choose a password" required>
                 <PasswordInput
@@ -404,8 +405,19 @@ export default function BetaApplyPage() {
                   placeholder="Repeat password"
                   value={form.passwordConfirm}
                   onChange={(e) => set("passwordConfirm")(e.target.value)}
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    ...(form.passwordConfirm
+                      ? { borderColor: form.passwordConfirm === form.password ? "#5EE0A0" : "#FF7B8A" }
+                      : {}),
+                  }}
                 />
+                {form.passwordConfirm && form.passwordConfirm !== form.password && (
+                  <p style={styles.fieldError}>Passwords don&apos;t match yet.</p>
+                )}
+                {form.passwordConfirm && form.passwordConfirm === form.password && (
+                  <p style={styles.fieldOk}>Passwords match ✓</p>
+                )}
               </Field>
 
               <p style={{ ...styles.body, marginTop: 18 }}>
@@ -570,6 +582,9 @@ const styles = {
   title: { fontSize: 22, fontWeight: 700, color: "#F3F0FA", margin: "0 0 6px", textAlign: "center" },
   subtitle: { color: "#B4ABC9", fontSize: 13, lineHeight: 1.5, marginBottom: 20, textAlign: "center" },
   body: { color: "#B4ABC9", fontSize: 14, lineHeight: 1.6, margin: "12px 0 24px" },
+  fieldHint: { color: "#9B93B8", fontSize: 12, margin: "6px 0 0" },
+  fieldError: { color: "#FF7B8A", fontSize: 12, margin: "6px 0 0" },
+  fieldOk: { color: "#5EE0A0", fontSize: 12, margin: "6px 0 0" },
   progressRow: { display: "flex", gap: 6, justifyContent: "center", marginBottom: 10 },
   progressDot: { width: 28, height: 4, borderRadius: 2, background: "#3A3452" },
   progressDotActive: { background: "#FF8FB1" },
