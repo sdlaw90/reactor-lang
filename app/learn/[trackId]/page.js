@@ -122,6 +122,17 @@ export default function LessonsPage({ params }) {
     setScreen("lesson");
   };
 
+  // Exit mid-lesson returns to the lesson picker, not the track home —
+  // nothing is lost (XP/streak save per answer), and Exit from the picker
+  // itself still goes up a level to the track home as before.
+  const exitLesson = () => {
+    setScreen("start");
+    setSequence([]);
+    setIndex(0);
+    setSelected(null);
+    setAnswered(false);
+  };
+
   const q = sequence[index];
 
   const handleAnswer = async (i) => {
@@ -205,7 +216,7 @@ export default function LessonsPage({ params }) {
       {trackTheme && <div style={animatedBackgroundStyle(trackTheme.gradient)} />}
       <div style={styles.container}>
         <div style={styles.hudRow}>
-          <button className="rj" style={styles.backBtn} onClick={() => router.push(`/play/${track.id}`)}>
+          <button className="rj" style={styles.backBtn} onClick={() => (screen === "start" ? router.push(`/play/${track.id}`) : exitLesson())}>
             ← {T("exit")}
           </button>
         </div>
@@ -267,8 +278,8 @@ export default function LessonsPage({ params }) {
             <div className="rj" style={{ ...styles.catTag, color: track.cats[q.cat].color, borderColor: track.cats[q.cat].color }}>
               {displayCatLabel(q.cat)}
             </div>
-            <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-              <p style={{ ...styles.prompt, flex: 1 }}>{displayPrompt(q)}</p>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, margin: "18px 0 4px" }}>
+              <p style={{ ...styles.prompt, margin: 0 }}>{displayPrompt(q)}</p>
               <AudioButton trackId={track.id} text={displayPrompt(q)} enabled={questionAudio} />
             </div>
             {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}

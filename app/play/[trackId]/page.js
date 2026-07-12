@@ -266,7 +266,10 @@ export default function PlayPage({ params }) {
       },
     ]);
 
-    if (reviewMode) {
+    // Timeouts always pause on the explanation, even with review mode off —
+    // a 750ms flash of the correct answer teaches nothing (never-punish:
+    // the miss should become a micro-lesson, not just a silent penalty).
+    if (reviewMode || optIdx === -1) {
       setAwaitingNext(true);
       return;
     }
@@ -410,9 +413,11 @@ export default function PlayPage({ params }) {
       {trackTheme && <div style={animatedBackgroundStyle(trackTheme.gradient)} />}
       <div style={styles.wrap}>
         <div style={styles.hud} className="jm">
-          <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
-            ←
-          </button>
+          {screen !== "playing" && (
+            <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
+              ←
+            </button>
+          )}
           <div style={styles.hudItem}>
             <Trophy size={14} color="#FFB84D" />
             <span style={{ marginLeft: 6 }}>{T("levelAbbrev")}{progress.level}</span>
@@ -649,8 +654,8 @@ export default function PlayPage({ params }) {
               <div className="rj" style={{ ...styles.catTag, color: track.cats[q.cat].color, borderColor: track.cats[q.cat].color }}>
                 {displayCatLabel(q.cat)}
               </div>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                <p style={{ ...styles.prompt, flex: 1 }}>{displayPrompt(q)}</p>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, margin: "19px 0 18px" }}>
+                <p style={{ ...styles.prompt, margin: 0 }}>{displayPrompt(q)}</p>
                 <AudioButton trackId={track.id} text={displayPrompt(q)} enabled={questionAudio} />
               </div>
               {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}
@@ -698,6 +703,10 @@ export default function PlayPage({ params }) {
                   );
                 })}
               </div>
+
+              {awaitingNext && selected === -1 && (
+                <p style={{ color: "#FFB84D", fontSize: 13.5, fontWeight: 600, marginTop: 12 }}>{T("timeUp")}</p>
+              )}
 
               {awaitingNext && q.explain && (
                 <div style={styles.reviewExplainBox}>
@@ -874,6 +883,9 @@ function ExplanationCard({ item, track, uiLang }) {
         </div>
       )}
 
+      {(item.selectedIdx ?? item.selected_idx) === -1 && (
+        <p style={{ color: "#FFB84D", fontSize: 12.5, fontWeight: 600, margin: "0 0 8px" }}>{t(uiLang, "noAnswer")}</p>
+      )}
       <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 }}>
         {item.options.map((opt, oi) => {
           const correctIdx = item.correctIdx ?? item.correct_idx;
