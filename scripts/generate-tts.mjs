@@ -36,7 +36,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
@@ -74,18 +74,26 @@ const SPEAKING_RATE = Number(opt("rate", "0.92")); // slightly slower for learne
 // Locale for embedded native-language spans, derived from track.nativeLang.
 const NATIVE_TTS_LOCALE = { en: "en-US", es: "es-US", it: "it-IT" };
 
-// ---------- load the track through esbuild (data files are ESM w/ extensionless imports) ----------
-async function loadTrack(trackName) {
+// ---------- load the track + audioKey through esbuild ----------
+// (data files and lib/audioKey.js are ESM with extensionless imports; the
+// repo has no "type":"module", so Node can't import them directly —
+// esbuild normalizes everything to CJS regardless of Node version.)
+async function loadModules(trackName) {
   const esbuild = require("esbuild");
   const entry = path.join(ROOT, "data", "tracks", `${trackName}.js`);
   if (!existsSync(entry)) {
     console.error(`No such track file: data/tracks/${trackName}.js`);
     process.exit(1);
   }
-  const outfile = path.join(ROOT, "tts-output", `.track-${trackName}.bundle.cjs`);
+  const outfile = path.join(ROOT, "tts-output", `.tts-entry-${trackName}.bundle.cjs`);
   mkdirSync(path.dirname(outfile), { recursive: true });
+  const stub = [
+    `import track from ${JSON.stringify(entry.replace(/\\/g, "/"))};`,
+    `import * as audioKeyMod from ${JSON.stringify(path.join(ROOT, "lib", "audioKey.js").replace(/\\/g, "/"))};`,
+    `module.exports = { track, audioKeyMod };`,
+  ].join("\n");
   await esbuild.build({
-    entryPoints: [entry],
+    stdin: { contents: stub, resolveDir: ROOT, sourcefile: "tts-entry.js" },
     bundle: true,
     platform: "node",
     format: "cjs",
@@ -94,7 +102,7 @@ async function loadTrack(trackName) {
   });
   const mod = require(outfile);
   rmSync(outfile);
-  return mod.default;
+  return mod;
 }
 
 // ---------- spoken-text extraction ----------
@@ -232,9 +240,8 @@ async function pool(items, worker, size = 4) {
 }
 
 // ---------- main ----------
-const { audioKey, normalizeSpokenText } = await import(pathToFileURL(path.join(ROOT, "lib", "audioKey.js")));
-
-const track = await loadTrack(TRACK);
+const { track, audioKeyMod } = await loadModules(TRACK);
+const { audioKey, normalizeSpokenText } = audioKeyMod;
 const outDir = path.join(ROOT, "tts-output", track.id);
 mkdirSync(outDir, { recursive: true });
 
@@ -308,14 +315,35 @@ console.log(`Manifest → ${path.relative(ROOT, manifestPath)}`);
 
 // ---------- optional upload ----------
 if (UPLOAD) {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const url = (process.env.NEXT_PUBLIC_SUPABASE_URL || "").replace(/\/$/, "");
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !serviceKey) {
     console.error("--upload needs NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local. Skipping upload.");
     process.exit(1);
   }
-  const { createClient } = require("@supabase/supabase-js");
-  const supabase = createClient(url, serviceKey);
+
+  // Plain Storage REST API — deliberately NOT supabase-js: the client
+  // constructs its realtime layer (needs Node 22+ native WebSocket) even
+  // for storage-only use. fetch keeps the script runnable on any Node 18+.
+  async function storagePut(objectPath, body, contentType, maxAgeSeconds) {
+    const res = await fetch(`${url}/storage/v1/object/tts-audio/${objectPath}`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${serviceKey}`,
+        apikey: serviceKey,
+        "content-type": contentType,
+        "cache-control": `max-age=${maxAgeSeconds}`,
+        "x-upsert": "true",
+      },
+      body,
+    });
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      const err = new Error(`storage ${res.status}: ${detail.slice(0, 200)}`);
+      err.status = res.status;
+      throw err;
+    }
+  }
 
   const files = (await readdir(outDir)).filter((f) => f.endsWith(".mp3"));
   console.log(`Uploading ${files.length} clips + manifest to bucket "tts-audio"...`);
@@ -323,30 +351,25 @@ if (UPLOAD) {
   const upErrors = await pool(
     files,
     async (f) => {
-      const body = readFileSync(path.join(outDir, f));
-      const { error } = await supabase.storage
-        .from("tts-audio")
-        .upload(`${track.id}/${f}`, body, {
-          upsert: true,
-          contentType: "audio/mpeg",
-          cacheControl: "31536000", // clips are immutable per key
-        });
-      if (error) throw new Error(error.message);
+      await withRetry(() =>
+        storagePut(`${track.id}/${f}`, readFileSync(path.join(outDir, f)), "audio/mpeg", 31536000) // clips immutable per key
+      );
       up++;
       if (up % 100 === 0 || up === files.length) console.log(`  uploaded ${up}/${files.length}`);
     },
     6
   );
-  const { error: mErr } = await supabase.storage
-    .from("tts-audio")
-    .upload(`${track.id}/manifest.json`, readFileSync(manifestPath), {
-      upsert: true,
-      contentType: "application/json",
-      cacheControl: "300", // manifest changes with content passes — short cache
-    });
-  if (mErr) console.error(`✗ manifest upload failed: ${mErr.message}`);
+  try {
+    await withRetry(() =>
+      storagePut(`${track.id}/manifest.json`, readFileSync(manifestPath), "application/json", 300) // manifest changes with content passes
+    );
+  } catch (e) {
+    console.error(`✗ manifest upload failed: ${e.message}`);
+  }
   if (upErrors.length) {
-    console.error(`✗ ${upErrors.length} uploads failed — re-run with --upload to retry.`);
+    console.error(`✗ ${upErrors.length} uploads failed:`);
+    upErrors.slice(0, 5).forEach((f) => console.error(`  ${f.item}  ${f.error.message}`));
+    console.error("Re-run with --upload to retry (x-upsert makes it safe).");
     process.exit(1);
   }
   console.log("Upload complete.");

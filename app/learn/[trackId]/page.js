@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Check, X, ChevronRight, ChevronDown, RotateCcw, Info } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
+import AudioButton from "../../../lib/AudioButton";
 import { getTrack } from "../../../data/tracks";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import { buildLessonSequence, computeMastery, todayStr, computeStreakUpdate } from "../../../lib/gameEngine";
@@ -80,6 +81,7 @@ export default function LessonsPage({ params }) {
   }
 
   const viewerNativeLang = session?.user?.user_metadata?.native_lang;
+  const questionAudio = session?.user?.user_metadata?.question_audio ?? true;
   const useAltPrompt = viewerNativeLang === "en" && track.nativeLang !== "en";
   const displayPrompt = (q) => (useAltPrompt && q.promptEn ? q.promptEn : q.prompt);
   const displayCatLabel = (catId) => categoryDisplayName(uiLang, viewerNativeLang, track, catId);
@@ -265,7 +267,10 @@ export default function LessonsPage({ params }) {
             <div className="rj" style={{ ...styles.catTag, color: track.cats[q.cat].color, borderColor: track.cats[q.cat].color }}>
               {displayCatLabel(q.cat)}
             </div>
-            <p style={styles.prompt}>{displayPrompt(q)}</p>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+              <p style={{ ...styles.prompt, flex: 1 }}>{displayPrompt(q)}</p>
+              <AudioButton trackId={track.id} text={displayPrompt(q)} enabled={questionAudio} />
+            </div>
             {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}
 
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>

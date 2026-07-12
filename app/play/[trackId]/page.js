@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Flame, Zap, Check, X, ChevronRight, ChevronDown, RotateCcw, Trophy, Info } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
+import AudioButton from "../../../lib/AudioButton";
 import { getTrack } from "../../../data/tracks";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import {
@@ -138,6 +139,7 @@ export default function PlayPage({ params }) {
   };
 
   const reviewMode = session?.user?.user_metadata?.review_mode ?? false;
+  const questionAudio = session?.user?.user_metadata?.question_audio ?? true;
   const roundSettings = session?.user?.user_metadata?.round_settings || {};
   const buildOptions = { perCat: roundSettings.perCat, extraPairs: roundSettings.extraPairs, categoryFilter };
   const timerOverrides = { questionTime: roundSettings.questionTime, extraQuestionTime: roundSettings.extraQuestionTime };
@@ -647,7 +649,10 @@ export default function PlayPage({ params }) {
               <div className="rj" style={{ ...styles.catTag, color: track.cats[q.cat].color, borderColor: track.cats[q.cat].color }}>
                 {displayCatLabel(q.cat)}
               </div>
-              <p style={styles.prompt}>{displayPrompt(q)}</p>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+                <p style={{ ...styles.prompt, flex: 1 }}>{displayPrompt(q)}</p>
+                <AudioButton trackId={track.id} text={displayPrompt(q)} enabled={questionAudio} />
+              </div>
               {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}
 
               {q.cat === track.extraCatId && q.sound && (
