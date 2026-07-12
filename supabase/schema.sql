@@ -349,3 +349,6 @@ alter table profiles
 -- grant select, insert on profiles + column-level update (010's list);
 -- grant CRUD on progress/seen_questions/missed_questions/explanations;
 -- grant usage, select on all sequences in schema public to authenticated.
+
+-- Migration 013: profiles UPDATE grant gains user_id — supabase-js upserts
+-- include the conflict column in DO UPDATE SET; RLS still pins it to self.
