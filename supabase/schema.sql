@@ -352,3 +352,6 @@ alter table profiles
 
 -- Migration 013: profiles UPDATE grant gains user_id — supabase-js upserts
 -- include the conflict column in DO UPDATE SET; RLS still pins it to self.
+
+-- Migration 014: tts-audio storage bucket (public read, service-role-only
+-- writes — no client write policies by design; see the migration file).
