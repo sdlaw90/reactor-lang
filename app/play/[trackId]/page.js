@@ -625,8 +625,7 @@ export default function PlayPage({ params }) {
           <div style={styles.centerCol}>
             <div style={styles.topRow}>
               <button onClick={exitRound} className="rj" style={styles.exitBtn}>
-                <X size={14} />
-                <span style={{ marginLeft: 4 }}>{T("exit")}</span>
+                ← {T("exit")}
               </button>
               <div className="jm" style={{ color: "#7C7395", fontSize: 13 }}>
                 {qIndex + 1} / {round.length}
@@ -654,9 +653,9 @@ export default function PlayPage({ params }) {
               <div className="rj" style={{ ...styles.catTag, color: track.cats[q.cat].color, borderColor: track.cats[q.cat].color }}>
                 {displayCatLabel(q.cat)}
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, margin: "19px 0 18px" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 8, margin: "19px 0 18px" }}>
                 <p style={{ ...styles.prompt, margin: 0 }}>{displayPrompt(q)}</p>
-                <AudioButton trackId={track.id} text={displayPrompt(q)} enabled={questionAudio} />
+                <AudioButton trackId={track.id} text={displayPrompt(q)} enabled={questionAudio} align="left" />
               </div>
               {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}
 
@@ -1023,7 +1022,7 @@ const styles = {
   topRow: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: 14, gap: 10 },
   // Matches Lessons' exit styling — mid-round Exit is the single escape
   // route, so it gets the same prominent treatment, not muted chrome.
-  exitBtn: { display: "flex", alignItems: "center", background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "5px 12px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
+  exitBtn: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
   comboWrap: { display: "flex", alignItems: "center" },
   card: { width: "100%", background: "#221E33", border: "1px solid", borderRadius: 16, padding: "22px 20px", textAlign: "left" },
   catTag: { display: "inline-block", fontSize: 12, fontWeight: 700, textTransform: "uppercase", border: "1px solid", borderRadius: 20, padding: "3px 10px", marginBottom: 14 },
