@@ -21,13 +21,13 @@ name: Deploy Supabase migrations
 
 on:
   push:
-    branches: [beta, dev]
+    branches: [main, dev]
     paths:
       - "supabase/migrations/**"
 
 jobs:
   migrate-production:
-    if: github.ref == 'refs/heads/beta'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: Production
     steps:
