@@ -1021,7 +1021,9 @@ const styles = {
   explainOpenBtn: { background: "transparent", color: "#3DDBFF", border: "1px solid #3DDBFF", padding: "12px 24px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 10 },
   secondaryBtn: { background: "transparent", color: "#7C7395", border: "1px solid #3A3452", padding: "10px 20px", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", width: "100%" },
   topRow: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: 14, gap: 10 },
-  exitBtn: { display: "flex", alignItems: "center", background: "transparent", color: "#7C7395", border: "1px solid #3A3452", borderRadius: 8, padding: "5px 10px", fontSize: 13, fontWeight: 600, cursor: "pointer" },
+  // Matches Lessons' exit styling — mid-round Exit is the single escape
+  // route, so it gets the same prominent treatment, not muted chrome.
+  exitBtn: { display: "flex", alignItems: "center", background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "5px 12px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
   comboWrap: { display: "flex", alignItems: "center" },
   card: { width: "100%", background: "#221E33", border: "1px solid", borderRadius: 16, padding: "22px 20px", textAlign: "left" },
   catTag: { display: "inline-block", fontSize: 12, fontWeight: 700, textTransform: "uppercase", border: "1px solid", borderRadius: 20, padding: "3px 10px", marginBottom: 14 },
