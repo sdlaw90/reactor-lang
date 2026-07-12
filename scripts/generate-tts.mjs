@@ -27,11 +27,21 @@
 //   - The fono extraBank is EXCLUDED: speaking item.text aloud would answer
 //     the identify question. Real listening exercises are the separate
 //     listening-module roadmap item, not this pipeline.
-//   - Cloze gaps ("_____") become a 500ms SSML pause.
-//   - "¿Cómo se dice 'X' ...?" prompts wrap X in an en-US <lang> span so the
-//     Spanish voice doesn't mangle the embedded English. Any OTHER prompt
-//     containing a quoted span is flagged to tts-output/<id>/review.txt for
-//     a manual look rather than guessed at.
+//   - Cloze gaps ("___"/"_____") become a 500ms SSML pause.
+//   - Production prompts ("¿Cómo se dice 'X' ...?" / "Comment dit-on 'X'
+//     en français?") wrap X in a native-locale <lang> span so the target
+//     voice doesn't mangle the embedded English. Any OTHER prompt containing
+//     a true quoted span is flagged to tts-output/<id>/review.txt for a
+//     manual look rather than guessed at.
+//   - Prompt-shape rules are per-language (LANG_RULES, keyed by
+//     track.targetLang; tracks without one fall back to the es pilot rules).
+//     French rules are elision-aware: apostrophes inside words (t'as, c'est,
+//     l'école) are orthography, not quotes, and must not trip the review
+//     flag or truncate quoted-span matches.
+//   - Voice preflight: before any paid synthesis the script verifies the
+//     configured voices actually exist for their locales and hard-fails
+//     otherwise — never silently substitutes a neighboring dialect (fr-CA
+//     falling back to fr-FR would defeat the entire dialect positioning).
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { readdir } from "node:fs/promises";
@@ -63,7 +73,16 @@ const opt = (name, dflt) => {
   return i !== -1 && args[i + 1] ? args[i + 1] : dflt;
 };
 const TRACK = opt("track", "esForEn");
-const VOICE = opt("voice", "es-US-Neural2-A");
+
+// Per-track default voices (--voice / --native-voice still override).
+// Dialect fidelity is the product: the fr-CA entry must be an fr-CA voice,
+// never an fr-FR one. Variant letters (A vs B...) are an audition decision —
+// update here once ears have picked.
+const TRACK_VOICES = {
+  esForEn: "es-US-Neural2-A",
+  frCaForEn: "fr-CA-Neural2-A",
+};
+const VOICE = opt("voice", TRACK_VOICES[TRACK] || "es-US-Neural2-A");
 const NATIVE_VOICE = opt("native-voice", "en-US-Neural2-C");
 const LIMIT = Number(opt("limit", "0")) || 0;
 const DRY = flag("dry-run");
@@ -105,6 +124,37 @@ async function loadModules(trackName) {
   return mod;
 }
 
+// ---------- per-language prompt-shape rules ----------
+// Keyed by track.targetLang. Each entry:
+//   production  — regex for "how do you say 'X'" prompts; groups are
+//                 (lead)(quoted native word)(tail); the quoted word gets a
+//                 native-locale <lang> span.
+//   knownQuoted — recognition shapes whose quoted spans are ALL
+//                 target-language (spoken as-is, not flagged).
+//   quoteDetect — does this text contain a true quoted span? Used only for
+//                 the review flag.
+//
+// es rules are the pilot's logic verbatim — they must stay byte-identical in
+// SSML output so esForEn needs no --force after this change (verified by
+// snapshot diff at this pass).
+//
+// fr notes: word/gloss content can contain elision apostrophes ("l'école",
+// "one's"), so the quoted-span matches are GREEDY and anchored on the exact
+// formula tails, unlike the pilot's [^']+ — and quote detection requires
+// span boundaries (whitespace/punct) so French elisions don't flag.
+const LANG_RULES = {
+  es: {
+    production: /^(¿Cómo se dice )'([^']+)'( .*)$/i,
+    knownQuoted: /^'[^']+'\s+significa/i,
+    quoteDetect: (text) => text.includes("'"),
+  },
+  fr: {
+    production: /^(Comment dit-on )'(.+)'( en français\?)$/i,
+    knownQuoted: /^'.+'\s+signifie/i,
+    quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…]|$)/.test(text),
+  },
+};
+
 // ---------- spoken-text extraction ----------
 function extractSpoken(track) {
   const items = []; // { key, text, ssml, sources: [questionId,...] }
@@ -112,6 +162,7 @@ function extractSpoken(track) {
   const review = [];
 
   const nativeLocale = NATIVE_TTS_LOCALE[track.nativeLang] || "en-US";
+  const rules = LANG_RULES[track.targetLang] || LANG_RULES.es;
 
   Object.keys(track.bank).forEach((cat) => {
     track.bank[cat].forEach((q, i) => {
@@ -129,7 +180,7 @@ function extractSpoken(track) {
         prior.sources.push(id);
         return;
       }
-      const { ssml, flagged, voice } = toSSML(text, nativeLocale);
+      const { ssml, flagged, voice } = toSSML(text, nativeLocale, rules);
       if (flagged) review.push({ id, text });
       const item = { key, text, ssml, voice, sources: [id] };
       byKey.set(key, item);
@@ -148,43 +199,69 @@ function xmlEscape(s) {
 // means a quoted span we did NOT confidently language-tag; voice is
 // "target" (default) or "native" (the whole prompt is the learner's
 // native language, e.g. the trad category's "Translate: '...'" prompts).
-function toSSML(text, nativeLocale) {
+function toSSML(text, nativeLocale, rules) {
   let flagged = false;
   let voice = "target";
   let body;
 
   const translate = text.match(/^Translate:\s*'/i);
-  const comoSeDice = text.match(/^(¿Cómo se dice )'([^']+)'( .*)$/i);
+  const production = text.match(rules.production);
   if (translate) {
     // Whole prompt is native-language — synthesize with the native voice.
-    // (Occasional Spanish parenthetical like "(coloquial)" comes out with an
-    // English accent; one word, acceptable for the pilot — see runbook.)
+    // (Occasional target-language parenthetical like "(coloquial)" comes out
+    // with an English accent; one word, acceptable — see runbook.)
     voice = "native";
     body = xmlEscape(text);
-  } else if (comoSeDice) {
-    // "¿Cómo se dice 'deadline' en español?" — the quoted word is the
-    // learner's native language; tag it so the es voice doesn't mangle it.
+  } else if (production) {
+    // "¿Cómo se dice 'deadline' en español?" / "Comment dit-on 'kitchen' en
+    // français?" — the quoted word is the learner's native language; tag it
+    // so the target voice doesn't mangle it.
     body =
-      xmlEscape(comoSeDice[1]) +
+      xmlEscape(production[1]) +
       `<lang xml:lang="${nativeLocale}">` +
-      xmlEscape(comoSeDice[2]) +
+      xmlEscape(production[2]) +
       `</lang>` +
-      xmlEscape(comoSeDice[3]);
+      xmlEscape(production[3]);
   } else {
-    // "'La almohada' significa..." — quoted span is target-language, speak
-    // as-is. Any other quoted pattern gets flagged for manual review but is
-    // still generated (worst case: accented pronunciation of a stray word).
-    if (text.includes("'") && !/^'[^']+'\s+significa/i.test(text)) flagged = true;
+    // "'La almohada' significa..." / "'Magasiner' signifie..." — quoted
+    // span(s) are target-language, speak as-is. Any other prompt with a true
+    // quoted span gets flagged for manual review but is still generated
+    // (worst case: accented pronunciation of a stray word).
+    if (rules.quoteDetect(text) && !rules.knownQuoted.test(text)) flagged = true;
     body = xmlEscape(text);
   }
 
-  // Cloze gaps: "Yo _____ (tener) mucha hambre." → pause where the gap is.
+  // Cloze gaps: "Yo _____ (tener) mucha hambre." / "___ maison est grande."
+  // → pause where the gap is.
   body = body.replace(/_{2,}/g, '<break time="500ms"/>');
 
   return { ssml: `<speak>${body}</speak>`, flagged, voice };
 }
 
 // ---------- Google TTS REST ----------
+// Preflight: confirm both configured voices exist for their exact locales.
+// Google returns 400s per-request for unknown voice names, but this check
+// fails FAST with a clear message — and guarantees we never end up quietly
+// auditioning a neighboring dialect (fr-CA is the point; fr-FR is a bug).
+async function verifyVoices(apiKey) {
+  for (const name of new Set([VOICE, NATIVE_VOICE])) {
+    const locale = name.split("-").slice(0, 2).join("-");
+    const res = await fetch(`https://texttospeech.googleapis.com/v1/voices?languageCode=${locale}&key=${apiKey}`);
+    if (!res.ok) {
+      console.error(`Voice preflight failed: voices list returned ${res.status}. Aborting before any synthesis.`);
+      process.exit(1);
+    }
+    const { voices = [] } = await res.json();
+    if (!voices.some((v) => v.name === name)) {
+      const available = voices.map((v) => v.name).join(", ") || "(none)";
+      console.error(`Voice "${name}" does not exist for locale ${locale}.`);
+      console.error(`Available ${locale} voices: ${available}`);
+      console.error(`Refusing to fall back to another dialect — pick a real ${locale} voice with --voice/--native-voice.`);
+      process.exit(1);
+    }
+  }
+}
+
 async function synthesize(ssml, apiKey, voiceKind = "target") {
   const voiceName = voiceKind === "native" ? NATIVE_VOICE : VOICE;
   const res = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`, {
@@ -279,6 +356,8 @@ if (!API_KEY) {
   console.error("GOOGLE_TTS_API_KEY missing (set it in .env.local). Aborting.");
   process.exit(1);
 }
+
+await verifyVoices(API_KEY);
 
 let done = 0;
 const failures = await pool(todo, async (item) => {
