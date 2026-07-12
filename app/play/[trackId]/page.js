@@ -653,9 +653,9 @@ export default function PlayPage({ params }) {
               <div className="rj" style={{ ...styles.catTag, color: track.cats[q.cat].color, borderColor: track.cats[q.cat].color }}>
                 {displayCatLabel(q.cat)}
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 8, margin: "19px 0 18px" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, margin: "19px 0 18px" }}>
                 <p style={{ ...styles.prompt, margin: 0 }}>{displayPrompt(q)}</p>
-                <AudioButton trackId={track.id} text={displayPrompt(q)} enabled={questionAudio} align="left" />
+                <AudioButton trackId={track.id} text={displayPrompt(q)} enabled={questionAudio} />
               </div>
               {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}
 
@@ -1027,7 +1027,7 @@ const styles = {
   card: { width: "100%", background: "#221E33", border: "1px solid", borderRadius: 16, padding: "22px 20px", textAlign: "left" },
   catTag: { display: "inline-block", fontSize: 12, fontWeight: 700, textTransform: "uppercase", border: "1px solid", borderRadius: 20, padding: "3px 10px", marginBottom: 14 },
   prompt: { fontSize: 19, fontWeight: 500, lineHeight: 1.4, marginBottom: 18 },
-  promptNative: { fontSize: 14, fontWeight: 400, lineHeight: 1.45, margin: "-12px 0 18px", color: "#9B93B8" },
+  promptNative: { fontSize: 14, fontWeight: 400, lineHeight: 1.45, margin: "-12px 0 18px", color: "#9B93B8", textAlign: "center" },
   soundBox: { background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "16px 14px", marginBottom: 16, textAlign: "center" },
   soundText: { color: "#E4D6FF", fontSize: 21, fontWeight: 600, margin: 0, lineHeight: 1.6 },
   soundLegend: { color: "#8A7FA3", fontSize: 11, marginTop: 10, marginBottom: 0 },
