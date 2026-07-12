@@ -68,6 +68,7 @@ export default function HelpPage() {
 
         <Section title="Category picker (Quick Quiz mode)">
           <P>Before starting a round, mix and match any combination of categories to focus on (vocabulary, grammar, translation, phonetics — any subset), or leave it on the "Mixed" option for the default blend of everything (its label shows in whichever language your other buttons are currently in). Picking it clears any specific selections back to the full mix. In Lessons mode, you pick one topic at a time instead — see the mode explanation above.</P>
+          <P>Some tracks also carry a <b>Word Bank</b> category ("Palabras" / "Mots") — a large layer of the language's most frequent words. It joins the mix like any other category, but the default blend caps how much of a round it can take up, so it never crowds out grammar, expressions, or phonetics.</P>
         </Section>
 
         <Section title="Language switches with your skill level">
@@ -79,6 +80,7 @@ export default function HelpPage() {
           <P>Each round mixes several question types — you'll see a colored tag on each question card showing which type it is.</P>
           <P>You get a set number of seconds per question (adjustable in Settings → Gameplay), no penalty for wrong answers — just answer and move on. A combo counter (⚡) builds as you chain correct answers in a row, and resets on a miss with no other penalty.</P>
           <P><b>Phonetics questions</b> show a written respelling of how a phrase sounds (CAPS = stressed syllable, ‿ = words that blend together in fast speech) instead of real audio, so it works everywhere without needing sound.</P>
+          <P><b>Question audio</b>: on tracks where audio has been recorded (Latin American Spanish so far), a speaker button appears beside the question — tap to hear it read aloud in the track's own dialect, tap again to stop. It never plays on its own, and the timer keeps running while it plays. All speaker buttons can be turned off in Settings → Gameplay.</P>
           <P>Right and wrong answers are deliberately hard to miss — a green pulse for correct, a red shake for wrong.</P>
         </Section>
 
@@ -112,7 +114,7 @@ export default function HelpPage() {
         </Section>
 
         <Section title="Gameplay settings">
-          <P>In Settings → Gameplay: turn review mode on/off, adjust how many questions come from each category per round, how many phonetics pairs appear, and the per-question timer — either one shared time limit or separate limits for regular questions vs. phonetics.</P>
+          <P>In Settings → Gameplay: turn review mode on/off, adjust how many questions come from each category per round, how many phonetics pairs appear, and the per-question timer — either one shared time limit or separate limits for regular questions vs. phonetics — and turn question audio on or off.</P>
         </Section>
 
         <Section title="Feedback">
