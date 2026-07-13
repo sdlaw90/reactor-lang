@@ -91,6 +91,37 @@ French specifics (added at the frCaForEn pass, apply to frForEn too):
   rules were left byte-identical — **esForEn needs no `--force` after this
   change** (verified by harness at the frCa pass).
 
+German specifics (added at the deForEn pass):
+
+- Recognition shape is `'X' bedeutet...`, and the match tolerates words
+  between the quoted span and `bedeutet` (`'Doch!' als Antwort bedeutet...`,
+  `'Handschuh' bedeutet wörtlich "hand shoe", aber wirklich...`) — everything
+  before `bedeutet` in those shapes is German, spoken as-is, not flagged.
+- Production shape is `Wie sagt man 'X' auf Deutsch?` — X is the English
+  gloss, wrapped in a native `<lang>` span like the es/fr formulas.
+- Quoted-span handling reuses the fr greedy + boundary-aware rules: German
+  headwords are stored in dictionary casing **with their article**
+  (`'der Termin'`) per the track's capitalization convention, and glosses can
+  carry internal apostrophes (`one's`) — neither truncates a match or trips
+  the review flag. Casing is passed through untouched (it's grammatically
+  meaningful in German); TTS pronunciation is unaffected either way.
+- Embedded double-quoted English inside a German prompt (`"hand shoe"`)
+  comes out German-accented — same accepted wart class as the trad
+  `(coloquial)` case.
+- Default voice: `de-DE-Neural2-G` (female; `-H` is male). The Neural2-A/B
+  voices previously noted as confirmed were **retired in a Google voice
+  refresh** — the preflight caught it, exactly as designed. Standing caution
+  for every future track: re-run the voices-list check at the track's own
+  TTS pass; "confirmed at deepening time" can go stale.
+- **Chirp / Chirp3-HD voices are incompatible with this pipeline**: they do
+  not support SSML input or the speakingRate parameter, and the pipeline
+  depends on both (`<lang>` spans, cloze `<break>` pauses, rate 0.92). If a
+  future locale offers only Chirp-tier voices, that's a pipeline rework
+  decision, not a voice-flag choice. Multi-voice support (e.g. adding
+  Neural2-H) remains a deliberately deferred, separate work item.
+- es and fr rules were untouched (verified additive-only diff + snapshot
+  harness at this pass) — **no `--force` needed for esForEn or frCaForEn.**
+
 ## Per-track rollout checklist (when extending past the pilot)
 
 1. Audit voice availability for the track's locale (Neural2 tiers vary by

@@ -29,7 +29,8 @@
 //     listening-module roadmap item, not this pipeline.
 //   - Cloze gaps ("___"/"_____") become a 500ms SSML pause.
 //   - Production prompts ("¿Cómo se dice 'X' ...?" / "Comment dit-on 'X'
-//     en français?") wrap X in a native-locale <lang> span so the target
+//     en français?" / "Wie sagt man 'X' auf Deutsch?") wrap X in a
+//     native-locale <lang> span so the target
 //     voice doesn't mangle the embedded English. Any OTHER prompt containing
 //     a true quoted span is flagged to tts-output/<id>/review.txt for a
 //     manual look rather than guessed at.
@@ -81,6 +82,7 @@ const TRACK = opt("track", "esForEn");
 const TRACK_VOICES = {
   esForEn: "es-US-Neural2-A",
   frCaForEn: "fr-CA-Neural2-A",
+  deForEn: "de-DE-Neural2-G", // female. A/B retired in Google's voice refresh (G=F, H=M)
 };
 const VOICE = opt("voice", TRACK_VOICES[TRACK] || "es-US-Neural2-A");
 const NATIVE_VOICE = opt("native-voice", "en-US-Neural2-C");
@@ -151,6 +153,20 @@ const LANG_RULES = {
   fr: {
     production: /^(Comment dit-on )'(.+)'( en français\?)$/i,
     knownQuoted: /^'.+'\s+signifie/i,
+    quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…]|$)/.test(text),
+  },
+  // de notes: recognition allows words between the quoted span and
+  // "bedeutet" ("'Doch!' als Antwort bedeutet...", "'Handschuh' bedeutet
+  // wörtlich ..."), hence `.*` rather than `\s+`. Everything before
+  // "bedeutet" in those shapes is German, so speaking as-is is correct.
+  // Embedded double-quoted English ("hand shoe") comes out German-accented —
+  // same accepted wart class as the trad "(coloquial)" case. Quoted spans
+  // keep the greedy+boundary-aware fr treatment: German words are stored in
+  // dictionary casing WITH articles ('der Termin') and glosses can carry
+  // internal apostrophes ("one's"), neither of which may truncate or flag.
+  de: {
+    production: /^(Wie sagt man )'(.+)'( auf Deutsch\?)$/i,
+    knownQuoted: /^'.+'.*\bbedeutet/i,
     quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…]|$)/.test(text),
   },
 };
