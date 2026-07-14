@@ -53,7 +53,14 @@ git push
 ```
 
 Pushing `dev` triggers: Vercel Preview deploy + migrations workflow →
+<<<<<<< HEAD
 **staging** Supabase (workflow watches `main` + `dev`).
+=======
+**staging** Supabase. Note: the workflow's old `paths` filter is gone, so
+the staging migration job now runs on *every* dev push — an idempotent
+no-op when no new migration files exist. This is deliberate (the filter
+would have skipped the release sync/smoke jobs on no-migration releases).
+>>>>>>> dev
 
 ---
 
@@ -69,13 +76,21 @@ solely owned by the deepening/ledger chat.
 ## 5. TTS per-track sequence (dev)
 
 Requires `.env.local` with the GCP API key and Supabase service role key
+<<<<<<< HEAD
 (dev/staging values).
+=======
+(**dev values — prod is never touched manually; see §6**).
+>>>>>>> dev
 
 ```
 node scripts/generate-tts.mjs --track <trackId> --dry-run     # review counts + review.txt flags
 node scripts/generate-tts.mjs --track <trackId> --limit 10    # audition clips → tts-output/<trackId>/ (LOCAL only)
 # listen to the clips, approve voice/rate
+<<<<<<< HEAD
 node scripts/generate-tts.mjs --track <trackId> --upload      # only this step touches the Supabase bucket
+=======
+node scripts/generate-tts.mjs --track <trackId> --upload      # only this step touches the DEV Supabase bucket
+>>>>>>> dev
 ```
 
 Flags:
@@ -85,13 +100,25 @@ Flags:
   Voice preflight hard-fails if a configured voice doesn't exist for its
   exact locale — intentional, never bypass it.
 
+<<<<<<< HEAD
+=======
+Prod gets this audio automatically at release time: the `sync-tts` CI job
+mirrors the dev bucket into prod on every `main` push (copy-only, never
+deletes). There is no manual prod upload step anymore.
+
+>>>>>>> dev
 ---
 
 ## 6. Cutting a release (prod)
 
+<<<<<<< HEAD
 Order matters — the merge goes FIRST because the migrations workflow on
 `main` is what creates prod DB objects (e.g. the `tts-audio` bucket); prod
 uploads can't land in a bucket that doesn't exist yet.
+=======
+The entire release is: bump + rollup → merge → watch for green. No manual
+prod uploads, no env swapping.
+>>>>>>> dev
 
 ### 6a. Version bump + changelog rollup (deepening/ledger chat)
 - New `-beta.N` in `lib/version.js` (any change to a built deliverable =
@@ -115,6 +142,7 @@ merge commit exists to carry the message (a fast-forward would silently
 drop it). Forgot to edit before pushing? `git commit --amend -m "..."` —
 but only before push.
 
+<<<<<<< HEAD
 Pushing `main` triggers: Vercel Production deploy + migrations workflow
 against prod.
 
@@ -138,6 +166,27 @@ node scripts/generate-tts.mjs --track frCaForEn --upload
 (Neither needs `--force`.) Restore dev env values afterward. The brief
 window between 6b and here — speaker button live with no audio — is
 harmless; playback just finds no manifest entries until upload completes.
+=======
+Pushing `main` triggers, in order:
+- Vercel Production deploy (parallel, outside Actions)
+- "Deploy Supabase migrations" workflow: `migrate-production` →
+  `sync-tts` (mirrors dev `tts-audio` bucket to prod) → `smoke-check`
+
+### 6c. Watch for green checks (Actions tab)
+The release is done when the workflow run on the `main` push is fully
+green. The smoke-check job is the release verdict — it fails red on any
+of:
+
+| Failing check | Meaning | First move |
+|---|---|---|
+| 1. Version endpoint | Prod isn't serving the merged version | Usually a slow/failed Vercel deploy — check Vercel dashboard, re-run the job after the deploy lands |
+| 2. Bucket key parity (prod ≥ dev) | Storage sync gap | Check the `sync-tts` job log for copy failures; re-run the workflow (sync is idempotent) |
+| 3. Canary audio 200 | Uploaded audio isn't publicly reachable | Bucket/policy problem — check the bucket's public-access policy in prod |
+| 4. Migration alignment | Prod DB schema ≠ repo migration files | Check the `migrate-production` job log; if the push failed, migrations are self-sufficient (explicit grants) — SQL-editor paste works as the manual fallback, then fix the workflow |
+
+Re-running a red workflow is always safe: migrations and the TTS sync are
+both idempotent.
+>>>>>>> dev
 
 ---
 
@@ -151,6 +200,13 @@ or the old value bakes in. `NEXT_PUBLIC_SUPABASE_URL` must be the API URL
 
 ## 8. One-time cleanups still pending
 
+<<<<<<< HEAD
+=======
+- **One-time secret adds for the release workflow (Production
+  environment):** `DEV_SUPABASE_URL`, `DEV_SUPABASE_SERVICE_ROLE_KEY`,
+  `SUPABASE_SERVICE_ROLE_KEY` (prod service role). Details in the
+  workflow file header. The workflow is inert-but-red without them.
+>>>>>>> dev
 - Delete stale nested `reactor-lang/reactor-lang/` directory **before the
   next full-repo zip upload** for a release session.
 - Exclude `node_modules` from future repo-zip uploads.

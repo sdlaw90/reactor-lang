@@ -1,63 +1,145 @@
-// Track: German, for an English speaker. Full depth (36 items). Categories:
-// vocab (basics + classic false friends), gram (three-gender articles, the
-// case system, verb-second word order, separable verbs, modal-verb clause
-// structure, subordinate-clause verb-final order — genuinely the biggest
-// structural leap of any track so far for an English speaker), trad
-// (idioms), and fono (umlauts, ich-laut/ach-laut, final devoicing).
+// Track: German, for an English speaker. Categories: vocab (basics + classic
+// false friends + the famous untranslatables), gram (three-gender articles,
+// the case system, verb-second word order, separable verbs, modal-verb clause
+// structure, subordinate-clause verb-final order, Konjunktiv I/II — genuinely
+// the biggest structural leap of any track so far for an English speaker),
+// trad (idioms), and fono (umlauts, ich-laut/ach-laut, final devoicing,
+// z=ts, w=v).
+// Deepening pass 2026-07-12: A1/C1/C2 tier coverage in every category,
+// promptNative subtitles (slot 6) on every German-language prompt, five new
+// fono pairs, and the track's Word Bank (fvocab) — third track through the
+// WB assembly line after esForEn and frCaForEn.
+// NOTE on capitalization: unlike the French/Spanish formulas, the German
+// formulas do NOT auto-capitalize the headword — German capitalization is
+// grammatically meaningful (nouns capitalize, verbs don't), so deWords.js
+// stores each word in its dictionary casing and the prompt presents it as-is.
+
+import { buildFrequencyBank } from "../../lib/frequencyVocab";
+import WORDS from "../vocab/deWords";
+
+// German prompt formulas for the Word Bank generator. The ¿Cómo se dice...?
+// SSML rule in scripts/generate-tts.mjs will need a Wie sagt man...?
+// analogue (English word in a native <lang> span) at this track's TTS pass.
+// German TTS voices: de-DE Neural2-A (F) / Neural2-B (M) confirmed to exist.
+const DE_FORMULAS = {
+  recognitionPrompt: (w) => `'${w}' bedeutet...`,
+  recognitionNative: (w) => ({ en: `'${w}' means...` }),
+  recognitionExplain: (w, g, noteEn) => ({
+    en: `'${w}' means ${g}.${noteEn}`,
+    es: `'${w}' significa ${g}.`,
+  }),
+  productionPrompt: (g) => `Wie sagt man '${g}' auf Deutsch?`,
+  productionNative: (g) => ({ en: `How do you say '${g}' in German?` }),
+  productionExplain: (w, g, noteEn) => ({
+    en: `'${g}' is '${w}'.${noteEn}`,
+    es: `'${g}' se dice '${w}'.`,
+  }),
+};
 
 const CATS = {
   vocab: { label: "Vokabular", color: "#3DDBFF" },
   gram: { label: "Grammatik", color: "#FFB84D" },
   trad: { label: "Redewendungen", color: "#FF3D7F" },
   fono: { label: "Phonetik", color: "#B98EFF" },
+  fvocab: { label: "Wörter", color: "#7BE495" },
 };
 
 const BANK = {
   vocab: [
     ["'Hallo' bedeutet...", ["hello", "goodbye", "please", "sorry"], 0,
-      { en: "'Hallo' is the standard everyday greeting.", es: "'Hallo' es el saludo cotidiano estándar." }, "A1"],
+      { en: "'Hallo' is the standard everyday greeting.", es: "'Hallo' es el saludo cotidiano estándar." }, "A1", null, { en: "'Hallo' means..." }],
     ["'Danke' bedeutet...", ["thank you", "please", "you're welcome", "sorry"], 0,
-      { en: "'Danke' is thank you — one of the most essential words to know.", es: "'Danke' significa gracias — una de las palabras más esenciales." }, "A1"],
+      { en: "'Danke' is thank you — one of the most essential words to know.", es: "'Danke' significa gracias — una de las palabras más esenciales." }, "A1", null, { en: "'Danke' means..." }],
     ["'Freund/Freundin' bedeutet...", ["friend", "enemy", "neighbor", "coworker"], 0,
-      { en: "'Freund' (masculine)/'Freundin' (feminine) means friend — context or a possessive usually clarifies whether it means \"friend\" or \"boyfriend/girlfriend.\"", es: "'Freund' (masculino)/'Freundin' (femenino) significa amigo/a — el contexto o un posesivo suele aclarar si significa \"amigo\" o \"novio/a\"." }, "A1"],
+      { en: "'Freund' (masculine)/'Freundin' (feminine) means friend — context or a possessive usually clarifies whether it means \"friend\" or \"boyfriend/girlfriend.\"", es: "'Freund' (masculino)/'Freundin' (femenino) significa amigo/a — el contexto o un posesivo suele aclarar si significa \"amigo\" o \"novio/a\"." }, "A1", null, { en: "'Freund/Freundin' means..." }],
     ["'Fenster' bedeutet...", ["window", "door", "wall", "floor"], 0,
-      { en: "'Fenster' means window — a common everyday noun.", es: "'Fenster' significa ventana — un sustantivo cotidiano común." }, "A2"],
+      { en: "'Fenster' means window — a common everyday noun.", es: "'Fenster' significa ventana — un sustantivo cotidiano común." }, "A2", null, { en: "'Fenster' means..." }],
     ["'Familie' bedeutet...", ["family", "friend group", "neighborhood", "team"], 0,
-      { en: "'Familie' means family, pronounced close to how it looks.", es: "'Familie' significa familia, se pronuncia cerca de cómo se escribe." }, "A2"],
+      { en: "'Familie' means family, pronounced close to how it looks.", es: "'Familie' significa familia, se pronuncia cerca de cómo se escribe." }, "A2", null, { en: "'Familie' means..." }],
     ["'Arbeit' bedeutet...", ["work/job", "worker", "factory", "schedule"], 0,
-      { en: "'Arbeit' means work or job (the noun); 'arbeiten' is the verb \"to work.\"", es: "'Arbeit' significa trabajo (el sustantivo); 'arbeiten' es el verbo \"trabajar\"." }, "A2"],
+      { en: "'Arbeit' means work or job (the noun); 'arbeiten' is the verb \"to work.\"", es: "'Arbeit' significa trabajo (el sustantivo); 'arbeiten' es el verbo \"trabajar\"." }, "A2", null, { en: "'Arbeit' means..." }],
     ["'Gift' bedeutet...", ["poison", "a present/gift", "talent", "medicine"], 0,
-      { en: "Famous false friend: 'Gift' means poison in German. A present/gift is 'Geschenk'.", es: "Falso amigo famoso: 'Gift' significa veneno en alemán. Un regalo es 'Geschenk'." }, "B1"],
+      { en: "Famous false friend: 'Gift' means poison in German. A present/gift is 'Geschenk'.", es: "Falso amigo famoso: 'Gift' significa veneno en alemán. Un regalo es 'Geschenk'." }, "B1", null, { en: "'Gift' means..." }],
     ["'Rat' bedeutet...", ["advice", "a rat (animal)", "rate/speed", "opinion"], 0,
-      { en: "False friend — 'Rat' means advice. The animal is 'Ratte'.", es: "Falso amigo — 'Rat' significa consejo. El animal es 'Ratte'." }, "B1"],
+      { en: "False friend — 'Rat' means advice. The animal is 'Ratte'.", es: "Falso amigo — 'Rat' significa consejo. El animal es 'Ratte'." }, "B1", null, { en: "'Rat' means..." }],
     ["'Handy' bedeutet...", ["cell phone", "handy/useful", "handshake", "handle"], 0,
-      { en: "False friend — 'Handy' is the everyday German word for cell phone (not used this way in English at all). \"Handy/useful\" is 'praktisch' in German.", es: "Falso amigo — 'Handy' es la palabra alemana cotidiana para celular (no se usa así en inglés en absoluto). \"Práctico/útil\" es 'praktisch' en alemán." }, "B1"],
+      { en: "False friend — 'Handy' is the everyday German word for cell phone (not used this way in English at all). \"Handy/useful\" is 'praktisch' in German.", es: "Falso amigo — 'Handy' es la palabra alemana cotidiana para celular (no se usa así en inglés en absoluto). \"Práctico/útil\" es 'praktisch' en alemán." }, "B1", null, { en: "'Handy' means..." }],
     ["'Chef' bedeutet...", ["boss", "chef/cook", "leader (informal)", "expert"], 0,
-      { en: "False friend — 'Chef' means boss/manager in German. A cook/chef is 'Koch'.", es: "Falso amigo — 'Chef' significa jefe en alemán. Un cocinero/chef es 'Koch'." }, "B2"],
+      { en: "False friend — 'Chef' means boss/manager in German. A cook/chef is 'Koch'.", es: "Falso amigo — 'Chef' significa jefe en alemán. Un cocinero/chef es 'Koch'." }, "B2", null, { en: "'Chef' means..." }],
     ["'Also' bedeutet...", ["so/therefore", "also/too", "already", "always"], 0,
-      { en: "False friend — 'also' means \"so/therefore\" in German, not \"also/too\" (which is 'auch').", es: "Falso amigo — 'also' significa \"entonces/por lo tanto\" en alemán, no \"también\" (que es 'auch')." }, "B2"],
+      { en: "False friend — 'also' means \"so/therefore\" in German, not \"also/too\" (which is 'auch').", es: "Falso amigo — 'also' significa \"entonces/por lo tanto\" en alemán, no \"también\" (que es 'auch')." }, "B2", null, { en: "'Also' means..." }],
     ["'Aktuell' bedeutet...", ["current/up-to-date", "actually/in fact", "eventually", "urgent"], 0,
-      { en: "False friend — 'aktuell' means current or up-to-date, not \"actually\" (which is 'eigentlich').", es: "Falso amigo — 'aktuell' significa actual/al día, no \"actually\" (que es 'eigentlich')." }, "B2"],
+      { en: "False friend — 'aktuell' means current or up-to-date, not \"actually\" (which is 'eigentlich').", es: "Falso amigo — 'aktuell' significa actual/al día, no \"actually\" (que es 'eigentlich')." }, "B2", null, { en: "'Aktuell' means..." }],
+    // Deepening pass 2026-07-12: A1/C1/C2 coverage + the famous untranslatables.
+    ["'Wasser' bedeutet...", ["water", "wine", "weather", "washing"], 0,
+      { en: "'Wasser' means water — and it's a close cousin of the English word, once you know German 'ss' often matches English 't' (Wasser/water, besser/better).", es: "'Wasser' significa agua — y es primo cercano de la palabra inglesa, una vez que sabes que la 'ss' alemana suele corresponder a la 't' inglesa (Wasser/water, besser/better)." }, "A1", null, { en: "'Wasser' means..." }],
+    ["'Bitte' bedeutet...", ["please AND you're welcome", "only please", "only you're welcome", "excuse me only"], 0,
+      { en: "'Bitte' does double duty: it means both \"please\" AND \"you're welcome\" (and even \"here you go\" when handing something over) — one of the hardest-working little words in German.", es: "'Bitte' cumple doble función: significa tanto \"por favor\" COMO \"de nada\" (e incluso \"aquí tienes\" al entregar algo) — una de las palabritas más trabajadoras del alemán." }, "A1", null, { en: "'Bitte' means..." }],
+    ["'der Termin' bedeutet...", ["appointment", "the end/terminus", "the deadline only", "the term/semester"], 0,
+      { en: "'Termin' means appointment — a word you'll need constantly in Germany, where making a Termin (doctor, office, even some shops) is a way of life.", es: "'Termin' significa cita — una palabra que necesitarás constantemente en Alemania, donde hacer un Termin (médico, oficina, incluso algunas tiendas) es un estilo de vida." }, "A2", null, { en: "'Der Termin' means..." }],
+    ["'bekommen' bedeutet...", ["to receive/get", "to become", "to come along", "to welcome"], 0,
+      { en: "The classic verb false friend: 'bekommen' means to get/receive, NOT \"to become\" (which is 'werden'). \"Ich bekomme ein Steak\" means you're getting one, not turning into one.", es: "El clásico falso amigo verbal: 'bekommen' significa recibir/obtener, NO \"convertirse\" (que es 'werden'). \"Ich bekomme ein Steak\" significa que te lo traen, no que te transformas en uno." }, "B1", null, { en: "'Bekommen' means..." }],
+    ["'das Rathaus' bedeutet...", ["town hall", "rat-infested house", "advice center", "courthouse"], 0,
+      { en: "'Rathaus' = Rat (council) + Haus (house): the town hall. No rodents involved — the same 'Rat' as in the advice/council false friend.", es: "'Rathaus' = Rat (consejo) + Haus (casa): el ayuntamiento. Sin roedores — el mismo 'Rat' del falso amigo consejo." }, "B1", null, { en: "'Das Rathaus' means..." }],
+    ["'eventuell' bedeutet...", ["possibly/perhaps", "eventually/finally", "definitely", "occasionally"], 0,
+      { en: "False friend — 'eventuell' means possibly/maybe, NOT \"eventually\" (which is 'schließlich' or 'irgendwann'). Agreeing to something \"eventuell\" is much less committal than an English speaker might think.", es: "Falso amigo — 'eventuell' significa posiblemente/quizás, NO \"eventually\" (que es 'schließlich' o 'irgendwann'). Aceptar algo \"eventuell\" compromete mucho menos de lo que un angloparlante pensaría." }, "B2", null, { en: "'Eventuell' means..." }],
+    ["'spenden' bedeutet...", ["to donate", "to spend money", "to save up", "to lend"], 0,
+      { en: "False friend — 'spenden' means to donate (to charity). \"To spend\" money is 'ausgeben'. Mixing these up changes your budget considerably.", es: "Falso amigo — 'spenden' significa donar (a caridad). \"Gastar\" dinero es 'ausgeben'. Confundirlos cambia bastante tu presupuesto." }, "B2", null, { en: "'Spenden' means..." }],
+    ["'Doch!' als Antwort bedeutet...", ["yes it IS! (contradicting a negative)", "no way!", "maybe", "whatever"], 0,
+      { en: "'Doch' is the famous one-word rebuttal English lacks: it contradicts a negative statement. \"Du kommst nicht.\" — \"Doch!\" (= Yes I AM coming!). English needs a whole sentence for what German does in one syllable.", es: "'Doch' es la famosa réplica de una palabra que el inglés no tiene: contradice una afirmación negativa. \"Du kommst nicht.\" — \"Doch!\" (= ¡Sí que voy!). El inglés necesita una frase entera para lo que el alemán hace en una sílaba." }, "C1", null, { en: "'Doch!' as a reply means..." }],
+    ["'der Feierabend' bedeutet...", ["the end of the workday", "a holiday evening", "a celebration party", "Friday evening"], 0,
+      { en: "'Feierabend' (literally \"celebration evening\") is the moment work ends and your own time begins — a beloved cultural institution. \"Schönen Feierabend!\" is the standard end-of-workday farewell.", es: "'Feierabend' (literalmente \"tarde de celebración\") es el momento en que termina el trabajo y empieza tu propio tiempo — una institución cultural querida. \"Schönen Feierabend!\" es la despedida estándar al final de la jornada." }, "C1", null, { en: "'Der Feierabend' means..." }],
+    ["'die Schadenfreude' bedeutet...", ["joy at someone else's misfortune", "sudden sadness", "fear of damage", "guilty pleasure (food)"], 0,
+      { en: "'Schadenfreude' = Schaden (harm) + Freude (joy): pleasure taken in another's misfortune. So precisely untranslatable that English gave up and borrowed the German word outright.", es: "'Schadenfreude' = Schaden (daño) + Freude (alegría): placer por la desgracia ajena. Tan intraducible que el inglés se rindió y tomó prestada la palabra alemana tal cual." }, "C1", null, { en: "'Die Schadenfreude' means..." }],
+    ["'das Fingerspitzengefühl' bedeutet...", ["intuitive tact/a delicate touch", "numb fingertips", "manual dexterity only", "nervousness"], 0,
+      { en: "Literally \"fingertip feeling\": an instinctive sensitivity for handling delicate situations or people. High praise when someone says you have it.", es: "Literalmente \"sensación de yemas de los dedos\": una sensibilidad instintiva para manejar situaciones o personas delicadas. Un gran elogio cuando dicen que la tienes." }, "C2", null, { en: "'Das Fingerspitzengefühl' means..." }],
+    ["'die Verschlimmbesserung' bedeutet...", ["an 'improvement' that makes things worse", "a gradual improvement", "a worsening illness", "a strict correction"], 0,
+      { en: "A gloriously German portmanteau of 'verschlimmern' (to worsen) and 'verbessern' (to improve): a fix that breaks more than it repairs. Every software developer knows this word's meaning intimately.", es: "Un glorioso acrónimo alemán de 'verschlimmern' (empeorar) y 'verbessern' (mejorar): un arreglo que rompe más de lo que repara. Todo desarrollador de software conoce íntimamente su significado." }, "C2", null, { en: "'Die Verschlimmbesserung' means..." }],
+    ["'sich fremdschämen' bedeutet...", ["to feel embarrassed on someone else's behalf", "to be shy with strangers", "to feel homesick", "to be ashamed of a stranger's insult"], 0,
+      { en: "'Fremdschämen' (literally \"foreign-shaming yourself\") is cringing with secondhand embarrassment at someone else's behavior — the exact feeling of watching an awkward scene you can't stop.", es: "'Fremdschämen' (literalmente \"avergonzarse ajeno\") es sentir vergüenza ajena por el comportamiento de otro — la sensación exacta de ver una escena incómoda que no puedes detener." }, "C2", null, { en: "'Sich fremdschämen' means..." }],
   ],
   gram: [
     ["___ Mann ist hier.", ["Der", "Die", "Das", "Den"], 0,
-      { en: "German has three grammatical genders — 'Mann' (man) is masculine, taking 'der' in the nominative case.", es: "El alemán tiene tres géneros gramaticales — 'Mann' (hombre) es masculino, lleva 'der' en caso nominativo." }, "A2"],
+      { en: "German has three grammatical genders — 'Mann' (man) is masculine, taking 'der' in the nominative case.", es: "El alemán tiene tres géneros gramaticales — 'Mann' (hombre) es masculino, lleva 'der' en caso nominativo." }, "A2", null, { en: "___ man is here." }],
     ["Ich sehe ___ Mann.", ["den", "der", "dem", "des"], 0,
-      { en: "This is German's case system in action: as the direct object (accusative case), masculine 'der' changes to 'den' — a change English doesn't make to its articles at all.", es: "Esto es el sistema de casos del alemán en acción: como objeto directo (caso acusativo), el masculino 'der' cambia a 'den' — un cambio que el inglés no hace en absoluto a sus artículos." }, "B1"],
+      { en: "This is German's case system in action: as the direct object (accusative case), masculine 'der' changes to 'den' — a change English doesn't make to its articles at all.", es: "Esto es el sistema de casos del alemán en acción: como objeto directo (caso acusativo), el masculino 'der' cambia a 'den' — un cambio que el inglés no hace en absoluto a sus artículos." }, "B1", null, { en: "I see ___ (the) man." }],
     ["Ich gebe ___ Mann das Buch.", ["dem", "den", "der", "des"], 0,
-      { en: "The indirect object (dative case) changes masculine 'der' to 'dem' — yet another case form for the same underlying word.", es: "El objeto indirecto (caso dativo) cambia el masculino 'der' a 'dem' — otra forma más de caso para la misma palabra subyacente." }, "B1"],
+      { en: "The indirect object (dative case) changes masculine 'der' to 'dem' — yet another case form for the same underlying word.", es: "El objeto indirecto (caso dativo) cambia el masculino 'der' a 'dem' — otra forma más de caso para la misma palabra subyacente." }, "B1", null, { en: "I give ___ (the) man the book." }],
     ["Heute gehe ich ins Kino.", ["✓ correct — verb in second position", "incorrect word order", "wrong verb", "missing preposition"], 0,
-      { en: "German main clauses require the verb in the second position, no matter what comes first. Since 'heute' (today) took the first slot, the verb 'gehe' must come next, before the subject 'ich'.", es: "Las oraciones principales alemanas requieren el verbo en segunda posición, sin importar qué vaya primero. Como 'heute' (hoy) ocupó el primer lugar, el verbo 'gehe' debe ir después, antes del sujeto 'ich'." }, "B1"],
+      { en: "German main clauses require the verb in the second position, no matter what comes first. Since 'heute' (today) took the first slot, the verb 'gehe' must come next, before the subject 'ich'.", es: "Las oraciones principales alemanas requieren el verbo en segunda posición, sin importar qué vaya primero. Como 'heute' (hoy) ocupó el primer lugar, el verbo 'gehe' debe ir después, antes del sujeto 'ich'." }, "B1", null, { en: "Today I'm going to the movies." }],
     ["Ich stehe um sechs Uhr ___.", ["auf", "aufstehen", "stehe", "ab"], 0,
-      { en: "'Aufstehen' (to get up) is a separable verb — the prefix 'auf' splits off and moves to the end of the clause, a structure with no real English equivalent.", es: "'Aufstehen' (levantarse) es un verbo separable — el prefijo 'auf' se separa y se mueve al final de la cláusula, una estructura sin equivalente real en inglés." }, "B2"],
+      { en: "'Aufstehen' (to get up) is a separable verb — the prefix 'auf' splits off and moves to the end of the clause, a structure with no real English equivalent.", es: "'Aufstehen' (levantarse) es un verbo separable — el prefijo 'auf' se separa y se mueve al final de la cláusula, una estructura sin equivalente real en inglés." }, "B2", null, { en: "I get ___ (up) at six o'clock." }],
     ["Ich kann gut Deutsch ___.", ["sprechen", "spreche", "gesprochen", "sprach"], 0,
-      { en: "With modal verbs like 'kann' (can), the main verb goes to the end of the clause in its infinitive form — 'sprechen', not a conjugated form.", es: "Con verbos modales como 'kann' (poder), el verbo principal va al final de la cláusula en su forma infinitiva — 'sprechen', no una forma conjugada." }, "B1"],
+      { en: "With modal verbs like 'kann' (can), the main verb goes to the end of the clause in its infinitive form — 'sprechen', not a conjugated form.", es: "Con verbos modales como 'kann' (poder), el verbo principal va al final de la cláusula en su forma infinitiva — 'sprechen', no una forma conjugada." }, "B1", null, { en: "I can ___ (speak) German well." }],
     ["'Handschuh' bedeutet wörtlich \"hand shoe\", aber wirklich...", ["glove", "sock", "sandal", "sleeve"], 0,
-      { en: "German loves productive compounding — 'Handschuh' (literally \"hand shoe\") actually means glove, a great example of how German builds new words by stacking existing ones.", es: "Al alemán le encanta la composición productiva — 'Handschuh' (literalmente \"zapato de mano\") en realidad significa guante, un gran ejemplo de cómo el alemán forma palabras nuevas apilando otras existentes." }, "B2"],
+      { en: "German loves productive compounding — 'Handschuh' (literally \"hand shoe\") actually means glove, a great example of how German builds new words by stacking existing ones.", es: "Al alemán le encanta la composición productiva — 'Handschuh' (literalmente \"zapato de mano\") en realidad significa guante, un gran ejemplo de cómo el alemán forma palabras nuevas apilando otras existentes." }, "B2", null, { en: "'Handschuh' literally means \"hand shoe\", but really..." }],
     ["Das ist ein gut___ Buch.", ["es", "er", "e", "en"], 0,
-      { en: "Adjective endings shift based on gender, case, and whether an article is present — neuter 'Buch' after 'ein' takes the ending '-es' here.", es: "Las terminaciones de los adjetivos cambian según el género, el caso y si hay un artículo presente — el neutro 'Buch' después de 'ein' lleva la terminación '-es' aquí." }, "B2"],
+      { en: "Adjective endings shift based on gender, case, and whether an article is present — neuter 'Buch' after 'ein' takes the ending '-es' here.", es: "Las terminaciones de los adjetivos cambian según el género, el caso y si hay un artículo presente — el neutro 'Buch' después de 'ein' lleva la terminación '-es' aquí." }, "B2", null, { en: "That is a good___ book." }],
     ["Ich weiß, dass er heute ___.", ["kommt", "er kommt", "kommt er", "kommen"], 0,
-      { en: "In subordinate clauses introduced by words like 'dass' (that), the conjugated verb moves all the way to the end of the clause — a structure that takes real practice for English speakers.", es: "En las cláusulas subordinadas introducidas por palabras como 'dass' (que), el verbo conjugado se mueve hasta el final de la cláusula — una estructura que requiere práctica real para los angloparlantes." }, "B2"],
+      { en: "In subordinate clauses introduced by words like 'dass' (that), the conjugated verb moves all the way to the end of the clause — a structure that takes real practice for English speakers.", es: "En las cláusulas subordinadas introducidas por palabras como 'dass' (que), el verbo conjugado se mueve hasta el final de la cláusula — una estructura que requiere práctica real para los angloparlantes." }, "B2", null, { en: "I know that he ___ (is coming) today." }],
+    // Deepening pass 2026-07-12: A1/A2/C1/C2 coverage.
+    ["Ich ___ Anna.", ["bin", "ist", "sind", "bist"], 0,
+      { en: "'Sein' (to be) conjugates as 'ich bin' (I am) — the first verb form every German learner needs.", es: "'Sein' (ser/estar) se conjuga como 'ich bin' (yo soy) — la primera forma verbal que todo estudiante de alemán necesita." }, "A1", null, { en: "I ___ (am) Anna." }],
+    ["Das ist ___ Buch.", ["ein", "eine", "einen", "einem"], 0,
+      { en: "'Buch' (book) is neuter, so the indefinite article is 'ein' — feminine nouns would take 'eine'. Learning each noun's gender alongside the noun itself pays off from day one.", es: "'Buch' (libro) es neutro, así que el artículo indefinido es 'ein' — los sustantivos femeninos llevarían 'eine'. Aprender el género de cada sustantivo junto con el sustantivo mismo rinde desde el primer día." }, "A1", null, { en: "That is ___ (a) book." }],
+    ["___ Kind spielt.", ["Das", "Der", "Die", "Den"], 0,
+      { en: "'Kind' (child) is neuter — 'das Kind' — completing German's three-gender set: der Mann, die Frau, das Kind. Gender is a property of the word, not the person: 'das Mädchen' (the girl) is also grammatically neuter.", es: "'Kind' (niño/a) es neutro — 'das Kind' — completando el trío de géneros del alemán: der Mann, die Frau, das Kind. El género es propiedad de la palabra, no de la persona: 'das Mädchen' (la niña) también es gramaticalmente neutro." }, "A2", null, { en: "___ child is playing." }],
+    ["Wir ___ nach Berlin.", ["fahren", "fährt", "fahre", "gehen zu"], 0,
+      { en: "'Wir fahren' — and note German distinguishes travel by vehicle ('fahren') from going on foot ('gehen'). Traveling to Berlin implies wheels, so 'fahren' is the natural verb.", es: "'Wir fahren' — y nota que el alemán distingue viajar en vehículo ('fahren') de ir a pie ('gehen'). Viajar a Berlín implica ruedas, así que 'fahren' es el verbo natural." }, "A2", null, { en: "We ___ (are traveling) to Berlin." }],
+    ["Ich habe das Buch ___.", ["gelesen", "lese", "las", "lesen"], 0,
+      { en: "The Perfekt (conversational past) sandwiches the sentence: 'haben' in second position, past participle 'gelesen' at the very end — the everyday way to talk about the past in spoken German.", es: "El Perfekt (pasado conversacional) forma un sándwich: 'haben' en segunda posición, el participio 'gelesen' al final — la forma cotidiana de hablar del pasado en alemán hablado." }, "B1", null, { en: "I have ___ (read) the book." }],
+    ["Er ist größer ___ ich.", ["als", "wie", "denn", "so"], 0,
+      { en: "Comparatives take 'als' (than): 'größer als ich'. You'll hear native speakers casually say 'wie' here too — but 'als' is the standard form, and the distinction is a classic German-class battleground.", es: "Los comparativos llevan 'als' (que): 'größer als ich'. Oirás a nativos decir casualmente 'wie' aquí también — pero 'als' es la forma estándar, y la distinción es un clásico campo de batalla de las clases de alemán." }, "B2", null, { en: "He is taller ___ (than) I am." }],
+    ["___ des schlechten Wetters gehen wir spazieren.", ["Trotz", "Obwohl", "Weil", "Während"], 0,
+      { en: "'Trotz' (despite) is a genitive preposition — 'trotz des schlechten Wetters' (despite the bad weather). 'Obwohl' means the same but is a conjunction: it needs a full clause with a verb, not just a noun phrase.", es: "'Trotz' (a pesar de) es una preposición de genitivo — 'trotz des schlechten Wetters' (a pesar del mal tiempo). 'Obwohl' significa lo mismo pero es una conjunción: necesita una cláusula completa con verbo, no solo una frase nominal." }, "C1", null, { en: "___ (Despite) the bad weather, we're going for a walk." }],
+    ["Wenn ich Zeit hätte, ___ ich kommen.", ["würde", "werde", "will", "wollte"], 0,
+      { en: "Hypotheticals use Konjunktiv II: 'hätte' (had) in the if-clause pairs with 'würde' (would) in the main clause — German's engine for talking about what isn't, but could be.", es: "Las hipótesis usan el Konjunktiv II: 'hätte' (tuviera) en la cláusula condicional se empareja con 'würde' (haría) en la principal — el motor del alemán para hablar de lo que no es, pero podría ser." }, "C1", null, { en: "If I had time, I ___ (would) come." }],
+    ["Der Brief wurde gestern ___.", ["geschickt", "schicken", "schickte", "geschickt haben"], 0,
+      { en: "The passive voice is built with 'werden' + past participle: 'wurde geschickt' (was sent). German leans on the passive heavily in formal and written registers.", es: "La voz pasiva se construye con 'werden' + participio: 'wurde geschickt' (fue enviada). El alemán usa mucho la pasiva en registros formales y escritos." }, "C1", null, { en: "The letter was ___ (sent) yesterday." }],
+    ["Er sagte, er ___ krank.", ["sei", "ist", "war", "wäre"], 0,
+      { en: "Reported speech in careful German uses Konjunktiv I: 'er sei krank' (he said he was sick — allegedly). It flags the claim as someone else's words, a nuance news German maintains rigorously; 'wäre' (Konjunktiv II) appears only when the K I form is ambiguous.", es: "El estilo indirecto en alemán cuidado usa el Konjunktiv I: 'er sei krank' (dijo que estaba enfermo — supuestamente). Marca la afirmación como palabras ajenas, un matiz que el alemán periodístico mantiene con rigor; 'wäre' (Konjunktiv II) aparece solo cuando la forma K I es ambigua." }, "C2", null, { en: "He said he ___ (was) sick. (reported speech)" }],
+    ["___ er das gewusst, wäre er nicht gekommen.", ["Hätte", "Wenn hätte", "Ob", "Als"], 0,
+      { en: "Elegant written German can drop 'wenn' and lead with the verb: 'Hätte er das gewusst...' (Had he known that...) — the same inversion English does in \"Had I known.\" Recognizing it unlocks a lot of literary and formal prose.", es: "El alemán escrito elegante puede omitir 'wenn' y empezar con el verbo: 'Hätte er das gewusst...' (De haberlo sabido...) — la misma inversión que el inglés hace en \"Had I known.\" Reconocerla desbloquea mucha prosa literaria y formal." }, "C2", null, { en: "Had he known that, he wouldn't have come." }],
   ],
   trad: [
     ["Translate: 'I'll keep my fingers crossed for you.'", ["Ich drücke dir die Daumen.", "Ich kreuze meine Finger.", "Ich halte die Daumen fest.", "Ich wünsche dir Glück sehr."], 0,
@@ -74,13 +156,32 @@ const BANK = {
       { en: "\"Tomaten auf den Augen haben\" (literally \"to have tomatoes on the eyes\") is the everyday German idiom for being oblivious to something obvious right in front of you.", es: "\"Tomaten auf den Augen haben\" (literalmente \"tener tomates en los ojos\") es el modismo alemán cotidiano para no ver algo obvio justo delante." }, "B1"],
     ["Translate: 'He kicked the bucket.' (informal, died)", ["Er hat ins Gras gebissen.", "Er ist gestorben plötzlich.", "Er hat den Löffel fallen lassen.", "Er ist von uns gegangen."], 0,
       { en: "\"Ins Gras beißen\" (literally \"to bite into the grass\") is the informal German equivalent of \"to kick the bucket.\"", es: "\"Ins Gras beißen\" (literalmente \"morder el pasto\") es el equivalente alemán informal de \"estirar la pata\"." }, "B2"],
+    // Deepening pass 2026-07-12: A1/A2/C1/C2 coverage.
+    ["Translate: 'Good morning.'", ["Guten Morgen.", "Gute Nacht.", "Guten Abend.", "Gutes Morgen."], 0,
+      { en: "'Guten Morgen' — note the '-en' ending: greetings are grammatically in the accusative case (short for \"I wish you a good morning\"), which is why it's not 'gut' or 'gutes'.", es: "'Guten Morgen' — nota la terminación '-en': los saludos están gramaticalmente en acusativo (abreviatura de \"te deseo un buen día\"), por eso no es 'gut' ni 'gutes'." }, "A1"],
+    ["Translate: 'How are you?' (informal)", ["Wie geht's dir?", "Wie bist du?", "Was bist du?", "Wie machst du?"], 0,
+      { en: "German asks \"how goes it to you\" — 'Wie geht es dir?', casually 'Wie geht's?'. A literal \"Wie bist du?\" asks what kind of person you are, not how you're doing.", es: "El alemán pregunta \"cómo te va\" — 'Wie geht es dir?', casualmente 'Wie geht's?'. Un literal \"Wie bist du?\" pregunta qué clase de persona eres, no cómo estás." }, "A2"],
+    ["Translate: 'See you later!'", ["Bis später!", "Sehe dich später!", "Auf später!", "Zu später!"], 0,
+      { en: "German builds these farewells with 'bis' (until): 'bis später' (see you later), 'bis morgen' (see you tomorrow), 'bis bald' (see you soon) — no \"see\" verb needed.", es: "El alemán construye estas despedidas con 'bis' (hasta): 'bis später' (hasta luego), 'bis morgen' (hasta mañana), 'bis bald' (hasta pronto) — sin verbo \"ver\"." }, "A2"],
+    ["Translate: 'That's none of my business.'", ["Das ist nicht mein Bier.", "Das ist nicht mein Brot.", "Das geht mich nichts an total.", "Das ist nicht meine Suppe."], 0,
+      { en: "\"Das ist nicht mein Bier\" (literally \"that's not my beer\") — Germany's most on-brand way to say something isn't your problem or concern.", es: "\"Das ist nicht mein Bier\" (literalmente \"esa no es mi cerveza\") — la forma más alemana posible de decir que algo no es tu problema ni asunto." }, "C1"],
+    ["Translate: 'You're pulling my leg.'", ["Du nimmst mich auf den Arm.", "Du ziehst mein Bein.", "Du hältst mich am Fuß.", "Du machst mich zum Narren fest."], 0,
+      { en: "Where English pulls a leg, German takes you \"on the arm\": \"jemanden auf den Arm nehmen\" — like carrying a child, treating you as if you'd believe anything.", es: "Donde el inglés jala una pierna, el alemán te toma \"en el brazo\": \"jemanden auf den Arm nehmen\" — como cargar a un niño, tratándote como si creyeras cualquier cosa." }, "C1"],
+    ["Translate: 'I have to overcome my weaker self.'", ["Ich muss meinen inneren Schweinehund überwinden.", "Ich muss mein schwaches Ich besiegen.", "Ich muss meine innere Katze überwinden.", "Ich muss den faulen Hund schlagen."], 0,
+      { en: "The 'innerer Schweinehund' (inner pig-dog) is the German personification of laziness and weak will — the creature you must overcome to go jogging in the rain. A beloved, deeply German concept.", es: "El 'innerer Schweinehund' (perro-cerdo interior) es la personificación alemana de la pereza y la voluntad débil — la criatura que debes vencer para salir a correr bajo la lluvia. Un concepto querido y profundamente alemán." }, "C1"],
+    ["Translate: 'That's the last straw!'", ["Das schlägt dem Fass den Boden aus!", "Das ist der letzte Strohhalm!", "Das bricht dem Kamel den Rücken!", "Das ist das Ende der Fahnenstange fast!"], 0,
+      { en: "Literally \"that knocks the bottom out of the barrel\" — the German image for the final outrage that makes everything spill. The English straw/camel version doesn't exist in German.", es: "Literalmente \"eso le saca el fondo al barril\" — la imagen alemana para el colmo final que lo derrama todo. La versión inglesa de la paja y el camello no existe en alemán." }, "C2"],
+    ["Translate: 'Well, now we're in a fine mess.'", ["Jetzt haben wir den Salat.", "Jetzt haben wir die Suppe.", "Jetzt sitzen wir im Gemüse.", "Jetzt ist der Kuchen gegessen."], 0,
+      { en: "\"Jetzt haben wir den Salat\" (literally \"now we have the salad\") — the resigned German sigh when a warned-about mess has duly arrived. Food idioms run deep in German.", es: "\"Jetzt haben wir den Salat\" (literalmente \"ahora tenemos la ensalada\") — el suspiro alemán resignado cuando el desastre anunciado por fin llegó. Los modismos de comida abundan en alemán." }, "C2"],
   ],
 };
 
 // German phonetics: umlauts (ä/ö/ü) shift vowel quality with no direct
 // English equivalent, "ch" sounds two different ways depending on the
 // preceding vowel (ich-laut after front vowels, ach-laut after back vowels),
-// and final b/d/g devoice to sound like p/t/k. CAPS = stress.
+// final b/d/g devoice to sound like p/t/k, 'z' is always "ts", 'w' sounds
+// like English v, and 'st'/'sp' at the start of a word become "sht"/"shp".
+// CAPS = stress.
 const FONO_BANK = [
   { text: "Ich möchte ein Bier, bitte.", sound: "ish MERSH-tuh ayn beer, BIT-tuh", difficulty: "B1",
     identify: { options: ["Ich möchte ein Bier, bitte.", "Ich mochte ein Bier, bitte.", "Ich möchte einen Bier, bitte.", "Ich möchte ein Wasser, bitte."], correctIdx: 0,
@@ -102,6 +203,33 @@ const FONO_BANK = [
       explain: { en: "'Übung' has the ü umlaut, a rounded high front vowel with no true English equivalent — and 'schwer' shows the German 'sch' sound, close to English \"sh.\"", es: "'Übung' tiene la diéresis ü, una vocal anterior alta redondeada sin equivalente real en inglés — y 'schwer' muestra el sonido alemán 'sch', cercano al \"sh\" del inglés." } },
     respond: { options: ["Ja, ich übe jeden Tag.", "Nein, das kostet nichts.", "Es ist schon spät.", "Ich habe keine Zeit."], correctIdx: 0,
       explain: { en: "A comment about an exercise being hard calls for a relatable response about practicing, like \"yes, I practice every day.\"", es: "Un comentario sobre que un ejercicio es difícil pide una respuesta cercana sobre practicar, como \"sí, practico todos los días\"." } } },
+  // Deepening pass 2026-07-12: five more pairs — final devoicing (Tag), ei/ß,
+  // w=v + st=sht, z=ts, and the Eichhörnchen shibboleth.
+  { text: "Guten Tag!", sound: "GOO-ten TAHK", difficulty: "A1",
+    identify: { options: ["Guten Tag!", "Gute Nacht!", "Guten Takt!", "Guten Teig!"], correctIdx: 0,
+      explain: { en: "'Tag' ends in a 'g' pronounced like a 'k' — final devoicing again, this time on day one: the standard daytime greeting sounds like \"tahk.\"", es: "'Tag' termina en una 'g' pronunciada como 'k' — de nuevo el ensordecimiento final, esta vez desde el día uno: el saludo diurno estándar suena como \"tahk\"." } },
+    respond: { options: ["Guten Tag! Wie geht's?", "Gute Nacht, bis morgen!", "Danke, gleichfalls spät.", "Nein, danke schön."], correctIdx: 0,
+      explain: { en: "A greeting invites a greeting back — \"Guten Tag! Wie geht's?\" (good day! how's it going?) keeps the exchange moving naturally.", es: "Un saludo invita a devolverlo — \"Guten Tag! Wie geht's?\" (¡buen día! ¿cómo va?) mantiene el intercambio con naturalidad." } } },
+  { text: "Ich heiße Anna.", sound: "ish HIGH-suh AH-nah", difficulty: "A2",
+    identify: { options: ["Ich heiße Anna.", "Ich hasse Anna.", "Ich heiße Anne.", "Ich heizte, Anna."], correctIdx: 0,
+      explain: { en: "German 'ei' always says \"eye\" (heiße = \"HIGH-suh\"), and the ß character is just a sharp double-s. Careful: mispronounce the vowel and 'ich heiße' (my name is) turns into 'ich hasse' (I hate) — a genuinely important minimal pair.", es: "La 'ei' alemana siempre suena \"ai\" (heiße = \"HIGH-suh\"), y el carácter ß es solo una doble s fuerte. Cuidado: pronuncia mal la vocal y 'ich heiße' (me llamo) se convierte en 'ich hasse' (odio) — un par mínimo genuinamente importante." } },
+    respond: { options: ["Freut mich! Ich bin Max.", "Warum hasst du sie?", "Anna ist nicht hier.", "Das heißt nichts."], correctIdx: 0,
+      explain: { en: "An introduction calls for one in return — \"Freut mich! Ich bin Max\" (nice to meet you! I'm Max).", es: "Una presentación pide otra a cambio — \"Freut mich! Ich bin Max\" (¡mucho gusto! soy Max)." } } },
+  { text: "Wir wohnen in der Stadt.", sound: "veer VOH-nen in dair SHTAHT", difficulty: "B2",
+    identify: { options: ["Wir wohnen in der Stadt.", "Wir wollen in die Stadt.", "Vier wohnen in der Stadt.", "Wir wohnten in der Stadt."], correctIdx: 0,
+      explain: { en: "Two spelling traps at once: German 'w' sounds like English v (\"veer\"), and 'st' at the start of a word or syllable becomes \"sht\" — 'Stadt' is \"shtaht,\" never \"staht.\"", es: "Dos trampas ortográficas a la vez: la 'w' alemana suena como v inglesa (\"veer\"), y 'st' al inicio de palabra o sílaba se vuelve \"sht\" — 'Stadt' es \"shtaht,\" nunca \"staht\"." } },
+    respond: { options: ["Schön! In welchem Viertel?", "Vier ist eine gute Zahl.", "Wollen wir auch?", "Die Stadt ist weit weg."], correctIdx: 0,
+      explain: { en: "Hearing where someone lives invites a friendly follow-up — \"Schön! In welchem Viertel?\" (nice! which neighborhood?).", es: "Escuchar dónde vive alguien invita a una pregunta amistosa — \"Schön! In welchem Viertel?\" (¡qué bien! ¿en qué barrio?)." } } },
+  { text: "Der Zug fährt um zehn.", sound: "dair TSOOK fairt oom TSAYN", difficulty: "C1",
+    identify: { options: ["Der Zug fährt um zehn.", "Der Zug fährt um neun.", "Der Zoo schließt um zehn.", "Der Zug fuhr um zehn."], correctIdx: 0,
+      explain: { en: "German 'z' is ALWAYS a crisp \"ts\" — 'Zug' is \"tsook\" (with the final g devoiced to k) and 'zehn' is \"tsayn.\" The English z-buzz doesn't exist in German.", es: "La 'z' alemana SIEMPRE es un \"ts\" nítido — 'Zug' es \"tsook\" (con la g final ensordecida a k) y 'zehn' es \"tsayn\". El zumbido de la z inglesa no existe en alemán." } },
+    respond: { options: ["Dann müssen wir uns beeilen!", "Der Zoo ist heute zu.", "Neun ist zu früh.", "Der Zug war gestern."], correctIdx: 0,
+      explain: { en: "A train at ten means time pressure — \"Dann müssen wir uns beeilen!\" (then we'd better hurry!).", es: "Un tren a las diez significa prisa — \"Dann müssen wir uns beeilen!\" (¡entonces hay que apurarse!)." } } },
+  { text: "Das Eichhörnchen sitzt im Baum.", sound: "dahs EYESH-hern-shen zitst im BOWM", difficulty: "C2",
+    identify: { options: ["Das Eichhörnchen sitzt im Baum.", "Das Eichhörnchen singt im Baum.", "Das Hörnchen sitzt im Traum.", "Das Eichhorn schwitzt im Baum."], correctIdx: 0,
+      explain: { en: "'Eichhörnchen' (squirrel — yes, that one) is THE word Germans use to catch non-natives: ich-laut, ö umlaut, and the '-chen' ending back to back. Master it and you've earned this track's unofficial final boss.", es: "'Eichhörnchen' (ardilla — sí, esa misma) es LA palabra que los alemanes usan para detectar a los no nativos: ich-laut, diéresis ö y la terminación '-chen' seguidas. Domínala y habrás vencido al jefe final no oficial de esta pista." } },
+    respond: { options: ["Wie süß! Siehst du es noch?", "Träume sind keine Bäume.", "Es schwitzt, weil es warm ist.", "Singen kann es sicher nicht."], correctIdx: 0,
+      explain: { en: "A squirrel sighting deserves shared delight — \"Wie süß! Siehst du es noch?\" (how cute! can you still see it?).", es: "Ver una ardilla merece compartir la ternura — \"Wie süß! Siehst du es noch?\" (¡qué linda! ¿todavía la ves?)." } } },
 ];
 
 const deForEn = {
@@ -114,14 +242,19 @@ const deForEn = {
   targetLang: "de",
   theme: "germany-stahl",
   cats: CATS,
-  bank: BANK,
+  bank: { ...BANK, fvocab: buildFrequencyBank(WORDS, { seed: 20260712, formulas: DE_FORMULAS }) },
+  // #78: Word Bank category — the round-draw engine caps its share of mixed
+  // rounds instead of letting the frequency bank dominate the draw.
+  wbCatId: "fvocab",
   extraCatId: "fono",
   extraBank: FONO_BANK.map((item) => ({
     sound: item.sound,
     difficulty: item.difficulty,
     identifyPrompt: "Lies die ungefähre Aussprache. Was sagt sie?",
+    identifyPromptNative: { en: "Read the approximate pronunciation. What does it say?" },
     identify: item.identify,
     respondPrompt: (i) => `"${i.text}" — welche Antwort passt?`,
+    respondPromptNative: (i) => ({ en: `"${i.text}" — what's the appropriate reply?` }),
     respond: item.respond,
     text: item.text,
   })),

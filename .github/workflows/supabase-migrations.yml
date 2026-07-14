@@ -1,29 +1,49 @@
 name: Deploy Supabase migrations
 
-# #80 (+#82 dual-target): applies any not-yet-applied migration files to the
-# right Supabase project, keyed off the branch pushed.
+# #80/#82, extended 2026-07-13: full zero-manual-effort release chain.
+# Merging dev→main must make prod = dev across ALL surfaces (code via
+# Vercel, DB schema via migrations, storage/TTS via the sync job) — a
+# standing architectural requirement. Branch → target mapping:
 #
-#   beta → PRODUCTION project (secrets from the "Production" environment)
-#   dev  → STAGING project    (secrets from the "Staging" environment — #82;
-#                              until that environment + project exist, the
-#                              staging job simply fails fast on missing
-#                              secrets without touching anything)
+#   main → PRODUCTION project ("Production" environment secrets)
+#            migrate-production → sync-tts → smoke-check
+#   dev  → STAGING project    ("Staging" environment secrets — until that
+#            environment + project exist, the job fails fast on missing
+#            secrets without touching anything)
 #
-# History note: the prod migration baseline was repaired 2026-07-12
-# (migrations 000-011 marked applied via `supabase migration repair`), so
-# `db push` only ever applies NEW files. Originally this workflow watched
-# `main`, which the app never deploys from — that's why it sat dormant while
-# migrations were applied by hand.
+# The old `paths: supabase/migrations/**` filter is REMOVED on purpose:
+# with it, a release containing no new migrations would never fire this
+# workflow, so sync-tts and smoke-check would silently not run. Cost:
+# staging migrations now run on every dev push — an idempotent no-op when
+# nothing is pending.
+#
+# History note: prod migration baseline repaired 2026-07-12 (000-011
+# marked applied via `supabase migration repair`); `db push` only ever
+# applies NEW files. Positive case (main push applies prod migrations)
+# verified 2026-07-13.
 #
 # Convention (state-of-app Decisions): migrations are idempotent;
 # DESTRUCTIVE operations (drops, data rewrites) stay manual — never merged
 # as migration files for this workflow to pick up.
+#
+# ── One-time manual secret setup (Production environment) ──────────────
+# NEW secrets this workflow now needs (add once, then never touch):
+#   DEV_SUPABASE_URL                dev project API URL (https://<ref>.supabase.co)
+#   DEV_SUPABASE_SERVICE_ROLE_KEY   dev service role key (was never a
+#                                   Production-environment secret before)
+#   SUPABASE_SERVICE_ROLE_KEY       PROD service role key (also new here —
+#                                   only the anon key existed before)
+# Already present and reused (these two live under GitHub *variables*, not
+# secrets — they are NEXT_PUBLIC_ values and non-sensitive; the refs below use
+# `vars.X || secrets.X` so they resolve from whichever store holds them):
+#   NEXT_PUBLIC_SUPABASE_URL        prod project API URL   (variable)
+#   NEXT_PUBLIC_SITE_URL            prod site origin        (variable; smoke check 1)
+#   SUPABASE_ACCESS_TOKEN / SUPABASE_DB_PASSWORD / SUPABASE_PROJECT_ID
+# ────────────────────────────────────────────────────────────────────────
 
 on:
   push:
     branches: [main, dev]
-    paths:
-      - "supabase/migrations/**"
 
 jobs:
   migrate-production:
@@ -74,3 +94,105 @@ jobs:
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+
+  # Mirrors the dev tts-audio bucket into prod. Runs AFTER migrations so a
+  # new bucket/policy migration lands before the sync touches storage.
+  # Copy-only mirror — never deletes from prod (unreferenced audio is
+  # inert; see scripts/sync-tts.mjs header).
+  sync-tts:
+    if: github.ref == 'refs/heads/main'
+    needs: migrate-production
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Mirror dev tts-audio bucket to prod
+        run: node scripts/sync-tts.mjs
+        env:
+          DEV_SUPABASE_URL: ${{ secrets.DEV_SUPABASE_URL }}
+          DEV_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.DEV_SUPABASE_SERVICE_ROLE_KEY }}
+          PROD_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL || secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          PROD_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+  # Runs last on every main push; any miss turns the workflow red.
+  # Checks 1-3 live in scripts/smoke-check.mjs (version endpoint, bucket
+  # key-count parity, canary audio 200). Check 4 (migration alignment) is
+  # the shell step below, via the Supabase CLI.
+  smoke-check:
+    if: github.ref == 'refs/heads/main'
+    needs: [migrate-production, sync-tts]
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: supabase/setup-cli@v3
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: "Checks 1-3: version endpoint, bucket parity, canary audio"
+        run: node scripts/smoke-check.mjs
+        env:
+          PROD_APP_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || secrets.NEXT_PUBLIC_SITE_URL }}
+          DEV_SUPABASE_URL: ${{ secrets.DEV_SUPABASE_URL }}
+          DEV_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.DEV_SUPABASE_SERVICE_ROLE_KEY }}
+          PROD_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL || secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          PROD_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+      - name: "Check 4: prod migrations match repo migration files"
+        # A dry-run push against prod must report nothing pending. If the
+        # CLI ever changes this wording, this check goes red on a healthy
+        # prod — fix the grep, not the migrations.
+        run: |
+          supabase link --project-ref "$SUPABASE_PROJECT_ID"
+          OUT=$(yes | supabase db push --dry-run 2>&1) || true
+          echo "$OUT"
+          if echo "$OUT" | grep -qi "Remote database is up to date"; then
+            echo "Migrations aligned: prod matches repo."
+          else
+            echo "::error::Prod migrations do not match repo migration files (dry-run reported pending work or errored)"
+            exit 1
+          fi
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+  # The release is fully live ONLY if migrations + sync-tts + smoke-check all
+  # passed. Writing the marker last is what lets the client gate its "update
+  # available" prompt on the whole chain finishing, not just Vercel's deploy.
+  # Marker lives at the tts-audio bucket root (release-ready.json); it does not
+  # interfere with per-track sync/parity/sweep.
+  publish-ready:
+    if: github.ref == 'refs/heads/main'
+    needs: smoke-check
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Mark release fully live
+        run: node scripts/publish-ready.mjs
+        env:
+          PROD_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL || secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          PROD_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

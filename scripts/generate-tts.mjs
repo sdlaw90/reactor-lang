@@ -29,7 +29,8 @@
 //     listening-module roadmap item, not this pipeline.
 //   - Cloze gaps ("___"/"_____") become a 500ms SSML pause.
 //   - Production prompts ("¿Cómo se dice 'X' ...?" / "Comment dit-on 'X'
-//     en français?") wrap X in a native-locale <lang> span so the target
+//     en français?" / "Wie sagt man 'X' auf Deutsch?") wrap X in a
+//     native-locale <lang> span so the target
 //     voice doesn't mangle the embedded English. Any OTHER prompt containing
 //     a true quoted span is flagged to tts-output/<id>/review.txt for a
 //     manual look rather than guessed at.
@@ -81,7 +82,25 @@ const TRACK = opt("track", "esForEn");
 const TRACK_VOICES = {
   esForEn: "es-US-Neural2-A",
   frCaForEn: "fr-CA-Neural2-A",
+  deForEn: "de-DE-Neural2-G", // female. A/B retired in Google's voice refresh (G=F, H=M)
+  jaForEn: "ja-JP-Neural2-B", // female. Neural2 confirmed live 2026-07-13; Chirp3-HD ignored (no SSML/rate)
 };
+
+// Voice-aware key schema: clips named {hash}-{voiceName}.mp3 instead of
+// {hash}.mp3, so a future second voice per track never collides. As of the
+// TTS sync-job session (2026-07-14) ALL tracks are voice-keyed — es/frCa/de
+// were re-keyed here (re-synthesis ≈ $0) alongside ja, which shipped voice-
+// keyed from day one. New tracks are added below at their first pass. The
+// client resolves filenames via the manifest's per-clip `f` field — it must
+// never construct filenames itself, so re-keying was a manifest-only change
+// on the client side.
+//
+// One-time follow-through after flipping a track into this set: regenerate it
+// with --upload against DEV (the run synthesizes under the new filenames and
+// leaves the old plain clips as local + bucket orphans), then sweep-tts.mjs
+// --delete against dev to clear the old plain clips. Prod orphans are cleared
+// by a guarded one-time prod sweep — see docs/tts-sync-runbook.md.
+const VOICE_KEYED_TRACKS = new Set(["esForEn", "frCaForEn", "deForEn", "jaForEn"]);
 const VOICE = opt("voice", TRACK_VOICES[TRACK] || "es-US-Neural2-A");
 const NATIVE_VOICE = opt("native-voice", "en-US-Neural2-C");
 const LIMIT = Number(opt("limit", "0")) || 0;
@@ -153,7 +172,136 @@ const LANG_RULES = {
     knownQuoted: /^'.+'\s+signifie/i,
     quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…]|$)/.test(text),
   },
+  // de notes: recognition allows words between the quoted span and
+  // "bedeutet" ("'Doch!' als Antwort bedeutet...", "'Handschuh' bedeutet
+  // wörtlich ..."), hence `.*` rather than `\s+`. Everything before
+  // "bedeutet" in those shapes is German, so speaking as-is is correct.
+  // Embedded double-quoted English ("hand shoe") comes out German-accented —
+  // same accepted wart class as the trad "(coloquial)" case. Quoted spans
+  // keep the greedy+boundary-aware fr treatment: German words are stored in
+  // dictionary casing WITH articles ('der Termin') and glosses can carry
+  // internal apostrophes ("one's"), neither of which may truncate or flag.
+  de: {
+    production: /^(Wie sagt man )'(.+)'( auf Deutsch\?)$/i,
+    knownQuoted: /^'.+'.*\bbedeutet/i,
+    quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…]|$)/.test(text),
+  },
+  // ja notes (added at the jaForEn pass — es/fr/de rules above are untouched,
+  // so esForEn/frCaForEn/deForEn need no --force after this change):
+  // - Content strings pack script + romaji ("友達 (tomodachi)"), and prompt
+  //   frames carry a whole-sentence romaji parenthetical. Spoken text strips
+  //   every ASCII (...) whose preceding non-space char is CJK — the romaji is
+  //   a reading aid for the eyes, not something to say twice. English content
+  //   parens ("(said before eating)", the "(duration)" in a gloss) survive
+  //   because they follow Latin text. Stripping happens AFTER hashing: keys
+  //   stay derivable from the raw prompt the client has.
+  // - Recognition shape: 'X' はどういう意味ですか？ — X is target-language.
+  //   Production shape: 'X' は日本語で何と言いますか？ — X is the English
+  //   gloss, native <lang> span (¿Cómo se dice...? / Wie sagt man...? class).
+  // - Heteronym kanji: the romaji parenthetical is the intended-reading
+  //   record. Every quoted recognition headword containing kanji gets an SSML
+  //   <sub alias="かな"> built by converting its romaji to hiragana — TTS
+  //   guesses readings on isolated words (家 ie/uchi, 日 hi/nichi, 今日), so
+  //   we substitute universally rather than curate a heteronym list. The
+  //   converter hard-fails the whole run on any romaji it can't fully
+  //   convert; it never emits a partial alias.
+  // - English hint tails on gram cloze prompts (`... — "I'll go TOO"`) get a
+  //   native <lang> span when the tail is CJK-free. Prompts with no CJK at
+  //   all (keigo scenario questions) go whole-native-voice like trad.
+  // - Accepted warts, same class as de's "hand shoe": short English inside a
+  //   CJK prompt without an em-dash tail (`食べます means...`, `Which is true
+  //   of は vs. が?`) is spoken ja-accented.
+  ja: {
+    production: /^()'(.+)'( は日本語で何と言いますか？)$/,
+    knownQuoted: /^'.+' はどういう意味ですか/,
+    quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…？！、。」]|$)/.test(text),
+    deriveSpoken: stripCJKReadingParens,
+    targetScript: /[\u3040-\u30FF\u3400-\u9FFF\uF900-\uFAFF々]/, // kana or kanji anywhere?
+    nativeWhenNoTarget: true, // no CJK at all → whole prompt is native-language
+    nativeTail: true, // ` — <english hint>` tails get a native <lang> span
+    subReading: true, // quoted kanji headwords get <sub alias=hiragana(romaji)>
+  },
 };
+
+// ---------- ja helpers ----------
+// CJK detection for the paren-strip rule: hiragana, katakana, CJK unified
+// ideographs (+ext A / compat), CJK symbols/punctuation (。、「」), and
+// full-width forms (？！). Latin text never matches.
+const CJK_CONTEXT = /[\u3000-\u303F\u3040-\u30FF\u3400-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF々]/;
+const HAS_KANJI = /[\u3400-\u9FFF\uF900-\uFAFF々]/;
+
+// Strip ASCII parentheticals that annotate CJK text (romaji readings).
+// Walk back from the "(" past whitespace and trailing ASCII punctuation
+// (?!._… and cloze underscores — "元気です___? (Genki desu ___?)"); if the
+// first substantive char is CJK, the parenthetical is a reading aid → strip.
+// If it's Latin ("'Thanks for the meal.' (said before eating)"), keep it.
+function stripCJKReadingParens(text) {
+  return text
+    .replace(/\s*\(([^)]*)\)/g, (m, _inner, idx, whole) => {
+      let j = idx - 1;
+      while (j >= 0 && /[\s?!._…]/.test(whole[j])) j--;
+      return j >= 0 && CJK_CONTEXT.test(whole[j]) ? "" : m;
+    })
+    .replace(/ {2,}/g, " ")
+    .trim();
+}
+
+// Wapuro-Hepburn romaji → hiragana. Deliberately strict: returns null on
+// ANY unconvertible remainder rather than guessing — the caller hard-fails
+// the run and lists offenders. Handles sokuon doubling (kitte, matcha via
+// "tch"), the n/n' rules (kan'youku, onna), and the yōon digraphs. Long
+// vowels are written out in wapuro (ou/uu/ei), so they need no logic.
+const KANA_MAP = {
+  kya: "きゃ", kyu: "きゅ", kyo: "きょ", sha: "しゃ", shu: "しゅ", sho: "しょ",
+  cha: "ちゃ", chu: "ちゅ", cho: "ちょ", nya: "にゃ", nyu: "にゅ", nyo: "にょ",
+  hya: "ひゃ", hyu: "ひゅ", hyo: "ひょ", mya: "みゃ", myu: "みゅ", myo: "みょ",
+  rya: "りゃ", ryu: "りゅ", ryo: "りょ", gya: "ぎゃ", gyu: "ぎゅ", gyo: "ぎょ",
+  ja: "じゃ", ju: "じゅ", jo: "じょ", bya: "びゃ", byu: "びゅ", byo: "びょ",
+  pya: "ぴゃ", pyu: "ぴゅ", pyo: "ぴょ",
+  shi: "し", chi: "ち", tsu: "つ", fu: "ふ", ji: "じ",
+  ka: "か", ki: "き", ku: "く", ke: "け", ko: "こ",
+  sa: "さ", su: "す", se: "せ", so: "そ",
+  ta: "た", te: "て", to: "と",
+  na: "な", ni: "に", nu: "ぬ", ne: "ね", no: "の",
+  ha: "は", hi: "ひ", he: "へ", ho: "ほ",
+  ma: "ま", mi: "み", mu: "む", me: "め", mo: "も",
+  ya: "や", yu: "ゆ", yo: "よ",
+  ra: "ら", ri: "り", ru: "る", re: "れ", ro: "ろ",
+  wa: "わ", wo: "を",
+  ga: "が", gi: "ぎ", gu: "ぐ", ge: "げ", go: "ご",
+  za: "ざ", zu: "ず", ze: "ぜ", zo: "ぞ",
+  da: "だ", de: "で", do: "ど",
+  ba: "ば", bi: "び", bu: "ぶ", be: "べ", bo: "ぼ",
+  pa: "ぱ", pi: "ぴ", pu: "ぷ", pe: "ぺ", po: "ぽ",
+  a: "あ", i: "い", u: "う", e: "え", o: "お",
+};
+function romajiToHiragana(romaji) {
+  let s = romaji.toLowerCase().replace(/[\s,]+/g, "");
+  let out = "";
+  while (s.length) {
+    if (/^([kstpgzjdbfc])\1/.test(s) || s.startsWith("tch")) { out += "っ"; s = s.slice(1); continue; }
+    if (s.startsWith("n'")) { out += "ん"; s = s.slice(2); continue; }
+    if (s[0] === "n" && (s.length === 1 || !/[aiueoy]/.test(s[1]))) { out += "ん"; s = s.slice(1); continue; }
+    let matched = false;
+    for (const len of [3, 2, 1]) {
+      const tok = s.slice(0, len);
+      if (KANA_MAP[tok]) { out += KANA_MAP[tok]; s = s.slice(len); matched = true; break; }
+    }
+    if (!matched) return null;
+  }
+  return out;
+}
+
+// If a prompt opens with a quoted headword that packs a reading —
+// 'friend 漢字 (romaji)' shapes — and the headword contains kanji, return
+// { word, alias } for an SSML <sub>. Latin-only words (production glosses,
+// even ones with their own parens like "time (duration)") return null.
+function readingSub(rawText) {
+  const m = rawText.match(/^'([^']+?)\s*\(([^)]+)\)'/);
+  if (!m || !HAS_KANJI.test(m[1])) return null;
+  const alias = romajiToHiragana(m[2]);
+  return { word: m[1], alias }; // alias === null → caller hard-fails
+}
 
 // ---------- spoken-text extraction ----------
 function extractSpoken(track) {
@@ -163,30 +311,52 @@ function extractSpoken(track) {
 
   const nativeLocale = NATIVE_TTS_LOCALE[track.nativeLang] || "en-US";
   const rules = LANG_RULES[track.targetLang] || LANG_RULES.es;
+  const voiceKeyed = VOICE_KEYED_TRACKS.has(TRACK);
+  const readingFailures = [];
 
   Object.keys(track.bank).forEach((cat) => {
     track.bank[cat].forEach((q, i) => {
       const id = `${cat}-${i}`;
       const raw = q[0];
       const text = normalizeSpokenText(raw);
+      // KEY comes from the raw normalized prompt — the client must be able
+      // to derive it from the question text it already has. Language-level
+      // spoken-text transforms (ja romaji stripping) apply AFTER hashing.
       const key = audioKey(text);
       if (byKey.has(key)) {
         const prior = byKey.get(key);
-        if (prior.text !== text) {
+        if (prior.rawText !== text) {
           // Hash collision between different texts — abort loudly.
-          console.error(`FATAL: audioKey collision: "${prior.text}" vs "${text}"`);
+          console.error(`FATAL: audioKey collision: "${prior.rawText}" vs "${text}"`);
           process.exit(1);
         }
         prior.sources.push(id);
         return;
       }
-      const { ssml, flagged, voice } = toSSML(text, nativeLocale, rules);
-      if (flagged) review.push({ id, text });
-      const item = { key, text, ssml, voice, sources: [id] };
+      const spoken = rules.deriveSpoken ? rules.deriveSpoken(text) : text;
+      // ja: quoted kanji headwords carry their intended reading in the raw
+      // text's romaji parenthetical → SSML <sub>. Unconvertible romaji is a
+      // content bug; collect every offender, then hard-fail below.
+      let sub = null;
+      if (rules.subReading) {
+        sub = readingSub(text);
+        if (sub && sub.alias === null) readingFailures.push({ id, word: sub.word, text });
+      }
+      const { ssml, flagged, voice } = toSSML(spoken, nativeLocale, rules, sub);
+      if (flagged) review.push({ id, text: spoken });
+      const item = { key, rawText: text, text: spoken, ssml, voice, sources: [id] };
+      item.file = voiceKeyed ? `${key}-${voice === "native" ? NATIVE_VOICE : VOICE}.mp3` : `${key}.mp3`;
       byKey.set(key, item);
       items.push(item);
     });
   });
+
+  if (readingFailures.length) {
+    console.error(`FATAL: ${readingFailures.length} romaji reading(s) could not be converted to hiragana:`);
+    readingFailures.forEach((f) => console.error(`  ${f.id}\t${f.word}\t${f.text}`));
+    console.error("Fix the romaji (wapuro Hepburn) or extend KANA_MAP. No synthesis attempted.");
+    process.exit(1);
+  }
 
   return { items, review };
 }
@@ -199,15 +369,17 @@ function xmlEscape(s) {
 // means a quoted span we did NOT confidently language-tag; voice is
 // "target" (default) or "native" (the whole prompt is the learner's
 // native language, e.g. the trad category's "Translate: '...'" prompts).
-function toSSML(text, nativeLocale, rules) {
+function toSSML(text, nativeLocale, rules, sub = null) {
   let flagged = false;
   let voice = "target";
   let body;
 
   const translate = text.match(/^Translate:\s*'/i);
   const production = text.match(rules.production);
-  if (translate) {
+  if (translate || (rules.nativeWhenNoTarget && !rules.targetScript.test(text))) {
     // Whole prompt is native-language — synthesize with the native voice.
+    // Two ways in: the trad "Translate: '...'" frame, or (ja) a prompt with
+    // no target-script characters at all (keigo scenario questions).
     // (Occasional target-language parenthetical like "(coloquial)" comes out
     // with an English accent; one word, acceptable — see runbook.)
     voice = "native";
@@ -229,6 +401,26 @@ function toSSML(text, nativeLocale, rules) {
     // (worst case: accented pronunciation of a stray word).
     if (rules.quoteDetect(text) && !rules.knownQuoted.test(text)) flagged = true;
     body = xmlEscape(text);
+
+    // ja: substitute the intended reading for the quoted kanji headword —
+    // TTS guesses readings on isolated words; the romaji parenthetical is
+    // authoritative. Applied to the escaped body (kanji and kana are
+    // untouched by xmlEscape; the quotes become &apos;).
+    if (sub && sub.alias) {
+      const quoted = `&apos;${xmlEscape(sub.word)}&apos;`;
+      body = body.replace(quoted, `&apos;<sub alias="${sub.alias}">${xmlEscape(sub.word)}</sub>&apos;`);
+    }
+
+    // ja: English hint tails on gram cloze prompts (`... — "IF it rains, I
+    // won't go"`) get a native <lang> span, iff the tail is target-script-
+    // free. Only in this branch — production/translate bodies never carry
+    // these tails.
+    if (rules.nativeTail) {
+      const tail = body.match(/^(.*) — (.+)$/);
+      if (tail && !rules.targetScript.test(tail[2])) {
+        body = `${tail[1]} — <lang xml:lang="${nativeLocale}">${tail[2]}</lang>`;
+      }
+    }
   }
 
   // Cloze gaps: "Yo _____ (tener) mucha hambre." / "___ maison est grande."
@@ -326,15 +518,17 @@ const { items, review } = extractSpoken(track);
 let todo = items;
 
 // Idempotency: skip clips already on disk (and, if uploading, in the bucket).
+// Compared by full filename, so plain and voice-keyed schemas both work.
 if (!FORCE) {
-  const existing = new Set((await readdir(outDir).catch(() => [])).map((f) => f.replace(/\.mp3$/, "")));
-  todo = todo.filter((it) => !existing.has(it.key));
+  const existing = new Set(await readdir(outDir).catch(() => []));
+  todo = todo.filter((it) => !existing.has(it.file));
 }
 if (LIMIT) todo = todo.slice(0, LIMIT);
 
 const totalChars = items.reduce((n, it) => n + it.text.length, 0);
 console.log(`Track: ${track.id} (${TRACK})`);
 console.log(`Voice: ${VOICE}  native voice: ${NATIVE_VOICE}  rate: ${SPEAKING_RATE}`);
+console.log(`Key schema: ${VOICE_KEYED_TRACKS.has(TRACK) ? "voice-keyed ({hash}-{voice}.mp3)" : "plain ({hash}.mp3)"}`);
 const nativeCount = items.filter((it) => it.voice === "native").length;
 if (nativeCount) console.log(`Native-voice prompts: ${nativeCount}`);
 console.log(`Unique spoken prompts: ${items.length} (from ${Object.keys(track.bank).length} categories)`);
@@ -362,7 +556,7 @@ await verifyVoices(API_KEY);
 let done = 0;
 const failures = await pool(todo, async (item) => {
   const mp3 = await withRetry(() => synthesize(item.ssml, API_KEY, item.voice));
-  writeFileSync(path.join(outDir, `${item.key}.mp3`), mp3);
+  writeFileSync(path.join(outDir, item.file), mp3);
   done++;
   if (done % 50 === 0 || done === todo.length) console.log(`  synthesized ${done}/${todo.length}`);
 });
@@ -381,12 +575,18 @@ const manifest = {
   voice: VOICE,
   nativeVoice: NATIVE_VOICE,
   speakingRate: SPEAKING_RATE,
+  // "plain" = {hash}.mp3, "voice-keyed" = {hash}-{voice}.mp3. The client
+  // must resolve clip URLs through `f` below and never build filenames —
+  // that makes the sync-job re-key of the plain tracks a manifest-only
+  // change on the client side.
+  keySchema: VOICE_KEYED_TRACKS.has(TRACK) ? "voice-keyed" : "plain",
   generatedAt: new Date().toISOString(),
   count: items.length,
-  // key → { t: spoken text, v: "target" | "native" }. Voice kind is
-  // informational — it is NOT part of the key, so reclassifying a prompt's
-  // voice later requires a --force regeneration (see runbook).
-  clips: Object.fromEntries(items.map((it) => [it.key, { t: it.text, v: it.voice }])),
+  // key → { t: spoken text (post language transforms), v: "target" |
+  // "native", f: filename in the bucket }. Voice kind is informational —
+  // it is NOT part of the hash, so reclassifying a prompt's voice later
+  // requires a --force regeneration (see runbook).
+  clips: Object.fromEntries(items.map((it) => [it.key, { t: it.text, v: it.voice, f: it.file }])),
 };
 const manifestPath = path.join(outDir, "manifest.json");
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
