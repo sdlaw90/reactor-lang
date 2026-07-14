@@ -84,6 +84,10 @@ const TRACK_VOICES = {
   frCaForEn: "fr-CA-Neural2-A",
   deForEn: "de-DE-Neural2-G", // female. A/B retired in Google's voice refresh (G=F, H=M)
   jaForEn: "ja-JP-Neural2-B", // female. Neural2 confirmed live 2026-07-13; Chirp3-HD ignored (no SSML/rate)
+  koForEn: "ko-KR-Neural2-A", // PROVISIONAL — confirm against voices:list ko-KR before the
+                              // paid run (standing rule); Google's de refresh proved letters
+                              // churn. verifyVoices hard-fails if A isn't live — override with
+                              // --voice and update here once ears have picked the variant.
 };
 
 // Voice-aware key schema: clips named {hash}-{voiceName}.mp3 instead of
@@ -100,7 +104,7 @@ const TRACK_VOICES = {
 // leaves the old plain clips as local + bucket orphans), then sweep-tts.mjs
 // --delete against dev to clear the old plain clips. Prod orphans are cleared
 // by a guarded one-time prod sweep — see docs/tts-sync-runbook.md.
-const VOICE_KEYED_TRACKS = new Set(["esForEn", "frCaForEn", "deForEn", "jaForEn"]);
+const VOICE_KEYED_TRACKS = new Set(["esForEn", "frCaForEn", "deForEn", "jaForEn", "koForEn"]);
 const VOICE = opt("voice", TRACK_VOICES[TRACK] || "es-US-Neural2-A");
 const NATIVE_VOICE = opt("native-voice", "en-US-Neural2-C");
 const LIMIT = Number(opt("limit", "0")) || 0;
@@ -221,6 +225,40 @@ const LANG_RULES = {
     nativeTail: true, // ` — <english hint>` tails get a native <lang> span
     subReading: true, // quoted kanji headwords get <sub alias=hiragana(romaji)>
   },
+  // ko notes (added at the koForEn pass — es/fr/de/ja rules above are
+  // untouched, so those tracks need no --force after this change):
+  // - Content packs hangul + Revised-Romanization together ("물 (mul)"), and
+  //   prompt frames carry a whole-sentence RR parenthetical. Spoken text
+  //   strips the RR the same spirit as ja's romaji strip — but ko needs TWO
+  //   passes (stripKoreanReadingParens), because some gram cloze prompts put
+  //   an English em-dash hint BETWEEN the hangul and its trailing RR paren
+  //   (`학교___ 가요. — "I go TO school" (Hakgyo___ gayo.)`), so the RR follows
+  //   Latin, not hangul, and a preceded-by-hangul rule alone misses it.
+  //   Stripping happens AFTER hashing: keys stay derivable from the raw prompt
+  //   the client has.
+  // - NO subReading (the big divergence from ja): hangul is phonetic, so
+  //   ko-KR TTS reads headwords correctly — including the standard batchim
+  //   liaison/assimilation a native voice applies. The fono category (which
+  //   teaches those sound changes explicitly) is extraBank, already excluded.
+  // - Recognition shape: 'X'은/는 무슨 뜻이에요? — X is target-language, spoken
+  //   as-is. The 은/는 particle sits flush against the closing quote (no
+  //   boundary), so quoteDetect reads false there and it never review-flags.
+  //   Production shape: 'X', 한국어로 뭐라고 해요? — X is the English gloss,
+  //   native <lang> span (¿Cómo se dice...? / は日本語で class).
+  // - English hint tails on gram cloze prompts get a native <lang> span when
+  //   target-script-free; prompts with no hangul at all (trad "Translate:
+  //   '...'") go whole-native-voice, and their English "(note)" survives
+  //   because those prompts carry no hangul for the trailing-paren strip to
+  //   trigger on — matching ja's preserved trad notes.
+  ko: {
+    production: /^()'(.+)'(, 한국어로 뭐라고 해요\?)$/,
+    knownQuoted: /^'.+'[은는] 무슨 뜻이에요/,
+    quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…]|$)/.test(text),
+    deriveSpoken: stripKoreanReadingParens,
+    targetScript: /[\uAC00-\uD7A3]/, // any hangul syllable block
+    nativeWhenNoTarget: true, // no hangul at all → whole prompt is native-language
+    nativeTail: true, // ` — <english hint>` tails get a native <lang> span
+  },
 };
 
 // ---------- ja helpers ----------
@@ -301,6 +339,38 @@ function readingSub(rawText) {
   if (!m || !HAS_KANJI.test(m[1])) return null;
   const alias = romajiToHiragana(m[2]);
   return { word: m[1], alias }; // alias === null → caller hard-fails
+}
+
+// ---------- ko helpers ----------
+// Hangul syllable blocks (U+AC00–U+D7A3). Jamo aren't used in this track's
+// prompts, so the syllable range is sufficient for both stripping and the
+// targetScript test.
+const HANGUL_BLOCK = /[\uAC00-\uD7A3]/;
+
+// Strip Revised-Romanization reading aids from ko spoken text. Two passes,
+// because ko prompt frames don't put the RR in one consistent position:
+//   (a) parens whose preceding substantive char is hangul — the mid-prompt
+//       headword reading ("'물 (mul)'…" → "'물'…") and any RR that trails
+//       hangul directly ("…해요? (…)" → "…해요?"). Walk-back skips whitespace,
+//       terminal punctuation, and cloze underscores, mirroring the ja rule.
+//   (b) a FINAL paren that (a) missed because it follows an English em-dash
+//       hint ("…가요. — \"I go TO school\" (Hakgyo___ gayo.)"). Only strips
+//       when hangul appears earlier in the prompt, so trad "Translate: '…'
+//       (set phrase…)" — which has no hangul in the prompt itself — keeps its
+//       English note and speaks it in the native voice, exactly as ja does.
+// English glosses that trail hangul (the rare "(\"Elephants…\")" aside) are
+// dropped from audio too; that's correct — spoken, they'd be read hangul-
+// accented, and they're a visual aid, not something to say.
+function stripKoreanReadingParens(text) {
+  let out = text.replace(/\s*\(([^)]*)\)/g, (m, _inner, idx, whole) => {
+    let j = idx - 1;
+    while (j >= 0 && /[\s?!._…]/.test(whole[j])) j--;
+    return j >= 0 && HANGUL_BLOCK.test(whole[j]) ? "" : m;
+  });
+  out = out.replace(/\s*\(([^)]*)\)\s*$/, (m, _inner, idx, whole) =>
+    HANGUL_BLOCK.test(whole.slice(0, idx)) ? "" : m
+  );
+  return out.replace(/ {2,}/g, " ").trim();
 }
 
 // ---------- spoken-text extraction ----------

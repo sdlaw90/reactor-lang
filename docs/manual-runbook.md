@@ -106,25 +106,47 @@ prod uploads, no env swapping.
   fragments → release notes (regrouped by feature area) → move fragments
   to `released/vX.Y.Z-beta.N/`
 
-### 6b. Merge to main
+### 6b. Merge to main (prod release)
 
-```
-git checkout main
-git pull
-git merge dev --no-ff -m "Release vX.Y.Z-beta.N"
-git push
-git checkout dev
-```
+Prereqs: `lib/version.js` bumped, `unreleased/` fragments rolled up into
+`released/vX.Y.Z-beta.N/`, everything committed on `dev`.
 
-Edit the version in `-m` to match `lib/version.js`. `--no-ff` guarantees a
-merge commit exists to carry the message (a fast-forward would silently
-drop it). Forgot to edit before pushing? `git commit --amend -m "..."` —
-but only before push.
+1. Get onto an up-to-date main:
+       git checkout main
+       git pull
 
-Pushing `main` triggers, in order:
-- Vercel Production deploy (parallel, outside Actions)
-- "Deploy Supabase migrations" workflow: `migrate-production` →
-  `sync-tts` (mirrors dev `tts-audio` bucket to prod) → `smoke-check`
+2. Merge dev:
+       git merge dev --no-ff -m "Release vX.Y.Z-beta.N"
+   Edit the version in `-m` to match `lib/version.js`. `--no-ff` guarantees a
+   merge commit exists to carry the message (a fast-forward drops it).
+
+   Two conflicts recur every release — resolve them differently:
+   - `.github/workflows/supabase-migrations.yml` — take dev's copy wholesale
+     (dev has the current job chain):
+         git checkout --theirs .github/workflows/supabase-migrations.yml
+         git add .github/workflows/supabase-migrations.yml
+   - `docs/manual-runbook.md` (add/add) — hand-merge. Do NOT use
+     `--ours`/`--theirs`; either silently drops a side. Open it, resolve the
+     `<<<<<<< ======= >>>>>>>` markers, keep both blocks if they're different
+     topics, then `git add docs/manual-runbook.md`.
+
+3. Finish and push:
+       git status                              # "All conflicts fixed"
+       git commit -m "Release vX.Y.Z-beta.N"   # only if the merge paused for conflicts
+       git push origin main
+
+   Pushing main triggers the chain:
+       migrate-production → sync-tts → smoke-check → publish-ready
+   `publish-ready` going green is the real success gate — VersionWatcher fails
+   closed on a missing release-ready marker, so a green Vercel deploy alone is
+   NOT enough. Chain internals + the three one-time Production secrets live in
+   docs/tts-sync-runbook.md.
+
+4. Back-merge so the SAME two conflicts don't return next release:
+       git checkout dev
+       git merge main
+       git push origin dev
+       git checkout main
 
 ### 6c. Watch for green checks (Actions tab)
 The release is done when the workflow run on the `main` push is fully
