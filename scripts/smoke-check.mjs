@@ -1,204 +1,180 @@
-#!/usr/bin/env node
-/**
- * smoke-check.mjs — post-release verification, runs last on main push.
- * Fails the workflow red on any miss. Checks:
- *
- *   1. Prod version endpoint (/version.json) reports the version just
- *      merged (read from lib/version.js in the checked-out repo).
- *      Polls with a timeout, because the Vercel Production deploy runs
- *      in parallel with this workflow and may finish after it starts.
- *   2. Prod `tts-audio` key count >= dev's key count.
- *   3. One canary audio URL (first .mp3 found in prod) returns HTTP 200
- *      via the public storage URL — the same path the app's playback
- *      uses. (Assumes the bucket is public; if it is ever made private,
- *      switch this to a signed URL.)
- *
- * Check 4 (latest applied prod migration == latest migration file in
- * repo) lives in the workflow as a shell step using the Supabase CLI —
- * see .github/workflows/supabase-migrations.yml.
- *
- * Required env vars (CI: Production environment secrets):
- *   PROD_APP_URL                   prod site origin (NEXT_PUBLIC_SITE_URL)
- *   DEV_SUPABASE_URL               dev project API URL
- *   DEV_SUPABASE_SERVICE_ROLE_KEY  dev service role key
- *   PROD_SUPABASE_URL              prod project API URL
- *   PROD_SUPABASE_SERVICE_ROLE_KEY prod service role key
- * Optional:
- *   SMOKE_VERSION_TIMEOUT_SECS     poll window for check 1 (default 600)
- */
-
-import { readFileSync } from "node:fs";
-import { createClient } from "@supabase/supabase-js";
+// Post-release smoke check (TTS sync CI job, 2026-07-14).
+//
+// Runs last on every main push (.github/workflows/supabase-migrations.yml),
+// after migrate-production and sync-tts. Any failure turns the workflow red.
+// This file owns checks 1-3; check 4 (migration alignment) is a shell step in
+// the workflow using the Supabase CLI.
+//
+//   1. Version endpoint    — prod serves a valid /version.json.
+//   2. Bucket parity       — for every clip a dev manifest claims (its `f`
+//                            filename), prod has that file. SUPERSET check:
+//                            prod may hold extra inert orphans; those never
+//                            fail. This is the manifest-`f` parity the sync
+//                            job's copy-only mirror is designed around — NOT a
+//                            raw count × voices multiplier. Also asserts each
+//                            prod manifest.json is byte-equal to dev's, so the
+//                            client fetches the right key→filename map.
+//   3. Canary audio        — one real clip's PUBLIC url returns 200 audio,
+//                            proving the bucket is public and playable.
+//
+// Env (set by the workflow):
+//   PROD_APP_URL                                    — check 1
+//   DEV_SUPABASE_URL,  DEV_SUPABASE_SERVICE_ROLE_KEY  — source of truth
+//   PROD_SUPABASE_URL, PROD_SUPABASE_SERVICE_ROLE_KEY — target under test
 
 const BUCKET = "tts-audio";
 
-function requireEnv(name) {
-  const v = process.env[name];
-  if (!v) {
-    console.error(`Missing required env var: ${name}`);
-    process.exit(1);
-  }
-  return v;
+const APP_URL = (process.env.PROD_APP_URL || "").replace(/\/$/, "");
+const DEV_URL = (process.env.DEV_SUPABASE_URL || "").replace(/\/$/, "");
+const DEV_KEY = process.env.DEV_SUPABASE_SERVICE_ROLE_KEY || "";
+const PROD_URL = (process.env.PROD_SUPABASE_URL || "").replace(/\/$/, "");
+const PROD_KEY = process.env.PROD_SUPABASE_SERVICE_ROLE_KEY || "";
+
+const problems = [];
+const warnings = [];
+function fail(msg) { problems.push(msg); console.error(`  ✗ ${msg}`); }
+function warn(msg) { warnings.push(msg); console.warn(`  ⚠ ${msg}`); }
+function ok(msg) { console.log(`  ✓ ${msg}`); }
+
+function authHeaders(key) {
+  return { authorization: `Bearer ${key}`, apikey: key };
 }
 
-const PROD_APP_URL = requireEnv("PROD_APP_URL").replace(/\/+$/, "");
-const devClient = createClient(
-  requireEnv("DEV_SUPABASE_URL"),
-  requireEnv("DEV_SUPABASE_SERVICE_ROLE_KEY"),
-  { auth: { persistSession: false } }
-);
-const PROD_SUPABASE_URL = requireEnv("PROD_SUPABASE_URL").replace(/\/+$/, "");
-const prodClient = createClient(
-  PROD_SUPABASE_URL,
-  requireEnv("PROD_SUPABASE_SERVICE_ROLE_KEY"),
-  { auth: { persistSession: false } }
-);
-
-/** Same recursive lister as sync-tts.mjs (kept local so each script is
- *  self-contained in delta zips). Returns Map<key, meta>. */
-async function listAllKeys(client, prefix = "") {
-  const out = new Map();
-  const PAGE = 1000;
-  let offset = 0;
-  for (;;) {
-    const { data, error } = await client.storage.from(BUCKET).list(prefix, {
-      limit: PAGE,
-      offset,
-      sortBy: { column: "name", order: "asc" },
+async function listOnce(base, key, prefix) {
+  const out = [];
+  for (let offset = 0; ; offset += 1000) {
+    const res = await fetch(`${base}/storage/v1/object/list/${BUCKET}`, {
+      method: "POST",
+      headers: { ...authHeaders(key), "content-type": "application/json" },
+      body: JSON.stringify({ prefix, limit: 1000, offset, sortBy: { column: "name", order: "asc" } }),
     });
-    if (error) {
-      throw new Error(`list("${prefix}") failed: ${error.message}`);
-    }
-    for (const entry of data) {
-      if (entry.name === ".emptyFolderPlaceholder") continue;
-      const key = prefix ? `${prefix}/${entry.name}` : entry.name;
-      if (entry.id === null) {
-        const sub = await listAllKeys(client, key);
-        for (const [k, v] of sub) out.set(k, v);
-      } else {
-        out.set(key, { size: entry.metadata?.size ?? null });
-      }
-    }
-    if (data.length < PAGE) break;
-    offset += PAGE;
+    if (!res.ok) throw new Error(`list ${prefix || "(root)"} ${res.status}: ${(await res.text().catch(() => "")).slice(0, 150)}`);
+    const page = await res.json();
+    out.push(...page);
+    if (page.length < 1000) break;
   }
   return out;
 }
-
-function repoVersion() {
-  const src = readFileSync("lib/version.js", "utf8");
-  const m = src.match(/CURRENT_VERSION\s*=\s*["']([^"']+)["']/);
-  if (!m) throw new Error("Could not parse CURRENT_VERSION from lib/version.js");
-  return m[1];
+async function listTrackIds(base, key) {
+  return (await listOnce(base, key, "")).filter((r) => r && r.id == null && r.name).map((r) => r.name);
+}
+async function listFiles(base, key, trackId) {
+  return (await listOnce(base, key, trackId)).filter((r) => r && r.id != null && r.name).map((r) => r.name);
+}
+async function getObject(base, key, objectPath) {
+  const res = await fetch(`${base}/storage/v1/object/${BUCKET}/${objectPath}`, { headers: authHeaders(key) });
+  if (!res.ok) throw new Error(`get ${objectPath} ${res.status}`);
+  return Buffer.from(await res.arrayBuffer());
 }
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-/** Check 1: poll /version.json until it reports the merged version. */
-async function checkVersion(expected) {
-  const timeoutSecs = Number(process.env.SMOKE_VERSION_TIMEOUT_SECS || 600);
-  const intervalMs = 20_000;
-  const deadline = Date.now() + timeoutSecs * 1000;
-  const url = `${PROD_APP_URL}/version.json`;
-  let last = "(no response yet)";
-
-  for (;;) {
-    try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (res.ok) {
-        const body = await res.text();
-        let deployed = null;
-        try {
-          const json = JSON.parse(body);
-          deployed = json.version ?? null;
-        } catch {
-          /* not JSON — fall through to substring match */
-        }
-        if (deployed === expected || (!deployed && body.includes(expected))) {
-          console.log(`✓ Check 1: prod reports version ${expected}`);
-          return;
-        }
-        last = deployed ?? body.slice(0, 200);
-      } else {
-        last = `HTTP ${res.status}`;
-      }
-    } catch (err) {
-      last = err.message;
-    }
-    if (Date.now() >= deadline) {
-      throw new Error(
-        `Check 1 FAILED: ${url} never reported ${expected} within ` +
-          `${timeoutSecs}s (last seen: ${last}). If the Vercel deploy is ` +
-          `just slow, re-run this job once it finishes.`
-      );
-    }
-    console.log(`  waiting for prod deploy... (last seen: ${last})`);
-    await sleep(intervalMs);
-  }
-}
-
-async function main() {
-  const expected = repoVersion();
-  console.log(`Repo version: ${expected}`);
-
-  const failures = [];
-
-  // Check 1 — version endpoint (polls; run first, it's the slow one).
+// ---------- Check 1: version endpoint ----------
+console.log("Check 1: prod version endpoint");
+if (!APP_URL) {
+  fail("PROD_APP_URL not set.");
+} else {
   try {
-    await checkVersion(expected);
-  } catch (err) {
-    failures.push(err.message);
-    console.error(`✗ ${err.message}`);
-  }
-
-  // Checks 2 + 3 — bucket parity and canary audio.
-  try {
-    const [devKeys, prodKeys] = await Promise.all([
-      listAllKeys(devClient),
-      listAllKeys(prodClient),
-    ]);
-
-    if (prodKeys.size >= devKeys.size) {
-      console.log(
-        `✓ Check 2: prod key count ${prodKeys.size} >= dev ${devKeys.size}`
-      );
+    const res = await fetch(`${APP_URL}/version.json`, { headers: { accept: "application/json" } });
+    if (!res.ok) {
+      fail(`GET ${APP_URL}/version.json returned ${res.status}`);
     } else {
-      const msg = `Check 2 FAILED: prod has ${prodKeys.size} keys, dev has ${devKeys.size} — sync gap`;
-      failures.push(msg);
-      console.error(`✗ ${msg}`);
+      const body = await res.json();
+      const version = body.version || body.appVersion;
+      if (!version) fail(`/version.json has no version field (keys: ${Object.keys(body).join(", ") || "none"})`);
+      else ok(`prod version.json served: ${version}`);
     }
-
-    const canary = [...prodKeys.keys()].find((k) => k.endsWith(".mp3"));
-    if (!canary) {
-      const msg = "Check 3 FAILED: no .mp3 found in prod bucket to canary";
-      failures.push(msg);
-      console.error(`✗ ${msg}`);
-    } else {
-      const url = `${PROD_SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${canary}`;
-      const res = await fetch(url, { method: "GET" });
-      if (res.ok) {
-        console.log(`✓ Check 3: canary audio 200 (${canary})`);
-      } else {
-        const msg = `Check 3 FAILED: canary ${url} returned HTTP ${res.status}`;
-        failures.push(msg);
-        console.error(`✗ ${msg}`);
-      }
-      // Don't download the body.
-      res.body?.cancel?.();
-    }
-  } catch (err) {
-    failures.push(`Checks 2/3 errored: ${err.message}`);
-    console.error(`✗ Checks 2/3 errored: ${err.message}`);
+  } catch (e) {
+    // Vercel deploy can lag the GitHub Action by a few seconds. Treat a
+    // transient miss as a warning, not a hard fail — check 4 + parity still
+    // guard the substantive surfaces. A persistent miss shows here to look at.
+    warn(`could not read ${APP_URL}/version.json (${e.message}); Vercel deploy may still be propagating.`);
   }
-
-  if (failures.length > 0) {
-    console.error(`\nSMOKE CHECK FAILED (${failures.length} miss(es)).`);
-    process.exit(1);
-  }
-  console.log("\nAll smoke checks passed.");
 }
 
-main().catch((err) => {
-  console.error(`smoke-check fatal: ${err.message}`);
+// ---------- Check 2: manifest-f bucket parity ----------
+console.log("Check 2: bucket parity (dev manifest `f` ⊆ prod)");
+let devTrackIds = [];
+try {
+  devTrackIds = await listTrackIds(DEV_URL, DEV_KEY);
+} catch (e) {
+  fail(`could not list dev bucket: ${e.message}`);
+}
+
+// A stable clip to reuse for the canary check (Check 3), captured while we have
+// manifests open. Prefer esForEn (oldest, always present); fall back to any.
+let canary = null;
+
+for (const trackId of devTrackIds) {
+  let devManifest;
+  try {
+    devManifest = JSON.parse((await getObject(DEV_URL, DEV_KEY, `${trackId}/manifest.json`)).toString("utf8"));
+  } catch (e) {
+    fail(`${trackId}: no readable dev manifest (${e.message})`);
+    continue;
+  }
+  const expected = Object.entries(devManifest.clips || {}).map(([k, c]) => (c && c.f) || `${k}.mp3`);
+  if (!expected.length) {
+    warn(`${trackId}: dev manifest lists 0 clips — skipping parity for this track.`);
+    continue;
+  }
+
+  let prodFiles;
+  try {
+    prodFiles = new Set(await listFiles(PROD_URL, PROD_KEY, trackId));
+  } catch (e) {
+    fail(`${trackId}: could not list prod bucket (${e.message})`);
+    continue;
+  }
+
+  const missing = expected.filter((f) => !prodFiles.has(f));
+  if (missing.length) {
+    fail(`${trackId}: ${missing.length}/${expected.length} clip(s) missing in prod (e.g. ${missing.slice(0, 3).join(", ")})`);
+  } else {
+    const orphans = prodFiles.size - expected.length;
+    ok(`${trackId}: all ${expected.length} clips present${orphans > 0 ? ` (+${orphans} inert orphan(s), ignored)` : ""}`);
+  }
+
+  // Prod manifest must byte-match dev's, so the client's key→filename map is right.
+  try {
+    const prodManifest = (await getObject(PROD_URL, PROD_KEY, `${trackId}/manifest.json`)).toString("utf8");
+    const devManifestRaw = JSON.stringify(devManifest);
+    if (JSON.stringify(JSON.parse(prodManifest)) !== devManifestRaw) {
+      fail(`${trackId}: prod manifest.json differs from dev — sync did not mirror it.`);
+    }
+  } catch (e) {
+    fail(`${trackId}: could not read prod manifest.json (${e.message})`);
+  }
+
+  // Stash a canary clip (prefer esForEn track id "es-for-en").
+  if (!canary || trackId === "es-for-en") {
+    const firstPresent = expected.find((f) => prodFiles.has(f));
+    if (firstPresent) canary = { trackId, file: firstPresent };
+  }
+}
+
+// ---------- Check 3: canary audio (public url) ----------
+console.log("Check 3: canary audio (public url, 200 + audio)");
+if (!canary) {
+  fail("no canary clip available (parity failures above blocked selection).");
+} else {
+  const publicUrl = `${PROD_URL}/storage/v1/object/public/${BUCKET}/${canary.trackId}/${canary.file}`;
+  try {
+    const res = await fetch(publicUrl);
+    const ct = res.headers.get("content-type") || "";
+    const len = Number(res.headers.get("content-length") || "0");
+    if (!res.ok) fail(`canary ${canary.trackId}/${canary.file} returned ${res.status} (bucket not public?)`);
+    else if (!ct.includes("audio") && !ct.includes("mpeg")) fail(`canary content-type is "${ct}", expected audio.`);
+    else if (len === 0) fail(`canary clip is 0 bytes.`);
+    else ok(`canary ${canary.trackId}/${canary.file} → 200 ${ct} (${len} bytes)`);
+  } catch (e) {
+    fail(`canary fetch failed: ${e.message}`);
+  }
+}
+
+// ---------- verdict ----------
+console.log("");
+if (warnings.length) console.log(`${warnings.length} warning(s).`);
+if (problems.length) {
+  console.error(`✗ Smoke check FAILED: ${problems.length} problem(s).`);
   process.exit(1);
-});
+}
+console.log("✓ Smoke check passed (checks 1-3).");

@@ -33,9 +33,11 @@ name: Deploy Supabase migrations
 #                                   Production-environment secret before)
 #   SUPABASE_SERVICE_ROLE_KEY       PROD service role key (also new here —
 #                                   only the anon key existed before)
-# Already present and reused:
-#   NEXT_PUBLIC_SUPABASE_URL        prod project API URL
-#   NEXT_PUBLIC_SITE_URL            prod site origin (smoke check 1)
+# Already present and reused (these two live under GitHub *variables*, not
+# secrets — they are NEXT_PUBLIC_ values and non-sensitive; the refs below use
+# `vars.X || secrets.X` so they resolve from whichever store holds them):
+#   NEXT_PUBLIC_SUPABASE_URL        prod project API URL   (variable)
+#   NEXT_PUBLIC_SITE_URL            prod site origin        (variable; smoke check 1)
 #   SUPABASE_ACCESS_TOKEN / SUPABASE_DB_PASSWORD / SUPABASE_PROJECT_ID
 # ────────────────────────────────────────────────────────────────────────
 
@@ -118,7 +120,7 @@ jobs:
         env:
           DEV_SUPABASE_URL: ${{ secrets.DEV_SUPABASE_URL }}
           DEV_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.DEV_SUPABASE_SERVICE_ROLE_KEY }}
-          PROD_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          PROD_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL || secrets.NEXT_PUBLIC_SUPABASE_URL }}
           PROD_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
 
   # Runs last on every main push; any miss turns the workflow red.
@@ -148,10 +150,10 @@ jobs:
       - name: "Checks 1-3: version endpoint, bucket parity, canary audio"
         run: node scripts/smoke-check.mjs
         env:
-          PROD_APP_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          PROD_APP_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || secrets.NEXT_PUBLIC_SITE_URL }}
           DEV_SUPABASE_URL: ${{ secrets.DEV_SUPABASE_URL }}
           DEV_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.DEV_SUPABASE_SERVICE_ROLE_KEY }}
-          PROD_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          PROD_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL || secrets.NEXT_PUBLIC_SUPABASE_URL }}
           PROD_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
 
       - name: "Check 4: prod migrations match repo migration files"

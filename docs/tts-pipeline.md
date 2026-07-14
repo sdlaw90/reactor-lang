@@ -53,7 +53,11 @@ Question ids are positional and shift when content is inserted; text hashes
 don't, dedupe identical prompts, and make re-runs idempotent (only new or
 changed prompts are synthesized). After a content pass, just re-run with
 `--upload` — new prompts get clips, unchanged ones are skipped, and clips
-orphaned by removed questions are harmless leftovers (sweep occasionally).
+orphaned by removed questions are harmless leftovers. Sweep them with
+`node scripts/sweep-tts.mjs --track <name>` (report) then `--delete` —
+it removes every bucket clip the local manifest doesn't claim, so run it
+only after a fresh, complete generate run. Sweep BEFORE the sync job's
+bucket-parity smoke-check exists in CI, or orphans will trip it.
 
 **--force is required when:** SSML rendering logic changes (pauses, lang
 spans), a prompt's voice classification changes, or the voice/rate flags
@@ -121,6 +125,52 @@ German specifics (added at the deForEn pass):
   Neural2-H) remains a deliberately deferred, separate work item.
 - es and fr rules were untouched (verified additive-only diff + snapshot
   harness at this pass) — **no `--force` needed for esForEn or frCaForEn.**
+
+Japanese specifics (added at the jaForEn pass):
+
+- **Voice: `ja-JP-Neural2-B`** (female), rate 0.92. Neural2 B/C/D confirmed
+  live 2026-07-13. The 30 ja-JP Chirp3-HD voices are ignored per the
+  standing Chirp incompatibility (no SSML, no speakingRate).
+- **Voice-keyed filename schema debuts here:** ja clips are named
+  `{hash}-{voiceName}.mp3` (e.g. `abc123-ja-JP-Neural2-B.mp3`), gated by
+  `VOICE_KEYED_TRACKS` in the script. es/frCa/de stay `{hash}.mp3` until
+  the TTS sync-job session re-keys them and flips the set to all-tracks.
+  The manifest carries `keySchema` plus a per-clip `f` (filename) field —
+  **the client must resolve clip URLs via `f` and never construct
+  filenames** (old manifests without `f` fall back to `{key}.mp3`). Hash
+  derivation is unchanged: keys still hash the raw normalized prompt the
+  client has, NOT the ja-transformed spoken text.
+- **Romaji parentheticals are stripped from spoken text**: any ASCII
+  `(...)` whose preceding non-space character (walking back past ASCII
+  `?!._…` and cloze underscores) is CJK is a reading aid, not content —
+  `'友達 (tomodachi)' はどういう意味ですか？(wa dou iu imi desu ka?)`
+  speaks as `'友達' はどういう意味ですか？`. English content parens
+  survive because they follow Latin text (`(said before eating)` in trad,
+  `(duration)` inside a production gloss).
+- **Heteronym kanji get an SSML `<sub>`**: every quoted recognition
+  headword containing kanji is substituted with its intended reading —
+  hiragana converted from the romaji parenthetical (`今日` speaks as きょう,
+  never こんにち). Substitution is universal rather than list-curated: TTS
+  guesses readings on isolated words, and the parenthetical is already the
+  authoritative record. The wapuro-Hepburn→hiragana converter **hard-fails
+  the entire run** on any romaji it can't fully convert (all 658
+  kanji-bearing bank readings verified converting at this pass). The
+  wapuro `n'` convention is load-bearing: ん before a vowel/y must be
+  written `n'` (kan'youku) or it converts as な行/にゃ行.
+- Recognition shape is `'X' はどういう意味ですか？` — the quoted span is
+  target-language, spoken as-is (with the `<sub>` above), not flagged.
+- Production shape is `'X' は日本語で何と言いますか？` — X is the English
+  gloss, wrapped in a native `<lang>` span (¿Cómo se dice…? class).
+- **English hint tails on gram cloze prompts** (`… — "IF it rains, I
+  won't go"`) get a native `<lang>` span when the tail is CJK-free.
+  Prompts with **no CJK at all** (the keigo scenario questions) are
+  synthesized whole with the native voice, like trad.
+- Accepted warts, same class as de's "hand shoe": short English embedded
+  in a CJK prompt without an em-dash tail (`食べます means...`, `Which is
+  true of は vs. が?`) comes out ja-accented.
+- es, fr, and de rules and SSML output were untouched (verified by
+  old-vs-new snapshot harness at this pass) — **no `--force` needed for
+  esForEn, frCaForEn, or deForEn.**
 
 ## Per-track rollout checklist (when extending past the pilot)
 
