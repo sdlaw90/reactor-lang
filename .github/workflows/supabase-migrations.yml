@@ -174,3 +174,25 @@ jobs:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
           SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+  # The release is fully live ONLY if migrations + sync-tts + smoke-check all
+  # passed. Writing the marker last is what lets the client gate its "update
+  # available" prompt on the whole chain finishing, not just Vercel's deploy.
+  # Marker lives at the tts-audio bucket root (release-ready.json); it does not
+  # interfere with per-track sync/parity/sweep.
+  publish-ready:
+    if: github.ref == 'refs/heads/main'
+    needs: smoke-check
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Mark release fully live
+        run: node scripts/publish-ready.mjs
+        env:
+          PROD_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL || secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          PROD_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
