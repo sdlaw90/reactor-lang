@@ -88,6 +88,13 @@ const TRACK_VOICES = {
                               // paid run (standing rule); Google's de refresh proved letters
                               // churn. verifyVoices hard-fails if A isn't live — override with
                               // --voice and update here once ears have picked the variant.
+  ruForEn: "ru-RU-Wavenet-A", // female. NO ru-RU Neural2 EXISTS (voices:list 2026-07-15:
+                              // ru-RU offers only Chirp3-HD [no SSML/rate — unusable here],
+                              // Standard, and Wavenet). So ru is the first track to break the
+                              // all-Neural2 pattern: Wavenet is the best SSML-compatible family
+                              // Google ships for ru-RU, and honors <lang>/<break>/<sub> + rate.
+                              // Females A/C/E, males B/D — A matches the cross-track female
+                              // default; override with --voice and update here if ears prefer.
 };
 
 // Voice-aware key schema: clips named {hash}-{voiceName}.mp3 instead of
@@ -104,7 +111,7 @@ const TRACK_VOICES = {
 // leaves the old plain clips as local + bucket orphans), then sweep-tts.mjs
 // --delete against dev to clear the old plain clips. Prod orphans are cleared
 // by a guarded one-time prod sweep — see docs/tts-sync-runbook.md.
-const VOICE_KEYED_TRACKS = new Set(["esForEn", "frCaForEn", "deForEn", "jaForEn", "koForEn"]);
+const VOICE_KEYED_TRACKS = new Set(["esForEn", "frCaForEn", "deForEn", "jaForEn", "koForEn", "ruForEn"]);
 const VOICE = opt("voice", TRACK_VOICES[TRACK] || "es-US-Neural2-A");
 const NATIVE_VOICE = opt("native-voice", "en-US-Neural2-C");
 const LIMIT = Number(opt("limit", "0")) || 0;
@@ -259,6 +266,31 @@ const LANG_RULES = {
     nativeWhenNoTarget: true, // no hangul at all → whole prompt is native-language
     nativeTail: true, // ` — <english hint>` tails get a native <lang> span
   },
+  // ru notes (added at the ruForEn pass — es/fr/de/ja/ko rules above are
+  // untouched, so those tracks need no --force after this change):
+  // - Cyrillic is alphabetic/phonetic → NO subReading (ko's divergence from ja
+  //   transfers). ru-RU TTS reads headwords correctly on its own, including
+  //   akanye vowel reduction and final devoicing; the fono category that
+  //   teaches those explicitly is extraBank, already excluded.
+  // - Recognition shape: 'X' значит... — X is target-language (Cyrillic),
+  //   spoken as-is (knownQuoted). Production shape: Как сказать 'X' по-русски?
+  //   — X is the English gloss, gets the native <lang> span (¿Cómo se dice...?
+  //   / Wie sagt man...? / は日本語で class). Greedy .+ so glosses with inner
+  //   apostrophes ("with one's own eyes") don't truncate on the closing quote.
+  // - trad "Translate: '...'" prompts are whole-native English, caught by the
+  //   shared translate branch — same as every other track.
+  // - deriveSpoken drops an English gloss paren that trails Cyrillic (the one
+  //   curated gram item above); see stripCyrillicGlossParens for why it only
+  //   ever fires there.
+  // - Accepted review flag: 'Стол' — какого рода? (gram) has a leading quoted
+  //   Cyrillic span that isn't a значит-recognition, so it review-flags. Benign
+  //   — target-language, spoken correctly as-is. Same accepted-flag class as ja/ko.
+  ru: {
+    production: /^(Как сказать )'(.+)'( по-русски\?)$/,
+    knownQuoted: /^'.+'\s+значит/,
+    quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…]|$)/.test(text),
+    deriveSpoken: stripCyrillicGlossParens,
+  },
 };
 
 // ---------- ja helpers ----------
@@ -371,6 +403,29 @@ function stripKoreanReadingParens(text) {
     HANGUL_BLOCK.test(whole.slice(0, idx)) ? "" : m
   );
   return out.replace(/ {2,}/g, " ").trim();
+}
+
+// ---------- ru helpers ----------
+// Basic Cyrillic block (covers all modern Russian letters incl. ё U+0451).
+const CYRILLIC = /[\u0400-\u04FF]/;
+// Drop an English translation-gloss paren that trails Cyrillic — the single
+// curated gram item 'Я студент. ("I am a student.")'. Mirrors the ja/ko
+// reading-paren strip: walk back past whitespace and terminal punctuation; if
+// the preceding substantive char is Cyrillic, the paren is a visual gloss →
+// drop it from audio (still shown on screen). Production glosses ("to buy
+// (impf.)") are Latin-preceded → kept, and the production branch <lang>-tags
+// them; trad parens follow a quote → kept and spoken in the native voice. WB
+// prompts carry no parens (ruWords has no romanization). Strips AFTER hashing,
+// so keys stay client-derivable.
+function stripCyrillicGlossParens(text) {
+  return text
+    .replace(/\s*\(([^)]*)\)/g, (m, _inner, idx, whole) => {
+      let j = idx - 1;
+      while (j >= 0 && /[\s?!._…]/.test(whole[j])) j--;
+      return j >= 0 && CYRILLIC.test(whole[j]) ? "" : m;
+    })
+    .replace(/ {2,}/g, " ")
+    .trim();
 }
 
 // ---------- spoken-text extraction ----------
