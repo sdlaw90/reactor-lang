@@ -95,6 +95,16 @@ const TRACK_VOICES = {
                               // Google ships for ru-RU, and honors <lang>/<break>/<sub> + rate.
                               // Females A/C/E, males B/D — A matches the cross-track female
                               // default; override with --voice and update here if ears prefer.
+  zhForEn: "cmn-CN-Wavenet-A", // female. NO cmn-CN Neural2 EXISTS (voices:list 2026-07-15:
+                               // cmn-CN offers only Chirp3-HD [no SSML/rate — unusable here],
+                               // Standard, and Wavenet). Second track after ru forced off the
+                               // all-Neural2 pattern, same cause: Wavenet is the best SSML-
+                               // compatible family Google ships for cmn-CN and honors <lang>/
+                               // <break> + rate — required for the en→zh production handoff.
+                               // NOTE the locale is cmn-CN, not zh-CN: the voice NAME is cmn-CN-*,
+                               // so name.split("-").slice(0,2) yields cmn-CN for both preflight and
+                               // synth — no parsing change needed. Females A/D, males B/C — A
+                               // matches the cross-track female default; override with --voice.
 };
 
 // Voice-aware key schema: clips named {hash}-{voiceName}.mp3 instead of
@@ -111,7 +121,7 @@ const TRACK_VOICES = {
 // leaves the old plain clips as local + bucket orphans), then sweep-tts.mjs
 // --delete against dev to clear the old plain clips. Prod orphans are cleared
 // by a guarded one-time prod sweep — see docs/tts-sync-runbook.md.
-const VOICE_KEYED_TRACKS = new Set(["esForEn", "frCaForEn", "deForEn", "jaForEn", "koForEn", "ruForEn"]);
+const VOICE_KEYED_TRACKS = new Set(["esForEn", "frCaForEn", "deForEn", "jaForEn", "koForEn", "ruForEn", "zhForEn"]);
 const VOICE = opt("voice", TRACK_VOICES[TRACK] || "es-US-Neural2-A");
 const NATIVE_VOICE = opt("native-voice", "en-US-Neural2-C");
 const LIMIT = Number(opt("limit", "0")) || 0;
@@ -290,6 +300,56 @@ const LANG_RULES = {
     knownQuoted: /^'.+'\s+значит/,
     quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…]|$)/.test(text),
     deriveSpoken: stripCyrillicGlossParens,
+  },
+  // zh notes (added at the zhForEn pass — es/fr/de/ja/ko/ru rules above are
+  // untouched, so those tracks need no --force after this change):
+  // - Content packs hanzi + pinyin ("谢谢 (xièxie)") in CITATION tones (sandhi
+  //   never pre-applied), and recognition frames carry the pinyin on the quoted
+  //   headword. Spoken text strips the pinyin in the same spirit as ja's romaji
+  //   strip — it REUSES stripCJKReadingParens directly, since CJK_CONTEXT already
+  //   covers hanzi: a paren whose preceding substantive char is hanzi is a
+  //   reading aid → stripped; a paren following Latin (a production gloss's
+  //   "(informal)", a trad "(note)") is kept and spoken. Single pass suffices
+  //   because zh puts pinyin ONLY on the mid-prompt headword (hanzi-preceded) —
+  //   there is no ko-style whole-sentence RR paren trailing an English hint, so
+  //   no second final-paren pass is needed. (If a dry-run manifest ever shows a
+  //   residual "(pinyin)" in a clip's `t`, that assumption broke — add ko's
+  //   second pass then, not blindly now.) Strips AFTER hashing, so keys stay
+  //   derivable from the raw prompt the client has.
+  // - Recognition shape: 'X (pīnyīn)' 是什么意思？ — X is target-language (hanzi),
+  //   spoken as-is after the pinyin strip (knownQuoted). Production shape:
+  //   'X' 用中文怎么说？ — X is the English gloss, gets the native <lang> span
+  //   (¿Cómo se dice...? / は日本語で / Как сказать class). The WB `fvocab`
+  //   category is production-framed, so ALL ~600 WB items exercise the en→zh
+  //   <lang> handoff — the #1 audition item (Wavenet honors <lang>, per ru).
+  //   Greedy .+ so glosses with inner apostrophes ("with one's own") and inner
+  //   parens don't truncate; tail \s* since CJK frames may omit the space.
+  // - trad "Translate: '...'" prompts are whole-native English (shared translate
+  //   branch — the quoted phrase there is the English source, not a target word);
+  //   any prompt with no hanzi at all also goes native (nativeWhenNoTarget).
+  // - NO subReading — DEFERRED, not "not needed" (this is the divergence from
+  //   ko/ru, whose phonetic scripts genuinely don't need it): zh is logographic,
+  //   so the isolated-headword heteronym risk ja solves with <sub> IS real here
+  //   (多音字: 银行 háng, 教 jiāo, 长 cháng, 便宜 pián, 还 hái, 薄 báo, 觉/睡觉
+  //   jiào…). But ja's fix maps romaji→kana, an unambiguous TTS-safe script; raw
+  //   pinyin in <sub>/<phoneme> is NOT verified to render correct tones on cmn-CN
+  //   Wavenet, and blind-shipping an unhonored tag would 400 or mis-speak every
+  //   heteronym clip. So: engine-default readings this pass, heteronyms are the
+  //   top audition item, and a CURATED <phoneme alphabet="pinyin"> pass is a
+  //   follow-up IFF audition shows the engine both mis-reads AND honors the tag.
+  //   Exposure is the ~10 listed 多音字, not the whole bank (most headwords are
+  //   single-reading).
+  // - Accepted review flag (same class as ja/ko/ru): a leading quoted-hanzi gram
+  //   prompt that isn't a 是什么意思-recognition review-flags benignly — target-
+  //   language, spoken correctly as-is; the flag is look-don't-block.
+  zh: {
+    production: /^()'(.+)'(\s*用中文怎么说？)$/,
+    knownQuoted: /^'.+'\s*是什么意思/,
+    quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…？！、。」]|$)/.test(text),
+    deriveSpoken: stripCJKReadingParens,
+    targetScript: /[\u3400-\u9FFF\uF900-\uFAFF々〇]/, // any hanzi (CJK unified + ext-A + compat + 々〇)
+    nativeWhenNoTarget: true, // no hanzi at all → whole prompt is native-language
+    nativeTail: true, // ` — <english hint>` tails get a native <lang> span
   },
 };
 
