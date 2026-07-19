@@ -1,7 +1,7 @@
 # SquirreLingo — Technical Architecture
 
 > Orientation + handoff reference for the whole codebase. Written against the
-> repo state at **v2.31.0-beta.2** (2026-07-14). This is the "how it all fits
+> repo state at **v2.33.0-beta.2** (2026-07-19). This is the "how it all fits
 > together" doc; the operational how-to lives in `manual-runbook.md`,
 > `tts-pipeline.md`, and `tts-sync-runbook.md`, and the current work state
 > lives in `squirrelingo-state-of-the-app.md`. This doc explains structure and
@@ -73,8 +73,9 @@ reactor-lang/
 │   ├── error.js              # Route-level error boundary
 │   ├── global-error.js       # Whole-app error boundary (last resort)
 │   ├── icon.svg              # App icon
-│   ├── play/[trackId]/       # ★ Core gameplay loop (Quick Quiz + Lessons), 1053 lines
+│   ├── play/[trackId]/       # ★ Core gameplay loop (Quick Quiz + Lessons), ~1,100 lines
 │   ├── learn/[trackId]/      # Lessons-mode entry / lesson picker
+│   ├── grammar/[trackId]/    # #90 Grammar gym (targeted grammar drills)
 │   ├── listen/[trackId]/     # Listening module surface (roadmap; audio-excluded from aggregates)
 │   ├── speak/[trackId]/      # Speaking module surface (roadmap)
 │   ├── placement/[trackId]/  # CEFR placement quiz (A1–C2 sampler)
@@ -102,6 +103,9 @@ reactor-lang/
 │   ├── tracks/               # One file per track (15 tracks) + index.js registry
 │   │   ├── index.js          # TRACKS map, getTrack(), listTracks(), tracksForNativeLang()
 │   │   ├── esForEn.js …       # Curated banks + Word Bank wiring per track
+│   │   ├── esForEnTags.js     # #88 theme tag layer + tagFor() (verbs tense-tagged, themes curated)
+│   ├── grammar/              # #90 grammar-gym content
+│   │   ├── index.js  esForEn.js
 │   ├── vocab/                # Frequency word lists feeding the Word Bank generator
 │   │   ├── esLatAmWords.js  frCaWords.js  deWords.js  jaWords.js
 │   └── scripts/              # Writing-system definitions for the /script trainer
@@ -121,7 +125,10 @@ reactor-lang/
 │   ├── VersionWatcher.js     # Polls version.json + release-ready marker → "update available"
 │   ├── theme.js              # Base palette + per-track animated gradient themes
 │   ├── playStrings.js        # UI-string table + native/target language chrome switching
-│   ├── version.js            # ★ Version ledger: CURRENT_VERSION + full CHANGELOG (single source of truth)
+│   ├── grammarGym.js         # #90 grammar-gym round logic
+│   ├── BackHome.js           # #92 shared back-to-home control
+│   ├── navDepth.js  NavDepthTracker.js  # #92 nav-depth stack
+│   ├── version.js            # ★ Version ledger: CURRENT_VERSION + CHANGELOG + INTERNAL_CHANGELOG (single source of truth)
 │   └── … (gates, avatar, password, security-questions, error reporting, misc UI)
 │
 ├── scripts/                  # ★ Build + release + TTS tooling (Node)
@@ -130,8 +137,9 @@ reactor-lang/
 │   ├── smoke-check.mjs       # Post-release checks 1–3 (version, parity, canary audio)
 │   ├── publish-ready.mjs     # Writes release-ready.json marker (gates the update prompt)
 │   ├── sweep-tts.mjs         # Guarded orphan-clip cleanup (defaults to dev; --delete opt-in)
+│   ├── tts-on-deploy.mjs     # Deploy-time auto-sync: changed-tracks-only synth+upload to dev bucket
 │   ├── generate-version-json.js  # Pre-build: mirrors CURRENT_VERSION → public/version.json
-│   └── deploy.js             # deploy helper
+│   └── deploy.js             # Deploy helper; runs tts-on-deploy.mjs after git push (non-blocking)
 │
 ├── supabase/
 │   ├── migrations/           # ★ Source of truth for schema (00000000000000–14)
@@ -219,7 +227,8 @@ tracks without a script simply hide the third mode toggle.
 
 Entirely language-agnostic — it only knows the track *shape*. Core functions:
 
-- **`buildRound(track, mode, missedIds, seenAt, cefrSet, options)`** — the heart. Mixed mode pulls `perCat` from each curated category, adds phonetics pairs, and mixes in a *capped share* (default 30%, `wbShareCap`) of Word Bank items that **replace** rather than inflate the round. `categoryFilter` restricts to a chosen subset (mix-and-match). `review` mode draws only from the missed pile.
+- **`buildRound(track, mode, missedIds, seenAt, cefrSet, options)`** — the heart. Mixed mode pulls `perCat` from each curated category, adds phonetics pairs, and mixes in a *capped share* (default 30%, `wbShareCap`) of Word Bank items that **replace** rather than inflate the round. `categoryFilter` restricts to a chosen category subset; `themeFilter` restricts by theme tag (`esForEnTags.js` / `tagFor`). **When both are set they intersect (category ∩ theme)**, gated by the exported `COMBINED_MIN` (=4): if the combined pool would be thinner than that, it falls back to theme-only (#88). `review` mode draws only from the missed pile.
+- **`themeCoverage(track)` / `combinedPoolSize(coverage, catFilter, themeFilter)` / `COMBINED_MIN`** — support the combined category∩theme focus: coverage feeds the play-page live viability note (`comboReady`/`comboThin` in `playStrings.js`), and `combinedPoolSize` vs `COMBINED_MIN` decides intersect-vs-theme-fallback.
 - **`pickForLevelAndFreshness`** — three-group sort: at-level first, then above (a slight stretch beats rehashing), then below (de-weighted hardest), with freshness breaking ties. Falls back gracefully if a level is thin.
 - **`pickFreshest`** — least-recently-seen bias, drawing from the fresher half so repeats spread out without hard-blocking anything.
 - **`computeMastery(track, seenAt, missedIds)`** — per-category, per-CEFR "learned vs total," where *learned* = seen at least once AND not currently missed. Uses only data the app already tracks.
@@ -227,7 +236,7 @@ Entirely language-agnostic — it only knows the track *shape*. Core functions:
 - **`buildPlacementQuiz`** — samples a few items per CEFR tier across the full A1–C2 range so both true beginners and fluent speakers place correctly.
 - **`buildLessonSequence`** — ordered easiest-first walk through one category for Lessons mode (vs. the randomized sample Quick Quiz uses).
 
-The play page (`app/play/[trackId]/page.js`, 1053 lines) is the stateful shell:
+The play page (`app/play/[trackId]/page.js`, ~1,100 lines) is the stateful shell:
 a `screen` state machine (`start | playing | result | explain | archive`) plus
 two modes (Quick Quiz timed/combo, Lessons calm/untimed) sharing this engine.
 
@@ -276,7 +285,7 @@ and screenshots land in a private bucket.
 
 ## 8. The TTS pipeline
 
-Four scripts, one bucket (`tts-audio`), content-hash clip identity.
+Six scripts, one bucket (`tts-audio`), content-hash clip identity.
 
 **Clip keying (`lib/audioKey.js`, shared by Node + client):** clips are keyed by
 `cyrb53(normalizeSpokenText(text))` — a hash of the *spoken text*, not the
@@ -289,6 +298,7 @@ makes regeneration idempotent. Path convention: `tts-audio/<trackId>/<key>.mp3`
 3. **`smoke-check.mjs`** — checks 1–3: prod serves valid `/version.json`; **manifest-`f` parity** (every clip a dev manifest claims exists in prod — a *superset* check, inert prod orphans are fine); a canary clip's public URL returns 200 audio. (Check 4, migration alignment, is a shell step in the workflow.)
 4. **`publish-ready.mjs`** — writes `release-ready.json` to the bucket root as the *last* chain step (§9).
 5. **`sweep-tts.mjs`** — guarded orphan cleanup; defaults to dev, needs `--delete` + non-dev guard to touch prod. Used out-of-band, never in the release chain.
+6. **`tts-on-deploy.mjs`** — deploy-time auto-sync invoked by `deploy.js` after `git push` (non-blocking). Diffs changed tracks via git, dry-run gated, and synth+uploads only changed tracks to the dev `tts-audio` bucket — so dev audio tracks content edits without a manual generate step.
 
 **Playback (`lib/AudioButton.js`):** the client fetches each track's
 `manifest.json` once per session (module-cached) and resolves clip filenames
@@ -320,6 +330,11 @@ with zero manual steps. Three surfaces stay in sync automatically:
 The old `paths:` filter was **removed on purpose** — with it, a release with no
 new migrations would skip the whole workflow and silently not run sync/smoke.
 
+Beyond CI `sync-tts`, `deploy.js` now runs `scripts/tts-on-deploy.mjs` at push
+time to keep the **dev** bucket current for changed tracks (changed-tracks-only
+via git diff, dry-run gated, non-blocking) — so dev audio stays in step with
+content edits without a manual generate/upload pass.
+
 **The update-prompt gate:** Vercel finishes before CI, so the app could serve
 new `version.json` while audio is still syncing. The client ANDs *two* signals —
 app `version.json` (Vercel) **and** `release-ready.json` (written last by
@@ -346,7 +361,7 @@ manual** and are never merged as migration files for CI to pick up.
 ## 10. Routing surface
 
 **Pages** (App Router, `app/*/page.js`): home/track-picker, `play`/`learn`/
-`listen`/`speak`/`placement`/`script` (all `[trackId]`), `onboarding`, `auth`,
+`grammar`/`listen`/`speak`/`placement`/`script` (all `[trackId]`), `onboarding`, `auth`,
 `forgot-password`/`reset-password`, `settings`, `dashboard`, content pages
 (`about`/`help`/`changelog`/`whats-new`/`terms`/`privacy`), `beta-apply`,
 `feedback` (bug/feature), and the `admin` hub.
@@ -380,7 +395,8 @@ profile picture, username, email, password, recovery, native language/country,
 gameplay; lives in the nav drawer, not a page), **`theme.js`** (per-track
 animated CSS gradients, no images/flags), **`playStrings.js`** (UI-string table +
 native↔target chrome switching by skill level), and the CEFR/skill-level UI in
-`skillLevels.js`.
+`skillLevels.js` (including `masteryBandsForSkillLevel` for CEFR-banded mastery).
+Help now lives in the **home top bar** (#85), not only as a `/help` content page.
 
 ---
 
@@ -409,7 +425,7 @@ Surfaced while mapping — small, non-urgent, fix-at-next-touch:
 - `data/tracks/deForEn.js` header comment still cites Neural2-A/B, but `TRACK_VOICES` uses `de-DE-Neural2-G`. Comment-only drift.
 - `lib/audioKey.js` ~line 46 comment says `<key>.mp3` — stale vs. the voice-keyed schema. Comment-only.
 - `lib/db.js` `submitFeedback` and `submitBetaApplication` are marked RETIRED with no remaining callers — safe to delete once confirmed unused.
-- `public/version.json` in-repo shows `2.30.0-beta.1` while `CURRENT_VERSION` is `2.31.0-beta.2` — expected (build-generated), but worth knowing it's not authoritative.
+- `public/version.json` in-repo routinely lags `CURRENT_VERSION` (e.g. an older `2.32.x` while `CURRENT_VERSION` is `2.33.0-beta.2`) — expected (build-generated), but worth knowing it's not authoritative.
 - Structural content validator described in the business plan is still absent from the repo (handled ad hoc).
 - Runbook §2 has a Playwright command vs. `package.json` script-name mismatch.
 - Optional prod orphan sweep deliberately deferred (old plain-keyed clips are inert).
@@ -422,6 +438,8 @@ Surfaced while mapping — small, non-urgent, fix-at-next-touch:
 |---|---|
 | Add/deepen a language | `data/tracks/<track>.js` (+ `data/vocab/` for Word Bank), register in `data/tracks/index.js` |
 | Change how rounds are built | `lib/gameEngine.js` |
+| Theme tags / combined category∩theme focus | `data/tracks/esForEnTags.js` (`tagFor`) + `lib/gameEngine.js` (`themeCoverage`, `combinedPoolSize`, `COMBINED_MIN`) |
+| Work on the grammar gym | `data/grammar/*` + `lib/grammarGym.js` + `app/grammar/[trackId]` |
 | Change mastery/streak/placement logic | `lib/gameEngine.js` + `lib/skillLevels.js` |
 | Touch persistence / add a table | `lib/db.js` + `supabase/migrations/` (and mirror into `schema.sql`) |
 | Work on audio generation | `scripts/generate-tts.mjs` + `docs/tts-pipeline.md` |

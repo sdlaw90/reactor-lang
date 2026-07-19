@@ -3,7 +3,7 @@
 > The exhaustive companion to `architecture.md`. Where that doc explains *how
 > the systems fit together*, this one annotates *every file* so a new
 > contributor (or future-you on a cold start) can find and understand any file
-> without opening it first. Written against **v2.31.0-beta.2** (2026-07-14).
+> without opening it first. Written against **v2.33.0-beta.2** (2026-07-19).
 >
 > Read `architecture.md` first for the mental model; use this as the index.
 > `★` marks the files you'll touch or reason about most.
@@ -47,7 +47,7 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 
 | File | What it does |
 |---|---|
-| `layout.js` | ★ Root layout. Imports global CSS and mounts the 5 always-on client widgets: `VersionWatcher`, `RequireUsernameGate`, `RequireLegalGate`, `WelcomePopup`, `GlobalErrorLogger`. |
+| `layout.js` | ★ Root layout. Imports global CSS and mounts the 6 always-on client widgets: `VersionWatcher`, `RequireUsernameGate`, `RequireLegalGate`, `WelcomePopup`, `GlobalErrorLogger`, `NavDepthTracker` (#92). |
 | `page.js` | ★ Home / track picker. Handles the loading/signed-out/signed-in states; groups tracks by language family with "Your languages" pinned. |
 | `error.js` | Route-level error boundary — branded crash screen with a reload/home escape and a short `SQ-XXXXXX` code logged to `error_logs`. |
 | `global-error.js` | Last-resort boundary for crashes in the root layout itself; renders its own `<html>/<body>` and depends on nothing (CSS/fonts may not have loaded). |
@@ -57,7 +57,8 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 
 | File | What it does |
 |---|---|
-| `play/[trackId]/page.js` | ★ The gameplay loop (1053 lines). `screen` state machine (`start/playing/result/explain/archive`), Quick Quiz (timed, combo) + shares the engine. Also defines `ExplanationCard`, `StatChip`, `TimerRing`. |
+| `play/[trackId]/page.js` | ★ The gameplay loop. `screen` state machine (`start/playing/result/explain/archive`), Quick Quiz (timed, combo) + shares the engine. Also defines `ExplanationCard`, `StatChip`, `TimerRing`. Uses the new gameEngine combined-focus exports; category and theme filters are no longer mutually exclusive and a live combo-viability note (`combinedPoolSize`/`COMBINED_MIN`) tells the player when a category∩theme round can be built. |
+| `grammar/[trackId]/page.js` | Grammar Gym (#90) — targeted grammar drills backed by `data/grammar` + `lib/grammarGym.js`. |
 | `learn/[trackId]/page.js` | Lessons mode (calm, untimed, flat `XP_PER_CORRECT=10`, no combo). `screen`: `start/lesson/complete`. Uses `buildLessonSequence`. |
 | `placement/[trackId]/page.js` | CEFR placement quiz. Highest tier passed (≥60%) sets the recommendation; `beginner` is the floor; empty tiers are skipped. |
 | `script/[trackId]/page.js` | Generic writing-system trainer (#62). One page serves kana/hangul/cyrillic/hanzi via `data/scripts`. Never gates regular content. |
@@ -153,6 +154,7 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 | `enGbForEs.js` | `en-gb-for-es` | English (UK) for Spanish speakers (distinct vocab/idioms/phonetics). |
 | `enForIt.js` | `en-for-it` | First native-language track (English for Italian speakers). |
 | `enForEs.js` | `en-for-es` | ⚠️ **Unregistered** — not imported by `index.js` (superseded by the US/UK split). A starter-set legacy file; safe to delete once confirmed dead, or wire up if intended. |
+| `esForEnTags.js` | — | Tense/theme tag layer for esForEn (#88): `tagFor` + the theme/tense model. Coverage pass: 157/157 verbs tense-tagged (was 35), tense defs incl. Pluperfect/Future perfect/Conditional perfect; 255/418 curated items themed. Feeds category∩theme combined rounds. |
 
 *Track object shape* (see any file's tail): `id`, `label`, `nameEn/nameEs`, `sublabel`, `nativeLang`, `targetLang`, `theme`, `cats`, `bank`, `wbCatId`, `extraCatId`/`extraBank`, `perCat`, `extraPairsPerRound`, `questionTime`, `extraQuestionTime`. Questions are 7-slot tuples (see `architecture.md` §4).
 
@@ -164,6 +166,13 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 | `frCaWords.js` | 636 | |
 | `deWords.js` | 637 | German casing preserved per-word (no auto-cap). |
 | `jaWords.js` | 713 | Kanji + romaji + reading notes. |
+
+### `data/grammar/` — grammar-gym content (#90)
+
+| File | What it does |
+|---|---|
+| `index.js` | Grammar-set registry (`grammarForTrack` / set lookup) consumed by `lib/grammarGym.js`. |
+| `esForEn.js` | esForEn grammar drill content — the pilot set. |
 
 ### `data/scripts/` — writing-system definitions
 
@@ -183,11 +192,12 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 
 | File | What it does |
 |---|---|
-| `gameEngine.js` | ★ Language-agnostic engine: `buildRound`, `pickFreshest`, `pickForLevelAndFreshness`, `computeMastery`, `computeStreakUpdate` (never-punish), `buildPlacementQuiz`, `buildLessonSequence`, `STREAK_MILESTONES`, plus `flattenBank`/`shuffleOptions`/`seenIdsForRound`. |
+| `gameEngine.js` | ★ Language-agnostic engine: `buildRound`, `pickFreshest`, `pickForLevelAndFreshness`, `computeMastery`, `computeStreakUpdate` (never-punish), `buildPlacementQuiz`, `buildLessonSequence`, `STREAK_MILESTONES`, plus `flattenBank`/`shuffleOptions`/`seenIdsForRound`. `buildRound` now supports COMBINED round focus (category ∩ theme intersection) when both filters are set, gated by exported `COMBINED_MIN=4` with theme-only fallback. New exports: `themeCoverage(track)` → `{catId:{themeId:count}}`, `combinedPoolSize(coverage, categoryFilter, themeFilter)`, `COMBINED_MIN`. |
 | `frequencyVocab.js` | ★ Word Bank generator: word list → 7-slot bank entries at load. Seeded PRNG + gloss-overlap distractor filter. `SPANISH_FORMULAS` default; tracks override (`DE_FORMULAS` etc.). Determinism is load-bearing. |
-| `skillLevels.js` | CEFR ordering (`CEFR_ORDER`), `SKILL_LEVELS`, skill→CEFR-bias mapping, advance thresholds (`readyToAdvance`). |
+| `skillLevels.js` | CEFR ordering (`CEFR_ORDER`), `SKILL_LEVELS`, skill→CEFR-bias mapping, advance thresholds (`readyToAdvance`), `masteryBandsForSkillLevel` (CEFR-banded mastery, #89). |
+| `grammarGym.js` | Grammar-gym round builder (#90): turns `data/grammar` sets into drill rounds; backs `app/grammar/[trackId]/page.js`. |
 | `audioKey.js` | ★ `cyrb53` content-hash keying for TTS clips (`audioKey`, `audioPath`, `normalizeSpokenText`). Shared by the Node generator and the client. Dependency-free by design. |
-| `playStrings.js` | UI-string table (`STRINGS`) + `uiLangForSkill`, `t`, `categoryDisplayName` — the native↔target chrome switching. |
+| `playStrings.js` | UI-string table (`STRINGS`) + `uiLangForSkill`, `t`, `categoryDisplayName` — the native↔target chrome switching. Includes combo-viability strings `comboReady`/`comboThin`. |
 | `languageNames.js` | `LANGUAGE_NAMES` matrix + `trackDisplayName` — "what language X is called by a speaker of Y," so tracks don't need per-language name fields. |
 
 ### Data access & platform
@@ -207,6 +217,7 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 | `RequireLegalGate.js` | Forces ToS/PP acceptance when `LEGAL_VERSION` changes. |
 | `WelcomePopup.js` | Versioned first-run welcome (`WELCOME_VERSION`). |
 | `GlobalErrorLogger.js` | Logs errors that never hit a boundary (event handlers, unhandled rejections). Session cap 5 + dedupe. |
+| `NavDepthTracker.js` | ★ Mounted nav-depth tracker (#92): watches route changes and maintains the in-app back/home depth state via `navDepth.js`. |
 
 ### Reusable UI components
 
@@ -227,6 +238,7 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 | `PasswordStrengthMeter.js` | Strength bar (renders `passwordStrength` output). |
 | `UsernameAvailabilityField.js` | Live username availability + suggestions (`generateCandidate`). |
 | `VersionFooter.js` | Footer version tag (BETA-aware) linking to changelog. |
+| `BackHome.js` | Back/home affordance (#92) — reads nav-depth state to decide back-vs-home behavior. |
 
 ### Small services & helpers
 
@@ -245,9 +257,10 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 | `securityQuestions.js` | Curated `SECURITY_QUESTIONS` (append-only), `REQUIRED_QUESTION_COUNT=3`, `REQUIRED_CORRECT_ANSWERS=2`, `normalizeAnswer`. |
 | `reauth.js` | `verifyCurrentPassword` before sensitive changes. |
 | `community.js` | `FACEBOOK_GROUP_URL` (single source; private during beta). |
+| `navDepth.js` | Nav-depth state helper (#92): tracks how deep the user is in the route stack so `BackHome`/`NavDepthTracker` can choose back-vs-home. |
 | `legalVersions.js` | `LEGAL_VERSION` (bump to force re-acceptance). |
 | `welcomeVersion.js` | `WELCOME_VERSION` (bump to re-show the welcome). |
-| `version.js` | ★ `CURRENT_VERSION` + full `CHANGELOG` (82 entries). Single source of truth; ledger-chat-owned. |
+| `version.js` | ★ `CURRENT_VERSION` + full `CHANGELOG`. Single source of truth; ledger-chat-owned. Also `INTERNAL_CHANGELOG` + `isNonProdEnv()` / `internalNotesByVersion()` for non-prod-only internal notes (#91). |
 
 ---
 
@@ -255,13 +268,14 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 
 | File | What it does |
 |---|---|
-| `generate-tts.mjs` | ★ Synthesize clips via Google TTS REST → `tts-output/<id>/` → optional upload. Idempotent (content-hash keys), `--force`/`--dry-run`/`--upload`/`--voice`/`--limit`. `TRACK_VOICES`, per-language `LANG_RULES`, voice preflight hard-fail. |
+| `generate-tts.mjs` | ★ Synthesize clips via Google TTS REST → `tts-output/<id>/` → optional upload. Idempotent (content-hash keys), `--force`/`--dry-run`/`--upload`/`--voice`/`--limit`. `TRACK_VOICES`, per-language `LANG_RULES`, voice preflight hard-fail. Covers esForEn answer-choice audio (#87). |
 | `sync-tts.mjs` | ★ Mirror dev `tts-audio` bucket → prod in CI. Copy-only (never deletes); skips byte-identical MP3s; always re-copies manifests; refuses same-project source==target. |
 | `smoke-check.mjs` | ★ Post-release checks 1–3: prod `/version.json` valid, manifest-`f` parity (superset), canary clip public 200. Check 4 (migration alignment) is in the workflow. |
 | `publish-ready.mjs` | Writes `release-ready.json` to the bucket root as the last chain step — the second signal the update prompt gates on. |
 | `sweep-tts.mjs` | Guarded orphan-clip cleanup. Defaults to dev; `--delete` + non-dev guard needed for prod. Out-of-band only, never in CI. |
 | `generate-version-json.js` | Pre-build: regex-reads `CURRENT_VERSION` → writes `public/version.json`. Runs before `dev`/`build`. |
-| `deploy.js` | `npm run deploy`: stages, commits with the version number as message, pulls, pushes. |
+| `deploy.js` | `npm run deploy`: stages, commits with the version number as message, pulls, pushes, then fires `tts-on-deploy.mjs` (non-blocking) after the push. |
+| `tts-on-deploy.mjs` | Post-deploy TTS auto-sync: maps changed content files → audio tracks, dry-run gate, then synth + upload to the dev bucket. Invoked non-blocking by `deploy.js` after push. |
 
 ---
 
@@ -331,7 +345,7 @@ Found while mapping — none urgent, all fix-at-next-touch:
 - **`lib/db.js`** — `submitFeedback` and `submitBetaApplication` are marked RETIRED with no callers.
 - **`data/tracks/deForEn.js`** header comment cites Neural2-A/B; `TRACK_VOICES` actually uses `de-DE-Neural2-G`. Comment-only.
 - **`lib/audioKey.js`** ~line 46 comment says `<key>.mp3` — stale vs. the voice-keyed schema. Comment-only.
-- **`public/version.json`** in-repo (`2.30.0-beta.1`) trails `CURRENT_VERSION` (`2.31.0-beta.2`) — expected (build-generated).
+- **`public/version.json`** in-repo trails `CURRENT_VERSION` (`2.33.0-beta.2`) — expected (build-generated).
 - **Structural content validator** described in the business plan is absent from the repo (handled ad hoc). Worth building.
 - **`docs/manual-runbook.md` §2** has a Playwright command vs. `package.json` script-name mismatch.
 - **`supabase/.temp/`** is CLI scratch state, not source — fine to ignore/exclude from zips.

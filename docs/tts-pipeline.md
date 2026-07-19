@@ -64,6 +64,49 @@ spans), a prompt's voice classification changes, or the voice/rate flags
 change — keys hash the raw text only, so idempotent runs won't refresh
 those clips.
 
+## Automatic sync on deploy (`scripts/tts-on-deploy.mjs`)
+
+Added 2026-07-19 to close the manual gap: you no longer have to remember to
+regenerate TTS after a content pass. `npm run deploy` (`scripts/deploy.js`),
+**after** the `git push`, runs `scripts/tts-on-deploy.mjs`, which:
+
+1. Diffs the just-pushed range (old upstream → HEAD; deploy.js captures the
+   pre-push upstream sha and passes it as `--since`).
+2. Maps each changed content file to its audio track(s): `data/tracks/<t>.js`
+   (and `<t>Tags.js`) → that track; `data/vocab/<x>Words.js` → the importing
+   track; `lib/audioKey.js` → **all** audio tracks (re-hashes everything).
+   `data/scripts/**` and `data/grammar/**` feed other modules, not the spoken
+   bank, so they never trigger TTS.
+3. For each affected track, runs `generate-tts --dry-run` (no key, no spend) to
+   count NEW spoken clips. Only if that count is `> 0` does it run the paid
+   `generate-tts --track <t> --upload` (synth + push to the **dev** bucket).
+
+Design decisions (2026-07-19):
+
+- **Non-blocking.** Audio never aborts a code deploy. Per-track failures (missing
+  `GOOGLE_TTS_API_KEY`/Supabase keys, TTS quota, network) are caught and printed
+  as a warning; the script **always exits 0**. The client degrades gracefully
+  (no clip → no button), and `--upload` is idempotent, so a later re-run fixes
+  anything left behind.
+- **Changed-tracks-only.** Doc-only or non-content deploys do zero TTS work and
+  need no key. If the git diff can't be determined (no `--since`, detached HEAD),
+  it falls back to dry-running **all** audio tracks — still free until a track
+  actually has new clips.
+- **Dry-run gate = no surprise spend / no redundant re-upload.** A metadata-only
+  change (e.g. editing `esForEnTags.js` themes/tenses — not spoken) maps to the
+  track but the dry-run reports 0 new clips, so nothing is synthesized.
+
+**Scope caveat:** the gate keys off clips *missing from the local
+`tts-output/<track>/` cache*. Clips that were generated locally but never
+uploaded (e.g. a past `generate-tts` run without `--upload`) are seen on disk →
+dry-run reports 0 → the hook skips them. To push an already-generated-but-not-
+uploaded backlog, run `generate-tts --track <t> --upload` once by hand. From
+then on, genuinely-new content syncs automatically.
+
+This is the **dev-side** half. `scripts/sync-tts.mjs` (CI, on a `main` push)
+still mirrors the dev bucket → prod at release, unchanged — see
+`docs/tts-sync-runbook.md`.
+
 ## Language handling
 
 Prompt-shape rules are per-language (`LANG_RULES` in the script, keyed by

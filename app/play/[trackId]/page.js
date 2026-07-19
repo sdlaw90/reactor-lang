@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Flame, Zap, Check, X, ChevronRight, ChevronDown, RotateCcw, Trophy, Info } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
@@ -14,6 +14,9 @@ import {
   todayStr,
   computeMastery,
   computeStreakUpdate,
+  themeCoverage,
+  combinedPoolSize,
+  COMBINED_MIN,
 } from "../../../lib/gameEngine";
 import { cefrSetForSkillLevel, masteryBandsForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
@@ -154,6 +157,12 @@ export default function PlayPage({ params }) {
   const advancedLevel = ["expert", "native"].includes(progress.skill_level);
   const roundSettings = session?.user?.user_metadata?.round_settings || {};
   const buildOptions = { perCat: roundSettings.perCat, extraPairs: roundSettings.extraPairs, categoryFilter, themeFilter };
+  // #88 combined focus: category ∩ theme viability, so the picker can tell the
+  // learner up front how many items the combination will actually draw from
+  // (and warn when it's too thin to build a blended round). comboPool is null
+  // unless BOTH a category focus and a theme are selected.
+  const themeCov = useMemo(() => themeCoverage(track), [track]);
+  const comboPool = combinedPoolSize(themeCov, categoryFilter, themeFilter);
   const timerOverrides = { questionTime: roundSettings.questionTime, extraQuestionTime: roundSettings.extraQuestionTime };
   // If the viewer's native language differs from what this track was
   // originally designed for (e.g. a native English speaker cross-learning
@@ -575,8 +584,9 @@ export default function PlayPage({ params }) {
                         color: selected ? track.cats[catId].color : "#B4ABC9",
                       }}
                       onClick={() => {
+                        // #88: keep any active theme so category + theme combine,
+                        // instead of the old behaviour of clearing the theme here.
                         setCategoryFilter((prev) => (prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId]));
-                        setThemeFilter(null);
                       }}
                     >
                       {displayCatLabel(catId)}
@@ -586,10 +596,11 @@ export default function PlayPage({ params }) {
               </div>
             </div>
 
-            {/* #88: theme filter — pulls tagged items from any category into
-                one round. Picking a theme clears the category focus (they're
-                mutually exclusive); the round still records to each item's home
-                category, so there's no separate theme progress. */}
+            {/* #88/#88: theme filter — pulls tagged items into one round. On its
+                own a theme cuts across every category; with a Round focus also
+                selected, the two COMBINE (category ∩ theme). The round still
+                records to each item's home category, so there's no separate
+                theme progress. */}
             {track.themes && track.themes.length > 0 && (
               <div style={styles.categoryPicker}>
                 <span style={{ color: "#7C7395", fontSize: 12 }}>{T("themeFocus")}</span>
@@ -609,8 +620,9 @@ export default function PlayPage({ params }) {
                         className="rj"
                         style={{ ...styles.catChip, borderColor: on ? "#7BE495" : "#3A3452", color: on ? "#7BE495" : "#B4ABC9" }}
                         onClick={() => {
+                          // #88: keep any active category focus so the two combine
+                          // (category ∩ theme), rather than clearing it here.
                           setThemeFilter(on ? null : th.id);
-                          if (!on) setCategoryFilter([]);
                         }}
                       >
                         {th[uiLang] || th.en}
@@ -618,6 +630,14 @@ export default function PlayPage({ params }) {
                     );
                   })}
                 </div>
+                {/* #88: live viability of the combined focus. Below COMBINED_MIN
+                    the round can't blend the two, so we say so up front instead
+                    of silently serving the whole theme (or a one-item round). */}
+                {comboPool !== null && (
+                  <div style={comboPool >= COMBINED_MIN ? styles.comboNoteOk : styles.comboNoteThin}>
+                    {comboPool >= COMBINED_MIN ? T("comboReady", { n: comboPool }) : T("comboThin", { n: comboPool })}
+                  </div>
+                )}
               </div>
             )}
 
@@ -882,8 +902,9 @@ export default function PlayPage({ params }) {
                         color: selected ? track.cats[catId].color : "#B4ABC9",
                       }}
                       onClick={() => {
+                        // #88: keep any active theme so category + theme combine,
+                        // instead of the old behaviour of clearing the theme here.
                         setCategoryFilter((prev) => (prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId]));
-                        setThemeFilter(null);
                       }}
                     >
                       {displayCatLabel(catId)}
@@ -1079,6 +1100,8 @@ const styles = {
   pageHelpLine: { color: "#B4ABC9", fontSize: 12.5, lineHeight: 1.5, margin: "0 0 6px", textAlign: "left" },
   skillCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
   categoryPicker: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
+  comboNoteOk: { marginTop: 10, fontSize: 12, color: "#7BE495", lineHeight: 1.4 },
+  comboNoteThin: { marginTop: 10, fontSize: 12, color: "#FFB84D", lineHeight: 1.4 },
   masteryCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
   masteryBarOuter: { width: "100%", height: 6, background: "#171423", borderRadius: 3, overflow: "hidden", marginTop: 5 },
   masteryBarInner: { height: "100%", borderRadius: 3, transition: "width 0.4s ease" },

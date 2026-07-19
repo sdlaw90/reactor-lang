@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 180 tracked files.
+> 203 tracked files.
 
 ```
 .env.local.example
@@ -49,6 +49,7 @@ app/feedback/feature/page.js
 app/feedback/page.js
 app/forgot-password/page.js
 app/global-error.js
+app/grammar/[trackId]/page.js
 app/help/page.js
 app/icon.svg
 app/layout.js
@@ -65,6 +66,8 @@ app/settings/page.js
 app/speak/[trackId]/page.js
 app/terms/page.js
 app/whats-new/page.js
+data/grammar/esForEn.js
+data/grammar/index.js
 data/scripts/cyrillicRu.js
 data/scripts/hangulKo.js
 data/scripts/index.js
@@ -76,6 +79,7 @@ data/tracks/enForIt.js
 data/tracks/enGbForEs.js
 data/tracks/enUsForEs.js
 data/tracks/esForEn.js
+data/tracks/esForEnTags.js
 data/tracks/esSpainForEn.js
 data/tracks/frCaForEn.js
 data/tracks/frForEn.js
@@ -92,7 +96,10 @@ data/vocab/esLatAmWords.js
 data/vocab/frCaWords.js
 data/vocab/jaWords.js
 data/vocab/koWords.js
+data/vocab/ruWords.js
+data/vocab/zhWords.js
 docs/INTEGRATION-NOTES.md
+docs/PACKAGING.md
 docs/architecture.md
 docs/beta-feedback-email-draft.md
 docs/changelog/released/v2.31.0-beta.2/2026-07-12-deforen-deepening.md
@@ -103,9 +110,17 @@ docs/changelog/released/v2.31.0-beta.2/2026-07-14-tts-sync-ci.md
 docs/changelog/unreleased/.gitkeep
 docs/changelog/unreleased/2026-07-14-ko-tts-lang-rules.md
 docs/changelog/unreleased/2026-07-14-koforen-wordbank.md
+docs/changelog/unreleased/2026-07-14-ru-deepening.md
+docs/changelog/unreleased/2026-07-15-repo-tree-generator.md
+docs/changelog/unreleased/2026-07-15-ru-tts.md
+docs/changelog/unreleased/2026-07-15-ru-voice-pin.md
+docs/changelog/unreleased/2026-07-15-voices-list-helper.md
+docs/changelog/unreleased/2026-07-15-zh-deepening.md
+docs/changelog/unreleased/2026-07-15-zh-tts.md
 docs/codebase-reference.md
 docs/manual-runbook.md
 docs/repo-tree.md
+docs/squirrelingo_todo_active.md
 docs/supabase-change-email-email.html
 docs/supabase-confirm-signup-email.html
 docs/supabase-invite-email.html
@@ -116,10 +131,12 @@ e2e/authenticated-flow.spec.js
 e2e/public-pages.spec.js
 lib/AudioButton.js
 lib/Avatar.js
+lib/BackHome.js
 lib/ComingSoonSection.js
 lib/GlobalErrorLogger.js
 lib/Logo.js
 lib/ModeToggle.js
+lib/NavDepthTracker.js
 lib/NavDrawer.js
 lib/PasswordInput.js
 lib/PasswordStrengthMeter.js
@@ -144,8 +161,10 @@ lib/emailUtils.js
 lib/errorReporting.js
 lib/frequencyVocab.js
 lib/gameEngine.js
+lib/grammarGym.js
 lib/languageNames.js
 lib/legalVersions.js
+lib/navDepth.js
 lib/notify.js
 lib/passwordStrength.js
 lib/playStrings.js
@@ -164,12 +183,16 @@ package.json
 playwright.config.js
 public/version.json
 scripts/deploy.js
+scripts/gen-repo-tree.mjs
 scripts/generate-tts.mjs
 scripts/generate-version-json.js
+scripts/prune-local-tts.mjs
 scripts/publish-ready.mjs
 scripts/smoke-check.mjs
 scripts/sweep-tts.mjs
 scripts/sync-tts.mjs
+scripts/tts-on-deploy.mjs
+scripts/voices-list.mjs
 styles/globals.css
 supabase/migrations.zip
 supabase/migrations/00000000000000_baseline.sql

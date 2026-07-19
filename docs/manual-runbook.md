@@ -92,6 +92,17 @@ Prod gets this audio automatically at release time: the `sync-tts` CI job
 mirrors the dev bucket into prod on every `main` push (copy-only, never
 deletes). There is no manual prod upload step anymore.
 
+**Deploy-time auto-sync (added 2026-07-19):** `npm run deploy` now runs
+`scripts/tts-on-deploy.mjs` after the push — it detects which audio tracks'
+content changed in the deploy, dry-run-gates for genuinely-new clips, and
+synth+uploads only those to the **dev** bucket. So for ordinary content passes
+you no longer have to run the §5 sequence by hand; it's non-blocking (a TTS
+hiccup never aborts the code push) and needs your `.env.local` dev keys. The
+manual §5 flow is still the tool for auditioning voices/rates on a new track or
+after an SSML-rule change (`--force`), and for a one-time upload of clips that
+were generated locally but never pushed. See `docs/tts-pipeline.md` §"Automatic
+sync on deploy" for the full behavior.
+
 ---
 
 ## 6. Cutting a release (prod)
