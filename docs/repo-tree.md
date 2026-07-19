@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 208 tracked files.
+> 211 tracked files.
 
 ```
 .env.local.example
@@ -102,12 +102,15 @@ docs/INTEGRATION-NOTES.md
 docs/PACKAGING.md
 docs/architecture.md
 docs/beta-feedback-email-draft.md
+docs/changelog/README.md
+docs/changelog/released/.gitkeep
 docs/changelog/released/v2.31.0-beta.2/2026-07-12-deforen-deepening.md
 docs/changelog/released/v2.31.0-beta.2/2026-07-13-de-tts-lang-rules.md
 docs/changelog/released/v2.31.0-beta.2/2026-07-13-ja-deepening-wordbank.md
 docs/changelog/released/v2.31.0-beta.2/2026-07-13-ja-tts-pass.md
 docs/changelog/released/v2.31.0-beta.2/2026-07-14-tts-sync-ci.md
 docs/changelog/unreleased/.gitkeep
+docs/changelog/unreleased/2026-07-12-runbook-and-changelog.md
 docs/changelog/unreleased/2026-07-14-ko-tts-lang-rules.md
 docs/changelog/unreleased/2026-07-14-koforen-wordbank.md
 docs/changelog/unreleased/2026-07-14-ru-deepening.md
