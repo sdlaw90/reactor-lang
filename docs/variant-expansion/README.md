@@ -10,6 +10,9 @@ beta testers); native review is what gates promotion to the real live app. See *
 - `00-methodology.md` — master playbook. **Read first.** Language-agnostic pipeline + the
   per-language axis reference table that lets Claude run a new language without re-confirming.
 - `01-spanish-reference.md` — the worked Spanish example the method is derived from.
+- `02-french-reference.md` — French (frForEn / frCaForEn) run.
+- `03-italian-reference.md` — Italian (itForEn) run.
+- `04-portuguese-reference.md` — Portuguese (ptBrForEn / ptPtForEn) run.
 - `review-packets/<lang>-verb-variants.xlsx` — the file handed to a native reviewer.
 - `generated/<lang>_generated.json` — machine-readable variants with IDs, for round-trip.
 
@@ -23,9 +26,9 @@ corrections round-trip via IDs → review gates promotion to real prod. See meth
 | Lang | Track | Reviewer | Inventory | Generated (person / tense) | Packet | Reviewed | Loaded |
 |---|---|---|---|---|---|---|---|
 | Spanish (LatAm) | esForEn | ✅ confirmed | ✅ 157 | ✅ 358 / (tense held) | ✅ | ⬜ | ✅ shipped beta v2.33.0-beta.3 |
-| French | frForEn / frCaForEn | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
-| Italian | itForEn | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
-| Portuguese | ptBrForEn / ptPtForEn | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
+| French | frForEn / frCaForEn | ⬜ | ✅ 4 + 3 | ✅ 17 + 15 / (tense held) | ✅ | ⬜ | ✅ shipped beta v2.33.0-beta.4 |
+| Italian | itForEn | ⬜ | ✅ 4 | ✅ 20 / (tense held) | ✅ | ⬜ | ✅ shipped beta v2.33.0-beta.4 |
+| Portuguese | ptBrForEn / ptPtForEn | ⬜ | ✅ 8 + 9 | ✅ 30 + 33 / (tense held) | ✅ | ⬜ | ✅ shipped beta v2.33.0-beta.4 |
 | German | deForEn | ⬜ | ⬜ | ⬜ (no verbecc) | ⬜ | ⬜ | ⬜ |
 | Russian | ruForEn | ⬜ | ⬜ | ⬜ (+aspect axis) | ⬜ | ⬜ | ⬜ |
 | Japanese | jaForEn | ⬜ | ⬜ | ⬜ (politeness axis, not person) | ⬜ | ⬜ | ⬜ |

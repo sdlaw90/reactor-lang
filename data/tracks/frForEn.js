@@ -118,6 +118,58 @@ const BANK = {
     ["« Il alla au marché » — le temps de 'alla' est...", ["the passé simple — a literary narration tense", "a spelling error for 'allait'", "the simple future", "the imperfect subjunctive"], 0,
       { en: "'Alla' is the passé simple of 'aller' — used almost exclusively in literature and formal historical narration. Spoken French uses the passé composé instead ('il est allé'). You'll never need to produce it, but you can't read a French novel without recognizing it.", es: "'Alla' es el passé simple de 'aller' — usado casi exclusivamente en literatura y narración histórica formal. El francés hablado usa el passé composé ('il est allé'). Nunca necesitarás producirlo, pero no se puede leer una novela francesa sin reconocerlo." }, "C2", null,
       { en: "« Il alla au marché » — the tense of 'alla' is..." }],
+    // --- Variant-expansion person-swaps 2026-07-19 (subject-person reworks of existing gram conjugation items; auto-generated, PENDING native review) ---
+    ["Il faut que je ___ mes devoirs.", ["fasses", "fasse", "fassent", "fassiez"], 1,
+      { en: "The je (I) form of 'faire' (present subjunctive) is 'fasse'.", es: "La forma de yo de 'faire' (presente de subjuntivo) es 'fasse'." }, "B2", null,
+      { en: "I have to ___ (faire = to do) my homework." }],  // fr-v-001-p-je
+    ["Il faut qu'il ___ ses devoirs.", ["fasse", "fassions", "fassiez", "fasses"], 0,
+      { en: "The il/elle (he/she) form of 'faire' (present subjunctive) is 'fasse'.", es: "La forma de él/ella de 'faire' (presente de subjuntivo) es 'fasse'." }, "B2", null,
+      { en: "He has to ___ (faire = to do) his homework." }],  // fr-v-001-p-il
+    ["Il faut que nous ___ nos devoirs.", ["fasse", "fassions", "fasses", "fassiez"], 1,
+      { en: "The nous (we) form of 'faire' (present subjunctive) is 'fassions'.", es: "La forma de nosotros de 'faire' (presente de subjuntivo) es 'fassions'." }, "B2", null,
+      { en: "We have to ___ (faire = to do) our homework." }],  // fr-v-001-p-nous
+    ["Il faut que vous ___ vos devoirs.", ["fassiez", "fassent", "fasses", "fassions"], 0,
+      { en: "The vous (you all/formal) form of 'faire' (present subjunctive) is 'fassiez'.", es: "La forma de vosotros/ustedes de 'faire' (presente de subjuntivo) es 'fassiez'." }, "B2", null,
+      { en: "You (all) have to ___ (faire = to do) your homework." }],  // fr-v-001-p-vous
+    ["Il faut qu'ils ___ leurs devoirs.", ["fassiez", "fassions", "fasse", "fassent"], 3,
+      { en: "The ils/elles (they) form of 'faire' (present subjunctive) is 'fassent'.", es: "La forma de ellos/ellas de 'faire' (presente de subjuntivo) es 'fassent'." }, "B2", null,
+      { en: "They have to ___ (faire = to do) their homework." }],  // fr-v-001-p-ils
+    ["___ la porte.", ["fermer", "Fermez", "Ferme", "Fermons"], 3,
+      { en: "The nous (we) form of 'fermer' (imperative (command)) is 'Fermons'.", es: "La forma de nosotros de 'fermer' (imperativo) es 'Fermons'." }, "A2", null,
+      { en: "Let's ___ (fermer = to close) the door. (nous — let's)" }],  // fr-v-002-p-nous
+    ["___ la porte, s'il vous plaît!", ["Ferme", "Fermons", "Fermez", "fermer"], 2,
+      { en: "The vous (you all/formal) form of 'fermer' (imperative (command)) is 'Fermez'.", es: "La forma de vosotros/ustedes de 'fermer' (imperativo) es 'Fermez'." }, "A2", null,
+      { en: "___ (fermer = to close) the door, please! (vous — formal/plural)" }],  // fr-v-002-p-vous
+    ["Tu ___ un café, s'il te plaît.", ["voudrais", "voudrait", "voudrions", "voudriez"], 0,
+      { en: "The tu (you) form of 'vouloir' (conditional) is 'voudrais'.", es: "La forma de tú de 'vouloir' (condicional) es 'voudrais'." }, "A2", null,
+      { en: "You ___ (vouloir = to want) a coffee, please." }],  // fr-v-003-p-tu
+    ["Il ___ un café, s'il vous plaît.", ["voudrais", "voudrait", "voudriez", "voudrions"], 1,
+      { en: "The il/elle (he/she) form of 'vouloir' (conditional) is 'voudrait'.", es: "La forma de él/ella de 'vouloir' (condicional) es 'voudrait'." }, "A2", null,
+      { en: "He ___ (vouloir = to want) a coffee, please." }],  // fr-v-003-p-il
+    ["Nous ___ un café, s'il vous plaît.", ["voudrions", "voudraient", "voudriez", "voudrait"], 0,
+      { en: "The nous (we) form of 'vouloir' (conditional) is 'voudrions'.", es: "La forma de nosotros de 'vouloir' (condicional) es 'voudrions'." }, "A2", null,
+      { en: "We ___ (vouloir = to want) a coffee, please." }],  // fr-v-003-p-nous
+    ["Vous ___ un café, s'il vous plaît.", ["voudrais", "voudrait", "voudraient", "voudriez"], 3,
+      { en: "The vous (you all/formal) form of 'vouloir' (conditional) is 'voudriez'.", es: "La forma de vosotros/ustedes de 'vouloir' (condicional) es 'voudriez'." }, "A2", null,
+      { en: "You (all) ___ (vouloir = to want) a coffee, please." }],  // fr-v-003-p-vous
+    ["Ils ___ un café, s'il vous plaît.", ["voudrait", "voudrais", "voudraient", "voudriez"], 2,
+      { en: "The ils/elles (they) form of 'vouloir' (conditional) is 'voudraient'.", es: "La forma de ellos/ellas de 'vouloir' (condicional) es 'voudraient'." }, "A2", null,
+      { en: "They ___ (vouloir = to want) a coffee, please." }],  // fr-v-003-p-ils
+    ["Tu ___ demain matin.", ["partirai", "partirons", "partiras", "partira"], 2,
+      { en: "The tu (you) form of 'partir' (future) is 'partiras'.", es: "La forma de tú de 'partir' (futuro) es 'partiras'." }, "B1", null,
+      { en: "You ___ (partir = to leave) tomorrow morning." }],  // fr-v-004-p-tu
+    ["Il ___ demain matin.", ["partirez", "partira", "partiras", "partirai"], 1,
+      { en: "The il/elle (he/she) form of 'partir' (future) is 'partira'.", es: "La forma de él/ella de 'partir' (futuro) es 'partira'." }, "B1", null,
+      { en: "He ___ (partir = to leave) tomorrow morning." }],  // fr-v-004-p-il
+    ["Nous ___ demain matin.", ["partiras", "partirons", "partirai", "partirez"], 1,
+      { en: "The nous (we) form of 'partir' (future) is 'partirons'.", es: "La forma de nosotros de 'partir' (futuro) es 'partirons'." }, "B1", null,
+      { en: "We ___ (partir = to leave) tomorrow morning." }],  // fr-v-004-p-nous
+    ["Vous ___ demain matin.", ["partiront", "partirai", "partirez", "partiras"], 2,
+      { en: "The vous (you all/formal) form of 'partir' (future) is 'partirez'.", es: "La forma de vosotros/ustedes de 'partir' (futuro) es 'partirez'." }, "B1", null,
+      { en: "You (all) ___ (partir = to leave) tomorrow morning." }],  // fr-v-004-p-vous
+    ["Ils ___ demain matin.", ["partirai", "partiront", "partira", "partirez"], 1,
+      { en: "The ils/elles (they) form of 'partir' (future) is 'partiront'.", es: "La forma de ellos/ellas de 'partir' (futuro) es 'partiront'." }, "B1", null,
+      { en: "They ___ (partir = to leave) tomorrow morning." }],  // fr-v-004-p-ils
   ],
   trad: [
     ["Translate: 'That costs an arm and a leg!'", ["Ça coûte les yeux de la tête!", "Ça coûte un bras et une jambe!", "Ça coûte trop d'argent!", "Ça coûte une fortune totale!"], 0,

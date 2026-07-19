@@ -136,6 +136,52 @@ const BANK = {
       { en: "In casual Québécois, the indirect-object pronoun 'lui' becomes 'y': 'j'y ai donné' = je lui ai donné (I gave him/her). A deeply rooted spoken feature that surprises France-trained ears.", es: "En quebequense casual, el pronombre de objeto indirecto 'lui' se vuelve 'y': 'j'y ai donné' = je lui ai donné (le di). Un rasgo oral muy arraigado que sorprende a oídos entrenados en Francia." }, "C2", null, { en: "I gave him/her the book. (casual)" }],
     ["Quand qu'il va arriver, on va souper.", ["✓ correct casual Québécois — 'que' after 'quand'", "grammatically incorrect", "means \"whenever he might arrive\"", "formal register"], 0,
       { en: "Casual Québécois inserts 'que' after conjunctions: 'quand que', 'comment que', 'où que'. Standard French drops it ('quand il va arriver') — recognizing the pattern is key to understanding fast QC speech.", es: "El quebequense casual inserta 'que' tras las conjunciones: 'quand que', 'comment que', 'où que'. El francés estándar lo omite ('quand il va arriver') — reconocer el patrón es clave para entender el habla rápida de Quebec." }, "C2", null, { en: "When he arrives, we'll have dinner. (casual)" }],
+    // --- Variant-expansion person-swaps 2026-07-19 (subject-person reworks of existing gram conjugation items; auto-generated, PENDING native review) ---
+    ["Il faut que je ___ mes devoirs.", ["fassent", "fasses", "fasse", "fassions"], 2,
+      { en: "The je (I) form of 'faire' (present subjunctive) is 'fasse'.", es: "La forma de yo de 'faire' (presente de subjuntivo) es 'fasse'." }, "B2", null,
+      { en: "I have to ___ (faire = to do) my homework." }],  // frCa-v-001-p-je
+    ["Il faut qu'il ___ ses devoirs.", ["fasses", "fassiez", "fasse", "fassent"], 2,
+      { en: "The il/elle (he/she) form of 'faire' (present subjunctive) is 'fasse'.", es: "La forma de él/ella de 'faire' (presente de subjuntivo) es 'fasse'." }, "B2", null,
+      { en: "He has to ___ (faire = to do) his homework." }],  // frCa-v-001-p-il
+    ["Il faut que nous ___ nos devoirs.", ["fasse", "fassions", "fassent", "fassiez"], 1,
+      { en: "The nous (we) form of 'faire' (present subjunctive) is 'fassions'.", es: "La forma de nosotros de 'faire' (presente de subjuntivo) es 'fassions'." }, "B2", null,
+      { en: "We have to ___ (faire = to do) our homework." }],  // frCa-v-001-p-nous
+    ["Il faut que vous ___ vos devoirs.", ["fasse", "fassent", "fassiez", "fasses"], 2,
+      { en: "The vous (you all/formal) form of 'faire' (present subjunctive) is 'fassiez'.", es: "La forma de vosotros/ustedes de 'faire' (presente de subjuntivo) es 'fassiez'." }, "B2", null,
+      { en: "You (all) have to ___ (faire = to do) your homework." }],  // frCa-v-001-p-vous
+    ["Il faut qu'ils ___ leurs devoirs.", ["fasse", "fassiez", "fassent", "fasses"], 2,
+      { en: "The ils/elles (they) form of 'faire' (present subjunctive) is 'fassent'.", es: "La forma de ellos/ellas de 'faire' (presente de subjuntivo) es 'fassent'." }, "B2", null,
+      { en: "They have to ___ (faire = to do) their homework." }],  // frCa-v-001-p-ils
+    ["Tu ___ de Montréal.", ["est", "sommes", "suis", "es"], 3,
+      { en: "The tu (you) form of 'être' (present) is 'es'.", es: "La forma de tú de 'être' (presente) es 'es'." }, "A1", null,
+      { en: "You ___ (être = to be) from Montreal." }],  // frCa-v-002-p-tu
+    ["Il ___ de Montréal.", ["suis", "est", "sont", "êtes"], 1,
+      { en: "The il/elle (he/she) form of 'être' (present) is 'est'.", es: "La forma de él/ella de 'être' (presente) es 'est'." }, "A1", null,
+      { en: "He ___ (être = to be) from Montreal." }],  // frCa-v-002-p-il
+    ["Nous ___ de Montréal.", ["êtes", "sommes", "suis", "est"], 1,
+      { en: "The nous (we) form of 'être' (present) is 'sommes'.", es: "La forma de nosotros de 'être' (presente) es 'sommes'." }, "A1", null,
+      { en: "We ___ (être = to be) from Montreal." }],  // frCa-v-002-p-nous
+    ["Vous ___ de Montréal.", ["est", "êtes", "suis", "es"], 1,
+      { en: "The vous (you all/formal) form of 'être' (present) is 'êtes'.", es: "La forma de vosotros/ustedes de 'être' (presente) es 'êtes'." }, "A1", null,
+      { en: "You (all) ___ (être = to be) from Montreal." }],  // frCa-v-002-p-vous
+    ["Ils ___ de Montréal.", ["suis", "est", "êtes", "sont"], 3,
+      { en: "The ils/elles (they) form of 'être' (present) is 'sont'.", es: "La forma de ellos/ellas de 'être' (presente) es 'sont'." }, "A1", null,
+      { en: "They ___ (être = to be) from Montreal." }],  // frCa-v-002-p-ils
+    ["Il faudrait que je ___ là avant midi.", ["soient", "soyez", "sois", "soyons"], 2,
+      { en: "The je (I) form of 'être' (present subjunctive) is 'sois'.", es: "La forma de yo de 'être' (presente de subjuntivo) es 'sois'." }, "B2", null,
+      { en: "I'd need to ___ (être = to be) there before noon." }],  // frCa-v-003-p-je
+    ["Il faudrait qu'il ___ là avant midi.", ["soient", "soit", "sois", "soyons"], 1,
+      { en: "The il/elle (he/she) form of 'être' (present subjunctive) is 'soit'.", es: "La forma de él/ella de 'être' (presente de subjuntivo) es 'soit'." }, "B2", null,
+      { en: "He'd need to ___ (être = to be) there before noon." }],  // frCa-v-003-p-il
+    ["Il faudrait que nous ___ là avant midi.", ["soyons", "soyez", "soient", "sois"], 0,
+      { en: "The nous (we) form of 'être' (present subjunctive) is 'soyons'.", es: "La forma de nosotros de 'être' (presente de subjuntivo) es 'soyons'." }, "B2", null,
+      { en: "We'd need to ___ (être = to be) there before noon." }],  // frCa-v-003-p-nous
+    ["Il faudrait que vous ___ là avant midi.", ["soient", "soyez", "soit", "soyons"], 1,
+      { en: "The vous (you all/formal) form of 'être' (present subjunctive) is 'soyez'.", es: "La forma de vosotros/ustedes de 'être' (presente de subjuntivo) es 'soyez'." }, "B2", null,
+      { en: "You (all) would need to ___ (être = to be) there before noon." }],  // frCa-v-003-p-vous
+    ["Il faudrait qu'ils ___ là avant midi.", ["soient", "soit", "sois", "soyons"], 0,
+      { en: "The ils/elles (they) form of 'être' (present subjunctive) is 'soient'.", es: "La forma de ellos/ellas de 'être' (presente de subjuntivo) es 'soient'." }, "B2", null,
+      { en: "They'd need to ___ (être = to be) there before noon." }],  // frCa-v-003-p-ils
   ],
   trad: [
     ["Translate: 'I'm completely overwhelmed/swamped.'", ["J'ai de la broue dans le toupet.", "J'ai de la mousse dans les cheveux.", "Je suis très occupé aujourd'hui.", "J'ai trop de travail."], 0,

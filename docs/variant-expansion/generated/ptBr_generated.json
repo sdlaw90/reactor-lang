@@ -1,0 +1,939 @@
+{
+ "language": "Portuguese (Brazil)",
+ "track": "ptBrForEn",
+ "code": "ptBr",
+ "generated_date": "2026-07-19",
+ "method": "Phase 1 person-swap (docs/variant-expansion/00-methodology.md); forms via verbecc, verified.",
+ "convention": "Brazilian Portuguese (você for 2sg; a gente colloquial; nós preterite has no acute — \"falamos\").",
+ "counts": {
+  "base_items_transformed": 8,
+  "person_variants": 30,
+  "not_transformed": 3
+ },
+ "person": [
+  {
+   "bid": "ptBr-v-001",
+   "vid": "ptBr-v-001-p-ele",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Espero que você ___ bem.",
+   "base_person": "você",
+   "new_prompt": "Espero que ele ___ bem.",
+   "target_person": "ele",
+   "verb": "estar",
+   "tense": "present-subjunctive",
+   "answer": "esteja",
+   "options": [
+    "estejam",
+    "estejamos",
+    "estejas",
+    "esteja"
+   ],
+   "correctIndex": 3,
+   "level": "A2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "I hope he ___ (estar = to be) is well.",
+   "explanation": {
+    "en": "The ele/ela (he/she) form of 'estar' (present subjunctive) is 'esteja'.",
+    "es": "La forma de él/ella de 'estar' (presente de subjuntivo) es 'esteja'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "ptBr-v-001",
+   "vid": "ptBr-v-001-p-nós",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Espero que você ___ bem.",
+   "base_person": "você",
+   "new_prompt": "Espero que nós ___ bem.",
+   "target_person": "nós",
+   "verb": "estar",
+   "tense": "present-subjunctive",
+   "answer": "estejamos",
+   "options": [
+    "esteja",
+    "estejas",
+    "estejam",
+    "estejamos"
+   ],
+   "correctIndex": 3,
+   "level": "A2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "I hope we ___ (estar = to be) are well.",
+   "explanation": {
+    "en": "The nós (we) form of 'estar' (present subjunctive) is 'estejamos'.",
+    "es": "La forma de nosotros de 'estar' (presente de subjuntivo) es 'estejamos'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "ptBr-v-001",
+   "vid": "ptBr-v-001-p-eles",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Espero que você ___ bem.",
+   "base_person": "você",
+   "new_prompt": "Espero que eles ___ bem.",
+   "target_person": "eles",
+   "verb": "estar",
+   "tense": "present-subjunctive",
+   "answer": "estejam",
+   "options": [
+    "estejam",
+    "esteja",
+    "estejamos",
+    "estejas"
+   ],
+   "correctIndex": 0,
+   "level": "A2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "I hope they ___ (estar = to be) are well.",
+   "explanation": {
+    "en": "The eles/elas (they) form of 'estar' (present subjunctive) is 'estejam'.",
+    "es": "La forma de ellos/ellas de 'estar' (presente de subjuntivo) es 'estejam'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "ptBr-v-002",
+   "vid": "ptBr-v-002-p-você",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Eu ___ brasileiro.",
+   "base_person": "eu",
+   "new_prompt": "Você ___ brasileiro.",
+   "target_person": "você",
+   "verb": "ser",
+   "tense": "present",
+   "answer": "é",
+   "options": [
+    "és",
+    "é",
+    "somos",
+    "são"
+   ],
+   "correctIndex": 1,
+   "level": "A1",
+   "structure": "standard(copular)",
+   "risk": "Medium",
+   "subtitle": "You ___ (ser = to be) Brazilian.",
+   "explanation": {
+    "en": "The você (you) form of 'ser' (present) is 'é'.",
+    "es": "La forma de usted de 'ser' (presente) es 'é'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-002",
+   "vid": "ptBr-v-002-p-ele",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Eu ___ brasileiro.",
+   "base_person": "eu",
+   "new_prompt": "Ele ___ brasileiro.",
+   "target_person": "ele",
+   "verb": "ser",
+   "tense": "present",
+   "answer": "é",
+   "options": [
+    "são",
+    "és",
+    "é",
+    "sou"
+   ],
+   "correctIndex": 2,
+   "level": "A1",
+   "structure": "standard(copular)",
+   "risk": "Medium",
+   "subtitle": "He ___ (ser = to be) Brazilian.",
+   "explanation": {
+    "en": "The ele/ela (he/she) form of 'ser' (present) is 'é'.",
+    "es": "La forma de él/ella de 'ser' (presente) es 'é'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-002",
+   "vid": "ptBr-v-002-p-nós",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Eu ___ brasileiro.",
+   "base_person": "eu",
+   "new_prompt": "Nós ___ brasileiros.",
+   "target_person": "nós",
+   "verb": "ser",
+   "tense": "present",
+   "answer": "somos",
+   "options": [
+    "somos",
+    "sou",
+    "és",
+    "são"
+   ],
+   "correctIndex": 0,
+   "level": "A1",
+   "structure": "standard(copular)",
+   "risk": "Medium",
+   "subtitle": "We ___ (ser = to be) Brazilian.",
+   "explanation": {
+    "en": "The nós (we) form of 'ser' (present) is 'somos'.",
+    "es": "La forma de nosotros de 'ser' (presente) es 'somos'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-002",
+   "vid": "ptBr-v-002-p-eles",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Eu ___ brasileiro.",
+   "base_person": "eu",
+   "new_prompt": "Eles ___ brasileiros.",
+   "target_person": "eles",
+   "verb": "ser",
+   "tense": "present",
+   "answer": "são",
+   "options": [
+    "é",
+    "sou",
+    "são",
+    "és"
+   ],
+   "correctIndex": 2,
+   "level": "A1",
+   "structure": "standard(copular)",
+   "risk": "Medium",
+   "subtitle": "They ___ (ser = to be) Brazilian.",
+   "explanation": {
+    "en": "The eles/elas (they) form of 'ser' (present) is 'são'.",
+    "es": "La forma de ellos/ellas de 'ser' (presente) es 'são'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-003",
+   "vid": "ptBr-v-003-p-eu",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Nós ___ (ter) dois gatos.",
+   "base_person": "nós",
+   "new_prompt": "Eu ___ (ter) dois gatos.",
+   "target_person": "eu",
+   "verb": "ter",
+   "tense": "present",
+   "answer": "tenho",
+   "options": [
+    "temos",
+    "tenho",
+    "tem",
+    "têm"
+   ],
+   "correctIndex": 1,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Low",
+   "subtitle": "I ___ (ter = to have) two cats.",
+   "explanation": {
+    "en": "The eu (I) form of 'ter' (present) is 'tenho'.",
+    "es": "La forma de yo de 'ter' (presente) es 'tenho'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-003",
+   "vid": "ptBr-v-003-p-você",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Nós ___ (ter) dois gatos.",
+   "base_person": "nós",
+   "new_prompt": "Você ___ (ter) dois gatos.",
+   "target_person": "você",
+   "verb": "ter",
+   "tense": "present",
+   "answer": "tem",
+   "options": [
+    "tem",
+    "temos",
+    "têm",
+    "tens"
+   ],
+   "correctIndex": 0,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Low",
+   "subtitle": "You ___ (ter = to have) two cats.",
+   "explanation": {
+    "en": "The você (you) form of 'ter' (present) is 'tem'.",
+    "es": "La forma de usted de 'ter' (presente) es 'tem'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-003",
+   "vid": "ptBr-v-003-p-ele",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Nós ___ (ter) dois gatos.",
+   "base_person": "nós",
+   "new_prompt": "Ele ___ (ter) dois gatos.",
+   "target_person": "ele",
+   "verb": "ter",
+   "tense": "present",
+   "answer": "tem",
+   "options": [
+    "temos",
+    "tens",
+    "tem",
+    "têm"
+   ],
+   "correctIndex": 2,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Low",
+   "subtitle": "He ___ (ter = to have) two cats.",
+   "explanation": {
+    "en": "The ele/ela (he/she) form of 'ter' (present) is 'tem'.",
+    "es": "La forma de él/ella de 'ter' (presente) es 'tem'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-003",
+   "vid": "ptBr-v-003-p-eles",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Nós ___ (ter) dois gatos.",
+   "base_person": "nós",
+   "new_prompt": "Eles ___ (ter) dois gatos.",
+   "target_person": "eles",
+   "verb": "ter",
+   "tense": "present",
+   "answer": "têm",
+   "options": [
+    "têm",
+    "tenho",
+    "tens",
+    "tem"
+   ],
+   "correctIndex": 0,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Low",
+   "subtitle": "They ___ (ter = to have) two cats.",
+   "explanation": {
+    "en": "The eles/elas (they) form of 'ter' (present) is 'têm'.",
+    "es": "La forma de ellos/ellas de 'ter' (presente) es 'têm'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-004",
+   "vid": "ptBr-v-004-p-você",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Ontem eu ___ (falar) com ela.",
+   "base_person": "eu",
+   "new_prompt": "Ontem você ___ (falar) com ela.",
+   "target_person": "você",
+   "verb": "falar",
+   "tense": "preterite",
+   "answer": "falou",
+   "options": [
+    "falaram",
+    "falei",
+    "falaste",
+    "falou"
+   ],
+   "correctIndex": 3,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "Yesterday you ___ (falar = to speak) spoke with her.",
+   "explanation": {
+    "en": "The você (you) form of 'falar' (preterite (simple past)) is 'falou'.",
+    "es": "La forma de usted de 'falar' (pretérito) es 'falou'."
+   },
+   "irregular": "no",
+   "notes": "Preterite (simple past) person-swap."
+  },
+  {
+   "bid": "ptBr-v-004",
+   "vid": "ptBr-v-004-p-ele",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Ontem eu ___ (falar) com ela.",
+   "base_person": "eu",
+   "new_prompt": "Ontem ele ___ (falar) com ela.",
+   "target_person": "ele",
+   "verb": "falar",
+   "tense": "preterite",
+   "answer": "falou",
+   "options": [
+    "falaram",
+    "falei",
+    "falou",
+    "falaste"
+   ],
+   "correctIndex": 2,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "Yesterday he ___ (falar = to speak) spoke with her.",
+   "explanation": {
+    "en": "The ele/ela (he/she) form of 'falar' (preterite (simple past)) is 'falou'.",
+    "es": "La forma de él/ella de 'falar' (pretérito) es 'falou'."
+   },
+   "irregular": "no",
+   "notes": "Preterite (simple past) person-swap."
+  },
+  {
+   "bid": "ptBr-v-004",
+   "vid": "ptBr-v-004-p-nós",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Ontem eu ___ (falar) com ela.",
+   "base_person": "eu",
+   "new_prompt": "Ontem nós ___ (falar) com ela.",
+   "target_person": "nós",
+   "verb": "falar",
+   "tense": "preterite",
+   "answer": "falamos",
+   "options": [
+    "falamos",
+    "falei",
+    "falou",
+    "falaram"
+   ],
+   "correctIndex": 0,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "Yesterday we ___ (falar = to speak) spoke with her.",
+   "explanation": {
+    "en": "The nós (we) form of 'falar' (preterite (simple past)) is 'falamos'.",
+    "es": "La forma de nosotros de 'falar' (pretérito) es 'falamos'."
+   },
+   "irregular": "no",
+   "notes": "Preterite (simple past) person-swap."
+  },
+  {
+   "bid": "ptBr-v-004",
+   "vid": "ptBr-v-004-p-eles",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Ontem eu ___ (falar) com ela.",
+   "base_person": "eu",
+   "new_prompt": "Ontem eles ___ (falar) com ela.",
+   "target_person": "eles",
+   "verb": "falar",
+   "tense": "preterite",
+   "answer": "falaram",
+   "options": [
+    "falaram",
+    "falei",
+    "falamos",
+    "falou"
+   ],
+   "correctIndex": 0,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "Yesterday they ___ (falar = to speak) spoke with her.",
+   "explanation": {
+    "en": "The eles/elas (they) form of 'falar' (preterite (simple past)) is 'falaram'.",
+    "es": "La forma de ellos/ellas de 'falar' (pretérito) es 'falaram'."
+   },
+   "irregular": "no",
+   "notes": "Preterite (simple past) person-swap."
+  },
+  {
+   "bid": "ptBr-v-005",
+   "vid": "ptBr-v-005-p-eu",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "A gente ___ (ir) à praia amanhã.",
+   "base_person": "ele",
+   "new_prompt": "Eu ___ (ir) à praia amanhã.",
+   "target_person": "eu",
+   "verb": "ir",
+   "tense": "present",
+   "answer": "vou",
+   "options": [
+    "vou",
+    "vais",
+    "vai",
+    "vão"
+   ],
+   "correctIndex": 0,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "I ___ (ir = to go) am going to the beach tomorrow.",
+   "explanation": {
+    "en": "The eu (I) form of 'ir' (present) is 'vou'.",
+    "es": "La forma de yo de 'ir' (presente) es 'vou'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-005",
+   "vid": "ptBr-v-005-p-você",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "A gente ___ (ir) à praia amanhã.",
+   "base_person": "ele",
+   "new_prompt": "Você ___ (ir) à praia amanhã.",
+   "target_person": "você",
+   "verb": "ir",
+   "tense": "present",
+   "answer": "vai",
+   "options": [
+    "vou",
+    "vais",
+    "vai",
+    "vamos"
+   ],
+   "correctIndex": 2,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "You ___ (ir = to go) are going to the beach tomorrow.",
+   "explanation": {
+    "en": "The você (you) form of 'ir' (present) is 'vai'.",
+    "es": "La forma de usted de 'ir' (presente) es 'vai'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-005",
+   "vid": "ptBr-v-005-p-nós",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "A gente ___ (ir) à praia amanhã.",
+   "base_person": "ele",
+   "new_prompt": "Nós ___ (ir) à praia amanhã.",
+   "target_person": "nós",
+   "verb": "ir",
+   "tense": "present",
+   "answer": "vamos",
+   "options": [
+    "vão",
+    "vou",
+    "vamos",
+    "vai"
+   ],
+   "correctIndex": 2,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "We ___ (ir = to go) are going to the beach tomorrow.",
+   "explanation": {
+    "en": "The nós (we) form of 'ir' (present) is 'vamos'.",
+    "es": "La forma de nosotros de 'ir' (presente) es 'vamos'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-005",
+   "vid": "ptBr-v-005-p-eles",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "A gente ___ (ir) à praia amanhã.",
+   "base_person": "ele",
+   "new_prompt": "Eles ___ (ir) à praia amanhã.",
+   "target_person": "eles",
+   "verb": "ir",
+   "tense": "present",
+   "answer": "vão",
+   "options": [
+    "vais",
+    "vão",
+    "vai",
+    "vamos"
+   ],
+   "correctIndex": 1,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "They ___ (ir = to go) are going to the beach tomorrow.",
+   "explanation": {
+    "en": "The eles/elas (they) form of 'ir' (present) is 'vão'.",
+    "es": "La forma de ellos/ellas de 'ir' (presente) es 'vão'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-006",
+   "vid": "ptBr-v-006-p-você",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Faz dois anos que eu ___ (morar) aqui.",
+   "base_person": "eu",
+   "new_prompt": "Faz dois anos que você ___ (morar) aqui.",
+   "target_person": "você",
+   "verb": "morar",
+   "tense": "present",
+   "answer": "mora",
+   "options": [
+    "mora",
+    "moro",
+    "moramos",
+    "moras"
+   ],
+   "correctIndex": 0,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "Low",
+   "subtitle": "It's been two years that you ___ (morar = to live) have lived here.",
+   "explanation": {
+    "en": "The você (you) form of 'morar' (present) is 'mora'.",
+    "es": "La forma de usted de 'morar' (presente) es 'mora'."
+   },
+   "irregular": "no",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-006",
+   "vid": "ptBr-v-006-p-ele",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Faz dois anos que eu ___ (morar) aqui.",
+   "base_person": "eu",
+   "new_prompt": "Faz dois anos que ele ___ (morar) aqui.",
+   "target_person": "ele",
+   "verb": "morar",
+   "tense": "present",
+   "answer": "mora",
+   "options": [
+    "moro",
+    "moram",
+    "moramos",
+    "mora"
+   ],
+   "correctIndex": 3,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "Low",
+   "subtitle": "It's been two years that he ___ (morar = to live) has lived here.",
+   "explanation": {
+    "en": "The ele/ela (he/she) form of 'morar' (present) is 'mora'.",
+    "es": "La forma de él/ella de 'morar' (presente) es 'mora'."
+   },
+   "irregular": "no",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-006",
+   "vid": "ptBr-v-006-p-nós",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Faz dois anos que eu ___ (morar) aqui.",
+   "base_person": "eu",
+   "new_prompt": "Faz dois anos que nós ___ (morar) aqui.",
+   "target_person": "nós",
+   "verb": "morar",
+   "tense": "present",
+   "answer": "moramos",
+   "options": [
+    "mora",
+    "moras",
+    "moram",
+    "moramos"
+   ],
+   "correctIndex": 3,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "Low",
+   "subtitle": "It's been two years that we ___ (morar = to live) have lived here.",
+   "explanation": {
+    "en": "The nós (we) form of 'morar' (present) is 'moramos'.",
+    "es": "La forma de nosotros de 'morar' (presente) es 'moramos'."
+   },
+   "irregular": "no",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-006",
+   "vid": "ptBr-v-006-p-eles",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Faz dois anos que eu ___ (morar) aqui.",
+   "base_person": "eu",
+   "new_prompt": "Faz dois anos que eles ___ (morar) aqui.",
+   "target_person": "eles",
+   "verb": "morar",
+   "tense": "present",
+   "answer": "moram",
+   "options": [
+    "mora",
+    "moramos",
+    "moro",
+    "moram"
+   ],
+   "correctIndex": 3,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "Low",
+   "subtitle": "It's been two years that they ___ (morar = to live) have lived here.",
+   "explanation": {
+    "en": "The eles/elas (they) form of 'morar' (present) is 'moram'.",
+    "es": "La forma de ellos/ellas de 'morar' (presente) es 'moram'."
+   },
+   "irregular": "no",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "ptBr-v-007",
+   "vid": "ptBr-v-007-p-eu",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Quando você ___ (chegar), me liga.",
+   "base_person": "você",
+   "new_prompt": "Quando eu ___ (chegar), me liga.",
+   "target_person": "eu",
+   "verb": "chegar",
+   "tense": "future-subjunctive",
+   "answer": "chegar",
+   "options": [
+    "chegarem",
+    "chegarmos",
+    "chegares",
+    "chegar"
+   ],
+   "correctIndex": 3,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "High",
+   "subtitle": "When I ___ (chegar = to arrive) arrive, call me.",
+   "explanation": {
+    "en": "The eu (I) form of 'chegar' (future subjunctive) is 'chegar'.",
+    "es": "La forma de yo de 'chegar' (futuro de subjuntivo) es 'chegar'."
+   },
+   "irregular": "no",
+   "notes": "PORTUGUESE FUTURE SUBJUNCTIVE (após \"quando/se\") — verify the form and that the sentence reads naturally."
+  },
+  {
+   "bid": "ptBr-v-007",
+   "vid": "ptBr-v-007-p-ele",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Quando você ___ (chegar), me liga.",
+   "base_person": "você",
+   "new_prompt": "Quando ele ___ (chegar), me liga.",
+   "target_person": "ele",
+   "verb": "chegar",
+   "tense": "future-subjunctive",
+   "answer": "chegar",
+   "options": [
+    "chegar",
+    "chegarmos",
+    "chegarem",
+    "chegares"
+   ],
+   "correctIndex": 0,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "High",
+   "subtitle": "When he ___ (chegar = to arrive) arrives, call me.",
+   "explanation": {
+    "en": "The ele/ela (he/she) form of 'chegar' (future subjunctive) is 'chegar'.",
+    "es": "La forma de él/ella de 'chegar' (futuro de subjuntivo) es 'chegar'."
+   },
+   "irregular": "no",
+   "notes": "PORTUGUESE FUTURE SUBJUNCTIVE (após \"quando/se\") — verify the form and that the sentence reads naturally."
+  },
+  {
+   "bid": "ptBr-v-007",
+   "vid": "ptBr-v-007-p-nós",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Quando você ___ (chegar), me liga.",
+   "base_person": "você",
+   "new_prompt": "Quando nós ___ (chegar), me liga.",
+   "target_person": "nós",
+   "verb": "chegar",
+   "tense": "future-subjunctive",
+   "answer": "chegarmos",
+   "options": [
+    "chegarmos",
+    "chegares",
+    "chegarem",
+    "chegar"
+   ],
+   "correctIndex": 0,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "High",
+   "subtitle": "When we ___ (chegar = to arrive) arrive, call me.",
+   "explanation": {
+    "en": "The nós (we) form of 'chegar' (future subjunctive) is 'chegarmos'.",
+    "es": "La forma de nosotros de 'chegar' (futuro de subjuntivo) es 'chegarmos'."
+   },
+   "irregular": "no",
+   "notes": "PORTUGUESE FUTURE SUBJUNCTIVE (após \"quando/se\") — verify the form and that the sentence reads naturally."
+  },
+  {
+   "bid": "ptBr-v-007",
+   "vid": "ptBr-v-007-p-eles",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "Quando você ___ (chegar), me liga.",
+   "base_person": "você",
+   "new_prompt": "Quando eles ___ (chegar), me liga.",
+   "target_person": "eles",
+   "verb": "chegar",
+   "tense": "future-subjunctive",
+   "answer": "chegarem",
+   "options": [
+    "chegar",
+    "chegares",
+    "chegarem",
+    "chegarmos"
+   ],
+   "correctIndex": 2,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "High",
+   "subtitle": "When they ___ (chegar = to arrive) arrive, call me.",
+   "explanation": {
+    "en": "The eles/elas (they) form of 'chegar' (future subjunctive) is 'chegarem'.",
+    "es": "La forma de ellos/ellas de 'chegar' (futuro de subjuntivo) es 'chegarem'."
+   },
+   "irregular": "no",
+   "notes": "PORTUGUESE FUTURE SUBJUNCTIVE (após \"quando/se\") — verify the form and that the sentence reads naturally."
+  },
+  {
+   "bid": "ptBr-v-008",
+   "vid": "ptBr-v-008-p-eu",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "É importante ___ (fazer, nós) isso hoje.",
+   "base_person": "nós",
+   "new_prompt": "É importante ___ (fazer, eu) isso hoje.",
+   "target_person": "eu",
+   "verb": "fazer",
+   "tense": "personal-infinitive",
+   "answer": "fazer",
+   "options": [
+    "fazermos",
+    "fazer",
+    "fazeres",
+    "fazerem"
+   ],
+   "correctIndex": 1,
+   "level": "B2",
+   "structure": "personal-infinitive",
+   "risk": "High",
+   "subtitle": "It's important for me ___ (fazer = to do) to do this today.",
+   "explanation": {
+    "en": "The eu (I) form of 'fazer' (personal infinitive) is 'fazer'.",
+    "es": "La forma de yo de 'fazer' (infinitivo personal) es 'fazer'."
+   },
+   "irregular": "yes",
+   "notes": "PORTUGUESE PERSONAL INFINITIVE — inflected infinitive; the \"(lemma, person)\" hint carries the person. Verify naturalness."
+  },
+  {
+   "bid": "ptBr-v-008",
+   "vid": "ptBr-v-008-p-ele",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "É importante ___ (fazer, nós) isso hoje.",
+   "base_person": "nós",
+   "new_prompt": "É importante ___ (fazer, ele) isso hoje.",
+   "target_person": "ele",
+   "verb": "fazer",
+   "tense": "personal-infinitive",
+   "answer": "fazer",
+   "options": [
+    "fazer",
+    "fazermos",
+    "fazeres",
+    "fazerem"
+   ],
+   "correctIndex": 0,
+   "level": "B2",
+   "structure": "personal-infinitive",
+   "risk": "High",
+   "subtitle": "It's important for him ___ (fazer = to do) to do this today.",
+   "explanation": {
+    "en": "The ele/ela (he/she) form of 'fazer' (personal infinitive) is 'fazer'.",
+    "es": "La forma de él/ella de 'fazer' (infinitivo personal) es 'fazer'."
+   },
+   "irregular": "yes",
+   "notes": "PORTUGUESE PERSONAL INFINITIVE — inflected infinitive; the \"(lemma, person)\" hint carries the person. Verify naturalness."
+  },
+  {
+   "bid": "ptBr-v-008",
+   "vid": "ptBr-v-008-p-eles",
+   "track": "ptBrForEn",
+   "xform": "person-swap",
+   "base_prompt": "É importante ___ (fazer, nós) isso hoje.",
+   "base_person": "nós",
+   "new_prompt": "É importante ___ (fazer, eles) isso hoje.",
+   "target_person": "eles",
+   "verb": "fazer",
+   "tense": "personal-infinitive",
+   "answer": "fazerem",
+   "options": [
+    "fazerem",
+    "fazermos",
+    "fazeres",
+    "fazer"
+   ],
+   "correctIndex": 0,
+   "level": "B2",
+   "structure": "personal-infinitive",
+   "risk": "High",
+   "subtitle": "It's important for them ___ (fazer = to do) to do this today.",
+   "explanation": {
+    "en": "The eles/elas (they) form of 'fazer' (personal infinitive) is 'fazerem'.",
+    "es": "La forma de ellos/ellas de 'fazer' (infinitivo personal) es 'fazerem'."
+   },
+   "irregular": "yes",
+   "notes": "PORTUGUESE PERSONAL INFINITIVE — inflected infinitive; the \"(lemma, person)\" hint carries the person. Verify naturalness."
+  }
+ ],
+ "tense_sample": [],
+ "skipped": [
+  {
+   "track": "ptBrForEn",
+   "reason": "progressive (estar + gerund) — the person axis is on the auxiliary 'estar', a separate rule; the gerund is invariant.",
+   "prompt": "Ela está ___ (comer) agora.",
+   "gram_idx": 12,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  },
+  {
+   "track": "ptBrForEn",
+   "reason": "conditional period — the blank is the subordinate verb; main clause 'viajaria' is fixed 1sg → mismatch.",
+   "prompt": "Se eu ___ (ter) dinheiro, viajaria mais.",
+   "gram_idx": 15,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  },
+  {
+   "track": "ptBrForEn",
+   "reason": "conditional period — main clause 'vamos' is fixed 1pl → mismatch if the subordinate person changes.",
+   "prompt": "Se nós ___ (poder), vamos amanhã.",
+   "gram_idx": 17,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  }
+ ]
+}

@@ -136,6 +136,106 @@ const BANK = {
     ["Vós ___ (ser) bem-vindos.", ["sois", "são", "sedes", "éreis"], 0,
       { en: "'Vós sois' — the historical second-person plural, now mostly replaced by 'vocês são'. It survives in the north of Portugal, in church language, and throughout classic literature: you'll never need to produce it, but you WILL meet it.", es: "'Vós sois' — la segunda persona del plural histórica, hoy mayormente reemplazada por 'vocês são'. Sobrevive en el norte de Portugal, en el lenguaje eclesiástico y en toda la literatura clásica: nunca necesitarás producirla, pero SÍ la encontrarás." }, "C2", null,
       { en: "You all ___ (ser = to be) are welcome. (vós — historical)" }],
+    // --- Variant-expansion person-swaps 2026-07-19 (subject-person reworks of existing gram conjugation items; auto-generated, PENDING native review) ---
+    ["Espero que ele ___ bem.", ["estejam", "estejamos", "esteja", "estejas"], 2,
+      { en: "The ele/ela (he/she) form of 'estar' (present subjunctive) is 'esteja'.", es: "La forma de él/ella de 'estar' (presente de subjuntivo) es 'esteja'." }, "A2", null,
+      { en: "I hope he ___ (estar = to be) is well." }],  // ptPt-v-001-p-ele
+    ["Espero que nós ___ bem.", ["estejam", "esteja", "estejas", "estejamos"], 3,
+      { en: "The nós (we) form of 'estar' (present subjunctive) is 'estejamos'.", es: "La forma de nosotros de 'estar' (presente de subjuntivo) es 'estejamos'." }, "A2", null,
+      { en: "I hope we ___ (estar = to be) are well." }],  // ptPt-v-001-p-nós
+    ["Espero que eles ___ bem.", ["esteja", "estejam", "estejas", "estejamos"], 1,
+      { en: "The eles/elas (they) form of 'estar' (present subjunctive) is 'estejam'.", es: "La forma de ellos/ellas de 'estar' (presente de subjuntivo) es 'estejam'." }, "A2", null,
+      { en: "I hope they ___ (estar = to be) are well." }],  // ptPt-v-001-p-eles
+    ["Tu ___ português.", ["é", "somos", "sou", "és"], 3,
+      { en: "The tu (you) form of 'ser' (present) is 'és'.", es: "La forma de tú de 'ser' (presente) es 'és'." }, "A1", null,
+      { en: "You ___ (ser = to be) Portuguese." }],  // ptPt-v-002-p-tu
+    ["Ele ___ português.", ["é", "és", "sou", "são"], 0,
+      { en: "The ele/ela (he/she) form of 'ser' (present) is 'é'.", es: "La forma de él/ella de 'ser' (presente) es 'é'." }, "A1", null,
+      { en: "He ___ (ser = to be) Portuguese." }],  // ptPt-v-002-p-ele
+    ["Nós ___ portugueses.", ["és", "sou", "somos", "é"], 2,
+      { en: "The nós (we) form of 'ser' (present) is 'somos'.", es: "La forma de nosotros de 'ser' (presente) es 'somos'." }, "A1", null,
+      { en: "We ___ (ser = to be) Portuguese." }],  // ptPt-v-002-p-nós
+    ["Eles ___ portugueses.", ["sou", "é", "és", "são"], 3,
+      { en: "The eles/elas (they) form of 'ser' (present) is 'são'.", es: "La forma de ellos/ellas de 'ser' (presente) es 'são'." }, "A1", null,
+      { en: "They ___ (ser = to be) Portuguese." }],  // ptPt-v-002-p-eles
+    ["Eu ___ (ter) razão.", ["tens", "tenho", "têm", "tem"], 1,
+      { en: "The eu (I) form of 'ter' (present) is 'tenho'.", es: "La forma de yo de 'ter' (presente) es 'tenho'." }, "A1", null,
+      { en: "I ___ (ter = to have) am right. (lit. I have reason)" }],  // ptPt-v-003-p-eu
+    ["Ele ___ (ter) razão.", ["temos", "tens", "tenho", "tem"], 3,
+      { en: "The ele/ela (he/she) form of 'ter' (present) is 'tem'.", es: "La forma de él/ella de 'ter' (presente) es 'tem'." }, "A1", null,
+      { en: "He ___ (ter = to have) is right. (lit. he has reason)" }],  // ptPt-v-003-p-ele
+    ["Nós ___ (ter) razão.", ["temos", "tens", "tenho", "têm"], 0,
+      { en: "The nós (we) form of 'ter' (present) is 'temos'.", es: "La forma de nosotros de 'ter' (presente) es 'temos'." }, "A1", null,
+      { en: "We ___ (ter = to have) are right. (lit. we have reason)" }],  // ptPt-v-003-p-nós
+    ["Eles ___ (ter) razão.", ["têm", "tem", "tens", "tenho"], 0,
+      { en: "The eles/elas (they) form of 'ter' (present) is 'têm'.", es: "La forma de ellos/ellas de 'ter' (presente) es 'têm'." }, "A1", null,
+      { en: "They ___ (ter = to have) are right. (lit. they have reason)" }],  // ptPt-v-003-p-eles
+    ["Ontem ___ (falar, tu) com ela.", ["falei", "falaste", "falaram", "falámos"], 1,
+      { en: "The tu (you) form of 'falar' (preterite (simple past)) is 'falaste'.", es: "La forma de tú de 'falar' (pretérito) es 'falaste'." }, "A2", null,
+      { en: "Yesterday you ___ (falar = to speak) spoke with her." }],  // ptPt-v-004-p-tu
+    ["Ontem ___ (falar, ele) com ela.", ["falei", "falaram", "falou", "falámos"], 2,
+      { en: "The ele/ela (he/she) form of 'falar' (preterite (simple past)) is 'falou'.", es: "La forma de él/ella de 'falar' (pretérito) es 'falou'." }, "A2", null,
+      { en: "Yesterday he ___ (falar = to speak) spoke with her." }],  // ptPt-v-004-p-ele
+    ["Ontem ___ (falar, nós) com ela.", ["falámos", "falei", "falaram", "falaste"], 0,
+      { en: "The nós (we) form of 'falar' (preterite (simple past)) is 'falámos'.", es: "La forma de nosotros de 'falar' (pretérito) es 'falámos'." }, "A2", null,
+      { en: "Yesterday we ___ (falar = to speak) spoke with her." }],  // ptPt-v-004-p-nós
+    ["Ontem ___ (falar, eles) com ela.", ["falaste", "falámos", "falei", "falaram"], 3,
+      { en: "The eles/elas (they) form of 'falar' (preterite (simple past)) is 'falaram'.", es: "La forma de ellos/ellas de 'falar' (pretérito) es 'falaram'." }, "A2", null,
+      { en: "Yesterday they ___ (falar = to speak) spoke with her." }],  // ptPt-v-004-p-eles
+    ["Ele ___ (falar) inglês?", ["fala", "falamos", "falas", "falam"], 0,
+      { en: "The ele/ela (he/she) form of 'falar' (present) is 'fala'.", es: "La forma de él/ella de 'falar' (presente) es 'fala'." }, "A1", null,
+      { en: "Does he ___ (falar = to speak) speak English?" }],  // ptPt-v-005-p-ele
+    ["Nós ___ (falar) inglês?", ["falo", "fala", "falam", "falamos"], 3,
+      { en: "The nós (we) form of 'falar' (present) is 'falamos'.", es: "La forma de nosotros de 'falar' (presente) es 'falamos'." }, "A1", null,
+      { en: "Do we ___ (falar = to speak) speak English?" }],  // ptPt-v-005-p-nós
+    ["Eles ___ (falar) inglês?", ["falam", "falas", "falo", "falamos"], 0,
+      { en: "The eles/elas (they) form of 'falar' (present) is 'falam'.", es: "La forma de ellos/ellas de 'falar' (presente) es 'falam'." }, "A1", null,
+      { en: "Do they ___ (falar = to speak) speak English?" }],  // ptPt-v-005-p-eles
+    ["___ (fazer, você) os trabalhos antes de sair, está bem?", ["Faça", "Faz", "Façamos", "Façam"], 0,
+      { en: "The você (you) form of 'fazer' (imperative (command)) is 'Faça'.", es: "La forma de usted de 'fazer' (imperativo) es 'Faça'." }, "A2", null,
+      { en: "___ (fazer = to do) your homework before going out, okay? (formal command)" }],  // ptPt-v-006-p-você
+    ["___ (fazer, nós) os trabalhos antes de sair, está bem?", ["Faça", "Façam", "Façamos", "Faz"], 2,
+      { en: "The nós (we) form of 'fazer' (imperative (command)) is 'Façamos'.", es: "La forma de nosotros de 'fazer' (imperativo) es 'Façamos'." }, "A2", null,
+      { en: "Let's ___ (fazer = to do) the homework before going out, okay?" }],  // ptPt-v-006-p-nós
+    ["___ (fazer, vocês) os trabalhos antes de sair, está bem?", ["Façam", "Faça", "Faz", "Façamos"], 0,
+      { en: "The vocês (you all) form of 'fazer' (imperative (command)) is 'Façam'.", es: "La forma de ustedes de 'fazer' (imperativo) es 'Façam'." }, "A2", null,
+      { en: "___ (fazer = to do) your homework before going out, okay? (you all)" }],  // ptPt-v-006-p-vocês
+    ["Quando ___ (chegar, eu), liga-me.", ["chegarmos", "chegarem", "chegar", "chegares"], 2,
+      { en: "The eu (I) form of 'chegar' (future subjunctive) is 'chegar'.", es: "La forma de yo de 'chegar' (futuro de subjuntivo) es 'chegar'." }, "B1", null,
+      { en: "When I ___ (chegar = to arrive) arrive, call me." }],  // ptPt-v-007-p-eu
+    ["Quando ___ (chegar, ele), liga-me.", ["chegarmos", "chegar", "chegares", "chegarem"], 1,
+      { en: "The ele/ela (he/she) form of 'chegar' (future subjunctive) is 'chegar'.", es: "La forma de él/ella de 'chegar' (futuro de subjuntivo) es 'chegar'." }, "B1", null,
+      { en: "When he ___ (chegar = to arrive) arrives, call me." }],  // ptPt-v-007-p-ele
+    ["Quando ___ (chegar, nós), liga-me.", ["chegarem", "chegarmos", "chegares", "chegar"], 1,
+      { en: "The nós (we) form of 'chegar' (future subjunctive) is 'chegarmos'.", es: "La forma de nosotros de 'chegar' (futuro de subjuntivo) es 'chegarmos'." }, "B1", null,
+      { en: "When we ___ (chegar = to arrive) arrive, call me." }],  // ptPt-v-007-p-nós
+    ["Quando ___ (chegar, eles), liga-me.", ["chegarem", "chegar", "chegares", "chegarmos"], 0,
+      { en: "The eles/elas (they) form of 'chegar' (future subjunctive) is 'chegarem'.", es: "La forma de ellos/ellas de 'chegar' (futuro de subjuntivo) es 'chegarem'." }, "B1", null,
+      { en: "When they ___ (chegar = to arrive) arrive, call me." }],  // ptPt-v-007-p-eles
+    ["É melhor ___ (ir, eu) andando.", ["ires", "irem", "irmos", "ir"], 3,
+      { en: "The eu (I) form of 'ir' (personal infinitive) is 'ir'.", es: "La forma de yo de 'ir' (infinitivo personal) es 'ir'." }, "B2", null,
+      { en: "It's better for me ___ (ir = to go) to get going." }],  // ptPt-v-008-p-eu
+    ["É melhor ___ (ir, tu) andando.", ["irmos", "irem", "ires", "ir"], 2,
+      { en: "The tu (you) form of 'ir' (personal infinitive) is 'ires'.", es: "La forma de tú de 'ir' (infinitivo personal) es 'ires'." }, "B2", null,
+      { en: "It's better for you ___ (ir = to go) to get going." }],  // ptPt-v-008-p-tu
+    ["É melhor ___ (ir, eles) andando.", ["ires", "ir", "irem", "irmos"], 2,
+      { en: "The eles/elas (they) form of 'ir' (personal infinitive) is 'irem'.", es: "La forma de ellos/ellas de 'ir' (infinitivo personal) es 'irem'." }, "B2", null,
+      { en: "It's better for them ___ (ir = to go) to get going." }],  // ptPt-v-008-p-eles
+    ["Eu ___ (ser) bem-vindo.", ["é", "são", "sou", "somos"], 2,
+      { en: "The eu (I) form of 'ser' (present) is 'sou'.", es: "La forma de yo de 'ser' (presente) es 'sou'." }, "C1", null,
+      { en: "I ___ (ser = to be) am welcome." }],  // ptPt-v-009-p-eu
+    ["Tu ___ (ser) bem-vindo.", ["é", "sou", "são", "és"], 3,
+      { en: "The tu (you) form of 'ser' (present) is 'és'.", es: "La forma de tú de 'ser' (presente) es 'és'." }, "C1", null,
+      { en: "You ___ (ser = to be) are welcome." }],  // ptPt-v-009-p-tu
+    ["Ele ___ (ser) bem-vindo.", ["é", "sou", "és", "são"], 0,
+      { en: "The ele/ela (he/she) form of 'ser' (present) is 'é'.", es: "La forma de él/ella de 'ser' (presente) es 'é'." }, "C1", null,
+      { en: "He ___ (ser = to be) is welcome." }],  // ptPt-v-009-p-ele
+    ["Nós ___ (ser) bem-vindos.", ["és", "são", "somos", "é"], 2,
+      { en: "The nós (we) form of 'ser' (present) is 'somos'.", es: "La forma de nosotros de 'ser' (presente) es 'somos'." }, "C1", null,
+      { en: "We ___ (ser = to be) are welcome." }],  // ptPt-v-009-p-nós
+    ["Eles ___ (ser) bem-vindos.", ["é", "sou", "és", "são"], 3,
+      { en: "The eles/elas (they) form of 'ser' (present) is 'são'.", es: "La forma de ellos/ellas de 'ser' (presente) es 'são'." }, "C1", null,
+      { en: "They ___ (ser = to be) are welcome." }],  // ptPt-v-009-p-eles
   ],
   trad: [
     ["Translate: 'She's full of energy today.'", ["Ela está com a corda toda.", "Ela está muito energética.", "Ela está bastante ativa.", "Ela está com muita força."], 0,

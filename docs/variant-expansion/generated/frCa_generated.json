@@ -1,0 +1,489 @@
+{
+ "language": "French (Québec)",
+ "track": "frCaForEn",
+ "code": "frCa",
+ "generated_date": "2026-07-19",
+ "method": "Phase 1 person-swap (docs/variant-expansion/00-methodology.md); forms via verbecc, verified.",
+ "convention": "Québécois French (standard grammar; the track also teaches casual regional forms — those were NOT transformed).",
+ "counts": {
+  "base_items_transformed": 3,
+  "person_variants": 15,
+  "not_transformed": 3
+ },
+ "person": [
+  {
+   "bid": "frCa-v-001",
+   "vid": "frCa-v-001-p-je",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faut que tu ___ tes devoirs.",
+   "base_person": "tu",
+   "new_prompt": "Il faut que je ___ mes devoirs.",
+   "target_person": "je",
+   "verb": "faire",
+   "tense": "present-subjunctive",
+   "answer": "fasse",
+   "options": [
+    "fassent",
+    "fasses",
+    "fasse",
+    "fassions"
+   ],
+   "correctIndex": 2,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "I have to ___ (faire = to do) my homework.",
+   "explanation": {
+    "en": "The je (I) form of 'faire' (present subjunctive) is 'fasse'.",
+    "es": "La forma de yo de 'faire' (presente de subjuntivo) es 'fasse'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "frCa-v-001",
+   "vid": "frCa-v-001-p-il",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faut que tu ___ tes devoirs.",
+   "base_person": "tu",
+   "new_prompt": "Il faut qu'il ___ ses devoirs.",
+   "target_person": "il",
+   "verb": "faire",
+   "tense": "present-subjunctive",
+   "answer": "fasse",
+   "options": [
+    "fasses",
+    "fassiez",
+    "fasse",
+    "fassent"
+   ],
+   "correctIndex": 2,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "He has to ___ (faire = to do) his homework.",
+   "explanation": {
+    "en": "The il/elle (he/she) form of 'faire' (present subjunctive) is 'fasse'.",
+    "es": "La forma de él/ella de 'faire' (presente de subjuntivo) es 'fasse'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "frCa-v-001",
+   "vid": "frCa-v-001-p-nous",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faut que tu ___ tes devoirs.",
+   "base_person": "tu",
+   "new_prompt": "Il faut que nous ___ nos devoirs.",
+   "target_person": "nous",
+   "verb": "faire",
+   "tense": "present-subjunctive",
+   "answer": "fassions",
+   "options": [
+    "fasse",
+    "fassions",
+    "fassent",
+    "fassiez"
+   ],
+   "correctIndex": 1,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "We have to ___ (faire = to do) our homework.",
+   "explanation": {
+    "en": "The nous (we) form of 'faire' (present subjunctive) is 'fassions'.",
+    "es": "La forma de nosotros de 'faire' (presente de subjuntivo) es 'fassions'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "frCa-v-001",
+   "vid": "frCa-v-001-p-vous",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faut que tu ___ tes devoirs.",
+   "base_person": "tu",
+   "new_prompt": "Il faut que vous ___ vos devoirs.",
+   "target_person": "vous",
+   "verb": "faire",
+   "tense": "present-subjunctive",
+   "answer": "fassiez",
+   "options": [
+    "fasse",
+    "fassent",
+    "fassiez",
+    "fasses"
+   ],
+   "correctIndex": 2,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "You (all) have to ___ (faire = to do) your homework.",
+   "explanation": {
+    "en": "The vous (you all/formal) form of 'faire' (present subjunctive) is 'fassiez'.",
+    "es": "La forma de vosotros/ustedes de 'faire' (presente de subjuntivo) es 'fassiez'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "frCa-v-001",
+   "vid": "frCa-v-001-p-ils",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faut que tu ___ tes devoirs.",
+   "base_person": "tu",
+   "new_prompt": "Il faut qu'ils ___ leurs devoirs.",
+   "target_person": "ils",
+   "verb": "faire",
+   "tense": "present-subjunctive",
+   "answer": "fassent",
+   "options": [
+    "fasse",
+    "fassiez",
+    "fassent",
+    "fasses"
+   ],
+   "correctIndex": 2,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "They have to ___ (faire = to do) their homework.",
+   "explanation": {
+    "en": "The ils/elles (they) form of 'faire' (present subjunctive) is 'fassent'.",
+    "es": "La forma de ellos/ellas de 'faire' (presente de subjuntivo) es 'fassent'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "frCa-v-002",
+   "vid": "frCa-v-002-p-tu",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ de Montréal.",
+   "base_person": "je",
+   "new_prompt": "Tu ___ de Montréal.",
+   "target_person": "tu",
+   "verb": "être",
+   "tense": "present",
+   "answer": "es",
+   "options": [
+    "est",
+    "sommes",
+    "suis",
+    "es"
+   ],
+   "correctIndex": 3,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "You ___ (être = to be) from Montreal.",
+   "explanation": {
+    "en": "The tu (you) form of 'être' (present) is 'es'.",
+    "es": "La forma de tú de 'être' (presente) es 'es'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "frCa-v-002",
+   "vid": "frCa-v-002-p-il",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ de Montréal.",
+   "base_person": "je",
+   "new_prompt": "Il ___ de Montréal.",
+   "target_person": "il",
+   "verb": "être",
+   "tense": "present",
+   "answer": "est",
+   "options": [
+    "suis",
+    "est",
+    "sont",
+    "êtes"
+   ],
+   "correctIndex": 1,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "He ___ (être = to be) from Montreal.",
+   "explanation": {
+    "en": "The il/elle (he/she) form of 'être' (present) is 'est'.",
+    "es": "La forma de él/ella de 'être' (presente) es 'est'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "frCa-v-002",
+   "vid": "frCa-v-002-p-nous",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ de Montréal.",
+   "base_person": "je",
+   "new_prompt": "Nous ___ de Montréal.",
+   "target_person": "nous",
+   "verb": "être",
+   "tense": "present",
+   "answer": "sommes",
+   "options": [
+    "êtes",
+    "sommes",
+    "suis",
+    "est"
+   ],
+   "correctIndex": 1,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "We ___ (être = to be) from Montreal.",
+   "explanation": {
+    "en": "The nous (we) form of 'être' (present) is 'sommes'.",
+    "es": "La forma de nosotros de 'être' (presente) es 'sommes'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "frCa-v-002",
+   "vid": "frCa-v-002-p-vous",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ de Montréal.",
+   "base_person": "je",
+   "new_prompt": "Vous ___ de Montréal.",
+   "target_person": "vous",
+   "verb": "être",
+   "tense": "present",
+   "answer": "êtes",
+   "options": [
+    "est",
+    "êtes",
+    "suis",
+    "es"
+   ],
+   "correctIndex": 1,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "You (all) ___ (être = to be) from Montreal.",
+   "explanation": {
+    "en": "The vous (you all/formal) form of 'être' (present) is 'êtes'.",
+    "es": "La forma de vosotros/ustedes de 'être' (presente) es 'êtes'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "frCa-v-002",
+   "vid": "frCa-v-002-p-ils",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ de Montréal.",
+   "base_person": "je",
+   "new_prompt": "Ils ___ de Montréal.",
+   "target_person": "ils",
+   "verb": "être",
+   "tense": "present",
+   "answer": "sont",
+   "options": [
+    "suis",
+    "est",
+    "êtes",
+    "sont"
+   ],
+   "correctIndex": 3,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "They ___ (être = to be) from Montreal.",
+   "explanation": {
+    "en": "The ils/elles (they) form of 'être' (present) is 'sont'.",
+    "es": "La forma de ellos/ellas de 'être' (presente) es 'sont'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "frCa-v-003",
+   "vid": "frCa-v-003-p-je",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faudrait que tu ___ là avant midi.",
+   "base_person": "tu",
+   "new_prompt": "Il faudrait que je ___ là avant midi.",
+   "target_person": "je",
+   "verb": "être",
+   "tense": "present-subjunctive",
+   "answer": "sois",
+   "options": [
+    "soient",
+    "soyez",
+    "sois",
+    "soyons"
+   ],
+   "correctIndex": 2,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "I'd need to ___ (être = to be) there before noon.",
+   "explanation": {
+    "en": "The je (I) form of 'être' (present subjunctive) is 'sois'.",
+    "es": "La forma de yo de 'être' (presente de subjuntivo) es 'sois'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "frCa-v-003",
+   "vid": "frCa-v-003-p-il",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faudrait que tu ___ là avant midi.",
+   "base_person": "tu",
+   "new_prompt": "Il faudrait qu'il ___ là avant midi.",
+   "target_person": "il",
+   "verb": "être",
+   "tense": "present-subjunctive",
+   "answer": "soit",
+   "options": [
+    "soient",
+    "soit",
+    "sois",
+    "soyons"
+   ],
+   "correctIndex": 1,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "He'd need to ___ (être = to be) there before noon.",
+   "explanation": {
+    "en": "The il/elle (he/she) form of 'être' (present subjunctive) is 'soit'.",
+    "es": "La forma de él/ella de 'être' (presente de subjuntivo) es 'soit'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "frCa-v-003",
+   "vid": "frCa-v-003-p-nous",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faudrait que tu ___ là avant midi.",
+   "base_person": "tu",
+   "new_prompt": "Il faudrait que nous ___ là avant midi.",
+   "target_person": "nous",
+   "verb": "être",
+   "tense": "present-subjunctive",
+   "answer": "soyons",
+   "options": [
+    "soyons",
+    "soyez",
+    "soient",
+    "sois"
+   ],
+   "correctIndex": 0,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "We'd need to ___ (être = to be) there before noon.",
+   "explanation": {
+    "en": "The nous (we) form of 'être' (present subjunctive) is 'soyons'.",
+    "es": "La forma de nosotros de 'être' (presente de subjuntivo) es 'soyons'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "frCa-v-003",
+   "vid": "frCa-v-003-p-vous",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faudrait que tu ___ là avant midi.",
+   "base_person": "tu",
+   "new_prompt": "Il faudrait que vous ___ là avant midi.",
+   "target_person": "vous",
+   "verb": "être",
+   "tense": "present-subjunctive",
+   "answer": "soyez",
+   "options": [
+    "soient",
+    "soyez",
+    "soit",
+    "soyons"
+   ],
+   "correctIndex": 1,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "You (all) would need to ___ (être = to be) there before noon.",
+   "explanation": {
+    "en": "The vous (you all/formal) form of 'être' (present subjunctive) is 'soyez'.",
+    "es": "La forma de vosotros/ustedes de 'être' (presente de subjuntivo) es 'soyez'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "frCa-v-003",
+   "vid": "frCa-v-003-p-ils",
+   "track": "frCaForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faudrait que tu ___ là avant midi.",
+   "base_person": "tu",
+   "new_prompt": "Il faudrait qu'ils ___ là avant midi.",
+   "target_person": "ils",
+   "verb": "être",
+   "tense": "present-subjunctive",
+   "answer": "soient",
+   "options": [
+    "soient",
+    "soit",
+    "sois",
+    "soyons"
+   ],
+   "correctIndex": 0,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "They'd need to ___ (être = to be) there before noon.",
+   "explanation": {
+    "en": "The ils/elles (they) form of 'être' (present subjunctive) is 'soient'.",
+    "es": "La forma de ellos/ellas de 'être' (presente de subjuntivo) es 'soient'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  }
+ ],
+ "tense_sample": [],
+ "skipped": [
+  {
+   "track": "frCaForEn",
+   "reason": "comparative (plus/moins) — not a verb-conjugation drill.",
+   "prompt": "Elle est ___ grande que sa sœur.",
+   "gram_idx": 13,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  },
+  {
+   "track": "frCaForEn",
+   "reason": "Québécois casual-usage judgment (contraction of 'je suis') — not a person-conjugation drill.",
+   "prompt": "Chu fatigué.",
+   "gram_idx": 1,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  },
+  {
+   "track": "frCaForEn",
+   "reason": "Québécois casual-usage judgment — dialectal form, not a standard person drill.",
+   "prompt": "Je vas au magasin.",
+   "gram_idx": 12,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  }
+ ]
+}

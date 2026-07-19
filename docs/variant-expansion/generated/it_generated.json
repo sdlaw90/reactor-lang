@@ -1,0 +1,653 @@
+{
+ "language": "Italian",
+ "track": "itForEn",
+ "code": "it",
+ "generated_date": "2026-07-19",
+ "method": "Phase 1 person-swap (docs/variant-expansion/00-methodology.md); forms via verbecc, verified.",
+ "convention": "Standard Italian (io/tu/lui/lei/noi/voi/loro).",
+ "counts": {
+  "base_items_transformed": 4,
+  "person_variants": 20,
+  "not_transformed": 5
+ },
+ "person": [
+  {
+   "bid": "it-v-001",
+   "vid": "it-v-001-p-tu",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Io ___ italiano.",
+   "base_person": "io",
+   "new_prompt": "Tu ___ italiano.",
+   "target_person": "tu",
+   "verb": "essere",
+   "tense": "present",
+   "answer": "sei",
+   "options": [
+    "sei",
+    "siete",
+    "siamo",
+    "è"
+   ],
+   "correctIndex": 0,
+   "level": "A1",
+   "structure": "standard(copular)",
+   "risk": "Medium",
+   "subtitle": "You ___ (essere = to be) Italian.",
+   "explanation": {
+    "en": "The tu (you) form of 'essere' (present) is 'sei'.",
+    "es": "La forma de tú de 'essere' (presente) es 'sei'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "it-v-001",
+   "vid": "it-v-001-p-lui",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Io ___ italiano.",
+   "base_person": "io",
+   "new_prompt": "Lui ___ italiano.",
+   "target_person": "lui",
+   "verb": "essere",
+   "tense": "present",
+   "answer": "è",
+   "options": [
+    "sei",
+    "siamo",
+    "è",
+    "siete"
+   ],
+   "correctIndex": 2,
+   "level": "A1",
+   "structure": "standard(copular)",
+   "risk": "Medium",
+   "subtitle": "He ___ (essere = to be) Italian.",
+   "explanation": {
+    "en": "The lui/lei (he/she) form of 'essere' (present) is 'è'.",
+    "es": "La forma de él/ella de 'essere' (presente) es 'è'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "it-v-001",
+   "vid": "it-v-001-p-noi",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Io ___ italiano.",
+   "base_person": "io",
+   "new_prompt": "Noi ___ italiani.",
+   "target_person": "noi",
+   "verb": "essere",
+   "tense": "present",
+   "answer": "siamo",
+   "options": [
+    "sono",
+    "siete",
+    "sei",
+    "siamo"
+   ],
+   "correctIndex": 3,
+   "level": "A1",
+   "structure": "standard(copular)",
+   "risk": "Medium",
+   "subtitle": "We ___ (essere = to be) Italian.",
+   "explanation": {
+    "en": "The noi (we) form of 'essere' (present) is 'siamo'.",
+    "es": "La forma de nosotros de 'essere' (presente) es 'siamo'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "it-v-001",
+   "vid": "it-v-001-p-voi",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Io ___ italiano.",
+   "base_person": "io",
+   "new_prompt": "Voi ___ italiani.",
+   "target_person": "voi",
+   "verb": "essere",
+   "tense": "present",
+   "answer": "siete",
+   "options": [
+    "sono",
+    "è",
+    "siete",
+    "siamo"
+   ],
+   "correctIndex": 2,
+   "level": "A1",
+   "structure": "standard(copular)",
+   "risk": "Medium",
+   "subtitle": "You (all) ___ (essere = to be) Italian.",
+   "explanation": {
+    "en": "The voi (you all) form of 'essere' (present) is 'siete'.",
+    "es": "La forma de vosotros de 'essere' (presente) es 'siete'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "it-v-001",
+   "vid": "it-v-001-p-loro",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Io ___ italiano.",
+   "base_person": "io",
+   "new_prompt": "Loro ___ italiani.",
+   "target_person": "loro",
+   "verb": "essere",
+   "tense": "present",
+   "answer": "sono",
+   "options": [
+    "è",
+    "siamo",
+    "sei",
+    "sono"
+   ],
+   "correctIndex": 3,
+   "level": "A1",
+   "structure": "standard(copular)",
+   "risk": "Medium",
+   "subtitle": "They ___ (essere = to be) Italian.",
+   "explanation": {
+    "en": "The loro (they) form of 'essere' (present) is 'sono'.",
+    "es": "La forma de ellos/ellas de 'essere' (presente) es 'sono'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "it-v-002",
+   "vid": "it-v-002-p-io",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Noi ___ (avere) fame.",
+   "base_person": "noi",
+   "new_prompt": "Io ___ (avere) fame.",
+   "target_person": "io",
+   "verb": "avere",
+   "tense": "present",
+   "answer": "ho",
+   "options": [
+    "avete",
+    "ho",
+    "abbiamo",
+    "ha"
+   ],
+   "correctIndex": 1,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "I ___ (avere = to have) am hungry. (lit. I have hunger.)",
+   "explanation": {
+    "en": "The io (I) form of 'avere' (present) is 'ho'.",
+    "es": "La forma de yo de 'avere' (presente) es 'ho'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "it-v-002",
+   "vid": "it-v-002-p-tu",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Noi ___ (avere) fame.",
+   "base_person": "noi",
+   "new_prompt": "Tu ___ (avere) fame.",
+   "target_person": "tu",
+   "verb": "avere",
+   "tense": "present",
+   "answer": "hai",
+   "options": [
+    "avete",
+    "ho",
+    "hanno",
+    "hai"
+   ],
+   "correctIndex": 3,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "You ___ (avere = to have) are hungry. (lit. you have hunger.)",
+   "explanation": {
+    "en": "The tu (you) form of 'avere' (present) is 'hai'.",
+    "es": "La forma de tú de 'avere' (presente) es 'hai'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "it-v-002",
+   "vid": "it-v-002-p-lui",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Noi ___ (avere) fame.",
+   "base_person": "noi",
+   "new_prompt": "Lui ___ (avere) fame.",
+   "target_person": "lui",
+   "verb": "avere",
+   "tense": "present",
+   "answer": "ha",
+   "options": [
+    "ha",
+    "hai",
+    "abbiamo",
+    "ho"
+   ],
+   "correctIndex": 0,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "He ___ (avere = to have) is hungry. (lit. he has hunger.)",
+   "explanation": {
+    "en": "The lui/lei (he/she) form of 'avere' (present) is 'ha'.",
+    "es": "La forma de él/ella de 'avere' (presente) es 'ha'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "it-v-002",
+   "vid": "it-v-002-p-voi",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Noi ___ (avere) fame.",
+   "base_person": "noi",
+   "new_prompt": "Voi ___ (avere) fame.",
+   "target_person": "voi",
+   "verb": "avere",
+   "tense": "present",
+   "answer": "avete",
+   "options": [
+    "ha",
+    "hai",
+    "avete",
+    "abbiamo"
+   ],
+   "correctIndex": 2,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "You (all) ___ (avere = to have) are hungry. (lit. you have hunger.)",
+   "explanation": {
+    "en": "The voi (you all) form of 'avere' (present) is 'avete'.",
+    "es": "La forma de vosotros de 'avere' (presente) es 'avete'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "it-v-002",
+   "vid": "it-v-002-p-loro",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Noi ___ (avere) fame.",
+   "base_person": "noi",
+   "new_prompt": "Loro ___ (avere) fame.",
+   "target_person": "loro",
+   "verb": "avere",
+   "tense": "present",
+   "answer": "hanno",
+   "options": [
+    "hai",
+    "hanno",
+    "ho",
+    "avete"
+   ],
+   "correctIndex": 1,
+   "level": "A1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "They ___ (avere = to have) are hungry. (lit. they have hunger.)",
+   "explanation": {
+    "en": "The loro (they) form of 'avere' (present) is 'hanno'.",
+    "es": "La forma de ellos/ellas de 'avere' (presente) es 'hanno'."
+   },
+   "irregular": "yes",
+   "notes": "Present-tense person-swap."
+  },
+  {
+   "bid": "it-v-003",
+   "vid": "it-v-003-p-tu",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Domani ___ (andare, io) al mare.",
+   "base_person": "io",
+   "new_prompt": "Domani ___ (andare, tu) al mare.",
+   "target_person": "tu",
+   "verb": "andare",
+   "tense": "future",
+   "answer": "andrai",
+   "options": [
+    "andrò",
+    "andrai",
+    "andranno",
+    "andrete"
+   ],
+   "correctIndex": 1,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "Tomorrow you ___ (andare = to go) will go to the beach.",
+   "explanation": {
+    "en": "The tu (you) form of 'andare' (future) is 'andrai'.",
+    "es": "La forma de tú de 'andare' (futuro) es 'andrai'."
+   },
+   "irregular": "yes",
+   "notes": "Future-tense person-swap."
+  },
+  {
+   "bid": "it-v-003",
+   "vid": "it-v-003-p-lui",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Domani ___ (andare, io) al mare.",
+   "base_person": "io",
+   "new_prompt": "Domani ___ (andare, lui) al mare.",
+   "target_person": "lui",
+   "verb": "andare",
+   "tense": "future",
+   "answer": "andrà",
+   "options": [
+    "andrete",
+    "andrai",
+    "andremo",
+    "andrà"
+   ],
+   "correctIndex": 3,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "Tomorrow he ___ (andare = to go) will go to the beach.",
+   "explanation": {
+    "en": "The lui/lei (he/she) form of 'andare' (future) is 'andrà'.",
+    "es": "La forma de él/ella de 'andare' (futuro) es 'andrà'."
+   },
+   "irregular": "yes",
+   "notes": "Future-tense person-swap."
+  },
+  {
+   "bid": "it-v-003",
+   "vid": "it-v-003-p-noi",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Domani ___ (andare, io) al mare.",
+   "base_person": "io",
+   "new_prompt": "Domani ___ (andare, noi) al mare.",
+   "target_person": "noi",
+   "verb": "andare",
+   "tense": "future",
+   "answer": "andremo",
+   "options": [
+    "andrà",
+    "andranno",
+    "andrete",
+    "andremo"
+   ],
+   "correctIndex": 3,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "Tomorrow we ___ (andare = to go) will go to the beach.",
+   "explanation": {
+    "en": "The noi (we) form of 'andare' (future) is 'andremo'.",
+    "es": "La forma de nosotros de 'andare' (futuro) es 'andremo'."
+   },
+   "irregular": "yes",
+   "notes": "Future-tense person-swap."
+  },
+  {
+   "bid": "it-v-003",
+   "vid": "it-v-003-p-voi",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Domani ___ (andare, io) al mare.",
+   "base_person": "io",
+   "new_prompt": "Domani ___ (andare, voi) al mare.",
+   "target_person": "voi",
+   "verb": "andare",
+   "tense": "future",
+   "answer": "andrete",
+   "options": [
+    "andranno",
+    "andrò",
+    "andrete",
+    "andremo"
+   ],
+   "correctIndex": 2,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "Tomorrow you (all) ___ (andare = to go) will go to the beach.",
+   "explanation": {
+    "en": "The voi (you all) form of 'andare' (future) is 'andrete'.",
+    "es": "La forma de vosotros de 'andare' (futuro) es 'andrete'."
+   },
+   "irregular": "yes",
+   "notes": "Future-tense person-swap."
+  },
+  {
+   "bid": "it-v-003",
+   "vid": "it-v-003-p-loro",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Domani ___ (andare, io) al mare.",
+   "base_person": "io",
+   "new_prompt": "Domani ___ (andare, loro) al mare.",
+   "target_person": "loro",
+   "verb": "andare",
+   "tense": "future",
+   "answer": "andranno",
+   "options": [
+    "andrà",
+    "andranno",
+    "andrai",
+    "andremo"
+   ],
+   "correctIndex": 1,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "Tomorrow they ___ (andare = to go) will go to the beach.",
+   "explanation": {
+    "en": "The loro (they) form of 'andare' (future) is 'andranno'.",
+    "es": "La forma de ellos/ellas de 'andare' (futuro) es 'andranno'."
+   },
+   "irregular": "yes",
+   "notes": "Future-tense person-swap."
+  },
+  {
+   "bid": "it-v-004",
+   "vid": "it-v-004-p-io",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Che tu ___ (volere) o no, si parte alle sei.",
+   "base_person": "tu",
+   "new_prompt": "Che io ___ (volere) o no, si parte alle sei.",
+   "target_person": "io",
+   "verb": "volere",
+   "tense": "present-subjunctive",
+   "answer": "voglia",
+   "options": [
+    "voglia",
+    "vogliamo",
+    "vogliate",
+    "vogliano"
+   ],
+   "correctIndex": 0,
+   "level": "C1",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "Whether I ___ (volere = to want) like it or not, we leave at six.",
+   "explanation": {
+    "en": "The io (I) form of 'volere' (present subjunctive) is 'voglia'.",
+    "es": "La forma de yo de 'volere' (presente de subjuntivo) es 'voglia'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "it-v-004",
+   "vid": "it-v-004-p-lui",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Che tu ___ (volere) o no, si parte alle sei.",
+   "base_person": "tu",
+   "new_prompt": "Che lui ___ (volere) o no, si parte alle sei.",
+   "target_person": "lui",
+   "verb": "volere",
+   "tense": "present-subjunctive",
+   "answer": "voglia",
+   "options": [
+    "vogliano",
+    "vogliamo",
+    "vogliate",
+    "voglia"
+   ],
+   "correctIndex": 3,
+   "level": "C1",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "Whether he ___ (volere = to want) likes it or not, we leave at six.",
+   "explanation": {
+    "en": "The lui/lei (he/she) form of 'volere' (present subjunctive) is 'voglia'.",
+    "es": "La forma de él/ella de 'volere' (presente de subjuntivo) es 'voglia'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "it-v-004",
+   "vid": "it-v-004-p-noi",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Che tu ___ (volere) o no, si parte alle sei.",
+   "base_person": "tu",
+   "new_prompt": "Che noi ___ (volere) o no, si parte alle sei.",
+   "target_person": "noi",
+   "verb": "volere",
+   "tense": "present-subjunctive",
+   "answer": "vogliamo",
+   "options": [
+    "vogliano",
+    "vogliamo",
+    "voglia",
+    "vogliate"
+   ],
+   "correctIndex": 1,
+   "level": "C1",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "Whether we ___ (volere = to want) like it or not, we leave at six.",
+   "explanation": {
+    "en": "The noi (we) form of 'volere' (present subjunctive) is 'vogliamo'.",
+    "es": "La forma de nosotros de 'volere' (presente de subjuntivo) es 'vogliamo'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "it-v-004",
+   "vid": "it-v-004-p-voi",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Che tu ___ (volere) o no, si parte alle sei.",
+   "base_person": "tu",
+   "new_prompt": "Che voi ___ (volere) o no, si parte alle sei.",
+   "target_person": "voi",
+   "verb": "volere",
+   "tense": "present-subjunctive",
+   "answer": "vogliate",
+   "options": [
+    "voglia",
+    "vogliate",
+    "vogliamo",
+    "vogliano"
+   ],
+   "correctIndex": 1,
+   "level": "C1",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "Whether you (all) ___ (volere = to want) like it or not, we leave at six.",
+   "explanation": {
+    "en": "The voi (you all) form of 'volere' (present subjunctive) is 'vogliate'.",
+    "es": "La forma de vosotros de 'volere' (presente de subjuntivo) es 'vogliate'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "it-v-004",
+   "vid": "it-v-004-p-loro",
+   "track": "itForEn",
+   "xform": "person-swap",
+   "base_prompt": "Che tu ___ (volere) o no, si parte alle sei.",
+   "base_person": "tu",
+   "new_prompt": "Che loro ___ (volere) o no, si parte alle sei.",
+   "target_person": "loro",
+   "verb": "volere",
+   "tense": "present-subjunctive",
+   "answer": "vogliano",
+   "options": [
+    "vogliamo",
+    "vogliano",
+    "vogliate",
+    "voglia"
+   ],
+   "correctIndex": 1,
+   "level": "C1",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "Whether they ___ (volere = to want) like it or not, we leave at six.",
+   "explanation": {
+    "en": "The loro (they) form of 'volere' (present subjunctive) is 'vogliano'.",
+    "es": "La forma de ellos/ellas de 'volere' (presente de subjuntivo) es 'vogliano'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  }
+ ],
+ "tense_sample": [],
+ "skipped": [
+  {
+   "track": "itForEn",
+   "reason": "auxiliary-choice drill (avere vs essere) with an implied subject — pedagogy is auxiliary selection, not person.",
+   "prompt": "Ieri ___ (avere/essere?) mangiato una pizza buonissima.",
+   "gram_idx": 11,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  },
+  {
+   "track": "itForEn",
+   "reason": "noun subject (Maria) → 3rd-person locked (person-swap would change the meaning).",
+   "prompt": "Ieri Maria ___ (dormire) fino a tardi.",
+   "gram_idx": 14,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  },
+  {
+   "track": "itForEn",
+   "reason": "hypothetical period — the subordinate 'Se avessi' subject is fixed text, so swapping only the main verb's person creates a subject mismatch across clauses.",
+   "prompt": "Se avessi tempo, ___ (viaggiare, io) di più.",
+   "gram_idx": 15,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  },
+  {
+   "track": "itForEn",
+   "reason": "impersonal subject ('it was late') — no personal person axis.",
+   "prompt": "Benché ___ (essere) tardi, siamo usciti lo stesso.",
+   "gram_idx": 16,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  },
+  {
+   "track": "itForEn",
+   "reason": "the blank is the subordinate verb; the main clause 'ti avrei avvisato' is fixed 1sg → person mismatch.",
+   "prompt": "Se lo ___ (sapere) prima, ti avrei avvisato.",
+   "gram_idx": 17,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  }
+ ]
+}

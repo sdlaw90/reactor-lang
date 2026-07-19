@@ -130,6 +130,67 @@ const BANK = {
     ["Che tu ___ (volere) o no, si parte alle sei.", ["voglia", "vuoi", "vorrai", "volessi"], 0,
       { en: "The concessive formula 'che tu voglia o no' (whether you like it or not) runs on the present subjunctive — same family as Spanish's 'quieras o no'.", es: "La fórmula concesiva 'che tu voglia o no' (quieras o no) funciona con el presente de subjuntivo — la misma familia que el español 'quieras o no'." }, "C2", null,
       { en: "Whether you ___ (volere = to want) like it or not, we leave at six." }],
+    // --- Variant-expansion person-swaps 2026-07-19 (subject-person reworks of existing gram conjugation items; auto-generated, PENDING native review) ---
+    ["Tu ___ italiano.", ["sei", "siete", "siamo", "è"], 0,
+      { en: "The tu (you) form of 'essere' (present) is 'sei'.", es: "La forma de tú de 'essere' (presente) es 'sei'." }, "A1", null,
+      { en: "You ___ (essere = to be) Italian." }],  // it-v-001-p-tu
+    ["Lui ___ italiano.", ["sei", "siamo", "è", "siete"], 2,
+      { en: "The lui/lei (he/she) form of 'essere' (present) is 'è'.", es: "La forma de él/ella de 'essere' (presente) es 'è'." }, "A1", null,
+      { en: "He ___ (essere = to be) Italian." }],  // it-v-001-p-lui
+    ["Noi ___ italiani.", ["sono", "siete", "sei", "siamo"], 3,
+      { en: "The noi (we) form of 'essere' (present) is 'siamo'.", es: "La forma de nosotros de 'essere' (presente) es 'siamo'." }, "A1", null,
+      { en: "We ___ (essere = to be) Italian." }],  // it-v-001-p-noi
+    ["Voi ___ italiani.", ["sono", "è", "siete", "siamo"], 2,
+      { en: "The voi (you all) form of 'essere' (present) is 'siete'.", es: "La forma de vosotros de 'essere' (presente) es 'siete'." }, "A1", null,
+      { en: "You (all) ___ (essere = to be) Italian." }],  // it-v-001-p-voi
+    ["Loro ___ italiani.", ["è", "siamo", "sei", "sono"], 3,
+      { en: "The loro (they) form of 'essere' (present) is 'sono'.", es: "La forma de ellos/ellas de 'essere' (presente) es 'sono'." }, "A1", null,
+      { en: "They ___ (essere = to be) Italian." }],  // it-v-001-p-loro
+    ["Io ___ (avere) fame.", ["avete", "ho", "abbiamo", "ha"], 1,
+      { en: "The io (I) form of 'avere' (present) is 'ho'.", es: "La forma de yo de 'avere' (presente) es 'ho'." }, "A1", null,
+      { en: "I ___ (avere = to have) am hungry. (lit. I have hunger.)" }],  // it-v-002-p-io
+    ["Tu ___ (avere) fame.", ["avete", "ho", "hanno", "hai"], 3,
+      { en: "The tu (you) form of 'avere' (present) is 'hai'.", es: "La forma de tú de 'avere' (presente) es 'hai'." }, "A1", null,
+      { en: "You ___ (avere = to have) are hungry. (lit. you have hunger.)" }],  // it-v-002-p-tu
+    ["Lui ___ (avere) fame.", ["ha", "hai", "abbiamo", "ho"], 0,
+      { en: "The lui/lei (he/she) form of 'avere' (present) is 'ha'.", es: "La forma de él/ella de 'avere' (presente) es 'ha'." }, "A1", null,
+      { en: "He ___ (avere = to have) is hungry. (lit. he has hunger.)" }],  // it-v-002-p-lui
+    ["Voi ___ (avere) fame.", ["ha", "hai", "avete", "abbiamo"], 2,
+      { en: "The voi (you all) form of 'avere' (present) is 'avete'.", es: "La forma de vosotros de 'avere' (presente) es 'avete'." }, "A1", null,
+      { en: "You (all) ___ (avere = to have) are hungry. (lit. you have hunger.)" }],  // it-v-002-p-voi
+    ["Loro ___ (avere) fame.", ["hai", "hanno", "ho", "avete"], 1,
+      { en: "The loro (they) form of 'avere' (present) is 'hanno'.", es: "La forma de ellos/ellas de 'avere' (presente) es 'hanno'." }, "A1", null,
+      { en: "They ___ (avere = to have) are hungry. (lit. they have hunger.)" }],  // it-v-002-p-loro
+    ["Domani ___ (andare, tu) al mare.", ["andrò", "andrai", "andranno", "andrete"], 1,
+      { en: "The tu (you) form of 'andare' (future) is 'andrai'.", es: "La forma de tú de 'andare' (futuro) es 'andrai'." }, "A2", null,
+      { en: "Tomorrow you ___ (andare = to go) will go to the beach." }],  // it-v-003-p-tu
+    ["Domani ___ (andare, lui) al mare.", ["andrete", "andrai", "andremo", "andrà"], 3,
+      { en: "The lui/lei (he/she) form of 'andare' (future) is 'andrà'.", es: "La forma de él/ella de 'andare' (futuro) es 'andrà'." }, "A2", null,
+      { en: "Tomorrow he ___ (andare = to go) will go to the beach." }],  // it-v-003-p-lui
+    ["Domani ___ (andare, noi) al mare.", ["andrà", "andranno", "andrete", "andremo"], 3,
+      { en: "The noi (we) form of 'andare' (future) is 'andremo'.", es: "La forma de nosotros de 'andare' (futuro) es 'andremo'." }, "A2", null,
+      { en: "Tomorrow we ___ (andare = to go) will go to the beach." }],  // it-v-003-p-noi
+    ["Domani ___ (andare, voi) al mare.", ["andranno", "andrò", "andrete", "andremo"], 2,
+      { en: "The voi (you all) form of 'andare' (future) is 'andrete'.", es: "La forma de vosotros de 'andare' (futuro) es 'andrete'." }, "A2", null,
+      { en: "Tomorrow you (all) ___ (andare = to go) will go to the beach." }],  // it-v-003-p-voi
+    ["Domani ___ (andare, loro) al mare.", ["andrà", "andranno", "andrai", "andremo"], 1,
+      { en: "The loro (they) form of 'andare' (future) is 'andranno'.", es: "La forma de ellos/ellas de 'andare' (futuro) es 'andranno'." }, "A2", null,
+      { en: "Tomorrow they ___ (andare = to go) will go to the beach." }],  // it-v-003-p-loro
+    ["Che io ___ (volere) o no, si parte alle sei.", ["voglia", "vogliamo", "vogliate", "vogliano"], 0,
+      { en: "The io (I) form of 'volere' (present subjunctive) is 'voglia'.", es: "La forma de yo de 'volere' (presente de subjuntivo) es 'voglia'." }, "C1", null,
+      { en: "Whether I ___ (volere = to want) like it or not, we leave at six." }],  // it-v-004-p-io
+    ["Che lui ___ (volere) o no, si parte alle sei.", ["vogliano", "vogliamo", "vogliate", "voglia"], 3,
+      { en: "The lui/lei (he/she) form of 'volere' (present subjunctive) is 'voglia'.", es: "La forma de él/ella de 'volere' (presente de subjuntivo) es 'voglia'." }, "C1", null,
+      { en: "Whether he ___ (volere = to want) likes it or not, we leave at six." }],  // it-v-004-p-lui
+    ["Che noi ___ (volere) o no, si parte alle sei.", ["vogliano", "vogliamo", "voglia", "vogliate"], 1,
+      { en: "The noi (we) form of 'volere' (present subjunctive) is 'vogliamo'.", es: "La forma de nosotros de 'volere' (presente de subjuntivo) es 'vogliamo'." }, "C1", null,
+      { en: "Whether we ___ (volere = to want) like it or not, we leave at six." }],  // it-v-004-p-noi
+    ["Che voi ___ (volere) o no, si parte alle sei.", ["voglia", "vogliate", "vogliamo", "vogliano"], 1,
+      { en: "The voi (you all) form of 'volere' (present subjunctive) is 'vogliate'.", es: "La forma de vosotros de 'volere' (presente de subjuntivo) es 'vogliate'." }, "C1", null,
+      { en: "Whether you (all) ___ (volere = to want) like it or not, we leave at six." }],  // it-v-004-p-voi
+    ["Che loro ___ (volere) o no, si parte alle sei.", ["vogliamo", "vogliano", "vogliate", "voglia"], 1,
+      { en: "The loro (they) form of 'volere' (present subjunctive) is 'vogliano'.", es: "La forma de ellos/ellas de 'volere' (presente de subjuntivo) es 'vogliano'." }, "C1", null,
+      { en: "Whether they ___ (volere = to want) like it or not, we leave at six." }],  // it-v-004-p-loro
   ],
   trad: [
     ["Translate: 'Good luck!'", ["In bocca al lupo!", "Buona fortuna letterale!", "Nella bocca!", "Auguri lupo!"], 0,

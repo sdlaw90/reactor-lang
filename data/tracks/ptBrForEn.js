@@ -136,6 +136,97 @@ const BANK = {
     ["« Ele fizera tudo antes de sairmos » — a forma 'fizera' é...", ["the synthetic pluperfect — literary 'had done'", "a spelling error for 'fazia'", "the future subjunctive", "the conditional"], 0,
       { en: "'Fizera' is the mais-que-perfeito simples — a one-word literary pluperfect ('had done'). Spoken Portuguese says 'tinha feito' instead; the synthetic form lives in novels and formal prose. (Bonus: 'sairmos' in the same sentence is the personal infinitive.)", es: "'Fizera' es el mais-que-perfeito simples — un pluscuamperfecto literario de una palabra. El portugués hablado dice 'tinha feito'; la forma sintética vive en las novelas y la prosa formal. (Bono: 'sairmos' en la misma frase es el infinitivo personal.)" }, "C2", null,
       { en: "« Ele fizera tudo antes de sairmos » — the form 'fizera' is..." }],
+    // --- Variant-expansion person-swaps 2026-07-19 (subject-person reworks of existing gram conjugation items; auto-generated, PENDING native review) ---
+    ["Espero que ele ___ bem.", ["estejam", "estejamos", "estejas", "esteja"], 3,
+      { en: "The ele/ela (he/she) form of 'estar' (present subjunctive) is 'esteja'.", es: "La forma de él/ella de 'estar' (presente de subjuntivo) es 'esteja'." }, "A2", null,
+      { en: "I hope he ___ (estar = to be) is well." }],  // ptBr-v-001-p-ele
+    ["Espero que nós ___ bem.", ["esteja", "estejas", "estejam", "estejamos"], 3,
+      { en: "The nós (we) form of 'estar' (present subjunctive) is 'estejamos'.", es: "La forma de nosotros de 'estar' (presente de subjuntivo) es 'estejamos'." }, "A2", null,
+      { en: "I hope we ___ (estar = to be) are well." }],  // ptBr-v-001-p-nós
+    ["Espero que eles ___ bem.", ["estejam", "esteja", "estejamos", "estejas"], 0,
+      { en: "The eles/elas (they) form of 'estar' (present subjunctive) is 'estejam'.", es: "La forma de ellos/ellas de 'estar' (presente de subjuntivo) es 'estejam'." }, "A2", null,
+      { en: "I hope they ___ (estar = to be) are well." }],  // ptBr-v-001-p-eles
+    ["Você ___ brasileiro.", ["és", "é", "somos", "são"], 1,
+      { en: "The você (you) form of 'ser' (present) is 'é'.", es: "La forma de usted de 'ser' (presente) es 'é'." }, "A1", null,
+      { en: "You ___ (ser = to be) Brazilian." }],  // ptBr-v-002-p-você
+    ["Ele ___ brasileiro.", ["são", "és", "é", "sou"], 2,
+      { en: "The ele/ela (he/she) form of 'ser' (present) is 'é'.", es: "La forma de él/ella de 'ser' (presente) es 'é'." }, "A1", null,
+      { en: "He ___ (ser = to be) Brazilian." }],  // ptBr-v-002-p-ele
+    ["Nós ___ brasileiros.", ["somos", "sou", "és", "são"], 0,
+      { en: "The nós (we) form of 'ser' (present) is 'somos'.", es: "La forma de nosotros de 'ser' (presente) es 'somos'." }, "A1", null,
+      { en: "We ___ (ser = to be) Brazilian." }],  // ptBr-v-002-p-nós
+    ["Eles ___ brasileiros.", ["é", "sou", "são", "és"], 2,
+      { en: "The eles/elas (they) form of 'ser' (present) is 'são'.", es: "La forma de ellos/ellas de 'ser' (presente) es 'são'." }, "A1", null,
+      { en: "They ___ (ser = to be) Brazilian." }],  // ptBr-v-002-p-eles
+    ["Eu ___ (ter) dois gatos.", ["temos", "tenho", "tem", "têm"], 1,
+      { en: "The eu (I) form of 'ter' (present) is 'tenho'.", es: "La forma de yo de 'ter' (presente) es 'tenho'." }, "A1", null,
+      { en: "I ___ (ter = to have) two cats." }],  // ptBr-v-003-p-eu
+    ["Você ___ (ter) dois gatos.", ["tem", "temos", "têm", "tens"], 0,
+      { en: "The você (you) form of 'ter' (present) is 'tem'.", es: "La forma de usted de 'ter' (presente) es 'tem'." }, "A1", null,
+      { en: "You ___ (ter = to have) two cats." }],  // ptBr-v-003-p-você
+    ["Ele ___ (ter) dois gatos.", ["temos", "tens", "tem", "têm"], 2,
+      { en: "The ele/ela (he/she) form of 'ter' (present) is 'tem'.", es: "La forma de él/ella de 'ter' (presente) es 'tem'." }, "A1", null,
+      { en: "He ___ (ter = to have) two cats." }],  // ptBr-v-003-p-ele
+    ["Eles ___ (ter) dois gatos.", ["têm", "tenho", "tens", "tem"], 0,
+      { en: "The eles/elas (they) form of 'ter' (present) is 'têm'.", es: "La forma de ellos/ellas de 'ter' (presente) es 'têm'." }, "A1", null,
+      { en: "They ___ (ter = to have) two cats." }],  // ptBr-v-003-p-eles
+    ["Ontem você ___ (falar) com ela.", ["falaram", "falei", "falaste", "falou"], 3,
+      { en: "The você (you) form of 'falar' (preterite (simple past)) is 'falou'.", es: "La forma de usted de 'falar' (pretérito) es 'falou'." }, "A2", null,
+      { en: "Yesterday you ___ (falar = to speak) spoke with her." }],  // ptBr-v-004-p-você
+    ["Ontem ele ___ (falar) com ela.", ["falaram", "falei", "falou", "falaste"], 2,
+      { en: "The ele/ela (he/she) form of 'falar' (preterite (simple past)) is 'falou'.", es: "La forma de él/ella de 'falar' (pretérito) es 'falou'." }, "A2", null,
+      { en: "Yesterday he ___ (falar = to speak) spoke with her." }],  // ptBr-v-004-p-ele
+    ["Ontem nós ___ (falar) com ela.", ["falamos", "falei", "falou", "falaram"], 0,
+      { en: "The nós (we) form of 'falar' (preterite (simple past)) is 'falamos'.", es: "La forma de nosotros de 'falar' (pretérito) es 'falamos'." }, "A2", null,
+      { en: "Yesterday we ___ (falar = to speak) spoke with her." }],  // ptBr-v-004-p-nós
+    ["Ontem eles ___ (falar) com ela.", ["falaram", "falei", "falamos", "falou"], 0,
+      { en: "The eles/elas (they) form of 'falar' (preterite (simple past)) is 'falaram'.", es: "La forma de ellos/ellas de 'falar' (pretérito) es 'falaram'." }, "A2", null,
+      { en: "Yesterday they ___ (falar = to speak) spoke with her." }],  // ptBr-v-004-p-eles
+    ["Eu ___ (ir) à praia amanhã.", ["vou", "vais", "vai", "vão"], 0,
+      { en: "The eu (I) form of 'ir' (present) is 'vou'.", es: "La forma de yo de 'ir' (presente) es 'vou'." }, "A2", null,
+      { en: "I ___ (ir = to go) am going to the beach tomorrow." }],  // ptBr-v-005-p-eu
+    ["Você ___ (ir) à praia amanhã.", ["vou", "vais", "vai", "vamos"], 2,
+      { en: "The você (you) form of 'ir' (present) is 'vai'.", es: "La forma de usted de 'ir' (presente) es 'vai'." }, "A2", null,
+      { en: "You ___ (ir = to go) are going to the beach tomorrow." }],  // ptBr-v-005-p-você
+    ["Nós ___ (ir) à praia amanhã.", ["vão", "vou", "vamos", "vai"], 2,
+      { en: "The nós (we) form of 'ir' (present) is 'vamos'.", es: "La forma de nosotros de 'ir' (presente) es 'vamos'." }, "A2", null,
+      { en: "We ___ (ir = to go) are going to the beach tomorrow." }],  // ptBr-v-005-p-nós
+    ["Eles ___ (ir) à praia amanhã.", ["vais", "vão", "vai", "vamos"], 1,
+      { en: "The eles/elas (they) form of 'ir' (present) is 'vão'.", es: "La forma de ellos/ellas de 'ir' (presente) es 'vão'." }, "A2", null,
+      { en: "They ___ (ir = to go) are going to the beach tomorrow." }],  // ptBr-v-005-p-eles
+    ["Faz dois anos que você ___ (morar) aqui.", ["mora", "moro", "moramos", "moras"], 0,
+      { en: "The você (you) form of 'morar' (present) is 'mora'.", es: "La forma de usted de 'morar' (presente) es 'mora'." }, "B1", null,
+      { en: "It's been two years that you ___ (morar = to live) have lived here." }],  // ptBr-v-006-p-você
+    ["Faz dois anos que ele ___ (morar) aqui.", ["moro", "moram", "moramos", "mora"], 3,
+      { en: "The ele/ela (he/she) form of 'morar' (present) is 'mora'.", es: "La forma de él/ella de 'morar' (presente) es 'mora'." }, "B1", null,
+      { en: "It's been two years that he ___ (morar = to live) has lived here." }],  // ptBr-v-006-p-ele
+    ["Faz dois anos que nós ___ (morar) aqui.", ["mora", "moras", "moram", "moramos"], 3,
+      { en: "The nós (we) form of 'morar' (present) is 'moramos'.", es: "La forma de nosotros de 'morar' (presente) es 'moramos'." }, "B1", null,
+      { en: "It's been two years that we ___ (morar = to live) have lived here." }],  // ptBr-v-006-p-nós
+    ["Faz dois anos que eles ___ (morar) aqui.", ["mora", "moramos", "moro", "moram"], 3,
+      { en: "The eles/elas (they) form of 'morar' (present) is 'moram'.", es: "La forma de ellos/ellas de 'morar' (presente) es 'moram'." }, "B1", null,
+      { en: "It's been two years that they ___ (morar = to live) have lived here." }],  // ptBr-v-006-p-eles
+    ["Quando eu ___ (chegar), me liga.", ["chegarem", "chegarmos", "chegares", "chegar"], 3,
+      { en: "The eu (I) form of 'chegar' (future subjunctive) is 'chegar'.", es: "La forma de yo de 'chegar' (futuro de subjuntivo) es 'chegar'." }, "B1", null,
+      { en: "When I ___ (chegar = to arrive) arrive, call me." }],  // ptBr-v-007-p-eu
+    ["Quando ele ___ (chegar), me liga.", ["chegar", "chegarmos", "chegarem", "chegares"], 0,
+      { en: "The ele/ela (he/she) form of 'chegar' (future subjunctive) is 'chegar'.", es: "La forma de él/ella de 'chegar' (futuro de subjuntivo) es 'chegar'." }, "B1", null,
+      { en: "When he ___ (chegar = to arrive) arrives, call me." }],  // ptBr-v-007-p-ele
+    ["Quando nós ___ (chegar), me liga.", ["chegarmos", "chegares", "chegarem", "chegar"], 0,
+      { en: "The nós (we) form of 'chegar' (future subjunctive) is 'chegarmos'.", es: "La forma de nosotros de 'chegar' (futuro de subjuntivo) es 'chegarmos'." }, "B1", null,
+      { en: "When we ___ (chegar = to arrive) arrive, call me." }],  // ptBr-v-007-p-nós
+    ["Quando eles ___ (chegar), me liga.", ["chegar", "chegares", "chegarem", "chegarmos"], 2,
+      { en: "The eles/elas (they) form of 'chegar' (future subjunctive) is 'chegarem'.", es: "La forma de ellos/ellas de 'chegar' (futuro de subjuntivo) es 'chegarem'." }, "B1", null,
+      { en: "When they ___ (chegar = to arrive) arrive, call me." }],  // ptBr-v-007-p-eles
+    ["É importante ___ (fazer, eu) isso hoje.", ["fazermos", "fazer", "fazeres", "fazerem"], 1,
+      { en: "The eu (I) form of 'fazer' (personal infinitive) is 'fazer'.", es: "La forma de yo de 'fazer' (infinitivo personal) es 'fazer'." }, "B2", null,
+      { en: "It's important for me ___ (fazer = to do) to do this today." }],  // ptBr-v-008-p-eu
+    ["É importante ___ (fazer, ele) isso hoje.", ["fazer", "fazermos", "fazeres", "fazerem"], 0,
+      { en: "The ele/ela (he/she) form of 'fazer' (personal infinitive) is 'fazer'.", es: "La forma de él/ella de 'fazer' (infinitivo personal) es 'fazer'." }, "B2", null,
+      { en: "It's important for him ___ (fazer = to do) to do this today." }],  // ptBr-v-008-p-ele
+    ["É importante ___ (fazer, eles) isso hoje.", ["fazerem", "fazermos", "fazeres", "fazer"], 0,
+      { en: "The eles/elas (they) form of 'fazer' (personal infinitive) is 'fazerem'.", es: "La forma de ellos/ellas de 'fazer' (infinitivo personal) es 'fazerem'." }, "B2", null,
+      { en: "It's important for them ___ (fazer = to do) to do this today." }],  // ptBr-v-008-p-eles
   ],
   trad: [
     ["Translate: 'I was totally amazed.'", ["Fiquei de boca aberta.", "Fiquei com a boca fechada.", "Fiquei muito surpreso total.", "Fiquei chocado completo."], 0,

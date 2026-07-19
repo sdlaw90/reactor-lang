@@ -1,0 +1,542 @@
+{
+ "language": "French (France)",
+ "track": "frForEn",
+ "code": "fr",
+ "generated_date": "2026-07-19",
+ "method": "Phase 1 person-swap (docs/variant-expansion/00-methodology.md); forms via verbecc, verified.",
+ "convention": "European French (tu/vous both used).",
+ "counts": {
+  "base_items_transformed": 4,
+  "person_variants": 17,
+  "not_transformed": 2
+ },
+ "person": [
+  {
+   "bid": "fr-v-001",
+   "vid": "fr-v-001-p-je",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faut que tu ___ tes devoirs.",
+   "base_person": "tu",
+   "new_prompt": "Il faut que je ___ mes devoirs.",
+   "target_person": "je",
+   "verb": "faire",
+   "tense": "present-subjunctive",
+   "answer": "fasse",
+   "options": [
+    "fasses",
+    "fasse",
+    "fassent",
+    "fassiez"
+   ],
+   "correctIndex": 1,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "I have to ___ (faire = to do) my homework.",
+   "explanation": {
+    "en": "The je (I) form of 'faire' (present subjunctive) is 'fasse'.",
+    "es": "La forma de yo de 'faire' (presente de subjuntivo) es 'fasse'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "fr-v-001",
+   "vid": "fr-v-001-p-il",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faut que tu ___ tes devoirs.",
+   "base_person": "tu",
+   "new_prompt": "Il faut qu'il ___ ses devoirs.",
+   "target_person": "il",
+   "verb": "faire",
+   "tense": "present-subjunctive",
+   "answer": "fasse",
+   "options": [
+    "fasse",
+    "fassions",
+    "fassiez",
+    "fasses"
+   ],
+   "correctIndex": 0,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "He has to ___ (faire = to do) his homework.",
+   "explanation": {
+    "en": "The il/elle (he/she) form of 'faire' (present subjunctive) is 'fasse'.",
+    "es": "La forma de él/ella de 'faire' (presente de subjuntivo) es 'fasse'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "fr-v-001",
+   "vid": "fr-v-001-p-nous",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faut que tu ___ tes devoirs.",
+   "base_person": "tu",
+   "new_prompt": "Il faut que nous ___ nos devoirs.",
+   "target_person": "nous",
+   "verb": "faire",
+   "tense": "present-subjunctive",
+   "answer": "fassions",
+   "options": [
+    "fasse",
+    "fassions",
+    "fasses",
+    "fassiez"
+   ],
+   "correctIndex": 1,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "We have to ___ (faire = to do) our homework.",
+   "explanation": {
+    "en": "The nous (we) form of 'faire' (present subjunctive) is 'fassions'.",
+    "es": "La forma de nosotros de 'faire' (presente de subjuntivo) es 'fassions'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "fr-v-001",
+   "vid": "fr-v-001-p-vous",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faut que tu ___ tes devoirs.",
+   "base_person": "tu",
+   "new_prompt": "Il faut que vous ___ vos devoirs.",
+   "target_person": "vous",
+   "verb": "faire",
+   "tense": "present-subjunctive",
+   "answer": "fassiez",
+   "options": [
+    "fassiez",
+    "fassent",
+    "fasses",
+    "fassions"
+   ],
+   "correctIndex": 0,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "You (all) have to ___ (faire = to do) your homework.",
+   "explanation": {
+    "en": "The vous (you all/formal) form of 'faire' (present subjunctive) is 'fassiez'.",
+    "es": "La forma de vosotros/ustedes de 'faire' (presente de subjuntivo) es 'fassiez'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "fr-v-001",
+   "vid": "fr-v-001-p-ils",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Il faut que tu ___ tes devoirs.",
+   "base_person": "tu",
+   "new_prompt": "Il faut qu'ils ___ leurs devoirs.",
+   "target_person": "ils",
+   "verb": "faire",
+   "tense": "present-subjunctive",
+   "answer": "fassent",
+   "options": [
+    "fassiez",
+    "fassions",
+    "fasse",
+    "fassent"
+   ],
+   "correctIndex": 3,
+   "level": "B2",
+   "structure": "standard(mood-locked)",
+   "risk": "Medium",
+   "subtitle": "They have to ___ (faire = to do) their homework.",
+   "explanation": {
+    "en": "The ils/elles (they) form of 'faire' (present subjunctive) is 'fassent'.",
+    "es": "La forma de ellos/ellas de 'faire' (presente de subjuntivo) es 'fassent'."
+   },
+   "irregular": "yes",
+   "notes": "Subjunctive person-swap (mood is fixed; only the person changes)."
+  },
+  {
+   "bid": "fr-v-002",
+   "vid": "fr-v-002-p-nous",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "___ la porte, s'il te plaît!",
+   "base_person": "tu",
+   "new_prompt": "___ la porte.",
+   "target_person": "nous",
+   "verb": "fermer",
+   "tense": "imperative",
+   "answer": "Fermons",
+   "options": [
+    "fermer",
+    "Fermez",
+    "Ferme",
+    "Fermons"
+   ],
+   "correctIndex": 3,
+   "level": "A2",
+   "structure": "imperative",
+   "risk": "High",
+   "subtitle": "Let's ___ (fermer = to close) the door. (nous — let's)",
+   "explanation": {
+    "en": "The nous (we) form of 'fermer' (imperative (command)) is 'Fermons'.",
+    "es": "La forma de nosotros de 'fermer' (imperativo) es 'Fermons'."
+   },
+   "irregular": "no",
+   "notes": "IMPERATIVE person-swap (command form) — limited persons; verify the command register."
+  },
+  {
+   "bid": "fr-v-002",
+   "vid": "fr-v-002-p-vous",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "___ la porte, s'il te plaît!",
+   "base_person": "tu",
+   "new_prompt": "___ la porte, s'il vous plaît!",
+   "target_person": "vous",
+   "verb": "fermer",
+   "tense": "imperative",
+   "answer": "Fermez",
+   "options": [
+    "Ferme",
+    "Fermons",
+    "Fermez",
+    "fermer"
+   ],
+   "correctIndex": 2,
+   "level": "A2",
+   "structure": "imperative",
+   "risk": "High",
+   "subtitle": "___ (fermer = to close) the door, please! (vous — formal/plural)",
+   "explanation": {
+    "en": "The vous (you all/formal) form of 'fermer' (imperative (command)) is 'Fermez'.",
+    "es": "La forma de vosotros/ustedes de 'fermer' (imperativo) es 'Fermez'."
+   },
+   "irregular": "no",
+   "notes": "IMPERATIVE person-swap (command form) — limited persons; verify the command register."
+  },
+  {
+   "bid": "fr-v-003",
+   "vid": "fr-v-003-p-tu",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ un café, s'il vous plaît.",
+   "base_person": "je",
+   "new_prompt": "Tu ___ un café, s'il te plaît.",
+   "target_person": "tu",
+   "verb": "vouloir",
+   "tense": "conditional",
+   "answer": "voudrais",
+   "options": [
+    "voudrais",
+    "voudrait",
+    "voudrions",
+    "voudriez"
+   ],
+   "correctIndex": 0,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "You ___ (vouloir = to want) a coffee, please.",
+   "explanation": {
+    "en": "The tu (you) form of 'vouloir' (conditional) is 'voudrais'.",
+    "es": "La forma de tú de 'vouloir' (condicional) es 'voudrais'."
+   },
+   "irregular": "yes",
+   "notes": "Conditional (polite) person-swap."
+  },
+  {
+   "bid": "fr-v-003",
+   "vid": "fr-v-003-p-il",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ un café, s'il vous plaît.",
+   "base_person": "je",
+   "new_prompt": "Il ___ un café, s'il vous plaît.",
+   "target_person": "il",
+   "verb": "vouloir",
+   "tense": "conditional",
+   "answer": "voudrait",
+   "options": [
+    "voudrais",
+    "voudrait",
+    "voudriez",
+    "voudrions"
+   ],
+   "correctIndex": 1,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "He ___ (vouloir = to want) a coffee, please.",
+   "explanation": {
+    "en": "The il/elle (he/she) form of 'vouloir' (conditional) is 'voudrait'.",
+    "es": "La forma de él/ella de 'vouloir' (condicional) es 'voudrait'."
+   },
+   "irregular": "yes",
+   "notes": "Conditional (polite) person-swap."
+  },
+  {
+   "bid": "fr-v-003",
+   "vid": "fr-v-003-p-nous",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ un café, s'il vous plaît.",
+   "base_person": "je",
+   "new_prompt": "Nous ___ un café, s'il vous plaît.",
+   "target_person": "nous",
+   "verb": "vouloir",
+   "tense": "conditional",
+   "answer": "voudrions",
+   "options": [
+    "voudrions",
+    "voudraient",
+    "voudriez",
+    "voudrait"
+   ],
+   "correctIndex": 0,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "We ___ (vouloir = to want) a coffee, please.",
+   "explanation": {
+    "en": "The nous (we) form of 'vouloir' (conditional) is 'voudrions'.",
+    "es": "La forma de nosotros de 'vouloir' (condicional) es 'voudrions'."
+   },
+   "irregular": "yes",
+   "notes": "Conditional (polite) person-swap."
+  },
+  {
+   "bid": "fr-v-003",
+   "vid": "fr-v-003-p-vous",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ un café, s'il vous plaît.",
+   "base_person": "je",
+   "new_prompt": "Vous ___ un café, s'il vous plaît.",
+   "target_person": "vous",
+   "verb": "vouloir",
+   "tense": "conditional",
+   "answer": "voudriez",
+   "options": [
+    "voudrais",
+    "voudrait",
+    "voudraient",
+    "voudriez"
+   ],
+   "correctIndex": 3,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "You (all) ___ (vouloir = to want) a coffee, please.",
+   "explanation": {
+    "en": "The vous (you all/formal) form of 'vouloir' (conditional) is 'voudriez'.",
+    "es": "La forma de vosotros/ustedes de 'vouloir' (condicional) es 'voudriez'."
+   },
+   "irregular": "yes",
+   "notes": "Conditional (polite) person-swap."
+  },
+  {
+   "bid": "fr-v-003",
+   "vid": "fr-v-003-p-ils",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ un café, s'il vous plaît.",
+   "base_person": "je",
+   "new_prompt": "Ils ___ un café, s'il vous plaît.",
+   "target_person": "ils",
+   "verb": "vouloir",
+   "tense": "conditional",
+   "answer": "voudraient",
+   "options": [
+    "voudrait",
+    "voudrais",
+    "voudraient",
+    "voudriez"
+   ],
+   "correctIndex": 2,
+   "level": "A2",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "They ___ (vouloir = to want) a coffee, please.",
+   "explanation": {
+    "en": "The ils/elles (they) form of 'vouloir' (conditional) is 'voudraient'.",
+    "es": "La forma de ellos/ellas de 'vouloir' (condicional) es 'voudraient'."
+   },
+   "irregular": "yes",
+   "notes": "Conditional (polite) person-swap."
+  },
+  {
+   "bid": "fr-v-004",
+   "vid": "fr-v-004-p-tu",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ demain matin.",
+   "base_person": "je",
+   "new_prompt": "Tu ___ demain matin.",
+   "target_person": "tu",
+   "verb": "partir",
+   "tense": "future",
+   "answer": "partiras",
+   "options": [
+    "partirai",
+    "partirons",
+    "partiras",
+    "partira"
+   ],
+   "correctIndex": 2,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "You ___ (partir = to leave) tomorrow morning.",
+   "explanation": {
+    "en": "The tu (you) form of 'partir' (future) is 'partiras'.",
+    "es": "La forma de tú de 'partir' (futuro) es 'partiras'."
+   },
+   "irregular": "yes",
+   "notes": "Future-tense person-swap."
+  },
+  {
+   "bid": "fr-v-004",
+   "vid": "fr-v-004-p-il",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ demain matin.",
+   "base_person": "je",
+   "new_prompt": "Il ___ demain matin.",
+   "target_person": "il",
+   "verb": "partir",
+   "tense": "future",
+   "answer": "partira",
+   "options": [
+    "partirez",
+    "partira",
+    "partiras",
+    "partirai"
+   ],
+   "correctIndex": 1,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "He ___ (partir = to leave) tomorrow morning.",
+   "explanation": {
+    "en": "The il/elle (he/she) form of 'partir' (future) is 'partira'.",
+    "es": "La forma de él/ella de 'partir' (futuro) es 'partira'."
+   },
+   "irregular": "yes",
+   "notes": "Future-tense person-swap."
+  },
+  {
+   "bid": "fr-v-004",
+   "vid": "fr-v-004-p-nous",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ demain matin.",
+   "base_person": "je",
+   "new_prompt": "Nous ___ demain matin.",
+   "target_person": "nous",
+   "verb": "partir",
+   "tense": "future",
+   "answer": "partirons",
+   "options": [
+    "partiras",
+    "partirons",
+    "partirai",
+    "partirez"
+   ],
+   "correctIndex": 1,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "We ___ (partir = to leave) tomorrow morning.",
+   "explanation": {
+    "en": "The nous (we) form of 'partir' (future) is 'partirons'.",
+    "es": "La forma de nosotros de 'partir' (futuro) es 'partirons'."
+   },
+   "irregular": "yes",
+   "notes": "Future-tense person-swap."
+  },
+  {
+   "bid": "fr-v-004",
+   "vid": "fr-v-004-p-vous",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ demain matin.",
+   "base_person": "je",
+   "new_prompt": "Vous ___ demain matin.",
+   "target_person": "vous",
+   "verb": "partir",
+   "tense": "future",
+   "answer": "partirez",
+   "options": [
+    "partiront",
+    "partirai",
+    "partirez",
+    "partiras"
+   ],
+   "correctIndex": 2,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "You (all) ___ (partir = to leave) tomorrow morning.",
+   "explanation": {
+    "en": "The vous (you all/formal) form of 'partir' (future) is 'partirez'.",
+    "es": "La forma de vosotros/ustedes de 'partir' (futuro) es 'partirez'."
+   },
+   "irregular": "yes",
+   "notes": "Future-tense person-swap."
+  },
+  {
+   "bid": "fr-v-004",
+   "vid": "fr-v-004-p-ils",
+   "track": "frForEn",
+   "xform": "person-swap",
+   "base_prompt": "Je ___ demain matin.",
+   "base_person": "je",
+   "new_prompt": "Ils ___ demain matin.",
+   "target_person": "ils",
+   "verb": "partir",
+   "tense": "future",
+   "answer": "partiront",
+   "options": [
+    "partirai",
+    "partiront",
+    "partira",
+    "partirez"
+   ],
+   "correctIndex": 1,
+   "level": "B1",
+   "structure": "standard",
+   "risk": "Medium",
+   "subtitle": "They ___ (partir = to leave) tomorrow morning.",
+   "explanation": {
+    "en": "The ils/elles (they) form of 'partir' (future) is 'partiront'.",
+    "es": "La forma de ellos/ellas de 'partir' (futuro) es 'partiront'."
+   },
+   "irregular": "yes",
+   "notes": "Future-tense person-swap."
+  }
+ ],
+ "tense_sample": [],
+ "skipped": [
+  {
+   "track": "frForEn",
+   "reason": "auxiliary-choice judgment (être vs avoir) — not a fill-in-the-blank person drill.",
+   "prompt": "Je suis allé au marché.",
+   "gram_idx": 4,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  },
+  {
+   "track": "frForEn",
+   "reason": "reflexive passé-composé auxiliary choice (s'est); noun-referent 3rd-person subject.",
+   "prompt": "Elle ___ levée tôt ce matin.",
+   "gram_idx": 11,
+   "note": "3rd-person / non-person-axis — documented, not transformed"
+  }
+ ]
+}

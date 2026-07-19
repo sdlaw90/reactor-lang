@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 211 tracked files.
+> 224 tracked files.
 
 ```
 .env.local.example
@@ -132,9 +132,22 @@ docs/tts-pipeline.md
 docs/tts-sync-runbook.md
 docs/variant-expansion/00-methodology.md
 docs/variant-expansion/01-spanish-reference.md
+docs/variant-expansion/02-french-reference.md
+docs/variant-expansion/03-italian-reference.md
+docs/variant-expansion/04-portuguese-reference.md
 docs/variant-expansion/README.md
 docs/variant-expansion/generated/es_generated.json
+docs/variant-expansion/generated/frCa_generated.json
+docs/variant-expansion/generated/fr_generated.json
+docs/variant-expansion/generated/it_generated.json
+docs/variant-expansion/generated/ptBr_generated.json
+docs/variant-expansion/generated/ptPt_generated.json
 docs/variant-expansion/review-packets/es-verb-variants.xlsx
+docs/variant-expansion/review-packets/fr-verb-variants.xlsx
+docs/variant-expansion/review-packets/frCa-verb-variants.xlsx
+docs/variant-expansion/review-packets/it-verb-variants.xlsx
+docs/variant-expansion/review-packets/ptBr-verb-variants.xlsx
+docs/variant-expansion/review-packets/ptPt-verb-variants.xlsx
 e2e/authenticated-flow.spec.js
 e2e/public-pages.spec.js
 lib/AudioButton.js
