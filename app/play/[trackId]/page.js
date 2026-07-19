@@ -763,6 +763,9 @@ export default function PlayPage({ params }) {
               {tenseHints && q.grammar && (
                 <div style={styles.tenseChip}>
                   <span style={styles.tenseChipLabel}>🎯 {q.grammar.tense[uiLang] || q.grammar.tense.en}</span>
+                  {q.grammar.person && (
+                    <span style={styles.tenseChipPerson}>{q.grammar.person[uiLang] || q.grammar.person.en}</span>
+                  )}
                   <span style={styles.tenseChipWhy}>{q.grammar.why[uiLang] || q.grammar.why.en}</span>
                   {advancedLevel && (
                     <button className="rj" style={styles.tenseDismiss} onClick={dismissTenseHints} title="Hide tense hints" aria-label="Hide tense hints">
@@ -1165,6 +1168,8 @@ const styles = {
     marginBottom: 16,
   },
   tenseChipLabel: { color: "#E4D6FF", fontSize: 12.5, fontWeight: 800 },
+  // #89: person/number pill (which conjugation slot: yo/tú/…).
+  tenseChipPerson: { color: "#C9B8FF", fontSize: 11.5, fontWeight: 700, background: "#160F26", border: "1px solid #4A3B6E", borderRadius: 999, padding: "1px 8px", whiteSpace: "nowrap" },
   tenseChipWhy: { color: "#B4ABC9", fontSize: 12, lineHeight: 1.4, flex: 1, minWidth: 140 },
   tenseDismiss: {
     background: "transparent",
