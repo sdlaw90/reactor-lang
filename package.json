@@ -9,7 +9,9 @@
     "lint": "next lint",
     "deploy": "node scripts/deploy.js",
     "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui"
+    "test:e2e:ui": "playwright test --ui",
+    "gen-tree": "node scripts/gen-repo-tree.mjs",
+    "voices:list": "node scripts/voices-list.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

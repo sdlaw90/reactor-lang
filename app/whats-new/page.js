@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import BackHome from "../../lib/BackHome";
 import { supabase } from "../../lib/supabaseClient";
 import { CURRENT_VERSION, CHANGELOG } from "../../lib/version";
 
@@ -30,9 +31,7 @@ export default function WhatsNewPage() {
   return (
     <div style={styles.wrap}>
       <div style={{ width: "100%", maxWidth: 460 }}>
-        <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
-          ← Back
-        </button>
+        <BackHome />
 
         <div style={styles.badge}>!</div>
         <h1 className="rj" style={styles.title}>

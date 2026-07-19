@@ -103,6 +103,13 @@ audio go live in prod with no manual upload.
 
 ## Ongoing
 
+- **Dev-bucket auto-sync on deploy (added 2026-07-19):** `npm run deploy` runs
+  `scripts/tts-on-deploy.mjs` after the push, which synth+uploads any
+  newly-changed track's clips to the **dev** bucket automatically (dry-run
+  gated, changed-tracks-only, non-blocking). This CI chain is unchanged and is
+  still the **dev → prod** half — it mirrors whatever the deploy step (or a
+  manual `--upload`) has already put in the dev bucket. See
+  `docs/tts-pipeline.md` §"Automatic sync on deploy".
 - New track at its TTS pass: add it to `VOICE_KEYED_TRACKS`, generate + upload
   to dev, sweep dev. On the next main merge it mirrors to prod automatically.
 - Removed-question orphans in prod are inert and don't fail parity, so no CI

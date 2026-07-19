@@ -53,14 +53,10 @@ git push
 ```
 
 Pushing `dev` triggers: Vercel Preview deploy + migrations workflow →
-<<<<<<< HEAD
-**staging** Supabase (workflow watches `main` + `dev`).
-=======
 **staging** Supabase. Note: the workflow's old `paths` filter is gone, so
 the staging migration job now runs on *every* dev push — an idempotent
 no-op when no new migration files exist. This is deliberate (the filter
 would have skipped the release sync/smoke jobs on no-migration releases).
->>>>>>> dev
 
 ---
 
@@ -76,21 +72,13 @@ solely owned by the deepening/ledger chat.
 ## 5. TTS per-track sequence (dev)
 
 Requires `.env.local` with the GCP API key and Supabase service role key
-<<<<<<< HEAD
-(dev/staging values).
-=======
 (**dev values — prod is never touched manually; see §6**).
->>>>>>> dev
 
 ```
 node scripts/generate-tts.mjs --track <trackId> --dry-run     # review counts + review.txt flags
 node scripts/generate-tts.mjs --track <trackId> --limit 10    # audition clips → tts-output/<trackId>/ (LOCAL only)
 # listen to the clips, approve voice/rate
-<<<<<<< HEAD
-node scripts/generate-tts.mjs --track <trackId> --upload      # only this step touches the Supabase bucket
-=======
 node scripts/generate-tts.mjs --track <trackId> --upload      # only this step touches the DEV Supabase bucket
->>>>>>> dev
 ```
 
 Flags:
@@ -100,25 +88,27 @@ Flags:
   Voice preflight hard-fails if a configured voice doesn't exist for its
   exact locale — intentional, never bypass it.
 
-<<<<<<< HEAD
-=======
 Prod gets this audio automatically at release time: the `sync-tts` CI job
 mirrors the dev bucket into prod on every `main` push (copy-only, never
 deletes). There is no manual prod upload step anymore.
 
->>>>>>> dev
+**Deploy-time auto-sync (added 2026-07-19):** `npm run deploy` now runs
+`scripts/tts-on-deploy.mjs` after the push — it detects which audio tracks'
+content changed in the deploy, dry-run-gates for genuinely-new clips, and
+synth+uploads only those to the **dev** bucket. So for ordinary content passes
+you no longer have to run the §5 sequence by hand; it's non-blocking (a TTS
+hiccup never aborts the code push) and needs your `.env.local` dev keys. The
+manual §5 flow is still the tool for auditioning voices/rates on a new track or
+after an SSML-rule change (`--force`), and for a one-time upload of clips that
+were generated locally but never pushed. See `docs/tts-pipeline.md` §"Automatic
+sync on deploy" for the full behavior.
+
 ---
 
 ## 6. Cutting a release (prod)
 
-<<<<<<< HEAD
-Order matters — the merge goes FIRST because the migrations workflow on
-`main` is what creates prod DB objects (e.g. the `tts-audio` bucket); prod
-uploads can't land in a bucket that doesn't exist yet.
-=======
 The entire release is: bump + rollup → merge → watch for green. No manual
 prod uploads, no env swapping.
->>>>>>> dev
 
 ### 6a. Version bump + changelog rollup (deepening/ledger chat)
 - New `-beta.N` in `lib/version.js` (any change to a built deliverable =
@@ -127,50 +117,47 @@ prod uploads, no env swapping.
   fragments → release notes (regrouped by feature area) → move fragments
   to `released/vX.Y.Z-beta.N/`
 
-### 6b. Merge to main
+### 6b. Merge to main (prod release)
 
-```
-git checkout main
-git pull
-git merge dev --no-ff -m "Release vX.Y.Z-beta.N"
-git push
-git checkout dev
-```
+Prereqs: `lib/version.js` bumped, `unreleased/` fragments rolled up into
+`released/vX.Y.Z-beta.N/`, everything committed on `dev`.
 
-Edit the version in `-m` to match `lib/version.js`. `--no-ff` guarantees a
-merge commit exists to carry the message (a fast-forward would silently
-drop it). Forgot to edit before pushing? `git commit --amend -m "..."` —
-but only before push.
+1. Get onto an up-to-date main:
+       git checkout main
+       git pull
 
-<<<<<<< HEAD
-Pushing `main` triggers: Vercel Production deploy + migrations workflow
-against prod.
+2. Merge dev:
+       git merge dev --no-ff -m "Release vX.Y.Z-beta.N"
+   Edit the version in `-m` to match `lib/version.js`. `--no-ff` guarantees a
+   merge commit exists to carry the message (a fast-forward drops it).
 
-### 6c. Verify the migrations workflow
-Actions tab → confirm the migrations run on the `main` push succeeded, and
-the expected DB objects exist in prod (first release with TTS: `tts-audio`
-bucket appears in prod storage). **First-release note:** this is also the
-open verification of whether the workflow applies to prod at all — if the
-run didn't fire or didn't apply, apply the pending migrations manually
-(they're self-sufficient with explicit grants, SQL-editor paste works) and
-fix the workflow.
+   Two conflicts recur every release — resolve them differently:
+   - `.github/workflows/supabase-migrations.yml` — take dev's copy wholesale
+     (dev has the current job chain):
+         git checkout --theirs .github/workflows/supabase-migrations.yml
+         git add .github/workflows/supabase-migrations.yml
+   - `docs/manual-runbook.md` (add/add) — hand-merge. Do NOT use
+     `--ours`/`--theirs`; either silently drops a side. Open it, resolve the
+     `<<<<<<< ======= >>>>>>>` markers, keep both blocks if they're different
+     topics, then `git add docs/manual-runbook.md`.
 
-### 6d. Prod TTS uploads (when a release includes new track audio)
-Run with **prod** env values in `.env.local`:
+3. Finish and push:
+       git status                              # "All conflicts fixed"
+       git commit -m "Release vX.Y.Z-beta.N"   # only if the merge paused for conflicts
+       git push origin main
 
-```
-node scripts/generate-tts.mjs --track esForEn --upload
-node scripts/generate-tts.mjs --track frCaForEn --upload
-```
+   Pushing main triggers the chain:
+       migrate-production → sync-tts → smoke-check → publish-ready
+   `publish-ready` going green is the real success gate — VersionWatcher fails
+   closed on a missing release-ready marker, so a green Vercel deploy alone is
+   NOT enough. Chain internals + the three one-time Production secrets live in
+   docs/tts-sync-runbook.md.
 
-(Neither needs `--force`.) Restore dev env values afterward. The brief
-window between 6b and here — speaker button live with no audio — is
-harmless; playback just finds no manifest entries until upload completes.
-=======
-Pushing `main` triggers, in order:
-- Vercel Production deploy (parallel, outside Actions)
-- "Deploy Supabase migrations" workflow: `migrate-production` →
-  `sync-tts` (mirrors dev `tts-audio` bucket to prod) → `smoke-check`
+4. Back-merge so the SAME two conflicts don't return next release:
+       git checkout dev
+       git merge main
+       git push origin dev
+       git checkout main
 
 ### 6c. Watch for green checks (Actions tab)
 The release is done when the workflow run on the `main` push is fully
@@ -186,7 +173,6 @@ of:
 
 Re-running a red workflow is always safe: migrations and the TTS sync are
 both idempotent.
->>>>>>> dev
 
 ---
 
@@ -200,13 +186,10 @@ or the old value bakes in. `NEXT_PUBLIC_SUPABASE_URL` must be the API URL
 
 ## 8. One-time cleanups still pending
 
-<<<<<<< HEAD
-=======
 - **One-time secret adds for the release workflow (Production
   environment):** `DEV_SUPABASE_URL`, `DEV_SUPABASE_SERVICE_ROLE_KEY`,
   `SUPABASE_SERVICE_ROLE_KEY` (prod service role). Details in the
   workflow file header. The workflow is inert-but-red without them.
->>>>>>> dev
 - Delete stale nested `reactor-lang/reactor-lang/` directory **before the
   next full-repo zip upload** for a release session.
 - Exclude `node_modules` from future repo-zip uploads.

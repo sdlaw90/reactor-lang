@@ -11,6 +11,7 @@ import { buildLessonSequence, computeMastery, todayStr, computeStreakUpdate } fr
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
 import { scriptForTrack } from "../../../data/scripts";
+import { grammarForTrack } from "../../../data/grammar";
 import SectionToggle from "../../../lib/SectionToggle";
 import { trackDisplayName } from "../../../lib/languageNames";
 import StreakMilestoneCelebration from "../../../lib/StreakMilestoneCelebration";
@@ -82,6 +83,12 @@ export default function LessonsPage({ params }) {
 
   const viewerNativeLang = session?.user?.user_metadata?.native_lang;
   const questionAudio = session?.user?.user_metadata?.question_audio ?? true;
+  // #87: answer-choice audio (default off). In Lessons the item is always
+  // paused after answering, so choice speakers show once `answered`.
+  const choiceAudio = session?.user?.user_metadata?.choice_audio ?? false;
+  // #89: tense training-wheels (default on); dismissable at advanced levels.
+  const tenseHints = session?.user?.user_metadata?.tense_hints ?? true;
+  const advancedLevel = ["expert", "native"].includes(progress?.skill_level);
   const useAltPrompt = viewerNativeLang === "en" && track.nativeLang !== "en";
   const displayPrompt = (q) => (useAltPrompt && q.promptEn ? q.promptEn : q.prompt);
   const displayCatLabel = (catId) => categoryDisplayName(uiLang, viewerNativeLang, track, catId);
@@ -134,6 +141,16 @@ export default function LessonsPage({ params }) {
   };
 
   const q = sequence[index];
+
+  // #89: dismiss tense training-wheels (offered only at advanced levels).
+  const dismissTenseHints = async () => {
+    try {
+      const { data } = await supabase.auth.updateUser({ data: { tense_hints: false } });
+      if (data?.user) setSession((s) => ({ ...s, user: data.user }));
+    } catch (e) {
+      console.error("failed to dismiss tense hints", e);
+    }
+  };
 
   const handleAnswer = async (i) => {
     if (answered) return;
@@ -229,7 +246,7 @@ export default function LessonsPage({ params }) {
             <p style={styles.subtitle}>Lessons mode — no timer, step by step.</p>
 
             <SectionToggle trackId={track.id} active="practice" practiceLabel={T("sectionPractice")} listenLabel={T("sectionListen")} speakLabel={T("sectionSpeak")} soonLabel={T("soonTag")} />
-            <ModeToggle trackId={track.id} active="lessons" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} scriptLabel={scriptForTrack(track.id) ? T("modeScript") : null} />
+            <ModeToggle trackId={track.id} active="lessons" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} scriptLabel={scriptForTrack(track.id) ? T("modeScript") : null} grammarLabel={grammarForTrack(track.id) ? T("modeGrammar") : null} />
 
             <button className="rj" style={styles.pageHelpToggle} onClick={() => setShowPageHelp((v) => !v)}>
               <Info size={16} />
@@ -284,6 +301,22 @@ export default function LessonsPage({ params }) {
             </div>
             {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}
 
+            {/* #89: tense training-wheels chip (grammar-tagged items only). */}
+            {tenseHints && q.grammar && (
+              <div style={styles.tenseChip}>
+                <span style={styles.tenseChipLabel}>🎯 {q.grammar.tense[uiLang] || q.grammar.tense.en}</span>
+                {q.grammar.person && (
+                  <span style={styles.tenseChipPerson}>{q.grammar.person[uiLang] || q.grammar.person.en}</span>
+                )}
+                <span style={styles.tenseChipWhy}>{q.grammar.why[uiLang] || q.grammar.why.en}</span>
+                {advancedLevel && (
+                  <button className="rj" style={styles.tenseDismiss} onClick={dismissTenseHints} title="Hide tense hints" aria-label="Hide tense hints">
+                    ×
+                  </button>
+                )}
+              </div>
+            )}
+
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>
               {q.options.map((opt, i) => {
                 let bg = "#221E33";
@@ -303,18 +336,21 @@ export default function LessonsPage({ params }) {
                     textColor = "#FFC7CD";
                   }
                 }
+                const showChoiceAudio = choiceAudio && answered;
                 return (
-                  <button
-                    key={i}
-                    onClick={() => handleAnswer(i)}
-                    disabled={answered}
-                    className="rj"
-                    style={{ ...styles.optionBtn, background: bg, borderColor: border, borderWidth, color: textColor }}
-                  >
-                    <span>{opt}</span>
-                    {answered && i === q.correctIdx && <Check size={20} color="#5EE0A0" strokeWidth={3} />}
-                    {answered && i === selected && i !== q.correctIdx && <X size={20} color="#FF7B8A" strokeWidth={3} />}
-                  </button>
+                  <div key={i} style={{ display: "flex", alignItems: "stretch", gap: 8 }}>
+                    <button
+                      onClick={() => handleAnswer(i)}
+                      disabled={answered}
+                      className="rj"
+                      style={{ ...styles.optionBtn, flex: 1, background: bg, borderColor: border, borderWidth, color: textColor }}
+                    >
+                      <span>{opt}</span>
+                      {answered && i === q.correctIdx && <Check size={20} color="#5EE0A0" strokeWidth={3} />}
+                      {answered && i === selected && i !== q.correctIdx && <X size={20} color="#FF7B8A" strokeWidth={3} />}
+                    </button>
+                    {showChoiceAudio && <AudioButton trackId={track.id} text={opt} enabled size={16} align="left" />}
+                  </div>
                 );
               })}
             </div>
@@ -445,6 +481,37 @@ const styles = {
   },
   prompt: { fontSize: 18, fontWeight: 600, color: "#F3F0FA", lineHeight: 1.4, marginBottom: 4 },
   promptNative: { fontSize: 13, fontWeight: 400, lineHeight: 1.45, margin: "0 0 4px", color: "#9B93B8" },
+  // #89: tense training-wheels chip.
+  tenseChip: {
+    display: "flex",
+    alignItems: "center",
+    flexWrap: "wrap",
+    gap: "2px 8px",
+    width: "100%",
+    background: "#241B36",
+    border: "1px solid #B98EFF",
+    borderRadius: 10,
+    padding: "8px 12px",
+    marginTop: 12,
+    textAlign: "left",
+  },
+  tenseChipLabel: { color: "#E4D6FF", fontSize: 12.5, fontWeight: 800 },
+  // #89: person/number pill (which conjugation slot: yo/tú/…).
+  tenseChipPerson: { color: "#C9B8FF", fontSize: 11.5, fontWeight: 700, background: "#160F26", border: "1px solid #4A3B6E", borderRadius: 999, padding: "1px 8px", whiteSpace: "nowrap" },
+  tenseChipWhy: { color: "#B4ABC9", fontSize: 12, lineHeight: 1.4, flex: 1, minWidth: 140 },
+  tenseDismiss: {
+    background: "transparent",
+    color: "#9B93B8",
+    border: "1px solid #3A3452",
+    borderRadius: 6,
+    width: 22,
+    height: 22,
+    fontSize: 15,
+    lineHeight: 1,
+    cursor: "pointer",
+    flexShrink: 0,
+    padding: 0,
+  },
   optionBtn: {
     display: "flex",
     justifyContent: "space-between",

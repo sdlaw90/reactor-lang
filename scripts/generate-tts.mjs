@@ -84,6 +84,27 @@ const TRACK_VOICES = {
   frCaForEn: "fr-CA-Neural2-A",
   deForEn: "de-DE-Neural2-G", // female. A/B retired in Google's voice refresh (G=F, H=M)
   jaForEn: "ja-JP-Neural2-B", // female. Neural2 confirmed live 2026-07-13; Chirp3-HD ignored (no SSML/rate)
+  koForEn: "ko-KR-Neural2-A", // PROVISIONAL — confirm against voices:list ko-KR before the
+                              // paid run (standing rule); Google's de refresh proved letters
+                              // churn. verifyVoices hard-fails if A isn't live — override with
+                              // --voice and update here once ears have picked the variant.
+  ruForEn: "ru-RU-Wavenet-A", // female. NO ru-RU Neural2 EXISTS (voices:list 2026-07-15:
+                              // ru-RU offers only Chirp3-HD [no SSML/rate — unusable here],
+                              // Standard, and Wavenet). So ru is the first track to break the
+                              // all-Neural2 pattern: Wavenet is the best SSML-compatible family
+                              // Google ships for ru-RU, and honors <lang>/<break>/<sub> + rate.
+                              // Females A/C/E, males B/D — A matches the cross-track female
+                              // default; override with --voice and update here if ears prefer.
+  zhForEn: "cmn-CN-Wavenet-A", // female. NO cmn-CN Neural2 EXISTS (voices:list 2026-07-15:
+                               // cmn-CN offers only Chirp3-HD [no SSML/rate — unusable here],
+                               // Standard, and Wavenet). Second track after ru forced off the
+                               // all-Neural2 pattern, same cause: Wavenet is the best SSML-
+                               // compatible family Google ships for cmn-CN and honors <lang>/
+                               // <break> + rate — required for the en→zh production handoff.
+                               // NOTE the locale is cmn-CN, not zh-CN: the voice NAME is cmn-CN-*,
+                               // so name.split("-").slice(0,2) yields cmn-CN for both preflight and
+                               // synth — no parsing change needed. Females A/D, males B/C — A
+                               // matches the cross-track female default; override with --voice.
 };
 
 // Voice-aware key schema: clips named {hash}-{voiceName}.mp3 instead of
@@ -100,7 +121,12 @@ const TRACK_VOICES = {
 // leaves the old plain clips as local + bucket orphans), then sweep-tts.mjs
 // --delete against dev to clear the old plain clips. Prod orphans are cleared
 // by a guarded one-time prod sweep — see docs/tts-sync-runbook.md.
-const VOICE_KEYED_TRACKS = new Set(["esForEn", "frCaForEn", "deForEn", "jaForEn"]);
+const VOICE_KEYED_TRACKS = new Set(["esForEn", "frCaForEn", "deForEn", "jaForEn", "koForEn", "ruForEn", "zhForEn"]);
+// #87: tracks that also synthesize ANSWER-CHOICE audio (tap-to-play, review
+// mode only, client-gated). Scoped to the categories whose options are
+// reliably full target-language — see the choice-audio block in extractSpoken.
+const CHOICE_AUDIO_TRACKS = new Set(["esForEn"]);
+const CHOICE_AUDIO_CATS = ["trad", "verbo"];
 const VOICE = opt("voice", TRACK_VOICES[TRACK] || "es-US-Neural2-A");
 const NATIVE_VOICE = opt("native-voice", "en-US-Neural2-C");
 const LIMIT = Number(opt("limit", "0")) || 0;
@@ -221,6 +247,115 @@ const LANG_RULES = {
     nativeTail: true, // ` — <english hint>` tails get a native <lang> span
     subReading: true, // quoted kanji headwords get <sub alias=hiragana(romaji)>
   },
+  // ko notes (added at the koForEn pass — es/fr/de/ja rules above are
+  // untouched, so those tracks need no --force after this change):
+  // - Content packs hangul + Revised-Romanization together ("물 (mul)"), and
+  //   prompt frames carry a whole-sentence RR parenthetical. Spoken text
+  //   strips the RR the same spirit as ja's romaji strip — but ko needs TWO
+  //   passes (stripKoreanReadingParens), because some gram cloze prompts put
+  //   an English em-dash hint BETWEEN the hangul and its trailing RR paren
+  //   (`학교___ 가요. — "I go TO school" (Hakgyo___ gayo.)`), so the RR follows
+  //   Latin, not hangul, and a preceded-by-hangul rule alone misses it.
+  //   Stripping happens AFTER hashing: keys stay derivable from the raw prompt
+  //   the client has.
+  // - NO subReading (the big divergence from ja): hangul is phonetic, so
+  //   ko-KR TTS reads headwords correctly — including the standard batchim
+  //   liaison/assimilation a native voice applies. The fono category (which
+  //   teaches those sound changes explicitly) is extraBank, already excluded.
+  // - Recognition shape: 'X'은/는 무슨 뜻이에요? — X is target-language, spoken
+  //   as-is. The 은/는 particle sits flush against the closing quote (no
+  //   boundary), so quoteDetect reads false there and it never review-flags.
+  //   Production shape: 'X', 한국어로 뭐라고 해요? — X is the English gloss,
+  //   native <lang> span (¿Cómo se dice...? / は日本語で class).
+  // - English hint tails on gram cloze prompts get a native <lang> span when
+  //   target-script-free; prompts with no hangul at all (trad "Translate:
+  //   '...'") go whole-native-voice, and their English "(note)" survives
+  //   because those prompts carry no hangul for the trailing-paren strip to
+  //   trigger on — matching ja's preserved trad notes.
+  ko: {
+    production: /^()'(.+)'(, 한국어로 뭐라고 해요\?)$/,
+    knownQuoted: /^'.+'[은는] 무슨 뜻이에요/,
+    quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…]|$)/.test(text),
+    deriveSpoken: stripKoreanReadingParens,
+    targetScript: /[\uAC00-\uD7A3]/, // any hangul syllable block
+    nativeWhenNoTarget: true, // no hangul at all → whole prompt is native-language
+    nativeTail: true, // ` — <english hint>` tails get a native <lang> span
+  },
+  // ru notes (added at the ruForEn pass — es/fr/de/ja/ko rules above are
+  // untouched, so those tracks need no --force after this change):
+  // - Cyrillic is alphabetic/phonetic → NO subReading (ko's divergence from ja
+  //   transfers). ru-RU TTS reads headwords correctly on its own, including
+  //   akanye vowel reduction and final devoicing; the fono category that
+  //   teaches those explicitly is extraBank, already excluded.
+  // - Recognition shape: 'X' значит... — X is target-language (Cyrillic),
+  //   spoken as-is (knownQuoted). Production shape: Как сказать 'X' по-русски?
+  //   — X is the English gloss, gets the native <lang> span (¿Cómo se dice...?
+  //   / Wie sagt man...? / は日本語で class). Greedy .+ so glosses with inner
+  //   apostrophes ("with one's own eyes") don't truncate on the closing quote.
+  // - trad "Translate: '...'" prompts are whole-native English, caught by the
+  //   shared translate branch — same as every other track.
+  // - deriveSpoken drops an English gloss paren that trails Cyrillic (the one
+  //   curated gram item above); see stripCyrillicGlossParens for why it only
+  //   ever fires there.
+  // - Accepted review flag: 'Стол' — какого рода? (gram) has a leading quoted
+  //   Cyrillic span that isn't a значит-recognition, so it review-flags. Benign
+  //   — target-language, spoken correctly as-is. Same accepted-flag class as ja/ko.
+  ru: {
+    production: /^(Как сказать )'(.+)'( по-русски\?)$/,
+    knownQuoted: /^'.+'\s+значит/,
+    quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…]|$)/.test(text),
+    deriveSpoken: stripCyrillicGlossParens,
+  },
+  // zh notes (added at the zhForEn pass — es/fr/de/ja/ko/ru rules above are
+  // untouched, so those tracks need no --force after this change):
+  // - Content packs hanzi + pinyin ("谢谢 (xièxie)") in CITATION tones (sandhi
+  //   never pre-applied), and recognition frames carry the pinyin on the quoted
+  //   headword. Spoken text strips the pinyin in the same spirit as ja's romaji
+  //   strip — it REUSES stripCJKReadingParens directly, since CJK_CONTEXT already
+  //   covers hanzi: a paren whose preceding substantive char is hanzi is a
+  //   reading aid → stripped; a paren following Latin (a production gloss's
+  //   "(informal)", a trad "(note)") is kept and spoken. Single pass suffices
+  //   because zh puts pinyin ONLY on the mid-prompt headword (hanzi-preceded) —
+  //   there is no ko-style whole-sentence RR paren trailing an English hint, so
+  //   no second final-paren pass is needed. (If a dry-run manifest ever shows a
+  //   residual "(pinyin)" in a clip's `t`, that assumption broke — add ko's
+  //   second pass then, not blindly now.) Strips AFTER hashing, so keys stay
+  //   derivable from the raw prompt the client has.
+  // - Recognition shape: 'X (pīnyīn)' 是什么意思？ — X is target-language (hanzi),
+  //   spoken as-is after the pinyin strip (knownQuoted). Production shape:
+  //   'X' 用中文怎么说？ — X is the English gloss, gets the native <lang> span
+  //   (¿Cómo se dice...? / は日本語で / Как сказать class). The WB `fvocab`
+  //   category is production-framed, so ALL ~600 WB items exercise the en→zh
+  //   <lang> handoff — the #1 audition item (Wavenet honors <lang>, per ru).
+  //   Greedy .+ so glosses with inner apostrophes ("with one's own") and inner
+  //   parens don't truncate; tail \s* since CJK frames may omit the space.
+  // - trad "Translate: '...'" prompts are whole-native English (shared translate
+  //   branch — the quoted phrase there is the English source, not a target word);
+  //   any prompt with no hanzi at all also goes native (nativeWhenNoTarget).
+  // - NO subReading — DEFERRED, not "not needed" (this is the divergence from
+  //   ko/ru, whose phonetic scripts genuinely don't need it): zh is logographic,
+  //   so the isolated-headword heteronym risk ja solves with <sub> IS real here
+  //   (多音字: 银行 háng, 教 jiāo, 长 cháng, 便宜 pián, 还 hái, 薄 báo, 觉/睡觉
+  //   jiào…). But ja's fix maps romaji→kana, an unambiguous TTS-safe script; raw
+  //   pinyin in <sub>/<phoneme> is NOT verified to render correct tones on cmn-CN
+  //   Wavenet, and blind-shipping an unhonored tag would 400 or mis-speak every
+  //   heteronym clip. So: engine-default readings this pass, heteronyms are the
+  //   top audition item, and a CURATED <phoneme alphabet="pinyin"> pass is a
+  //   follow-up IFF audition shows the engine both mis-reads AND honors the tag.
+  //   Exposure is the ~10 listed 多音字, not the whole bank (most headwords are
+  //   single-reading).
+  // - Accepted review flag (same class as ja/ko/ru): a leading quoted-hanzi gram
+  //   prompt that isn't a 是什么意思-recognition review-flags benignly — target-
+  //   language, spoken correctly as-is; the flag is look-don't-block.
+  zh: {
+    production: /^()'(.+)'(\s*用中文怎么说？)$/,
+    knownQuoted: /^'.+'\s*是什么意思/,
+    quoteDetect: (text) => /(^|[\s(])'[^']+'(?=[\s).,:;?!…？！、。」]|$)/.test(text),
+    deriveSpoken: stripCJKReadingParens,
+    targetScript: /[\u3400-\u9FFF\uF900-\uFAFF々〇]/, // any hanzi (CJK unified + ext-A + compat + 々〇)
+    nativeWhenNoTarget: true, // no hanzi at all → whole prompt is native-language
+    nativeTail: true, // ` — <english hint>` tails get a native <lang> span
+  },
 };
 
 // ---------- ja helpers ----------
@@ -303,6 +438,61 @@ function readingSub(rawText) {
   return { word: m[1], alias }; // alias === null → caller hard-fails
 }
 
+// ---------- ko helpers ----------
+// Hangul syllable blocks (U+AC00–U+D7A3). Jamo aren't used in this track's
+// prompts, so the syllable range is sufficient for both stripping and the
+// targetScript test.
+const HANGUL_BLOCK = /[\uAC00-\uD7A3]/;
+
+// Strip Revised-Romanization reading aids from ko spoken text. Two passes,
+// because ko prompt frames don't put the RR in one consistent position:
+//   (a) parens whose preceding substantive char is hangul — the mid-prompt
+//       headword reading ("'물 (mul)'…" → "'물'…") and any RR that trails
+//       hangul directly ("…해요? (…)" → "…해요?"). Walk-back skips whitespace,
+//       terminal punctuation, and cloze underscores, mirroring the ja rule.
+//   (b) a FINAL paren that (a) missed because it follows an English em-dash
+//       hint ("…가요. — \"I go TO school\" (Hakgyo___ gayo.)"). Only strips
+//       when hangul appears earlier in the prompt, so trad "Translate: '…'
+//       (set phrase…)" — which has no hangul in the prompt itself — keeps its
+//       English note and speaks it in the native voice, exactly as ja does.
+// English glosses that trail hangul (the rare "(\"Elephants…\")" aside) are
+// dropped from audio too; that's correct — spoken, they'd be read hangul-
+// accented, and they're a visual aid, not something to say.
+function stripKoreanReadingParens(text) {
+  let out = text.replace(/\s*\(([^)]*)\)/g, (m, _inner, idx, whole) => {
+    let j = idx - 1;
+    while (j >= 0 && /[\s?!._…]/.test(whole[j])) j--;
+    return j >= 0 && HANGUL_BLOCK.test(whole[j]) ? "" : m;
+  });
+  out = out.replace(/\s*\(([^)]*)\)\s*$/, (m, _inner, idx, whole) =>
+    HANGUL_BLOCK.test(whole.slice(0, idx)) ? "" : m
+  );
+  return out.replace(/ {2,}/g, " ").trim();
+}
+
+// ---------- ru helpers ----------
+// Basic Cyrillic block (covers all modern Russian letters incl. ё U+0451).
+const CYRILLIC = /[\u0400-\u04FF]/;
+// Drop an English translation-gloss paren that trails Cyrillic — the single
+// curated gram item 'Я студент. ("I am a student.")'. Mirrors the ja/ko
+// reading-paren strip: walk back past whitespace and terminal punctuation; if
+// the preceding substantive char is Cyrillic, the paren is a visual gloss →
+// drop it from audio (still shown on screen). Production glosses ("to buy
+// (impf.)") are Latin-preceded → kept, and the production branch <lang>-tags
+// them; trad parens follow a quote → kept and spoken in the native voice. WB
+// prompts carry no parens (ruWords has no romanization). Strips AFTER hashing,
+// so keys stay client-derivable.
+function stripCyrillicGlossParens(text) {
+  return text
+    .replace(/\s*\(([^)]*)\)/g, (m, _inner, idx, whole) => {
+      let j = idx - 1;
+      while (j >= 0 && /[\s?!._…]/.test(whole[j])) j--;
+      return j >= 0 && CYRILLIC.test(whole[j]) ? "" : m;
+    })
+    .replace(/ {2,}/g, " ")
+    .trim();
+}
+
 // ---------- spoken-text extraction ----------
 function extractSpoken(track) {
   const items = []; // { key, text, ssml, sources: [questionId,...] }
@@ -350,6 +540,38 @@ function extractSpoken(track) {
       items.push(item);
     });
   });
+
+  // #87: answer-choice audio (esForEn pilot). Synthesize the OPTION strings of
+  // the categories whose options are reliably full target-language — trad
+  // (idioms/translation) and verbo (conjugations). vocab/fvocab options are
+  // frequently English glosses and fono is itself a listening exercise, so both
+  // are deferred (a per-option language tag would be the clean way in). Options
+  // carry no production/translate framing and no cloze gaps, so they're
+  // synthesized as-is with the TARGET voice. The client keys off the displayed
+  // option text, so any un-synthesized option simply gets no speaker button.
+  if (CHOICE_AUDIO_TRACKS.has(TRACK)) {
+    let choiceCount = 0;
+    CHOICE_AUDIO_CATS.forEach((cat) => {
+      (track.bank[cat] || []).forEach((q, i) => {
+        (q[1] || []).forEach((optRaw, oi) => {
+          const text = normalizeSpokenText(optRaw);
+          if (!text) return;
+          const key = audioKey(text);
+          const src = `${cat}-${i}-opt${oi}`;
+          if (byKey.has(key)) {
+            byKey.get(key).sources.push(src);
+            return;
+          }
+          const item = { key, rawText: text, text, ssml: `<speak>${xmlEscape(text)}</speak>`, voice: "target", sources: [src] };
+          item.file = voiceKeyed ? `${key}-${VOICE}.mp3` : `${key}.mp3`;
+          byKey.set(key, item);
+          items.push(item);
+          choiceCount++;
+        });
+      });
+    });
+    if (choiceCount) console.log(`Choice audio: +${choiceCount} option clips (${CHOICE_AUDIO_CATS.join(", ")})`);
+  }
 
   if (readingFailures.length) {
     console.error(`FATAL: ${readingFailures.length} romaji reading(s) could not be converted to hiragana:`);

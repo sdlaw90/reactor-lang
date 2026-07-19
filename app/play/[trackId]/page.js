@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Flame, Zap, Check, X, ChevronRight, ChevronDown, RotateCcw, Trophy, Info } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
@@ -14,11 +14,15 @@ import {
   todayStr,
   computeMastery,
   computeStreakUpdate,
+  themeCoverage,
+  combinedPoolSize,
+  COMBINED_MIN,
 } from "../../../lib/gameEngine";
-import { cefrSetForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
+import { cefrSetForSkillLevel, masteryBandsForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
 import { scriptForTrack } from "../../../data/scripts";
+import { grammarForTrack } from "../../../data/grammar";
 import SectionToggle from "../../../lib/SectionToggle";
 import { trackDisplayName } from "../../../lib/languageNames";
 import StreakMilestoneCelebration from "../../../lib/StreakMilestoneCelebration";
@@ -85,6 +89,7 @@ export default function PlayPage({ params }) {
   const [milestoneHit, setMilestoneHit] = useState(null);
   const [advanceDismissed, setAdvanceDismissed] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState([]); // empty = Mixto (all categories)
+  const [themeFilter, setThemeFilter] = useState(null); // #88: null = all themes
   const [awaitingNext, setAwaitingNext] = useState(false); // review-mode: paused after answer, waiting for "Next"
   const [showMastery, setShowMastery] = useState(false);
 
@@ -140,8 +145,24 @@ export default function PlayPage({ params }) {
 
   const reviewMode = session?.user?.user_metadata?.review_mode ?? false;
   const questionAudio = session?.user?.user_metadata?.question_audio ?? true;
+  // #87: answer-choice audio (default off). Tap-to-play speaker buttons appear
+  // on the options ONLY in the review/pause state (after the answer is shown),
+  // so they can never hint the answer or turn a reading item into a listening
+  // one. Playback touches no aggregates (AudioButton enforces that).
+  const choiceAudio = session?.user?.user_metadata?.choice_audio ?? false;
+  // #89: tense training-wheels (default ON). Surfaces the tense + a one-line
+  // why on grammar-tagged items; dismissable only at advanced levels, where
+  // the learner should recognize the tense unaided.
+  const tenseHints = session?.user?.user_metadata?.tense_hints ?? true;
+  const advancedLevel = ["expert", "native"].includes(progress.skill_level);
   const roundSettings = session?.user?.user_metadata?.round_settings || {};
-  const buildOptions = { perCat: roundSettings.perCat, extraPairs: roundSettings.extraPairs, categoryFilter };
+  const buildOptions = { perCat: roundSettings.perCat, extraPairs: roundSettings.extraPairs, categoryFilter, themeFilter };
+  // #88 combined focus: category ∩ theme viability, so the picker can tell the
+  // learner up front how many items the combination will actually draw from
+  // (and warn when it's too thin to build a blended round). comboPool is null
+  // unless BOTH a category focus and a theme are selected.
+  const themeCov = useMemo(() => themeCoverage(track), [track]);
+  const comboPool = combinedPoolSize(themeCov, categoryFilter, themeFilter);
   const timerOverrides = { questionTime: roundSettings.questionTime, extraQuestionTime: roundSettings.extraQuestionTime };
   // If the viewer's native language differs from what this track was
   // originally designed for (e.g. a native English speaker cross-learning
@@ -357,6 +378,16 @@ export default function PlayPage({ params }) {
     setAdvanceDismissed(false);
   };
 
+  // #89: dismiss tense training-wheels (only offered at advanced levels).
+  const dismissTenseHints = async () => {
+    try {
+      const { data } = await supabase.auth.updateUser({ data: { tense_hints: false } });
+      if (data?.user) setSession((s) => ({ ...s, user: data.user }));
+    } catch (e) {
+      console.error("failed to dismiss tense hints", e);
+    }
+  };
+
   const openArchive = async () => {
     setScreen("archive");
     setArchiveLoading(true);
@@ -439,7 +470,7 @@ export default function PlayPage({ params }) {
             <p style={styles.subtitle}>{useAltPrompt && track.sublabelEn ? track.sublabelEn : track.sublabel}</p>
 
             <SectionToggle trackId={track.id} active="practice" practiceLabel={T("sectionPractice")} listenLabel={T("sectionListen")} speakLabel={T("sectionSpeak")} soonLabel={T("soonTag")} />
-            <ModeToggle trackId={track.id} active="quiz" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} scriptLabel={trackScript ? T("modeScript") : null} />
+            <ModeToggle trackId={track.id} active="quiz" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} scriptLabel={trackScript ? T("modeScript") : null} grammarLabel={grammarForTrack(track.id) ? T("modeGrammar") : null} />
 
             {trackScript && !scriptNoticeDismissed && ["none", "beginner"].includes(progress.skill_level) && (
               <div style={styles.scriptNotice}>
@@ -537,7 +568,7 @@ export default function PlayPage({ params }) {
                 <button
                   className="rj"
                   style={{ ...styles.catChip, borderColor: categoryFilter.length === 0 ? "#FF8FB1" : "#3A3452", color: categoryFilter.length === 0 ? "#FF8FB1" : "#B4ABC9" }}
-                  onClick={() => setCategoryFilter([])}
+                  onClick={() => { setCategoryFilter([]); setThemeFilter(null); }}
                 >
                   {T("mixed")}
                 </button>
@@ -552,9 +583,11 @@ export default function PlayPage({ params }) {
                         borderColor: selected ? track.cats[catId].color : "#3A3452",
                         color: selected ? track.cats[catId].color : "#B4ABC9",
                       }}
-                      onClick={() =>
-                        setCategoryFilter((prev) => (prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId]))
-                      }
+                      onClick={() => {
+                        // #88: keep any active theme so category + theme combine,
+                        // instead of the old behaviour of clearing the theme here.
+                        setCategoryFilter((prev) => (prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId]));
+                      }}
                     >
                       {displayCatLabel(catId)}
                     </button>
@@ -562,6 +595,51 @@ export default function PlayPage({ params }) {
                 })}
               </div>
             </div>
+
+            {/* #88/#88: theme filter — pulls tagged items into one round. On its
+                own a theme cuts across every category; with a Round focus also
+                selected, the two COMBINE (category ∩ theme). The round still
+                records to each item's home category, so there's no separate
+                theme progress. */}
+            {track.themes && track.themes.length > 0 && (
+              <div style={styles.categoryPicker}>
+                <span style={{ color: "#7C7395", fontSize: 12 }}>{T("themeFocus")}</span>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
+                  <button
+                    className="rj"
+                    style={{ ...styles.catChip, borderColor: !themeFilter ? "#7BE495" : "#3A3452", color: !themeFilter ? "#7BE495" : "#B4ABC9" }}
+                    onClick={() => setThemeFilter(null)}
+                  >
+                    {T("allThemes")}
+                  </button>
+                  {track.themes.map((th) => {
+                    const on = themeFilter === th.id;
+                    return (
+                      <button
+                        key={th.id}
+                        className="rj"
+                        style={{ ...styles.catChip, borderColor: on ? "#7BE495" : "#3A3452", color: on ? "#7BE495" : "#B4ABC9" }}
+                        onClick={() => {
+                          // #88: keep any active category focus so the two combine
+                          // (category ∩ theme), rather than clearing it here.
+                          setThemeFilter(on ? null : th.id);
+                        }}
+                      >
+                        {th[uiLang] || th.en}
+                      </button>
+                    );
+                  })}
+                </div>
+                {/* #88: live viability of the combined focus. Below COMBINED_MIN
+                    the round can't blend the two, so we say so up front instead
+                    of silently serving the whole theme (or a one-item round). */}
+                {comboPool !== null && (
+                  <div style={comboPool >= COMBINED_MIN ? styles.comboNoteOk : styles.comboNoteThin}>
+                    {comboPool >= COMBINED_MIN ? T("comboReady", { n: comboPool }) : T("comboThin", { n: comboPool })}
+                  </div>
+                )}
+              </div>
+            )}
 
             <div style={styles.masteryCard}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -573,28 +651,48 @@ export default function PlayPage({ params }) {
 
               {showMastery && (
                 <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 12 }}>
-                  {Object.keys(track.cats).map((catId) => {
-                    const m = mastery[catId];
-                    if (!m) return null;
-                    const pct = m.total > 0 ? Math.round((m.learned / m.total) * 100) : 0;
-                    const diffEntries = Object.entries(m.byDifficulty).sort((a, b) => a[0].localeCompare(b[0]));
-                    return (
-                      <div key={catId}>
-                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5 }}>
-                          <span style={{ color: track.cats[catId].color, fontWeight: 700 }}>{displayCatLabel(catId)}</span>
-                          <span className="jm" style={{ color: "#B4ABC9" }}>
-                            {T("learnedOf", { learned: m.learned, total: m.total })}
-                          </span>
+                  {(() => {
+                    const bands = masteryBandsForSkillLevel(progress.skill_level);
+                    const inBand = (diff) => diff === "—" || bands.includes(diff);
+                    return Object.keys(track.cats).map((catId) => {
+                      const m = mastery[catId];
+                      if (!m) return null;
+                      // Cumulative-to-level: the bar counts only the CEFR bands at
+                      // or below the player's level (#38 depth follow-up), so a
+                      // 150-item category stays attainable. Higher bands show dimmed
+                      // in the breakdown as the next goal.
+                      let learned = 0;
+                      let total = 0;
+                      Object.entries(m.byDifficulty).forEach(([diff, d]) => {
+                        if (inBand(diff)) {
+                          learned += d.learned;
+                          total += d.total;
+                        }
+                      });
+                      const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
+                      const diffEntries = Object.entries(m.byDifficulty).sort((a, b) => a[0].localeCompare(b[0]));
+                      return (
+                        <div key={catId}>
+                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5 }}>
+                            <span style={{ color: track.cats[catId].color, fontWeight: 700 }}>{displayCatLabel(catId)}</span>
+                            <span className="jm" style={{ color: "#B4ABC9" }}>
+                              {T("learnedOf", { learned, total })}
+                            </span>
+                          </div>
+                          <div style={styles.masteryBarOuter}>
+                            <div style={{ ...styles.masteryBarInner, width: `${pct}%`, background: track.cats[catId].color }} />
+                          </div>
+                          <div className="jm" style={{ fontSize: 10.5, marginTop: 4, display: "flex", flexWrap: "wrap", gap: "0 8px" }}>
+                            {diffEntries.map(([diff, d]) => (
+                              <span key={diff} style={{ color: inBand(diff) ? "#7C7395" : "#4A4460" }}>
+                                {diff}: {d.learned}/{d.total}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                        <div style={styles.masteryBarOuter}>
-                          <div style={{ ...styles.masteryBarInner, width: `${pct}%`, background: track.cats[catId].color }} />
-                        </div>
-                        <div className="jm" style={{ fontSize: 10.5, color: "#7C7395", marginTop: 4 }}>
-                          {diffEntries.map(([diff, d]) => `${diff}: ${d.learned}/${d.total}`).join(" · ")}
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    });
+                  })()}
                 </div>
               )}
             </div>
@@ -659,6 +757,24 @@ export default function PlayPage({ params }) {
               </div>
               {displayPromptNative(q) && <p style={styles.promptNative}>{displayPromptNative(q)}</p>}
 
+              {/* #89: tense training-wheels — names the tense the item asks for
+                  plus a one-line why. On by default; the × (advanced levels
+                  only) turns it off for good. */}
+              {tenseHints && q.grammar && (
+                <div style={styles.tenseChip}>
+                  <span style={styles.tenseChipLabel}>🎯 {q.grammar.tense[uiLang] || q.grammar.tense.en}</span>
+                  {q.grammar.person && (
+                    <span style={styles.tenseChipPerson}>{q.grammar.person[uiLang] || q.grammar.person.en}</span>
+                  )}
+                  <span style={styles.tenseChipWhy}>{q.grammar.why[uiLang] || q.grammar.why.en}</span>
+                  {advancedLevel && (
+                    <button className="rj" style={styles.tenseDismiss} onClick={dismissTenseHints} title="Hide tense hints" aria-label="Hide tense hints">
+                      ×
+                    </button>
+                  )}
+                </div>
+              )}
+
               {q.cat === track.extraCatId && q.sound && (
                 <div style={styles.soundBox}>
                   <p className="rj" style={styles.soundText}>
@@ -687,18 +803,25 @@ export default function PlayPage({ params }) {
                       textColor = "#FFC7CD";
                     }
                   }
+                  // #87: choice audio only in the review/pause state (answer
+                  // already revealed). The speaker renders only if a clip
+                  // exists for the option text (AudioButton resolves via the
+                  // manifest), so English glosses simply get no button.
+                  const showChoiceAudio = choiceAudio && awaitingNext;
                   return (
-                    <button
-                      key={i}
-                      onClick={() => handleAnswer(i)}
-                      disabled={!!feedback}
-                      className="rj"
-                      style={{ ...styles.optionBtn, background: bg, borderColor: border, borderWidth, color: textColor }}
-                    >
-                      <span>{opt}</span>
-                      {feedback && i === q.correctIdx && <Check size={22} color="#5EE0A0" strokeWidth={3} />}
-                      {feedback && i === selected && i !== q.correctIdx && <X size={22} color="#FF7B8A" strokeWidth={3} />}
-                    </button>
+                    <div key={i} style={{ display: "flex", alignItems: "stretch", gap: 8 }}>
+                      <button
+                        onClick={() => handleAnswer(i)}
+                        disabled={!!feedback}
+                        className="rj"
+                        style={{ ...styles.optionBtn, flex: 1, background: bg, borderColor: border, borderWidth, color: textColor }}
+                      >
+                        <span>{opt}</span>
+                        {feedback && i === q.correctIdx && <Check size={22} color="#5EE0A0" strokeWidth={3} />}
+                        {feedback && i === selected && i !== q.correctIdx && <X size={22} color="#FF7B8A" strokeWidth={3} />}
+                      </button>
+                      {showChoiceAudio && <AudioButton trackId={track.id} text={opt} enabled size={16} align="left" />}
+                    </div>
                   );
                 })}
               </div>
@@ -766,7 +889,7 @@ export default function PlayPage({ params }) {
                 <button
                   className="rj"
                   style={{ ...styles.catChip, borderColor: categoryFilter.length === 0 ? "#FF8FB1" : "#3A3452", color: categoryFilter.length === 0 ? "#FF8FB1" : "#B4ABC9" }}
-                  onClick={() => setCategoryFilter([])}
+                  onClick={() => { setCategoryFilter([]); setThemeFilter(null); }}
                 >
                   {T("mixed")}
                 </button>
@@ -781,9 +904,11 @@ export default function PlayPage({ params }) {
                         borderColor: selected ? track.cats[catId].color : "#3A3452",
                         color: selected ? track.cats[catId].color : "#B4ABC9",
                       }}
-                      onClick={() =>
-                        setCategoryFilter((prev) => (prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId]))
-                      }
+                      onClick={() => {
+                        // #88: keep any active theme so category + theme combine,
+                        // instead of the old behaviour of clearing the theme here.
+                        setCategoryFilter((prev) => (prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId]));
+                      }}
                     >
                       {displayCatLabel(catId)}
                     </button>
@@ -978,6 +1103,8 @@ const styles = {
   pageHelpLine: { color: "#B4ABC9", fontSize: 12.5, lineHeight: 1.5, margin: "0 0 6px", textAlign: "left" },
   skillCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
   categoryPicker: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
+  comboNoteOk: { marginTop: 10, fontSize: 12, color: "#7BE495", lineHeight: 1.4 },
+  comboNoteThin: { marginTop: 10, fontSize: 12, color: "#FFB84D", lineHeight: 1.4 },
   masteryCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
   masteryBarOuter: { width: "100%", height: 6, background: "#171423", borderRadius: 3, overflow: "hidden", marginTop: 5 },
   masteryBarInner: { height: "100%", borderRadius: 3, transition: "width 0.4s ease" },
@@ -1028,6 +1155,35 @@ const styles = {
   catTag: { display: "inline-block", fontSize: 12, fontWeight: 700, textTransform: "uppercase", border: "1px solid", borderRadius: 20, padding: "3px 10px", marginBottom: 14 },
   prompt: { fontSize: 19, fontWeight: 500, lineHeight: 1.4, marginBottom: 18 },
   promptNative: { fontSize: 14, fontWeight: 400, lineHeight: 1.45, margin: "-12px 0 18px", color: "#9B93B8", textAlign: "center" },
+  // #89: tense training-wheels chip.
+  tenseChip: {
+    display: "flex",
+    alignItems: "center",
+    flexWrap: "wrap",
+    gap: "2px 8px",
+    background: "#241B36",
+    border: "1px solid #B98EFF",
+    borderRadius: 10,
+    padding: "8px 12px",
+    marginBottom: 16,
+  },
+  tenseChipLabel: { color: "#E4D6FF", fontSize: 12.5, fontWeight: 800 },
+  // #89: person/number pill (which conjugation slot: yo/tú/…).
+  tenseChipPerson: { color: "#C9B8FF", fontSize: 11.5, fontWeight: 700, background: "#160F26", border: "1px solid #4A3B6E", borderRadius: 999, padding: "1px 8px", whiteSpace: "nowrap" },
+  tenseChipWhy: { color: "#B4ABC9", fontSize: 12, lineHeight: 1.4, flex: 1, minWidth: 140 },
+  tenseDismiss: {
+    background: "transparent",
+    color: "#9B93B8",
+    border: "1px solid #3A3452",
+    borderRadius: 6,
+    width: 22,
+    height: 22,
+    fontSize: 15,
+    lineHeight: 1,
+    cursor: "pointer",
+    flexShrink: 0,
+    padding: 0,
+  },
   soundBox: { background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "16px 14px", marginBottom: 16, textAlign: "center" },
   soundText: { color: "#E4D6FF", fontSize: 21, fontWeight: 600, margin: 0, lineHeight: 1.6 },
   soundLegend: { color: "#8A7FA3", fontSize: 11, marginTop: 10, marginBottom: 0 },

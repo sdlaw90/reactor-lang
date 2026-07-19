@@ -1,17 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import BackHome from "../../lib/BackHome";
 import { FACEBOOK_GROUP_URL } from "../../lib/community";
 
 export default function HelpPage() {
-  const router = useRouter();
-
   return (
     <div style={styles.wrap}>
       <div style={{ width: "100%", maxWidth: 480 }}>
-        <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
-          ← Back
-        </button>
+        <BackHome />
         <h1 className="rj" style={styles.title}>
           How SquirreLingo works
         </h1>
@@ -23,15 +19,18 @@ export default function HelpPage() {
           .
         </p>
 
-        <Section title="The menu (tap your profile picture)">
+        <Section title="Finding Help and the menu">
           <P>
-            Your profile picture, top-right of the home screen, opens a slide-out menu with everything that
-            used to be spread across separate icons: <b>What's New</b> (a dot appears when there's a release
-            you haven't seen yet), <b>Help</b> (this page), <b>About</b> (what the app is, how both modes
-            work, and what's planned next), and <b>Dashboard</b> (your total XP, streak, and
-            rounds across every language). Below a divider, the full <b>Settings</b> section sits right there
-            too — username, email, password, native language/country, profile picture, gameplay preferences —
-            no extra tap needed to open it.
+            The <b>?</b> button in the top-right corner of the home screen opens this Help page anytime —
+            it's right there so you never have to go hunting for it.
+          </P>
+          <P>
+            Next to it, your <b>profile picture</b> opens a slide-out menu with everything else: <b>What's New</b>
+            (a dot appears when there's a release you haven't seen yet), <b>About</b> (what the app is, how both
+            modes work, and what's planned next), and <b>Dashboard</b> (your total XP, streak, and rounds across
+            every language). Below a divider, the full <b>Settings</b> section sits right there too — username,
+            email, password, native language/country, profile picture, gameplay preferences — no extra tap
+            needed to open it.
           </P>
         </Section>
 
