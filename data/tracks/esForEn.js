@@ -905,6 +905,1081 @@ const BANK = {
     ["Ojala _____ (prever) las consecuencias antes de firmar el contrato.", ["hubiera previsto", "habria previsto", "previera", "preveia"], 0,
       { en: "'Ojala' expressing regret about a past unfulfilled wish demands the pluperfect subjunctive 'hubiera previsto', not the conditional perfect or a simple subjunctive form.", es: "'Ojala' que expresa arrepentimiento por un deseo pasado no cumplido exige el pluscuamperfecto de subjuntivo 'hubiera previsto', no el condicional compuesto ni una forma simple de subjuntivo."}, "C2", null,
       { en: "I wish I had foreseen the consequences before signing the contract. (prever = to foresee)" }],
+    // --- Variant-expansion person-swaps 2026-07-19 (subject-person reworks of existing verbo items; auto-generated, PENDING LatAm review #41) ---
+    ["Tú _____ (tener) mucha hambre ahora mismo.", ["tengo", "tiene", "tenemos", "tienes"], 3,
+      { en: "The tú (you) form of 'tener' is 'tienes'.", es: "La forma de tú de 'tener' es 'tienes'."}, "A1", null,
+      { en: "You _____ (tener = to have) are really hungry right now." }],  // es-v-001-p-tu
+    ["Él _____ (tener) mucha hambre ahora mismo.", ["tienes", "tenemos", "tiene", "tengo"], 2,
+      { en: "The él/ella (he/she) form of 'tener' is 'tiene'.", es: "La forma de él/ella de 'tener' es 'tiene'."}, "A1", null,
+      { en: "He _____ (tener = to have) is really hungry right now." }],  // es-v-001-p-él
+    ["Nosotros _____ (tener) mucha hambre ahora mismo.", ["tiene", "tenemos", "tengo", "tienes"], 1,
+      { en: "The nosotros (we) form of 'tener' is 'tenemos'.", es: "La forma de nosotros de 'tener' es 'tenemos'."}, "A1", null,
+      { en: "We _____ (tener = to have) are really hungry right now." }],  // es-v-001-p-nosotros
+    ["Ellos _____ (tener) mucha hambre ahora mismo.", ["tienen", "tengo", "tienes", "tiene"], 0,
+      { en: "The ellos/ellas (they) form of 'tener' is 'tienen'.", es: "La forma de ellos/ellas de 'tener' es 'tienen'."}, "A1", null,
+      { en: "They _____ (tener = to have) are really hungry right now." }],  // es-v-001-p-ellos
+    ["Yo _____ (querer) salir esta noche.", ["quieres", "quiere", "queremos", "quiero"], 3,
+      { en: "The yo (I) form of 'querer' is 'quiero'.", es: "La forma de yo de 'querer' es 'quiero'."}, "A1", null,
+      { en: "I _____ (querer = to want) to go out tonight." }],  // es-v-002-p-yo
+    ["Tú _____ (querer) salir esta noche.", ["quiere", "queremos", "quieres", "quiero"], 2,
+      { en: "The tú (you) form of 'querer' is 'quieres'.", es: "La forma de tú de 'querer' es 'quieres'."}, "A1", null,
+      { en: "You _____ (querer = to want) to go out tonight." }],  // es-v-002-p-tu
+    ["Él _____ (querer) salir esta noche.", ["queremos", "quiere", "quiero", "quieres"], 1,
+      { en: "The él/ella (he/she) form of 'querer' is 'quiere'.", es: "La forma de él/ella de 'querer' es 'quiere'."}, "A1", null,
+      { en: "He _____ (querer = to want) to go out tonight." }],  // es-v-002-p-él
+    ["Ellos _____ (querer) salir esta noche.", ["quieren", "quiero", "quieres", "quiere"], 0,
+      { en: "The ellos/ellas (they) form of 'querer' is 'quieren'.", es: "La forma de ellos/ellas de 'querer' es 'quieren'."}, "A1", null,
+      { en: "They _____ (querer = to want) to go out tonight." }],  // es-v-002-p-ellos
+    ["Yo _____ (dormir) ocho horas anoche.", ["dormiste", "durmió", "dormimos", "dormí"], 3,
+      { en: "The yo (I) form of 'dormir' is 'dormí'.", es: "La forma de yo de 'dormir' es 'dormí'."}, "B1", null,
+      { en: "I _____ (dormir = to sleep) eight hours last night." }],  // es-v-003-p-yo
+    ["Tú _____ (dormir) ocho horas anoche.", ["durmió", "dormimos", "dormiste", "dormí"], 2,
+      { en: "The tú (you) form of 'dormir' is 'dormiste'.", es: "La forma de tú de 'dormir' es 'dormiste'."}, "B1", null,
+      { en: "You _____ (dormir = to sleep) eight hours last night." }],  // es-v-003-p-tu
+    ["Nosotros _____ (dormir) ocho horas anoche.", ["durmió", "dormimos", "dormí", "dormiste"], 1,
+      { en: "The nosotros (we) form of 'dormir' is 'dormimos'.", es: "La forma de nosotros de 'dormir' es 'dormimos'."}, "B1", null,
+      { en: "We _____ (dormir = to sleep) eight hours last night." }],  // es-v-003-p-nosotros
+    ["Ellos _____ (dormir) ocho horas anoche.", ["durmieron", "dormí", "dormiste", "durmió"], 0,
+      { en: "The ellos/ellas (they) form of 'dormir' is 'durmieron'.", es: "La forma de ellos/ellas de 'dormir' es 'durmieron'."}, "B1", null,
+      { en: "They _____ (dormir = to sleep) eight hours last night." }],  // es-v-003-p-ellos
+    ["¿Yo _____ (poder) ayudarme mañana?", ["puedes", "puede", "podemos", "puedo"], 3,
+      { en: "The yo (I) form of 'poder' is 'puedo'.", es: "La forma de yo de 'poder' es 'puedo'."}, "A1", null,
+      { en: "Can I _____ (poder = to be able) help me tomorrow?" }],  // es-v-004-p-yo
+    ["¿Él _____ (poder) ayudarme mañana?", ["puedes", "podemos", "puede", "puedo"], 2,
+      { en: "The él/ella (he/she) form of 'poder' is 'puede'.", es: "La forma de él/ella de 'poder' es 'puede'."}, "A1", null,
+      { en: "Can he _____ (poder = to be able) help me tomorrow?" }],  // es-v-004-p-él
+    ["¿Nosotros _____ (poder) ayudarme mañana?", ["puede", "podemos", "puedo", "puedes"], 1,
+      { en: "The nosotros (we) form of 'poder' is 'podemos'.", es: "La forma de nosotros de 'poder' es 'podemos'."}, "A1", null,
+      { en: "Can we _____ (poder = to be able) help me tomorrow?" }],  // es-v-004-p-nosotros
+    ["¿Ellos _____ (poder) ayudarme mañana?", ["pueden", "puedo", "puedes", "puede"], 0,
+      { en: "The ellos/ellas (they) form of 'poder' is 'pueden'.", es: "La forma de ellos/ellas de 'poder' es 'pueden'."}, "A1", null,
+      { en: "Can they _____ (poder = to be able) help me tomorrow?" }],  // es-v-004-p-ellos
+    ["Ayer tú _____ (ir) al gimnasio.", ["fui", "fue", "fuimos", "fuiste"], 3,
+      { en: "The tú (you) form of 'ir' is 'fuiste'.", es: "La forma de tú de 'ir' es 'fuiste'."}, "A2", null,
+      { en: "Yesterday You _____ (ir = to go) to the gym." }],  // es-v-005-p-tu
+    ["Ayer él _____ (ir) al gimnasio.", ["fuiste", "fuimos", "fue", "fui"], 2,
+      { en: "The él/ella (he/she) form of 'ir' is 'fue'.", es: "La forma de él/ella de 'ir' es 'fue'."}, "A2", null,
+      { en: "Yesterday He _____ (ir = to go) to the gym." }],  // es-v-005-p-él
+    ["Ayer nosotros _____ (ir) al gimnasio.", ["fue", "fuimos", "fui", "fuiste"], 1,
+      { en: "The nosotros (we) form of 'ir' is 'fuimos'.", es: "La forma de nosotros de 'ir' es 'fuimos'."}, "A2", null,
+      { en: "Yesterday We _____ (ir = to go) to the gym." }],  // es-v-005-p-nosotros
+    ["Ayer ellos _____ (ir) al gimnasio.", ["fueron", "fui", "fuiste", "fue"], 0,
+      { en: "The ellos/ellas (they) form of 'ir' is 'fueron'.", es: "La forma de ellos/ellas de 'ir' es 'fueron'."}, "A2", null,
+      { en: "Yesterday They _____ (ir = to go) to the gym." }],  // es-v-005-p-ellos
+    ["Yo _____ (estar) trabajando cuando llamé.", ["estabas", "estábamos", "estaban", "estaba"], 3,
+      { en: "The yo (I) form of 'estar' is 'estaba'.", es: "La forma de yo de 'estar' es 'estaba'."}, "B1", null,
+      { en: "I _____ (estar = to be) working when I called." }],  // es-v-006-p-yo
+    ["Tú _____ (estar) trabajando cuando llamé.", ["estábamos", "estaban", "estabas", "estaba"], 2,
+      { en: "The tú (you) form of 'estar' is 'estabas'.", es: "La forma de tú de 'estar' es 'estabas'."}, "B1", null,
+      { en: "You _____ (estar = to be) working when I called." }],  // es-v-006-p-tu
+    ["Él _____ (estar) trabajando cuando llamé.", ["estaban", "estaba", "estabas", "estábamos"], 1,
+      { en: "The él/ella (he/she) form of 'estar' is 'estaba'.", es: "La forma de él/ella de 'estar' es 'estaba'."}, "B1", null,
+      { en: "He _____ (estar = to be) working when I called." }],  // es-v-006-p-él
+    ["Nosotros _____ (estar) trabajando cuando llamé.", ["estábamos", "estaba", "estabas", "estaban"], 0,
+      { en: "The nosotros (we) form of 'estar' is 'estábamos'.", es: "La forma de nosotros de 'estar' es 'estábamos'."}, "B1", null,
+      { en: "We _____ (estar = to be) working when I called." }],  // es-v-006-p-nosotros
+    ["Mañana yo _____ (llegar) tarde, seguro.", ["llegarás", "llegará", "llegaremos", "llegaré"], 3,
+      { en: "The yo (I) form of 'llegar' is 'llegaré'.", es: "La forma de yo de 'llegar' es 'llegaré'."}, "A2", null,
+      { en: "Tomorrow I _____ (llegar = to arrive) late, for sure." }],  // es-v-007-p-yo
+    ["Mañana tú _____ (llegar) tarde, seguro.", ["llegará", "llegaremos", "llegarás", "llegaré"], 2,
+      { en: "The tú (you) form of 'llegar' is 'llegarás'.", es: "La forma de tú de 'llegar' es 'llegarás'."}, "A2", null,
+      { en: "Tomorrow you _____ (llegar = to arrive) late, for sure." }],  // es-v-007-p-tu
+    ["Mañana él _____ (llegar) tarde, seguro.", ["llegaremos", "llegará", "llegaré", "llegarás"], 1,
+      { en: "The él/ella (he/she) form of 'llegar' is 'llegará'.", es: "La forma de él/ella de 'llegar' es 'llegará'."}, "A2", null,
+      { en: "Tomorrow he _____ (llegar = to arrive) late, for sure." }],  // es-v-007-p-él
+    ["Mañana ellos _____ (llegar) tarde, seguro.", ["llegarán", "llegaré", "llegarás", "llegará"], 0,
+      { en: "The ellos/ellas (they) form of 'llegar' is 'llegarán'.", es: "La forma de ellos/ellas de 'llegar' es 'llegarán'."}, "A2", null,
+      { en: "Tomorrow they _____ (llegar = to arrive) late, for sure." }],  // es-v-007-p-ellos
+    ["Espero que él _____ (venir) a la fiesta.", ["vengas", "vengamos", "vengan", "venga"], 3,
+      { en: "The él/ella (he/she) form of 'venir' is 'venga'.", es: "La forma de él/ella de 'venir' es 'venga'."}, "B2", null,
+      { en: "He hope you _____ (venir = to come) to the party." }],  // es-v-009-p-él
+    ["Espero que nosotros _____ (venir) a la fiesta.", ["vengas", "vengan", "vengamos", "venga"], 2,
+      { en: "The nosotros (we) form of 'venir' is 'vengamos'.", es: "La forma de nosotros de 'venir' es 'vengamos'."}, "B2", null,
+      { en: "We hope you _____ (venir = to come) to the party." }],  // es-v-009-p-nosotros
+    ["Espero que ellos _____ (venir) a la fiesta.", ["vengamos", "vengan", "venga", "vengas"], 1,
+      { en: "The ellos/ellas (they) form of 'venir' is 'vengan'.", es: "La forma de ellos/ellas de 'venir' es 'vengan'."}, "B2", null,
+      { en: "They hope you _____ (venir = to come) to the party." }],  // es-v-009-p-ellos
+    ["Tú ya _____ (terminar) el proyecto.", ["has terminado", "he terminado", "ha terminado", "hemos terminado"], 0,
+      { en: "The tú (you) form of 'terminar' is 'has terminado'.", es: "La forma de tú de 'terminar' es 'has terminado'."}, "B1", null,
+      { en: "You already _____ (terminar = to finish) the project." }],  // es-v-010-p-tu
+    ["Él ya _____ (terminar) el proyecto.", ["he terminado", "has terminado", "hemos terminado", "ha terminado"], 3,
+      { en: "The él/ella (he/she) form of 'terminar' is 'ha terminado'.", es: "La forma de él/ella de 'terminar' es 'ha terminado'."}, "B1", null,
+      { en: "He already _____ (terminar = to finish) the project." }],  // es-v-010-p-él
+    ["Nosotros ya _____ (terminar) el proyecto.", ["has terminado", "ha terminado", "hemos terminado", "he terminado"], 2,
+      { en: "The nosotros (we) form of 'terminar' is 'hemos terminado'.", es: "La forma de nosotros de 'terminar' es 'hemos terminado'."}, "B1", null,
+      { en: "We already _____ (terminar = to finish) the project." }],  // es-v-010-p-nosotros
+    ["Ellos ya _____ (terminar) el proyecto.", ["ha terminado", "han terminado", "he terminado", "has terminado"], 1,
+      { en: "The ellos/ellas (they) form of 'terminar' is 'han terminado'.", es: "La forma de ellos/ellas de 'terminar' es 'han terminado'."}, "B1", null,
+      { en: "They already _____ (terminar = to finish) the project." }],  // es-v-010-p-ellos
+    ["Yo _____ (decir) que llegaría a las ocho.", ["dije", "dijiste", "dijo", "dijimos"], 0,
+      { en: "The yo (I) form of 'decir' is 'dije'.", es: "La forma de yo de 'decir' es 'dije'."}, "A2", null,
+      { en: "I _____ (decir = to say) that she would arrive at eight." }],  // es-v-011-p-yo
+    ["Tú _____ (decir) que llegaría a las ocho.", ["dije", "dijo", "dijimos", "dijiste"], 3,
+      { en: "The tú (you) form of 'decir' is 'dijiste'.", es: "La forma de tú de 'decir' es 'dijiste'."}, "A2", null,
+      { en: "You _____ (decir = to say) that she would arrive at eight." }],  // es-v-011-p-tu
+    ["Nosotros _____ (decir) que llegaría a las ocho.", ["dijiste", "dijo", "dijimos", "dije"], 2,
+      { en: "The nosotros (we) form of 'decir' is 'dijimos'.", es: "La forma de nosotros de 'decir' es 'dijimos'."}, "A2", null,
+      { en: "We _____ (decir = to say) that she would arrive at eight." }],  // es-v-011-p-nosotros
+    ["Ellos _____ (decir) que llegaría a las ocho.", ["dijo", "dijeron", "dije", "dijiste"], 1,
+      { en: "The ellos/ellas (they) form of 'decir' is 'dijeron'.", es: "La forma de ellos/ellas de 'decir' es 'dijeron'."}, "A2", null,
+      { en: "They _____ (decir = to say) that she would arrive at eight." }],  // es-v-011-p-ellos
+    ["Yo _____ (ver) esa película tres veces.", ["he visto", "has visto", "ha visto", "hemos visto"], 0,
+      { en: "The yo (I) form of 'ver' is 'he visto'.", es: "La forma de yo de 'ver' es 'he visto'."}, "B1", null,
+      { en: "I _____ (ver = to see) that movie three times." }],  // es-v-012-p-yo
+    ["Tú _____ (ver) esa película tres veces.", ["he visto", "ha visto", "hemos visto", "has visto"], 3,
+      { en: "The tú (you) form of 'ver' is 'has visto'.", es: "La forma de tú de 'ver' es 'has visto'."}, "B1", null,
+      { en: "You _____ (ver = to see) that movie three times." }],  // es-v-012-p-tu
+    ["Él _____ (ver) esa película tres veces.", ["has visto", "hemos visto", "ha visto", "he visto"], 2,
+      { en: "The él/ella (he/she) form of 'ver' is 'ha visto'.", es: "La forma de él/ella de 'ver' es 'ha visto'."}, "B1", null,
+      { en: "He _____ (ver = to see) that movie three times." }],  // es-v-012-p-él
+    ["Ellos _____ (ver) esa película tres veces.", ["ha visto", "han visto", "he visto", "has visto"], 1,
+      { en: "The ellos/ellas (they) form of 'ver' is 'han visto'.", es: "La forma de ellos/ellas de 'ver' es 'han visto'."}, "B1", null,
+      { en: "They _____ (ver = to see) that movie three times." }],  // es-v-012-p-ellos
+    ["¿Qué _____ (hacer) yo si ganaras la lotería?", ["haría", "harías", "haríamos", "harían"], 0,
+      { en: "The yo (I) form of 'hacer' is 'haría'.", es: "La forma de yo de 'hacer' es 'haría'."}, "B2", null,
+      { en: "What would I _____ (hacer = to do) if you won the lottery?" }],  // es-v-013-p-yo
+    ["¿Qué _____ (hacer) él si ganaras la lotería?", ["harías", "haríamos", "harían", "haría"], 3,
+      { en: "The él/ella (he/she) form of 'hacer' is 'haría'.", es: "La forma de él/ella de 'hacer' es 'haría'."}, "B2", null,
+      { en: "What would he _____ (hacer = to do) if you won the lottery?" }],  // es-v-013-p-él
+    ["¿Qué _____ (hacer) nosotros si ganaras la lotería?", ["harías", "harían", "haríamos", "haría"], 2,
+      { en: "The nosotros (we) form of 'hacer' is 'haríamos'.", es: "La forma de nosotros de 'hacer' es 'haríamos'."}, "B2", null,
+      { en: "What would we _____ (hacer = to do) if you won the lottery?" }],  // es-v-013-p-nosotros
+    ["¿Qué _____ (hacer) ellos si ganaras la lotería?", ["haríamos", "harían", "haría", "harías"], 1,
+      { en: "The ellos/ellas (they) form of 'hacer' is 'harían'.", es: "La forma de ellos/ellas de 'hacer' es 'harían'."}, "B2", null,
+      { en: "What would they _____ (hacer = to do) if you won the lottery?" }],  // es-v-013-p-ellos
+    ["Es importante que yo _____ (llegar) temprano.", ["llegue", "llegues", "lleguemos", "lleguen"], 0,
+      { en: "The yo (I) form of 'llegar' is 'llegue'.", es: "La forma de yo de 'llegar' es 'llegue'."}, "B2", null,
+      { en: "It's important that I _____ (llegar = to arrive) early." }],  // es-v-015-p-yo
+    ["Es importante que tú _____ (llegar) temprano.", ["llegue", "lleguemos", "lleguen", "llegues"], 3,
+      { en: "The tú (you) form of 'llegar' is 'llegues'.", es: "La forma de tú de 'llegar' es 'llegues'."}, "B2", null,
+      { en: "It's important that you _____ (llegar = to arrive) early." }],  // es-v-015-p-tu
+    ["Es importante que él _____ (llegar) temprano.", ["lleguemos", "lleguen", "llegue", "llegues"], 2,
+      { en: "The él/ella (he/she) form of 'llegar' is 'llegue'.", es: "La forma de él/ella de 'llegar' es 'llegue'."}, "B2", null,
+      { en: "It's important that he _____ (llegar = to arrive) early." }],  // es-v-015-p-él
+    ["Es importante que nosotros _____ (llegar) temprano.", ["lleguen", "lleguemos", "llegue", "llegues"], 1,
+      { en: "The nosotros (we) form of 'llegar' is 'lleguemos'.", es: "La forma de nosotros de 'llegar' es 'lleguemos'."}, "B2", null,
+      { en: "It's important that we _____ (llegar = to arrive) early." }],  // es-v-015-p-nosotros
+    ["Tú _____ (levantarse) a las seis todos los días.", ["te levantas", "me levanto", "se levanta", "nos levantamos"], 0,
+      { en: "The tú (you) form of 'levantarse' is 'te levantas'.", es: "La forma de tú de 'levantarse' es 'te levantas'."}, "A1", null,
+      { en: "You _____ (levantarse = to get up) at six every day." }],  // es-v-016-p-tu
+    ["Él _____ (levantarse) a las seis todos los días.", ["me levanto", "te levantas", "nos levantamos", "se levanta"], 3,
+      { en: "The él/ella (he/she) form of 'levantarse' is 'se levanta'.", es: "La forma de él/ella de 'levantarse' es 'se levanta'."}, "A1", null,
+      { en: "He _____ (levantarse = to get up) at six every day." }],  // es-v-016-p-él
+    ["Nosotros _____ (levantarse) a las seis todos los días.", ["te levantas", "se levanta", "nos levantamos", "me levanto"], 2,
+      { en: "The nosotros (we) form of 'levantarse' is 'nos levantamos'.", es: "La forma de nosotros de 'levantarse' es 'nos levantamos'."}, "A1", null,
+      { en: "We _____ (levantarse = to get up) at six every day." }],  // es-v-016-p-nosotros
+    ["Ellos _____ (levantarse) a las seis todos los días.", ["se levanta", "se levantan", "me levanto", "te levantas"], 1,
+      { en: "The ellos/ellas (they) form of 'levantarse' is 'se levantan'.", es: "La forma de ellos/ellas de 'levantarse' es 'se levantan'."}, "A1", null,
+      { en: "They _____ (levantarse = to get up) at six every day." }],  // es-v-016-p-ellos
+    ["Yo _____ (ser) doctora.", ["soy", "eres", "es", "somos"], 0,
+      { en: "The yo (I) form of 'ser' is 'soy'.", es: "La forma de yo de 'ser' es 'soy'."}, "A1", null,
+      { en: "I _____ (ser = to be) a doctor." }],  // es-v-017-p-yo
+    ["Tú _____ (ser) doctora.", ["soy", "es", "somos", "eres"], 3,
+      { en: "The tú (you) form of 'ser' is 'eres'.", es: "La forma de tú de 'ser' es 'eres'."}, "A1", null,
+      { en: "You _____ (ser = to be) a doctor." }],  // es-v-017-p-tu
+    ["Nosotros _____ (ser) doctora.", ["eres", "es", "somos", "soy"], 2,
+      { en: "The nosotros (we) form of 'ser' is 'somos'.", es: "La forma de nosotros de 'ser' es 'somos'."}, "A1", null,
+      { en: "We _____ (ser = to be) a doctor." }],  // es-v-017-p-nosotros
+    ["Ellos _____ (ser) doctora.", ["es", "son", "soy", "eres"], 1,
+      { en: "The ellos/ellas (they) form of 'ser' is 'son'.", es: "La forma de ellos/ellas de 'ser' es 'son'."}, "A1", null,
+      { en: "They _____ (ser = to be) a doctor." }],  // es-v-017-p-ellos
+    ["Yo _____ (estar) en el cine ahora.", ["estoy", "estás", "está", "estamos"], 0,
+      { en: "The yo (I) form of 'estar' is 'estoy'.", es: "La forma de yo de 'estar' es 'estoy'."}, "A2", null,
+      { en: "I _____ (estar = to be) at the movies right now." }],  // es-v-018-p-yo
+    ["Tú _____ (estar) en el cine ahora.", ["estoy", "está", "estamos", "estás"], 3,
+      { en: "The tú (you) form of 'estar' is 'estás'.", es: "La forma de tú de 'estar' es 'estás'."}, "A2", null,
+      { en: "You _____ (estar = to be) at the movies right now." }],  // es-v-018-p-tu
+    ["Él _____ (estar) en el cine ahora.", ["estás", "estamos", "está", "estoy"], 2,
+      { en: "The él/ella (he/she) form of 'estar' is 'está'.", es: "La forma de él/ella de 'estar' es 'está'."}, "A2", null,
+      { en: "He _____ (estar = to be) at the movies right now." }],  // es-v-018-p-él
+    ["Ellos _____ (estar) en el cine ahora.", ["está", "están", "estoy", "estás"], 1,
+      { en: "The ellos/ellas (they) form of 'estar' is 'están'.", es: "La forma de ellos/ellas de 'estar' es 'están'."}, "A2", null,
+      { en: "They _____ (estar = to be) at the movies right now." }],  // es-v-018-p-ellos
+    ["Yo _____ (vivir) en Bogotá desde 2020.", ["vivo", "vives", "vive", "vivimos"], 0,
+      { en: "The yo (I) form of 'vivir' is 'vivo'.", es: "La forma de yo de 'vivir' es 'vivo'."}, "B1", null,
+      { en: "I _____ (vivir = to live) in Bogotá since 2020." }],  // es-v-022-p-yo
+    ["Tú _____ (vivir) en Bogotá desde 2020.", ["vivo", "vive", "vivimos", "vives"], 3,
+      { en: "The tú (you) form of 'vivir' is 'vives'.", es: "La forma de tú de 'vivir' es 'vives'."}, "B1", null,
+      { en: "You _____ (vivir = to live) in Bogotá since 2020." }],  // es-v-022-p-tu
+    ["Él _____ (vivir) en Bogotá desde 2020.", ["vives", "vivimos", "vive", "vivo"], 2,
+      { en: "The él/ella (he/she) form of 'vivir' is 'vive'.", es: "La forma de él/ella de 'vivir' es 'vive'."}, "B1", null,
+      { en: "He _____ (vivir = to live) in Bogotá since 2020." }],  // es-v-022-p-él
+    ["Nosotros _____ (vivir) en Bogotá desde 2020.", ["vive", "vivimos", "vivo", "vives"], 1,
+      { en: "The nosotros (we) form of 'vivir' is 'vivimos'.", es: "La forma de nosotros de 'vivir' es 'vivimos'."}, "B1", null,
+      { en: "We _____ (vivir = to live) in Bogotá since 2020." }],  // es-v-022-p-nosotros
+    ["Dudo que tú lo _____ (saber).", ["sepas", "sepa", "sepamos", "sepan"], 0,
+      { en: "The tú (you) form of 'saber' is 'sepas'.", es: "La forma de tú de 'saber' es 'sepas'."}, "B2", null,
+      { en: "You doubt that he _____ (saber = to know) it." }],  // es-v-026-p-tu
+    ["Dudo que nosotros lo _____ (saber).", ["sepa", "sepas", "sepan", "sepamos"], 3,
+      { en: "The nosotros (we) form of 'saber' is 'sepamos'.", es: "La forma de nosotros de 'saber' es 'sepamos'."}, "B2", null,
+      { en: "We doubt that he _____ (saber = to know) it." }],  // es-v-026-p-nosotros
+    ["Dudo que ellos lo _____ (saber).", ["sepas", "sepamos", "sepan", "sepa"], 2,
+      { en: "The ellos/ellas (they) form of 'saber' is 'sepan'.", es: "La forma de ellos/ellas de 'saber' es 'sepan'."}, "B2", null,
+      { en: "They doubt that he _____ (saber = to know) it." }],  // es-v-026-p-ellos
+    ["No creo que yo _____ (llegar) todavía.", ["lleguen", "llegue", "llegues", "lleguemos"], 1,
+      { en: "The yo (I) form of 'llegar' is 'llegue'.", es: "La forma de yo de 'llegar' es 'llegue'."}, "C1", null,
+      { en: "I don't think they _____ (llegar = to arrive) yet." }],  // es-v-031-p-yo
+    ["No creo que tú _____ (llegar) todavía.", ["llegues", "llegue", "lleguemos", "lleguen"], 0,
+      { en: "The tú (you) form of 'llegar' is 'llegues'.", es: "La forma de tú de 'llegar' es 'llegues'."}, "C1", null,
+      { en: "You don't think they _____ (llegar = to arrive) yet." }],  // es-v-031-p-tu
+    ["No creo que él _____ (llegar) todavía.", ["llegues", "lleguemos", "lleguen", "llegue"], 3,
+      { en: "The él/ella (he/she) form of 'llegar' is 'llegue'.", es: "La forma de él/ella de 'llegar' es 'llegue'."}, "C1", null,
+      { en: "He don't think they _____ (llegar = to arrive) yet." }],  // es-v-031-p-él
+    ["No creo que nosotros _____ (llegar) todavía.", ["llegues", "lleguen", "lleguemos", "llegue"], 2,
+      { en: "The nosotros (we) form of 'llegar' is 'lleguemos'.", es: "La forma de nosotros de 'llegar' es 'lleguemos'."}, "C1", null,
+      { en: "We don't think they _____ (llegar = to arrive) yet." }],  // es-v-031-p-nosotros
+    ["Tú _____ (hacer) la tarea todas las noches.", ["hacemos", "haces", "hago", "hace"], 1,
+      { en: "The tú (you) form of 'hacer' is 'haces'.", es: "La forma de tú de 'hacer' es 'haces'."}, "A1", null,
+      { en: "You _____ (hacer = to do/make) my homework every night." }],  // es-v-035-p-tu
+    ["Él _____ (hacer) la tarea todas las noches.", ["hace", "hago", "haces", "hacemos"], 0,
+      { en: "The él/ella (he/she) form of 'hacer' is 'hace'.", es: "La forma de él/ella de 'hacer' es 'hace'."}, "A1", null,
+      { en: "He _____ (hacer = to do/make) my homework every night." }],  // es-v-035-p-él
+    ["Nosotros _____ (hacer) la tarea todas las noches.", ["hago", "haces", "hace", "hacemos"], 3,
+      { en: "The nosotros (we) form of 'hacer' is 'hacemos'.", es: "La forma de nosotros de 'hacer' es 'hacemos'."}, "A1", null,
+      { en: "We _____ (hacer = to do/make) my homework every night." }],  // es-v-035-p-nosotros
+    ["Ellos _____ (hacer) la tarea todas las noches.", ["haces", "hace", "hacen", "hago"], 2,
+      { en: "The ellos/ellas (they) form of 'hacer' is 'hacen'.", es: "La forma de ellos/ellas de 'hacer' es 'hacen'."}, "A1", null,
+      { en: "They _____ (hacer = to do/make) my homework every night." }],  // es-v-035-p-ellos
+    ["Tú _____ (poner) la mesa antes de cenar.", ["ponemos", "pones", "pongo", "pone"], 1,
+      { en: "The tú (you) form of 'poner' is 'pones'.", es: "La forma de tú de 'poner' es 'pones'."}, "A1", null,
+      { en: "You _____ (poner = to set/put) the table before dinner." }],  // es-v-036-p-tu
+    ["Él _____ (poner) la mesa antes de cenar.", ["pone", "pongo", "pones", "ponemos"], 0,
+      { en: "The él/ella (he/she) form of 'poner' is 'pone'.", es: "La forma de él/ella de 'poner' es 'pone'."}, "A1", null,
+      { en: "He _____ (poner = to set/put) the table before dinner." }],  // es-v-036-p-él
+    ["Nosotros _____ (poner) la mesa antes de cenar.", ["pongo", "pones", "pone", "ponemos"], 3,
+      { en: "The nosotros (we) form of 'poner' is 'ponemos'.", es: "La forma de nosotros de 'poner' es 'ponemos'."}, "A1", null,
+      { en: "We _____ (poner = to set/put) the table before dinner." }],  // es-v-036-p-nosotros
+    ["Ellos _____ (poner) la mesa antes de cenar.", ["pones", "pone", "ponen", "pongo"], 2,
+      { en: "The ellos/ellas (they) form of 'poner' is 'ponen'.", es: "La forma de ellos/ellas de 'poner' es 'ponen'."}, "A1", null,
+      { en: "They _____ (poner = to set/put) the table before dinner." }],  // es-v-036-p-ellos
+    ["Tú _____ (salir) del trabajo a las seis.", ["salimos", "sales", "salgo", "sale"], 1,
+      { en: "The tú (you) form of 'salir' is 'sales'.", es: "La forma de tú de 'salir' es 'sales'."}, "A1", null,
+      { en: "You _____ (salir = to leave) work at six." }],  // es-v-037-p-tu
+    ["Él _____ (salir) del trabajo a las seis.", ["sale", "salgo", "sales", "salimos"], 0,
+      { en: "The él/ella (he/she) form of 'salir' is 'sale'.", es: "La forma de él/ella de 'salir' es 'sale'."}, "A1", null,
+      { en: "He _____ (salir = to leave) work at six." }],  // es-v-037-p-él
+    ["Nosotros _____ (salir) del trabajo a las seis.", ["salgo", "sales", "sale", "salimos"], 3,
+      { en: "The nosotros (we) form of 'salir' is 'salimos'.", es: "La forma de nosotros de 'salir' es 'salimos'."}, "A1", null,
+      { en: "We _____ (salir = to leave) work at six." }],  // es-v-037-p-nosotros
+    ["Ellos _____ (salir) del trabajo a las seis.", ["sales", "sale", "salen", "salgo"], 2,
+      { en: "The ellos/ellas (they) form of 'salir' is 'salen'.", es: "La forma de ellos/ellas de 'salir' es 'salen'."}, "A1", null,
+      { en: "They _____ (salir = to leave) work at six." }],  // es-v-037-p-ellos
+    ["Tú no _____ (saber) la respuesta.", ["sabemos", "sabes", "sé", "sabe"], 1,
+      { en: "The tú (you) form of 'saber' is 'sabes'.", es: "La forma de tú de 'saber' es 'sabes'."}, "A1", null,
+      { en: "You don't _____ (saber = to know) the answer." }],  // es-v-038-p-tu
+    ["Él no _____ (saber) la respuesta.", ["sabe", "sé", "sabes", "sabemos"], 0,
+      { en: "The él/ella (he/she) form of 'saber' is 'sabe'.", es: "La forma de él/ella de 'saber' es 'sabe'."}, "A1", null,
+      { en: "He don't _____ (saber = to know) the answer." }],  // es-v-038-p-él
+    ["Nosotros no _____ (saber) la respuesta.", ["sé", "sabes", "sabe", "sabemos"], 3,
+      { en: "The nosotros (we) form of 'saber' is 'sabemos'.", es: "La forma de nosotros de 'saber' es 'sabemos'."}, "A1", null,
+      { en: "We don't _____ (saber = to know) the answer." }],  // es-v-038-p-nosotros
+    ["Ellos no _____ (saber) la respuesta.", ["sabes", "sabe", "saben", "sé"], 2,
+      { en: "The ellos/ellas (they) form of 'saber' is 'saben'.", es: "La forma de ellos/ellas de 'saber' es 'saben'."}, "A1", null,
+      { en: "They don't _____ (saber = to know) the answer." }],  // es-v-038-p-ellos
+    ["Ayer yo _____ (hacer) un pastel.", ["hicimos", "hice", "hiciste", "hizo"], 1,
+      { en: "The yo (I) form of 'hacer' is 'hice'.", es: "La forma de yo de 'hacer' es 'hice'."}, "A2", null,
+      { en: "Yesterday I _____ (hacer = to make) a cake." }],  // es-v-040-p-yo
+    ["Ayer tú _____ (hacer) un pastel.", ["hiciste", "hice", "hizo", "hicimos"], 0,
+      { en: "The tú (you) form of 'hacer' is 'hiciste'.", es: "La forma de tú de 'hacer' es 'hiciste'."}, "A2", null,
+      { en: "Yesterday you _____ (hacer = to make) a cake." }],  // es-v-040-p-tu
+    ["Ayer nosotros _____ (hacer) un pastel.", ["hice", "hiciste", "hizo", "hicimos"], 3,
+      { en: "The nosotros (we) form of 'hacer' is 'hicimos'.", es: "La forma de nosotros de 'hacer' es 'hicimos'."}, "A2", null,
+      { en: "Yesterday we _____ (hacer = to make) a cake." }],  // es-v-040-p-nosotros
+    ["Ayer ellos _____ (hacer) un pastel.", ["hiciste", "hizo", "hicieron", "hice"], 2,
+      { en: "The ellos/ellas (they) form of 'hacer' is 'hicieron'.", es: "La forma de ellos/ellas de 'hacer' es 'hicieron'."}, "A2", null,
+      { en: "Yesterday they _____ (hacer = to make) a cake." }],  // es-v-040-p-ellos
+    ["Anoche yo _____ (tener) un problema.", ["tuvimos", "tuve", "tuviste", "tuvo"], 1,
+      { en: "The yo (I) form of 'tener' is 'tuve'.", es: "La forma de yo de 'tener' es 'tuve'."}, "A2", null,
+      { en: "Last night I _____ (tener = to have) a problem." }],  // es-v-041-p-yo
+    ["Anoche tú _____ (tener) un problema.", ["tuviste", "tuve", "tuvo", "tuvimos"], 0,
+      { en: "The tú (you) form of 'tener' is 'tuviste'.", es: "La forma de tú de 'tener' es 'tuviste'."}, "A2", null,
+      { en: "Last night you _____ (tener = to have) a problem." }],  // es-v-041-p-tu
+    ["Anoche él _____ (tener) un problema.", ["tuve", "tuviste", "tuvimos", "tuvo"], 3,
+      { en: "The él/ella (he/she) form of 'tener' is 'tuvo'.", es: "La forma de él/ella de 'tener' es 'tuvo'."}, "A2", null,
+      { en: "Last night he _____ (tener = to have) a problem." }],  // es-v-041-p-él
+    ["Anoche ellos _____ (tener) un problema.", ["tuviste", "tuvo", "tuvieron", "tuve"], 2,
+      { en: "The ellos/ellas (they) form of 'tener' is 'tuvieron'.", es: "La forma de ellos/ellas de 'tener' es 'tuvieron'."}, "A2", null,
+      { en: "Last night they _____ (tener = to have) a problem." }],  // es-v-041-p-ellos
+    ["Yo me _____ (decir) la verdad.", ["dijimos", "dije", "dijiste", "dijo"], 1,
+      { en: "The yo (I) form of 'decir' is 'dije'.", es: "La forma de yo de 'decir' es 'dije'."}, "A2", null,
+      { en: "I _____ (decir = to tell) me the truth." }],  // es-v-042-p-yo
+    ["Tú me _____ (decir) la verdad.", ["dijiste", "dije", "dijo", "dijimos"], 0,
+      { en: "The tú (you) form of 'decir' is 'dijiste'.", es: "La forma de tú de 'decir' es 'dijiste'."}, "A2", null,
+      { en: "You _____ (decir = to tell) me the truth." }],  // es-v-042-p-tu
+    ["Él me _____ (decir) la verdad.", ["dije", "dijiste", "dijimos", "dijo"], 3,
+      { en: "The él/ella (he/she) form of 'decir' is 'dijo'.", es: "La forma de él/ella de 'decir' es 'dijo'."}, "A2", null,
+      { en: "He _____ (decir = to tell) me the truth." }],  // es-v-042-p-él
+    ["Nosotros me _____ (decir) la verdad.", ["dijiste", "dijo", "dijimos", "dije"], 2,
+      { en: "The nosotros (we) form of 'decir' is 'dijimos'.", es: "La forma de nosotros de 'decir' es 'dijimos'."}, "A2", null,
+      { en: "We _____ (decir = to tell) me the truth." }],  // es-v-042-p-nosotros
+    ["¿Yo _____ (traer) el postre?", ["traemos", "traigo", "traes", "trae"], 1,
+      { en: "The yo (I) form of 'traer' is 'traigo'.", es: "La forma de yo de 'traer' es 'traigo'."}, "B1", null,
+      { en: "Did I _____ (traer = to bring) the dessert?" }],  // es-v-043-p-yo
+    ["¿Él _____ (traer) el postre?", ["trae", "traigo", "traes", "traemos"], 0,
+      { en: "The él/ella (he/she) form of 'traer' is 'trae'.", es: "La forma de él/ella de 'traer' es 'trae'."}, "B1", null,
+      { en: "Did he _____ (traer = to bring) the dessert?" }],  // es-v-043-p-él
+    ["¿Nosotros _____ (traer) el postre?", ["traigo", "traes", "trae", "traemos"], 3,
+      { en: "The nosotros (we) form of 'traer' is 'traemos'.", es: "La forma de nosotros de 'traer' es 'traemos'."}, "B1", null,
+      { en: "Did we _____ (traer = to bring) the dessert?" }],  // es-v-043-p-nosotros
+    ["¿Ellos _____ (traer) el postre?", ["traes", "trae", "traen", "traigo"], 2,
+      { en: "The ellos/ellas (they) form of 'traer' is 'traen'.", es: "La forma de ellos/ellas de 'traer' es 'traen'."}, "B1", null,
+      { en: "Did they _____ (traer = to bring) the dessert?" }],  // es-v-043-p-ellos
+    ["Cuando era niño, tú _____ (jugar) en el parque.", ["jugaban", "jugabas", "jugaba", "jugábamos"], 1,
+      { en: "The tú (you) form of 'jugar' is 'jugabas'.", es: "La forma de tú de 'jugar' es 'jugabas'."}, "A2", null,
+      { en: "When You were a kid, I _____ (jugar = to play) in the park." }],  // es-v-044-p-tu
+    ["Cuando era niño, él _____ (jugar) en el parque.", ["jugaba", "jugabas", "jugábamos", "jugaban"], 0,
+      { en: "The él/ella (he/she) form of 'jugar' is 'jugaba'.", es: "La forma de él/ella de 'jugar' es 'jugaba'."}, "A2", null,
+      { en: "When He was a kid, I _____ (jugar = to play) in the park." }],  // es-v-044-p-él
+    ["Cuando era niño, nosotros _____ (jugar) en el parque.", ["jugaba", "jugabas", "jugaban", "jugábamos"], 3,
+      { en: "The nosotros (we) form of 'jugar' is 'jugábamos'.", es: "La forma de nosotros de 'jugar' es 'jugábamos'."}, "A2", null,
+      { en: "When We were a kid, I _____ (jugar = to play) in the park." }],  // es-v-044-p-nosotros
+    ["Cuando era niño, ellos _____ (jugar) en el parque.", ["jugabas", "jugábamos", "jugaban", "jugaba"], 2,
+      { en: "The ellos/ellas (they) form of 'jugar' is 'jugaban'.", es: "La forma de ellos/ellas de 'jugar' es 'jugaban'."}, "A2", null,
+      { en: "When They were a kid, I _____ (jugar = to play) in the park." }],  // es-v-044-p-ellos
+    ["Tú _____ (despertarse) a las siete.", ["nos despertamos", "te despiertas", "me despierto", "se despierta"], 1,
+      { en: "The tú (you) form of 'despertarse' is 'te despiertas'.", es: "La forma de tú de 'despertarse' es 'te despiertas'."}, "A1", null,
+      { en: "You _____ (despertarse = to wake up) at seven." }],  // es-v-050-p-tu
+    ["Él _____ (despertarse) a las siete.", ["se despierta", "me despierto", "te despiertas", "nos despertamos"], 0,
+      { en: "The él/ella (he/she) form of 'despertarse' is 'se despierta'.", es: "La forma de él/ella de 'despertarse' es 'se despierta'."}, "A1", null,
+      { en: "He _____ (despertarse = to wake up) at seven." }],  // es-v-050-p-él
+    ["Nosotros _____ (despertarse) a las siete.", ["me despierto", "te despiertas", "se despierta", "nos despertamos"], 3,
+      { en: "The nosotros (we) form of 'despertarse' is 'nos despertamos'.", es: "La forma de nosotros de 'despertarse' es 'nos despertamos'."}, "A1", null,
+      { en: "We _____ (despertarse = to wake up) at seven." }],  // es-v-050-p-nosotros
+    ["Ellos _____ (despertarse) a las siete.", ["te despiertas", "se despierta", "se despiertan", "me despierto"], 2,
+      { en: "The ellos/ellas (they) form of 'despertarse' is 'se despiertan'.", es: "La forma de ellos/ellas de 'despertarse' es 'se despiertan'."}, "A1", null,
+      { en: "They _____ (despertarse = to wake up) at seven." }],  // es-v-050-p-ellos
+    ["Quiero que él _____ (estudiar) más.", ["estudien", "estudie", "estudies", "estudiemos"], 1,
+      { en: "The él/ella (he/she) form of 'estudiar' is 'estudie'.", es: "La forma de él/ella de 'estudiar' es 'estudie'."}, "B1", null,
+      { en: "He want you to _____ (estudiar = to study) more." }],  // es-v-053-p-él
+    ["Quiero que nosotros _____ (estudiar) más.", ["estudiemos", "estudie", "estudies", "estudien"], 0,
+      { en: "The nosotros (we) form of 'estudiar' is 'estudiemos'.", es: "La forma de nosotros de 'estudiar' es 'estudiemos'."}, "B1", null,
+      { en: "We want you to _____ (estudiar = to study) more." }],  // es-v-053-p-nosotros
+    ["Quiero que ellos _____ (estudiar) más.", ["estudie", "estudies", "estudiemos", "estudien"], 3,
+      { en: "The ellos/ellas (they) form of 'estudiar' is 'estudien'.", es: "La forma de ellos/ellas de 'estudiar' es 'estudien'."}, "B1", null,
+      { en: "They want you to _____ (estudiar = to study) more." }],  // es-v-053-p-ellos
+    ["No creo que yo _____ (tener) razón.", ["tengamos", "tengan", "tenga", "tengas"], 2,
+      { en: "The yo (I) form of 'tener' is 'tenga'.", es: "La forma de yo de 'tener' es 'tenga'."}, "B2", null,
+      { en: "I don't think he's _____ (tener = to have) right. (is right)" }],  // es-v-055-p-yo
+    ["No creo que tú _____ (tener) razón.", ["tengan", "tengas", "tenga", "tengamos"], 1,
+      { en: "The tú (you) form of 'tener' is 'tengas'.", es: "La forma de tú de 'tener' es 'tengas'."}, "B2", null,
+      { en: "You don't think he's _____ (tener = to have) right. (is right)" }],  // es-v-055-p-tu
+    ["No creo que nosotros _____ (tener) razón.", ["tengamos", "tenga", "tengas", "tengan"], 0,
+      { en: "The nosotros (we) form of 'tener' is 'tengamos'.", es: "La forma de nosotros de 'tener' es 'tengamos'."}, "B2", null,
+      { en: "We don't think he's _____ (tener = to have) right. (is right)" }],  // es-v-055-p-nosotros
+    ["No creo que ellos _____ (tener) razón.", ["tenga", "tengas", "tengamos", "tengan"], 3,
+      { en: "The ellos/ellas (they) form of 'tener' is 'tengan'.", es: "La forma de ellos/ellas de 'tener' es 'tengan'."}, "B2", null,
+      { en: "They don't think he's _____ (tener = to have) right. (is right)" }],  // es-v-055-p-ellos
+    ["_____ (seguir) derecho hasta yo semáforo.", ["sigamos", "sigan", "siga", "sigas"], 2,
+      { en: "The yo (I) form of 'seguir' is 'siga'.", es: "La forma de yo de 'seguir' es 'siga'."}, "B1", null,
+      { en: "_____ (seguir = to continue) straight to the traffic light." }],  // es-v-061-p-yo
+    ["_____ (seguir) derecho hasta tú semáforo.", ["sigan", "sigas", "siga", "sigamos"], 1,
+      { en: "The tú (you) form of 'seguir' is 'sigas'.", es: "La forma de tú de 'seguir' es 'sigas'."}, "B1", null,
+      { en: "_____ (seguir = to continue) straight to the traffic light." }],  // es-v-061-p-tu
+    ["_____ (seguir) derecho hasta nosotros semáforo.", ["sigamos", "siga", "sigas", "sigan"], 0,
+      { en: "The nosotros (we) form of 'seguir' is 'sigamos'.", es: "La forma de nosotros de 'seguir' es 'sigamos'."}, "B1", null,
+      { en: "_____ (seguir = to continue) straight to the traffic light." }],  // es-v-061-p-nosotros
+    ["_____ (seguir) derecho hasta ellos semáforo.", ["siga", "sigas", "sigamos", "sigan"], 3,
+      { en: "The ellos/ellas (they) form of 'seguir' is 'sigan'.", es: "La forma de ellos/ellas de 'seguir' es 'sigan'."}, "B1", null,
+      { en: "_____ (seguir = to continue) straight to the traffic light." }],  // es-v-061-p-ellos
+    ["Tú que tú, no _____ (decir) nada.", ["diríamos", "dirían", "dirías", "diría"], 2,
+      { en: "The tú (you) form of 'decir' is 'dirías'.", es: "La forma de tú de 'decir' es 'dirías'."}, "B2", null,
+      { en: "If You were you, I wouldn't _____ (decir = to say) anything." }],  // es-v-064-p-tu
+    ["Él que tú, no _____ (decir) nada.", ["dirían", "diría", "dirías", "diríamos"], 1,
+      { en: "The él/ella (he/she) form of 'decir' is 'diría'.", es: "La forma de él/ella de 'decir' es 'diría'."}, "B2", null,
+      { en: "If He was you, I wouldn't _____ (decir = to say) anything." }],  // es-v-064-p-él
+    ["Nosotros que tú, no _____ (decir) nada.", ["diríamos", "diría", "dirías", "dirían"], 0,
+      { en: "The nosotros (we) form of 'decir' is 'diríamos'.", es: "La forma de nosotros de 'decir' es 'diríamos'."}, "B2", null,
+      { en: "If We were you, I wouldn't _____ (decir = to say) anything." }],  // es-v-064-p-nosotros
+    ["Ellos que tú, no _____ (decir) nada.", ["diría", "dirías", "diríamos", "dirían"], 3,
+      { en: "The ellos/ellas (they) form of 'decir' is 'dirían'.", es: "La forma de ellos/ellas de 'decir' es 'dirían'."}, "B2", null,
+      { en: "If They were you, I wouldn't _____ (decir = to say) anything." }],  // es-v-064-p-ellos
+    ["Cuando llegué, yo ya se _____ (ir).", ["habíamos ido", "habían ido", "había ido", "habías ido"], 2,
+      { en: "The yo (I) form of 'ir' is 'había ido'.", es: "La forma de yo de 'ir' es 'había ido'."}, "B1", null,
+      { en: "When I arrived, they had already _____ (irse = to leave)." }],  // es-v-066-p-yo
+    ["Cuando llegué, tú ya se _____ (ir).", ["habían ido", "habías ido", "había ido", "habíamos ido"], 1,
+      { en: "The tú (you) form of 'ir' is 'habías ido'.", es: "La forma de tú de 'ir' es 'habías ido'."}, "B1", null,
+      { en: "When You arrived, they had already _____ (irse = to leave)." }],  // es-v-066-p-tu
+    ["Cuando llegué, él ya se _____ (ir).", ["había ido", "habías ido", "habíamos ido", "habían ido"], 0,
+      { en: "The él/ella (he/she) form of 'ir' is 'había ido'.", es: "La forma de él/ella de 'ir' es 'había ido'."}, "B1", null,
+      { en: "When He arrived, they had already _____ (irse = to leave)." }],  // es-v-066-p-él
+    ["Cuando llegué, nosotros ya se _____ (ir).", ["había ido", "habías ido", "habían ido", "habíamos ido"], 3,
+      { en: "The nosotros (we) form of 'ir' is 'habíamos ido'.", es: "La forma de nosotros de 'ir' es 'habíamos ido'."}, "B1", null,
+      { en: "When We arrived, they had already _____ (irse = to leave)." }],  // es-v-066-p-nosotros
+    ["Yo me _____ (pedir) un favor ayer.", ["pidió", "pedimos", "pedí", "pediste"], 2,
+      { en: "The yo (I) form of 'pedir' is 'pedí'.", es: "La forma de yo de 'pedir' es 'pedí'."}, "B1", null,
+      { en: "I _____ (pedir = to ask for) me a favor yesterday." }],  // es-v-071-p-yo
+    ["Tú me _____ (pedir) un favor ayer.", ["pedimos", "pediste", "pedí", "pidió"], 1,
+      { en: "The tú (you) form of 'pedir' is 'pediste'.", es: "La forma de tú de 'pedir' es 'pediste'."}, "B1", null,
+      { en: "You _____ (pedir = to ask for) me a favor yesterday." }],  // es-v-071-p-tu
+    ["Nosotros me _____ (pedir) un favor ayer.", ["pedimos", "pedí", "pediste", "pidió"], 0,
+      { en: "The nosotros (we) form of 'pedir' is 'pedimos'.", es: "La forma de nosotros de 'pedir' es 'pedimos'."}, "B1", null,
+      { en: "We _____ (pedir = to ask for) me a favor yesterday." }],  // es-v-071-p-nosotros
+    ["Ellos me _____ (pedir) un favor ayer.", ["pedí", "pediste", "pidió", "pidieron"], 3,
+      { en: "The ellos/ellas (they) form of 'pedir' is 'pidieron'.", es: "La forma de ellos/ellas de 'pedir' es 'pidieron'."}, "B1", null,
+      { en: "They _____ (pedir = to ask for) me a favor yesterday." }],  // es-v-071-p-ellos
+    ["Yo _____ (seguir) trabajando a pesar de todo.", ["sigue", "seguimos", "sigo", "sigues"], 2,
+      { en: "The yo (I) form of 'seguir' is 'sigo'.", es: "La forma de yo de 'seguir' es 'sigo'."}, "B1", null,
+      { en: "I keep _____ (seguir = to continue) working despite everything." }],  // es-v-072-p-yo
+    ["Tú _____ (seguir) trabajando a pesar de todo.", ["seguimos", "sigues", "sigo", "sigue"], 1,
+      { en: "The tú (you) form of 'seguir' is 'sigues'.", es: "La forma de tú de 'seguir' es 'sigues'."}, "B1", null,
+      { en: "You keep _____ (seguir = to continue) working despite everything." }],  // es-v-072-p-tu
+    ["Él _____ (seguir) trabajando a pesar de todo.", ["sigue", "sigo", "sigues", "seguimos"], 0,
+      { en: "The él/ella (he/she) form of 'seguir' is 'sigue'.", es: "La forma de él/ella de 'seguir' es 'sigue'."}, "B1", null,
+      { en: "He keep _____ (seguir = to continue) working despite everything." }],  // es-v-072-p-él
+    ["Nosotros _____ (seguir) trabajando a pesar de todo.", ["sigo", "sigues", "sigue", "seguimos"], 3,
+      { en: "The nosotros (we) form of 'seguir' is 'seguimos'.", es: "La forma de nosotros de 'seguir' es 'seguimos'."}, "B1", null,
+      { en: "We keep _____ (seguir = to continue) working despite everything." }],  // es-v-072-p-nosotros
+    ["Tú _____ (trabajar) en una oficina grande.", ["trabaja", "trabajamos", "trabajas", "trabajo"], 2,
+      { en: "The tú (you) form of 'trabajar' is 'trabajas'.", es: "La forma de tú de 'trabajar' es 'trabajas'."}, "A1", null,
+      { en: "You _____ (trabajar = to work) in a big office." }],  // es-v-073-p-tu
+    ["Él _____ (trabajar) en una oficina grande.", ["trabajamos", "trabaja", "trabajo", "trabajas"], 1,
+      { en: "The él/ella (he/she) form of 'trabajar' is 'trabaja'.", es: "La forma de él/ella de 'trabajar' es 'trabaja'."}, "A1", null,
+      { en: "He _____ (trabajar = to work) in a big office." }],  // es-v-073-p-él
+    ["Nosotros _____ (trabajar) en una oficina grande.", ["trabajamos", "trabajo", "trabajas", "trabaja"], 0,
+      { en: "The nosotros (we) form of 'trabajar' is 'trabajamos'.", es: "La forma de nosotros de 'trabajar' es 'trabajamos'."}, "A1", null,
+      { en: "We _____ (trabajar = to work) in a big office." }],  // es-v-073-p-nosotros
+    ["Ellos _____ (trabajar) en una oficina grande.", ["trabajo", "trabajas", "trabaja", "trabajan"], 3,
+      { en: "The ellos/ellas (they) form of 'trabajar' is 'trabajan'.", es: "La forma de ellos/ellas de 'trabajar' es 'trabajan'."}, "A1", null,
+      { en: "They _____ (trabajar = to work) in a big office." }],  // es-v-073-p-ellos
+    ["Yo _____ (comer) arroz con pollo los domingos.", ["come", "comemos", "como", "comes"], 2,
+      { en: "The yo (I) form of 'comer' is 'como'.", es: "La forma de yo de 'comer' es 'como'."}, "A1", null,
+      { en: "I _____ (comer = to eat) rice with chicken on Sundays." }],  // es-v-074-p-yo
+    ["Tú _____ (comer) arroz con pollo los domingos.", ["comemos", "comes", "como", "come"], 1,
+      { en: "The tú (you) form of 'comer' is 'comes'.", es: "La forma de tú de 'comer' es 'comes'."}, "A1", null,
+      { en: "You _____ (comer = to eat) rice with chicken on Sundays." }],  // es-v-074-p-tu
+    ["Él _____ (comer) arroz con pollo los domingos.", ["come", "como", "comes", "comemos"], 0,
+      { en: "The él/ella (he/she) form of 'comer' is 'come'.", es: "La forma de él/ella de 'comer' es 'come'."}, "A1", null,
+      { en: "He _____ (comer = to eat) rice with chicken on Sundays." }],  // es-v-074-p-él
+    ["Ellos _____ (comer) arroz con pollo los domingos.", ["como", "comes", "come", "comen"], 3,
+      { en: "The ellos/ellas (they) form of 'comer' is 'comen'.", es: "La forma de ellos/ellas de 'comer' es 'comen'."}, "A1", null,
+      { en: "They _____ (comer = to eat) rice with chicken on Sundays." }],  // es-v-074-p-ellos
+    ["Yo _____ (vivir) cerca de la playa.", ["vive", "vivimos", "vivo", "vives"], 2,
+      { en: "The yo (I) form of 'vivir' is 'vivo'.", es: "La forma de yo de 'vivir' es 'vivo'."}, "A1", null,
+      { en: "I _____ (vivir = to live) near the beach." }],  // es-v-075-p-yo
+    ["Tú _____ (vivir) cerca de la playa.", ["vivimos", "vives", "vivo", "vive"], 1,
+      { en: "The tú (you) form of 'vivir' is 'vives'.", es: "La forma de tú de 'vivir' es 'vives'."}, "A1", null,
+      { en: "You _____ (vivir = to live) near the beach." }],  // es-v-075-p-tu
+    ["Nosotros _____ (vivir) cerca de la playa.", ["vivimos", "vivo", "vives", "vive"], 0,
+      { en: "The nosotros (we) form of 'vivir' is 'vivimos'.", es: "La forma de nosotros de 'vivir' es 'vivimos'."}, "A1", null,
+      { en: "We _____ (vivir = to live) near the beach." }],  // es-v-075-p-nosotros
+    ["Ellos _____ (vivir) cerca de la playa.", ["vivo", "vives", "vive", "viven"], 3,
+      { en: "The ellos/ellas (they) form of 'vivir' is 'viven'.", es: "La forma de ellos/ellas de 'vivir' es 'viven'."}, "A1", null,
+      { en: "They _____ (vivir = to live) near the beach." }],  // es-v-075-p-ellos
+    ["Ayer yo _____ (viajar) a Bogota.", ["viajó", "viajamos", "viajé", "viajaste"], 2,
+      { en: "The yo (I) form of 'viajar' is 'viajé'.", es: "La forma de yo de 'viajar' es 'viajé'."}, "A1", null,
+      { en: "Yesterday I _____ (viajar = to travel) to Bogota." }],  // es-v-076-p-yo
+    ["Ayer tú _____ (viajar) a Bogota.", ["viajamos", "viajaste", "viajé", "viajó"], 1,
+      { en: "The tú (you) form of 'viajar' is 'viajaste'.", es: "La forma de tú de 'viajar' es 'viajaste'."}, "A1", null,
+      { en: "Yesterday you _____ (viajar = to travel) to Bogota." }],  // es-v-076-p-tu
+    ["Ayer él _____ (viajar) a Bogota.", ["viajó", "viajé", "viajaste", "viajamos"], 0,
+      { en: "The él/ella (he/she) form of 'viajar' is 'viajó'.", es: "La forma de él/ella de 'viajar' es 'viajó'."}, "A1", null,
+      { en: "Yesterday he _____ (viajar = to travel) to Bogota." }],  // es-v-076-p-él
+    ["Ayer ellos _____ (viajar) a Bogota.", ["viajé", "viajaste", "viajó", "viajaron"], 3,
+      { en: "The ellos/ellas (they) form of 'viajar' is 'viajaron'.", es: "La forma de ellos/ellas de 'viajar' es 'viajaron'."}, "A1", null,
+      { en: "Yesterday they _____ (viajar = to travel) to Bogota." }],  // es-v-076-p-ellos
+    ["Yo _____ (ser) muy simpatico con todos.", ["es", "somos", "soy", "eres"], 2,
+      { en: "The yo (I) form of 'ser' is 'soy'.", es: "La forma de yo de 'ser' es 'soy'."}, "A1", null,
+      { en: "I _____ (ser = to be) very nice to everyone." }],  // es-v-077-p-yo
+    ["Él _____ (ser) muy simpatico con todos.", ["somos", "es", "soy", "eres"], 1,
+      { en: "The él/ella (he/she) form of 'ser' is 'es'.", es: "La forma de él/ella de 'ser' es 'es'."}, "A1", null,
+      { en: "He _____ (ser = to be) very nice to everyone." }],  // es-v-077-p-él
+    ["Nosotros _____ (ser) muy simpatico con todos.", ["somos", "soy", "eres", "es"], 0,
+      { en: "The nosotros (we) form of 'ser' is 'somos'.", es: "La forma de nosotros de 'ser' es 'somos'."}, "A1", null,
+      { en: "We _____ (ser = to be) very nice to everyone." }],  // es-v-077-p-nosotros
+    ["Ellos _____ (ser) muy simpatico con todos.", ["soy", "eres", "es", "son"], 3,
+      { en: "The ellos/ellas (they) form of 'ser' is 'son'.", es: "La forma de ellos/ellas de 'ser' es 'son'."}, "A1", null,
+      { en: "They _____ (ser = to be) very nice to everyone." }],  // es-v-077-p-ellos
+    ["Todos los dias tú _____ (desayunar) antes de salir para el trabajo.", ["desayuna", "desayunamos", "desayunas", "desayuno"], 2,
+      { en: "The tú (you) form of 'desayunar' is 'desayunas'.", es: "La forma de tú de 'desayunar' es 'desayunas'."}, "A2", null,
+      { en: "Every day You _____ (desayunar = to have breakfast) before leaving for work." }],  // es-v-080-p-tu
+    ["Todos los dias él _____ (desayunar) antes de salir para el trabajo.", ["desayunamos", "desayuna", "desayuno", "desayunas"], 1,
+      { en: "The él/ella (he/she) form of 'desayunar' is 'desayuna'.", es: "La forma de él/ella de 'desayunar' es 'desayuna'."}, "A2", null,
+      { en: "Every day He _____ (desayunar = to have breakfast) before leaving for work." }],  // es-v-080-p-él
+    ["Todos los dias nosotros _____ (desayunar) antes de salir para el trabajo.", ["desayunamos", "desayuno", "desayunas", "desayuna"], 0,
+      { en: "The nosotros (we) form of 'desayunar' is 'desayunamos'.", es: "La forma de nosotros de 'desayunar' es 'desayunamos'."}, "A2", null,
+      { en: "Every day We _____ (desayunar = to have breakfast) before leaving for work." }],  // es-v-080-p-nosotros
+    ["Todos los dias ellos _____ (desayunar) antes de salir para el trabajo.", ["desayuno", "desayunas", "desayuna", "desayunan"], 3,
+      { en: "The ellos/ellas (they) form of 'desayunar' is 'desayunan'.", es: "La forma de ellos/ellas de 'desayunar' es 'desayunan'."}, "A2", null,
+      { en: "Every day They _____ (desayunar = to have breakfast) before leaving for work." }],  // es-v-080-p-ellos
+    ["Ayer yo _____ (comer) en un restaurante nuevo del centro.", ["comió", "comimos", "comí", "comiste"], 2,
+      { en: "The yo (I) form of 'comer' is 'comí'.", es: "La forma de yo de 'comer' es 'comí'."}, "A2", null,
+      { en: "Yesterday I _____ (comer = to eat) at a new restaurant downtown." }],  // es-v-082-p-yo
+    ["Ayer tú _____ (comer) en un restaurante nuevo del centro.", ["comimos", "comiste", "comí", "comió"], 1,
+      { en: "The tú (you) form of 'comer' is 'comiste'.", es: "La forma de tú de 'comer' es 'comiste'."}, "A2", null,
+      { en: "Yesterday you _____ (comer = to eat) at a new restaurant downtown." }],  // es-v-082-p-tu
+    ["Ayer él _____ (comer) en un restaurante nuevo del centro.", ["comió", "comí", "comiste", "comimos"], 0,
+      { en: "The él/ella (he/she) form of 'comer' is 'comió'.", es: "La forma de él/ella de 'comer' es 'comió'."}, "A2", null,
+      { en: "Yesterday he _____ (comer = to eat) at a new restaurant downtown." }],  // es-v-082-p-él
+    ["Ayer ellos _____ (comer) en un restaurante nuevo del centro.", ["comí", "comiste", "comió", "comieron"], 3,
+      { en: "The ellos/ellas (they) form of 'comer' is 'comieron'.", es: "La forma de ellos/ellas de 'comer' es 'comieron'."}, "A2", null,
+      { en: "Yesterday they _____ (comer = to eat) at a new restaurant downtown." }],  // es-v-082-p-ellos
+    ["Cuando era nina, tú _____ (vivir) en una casa cerca de la playa.", ["vivíamos", "vivían", "vivías", "vivía"], 2,
+      { en: "The tú (you) form of 'vivir' is 'vivías'.", es: "La forma de tú de 'vivir' es 'vivías'."}, "A2", null,
+      { en: "When You were a girl, I _____ (vivir = to live) in a house near the beach." }],  // es-v-084-p-tu
+    ["Cuando era nina, él _____ (vivir) en una casa cerca de la playa.", ["vivían", "vivía", "vivías", "vivíamos"], 1,
+      { en: "The él/ella (he/she) form of 'vivir' is 'vivía'.", es: "La forma de él/ella de 'vivir' es 'vivía'."}, "A2", null,
+      { en: "When He was a girl, I _____ (vivir = to live) in a house near the beach." }],  // es-v-084-p-él
+    ["Cuando era nina, nosotros _____ (vivir) en una casa cerca de la playa.", ["vivíamos", "vivía", "vivías", "vivían"], 0,
+      { en: "The nosotros (we) form of 'vivir' is 'vivíamos'.", es: "La forma de nosotros de 'vivir' es 'vivíamos'."}, "A2", null,
+      { en: "When We were a girl, I _____ (vivir = to live) in a house near the beach." }],  // es-v-084-p-nosotros
+    ["Cuando era nina, ellos _____ (vivir) en una casa cerca de la playa.", ["vivía", "vivías", "vivíamos", "vivían"], 3,
+      { en: "The ellos/ellas (they) form of 'vivir' is 'vivían'.", es: "La forma de ellos/ellas de 'vivir' es 'vivían'."}, "A2", null,
+      { en: "When They were a girl, I _____ (vivir = to live) in a house near the beach." }],  // es-v-084-p-ellos
+    ["Yo fin de semana pasado, mis amigos _____ (viajar) a la montana.", ["viajó", "viajamos", "viajé", "viajaste"], 2,
+      { en: "The yo (I) form of 'viajar' is 'viajé'.", es: "La forma de yo de 'viajar' es 'viajé'."}, "A2", null,
+      { en: "Last weekend, my friends _____ (viajar = to travel) to the mountains." }],  // es-v-085-p-yo
+    ["Tú fin de semana pasado, mis amigos _____ (viajar) a la montana.", ["viajamos", "viajaste", "viajé", "viajó"], 1,
+      { en: "The tú (you) form of 'viajar' is 'viajaste'.", es: "La forma de tú de 'viajar' es 'viajaste'."}, "A2", null,
+      { en: "Last weekend, my friends _____ (viajar = to travel) to the mountains." }],  // es-v-085-p-tu
+    ["Nosotros fin de semana pasado, mis amigos _____ (viajar) a la montana.", ["viajamos", "viajé", "viajaste", "viajó"], 0,
+      { en: "The nosotros (we) form of 'viajar' is 'viajamos'.", es: "La forma de nosotros de 'viajar' es 'viajamos'."}, "A2", null,
+      { en: "Last weekend, my friends _____ (viajar = to travel) to the mountains." }],  // es-v-085-p-nosotros
+    ["Ellos fin de semana pasado, mis amigos _____ (viajar) a la montana.", ["viajé", "viajaste", "viajó", "viajaron"], 3,
+      { en: "The ellos/ellas (they) form of 'viajar' is 'viajaron'.", es: "La forma de ellos/ellas de 'viajar' es 'viajaron'."}, "A2", null,
+      { en: "Last weekend, my friends _____ (viajar = to travel) to the mountains." }],  // es-v-085-p-ellos
+    ["En este momento, los ninos _____ (estar) jugando en yo parque.", ["está", "estamos", "estoy", "estás"], 2,
+      { en: "The yo (I) form of 'estar' is 'estoy'.", es: "La forma de yo de 'estar' es 'estoy'."}, "A2", null,
+      { en: "Right now, the kids _____ (estar = to be) playing in the park." }],  // es-v-086-p-yo
+    ["En este momento, los ninos _____ (estar) jugando en tú parque.", ["estamos", "estás", "estoy", "está"], 1,
+      { en: "The tú (you) form of 'estar' is 'estás'.", es: "La forma de tú de 'estar' es 'estás'."}, "A2", null,
+      { en: "Right now, the kids _____ (estar = to be) playing in the park." }],  // es-v-086-p-tu
+    ["En este momento, los ninos _____ (estar) jugando en nosotros parque.", ["estamos", "estoy", "estás", "está"], 0,
+      { en: "The nosotros (we) form of 'estar' is 'estamos'.", es: "La forma de nosotros de 'estar' es 'estamos'."}, "A2", null,
+      { en: "Right now, the kids _____ (estar = to be) playing in the park." }],  // es-v-086-p-nosotros
+    ["En este momento, los ninos _____ (estar) jugando en ellos parque.", ["estoy", "estás", "está", "están"], 3,
+      { en: "The ellos/ellas (they) form of 'estar' is 'están'.", es: "La forma de ellos/ellas de 'estar' es 'están'."}, "A2", null,
+      { en: "Right now, the kids _____ (estar = to be) playing in the park." }],  // es-v-086-p-ellos
+    ["Manana tú _____ (ir) al mercado a comprar aguacate fresco.", ["irá", "iremos", "irás", "iré"], 2,
+      { en: "The tú (you) form of 'ir' is 'irás'.", es: "La forma de tú de 'ir' es 'irás'."}, "A2", null,
+      { en: "Tomorrow You _____ (ir = to go) to the market to buy fresh avocado." }],  // es-v-087-p-tu
+    ["Manana él _____ (ir) al mercado a comprar aguacate fresco.", ["iremos", "irá", "iré", "irás"], 1,
+      { en: "The él/ella (he/she) form of 'ir' is 'irá'.", es: "La forma de él/ella de 'ir' es 'irá'."}, "A2", null,
+      { en: "Tomorrow He _____ (ir = to go) to the market to buy fresh avocado." }],  // es-v-087-p-él
+    ["Manana nosotros _____ (ir) al mercado a comprar aguacate fresco.", ["iremos", "iré", "irás", "irá"], 0,
+      { en: "The nosotros (we) form of 'ir' is 'iremos'.", es: "La forma de nosotros de 'ir' es 'iremos'."}, "A2", null,
+      { en: "Tomorrow We _____ (ir = to go) to the market to buy fresh avocado." }],  // es-v-087-p-nosotros
+    ["Manana ellos _____ (ir) al mercado a comprar aguacate fresco.", ["iré", "irás", "irá", "irán"], 3,
+      { en: "The ellos/ellas (they) form of 'ir' is 'irán'.", es: "La forma de ellos/ellas de 'ir' es 'irán'."}, "A2", null,
+      { en: "Tomorrow They _____ (ir = to go) to the market to buy fresh avocado." }],  // es-v-087-p-ellos
+    ["Yo ano pasado, tu _____ (estudiar) frances en la universidad.", ["estudió", "estudiamos", "estudié", "estudiaste"], 2,
+      { en: "The yo (I) form of 'estudiar' is 'estudié'.", es: "La forma de yo de 'estudiar' es 'estudié'."}, "A2", null,
+      { en: "Last year, I _____ (estudiar = to study) French at the university." }],  // es-v-089-p-yo
+    ["Tú ano pasado, tu _____ (estudiar) frances en la universidad.", ["estudiamos", "estudiaste", "estudié", "estudió"], 1,
+      { en: "The tú (you) form of 'estudiar' is 'estudiaste'.", es: "La forma de tú de 'estudiar' es 'estudiaste'."}, "A2", null,
+      { en: "Last year, you _____ (estudiar = to study) French at the university." }],  // es-v-089-p-tu
+    ["Nosotros ano pasado, tu _____ (estudiar) frances en la universidad.", ["estudiamos", "estudié", "estudiaste", "estudió"], 0,
+      { en: "The nosotros (we) form of 'estudiar' is 'estudiamos'.", es: "La forma de nosotros de 'estudiar' es 'estudiamos'."}, "A2", null,
+      { en: "Last year, we _____ (estudiar = to study) French at the university." }],  // es-v-089-p-nosotros
+    ["Ellos ano pasado, tu _____ (estudiar) frances en la universidad.", ["estudié", "estudiaste", "estudió", "estudiaron"], 3,
+      { en: "The ellos/ellas (they) form of 'estudiar' is 'estudiaron'.", es: "La forma de ellos/ellas de 'estudiar' es 'estudiaron'."}, "A2", null,
+      { en: "Last year, they _____ (estudiar = to study) French at the university." }],  // es-v-089-p-ellos
+    ["De pequenos, mis primos y tú _____ (jugar) futbol todos los sabados.", ["jugábamos", "jugaban", "jugabas", "jugaba"], 2,
+      { en: "The tú (you) form of 'jugar' is 'jugabas'.", es: "La forma de tú de 'jugar' es 'jugabas'."}, "A2", null,
+      { en: "As kids, my cousins and You _____ (jugar = to play) soccer every Saturday." }],  // es-v-091-p-tu
+    ["De pequenos, mis primos y él _____ (jugar) futbol todos los sabados.", ["jugaban", "jugaba", "jugabas", "jugábamos"], 1,
+      { en: "The él/ella (he/she) form of 'jugar' is 'jugaba'.", es: "La forma de él/ella de 'jugar' es 'jugaba'."}, "A2", null,
+      { en: "As kids, my cousins and He _____ (jugar = to play) soccer every Saturday." }],  // es-v-091-p-él
+    ["De pequenos, mis primos y nosotros _____ (jugar) futbol todos los sabados.", ["jugábamos", "jugaba", "jugabas", "jugaban"], 0,
+      { en: "The nosotros (we) form of 'jugar' is 'jugábamos'.", es: "La forma de nosotros de 'jugar' es 'jugábamos'."}, "A2", null,
+      { en: "As kids, my cousins and We _____ (jugar = to play) soccer every Saturday." }],  // es-v-091-p-nosotros
+    ["De pequenos, mis primos y ellos _____ (jugar) futbol todos los sabados.", ["jugaba", "jugabas", "jugábamos", "jugaban"], 3,
+      { en: "The ellos/ellas (they) form of 'jugar' is 'jugaban'.", es: "La forma de ellos/ellas de 'jugar' es 'jugaban'."}, "A2", null,
+      { en: "As kids, my cousins and They _____ (jugar = to play) soccer every Saturday." }],  // es-v-091-p-ellos
+    ["Anoche yo _____ (dormir) muy poco por el ruido de la calle.", ["durmió", "dormimos", "dormí", "dormiste"], 2,
+      { en: "The yo (I) form of 'dormir' is 'dormí'.", es: "La forma de yo de 'dormir' es 'dormí'."}, "A2", null,
+      { en: "Last night I _____ (dormir = to sleep) very little because of the street noise." }],  // es-v-093-p-yo
+    ["Anoche tú _____ (dormir) muy poco por el ruido de la calle.", ["dormimos", "dormiste", "dormí", "durmió"], 1,
+      { en: "The tú (you) form of 'dormir' is 'dormiste'.", es: "La forma de tú de 'dormir' es 'dormiste'."}, "A2", null,
+      { en: "Last night you _____ (dormir = to sleep) very little because of the street noise." }],  // es-v-093-p-tu
+    ["Anoche él _____ (dormir) muy poco por el ruido de la calle.", ["durmió", "dormí", "dormiste", "dormimos"], 0,
+      { en: "The él/ella (he/she) form of 'dormir' is 'durmió'.", es: "La forma de él/ella de 'dormir' es 'durmió'."}, "A2", null,
+      { en: "Last night he _____ (dormir = to sleep) very little because of the street noise." }],  // es-v-093-p-él
+    ["Anoche ellos _____ (dormir) muy poco por el ruido de la calle.", ["dormí", "dormiste", "durmió", "durmieron"], 3,
+      { en: "The ellos/ellas (they) form of 'dormir' is 'durmieron'.", es: "La forma de ellos/ellas de 'dormir' es 'durmieron'."}, "A2", null,
+      { en: "Last night they _____ (dormir = to sleep) very little because of the street noise." }],  // es-v-093-p-ellos
+    ["Ayer yo _____ (dormir) muy mal en el hotel.", ["durmamos", "duerman", "duerma", "duermas"], 2,
+      { en: "The yo (I) form of 'dormir' is 'duerma'.", es: "La forma de yo de 'dormir' es 'duerma'."}, "B1", null,
+      { en: "Yesterday I _____ (dormir = to sleep) very badly at the hotel." }],  // es-v-095-p-yo
+    ["Ayer tú _____ (dormir) muy mal en el hotel.", ["duerman", "duermas", "duerma", "durmamos"], 1,
+      { en: "The tú (you) form of 'dormir' is 'duermas'.", es: "La forma de tú de 'dormir' es 'duermas'."}, "B1", null,
+      { en: "Yesterday you _____ (dormir = to sleep) very badly at the hotel." }],  // es-v-095-p-tu
+    ["Ayer él _____ (dormir) muy mal en el hotel.", ["duerma", "duermas", "durmamos", "duerman"], 0,
+      { en: "The él/ella (he/she) form of 'dormir' is 'duerma'.", es: "La forma de él/ella de 'dormir' es 'duerma'."}, "B1", null,
+      { en: "Yesterday he _____ (dormir = to sleep) very badly at the hotel." }],  // es-v-095-p-él
+    ["Ayer ellos _____ (dormir) muy mal en el hotel.", ["duerma", "duermas", "durmamos", "duerman"], 3,
+      { en: "The ellos/ellas (they) form of 'dormir' is 'duerman'.", es: "La forma de ellos/ellas de 'dormir' es 'duerman'."}, "B1", null,
+      { en: "Yesterday they _____ (dormir = to sleep) very badly at the hotel." }],  // es-v-095-p-ellos
+    ["Cuando era niña, tú _____ (jugar) en el parque todos los días.", ["juguemos", "jueguen", "juegues", "juegue"], 2,
+      { en: "The tú (you) form of 'jugar' is 'juegues'.", es: "La forma de tú de 'jugar' es 'juegues'."}, "B1", null,
+      { en: "When You were a girl, I _____ (jugar = to play) in the park every day." }],  // es-v-096-p-tu
+    ["Cuando era niña, él _____ (jugar) en el parque todos los días.", ["jueguen", "juegue", "juegues", "juguemos"], 1,
+      { en: "The él/ella (he/she) form of 'jugar' is 'juegue'.", es: "La forma de él/ella de 'jugar' es 'juegue'."}, "B1", null,
+      { en: "When He was a girl, I _____ (jugar = to play) in the park every day." }],  // es-v-096-p-él
+    ["Cuando era niña, nosotros _____ (jugar) en el parque todos los días.", ["juguemos", "juegue", "juegues", "jueguen"], 0,
+      { en: "The nosotros (we) form of 'jugar' is 'juguemos'.", es: "La forma de nosotros de 'jugar' es 'juguemos'."}, "B1", null,
+      { en: "When We were a girl, I _____ (jugar = to play) in the park every day." }],  // es-v-096-p-nosotros
+    ["Cuando era niña, ellos _____ (jugar) en el parque todos los días.", ["juegue", "juegues", "juguemos", "jueguen"], 3,
+      { en: "The ellos/ellas (they) form of 'jugar' is 'jueguen'.", es: "La forma de ellos/ellas de 'jugar' es 'jueguen'."}, "B1", null,
+      { en: "When They were a girl, I _____ (jugar = to play) in the park every day." }],  // es-v-096-p-ellos
+    ["Es importante que yo _____ (llegar) temprano a la reunión.", ["lleguemos", "lleguen", "llegue", "llegues"], 2,
+      { en: "The yo (I) form of 'llegar' is 'llegue'.", es: "La forma de yo de 'llegar' es 'llegue'."}, "B1", null,
+      { en: "It am important that I _____ (llegar = to arrive) early to the meeting." }],  // es-v-097-p-yo
+    ["Es importante que él _____ (llegar) temprano a la reunión.", ["lleguen", "llegue", "llegues", "lleguemos"], 1,
+      { en: "The él/ella (he/she) form of 'llegar' is 'llegue'.", es: "La forma de él/ella de 'llegar' es 'llegue'."}, "B1", null,
+      { en: "It is important that he _____ (llegar = to arrive) early to the meeting." }],  // es-v-097-p-él
+    ["Es importante que nosotros _____ (llegar) temprano a la reunión.", ["lleguemos", "llegue", "llegues", "lleguen"], 0,
+      { en: "The nosotros (we) form of 'llegar' is 'lleguemos'.", es: "La forma de nosotros de 'llegar' es 'lleguemos'."}, "B1", null,
+      { en: "It are important that we _____ (llegar = to arrive) early to the meeting." }],  // es-v-097-p-nosotros
+    ["Es importante que ellos _____ (llegar) temprano a la reunión.", ["llegue", "llegues", "lleguemos", "lleguen"], 3,
+      { en: "The ellos/ellas (they) form of 'llegar' is 'lleguen'.", es: "La forma de ellos/ellas de 'llegar' es 'lleguen'."}, "B1", null,
+      { en: "It are important that they _____ (llegar = to arrive) early to the meeting." }],  // es-v-097-p-ellos
+    ["Yo _____ (viajar) a Colombia el verano pasado.", ["viajemos", "viajen", "viaje", "viajes"], 2,
+      { en: "The yo (I) form of 'viajar' is 'viaje'.", es: "La forma de yo de 'viajar' es 'viaje'."}, "B1", null,
+      { en: "I _____ (viajar = to travel) to Colombia last summer." }],  // es-v-100-p-yo
+    ["Tú _____ (viajar) a Colombia el verano pasado.", ["viajen", "viajes", "viaje", "viajemos"], 1,
+      { en: "The tú (you) form of 'viajar' is 'viajes'.", es: "La forma de tú de 'viajar' es 'viajes'."}, "B1", null,
+      { en: "You _____ (viajar = to travel) to Colombia last summer." }],  // es-v-100-p-tu
+    ["Él _____ (viajar) a Colombia el verano pasado.", ["viaje", "viajes", "viajemos", "viajen"], 0,
+      { en: "The él/ella (he/she) form of 'viajar' is 'viaje'.", es: "La forma de él/ella de 'viajar' es 'viaje'."}, "B1", null,
+      { en: "He _____ (viajar = to travel) to Colombia last summer." }],  // es-v-100-p-él
+    ["Ellos _____ (viajar) a Colombia el verano pasado.", ["viaje", "viajes", "viajemos", "viajen"], 3,
+      { en: "The ellos/ellas (they) form of 'viajar' is 'viajen'.", es: "La forma de ellos/ellas de 'viajar' es 'viajen'."}, "B1", null,
+      { en: "They _____ (viajar = to travel) to Colombia last summer." }],  // es-v-100-p-ellos
+    ["Dudo que tú _____ (saber) la verdad sobre el proyecto.", ["sepamos", "sepan", "sepas", "sepa"], 2,
+      { en: "The tú (you) form of 'saber' is 'sepas'.", es: "La forma de tú de 'saber' es 'sepas'."}, "B1", null,
+      { en: "You doubt that she _____ (saber = to know) the truth about the project." }],  // es-v-101-p-tu
+    ["Dudo que nosotros _____ (saber) la verdad sobre el proyecto.", ["sepan", "sepamos", "sepa", "sepas"], 1,
+      { en: "The nosotros (we) form of 'saber' is 'sepamos'.", es: "La forma de nosotros de 'saber' es 'sepamos'."}, "B1", null,
+      { en: "We doubt that she _____ (saber = to know) the truth about the project." }],  // es-v-101-p-nosotros
+    ["Dudo que ellos _____ (saber) la verdad sobre el proyecto.", ["sepan", "sepa", "sepas", "sepamos"], 0,
+      { en: "The ellos/ellas (they) form of 'saber' is 'sepan'.", es: "La forma de ellos/ellas de 'saber' es 'sepan'."}, "B1", null,
+      { en: "They doubt that she _____ (saber = to know) the truth about the project." }],  // es-v-101-p-ellos
+    ["Este verano tú he _____ (visitar) tres países diferentes.", ["he visitado", "ha visitado", "hemos visitado", "has visitado"], 3,
+      { en: "The tú (you) form of 'visitar' is 'has visitado'.", es: "La forma de tú de 'visitar' es 'has visitado'."}, "B1", null,
+      { en: "This summer You have _____ (visitar = to visit) three different countries." }],  // es-v-102-p-tu
+    ["Este verano él he _____ (visitar) tres países diferentes.", ["has visitado", "hemos visitado", "ha visitado", "he visitado"], 2,
+      { en: "The él/ella (he/she) form of 'visitar' is 'ha visitado'.", es: "La forma de él/ella de 'visitar' es 'ha visitado'."}, "B1", null,
+      { en: "This summer He has _____ (visitar = to visit) three different countries." }],  // es-v-102-p-él
+    ["Este verano nosotros he _____ (visitar) tres países diferentes.", ["ha visitado", "hemos visitado", "he visitado", "has visitado"], 1,
+      { en: "The nosotros (we) form of 'visitar' is 'hemos visitado'.", es: "La forma de nosotros de 'visitar' es 'hemos visitado'."}, "B1", null,
+      { en: "This summer We have _____ (visitar = to visit) three different countries." }],  // es-v-102-p-nosotros
+    ["Este verano ellos he _____ (visitar) tres países diferentes.", ["han visitado", "he visitado", "has visitado", "ha visitado"], 0,
+      { en: "The ellos/ellas (they) form of 'visitar' is 'han visitado'.", es: "La forma de ellos/ellas de 'visitar' es 'han visitado'."}, "B1", null,
+      { en: "This summer They have _____ (visitar = to visit) three different countries." }],  // es-v-102-p-ellos
+    ["Cuando tú _____ (llegar) a la oficina, mis compañeros ya estaban trabajando.", ["llegaba", "llegábamos", "llegaban", "llegabas"], 3,
+      { en: "The tú (you) form of 'llegar' is 'llegabas'.", es: "La forma de tú de 'llegar' es 'llegabas'."}, "B1", null,
+      { en: "When You _____ (llegar = to arrive) at the office, my coworkers were already working." }],  // es-v-103-p-tu
+    ["Cuando él _____ (llegar) a la oficina, mis compañeros ya estaban trabajando.", ["llegábamos", "llegaban", "llegaba", "llegabas"], 2,
+      { en: "The él/ella (he/she) form of 'llegar' is 'llegaba'.", es: "La forma de él/ella de 'llegar' es 'llegaba'."}, "B1", null,
+      { en: "When He _____ (llegar = to arrive) at the office, my coworkers was already working." }],  // es-v-103-p-él
+    ["Cuando nosotros _____ (llegar) a la oficina, mis compañeros ya estaban trabajando.", ["llegaban", "llegábamos", "llegaba", "llegabas"], 1,
+      { en: "The nosotros (we) form of 'llegar' is 'llegábamos'.", es: "La forma de nosotros de 'llegar' es 'llegábamos'."}, "B1", null,
+      { en: "When We _____ (llegar = to arrive) at the office, my coworkers were already working." }],  // es-v-103-p-nosotros
+    ["Cuando ellos _____ (llegar) a la oficina, mis compañeros ya estaban trabajando.", ["llegaban", "llegaba", "llegabas", "llegábamos"], 0,
+      { en: "The ellos/ellas (they) form of 'llegar' is 'llegaban'.", es: "La forma de ellos/ellas de 'llegar' es 'llegaban'."}, "B1", null,
+      { en: "When They _____ (llegar = to arrive) at the office, my coworkers were already working." }],  // es-v-103-p-ellos
+    ["Es probable que yo vuelo _____ (retrasarse) por la tormenta.", ["te retrases", "se retrase", "nos retrasemos", "me retrase"], 3,
+      { en: "The yo (I) form of 'retrasarse' is 'me retrase'.", es: "La forma de yo de 'retrasarse' es 'me retrase'."}, "B1", null,
+      { en: "It's likely that the flight will _____ (retrasarse = to be delayed) because of the storm." }],  // es-v-107-p-yo
+    ["Es probable que tú vuelo _____ (retrasarse) por la tormenta.", ["se retrase", "nos retrasemos", "te retrases", "me retrase"], 2,
+      { en: "The tú (you) form of 'retrasarse' is 'te retrases'.", es: "La forma de tú de 'retrasarse' es 'te retrases'."}, "B1", null,
+      { en: "It's likely that the flight will _____ (retrasarse = to be delayed) because of the storm." }],  // es-v-107-p-tu
+    ["Es probable que nosotros vuelo _____ (retrasarse) por la tormenta.", ["se retrase", "nos retrasemos", "me retrase", "te retrases"], 1,
+      { en: "The nosotros (we) form of 'retrasarse' is 'nos retrasemos'.", es: "La forma de nosotros de 'retrasarse' es 'nos retrasemos'."}, "B1", null,
+      { en: "It's likely that the flight will _____ (retrasarse = to be delayed) because of the storm." }],  // es-v-107-p-nosotros
+    ["Es probable que ellos vuelo _____ (retrasarse) por la tormenta.", ["se retrasen", "me retrase", "te retrases", "se retrase"], 0,
+      { en: "The ellos/ellas (they) form of 'retrasarse' is 'se retrasen'.", es: "La forma de ellos/ellas de 'retrasarse' es 'se retrasen'."}, "B1", null,
+      { en: "It's likely that the flight will _____ (retrasarse = to be delayed) because of the storm." }],  // es-v-107-p-ellos
+    ["Yo año pasado nosotros _____ (mudarse) a un apartamento más pequeño.", ["te mudes", "se mude", "nos mudemos", "me mude"], 3,
+      { en: "The yo (I) form of 'mudarse' is 'me mude'.", es: "La forma de yo de 'mudarse' es 'me mude'."}, "B1", null,
+      { en: "Last year I _____ (mudarse = to move) to a smaller apartment." }],  // es-v-108-p-yo
+    ["Tú año pasado nosotros _____ (mudarse) a un apartamento más pequeño.", ["se mude", "nos mudemos", "te mudes", "me mude"], 2,
+      { en: "The tú (you) form of 'mudarse' is 'te mudes'.", es: "La forma de tú de 'mudarse' es 'te mudes'."}, "B1", null,
+      { en: "Last year you _____ (mudarse = to move) to a smaller apartment." }],  // es-v-108-p-tu
+    ["Nosotros año pasado nosotros _____ (mudarse) a un apartamento más pequeño.", ["se mude", "nos mudemos", "me mude", "te mudes"], 1,
+      { en: "The nosotros (we) form of 'mudarse' is 'nos mudemos'.", es: "La forma de nosotros de 'mudarse' es 'nos mudemos'."}, "B1", null,
+      { en: "Last year we _____ (mudarse = to move) to a smaller apartment." }],  // es-v-108-p-nosotros
+    ["Ellos año pasado nosotros _____ (mudarse) a un apartamento más pequeño.", ["se muden", "me mude", "te mudes", "se mude"], 0,
+      { en: "The ellos/ellas (they) form of 'mudarse' is 'se muden'.", es: "La forma de ellos/ellas de 'mudarse' es 'se muden'."}, "B1", null,
+      { en: "Last year they _____ (mudarse = to move) to a smaller apartment." }],  // es-v-108-p-ellos
+    ["Antes de mudarnos, ya _____ (visitar) yo barrio varias veces.", ["habías visitado", "habíamos visitado", "habían visitado", "había visitado"], 3,
+      { en: "The yo (I) form of 'visitar' is 'había visitado'.", es: "La forma de yo de 'visitar' es 'había visitado'."}, "B1", null,
+      { en: "Before moving, I had already _____ (visitar = to visit) the neighborhood several times." }],  // es-v-109-p-yo
+    ["Antes de mudarnos, ya _____ (visitar) tú barrio varias veces.", ["habíamos visitado", "habían visitado", "habías visitado", "había visitado"], 2,
+      { en: "The tú (you) form of 'visitar' is 'habías visitado'.", es: "La forma de tú de 'visitar' es 'habías visitado'."}, "B1", null,
+      { en: "Before moving, you had already _____ (visitar = to visit) the neighborhood several times." }],  // es-v-109-p-tu
+    ["Antes de mudarnos, ya _____ (visitar) nosotros barrio varias veces.", ["habían visitado", "habíamos visitado", "había visitado", "habías visitado"], 1,
+      { en: "The nosotros (we) form of 'visitar' is 'habíamos visitado'.", es: "La forma de nosotros de 'visitar' es 'habíamos visitado'."}, "B1", null,
+      { en: "Before moving, we had already _____ (visitar = to visit) the neighborhood several times." }],  // es-v-109-p-nosotros
+    ["Antes de mudarnos, ya _____ (visitar) ellos barrio varias veces.", ["habían visitado", "había visitado", "habías visitado", "habíamos visitado"], 0,
+      { en: "The ellos/ellas (they) form of 'visitar' is 'habían visitado'.", es: "La forma de ellos/ellas de 'visitar' es 'habían visitado'."}, "B1", null,
+      { en: "Before moving, they had already _____ (visitar = to visit) the neighborhood several times." }],  // es-v-109-p-ellos
+    ["No creo que yo _____ (tener) tiempo para ayudarnos hoy.", ["tengas", "tengamos", "tengan", "tenga"], 3,
+      { en: "The yo (I) form of 'tener' is 'tenga'.", es: "La forma de yo de 'tener' es 'tenga'."}, "B1", null,
+      { en: "I don't think he _____ (tener = to have) time to help us today." }],  // es-v-110-p-yo
+    ["No creo que tú _____ (tener) tiempo para ayudarnos hoy.", ["tengamos", "tengan", "tengas", "tenga"], 2,
+      { en: "The tú (you) form of 'tener' is 'tengas'.", es: "La forma de tú de 'tener' es 'tengas'."}, "B1", null,
+      { en: "You don't think he _____ (tener = to have) time to help us today." }],  // es-v-110-p-tu
+    ["No creo que nosotros _____ (tener) tiempo para ayudarnos hoy.", ["tengan", "tengamos", "tenga", "tengas"], 1,
+      { en: "The nosotros (we) form of 'tener' is 'tengamos'.", es: "La forma de nosotros de 'tener' es 'tengamos'."}, "B1", null,
+      { en: "We don't think he _____ (tener = to have) time to help us today." }],  // es-v-110-p-nosotros
+    ["No creo que ellos _____ (tener) tiempo para ayudarnos hoy.", ["tengan", "tenga", "tengas", "tengamos"], 0,
+      { en: "The ellos/ellas (they) form of 'tener' is 'tengan'.", es: "La forma de ellos/ellas de 'tener' es 'tengan'."}, "B1", null,
+      { en: "They don't think he _____ (tener = to have) time to help us today." }],  // es-v-110-p-ellos
+    ["Mientras tú _____ (cocinar), mi pareja ponía la mesa.", ["cocine", "cocinemos", "cocinen", "cocines"], 3,
+      { en: "The tú (you) form of 'cocinar' is 'cocines'.", es: "La forma de tú de 'cocinar' es 'cocines'."}, "B1", null,
+      { en: "While You were _____ (cocinar = to cook), my partner was setting the table." }],  // es-v-111-p-tu
+    ["Mientras él _____ (cocinar), mi pareja ponía la mesa.", ["cocinemos", "cocinen", "cocine", "cocines"], 2,
+      { en: "The él/ella (he/she) form of 'cocinar' is 'cocine'.", es: "La forma de él/ella de 'cocinar' es 'cocine'."}, "B1", null,
+      { en: "While He was _____ (cocinar = to cook), my partner was setting the table." }],  // es-v-111-p-él
+    ["Mientras nosotros _____ (cocinar), mi pareja ponía la mesa.", ["cocinen", "cocinemos", "cocine", "cocines"], 1,
+      { en: "The nosotros (we) form of 'cocinar' is 'cocinemos'.", es: "La forma de nosotros de 'cocinar' es 'cocinemos'."}, "B1", null,
+      { en: "While We were _____ (cocinar = to cook), my partner was setting the table." }],  // es-v-111-p-nosotros
+    ["Mientras ellos _____ (cocinar), mi pareja ponía la mesa.", ["cocinen", "cocine", "cocines", "cocinemos"], 0,
+      { en: "The ellos/ellas (they) form of 'cocinar' is 'cocinen'.", es: "La forma de ellos/ellas de 'cocinar' es 'cocinen'."}, "B1", null,
+      { en: "While They were _____ (cocinar = to cook), my partner was setting the table." }],  // es-v-111-p-ellos
+    ["¿_____ (poder) yo ayudarme con este trámite, por favor?", ["podrías", "podríamos", "podrían", "podría"], 3,
+      { en: "The yo (I) form of 'poder' is 'podría'.", es: "La forma de yo de 'poder' es 'podría'."}, "B1", null,
+      { en: "_____ (poder = to be able to) I help me with this paperwork, please?" }],  // es-v-112-p-yo
+    ["¿_____ (poder) tú ayudarme con este trámite, por favor?", ["podríamos", "podrían", "podrías", "podría"], 2,
+      { en: "The tú (you) form of 'poder' is 'podrías'.", es: "La forma de tú de 'poder' es 'podrías'."}, "B1", null,
+      { en: "_____ (poder = to be able to) you help me with this paperwork, please?" }],  // es-v-112-p-tu
+    ["¿_____ (poder) nosotros ayudarme con este trámite, por favor?", ["podrían", "podríamos", "podría", "podrías"], 1,
+      { en: "The nosotros (we) form of 'poder' is 'podríamos'.", es: "La forma de nosotros de 'poder' es 'podríamos'."}, "B1", null,
+      { en: "_____ (poder = to be able to) we help me with this paperwork, please?" }],  // es-v-112-p-nosotros
+    ["¿_____ (poder) ellos ayudarme con este trámite, por favor?", ["podrían", "podría", "podrías", "podríamos"], 0,
+      { en: "The ellos/ellas (they) form of 'poder' is 'podrían'.", es: "La forma de ellos/ellas de 'poder' es 'podrían'."}, "B1", null,
+      { en: "_____ (poder = to be able to) they help me with this paperwork, please?" }],  // es-v-112-p-ellos
+    ["En cuanto _____ (recibir) yo el mensaje, escríbeme.", ["recibas", "recibamos", "reciban", "reciba"], 3,
+      { en: "The yo (I) form of 'recibir' is 'reciba'.", es: "La forma de yo de 'recibir' es 'reciba'."}, "B1", null,
+      { en: "As soon as I _____ (recibir = to receive) the message, write to me." }],  // es-v-113-p-yo
+    ["En cuanto _____ (recibir) él el mensaje, escríbeme.", ["recibamos", "reciban", "reciba", "recibas"], 2,
+      { en: "The él/ella (he/she) form of 'recibir' is 'reciba'.", es: "La forma de él/ella de 'recibir' es 'reciba'."}, "B1", null,
+      { en: "As soon as he _____ (recibir = to receive) the message, write to me." }],  // es-v-113-p-él
+    ["En cuanto _____ (recibir) nosotros el mensaje, escríbeme.", ["reciban", "recibamos", "reciba", "recibas"], 1,
+      { en: "The nosotros (we) form of 'recibir' is 'recibamos'.", es: "La forma de nosotros de 'recibir' es 'recibamos'."}, "B1", null,
+      { en: "As soon as we _____ (recibir = to receive) the message, write to me." }],  // es-v-113-p-nosotros
+    ["En cuanto _____ (recibir) ellos el mensaje, escríbeme.", ["reciban", "reciba", "recibas", "recibamos"], 0,
+      { en: "The ellos/ellas (they) form of 'recibir' is 'reciban'.", es: "La forma de ellos/ellas de 'recibir' es 'reciban'."}, "B1", null,
+      { en: "As soon as they _____ (recibir = to receive) the message, write to me." }],  // es-v-113-p-ellos
+    ["Nunca _____ (probar) tú un plato tan delicioso como este ceviche.", ["pruebe", "probemos", "prueben", "pruebes"], 3,
+      { en: "The tú (you) form of 'probar' is 'pruebes'.", es: "La forma de tú de 'probar' es 'pruebes'."}, "B1", null,
+      { en: "You had never _____ (probar = to try) a dish as delicious as this ceviche." }],  // es-v-114-p-tu
+    ["Nunca _____ (probar) él un plato tan delicioso como este ceviche.", ["probemos", "prueben", "pruebe", "pruebes"], 2,
+      { en: "The él/ella (he/she) form of 'probar' is 'pruebe'.", es: "La forma de él/ella de 'probar' es 'pruebe'."}, "B1", null,
+      { en: "He had never _____ (probar = to try) a dish as delicious as this ceviche." }],  // es-v-114-p-él
+    ["Nunca _____ (probar) nosotros un plato tan delicioso como este ceviche.", ["prueben", "probemos", "pruebe", "pruebes"], 1,
+      { en: "The nosotros (we) form of 'probar' is 'probemos'.", es: "La forma de nosotros de 'probar' es 'probemos'."}, "B1", null,
+      { en: "We had never _____ (probar = to try) a dish as delicious as this ceviche." }],  // es-v-114-p-nosotros
+    ["Nunca _____ (probar) ellos un plato tan delicioso como este ceviche.", ["prueben", "pruebe", "pruebes", "probemos"], 0,
+      { en: "The ellos/ellas (they) form of 'probar' is 'prueben'.", es: "La forma de ellos/ellas de 'probar' es 'prueben'."}, "B1", null,
+      { en: "They had never _____ (probar = to try) a dish as delicious as this ceviche." }],  // es-v-114-p-ellos
+    ["Dudo que tú _____ (llegar) a tiempo con este tráfico.", ["llegue", "lleguemos", "lleguen", "llegues"], 3,
+      { en: "The tú (you) form of 'llegar' is 'llegues'.", es: "La forma de tú de 'llegar' es 'llegues'."}, "B2", null,
+      { en: "You doubt they _____ (llegar = to arrive) on time with this traffic." }],  // es-v-116-p-tu
+    ["Dudo que él _____ (llegar) a tiempo con este tráfico.", ["lleguemos", "lleguen", "llegue", "llegues"], 2,
+      { en: "The él/ella (he/she) form of 'llegar' is 'llegue'.", es: "La forma de él/ella de 'llegar' es 'llegue'."}, "B2", null,
+      { en: "He doubt they _____ (llegar = to arrive) on time with this traffic." }],  // es-v-116-p-él
+    ["Dudo que nosotros _____ (llegar) a tiempo con este tráfico.", ["lleguen", "lleguemos", "llegue", "llegues"], 1,
+      { en: "The nosotros (we) form of 'llegar' is 'lleguemos'.", es: "La forma de nosotros de 'llegar' es 'lleguemos'."}, "B2", null,
+      { en: "We doubt they _____ (llegar = to arrive) on time with this traffic." }],  // es-v-116-p-nosotros
+    ["Este año tú _____ (viajar) tres veces a Colombia por trabajo.", ["has viajado", "he viajado", "ha viajado", "hemos viajado"], 0,
+      { en: "The tú (you) form of 'viajar' is 'has viajado'.", es: "La forma de tú de 'viajar' es 'has viajado'."}, "B2", null,
+      { en: "This year You _____ (viajar = to travel) three times to Colombia for work." }],  // es-v-118-p-tu
+    ["Este año él _____ (viajar) tres veces a Colombia por trabajo.", ["he viajado", "has viajado", "hemos viajado", "ha viajado"], 3,
+      { en: "The él/ella (he/she) form of 'viajar' is 'ha viajado'.", es: "La forma de él/ella de 'viajar' es 'ha viajado'."}, "B2", null,
+      { en: "This year He _____ (viajar = to travel) three times to Colombia for work." }],  // es-v-118-p-él
+    ["Este año nosotros _____ (viajar) tres veces a Colombia por trabajo.", ["has viajado", "ha viajado", "hemos viajado", "he viajado"], 2,
+      { en: "The nosotros (we) form of 'viajar' is 'hemos viajado'.", es: "La forma de nosotros de 'viajar' es 'hemos viajado'."}, "B2", null,
+      { en: "This year We _____ (viajar = to travel) three times to Colombia for work." }],  // es-v-118-p-nosotros
+    ["Este año ellos _____ (viajar) tres veces a Colombia por trabajo.", ["ha viajado", "han viajado", "he viajado", "has viajado"], 1,
+      { en: "The ellos/ellas (they) form of 'viajar' is 'han viajado'.", es: "La forma de ellos/ellas de 'viajar' es 'han viajado'."}, "B2", null,
+      { en: "This year They _____ (viajar = to travel) three times to Colombia for work." }],  // es-v-118-p-ellos
+    ["Mis abuelos siempre _____ (vivir) en yo campo cuando eran jóvenes.", ["viva", "vivas", "vivamos", "vivan"], 0,
+      { en: "The yo (I) form of 'vivir' is 'viva'.", es: "La forma de yo de 'vivir' es 'viva'."}, "B2", null,
+      { en: "My grandparents always _____ (vivir = to live) in the countryside when I was young." }],  // es-v-120-p-yo
+    ["Mis abuelos siempre _____ (vivir) en tú campo cuando eran jóvenes.", ["viva", "vivamos", "vivan", "vivas"], 3,
+      { en: "The tú (you) form of 'vivir' is 'vivas'.", es: "La forma de tú de 'vivir' es 'vivas'."}, "B2", null,
+      { en: "My grandparents always _____ (vivir = to live) in the countryside when you were young." }],  // es-v-120-p-tu
+    ["Mis abuelos siempre _____ (vivir) en nosotros campo cuando eran jóvenes.", ["vivas", "vivan", "vivamos", "viva"], 2,
+      { en: "The nosotros (we) form of 'vivir' is 'vivamos'.", es: "La forma de nosotros de 'vivir' es 'vivamos'."}, "B2", null,
+      { en: "My grandparents always _____ (vivir = to live) in the countryside when we were young." }],  // es-v-120-p-nosotros
+    ["Mis abuelos siempre _____ (vivir) en ellos campo cuando eran jóvenes.", ["vivamos", "vivan", "viva", "vivas"], 1,
+      { en: "The ellos/ellas (they) form of 'vivir' is 'vivan'.", es: "La forma de ellos/ellas de 'vivir' es 'vivan'."}, "B2", null,
+      { en: "My grandparents always _____ (vivir = to live) in the countryside when they were young." }],  // es-v-120-p-ellos
+    ["Es importante que yo _____ (cuidar) tu salud mental en el trabajo.", ["cuide", "cuides", "cuidemos", "cuiden"], 0,
+      { en: "The yo (I) form of 'cuidar' is 'cuide'.", es: "La forma de yo de 'cuidar' es 'cuide'."}, "B2", null,
+      { en: "It am important that I _____ (cuidar = to take care of) your mental health at work." }],  // es-v-121-p-yo
+    ["Es importante que él _____ (cuidar) tu salud mental en el trabajo.", ["cuides", "cuidemos", "cuiden", "cuide"], 3,
+      { en: "The él/ella (he/she) form of 'cuidar' is 'cuide'.", es: "La forma de él/ella de 'cuidar' es 'cuide'."}, "B2", null,
+      { en: "It is important that he _____ (cuidar = to take care of) your mental health at work." }],  // es-v-121-p-él
+    ["Es importante que nosotros _____ (cuidar) tu salud mental en el trabajo.", ["cuides", "cuiden", "cuidemos", "cuide"], 2,
+      { en: "The nosotros (we) form of 'cuidar' is 'cuidemos'.", es: "La forma de nosotros de 'cuidar' es 'cuidemos'."}, "B2", null,
+      { en: "It are important that we _____ (cuidar = to take care of) your mental health at work." }],  // es-v-121-p-nosotros
+    ["Es importante que ellos _____ (cuidar) tu salud mental en el trabajo.", ["cuidemos", "cuiden", "cuide", "cuides"], 1,
+      { en: "The ellos/ellas (they) form of 'cuidar' is 'cuiden'.", es: "La forma de ellos/ellas de 'cuidar' es 'cuiden'."}, "B2", null,
+      { en: "It are important that they _____ (cuidar = to take care of) your mental health at work." }],  // es-v-121-p-ellos
+    ["Anoche yo _____ (cenar) en ese restaurante peruano tan chévere.", ["había cenado", "habías cenado", "habíamos cenado", "habían cenado"], 0,
+      { en: "The yo (I) form of 'cenar' is 'había cenado'.", es: "La forma de yo de 'cenar' es 'había cenado'."}, "B2", null,
+      { en: "Last night I _____ (cenar = to have dinner) at that super chevere Peruvian restaurant." }],  // es-v-122-p-yo
+    ["Anoche tú _____ (cenar) en ese restaurante peruano tan chévere.", ["había cenado", "habíamos cenado", "habían cenado", "habías cenado"], 3,
+      { en: "The tú (you) form of 'cenar' is 'habías cenado'.", es: "La forma de tú de 'cenar' es 'habías cenado'."}, "B2", null,
+      { en: "Last night you _____ (cenar = to have dinner) at that super chevere Peruvian restaurant." }],  // es-v-122-p-tu
+    ["Anoche él _____ (cenar) en ese restaurante peruano tan chévere.", ["habíamos cenado", "habían cenado", "había cenado", "habías cenado"], 2,
+      { en: "The él/ella (he/she) form of 'cenar' is 'había cenado'.", es: "La forma de él/ella de 'cenar' es 'había cenado'."}, "B2", null,
+      { en: "Last night he _____ (cenar = to have dinner) at that super chevere Peruvian restaurant." }],  // es-v-122-p-él
+    ["Anoche ellos _____ (cenar) en ese restaurante peruano tan chévere.", ["habíamos cenado", "habían cenado", "había cenado", "habías cenado"], 1,
+      { en: "The ellos/ellas (they) form of 'cenar' is 'habían cenado'.", es: "La forma de ellos/ellas de 'cenar' es 'habían cenado'."}, "B2", null,
+      { en: "Last night they _____ (cenar = to have dinner) at that super chevere Peruvian restaurant." }],  // es-v-122-p-ellos
+    ["No creo que yo _____ (estar) enojada contigo, más bien preocupada.", ["esté", "estés", "estemos", "estén"], 0,
+      { en: "The yo (I) form of 'estar' is 'esté'.", es: "La forma de yo de 'estar' es 'esté'."}, "B2", null,
+      { en: "I do not think she _____ (estar = to be) angry with you, more likely worried." }],  // es-v-123-p-yo
+    ["No creo que tú _____ (estar) enojada contigo, más bien preocupada.", ["esté", "estemos", "estén", "estés"], 3,
+      { en: "The tú (you) form of 'estar' is 'estés'.", es: "La forma de tú de 'estar' es 'estés'."}, "B2", null,
+      { en: "You do not think she _____ (estar = to be) angry with you, more likely worried." }],  // es-v-123-p-tu
+    ["No creo que nosotros _____ (estar) enojada contigo, más bien preocupada.", ["estés", "estén", "estemos", "esté"], 2,
+      { en: "The nosotros (we) form of 'estar' is 'estemos'.", es: "La forma de nosotros de 'estar' es 'estemos'."}, "B2", null,
+      { en: "We do not think she _____ (estar = to be) angry with you, more likely worried." }],  // es-v-123-p-nosotros
+    ["No creo que ellos _____ (estar) enojada contigo, más bien preocupada.", ["estemos", "estén", "esté", "estés"], 1,
+      { en: "The ellos/ellas (they) form of 'estar' is 'estén'.", es: "La forma de ellos/ellas de 'estar' es 'estén'."}, "B2", null,
+      { en: "They do not think she _____ (estar = to be) angry with you, more likely worried." }],  // es-v-123-p-ellos
+    ["Ojalá que yo jefe nos _____ (dar) el viernes libre este mes.", ["dé", "des", "demos", "den"], 0,
+      { en: "The yo (I) form of 'dar' is 'dé'.", es: "La forma de yo de 'dar' es 'dé'."}, "B2", null,
+      { en: "Hopefully the boss will _____ (dar = to give) us Friday off this month." }],  // es-v-127-p-yo
+    ["Ojalá que tú jefe nos _____ (dar) el viernes libre este mes.", ["dé", "demos", "den", "des"], 3,
+      { en: "The tú (you) form of 'dar' is 'des'.", es: "La forma de tú de 'dar' es 'des'."}, "B2", null,
+      { en: "Hopefully the boss will _____ (dar = to give) us Friday off this month." }],  // es-v-127-p-tu
+    ["Ojalá que nosotros jefe nos _____ (dar) el viernes libre este mes.", ["des", "den", "demos", "dé"], 2,
+      { en: "The nosotros (we) form of 'dar' is 'demos'.", es: "La forma de nosotros de 'dar' es 'demos'."}, "B2", null,
+      { en: "Hopefully the boss will _____ (dar = to give) us Friday off this month." }],  // es-v-127-p-nosotros
+    ["Ojalá que ellos jefe nos _____ (dar) el viernes libre este mes.", ["demos", "den", "dé", "des"], 1,
+      { en: "The ellos/ellas (they) form of 'dar' is 'den'.", es: "La forma de ellos/ellas de 'dar' es 'den'."}, "B2", null,
+      { en: "Hopefully the boss will _____ (dar = to give) us Friday off this month." }],  // es-v-127-p-ellos
+    ["Yo año pasado, mientras yo _____ (trabajar) en la oficina, hubo un apagón enorme.", ["trabajaba", "trabajabas", "trabajábamos", "trabajaban"], 0,
+      { en: "The yo (I) form of 'trabajar' is 'trabajaba'.", es: "La forma de yo de 'trabajar' es 'trabajaba'."}, "B2", null,
+      { en: "Last year, while I was _____ (trabajar = to work) at the office, there was a huge blackout." }],  // es-v-128-p-yo
+    ["Tú año pasado, mientras yo _____ (trabajar) en la oficina, hubo un apagón enorme.", ["trabajaba", "trabajábamos", "trabajaban", "trabajabas"], 3,
+      { en: "The tú (you) form of 'trabajar' is 'trabajabas'.", es: "La forma de tú de 'trabajar' es 'trabajabas'."}, "B2", null,
+      { en: "Last year, while You were _____ (trabajar = to work) at the office, there was a huge blackout." }],  // es-v-128-p-tu
+    ["Nosotros año pasado, mientras yo _____ (trabajar) en la oficina, hubo un apagón enorme.", ["trabajabas", "trabajaban", "trabajábamos", "trabajaba"], 2,
+      { en: "The nosotros (we) form of 'trabajar' is 'trabajábamos'.", es: "La forma de nosotros de 'trabajar' es 'trabajábamos'."}, "B2", null,
+      { en: "Last year, while We were _____ (trabajar = to work) at the office, there was a huge blackout." }],  // es-v-128-p-nosotros
+    ["Ellos año pasado, mientras yo _____ (trabajar) en la oficina, hubo un apagón enorme.", ["trabajábamos", "trabajaban", "trabajaba", "trabajabas"], 1,
+      { en: "The ellos/ellas (they) form of 'trabajar' is 'trabajaban'.", es: "La forma de ellos/ellas de 'trabajar' es 'trabajaban'."}, "B2", null,
+      { en: "Last year, while They were _____ (trabajar = to work) at the office, there was a huge blackout." }],  // es-v-128-p-ellos
+    ["Te recomiendo que _____ (probar) tú jugo de maracuyá antes de irte.", ["pruebes", "pruebe", "probemos", "prueben"], 0,
+      { en: "The tú (you) form of 'probar' is 'pruebes'.", es: "La forma de tú de 'probar' es 'pruebes'."}, "B2", null,
+      { en: "You recommend that you _____ (probar = to try) the passion fruit juice before you leave." }],  // es-v-129-p-tu
+    ["Te recomiendo que _____ (probar) nosotros jugo de maracuyá antes de irte.", ["pruebe", "pruebes", "prueben", "probemos"], 3,
+      { en: "The nosotros (we) form of 'probar' is 'probemos'.", es: "La forma de nosotros de 'probar' es 'probemos'."}, "B2", null,
+      { en: "We recommend that you _____ (probar = to try) the passion fruit juice before you leave." }],  // es-v-129-p-nosotros
+    ["Te recomiendo que _____ (probar) ellos jugo de maracuyá antes de irte.", ["pruebes", "probemos", "prueben", "pruebe"], 2,
+      { en: "The ellos/ellas (they) form of 'probar' is 'prueben'.", es: "La forma de ellos/ellas de 'probar' es 'prueben'."}, "B2", null,
+      { en: "They recommend that you _____ (probar = to try) the passion fruit juice before you leave." }],  // es-v-129-p-ellos
+    ["Hasta ahora, la empresa no _____ (resolver) yo problema con los envíos.", ["hemos resuelto", "he resuelto", "has resuelto", "ha resuelto"], 1,
+      { en: "The yo (I) form of 'resolver' is 'he resuelto'.", es: "La forma de yo de 'resolver' es 'he resuelto'."}, "B2", null,
+      { en: "Until now, the company have not _____ (resolver = to resolve) the problem with the shipments." }],  // es-v-130-p-yo
+    ["Hasta ahora, la empresa no _____ (resolver) tú problema con los envíos.", ["has resuelto", "he resuelto", "ha resuelto", "hemos resuelto"], 0,
+      { en: "The tú (you) form of 'resolver' is 'has resuelto'.", es: "La forma de tú de 'resolver' es 'has resuelto'."}, "B2", null,
+      { en: "Until now, the company have not _____ (resolver = to resolve) the problem with the shipments." }],  // es-v-130-p-tu
+    ["Hasta ahora, la empresa no _____ (resolver) nosotros problema con los envíos.", ["he resuelto", "has resuelto", "ha resuelto", "hemos resuelto"], 3,
+      { en: "The nosotros (we) form of 'resolver' is 'hemos resuelto'.", es: "La forma de nosotros de 'resolver' es 'hemos resuelto'."}, "B2", null,
+      { en: "Until now, the company have not _____ (resolver = to resolve) the problem with the shipments." }],  // es-v-130-p-nosotros
+    ["Hasta ahora, la empresa no _____ (resolver) ellos problema con los envíos.", ["has resuelto", "ha resuelto", "han resuelto", "he resuelto"], 2,
+      { en: "The ellos/ellas (they) form of 'resolver' is 'han resuelto'.", es: "La forma de ellos/ellas de 'resolver' es 'han resuelto'."}, "B2", null,
+      { en: "Until now, the company have not _____ (resolver = to resolve) the problem with the shipments." }],  // es-v-130-p-ellos
+    ["Cuando vivíamos en la costa, siempre _____ (nadar) en yo mar al amanecer.", ["nadaban", "nadaba", "nadabas", "nadábamos"], 1,
+      { en: "The yo (I) form of 'nadar' is 'nadaba'.", es: "La forma de yo de 'nadar' es 'nadaba'."}, "B2", null,
+      { en: "When I used to live on the coast, we always _____ (nadar = to swim) in the sea at sunrise." }],  // es-v-132-p-yo
+    ["Cuando vivíamos en la costa, siempre _____ (nadar) en tú mar al amanecer.", ["nadabas", "nadaba", "nadábamos", "nadaban"], 0,
+      { en: "The tú (you) form of 'nadar' is 'nadabas'.", es: "La forma de tú de 'nadar' es 'nadabas'."}, "B2", null,
+      { en: "When you used to live on the coast, we always _____ (nadar = to swim) in the sea at sunrise." }],  // es-v-132-p-tu
+    ["Cuando vivíamos en la costa, siempre _____ (nadar) en nosotros mar al amanecer.", ["nadaba", "nadabas", "nadaban", "nadábamos"], 3,
+      { en: "The nosotros (we) form of 'nadar' is 'nadábamos'.", es: "La forma de nosotros de 'nadar' es 'nadábamos'."}, "B2", null,
+      { en: "When we used to live on the coast, we always _____ (nadar = to swim) in the sea at sunrise." }],  // es-v-132-p-nosotros
+    ["Cuando vivíamos en la costa, siempre _____ (nadar) en ellos mar al amanecer.", ["nadabas", "nadábamos", "nadaban", "nadaba"], 2,
+      { en: "The ellos/ellas (they) form of 'nadar' is 'nadaban'.", es: "La forma de ellos/ellas de 'nadar' es 'nadaban'."}, "B2", null,
+      { en: "When they used to live on the coast, we always _____ (nadar = to swim) in the sea at sunrise." }],  // es-v-132-p-ellos
+    ["Me sorprende que tantas personas _____ (usar) yo celular todo el día.", ["usen", "use", "uses", "usemos"], 1,
+      { en: "The yo (I) form of 'usar' is 'use'.", es: "La forma de yo de 'usar' es 'use'."}, "B2", null,
+      { en: "It surprises me that so many people _____ (usar = to use) their phone all day." }],  // es-v-133-p-yo
+    ["Me sorprende que tantas personas _____ (usar) tú celular todo el día.", ["uses", "use", "usemos", "usen"], 0,
+      { en: "The tú (you) form of 'usar' is 'uses'.", es: "La forma de tú de 'usar' es 'uses'."}, "B2", null,
+      { en: "It surprises me that so many people _____ (usar = to use) their phone all day." }],  // es-v-133-p-tu
+    ["Me sorprende que tantas personas _____ (usar) nosotros celular todo el día.", ["use", "uses", "usen", "usemos"], 3,
+      { en: "The nosotros (we) form of 'usar' is 'usemos'.", es: "La forma de nosotros de 'usar' es 'usemos'."}, "B2", null,
+      { en: "It surprises me that so many people _____ (usar = to use) their phone all day." }],  // es-v-133-p-nosotros
+    ["Me sorprende que tantas personas _____ (usar) ellos celular todo el día.", ["uses", "usemos", "usen", "use"], 2,
+      { en: "The ellos/ellas (they) form of 'usar' is 'usen'.", es: "La forma de ellos/ellas de 'usar' es 'usen'."}, "B2", null,
+      { en: "It surprises me that so many people _____ (usar = to use) their phone all day." }],  // es-v-133-p-ellos
+    ["Yo gerente exigió que todos los informes se _____ (entregar) antes del viernes.", ["entregaran", "entregara", "entregaras", "entregáramos"], 1,
+      { en: "The yo (I) form of 'entregar' is 'entregara'.", es: "La forma de yo de 'entregar' es 'entregara'."}, "C1", null,
+      { en: "The manager demanded that all reports _____ (entregar = to hand in) before Friday." }],  // es-v-138-p-yo
+    ["Tú gerente exigió que todos los informes se _____ (entregar) antes del viernes.", ["entregaras", "entregara", "entregáramos", "entregaran"], 0,
+      { en: "The tú (you) form of 'entregar' is 'entregaras'.", es: "La forma de tú de 'entregar' es 'entregaras'."}, "C1", null,
+      { en: "The manager demanded that all reports _____ (entregar = to hand in) before Friday." }],  // es-v-138-p-tu
+    ["Nosotros gerente exigió que todos los informes se _____ (entregar) antes del viernes.", ["entregara", "entregaras", "entregaran", "entregáramos"], 3,
+      { en: "The nosotros (we) form of 'entregar' is 'entregáramos'.", es: "La forma de nosotros de 'entregar' es 'entregáramos'."}, "C1", null,
+      { en: "The manager demanded that all reports _____ (entregar = to hand in) before Friday." }],  // es-v-138-p-nosotros
+    ["Ellos gerente exigió que todos los informes se _____ (entregar) antes del viernes.", ["entregaras", "entregáramos", "entregaran", "entregara"], 2,
+      { en: "The ellos/ellas (they) form of 'entregar' is 'entregaran'.", es: "La forma de ellos/ellas de 'entregar' es 'entregaran'."}, "C1", null,
+      { en: "The manager demanded that all reports _____ (entregar = to hand in) before Friday." }],  // es-v-138-p-ellos
+    ["Me habría gustado que yo _____ (estar) presentes en la ceremonia.", ["estén", "esté", "estés", "estemos"], 1,
+      { en: "The yo (I) form of 'estar' is 'esté'.", es: "La forma de yo de 'estar' es 'esté'."}, "C1", null,
+      { en: "I would have liked for you all _____ (estar = to be) present at the ceremony." }],  // es-v-140-p-yo
+    ["Me habría gustado que tú _____ (estar) presentes en la ceremonia.", ["estés", "esté", "estemos", "estén"], 0,
+      { en: "The tú (you) form of 'estar' is 'estés'.", es: "La forma de tú de 'estar' es 'estés'."}, "C1", null,
+      { en: "You would have liked for you all _____ (estar = to be) present at the ceremony." }],  // es-v-140-p-tu
+    ["Me habría gustado que él _____ (estar) presentes en la ceremonia.", ["estés", "estemos", "estén", "esté"], 3,
+      { en: "The él/ella (he/she) form of 'estar' is 'esté'.", es: "La forma de él/ella de 'estar' es 'esté'."}, "C1", null,
+      { en: "He would has liked for you all _____ (estar = to be) present at the ceremony." }],  // es-v-140-p-él
+    ["Me habría gustado que nosotros _____ (estar) presentes en la ceremonia.", ["estés", "estén", "estemos", "esté"], 2,
+      { en: "The nosotros (we) form of 'estar' is 'estemos'.", es: "La forma de nosotros de 'estar' es 'estemos'."}, "C1", null,
+      { en: "We would have liked for you all _____ (estar = to be) present at the ceremony." }],  // es-v-140-p-nosotros
+    ["Quienquiera que _____ (ser) yo responsable, deberá rendir cuentas ante la junta directiva.", ["sean", "sea", "seas", "seamos"], 1,
+      { en: "The yo (I) form of 'ser' is 'sea'.", es: "La forma de yo de 'ser' es 'sea'."}, "C1", null,
+      { en: "Whoever _____ (ser = to be) responsible will have to answer to the board of directors." }],  // es-v-141-p-yo
+    ["Quienquiera que _____ (ser) tú responsable, deberá rendir cuentas ante la junta directiva.", ["seas", "sea", "seamos", "sean"], 0,
+      { en: "The tú (you) form of 'ser' is 'seas'.", es: "La forma de tú de 'ser' es 'seas'."}, "C1", null,
+      { en: "Whoever _____ (ser = to be) responsible will have to answer to the board of directors." }],  // es-v-141-p-tu
+    ["Quienquiera que _____ (ser) nosotros responsable, deberá rendir cuentas ante la junta directiva.", ["sea", "seas", "sean", "seamos"], 3,
+      { en: "The nosotros (we) form of 'ser' is 'seamos'.", es: "La forma de nosotros de 'ser' es 'seamos'."}, "C1", null,
+      { en: "Whoever _____ (ser = to be) responsible will have to answer to the board of directors." }],  // es-v-141-p-nosotros
+    ["Quienquiera que _____ (ser) ellos responsable, deberá rendir cuentas ante la junta directiva.", ["seas", "seamos", "sean", "sea"], 2,
+      { en: "The ellos/ellas (they) form of 'ser' is 'sean'.", es: "La forma de ellos/ellas de 'ser' es 'sean'."}, "C1", null,
+      { en: "Whoever _____ (ser = to be) responsible will have to answer to the board of directors." }],  // es-v-141-p-ellos
+    ["Yo sindicato aceptó el acuerdo con tal de que la empresa _____ (reducir) la jornada en lugar de despedir gente.", ["redujeran", "redujera", "redujeras", "redujéramos"], 1,
+      { en: "The yo (I) form of 'reducir' is 'redujera'.", es: "La forma de yo de 'reducir' es 'redujera'."}, "C1", null,
+      { en: "The union accepted the deal as long as the company _____ (reducir = to reduce) the workday instead of laying people off." }],  // es-v-142-p-yo
+    ["Tú sindicato aceptó el acuerdo con tal de que la empresa _____ (reducir) la jornada en lugar de despedir gente.", ["redujeras", "redujera", "redujéramos", "redujeran"], 0,
+      { en: "The tú (you) form of 'reducir' is 'redujeras'.", es: "La forma de tú de 'reducir' es 'redujeras'."}, "C1", null,
+      { en: "The union accepted the deal as long as the company _____ (reducir = to reduce) the workday instead of laying people off." }],  // es-v-142-p-tu
+    ["Nosotros sindicato aceptó el acuerdo con tal de que la empresa _____ (reducir) la jornada en lugar de despedir gente.", ["redujera", "redujeras", "redujeran", "redujéramos"], 3,
+      { en: "The nosotros (we) form of 'reducir' is 'redujéramos'.", es: "La forma de nosotros de 'reducir' es 'redujéramos'."}, "C1", null,
+      { en: "The union accepted the deal as long as the company _____ (reducir = to reduce) the workday instead of laying people off." }],  // es-v-142-p-nosotros
+    ["Ellos sindicato aceptó el acuerdo con tal de que la empresa _____ (reducir) la jornada en lugar de despedir gente.", ["redujeras", "redujéramos", "redujeran", "redujera"], 2,
+      { en: "The ellos/ellas (they) form of 'reducir' is 'redujeran'.", es: "La forma de ellos/ellas de 'reducir' es 'redujeran'."}, "C1", null,
+      { en: "The union accepted the deal as long as the company _____ (reducir = to reduce) the workday instead of laying people off." }],  // es-v-142-p-ellos
+    ["A menos que yo gobierno _____ (invertir) más en infraestructura, la red eléctrica seguirá colapsando.", ["inviertan", "invierta", "inviertas", "invirtamos"], 1,
+      { en: "The yo (I) form of 'invertir' is 'invierta'.", es: "La forma de yo de 'invertir' es 'invierta'."}, "C1", null,
+      { en: "Unless the government _____ (invertir = to invest) more in infrastructure, the power grid will keep collapsing." }],  // es-v-144-p-yo
+    ["A menos que tú gobierno _____ (invertir) más en infraestructura, la red eléctrica seguirá colapsando.", ["inviertas", "invierta", "invirtamos", "inviertan"], 0,
+      { en: "The tú (you) form of 'invertir' is 'inviertas'.", es: "La forma de tú de 'invertir' es 'inviertas'."}, "C1", null,
+      { en: "Unless the government _____ (invertir = to invest) more in infrastructure, the power grid will keep collapsing." }],  // es-v-144-p-tu
+    ["A menos que nosotros gobierno _____ (invertir) más en infraestructura, la red eléctrica seguirá colapsando.", ["invierta", "inviertas", "inviertan", "invirtamos"], 3,
+      { en: "The nosotros (we) form of 'invertir' is 'invirtamos'.", es: "La forma de nosotros de 'invertir' es 'invirtamos'."}, "C1", null,
+      { en: "Unless the government _____ (invertir = to invest) more in infrastructure, the power grid will keep collapsing." }],  // es-v-144-p-nosotros
+    ["A menos que ellos gobierno _____ (invertir) más en infraestructura, la red eléctrica seguirá colapsando.", ["inviertas", "invirtamos", "inviertan", "invierta"], 2,
+      { en: "The ellos/ellas (they) form of 'invertir' is 'inviertan'.", es: "La forma de ellos/ellas de 'invertir' es 'inviertan'."}, "C1", null,
+      { en: "Unless the government _____ (invertir = to invest) more in infrastructure, the power grid will keep collapsing." }],  // es-v-144-p-ellos
+    ["Aunque le _____ (ofrecer) yo doble de sueldo, ella jamás habría dejado su vocación docente.", ["ofrezcan", "ofrezca", "ofrezcas", "ofrezcamos"], 1,
+      { en: "The yo (I) form of 'ofrecer' is 'ofrezca'.", es: "La forma de yo de 'ofrecer' es 'ofrezca'."}, "C1", null,
+      { en: "Even if I _____ (ofrecer = to offer) her double the salary, she would never have left her teaching vocation." }],  // es-v-146-p-yo
+    ["Aunque le _____ (ofrecer) tú doble de sueldo, ella jamás habría dejado su vocación docente.", ["ofrezcas", "ofrezca", "ofrezcamos", "ofrezcan"], 0,
+      { en: "The tú (you) form of 'ofrecer' is 'ofrezcas'.", es: "La forma de tú de 'ofrecer' es 'ofrezcas'."}, "C1", null,
+      { en: "Even if you _____ (ofrecer = to offer) her double the salary, she would never have left her teaching vocation." }],  // es-v-146-p-tu
+    ["Aunque le _____ (ofrecer) nosotros doble de sueldo, ella jamás habría dejado su vocación docente.", ["ofrezca", "ofrezcas", "ofrezcan", "ofrezcamos"], 3,
+      { en: "The nosotros (we) form of 'ofrecer' is 'ofrezcamos'.", es: "La forma de nosotros de 'ofrecer' es 'ofrezcamos'."}, "C1", null,
+      { en: "Even if we _____ (ofrecer = to offer) her double the salary, she would never have left her teaching vocation." }],  // es-v-146-p-nosotros
+    ["Aunque le _____ (ofrecer) ellos doble de sueldo, ella jamás habría dejado su vocación docente.", ["ofrezcas", "ofrezcamos", "ofrezcan", "ofrezca"], 2,
+      { en: "The ellos/ellas (they) form of 'ofrecer' is 'ofrezcan'.", es: "La forma de ellos/ellas de 'ofrecer' es 'ofrezcan'."}, "C1", null,
+      { en: "Even if they _____ (ofrecer = to offer) her double the salary, she would never have left her teaching vocation." }],  // es-v-146-p-ellos
+    ["No hubo nadie que _____ (saber) resolver yo enigma que planteaba la antigua profecía.", ["supieran", "supiera", "supieras", "supiéramos"], 1,
+      { en: "The yo (I) form of 'saber' is 'supiera'.", es: "La forma de yo de 'saber' es 'supiera'."}, "C1", null,
+      { en: "There was no one who _____ (saber = to know how) to solve the riddle posed by the ancient prophecy." }],  // es-v-147-p-yo
+    ["No hubo nadie que _____ (saber) resolver tú enigma que planteaba la antigua profecía.", ["supieras", "supiera", "supiéramos", "supieran"], 0,
+      { en: "The tú (you) form of 'saber' is 'supieras'.", es: "La forma de tú de 'saber' es 'supieras'."}, "C1", null,
+      { en: "There were no one who _____ (saber = to know how) to solve the riddle posed by the ancient prophecy." }],  // es-v-147-p-tu
+    ["No hubo nadie que _____ (saber) resolver nosotros enigma que planteaba la antigua profecía.", ["supiera", "supieras", "supieran", "supiéramos"], 3,
+      { en: "The nosotros (we) form of 'saber' is 'supiéramos'.", es: "La forma de nosotros de 'saber' es 'supiéramos'."}, "C1", null,
+      { en: "There were no one who _____ (saber = to know how) to solve the riddle posed by the ancient prophecy." }],  // es-v-147-p-nosotros
+    ["No hubo nadie que _____ (saber) resolver ellos enigma que planteaba la antigua profecía.", ["supieras", "supiéramos", "supieran", "supiera"], 2,
+      { en: "The ellos/ellas (they) form of 'saber' is 'supieran'.", es: "La forma de ellos/ellas de 'saber' es 'supieran'."}, "C1", null,
+      { en: "There were no one who _____ (saber = to know how) to solve the riddle posed by the ancient prophecy." }],  // es-v-147-p-ellos
+    ["Nunca crei que yo proyecto _____ (llegar) a tener tanto exito.", ["llegaran", "llegara", "llegaras", "llegáramos"], 1,
+      { en: "The yo (I) form of 'llegar' is 'llegara'.", es: "La forma de yo de 'llegar' es 'llegara'."}, "C2", null,
+      { en: "I never believed the project would end up being so successful. (llegar = to arrive/reach)" }],  // es-v-149-p-yo
+    ["Nunca crei que tú proyecto _____ (llegar) a tener tanto exito.", ["llegaras", "llegara", "llegáramos", "llegaran"], 0,
+      { en: "The tú (you) form of 'llegar' is 'llegaras'.", es: "La forma de tú de 'llegar' es 'llegaras'."}, "C2", null,
+      { en: "You never believed the project would end up being so successful. (llegar = to arrive/reach)" }],  // es-v-149-p-tu
+    ["Nunca crei que nosotros proyecto _____ (llegar) a tener tanto exito.", ["llegara", "llegaras", "llegaran", "llegáramos"], 3,
+      { en: "The nosotros (we) form of 'llegar' is 'llegáramos'.", es: "La forma de nosotros de 'llegar' es 'llegáramos'."}, "C2", null,
+      { en: "We never believed the project would end up being so successful. (llegar = to arrive/reach)" }],  // es-v-149-p-nosotros
+    ["Nunca crei que ellos proyecto _____ (llegar) a tener tanto exito.", ["llegaras", "llegáramos", "llegaran", "llegara"], 2,
+      { en: "The ellos/ellas (they) form of 'llegar' is 'llegaran'.", es: "La forma de ellos/ellas de 'llegar' es 'llegaran'."}, "C2", null,
+      { en: "They never believed the project would end up being so successful. (llegar = to arrive/reach)" }],  // es-v-149-p-ellos
+    ["Yo testigo hablaba como si _____ (presenciar) el accidente en persona.", ["presenciaran", "presenciara", "presenciaras", "presenciáramos"], 1,
+      { en: "The yo (I) form of 'presenciar' is 'presenciara'.", es: "La forma de yo de 'presenciar' es 'presenciara'."}, "C2", null,
+      { en: "The witness spoke as if I had witnessed the accident in person. (presenciar = to witness)" }],  // es-v-152-p-yo
+    ["Tú testigo hablaba como si _____ (presenciar) el accidente en persona.", ["presenciaras", "presenciara", "presenciáramos", "presenciaran"], 0,
+      { en: "The tú (you) form of 'presenciar' is 'presenciaras'.", es: "La forma de tú de 'presenciar' es 'presenciaras'."}, "C2", null,
+      { en: "The witness spoke as if you had witnessed the accident in person. (presenciar = to witness)" }],  // es-v-152-p-tu
+    ["Nosotros testigo hablaba como si _____ (presenciar) el accidente en persona.", ["presenciara", "presenciaras", "presenciaran", "presenciáramos"], 3,
+      { en: "The nosotros (we) form of 'presenciar' is 'presenciáramos'.", es: "La forma de nosotros de 'presenciar' es 'presenciáramos'."}, "C2", null,
+      { en: "The witness spoke as if we had witnessed the accident in person. (presenciar = to witness)" }],  // es-v-152-p-nosotros
+    ["Ellos testigo hablaba como si _____ (presenciar) el accidente en persona.", ["presenciaras", "presenciáramos", "presenciaran", "presenciara"], 2,
+      { en: "The ellos/ellas (they) form of 'presenciar' is 'presenciaran'.", es: "La forma de ellos/ellas de 'presenciar' es 'presenciaran'."}, "C2", null,
+      { en: "The witness spoke as if they had witnessed the accident in person. (presenciar = to witness)" }],  // es-v-152-p-ellos
+    ["Quienquiera que _____ (ser) yo responsable, tendra que rendir cuentas.", ["fueran", "fuera", "fueras", "fuéramos"], 1,
+      { en: "The yo (I) form of 'ser' is 'fuera'.", es: "La forma de yo de 'ser' es 'fuera'."}, "C2", null,
+      { en: "Whoever am responsible will have to answer for it. (ser = to be)" }],  // es-v-153-p-yo
+    ["Quienquiera que _____ (ser) tú responsable, tendra que rendir cuentas.", ["fueras", "fuera", "fuéramos", "fueran"], 0,
+      { en: "The tú (you) form of 'ser' is 'fueras'.", es: "La forma de tú de 'ser' es 'fueras'."}, "C2", null,
+      { en: "Whoever are responsible will have to answer for it. (ser = to be)" }],  // es-v-153-p-tu
+    ["Quienquiera que _____ (ser) nosotros responsable, tendra que rendir cuentas.", ["fuera", "fueras", "fueran", "fuéramos"], 3,
+      { en: "The nosotros (we) form of 'ser' is 'fuéramos'.", es: "La forma de nosotros de 'ser' es 'fuéramos'."}, "C2", null,
+      { en: "Whoever are responsible will have to answer for it. (ser = to be)" }],  // es-v-153-p-nosotros
+    ["Quienquiera que _____ (ser) ellos responsable, tendra que rendir cuentas.", ["fueras", "fuéramos", "fueran", "fuera"], 2,
+      { en: "The ellos/ellas (they) form of 'ser' is 'fueran'.", es: "La forma de ellos/ellas de 'ser' es 'fueran'."}, "C2", null,
+      { en: "Whoever are responsible will have to answer for it. (ser = to be)" }],  // es-v-153-p-ellos
+    ["Con tal de que _____ (cumplirse) yo plazo, aceptaremos cualquier formato.", ["nos cumpliéramos", "me cumpliera", "te cumplieras", "se cumpliera"], 1,
+      { en: "The yo (I) form of 'cumplirse' is 'me cumpliera'.", es: "La forma de yo de 'cumplirse' es 'me cumpliera'."}, "C2", null,
+      { en: "As long as the deadline am met, I will accept any format. (cumplirse = to be fulfilled/met)" }],  // es-v-154-p-yo
+    ["Con tal de que _____ (cumplirse) tú plazo, aceptaremos cualquier formato.", ["te cumplieras", "me cumpliera", "se cumpliera", "nos cumpliéramos"], 0,
+      { en: "The tú (you) form of 'cumplirse' is 'te cumplieras'.", es: "La forma de tú de 'cumplirse' es 'te cumplieras'."}, "C2", null,
+      { en: "As long as the deadline are met, you will accept any format. (cumplirse = to be fulfilled/met)" }],  // es-v-154-p-tu
+    ["Con tal de que _____ (cumplirse) nosotros plazo, aceptaremos cualquier formato.", ["me cumpliera", "te cumplieras", "se cumpliera", "nos cumpliéramos"], 3,
+      { en: "The nosotros (we) form of 'cumplirse' is 'nos cumpliéramos'.", es: "La forma de nosotros de 'cumplirse' es 'nos cumpliéramos'."}, "C2", null,
+      { en: "As long as the deadline are met, we will accept any format. (cumplirse = to be fulfilled/met)" }],  // es-v-154-p-nosotros
+    ["Con tal de que _____ (cumplirse) ellos plazo, aceptaremos cualquier formato.", ["te cumplieras", "se cumpliera", "se cumplieran", "me cumpliera"], 2,
+      { en: "The ellos/ellas (they) form of 'cumplirse' is 'se cumplieran'.", es: "La forma de ellos/ellas de 'cumplirse' es 'se cumplieran'."}, "C2", null,
+      { en: "As long as the deadline are met, they will accept any format. (cumplirse = to be fulfilled/met)" }],  // es-v-154-p-ellos
+    ["A poco que _____ (esforzarse), habria aprobado yo examen sin problema.", ["nos esforcemos", "me esfuerce", "te esfuerces", "se esfuerce"], 1,
+      { en: "The yo (I) form of 'esforzarse' is 'me esfuerce'.", es: "La forma de yo de 'esforzarse' es 'me esfuerce'."}, "C2", null,
+      { en: "With just a little effort, I would have passed the exam without trouble. (esforzarse = to make an effort)" }],  // es-v-155-p-yo
+    ["A poco que _____ (esforzarse), habria aprobado tú examen sin problema.", ["te esfuerces", "me esfuerce", "se esfuerce", "nos esforcemos"], 0,
+      { en: "The tú (you) form of 'esforzarse' is 'te esfuerces'.", es: "La forma de tú de 'esforzarse' es 'te esfuerces'."}, "C2", null,
+      { en: "With just a little effort, you would have passed the exam without trouble. (esforzarse = to make an effort)" }],  // es-v-155-p-tu
+    ["A poco que _____ (esforzarse), habria aprobado nosotros examen sin problema.", ["me esfuerce", "te esfuerces", "se esfuerce", "nos esforcemos"], 3,
+      { en: "The nosotros (we) form of 'esforzarse' is 'nos esforcemos'.", es: "La forma de nosotros de 'esforzarse' es 'nos esforcemos'."}, "C2", null,
+      { en: "With just a little effort, we would have passed the exam without trouble. (esforzarse = to make an effort)" }],  // es-v-155-p-nosotros
+    ["A poco que _____ (esforzarse), habria aprobado ellos examen sin problema.", ["te esfuerces", "se esfuerce", "se esfuercen", "me esfuerce"], 2,
+      { en: "The ellos/ellas (they) form of 'esforzarse' is 'se esfuercen'.", es: "La forma de ellos/ellas de 'esforzarse' es 'se esfuercen'."}, "C2", null,
+      { en: "With just a little effort, they would have passed the exam without trouble. (esforzarse = to make an effort)" }],  // es-v-155-p-ellos
+    ["Fue yo unico colega que _____ (atreverse) a cuestionar la decision del gerente.", ["nos atreviéramos", "me atreviera", "te atrevieras", "se atreviera"], 1,
+      { en: "The yo (I) form of 'atreverse' is 'me atreviera'.", es: "La forma de yo de 'atreverse' es 'me atreviera'."}, "C2", null,
+      { en: "I was the only colleague who dared to question the manager's decision. (atreverse = to dare)" }],  // es-v-156-p-yo
+    ["Fue tú unico colega que _____ (atreverse) a cuestionar la decision del gerente.", ["te atrevieras", "me atreviera", "se atreviera", "nos atreviéramos"], 0,
+      { en: "The tú (you) form of 'atreverse' is 'te atrevieras'.", es: "La forma de tú de 'atreverse' es 'te atrevieras'."}, "C2", null,
+      { en: "You were the only colleague who dared to question the manager's decision. (atreverse = to dare)" }],  // es-v-156-p-tu
+    ["Fue nosotros unico colega que _____ (atreverse) a cuestionar la decision del gerente.", ["me atreviera", "te atrevieras", "se atreviera", "nos atreviéramos"], 3,
+      { en: "The nosotros (we) form of 'atreverse' is 'nos atreviéramos'.", es: "La forma de nosotros de 'atreverse' es 'nos atreviéramos'."}, "C2", null,
+      { en: "We were the only colleague who dared to question the manager's decision. (atreverse = to dare)" }],  // es-v-156-p-nosotros
+    ["Fue ellos unico colega que _____ (atreverse) a cuestionar la decision del gerente.", ["te atrevieras", "se atreviera", "se atrevieran", "me atreviera"], 2,
+      { en: "The ellos/ellas (they) form of 'atreverse' is 'se atrevieran'.", es: "La forma de ellos/ellas de 'atreverse' es 'se atrevieran'."}, "C2", null,
+      { en: "They were the only colleague who dared to question the manager's decision. (atreverse = to dare)" }],  // es-v-156-p-ellos
+    ["Ojala _____ (prever) las consecuencias antes de firmar yo contrato.", ["prevean", "prevea", "preveas", "preveamos"], 1,
+      { en: "The yo (I) form of 'prever' is 'prevea'.", es: "La forma de yo de 'prever' es 'prevea'."}, "C2", null,
+      { en: "I wish I had foreseen the consequences before signing the contract. (prever = to foresee)" }],  // es-v-157-p-yo
+    ["Ojala _____ (prever) las consecuencias antes de firmar tú contrato.", ["preveas", "prevea", "preveamos", "prevean"], 0,
+      { en: "The tú (you) form of 'prever' is 'preveas'.", es: "La forma de tú de 'prever' es 'preveas'."}, "C2", null,
+      { en: "You wish I had foreseen the consequences before signing the contract. (prever = to foresee)" }],  // es-v-157-p-tu
+    ["Ojala _____ (prever) las consecuencias antes de firmar nosotros contrato.", ["prevea", "preveas", "prevean", "preveamos"], 3,
+      { en: "The nosotros (we) form of 'prever' is 'preveamos'.", es: "La forma de nosotros de 'prever' es 'preveamos'."}, "C2", null,
+      { en: "We wish I had foreseen the consequences before signing the contract. (prever = to foresee)" }],  // es-v-157-p-nosotros
+    ["Ojala _____ (prever) las consecuencias antes de firmar ellos contrato.", ["preveas", "preveamos", "prevean", "prevea"], 2,
+      { en: "The ellos/ellas (they) form of 'prever' is 'prevean'.", es: "La forma de ellos/ellas de 'prever' es 'prevean'."}, "C2", null,
+      { en: "They wish I had foreseen the consequences before signing the contract. (prever = to foresee)" }],  // es-v-157-p-ellos
   ],
   trad: [
     ["Translate: 'I'm running late.'", ["Voy tarde.", "Corro despacio.", "Estoy corriendo aquí.", "Llegué temprano."], 0,

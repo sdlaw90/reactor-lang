@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 203 tracked files.
+> 208 tracked files.
 
 ```
 .env.local.example
@@ -127,6 +127,11 @@ docs/supabase-invite-email.html
 docs/supabase-reset-password-email.html
 docs/tts-pipeline.md
 docs/tts-sync-runbook.md
+docs/variant-expansion/00-methodology.md
+docs/variant-expansion/01-spanish-reference.md
+docs/variant-expansion/README.md
+docs/variant-expansion/generated/es_generated.json
+docs/variant-expansion/review-packets/es-verb-variants.xlsx
 e2e/authenticated-flow.spec.js
 e2e/public-pages.spec.js
 lib/AudioButton.js
