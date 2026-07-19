@@ -53,18 +53,36 @@ if (!TRACK) {
   process.exit(1);
 }
 
+// CLI --track takes the track NAME (matching generate-tts.mjs, e.g. "esForEn"),
+// but tts-output dirs are keyed by track.id. For most tracks the id is just the
+// kebab-cased name (jaForEn → ja-for-en), so the guess below works. The
+// EXCEPTIONS are tracks whose id can't be derived by kebab-casing — map those
+// explicitly here.
+//
+// esForEn's id is "es-latam-for-en" (the "latam" is not in the name), so kebab
+// gives the wrong "es-for-en". esSpainForEn, by contrast, IS kebab-clean
+// (id "es-spain-for-en") — it needs NO alias and therefore can't collide with
+// esForEn here. Keep this map to only genuine exceptions.
+const TRACK_ID_ALIASES = {
+  esForEn: "es-latam-for-en",
+};
+
 // track.id from the manifest, not a track-file load — the manifest is the
 // contract here, and it already records the id.
 function findManifest(trackName) {
-  // tts-output dirs are keyed by track.id (e.g. ja-for-en), but the CLI takes
-  // the track NAME (jaForEn) like generate-tts.mjs does. Try the name, then
-  // scan tts-output for a manifest whose id kebab-matches.
-  const direct = path.join(ROOT, "tts-output", trackName, "manifest.json");
-  if (existsSync(direct)) return direct;
-  const kebab = trackName.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-  const guess = path.join(ROOT, "tts-output", kebab, "manifest.json");
-  if (existsSync(guess)) return guess;
-  return null;
+  const tryDir = (name) => {
+    const p = path.join(ROOT, "tts-output", name, "manifest.json");
+    return existsSync(p) ? p : null;
+  };
+  // 1. exact folder name (also lets you pass the id directly, e.g. es-latam-for-en)
+  // 2. explicit alias for ids the kebab guess can't derive (esForEn → es-latam-for-en)
+  // 3. kebab-cased guess (jaForEn → ja-for-en; esSpainForEn → es-spain-for-en)
+  return (
+    tryDir(trackName) ||
+    (TRACK_ID_ALIASES[trackName] && tryDir(TRACK_ID_ALIASES[trackName])) ||
+    tryDir(trackName.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()) ||
+    null
+  );
 }
 const mp = findManifest(TRACK);
 if (!mp) {
