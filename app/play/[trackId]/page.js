@@ -15,7 +15,7 @@ import {
   computeMastery,
   computeStreakUpdate,
 } from "../../../lib/gameEngine";
-import { cefrSetForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
+import { cefrSetForSkillLevel, masteryBandsForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
 import { scriptForTrack } from "../../../data/scripts";
@@ -631,28 +631,48 @@ export default function PlayPage({ params }) {
 
               {showMastery && (
                 <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 12 }}>
-                  {Object.keys(track.cats).map((catId) => {
-                    const m = mastery[catId];
-                    if (!m) return null;
-                    const pct = m.total > 0 ? Math.round((m.learned / m.total) * 100) : 0;
-                    const diffEntries = Object.entries(m.byDifficulty).sort((a, b) => a[0].localeCompare(b[0]));
-                    return (
-                      <div key={catId}>
-                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5 }}>
-                          <span style={{ color: track.cats[catId].color, fontWeight: 700 }}>{displayCatLabel(catId)}</span>
-                          <span className="jm" style={{ color: "#B4ABC9" }}>
-                            {T("learnedOf", { learned: m.learned, total: m.total })}
-                          </span>
+                  {(() => {
+                    const bands = masteryBandsForSkillLevel(progress.skill_level);
+                    const inBand = (diff) => diff === "—" || bands.includes(diff);
+                    return Object.keys(track.cats).map((catId) => {
+                      const m = mastery[catId];
+                      if (!m) return null;
+                      // Cumulative-to-level: the bar counts only the CEFR bands at
+                      // or below the player's level (#38 depth follow-up), so a
+                      // 150-item category stays attainable. Higher bands show dimmed
+                      // in the breakdown as the next goal.
+                      let learned = 0;
+                      let total = 0;
+                      Object.entries(m.byDifficulty).forEach(([diff, d]) => {
+                        if (inBand(diff)) {
+                          learned += d.learned;
+                          total += d.total;
+                        }
+                      });
+                      const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
+                      const diffEntries = Object.entries(m.byDifficulty).sort((a, b) => a[0].localeCompare(b[0]));
+                      return (
+                        <div key={catId}>
+                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5 }}>
+                            <span style={{ color: track.cats[catId].color, fontWeight: 700 }}>{displayCatLabel(catId)}</span>
+                            <span className="jm" style={{ color: "#B4ABC9" }}>
+                              {T("learnedOf", { learned, total })}
+                            </span>
+                          </div>
+                          <div style={styles.masteryBarOuter}>
+                            <div style={{ ...styles.masteryBarInner, width: `${pct}%`, background: track.cats[catId].color }} />
+                          </div>
+                          <div className="jm" style={{ fontSize: 10.5, marginTop: 4, display: "flex", flexWrap: "wrap", gap: "0 8px" }}>
+                            {diffEntries.map(([diff, d]) => (
+                              <span key={diff} style={{ color: inBand(diff) ? "#7C7395" : "#4A4460" }}>
+                                {diff}: {d.learned}/{d.total}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                        <div style={styles.masteryBarOuter}>
-                          <div style={{ ...styles.masteryBarInner, width: `${pct}%`, background: track.cats[catId].color }} />
-                        </div>
-                        <div className="jm" style={{ fontSize: 10.5, color: "#7C7395", marginTop: 4 }}>
-                          {diffEntries.map(([diff, d]) => `${diff}: ${d.learned}/${d.total}`).join(" · ")}
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    });
+                  })()}
                 </div>
               )}
             </div>
