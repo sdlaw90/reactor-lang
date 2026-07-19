@@ -2,8 +2,9 @@
 
 Reworking existing SquirreLingo questions into other grammatical forms (person, tense, mood,
 politeness) to grow the question bank **without** letting learners memorize fixed answers.
-Design by Sean + Claude; **correctness gated by native-speaker review** — see *Release strategy*
-below for where that gate sits (it is moving from "before load" to "before full production").
+Design by Sean + Claude. **The native-review gate sits before REAL (non-beta) production — not
+before beta.** Generated content ships to beta-prod *pre-review by standard* (fast momentum for
+beta testers); native review is what gates promotion to the real live app. See *Release strategy*.
 
 ## Contents
 - `00-methodology.md` — master playbook. **Read first.** Language-agnostic pipeline + the
@@ -13,8 +14,9 @@ below for where that gate sits (it is moving from "before load" to "before full 
 - `generated/<lang>_generated.json` — machine-readable variants with IDs, for round-trip.
 
 ## Workflow
-inventory → classify → generate (engine) → package → **native review** → round-trip into
-`data/tracks/<lang>ForEn.js`. See methodology §1.
+inventory → classify → generate (engine) → package → **load into
+`data/tracks/<lang>ForEn.js` and ship to beta-prod** → native review (in parallel) →
+corrections round-trip via IDs → review gates promotion to real prod. See methodology §1.
 
 ## Status tracker
 
@@ -32,39 +34,35 @@ inventory → classify → generate (engine) → package → **native review** �
 
 Legend: ✅ done · ⬜ pending. "Loaded" = variants merged into the track file (dev branch).
 
-> **Note (Spanish):** the 358 person-swaps were shipped to the **closed beta** *before* native
-> review — a deliberate call to move fast in beta, with the reviewer packet as the correction
-> pass. The #41 review is still owed; corrections round-trip via the `// es-v-…` IDs. For every
-> other language, keep the normal order: review **before** loading.
+> **Note (Spanish → the standard):** the 358 person-swaps were loaded and shipped to beta-prod
+> *before* native review, with the reviewer packet as the correction pass. This is **not a
+> one-off — it's the standard for every language going to beta.** Generate → package → load →
+> ship to beta; the #41-style native review runs in parallel and gates only the eventual
+> real-prod promotion. Corrections round-trip via the `// <lang>-v-…` IDs.
 
-## Release strategy — CONTEMPLATED, NOT COMMITTED
+## Release strategy
 
-> ⚠️ This is a direction Sean is leaning toward, **not a decided plan.** Do not build
-> tooling or branch changes around it yet, and do not treat it as fact in other docs. It
-> needs to be fully thought through first. Captured here so a future session understands the
-> intent behind shipping unreviewed content to beta.
+The shape is a **three-tier, ring-based rollout**: `dev → beta-prod → real production`, with
+the native-review gate on the **final hop only**.
 
-The likely (but unconfirmed) future shape is a **three-tier, ring-based rollout**:
+**The gate policy is DECIDED (this is how we operate now):**
+- Generated content is loaded and shipped to **beta-prod without waiting for review** — every
+  language, by standard. This keeps momentum and gives beta testers early updates; they also
+  act as a first error-sweep on the auto-generated items.
+- **Native review gates promotion to real (non-beta) production only.** Nothing reaches the
+  general live app unreviewed.
+- This works because every variant carries a stable `// <lang>-v-NNN` ID and lives in a
+  reviewer packet, so "what's reviewed" is a concrete ledger — real-prod promotion is a
+  **filter on reviewed IDs**, not a guess.
 
-`dev → beta testers → full production`
+**Branch mechanics are STILL BEING PLANNED (contemplated, not committed):**
+- Today `main` **is** the beta-prod tier (`npm run deploy beta`); `npm run deploy prod` is
+  reserved and errors until the real-prod branch exists.
+- The real-prod branch (the third tier) hasn't been stood up yet — Sean wants to plan it out
+  properly first. Don't build branch tooling around it until then.
 
-with the native-review gate **moved to the final hop**. That is: content flows into dev and
-out to beta testers freely (keeps momentum, avoids project staleness), and native review
-becomes a **promotion gate** — only reviewed items are promoted to full production for the
-general user base. Beta testers get updates early (an intentional perk) and double as a
-first error-sweep that surfaces the clunky auto-generated items before formal review.
-
-Why this fits what's already built: every variant carries a stable `// es-v-NNN` ID and lives
-in a reviewer packet, so "what's reviewed" is a concrete ledger — promotion to prod becomes a
-**filter on reviewed IDs**, not a guess. That traceability is the load-bearing piece if this
-model is adopted.
-
-Branch mechanics (undecided): today `main` ≈ production. The contemplated model inserts a tier
-— either `main` becomes the beta tier with a new production branch added, or a `beta` branch
-is inserted between `dev` and `main`. To be decided when the strategy is actually planned out.
-
-**Until this is committed:** the standing rule still holds for every language *except* the
-Spanish beta exception already taken — **review before loading**.
+> So: apply the gate **policy** now (ship every language to beta pre-review). Do **not** invent
+> the real-prod **branch** mechanics — that's Sean's to design when ready.
 
 ## Roadmap
 1. **Now:** Spanish template (this folder). Sean reacts to the packet format.
