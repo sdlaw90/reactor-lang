@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { supabase } from "../lib/supabaseClient";
 import { tracksForNativeLang, listTracks } from "../data/tracks";
+import { HelpCircle } from "lucide-react";
 import { HOME_GRADIENT, animatedBackgroundStyle } from "../lib/theme";
 import { loadProfile, loadAllProgress } from "../lib/db";
 import { skillLevelInfo } from "../lib/skillLevels";
@@ -97,6 +98,19 @@ export default function HomePage() {
             </h1>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            {/* #85: Help lives on the top bar next to the profile/drawer trigger,
+                not buried in the drawer — new users can find it without already
+                knowing the UI. Kept unobtrusive; the icon-only button stays
+                narrow on mobile. */}
+            <button
+              className="rj"
+              style={styles.helpIconBtn}
+              title="Help"
+              aria-label="Help"
+              onClick={() => router.push("/help")}
+            >
+              <HelpCircle size={20} />
+            </button>
             <NavDrawer profile={profile} displayName={displayName} hasUnseenWhatsNew={hasUnseenWhatsNew} userEmail={session?.user?.email} />
           </div>
         </div>
@@ -195,6 +209,22 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  // #85: Help trigger on the home top bar. Muted pink so it reads as a helper
+  // affordance, not a primary action; circular to match the avatar trigger.
+  helpIconBtn: {
+    background: "rgba(255,143,177,0.12)",
+    color: "#FF8FB1",
+    border: "1px solid #FF8FB1",
+    borderRadius: "50%",
+    width: 34,
+    height: 34,
+    padding: 0,
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
   },
   notifDot: {
     position: "absolute",

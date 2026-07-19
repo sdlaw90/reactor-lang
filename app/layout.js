@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import NavDepthTracker from "../lib/NavDepthTracker";
 import VersionWatcher from "../lib/VersionWatcher";
 import RequireUsernameGate from "../lib/RequireUsernameGate";
 import RequireLegalGate from "../lib/RequireLegalGate";
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         {children}
+        <NavDepthTracker />
         <VersionWatcher />
         <RequireUsernameGate />
         <RequireLegalGate />

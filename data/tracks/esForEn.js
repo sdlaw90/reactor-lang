@@ -10,6 +10,7 @@
 
 import { buildFrequencyBank } from "../../lib/frequencyVocab";
 import WORDS from "../vocab/esLatAmWords";
+import { THEMES, tagFor } from "./esForEnTags";
 
 const CATS = {
   vocab: { label: "Vocabulario", color: "#3DDBFF" },
@@ -426,6 +427,13 @@ const esForEn = {
   // its share of mixed rounds (default 30%) instead of letting a 609-item
   // bank inflate or dominate the draw. Every future WB-carrying track sets this.
   wbCatId: "fvocab",
+  // #88/#89: theme + tense tag layer (esForEn pilot). `themes` is the picker's
+  // starter catalog; `tagFor(prompt)` resolves an item's { themes, grammar }.
+  // The engine attaches these onto flattened items; untagged items carry none.
+  themes: THEMES,
+  tagFor,
+  // #90: this track has a standalone grammar-gym module (see data/grammar).
+  hasGrammarGym: true,
   extraCatId: "fono",
   extraBank: FONO_BANK.map((item) => ({
     sound: item.sound,

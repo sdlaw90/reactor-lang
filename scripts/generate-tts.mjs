@@ -122,6 +122,11 @@ const TRACK_VOICES = {
 // --delete against dev to clear the old plain clips. Prod orphans are cleared
 // by a guarded one-time prod sweep — see docs/tts-sync-runbook.md.
 const VOICE_KEYED_TRACKS = new Set(["esForEn", "frCaForEn", "deForEn", "jaForEn", "koForEn", "ruForEn", "zhForEn"]);
+// #87: tracks that also synthesize ANSWER-CHOICE audio (tap-to-play, review
+// mode only, client-gated). Scoped to the categories whose options are
+// reliably full target-language — see the choice-audio block in extractSpoken.
+const CHOICE_AUDIO_TRACKS = new Set(["esForEn"]);
+const CHOICE_AUDIO_CATS = ["trad", "verbo"];
 const VOICE = opt("voice", TRACK_VOICES[TRACK] || "es-US-Neural2-A");
 const NATIVE_VOICE = opt("native-voice", "en-US-Neural2-C");
 const LIMIT = Number(opt("limit", "0")) || 0;
@@ -535,6 +540,38 @@ function extractSpoken(track) {
       items.push(item);
     });
   });
+
+  // #87: answer-choice audio (esForEn pilot). Synthesize the OPTION strings of
+  // the categories whose options are reliably full target-language — trad
+  // (idioms/translation) and verbo (conjugations). vocab/fvocab options are
+  // frequently English glosses and fono is itself a listening exercise, so both
+  // are deferred (a per-option language tag would be the clean way in). Options
+  // carry no production/translate framing and no cloze gaps, so they're
+  // synthesized as-is with the TARGET voice. The client keys off the displayed
+  // option text, so any un-synthesized option simply gets no speaker button.
+  if (CHOICE_AUDIO_TRACKS.has(TRACK)) {
+    let choiceCount = 0;
+    CHOICE_AUDIO_CATS.forEach((cat) => {
+      (track.bank[cat] || []).forEach((q, i) => {
+        (q[1] || []).forEach((optRaw, oi) => {
+          const text = normalizeSpokenText(optRaw);
+          if (!text) return;
+          const key = audioKey(text);
+          const src = `${cat}-${i}-opt${oi}`;
+          if (byKey.has(key)) {
+            byKey.get(key).sources.push(src);
+            return;
+          }
+          const item = { key, rawText: text, text, ssml: `<speak>${xmlEscape(text)}</speak>`, voice: "target", sources: [src] };
+          item.file = voiceKeyed ? `${key}-${VOICE}.mp3` : `${key}.mp3`;
+          byKey.set(key, item);
+          items.push(item);
+          choiceCount++;
+        });
+      });
+    });
+    if (choiceCount) console.log(`Choice audio: +${choiceCount} option clips (${CHOICE_AUDIO_CATS.join(", ")})`);
+  }
 
   if (readingFailures.length) {
     console.error(`FATAL: ${readingFailures.length} romaji reading(s) could not be converted to hiragana:`);

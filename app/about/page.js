@@ -1,17 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import BackHome from "../../lib/BackHome";
 import { FACEBOOK_GROUP_URL } from "../../lib/community";
 
 export default function AboutPage() {
-  const router = useRouter();
-
   return (
     <div style={styles.wrap}>
       <div style={{ width: "100%", maxWidth: 480 }}>
-        <button className="rj" style={styles.backBtn} onClick={() => router.back()}>
-          ← Back
-        </button>
+        <BackHome />
         <h1 className="rj" style={styles.title}>
           About SquirreLingo
         </h1>
