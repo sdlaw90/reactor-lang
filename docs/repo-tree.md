@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 295 tracked files.
+> 296 tracked files.
 
 ```
 .env.local.example
@@ -140,6 +140,7 @@ docs/changelog/unreleased/2026-07-15-zh-tts.md
 docs/codebase-reference.md
 docs/manual-runbook.md
 docs/repo-tree.md
+docs/squirrelingo-language-wishlist.md
 docs/squirrelingo_todo_active.md
 docs/supabase-change-email-email.html
 docs/supabase-confirm-signup-email.html
