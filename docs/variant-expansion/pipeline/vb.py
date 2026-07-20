@@ -8,12 +8,14 @@ PRON={
  'fr': ["j'","je ","tu ","il ","elle ","on ","nous ","vous ","ils ","elles "],
  'it': ["io ","tu ","lui ","lei ","egli ","ella ","esso ","noi ","voi ","loro ","essi ","esse "],
  'pt': ["eu ","tu ","ele ","ela ","você ","voce ","nós ","nos ","vós ","vos ","eles ","elas ","vocês ","voces "],
+ 'es': ["yo ","tú ","él ","ella ","usted ","nosotros ","nosotras ","vosotros ","vosotras ","ellos ","ellas ","ustedes "],
 }
 # complementizers/particles verbecc bakes into subjunctive/future-subj tenses
 COMPL={
  'fr': ["que ","qu'","si ","s'"],
  'it': ["che ","ch'","se "],
  'pt': ["que ","quando ","se ","caso ","talvez "],
+ 'es': ["que ","cuando ","si ","como "],
 }
 def bare(c0, lang):
     s=c0.strip()

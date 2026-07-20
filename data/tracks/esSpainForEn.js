@@ -8,8 +8,12 @@
 // ⚠️ PENDING #41: no confirmed peninsular reviewer yet — queue via 41b channels
 // (regional-dialect pairs need a reviewer from that specific region).
 
+import { buildFrequencyBank } from "../../lib/frequencyVocab";
+import WORDS from "../vocab/esSpainWords";
+
 const CATS = {
   vocab: { label: "Vocabulario", color: "#3DDBFF" },
+  fvocab: { label: "Palabras", color: "#7BE495" },
   verbo: { label: "Verbos", color: "#FFB84D" },
   trad: { label: "Traducción", color: "#FF3D7F" },
   fono: { label: "Fonética", color: "#B98EFF" },
@@ -239,7 +243,8 @@ const esSpainForEn = {
   targetLang: "es",
   theme: "spain-warm",
   cats: CATS,
-  bank: BANK,
+  bank: { ...BANK, fvocab: buildFrequencyBank(WORDS, { seed: 20260720 }) },
+  wbCatId: "fvocab",
   extraCatId: "fono",
   extraBank: FONO_BANK.map((item) => ({
     sound: item.sound,

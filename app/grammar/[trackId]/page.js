@@ -194,7 +194,7 @@ export default function GrammarGymPage({ params }) {
                           <tbody>
                             {gym.persons.map((p, pi) => (
                               <tr key={p.id}>
-                                <td style={styles.tdPerson}>{p.es}<span style={styles.tdPersonEn}> · {p.en}</span></td>
+                                <td style={styles.tdPerson}>{p[gym.targetLang] || p.es}<span style={styles.tdPersonEn}> · {p.en}</span></td>
                                 <td style={styles.tdForm} className="jm">{v.forms[learnTense]?.[pi]}</td>
                               </tr>
                             ))}
@@ -223,7 +223,7 @@ export default function GrammarGymPage({ params }) {
             <div style={styles.qCard}>
               <div style={styles.qTense}>{L(item.tense)}</div>
               <p style={styles.qPrompt}>
-                <b className="jm" style={{ color: "#E4D6FF" }}>{item.person.es}</b>{" "}
+                <b className="jm" style={{ color: "#E4D6FF" }}>{item.person[gym.targetLang] || item.person.es}</b>{" "}
                 <span style={{ color: "#9B93B8", fontSize: 13 }}>({item.person.en})</span>
                 <br />
                 <span style={{ color: "#F3F0FA" }}>{item.verbInf}</span>{" "}

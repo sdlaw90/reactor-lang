@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 286 tracked files.
+> 294 tracked files.
 
 ```
 .env.local.example
@@ -67,7 +67,13 @@ app/speak/[trackId]/page.js
 app/terms/page.js
 app/whats-new/page.js
 data/grammar/esForEn.js
+data/grammar/esSpainForEn.js
+data/grammar/frCaForEn.js
+data/grammar/frForEn.js
 data/grammar/index.js
+data/grammar/itForEn.js
+data/grammar/ptBrForEn.js
+data/grammar/ptPtForEn.js
 data/scripts/cyrillicRu.js
 data/scripts/hangulKo.js
 data/scripts/index.js
@@ -98,6 +104,7 @@ data/tracks/ruForEn.js
 data/tracks/zhForEn.js
 data/vocab/deWords.js
 data/vocab/esLatAmWords.js
+data/vocab/esSpainWords.js
 data/vocab/frCaWords.js
 data/vocab/frWords.js
 data/vocab/itWords.js
@@ -181,6 +188,7 @@ docs/variant-expansion/pipeline/config_ptPt.json
 docs/variant-expansion/pipeline/deliv_g.py
 docs/variant-expansion/pipeline/emit_g.py
 docs/variant-expansion/pipeline/frdefs.py
+docs/variant-expansion/pipeline/gen_grammar_gym.py
 docs/variant-expansion/pipeline/itdefs.py
 docs/variant-expansion/pipeline/ptdefs.py
 docs/variant-expansion/pipeline/swap_phase1.py
