@@ -16,6 +16,7 @@
 
 import { buildFrequencyBank } from "../../lib/frequencyVocab";
 import WORDS from "../vocab/deWords";
+import { THEMES, tagFor } from "./deForEnTags";
 
 // German prompt formulas for the Word Bank generator. The ¿Cómo se dice...?
 // SSML rule in scripts/generate-tts.mjs will need a Wie sagt man...?
@@ -620,6 +621,13 @@ const deForEn = {
   // #78: Word Bank category — the round-draw engine caps its share of mixed
   // rounds instead of letting the frequency bank dominate the draw.
   wbCatId: "fvocab",
+  // #88/#89 (2026-07-20, beta.15): tag layer — theme filter across vocab/gram/
+  // trad + #89 tense/person training-wheel chips on conjugation gram items (see
+  // deForEnTags.js). The engine attaches these onto flattened items; untagged
+  // items carry none. German inflects for person, so the second chip is the real
+  // subject (ich…sie/Sie), not a repurposed register as in ja/ko.
+  themes: THEMES,
+  tagFor,
   extraCatId: "fono",
   extraBank: FONO_BANK.map((item) => ({
     sound: item.sound,

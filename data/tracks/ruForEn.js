@@ -19,6 +19,7 @@
 
 import { buildFrequencyBank } from "../../lib/frequencyVocab";
 import WORDS from "../vocab/ruWords";
+import { THEMES, tagFor } from "./ruForEnTags";
 
 // Word Bank prompt formulas for the generator. Like KO/JA_FORMULAS, no
 // auto-capitalization: the word is presented as-is (lowercase for common
@@ -668,6 +669,13 @@ const ruForEn = {
   cats: CATS,
   bank: { ...BANK, fvocab: buildFrequencyBank(WORDS, { seed: 20260714, formulas: RU_FORMULAS }) },
   wbCatId: "fvocab",
+  // #88/#89 (2026-07-20, beta.15): tag layer — theme filter across vocab/gram/
+  // trad + #89 tense/aspect/person training-wheel chips on conjugation gram items
+  // (see ruForEnTags.js). The engine attaches these onto flattened items; untagged
+  // items carry none. Russian inflects for person in present/future; past items
+  // agree by gender/number, so their chip names the agreement target.
+  themes: THEMES,
+  tagFor,
   extraCatId: "fono",
   extraBank: FONO_BANK.map((item) => ({
     sound: item.sound,
