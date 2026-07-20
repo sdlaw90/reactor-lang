@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 301 tracked files.
+> 305 tracked files.
 
 ```
 .env.local.example
@@ -66,6 +66,7 @@ app/settings/page.js
 app/speak/[trackId]/page.js
 app/terms/page.js
 app/whats-new/page.js
+data/grammar/deForEn.js
 data/grammar/esForEn.js
 data/grammar/esSpainForEn.js
 data/grammar/frCaForEn.js
@@ -76,12 +77,14 @@ data/grammar/jaForEn.js
 data/grammar/koForEn.js
 data/grammar/ptBrForEn.js
 data/grammar/ptPtForEn.js
+data/grammar/ruForEn.js
 data/scripts/cyrillicRu.js
 data/scripts/hangulKo.js
 data/scripts/index.js
 data/scripts/kanaJa.js
 data/scripts/mandarinZh.js
 data/tracks/deForEn.js
+data/tracks/deForEnTags.js
 data/tracks/enForEs.js
 data/tracks/enForIt.js
 data/tracks/enGbForEs.js
@@ -106,6 +109,7 @@ data/tracks/ptBrForEnTags.js
 data/tracks/ptPtForEn.js
 data/tracks/ptPtForEnTags.js
 data/tracks/ruForEn.js
+data/tracks/ruForEnTags.js
 data/tracks/zhForEn.js
 data/tracks/zhForEnTags.js
 data/vocab/deWords.js
