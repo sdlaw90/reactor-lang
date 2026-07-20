@@ -183,6 +183,6 @@ const styles = {
     fontWeight: 700,
   },
   roadmapDesc: { color: "#B4ABC9", fontSize: 12.5, lineHeight: 1.5, margin: 0 },
-  footer: { color: "#7C7395", fontSize: 12.5, lineHeight: 1.6, marginTop: 8 },
+  footer: { color: "#9B93B8", fontSize: 12.5, lineHeight: 1.6, marginTop: 8 },
   link: { color: "#3DDBFF", textDecoration: "underline" },
 };

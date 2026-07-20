@@ -11,7 +11,7 @@ export default function HelpPage() {
         <h1 className="rj" style={styles.title}>
           How SquirreLingo works
         </h1>
-        <p style={{ color: "#7C7395", fontSize: 12.5, marginTop: -8, marginBottom: 20 }}>
+        <p style={{ color: "#9B93B8", fontSize: 12.5, marginTop: -8, marginBottom: 20 }}>
           Looking for the bigger picture instead? See the{" "}
           <a href="/about" style={{ color: "#3DDBFF", textDecoration: "underline" }}>
             About page

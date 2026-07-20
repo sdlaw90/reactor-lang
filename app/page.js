@@ -186,7 +186,7 @@ const styles = {
     backgroundClip: "text",
   },
   wrap: { position: "relative", minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423", overflow: "hidden" },
-  content: { position: "relative", zIndex: 1, width: "100%", maxWidth: 460 },
+  content: { position: "relative", zIndex: 1, width: "100%", maxWidth: 480 },
   topRow: { display: "flex", justifyContent: "space-between", alignItems: "center" },
   title: { fontSize: 26, fontWeight: 700, margin: 0, color: "#F3F0FA" },
   subtitle: { color: "#B4ABC9", fontSize: 13, marginTop: 4 },

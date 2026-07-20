@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabaseClient";
+import BackHome from "../../lib/BackHome";
 
 // The old beta-survey wizard that lived here has been retired from the app;
 // that questionnaire now goes out as an email at the end of each beta round
@@ -32,9 +33,7 @@ export default function FeedbackChooserPage() {
   return (
     <div style={styles.wrap}>
       <div style={{ width: "100%", maxWidth: 440 }}>
-        <button className="rj" style={styles.backBtn} onClick={() => router.back()}>
-          ← Back
-        </button>
+        <BackHome />
         <h1 className="rj" style={styles.title}>Feedback</h1>
         <p style={styles.subtitle}>What would you like to send?</p>
 
@@ -87,5 +86,5 @@ const styles = {
   },
   choiceEmoji: { fontSize: 26 },
   choiceTitle: { display: "block", color: "#F3F0FA", fontSize: 15.5, fontWeight: 700, marginBottom: 3 },
-  choiceDesc: { display: "block", color: "#7C7395", fontSize: 12.5, lineHeight: 1.4 },
+  choiceDesc: { display: "block", color: "#9B93B8", fontSize: 12.5, lineHeight: 1.4 },
 };

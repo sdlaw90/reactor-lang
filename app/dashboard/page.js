@@ -8,6 +8,7 @@ import { getTrack, listTracks } from "../../data/tracks";
 import { loadAllProgress } from "../../lib/db";
 import { skillLevelInfo } from "../../lib/skillLevels";
 import { trackDisplayName as sharedTrackDisplayName } from "../../lib/languageNames";
+import BackHome from "../../lib/BackHome";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -55,9 +56,7 @@ export default function DashboardPage() {
   return (
     <div style={styles.wrap}>
       <div style={{ width: "100%", maxWidth: 460 }}>
-        <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
-          ← Back
-        </button>
+        <BackHome />
         <h1 className="rj" style={styles.title}>
           Your progress
         </h1>
@@ -93,7 +92,7 @@ export default function DashboardPage() {
         </h2>
 
         {playedTracks.length === 0 && (
-          <p style={{ color: "#7C7395", fontSize: 14 }}>Play a round in any language to see your breakdown here.</p>
+          <p style={{ color: "#9B93B8", fontSize: 14 }}>Play a round in any language to see your breakdown here.</p>
         )}
 
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -101,7 +100,7 @@ export default function DashboardPage() {
             <button key={r.track_id} className="rj" style={styles.trackRow} onClick={() => router.push(`/play/${r.track_id}`)}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontWeight: 700, color: "#F3F0FA" }}>{trackDisplayName(r.trackInfo)}</span>
-                <span style={{ color: "#7C7395", fontSize: 11 }}>{skillLevelInfo(r.skill_level).label}</span>
+                <span style={{ color: "#9B93B8", fontSize: 11 }}>{skillLevelInfo(r.skill_level).label}</span>
               </div>
               <div className="jm" style={styles.trackStatsRow}>
                 <span>Lv. {r.level}</span>
@@ -119,7 +118,7 @@ export default function DashboardPage() {
             .map((t) => (
               <button key={t.id} className="rj" style={{ ...styles.trackRow, opacity: 0.6 }} onClick={() => router.push(`/play/${t.id}`)}>
                 <span style={{ fontWeight: 700, color: "#F3F0FA" }}>{trackDisplayName(t)}</span>
-                <div style={{ color: "#7C7395", fontSize: 12, marginTop: 4 }}>Not started yet</div>
+                <div style={{ color: "#9B93B8", fontSize: 12, marginTop: 4 }}>Not started yet</div>
               </button>
             ))}
         </div>
@@ -136,7 +135,7 @@ const styles = {
   overallRow: { display: "flex", justifyContent: "space-around" },
   overallStat: { display: "flex", flexDirection: "column", alignItems: "center", gap: 4 },
   overallValue: { fontSize: 20, fontWeight: 700, color: "#F3F0FA" },
-  overallLabel: { fontSize: 11, color: "#7C7395" },
+  overallLabel: { fontSize: 11, color: "#9B93B8" },
   sectionTitle: { fontSize: 15, fontWeight: 700, color: "#F3F0FA", margin: "0 0 10px" },
   trackRow: { textAlign: "left", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "14px 16px", cursor: "pointer" },
   trackStatsRow: { display: "flex", gap: 14, marginTop: 6, color: "#B4ABC9", fontSize: 12 },

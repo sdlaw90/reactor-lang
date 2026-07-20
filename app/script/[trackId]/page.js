@@ -6,10 +6,12 @@ import { Check, X } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
 import { getTrack } from "../../../data/tracks";
 import { scriptForTrack, glyphPracticeId } from "../../../data/scripts";
+import { grammarForTrack } from "../../../data/grammar";
 import { shuffle } from "../../../lib/gameEngine";
 import { loadSeenAt, markSeen, loadMissedIds, addMissed, resolveMissed } from "../../../lib/db";
 import { t } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
+import BackHome from "../../../lib/BackHome";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import { trackDisplayName } from "../../../lib/languageNames";
 
@@ -198,11 +200,7 @@ export default function ScriptPracticePage({ params }) {
     <div style={styles.bg}>
       {trackTheme && <div style={animatedBackgroundStyle(trackTheme.gradient)} />}
       <div style={styles.container}>
-        <div style={styles.hudRow}>
-          <button className="rj" style={styles.backBtn} onClick={() => router.push(`/play/${track.id}`)}>
-            ← {T("exit")}
-          </button>
-        </div>
+        <BackHome />
 
         <div style={styles.header}>
           <h1 className="rj" style={styles.title}>{trackDisplayName(track, nativeLang)}</h1>
@@ -215,6 +213,7 @@ export default function ScriptPracticePage({ params }) {
           quickQuizLabel={T("modeQuickQuiz")}
           lessonsLabel={T("modeLessons")}
           scriptLabel={script.name}
+          grammarLabel={grammarForTrack(track.id) ? T("modeGrammar") : null}
         />
 
         {tab === "learn" && (
@@ -303,14 +302,14 @@ export default function ScriptPracticePage({ params }) {
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {quiz[qIndex].options.map((opt, i) => {
-                  let bg = "#171423";
+                  let bg = "#1D212B";
                   let border = "#3A3452";
                   if (feedback) {
                     if (i === quiz[qIndex].correctIdx) {
-                      bg = "#1B3A2A";
+                      bg = "#1E4A32";
                       border = "#5EE0A0";
                     } else if (i === selected) {
-                      bg = "#3A1B1F";
+                      bg = "#4A1E24";
                       border = "#FF7B8A";
                     }
                   }

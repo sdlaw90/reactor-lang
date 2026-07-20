@@ -137,7 +137,7 @@ const styles = {
   internalEntry: { borderColor: "#B98EFF", background: "#201A31" },
   entryHeader: { display: "flex", alignItems: "baseline", gap: 10, marginBottom: 8 },
   entryVersion: { color: "#FF8FB1", fontSize: 15, fontWeight: 700 },
-  entryDate: { color: "#7C7395", fontSize: 12 },
+  entryDate: { color: "#9B93B8", fontSize: 12 },
   internalTag: { color: "#B98EFF", fontSize: 10, fontWeight: 800, letterSpacing: 1, marginBottom: 4 },
   list: { margin: 0, paddingLeft: 18 },
   listItem: { color: "#D9D3EC", fontSize: 13.5, lineHeight: 1.6, marginBottom: 4 },

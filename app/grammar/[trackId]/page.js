@@ -9,8 +9,11 @@ import { useRouter } from "next/navigation";
 import { Check, X, ChevronRight, ChevronDown, RotateCcw, Dumbbell, BookOpen } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
 import BackHome from "../../../lib/BackHome";
+import ModeToggle from "../../../lib/ModeToggle";
 import { getTrack } from "../../../data/tracks";
 import { grammarForTrack } from "../../../data/grammar";
+import { scriptForTrack } from "../../../data/scripts";
+import { t } from "../../../lib/playStrings";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import { trackDisplayName } from "../../../lib/languageNames";
 import { buildDrill, loadGrammarProgress, saveGrammarProgress } from "../../../lib/grammarGym";
@@ -112,6 +115,15 @@ export default function GrammarGymPage({ params }) {
       <div style={styles.wrap}>
         <BackHome />
 
+        <ModeToggle
+          trackId={track.id}
+          active="grammar"
+          quickQuizLabel={t(lang, "modeQuickQuiz")}
+          lessonsLabel={t(lang, "modeLessons")}
+          scriptLabel={scriptForTrack(track.id) ? t(lang, "modeScript") : null}
+          grammarLabel={t(lang, "modeGrammar")}
+        />
+
         {screen === "start" && (
           <div style={styles.col} className="fadein">
             <div style={styles.badge}>
@@ -122,7 +134,7 @@ export default function GrammarGymPage({ params }) {
             <p style={styles.intro}>{L(gym.intro)}</p>
 
             <div style={styles.statCard}>
-              <span style={{ color: "#7C7395", fontSize: 12 }}>Your grammar-gym progress (separate from your main level)</span>
+              <span style={{ color: "#9B93B8", fontSize: 12 }}>Your grammar-gym progress (separate from your main level)</span>
               <div className="jm" style={{ color: "#F3F0FA", fontSize: 14, marginTop: 6 }}>
                 {progress.practiced} practiced
                 {accuracy !== null ? ` · ${accuracy}% correct` : ""}
@@ -217,7 +229,7 @@ export default function GrammarGymPage({ params }) {
 
         {screen === "practice" && item && (
           <div style={styles.col} className="fadein">
-            <p className="jm" style={{ color: "#7C7395", fontSize: 12, marginBottom: 10 }}>
+            <p className="jm" style={{ color: "#9B93B8", fontSize: 12, marginBottom: 10 }}>
               {dIndex + 1} / {drill.length}
             </p>
             <div style={styles.qCard}>
@@ -274,7 +286,7 @@ export default function GrammarGymPage({ params }) {
               <div className="jm" style={{ color: "#F3F0FA", fontSize: 18, textAlign: "center" }}>
                 {sessionCorrect} / {drill.length} correct this round
               </div>
-              <div style={{ color: "#7C7395", fontSize: 12, textAlign: "center", marginTop: 6 }}>
+              <div style={{ color: "#9B93B8", fontSize: 12, textAlign: "center", marginTop: 6 }}>
                 All-time: {progress.practiced} practiced{accuracy !== null ? ` · ${accuracy}% correct` : ""}
               </div>
             </div>
@@ -320,7 +332,7 @@ const styles = {
   tenseWhy: { color: "#9B93B8", fontSize: 12, lineHeight: 1.4, margin: "0 0 10px", textAlign: "left" },
   table: { width: "100%", borderCollapse: "collapse" },
   tdPerson: { color: "#B4ABC9", fontSize: 13, padding: "6px 8px", borderBottom: "1px solid #2A2740", textAlign: "left", whiteSpace: "nowrap" },
-  tdPersonEn: { color: "#7C7395", fontSize: 11 },
+  tdPersonEn: { color: "#9B93B8", fontSize: 11 },
   tdForm: { color: "#7BE495", fontSize: 15, fontWeight: 600, padding: "6px 8px", borderBottom: "1px solid #2A2740", textAlign: "right" },
   qCard: { width: "100%", background: "#221E33", border: "1px solid #B98EFF", borderRadius: 16, padding: "20px 18px", marginBottom: 14 },
   qTense: { display: "inline-block", color: "#E4D6FF", background: "#241B36", border: "1px solid #B98EFF", borderRadius: 999, fontSize: 11, fontWeight: 800, padding: "3px 10px", marginBottom: 12 },

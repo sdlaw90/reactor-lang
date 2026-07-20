@@ -428,7 +428,7 @@ export default function PlayPage({ params }) {
   if (!loaded) {
     return (
       <div style={styles.bg}>
-        <p style={{ color: "#7C7395" }} className="jm">
+        <p style={{ color: "#9B93B8" }} className="jm">
           {t(viewerNativeLang || "en", "loading")}
         </p>
       </div>
@@ -445,7 +445,7 @@ export default function PlayPage({ params }) {
       <div style={styles.wrap}>
         <div style={styles.hud} className="jm">
           {screen !== "playing" && (
-            <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
+            <button className="rj" style={styles.backBtn} onClick={() => router.push("/")} title="Home" aria-label="Home">
               ←
             </button>
           )}
@@ -563,7 +563,7 @@ export default function PlayPage({ params }) {
             </div>
 
             <div style={styles.categoryPicker}>
-              <span style={{ color: "#7C7395", fontSize: 12 }}>{T("roundFocus")}</span>
+              <span style={{ color: "#9B93B8", fontSize: 12 }}>{T("roundFocus")}</span>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                 <button
                   className="rj"
@@ -603,7 +603,7 @@ export default function PlayPage({ params }) {
                 theme progress. */}
             {track.themes && track.themes.length > 0 && (
               <div style={styles.categoryPicker}>
-                <span style={{ color: "#7C7395", fontSize: 12 }}>{T("themeFocus")}</span>
+                <span style={{ color: "#9B93B8", fontSize: 12 }}>{T("themeFocus")}</span>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                   <button
                     className="rj"
@@ -643,7 +643,7 @@ export default function PlayPage({ params }) {
 
             <div style={styles.masteryCard}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ color: "#7C7395", fontSize: 12 }}>{T("masteryLabel")}</span>
+                <span style={{ color: "#9B93B8", fontSize: 12 }}>{T("masteryLabel")}</span>
                 <button className="rj" style={styles.skillEditBtn} onClick={() => setShowMastery((v) => !v)}>
                   {showMastery ? T("close") : T("viewDetails")}
                 </button>
@@ -684,7 +684,7 @@ export default function PlayPage({ params }) {
                           </div>
                           <div className="jm" style={{ fontSize: 10.5, marginTop: 4, display: "flex", flexWrap: "wrap", gap: "0 8px" }}>
                             {diffEntries.map(([diff, d]) => (
-                              <span key={diff} style={{ color: inBand(diff) ? "#7C7395" : "#4A4460" }}>
+                              <span key={diff} style={{ color: inBand(diff) ? "#9B93B8" : "#4A4460" }}>
                                 {diff}: {d.learned}/{d.total}
                               </span>
                             ))}
@@ -725,7 +725,7 @@ export default function PlayPage({ params }) {
               <button onClick={exitRound} className="rj" style={styles.exitBtn}>
                 ← {T("exit")}
               </button>
-              <div className="jm" style={{ color: "#7C7395", fontSize: 13 }}>
+              <div className="jm" style={{ color: "#9B93B8", fontSize: 13 }}>
                 {qIndex + 1} / {round.length}
               </div>
               <div style={styles.comboWrap}>
@@ -932,7 +932,7 @@ export default function PlayPage({ params }) {
               {explanationLog.map((item, i) => (
                 <ExplanationCard item={item} track={track} uiLang={uiLang} key={item.id || i} />
               ))}
-              {explanationLog.length === 0 && <p style={{ color: "#7C7395", fontSize: 14 }}>{T("noExplanationsYet")}</p>}
+              {explanationLog.length === 0 && <p style={{ color: "#9B93B8", fontSize: 14 }}>{T("noExplanationsYet")}</p>}
             </div>
             <button className="rj" style={{ ...styles.secondaryBtn, marginTop: 18 }} onClick={() => setScreen("start")}>
               {T("close")}
@@ -969,7 +969,7 @@ export default function PlayPage({ params }) {
               {archiveLog.map((item, i) => (
                 <ExplanationCard item={item} track={track} uiLang={uiLang} key={item.id || i} />
               ))}
-              {archiveLog.length === 0 && !archiveLoading && <p style={{ color: "#7C7395", fontSize: 14 }}>{T("archiveEmpty")}</p>}
+              {archiveLog.length === 0 && !archiveLoading && <p style={{ color: "#9B93B8", fontSize: 14 }}>{T("archiveEmpty")}</p>}
             </div>
             {archiveLog.length < archiveCount && (
               <button className="rj" style={{ ...styles.secondaryBtn, marginTop: 12 }} onClick={loadMoreArchive} disabled={archiveLoading}>
@@ -988,7 +988,7 @@ export default function PlayPage({ params }) {
 }
 
 function ExplanationCard({ item, track, uiLang }) {
-  const catInfo = track.cats[item.cat] || { label: item.cat, color: "#7C7395" };
+  const catInfo = track.cats[item.cat] || { label: item.cat, color: "#9B93B8" };
   return (
     <div style={{ ...styles.card, borderColor: item.isCorrect || item.is_correct ? "#5EE0A0" : "#FF7B8A", textAlign: "left" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
@@ -1059,7 +1059,7 @@ function StatChip({ label, value, color }) {
   return (
     <div style={{ ...styles.chip, borderColor: color + "55" }}>
       <div style={{ fontSize: 20, fontWeight: 600, color }}>{value}</div>
-      <div style={{ fontSize: 10, color: "#7C7395", marginTop: 2, textTransform: "uppercase" }}>{label}</div>
+      <div style={{ fontSize: 10, color: "#9B93B8", marginTop: 2, textTransform: "uppercase" }}>{label}</div>
     </div>
   );
 }
@@ -1130,7 +1130,7 @@ const styles = {
   advanceYesBtn: { flex: 1, background: "#B98EFF", color: "#171423", border: "none", borderRadius: 8, padding: "7px 0", fontSize: 12, fontWeight: 700, cursor: "pointer" },
   advanceNoBtn: { flex: 1, background: "transparent", color: "#B4ABC9", border: "1px solid #3A3452", borderRadius: 8, padding: "7px 0", fontSize: 12, fontWeight: 600, cursor: "pointer" },
   bg: { position: "relative", minHeight: "100vh", width: "100%", background: "#171423", display: "flex", justifyContent: "center", padding: "20px 14px", overflow: "hidden" },
-  wrap: { position: "relative", zIndex: 1, width: "100%", maxWidth: 460 },
+  wrap: { position: "relative", zIndex: 1, width: "100%", maxWidth: 480 },
   hud: { display: "flex", alignItems: "center", gap: 10, marginBottom: 22, fontSize: 12 },
   backBtn: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "6px 14px", fontSize: 15, fontWeight: 700, cursor: "pointer" },
   hudItem: { display: "flex", alignItems: "center", whiteSpace: "nowrap" },
@@ -1145,7 +1145,7 @@ const styles = {
   reviewBtn: { background: "transparent", color: "#FF8FB1", border: "1px solid #FF8FB1", padding: "12px 24px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 10, display: "flex", alignItems: "center", justifyContent: "center" },
   missedBadge: { marginLeft: 10, background: "#FF8FB1", color: "#171423", borderRadius: 20, padding: "1px 8px", fontSize: 12, fontWeight: 700 },
   explainOpenBtn: { background: "transparent", color: "#3DDBFF", border: "1px solid #3DDBFF", padding: "12px 24px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 10 },
-  secondaryBtn: { background: "transparent", color: "#7C7395", border: "1px solid #3A3452", padding: "10px 20px", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", width: "100%" },
+  secondaryBtn: { background: "transparent", color: "#9B93B8", border: "1px solid #3A3452", padding: "10px 20px", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", width: "100%" },
   topRow: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: 14, gap: 10 },
   // Matches Lessons' exit styling — mid-round Exit is the single escape
   // route, so it gets the same prominent treatment, not muted chrome.
@@ -1186,7 +1186,7 @@ const styles = {
   },
   soundBox: { background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "16px 14px", marginBottom: 16, textAlign: "center" },
   soundText: { color: "#E4D6FF", fontSize: 21, fontWeight: 600, margin: 0, lineHeight: 1.6 },
-  soundLegend: { color: "#8A7FA3", fontSize: 11, marginTop: 10, marginBottom: 0 },
+  soundLegend: { color: "#9B93B8", fontSize: 11, marginTop: 10, marginBottom: 0 },
   optionsGrid: { display: "flex", flexDirection: "column", gap: 10 },
   optionBtn: { border: "1px solid", borderRadius: 10, padding: "13px 16px", fontSize: 16, fontWeight: 600, textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between" },
   explainBox: { background: "#11141B", border: "1px solid #3A3452", borderRadius: 10, padding: "12px 14px" },
@@ -1204,6 +1204,6 @@ const styles = {
     marginTop: 14,
   },
   explainLangRow: { display: "flex", alignItems: "flex-start", gap: 8 },
-  explainLangTag: { flexShrink: 0, fontSize: 10, fontWeight: 700, color: "#7C7395", border: "1px solid #3A3452", borderRadius: 4, padding: "1px 5px", marginTop: 2 },
+  explainLangTag: { flexShrink: 0, fontSize: 10, fontWeight: 700, color: "#9B93B8", border: "1px solid #3A3452", borderRadius: 4, padding: "1px 5px", marginTop: 2 },
   explainText: { color: "#C7CAD3", fontSize: 13.5, lineHeight: 1.5, margin: 0 },
 };

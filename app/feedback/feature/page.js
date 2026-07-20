@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
 import { submitFeatureRequest } from "../../../lib/db";
+import BackHome from "../../../lib/BackHome";
 
 // Single-screen feature request / suggestion form. One required field.
 // Identity is derived from the signed-in session server-side.
@@ -85,9 +86,7 @@ export default function FeatureRequestPage() {
   return (
     <div style={styles.wrap}>
       <div style={{ width: "100%", maxWidth: 460 }}>
-        <button className="rj" style={styles.backBtn} onClick={() => router.back()}>
-          ← Back
-        </button>
+        <BackHome />
         <h1 className="rj" style={styles.title}>Suggest a feature</h1>
         <p style={styles.subtitle}>Big or small, polished or half-formed — all ideas welcome.</p>
         {identity && <p style={styles.identity}>Submitting as {identity}</p>}
@@ -151,7 +150,7 @@ const styles = {
   },
   title: { fontSize: 22, fontWeight: 700, color: "#F3F0FA", margin: "0 0 6px", textAlign: "center" },
   subtitle: { color: "#B4ABC9", fontSize: 13, lineHeight: 1.5, marginBottom: 8, textAlign: "center" },
-  identity: { color: "#7C7395", fontSize: 12, textAlign: "center", marginBottom: 20 },
+  identity: { color: "#9B93B8", fontSize: 12, textAlign: "center", marginBottom: 20 },
   body: { color: "#B4ABC9", fontSize: 14, lineHeight: 1.6, margin: "12px 0 24px" },
   label: { display: "block", color: "#B4ABC9", fontSize: 13, fontWeight: 600, marginBottom: 8, lineHeight: 1.4 },
   textarea: {
@@ -181,9 +180,9 @@ const styles = {
   },
   secondaryBtn: {
     background: "transparent",
-    color: "#3DDBFF",
-    border: "1px solid #3DDBFF",
-    borderRadius: 12,
+    color: "#B4ABC9",
+    border: "1px solid #3A3452",
+    borderRadius: 10,
     padding: "12px 24px",
     fontSize: 14,
     fontWeight: 700,

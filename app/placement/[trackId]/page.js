@@ -9,6 +9,7 @@ import { buildPlacementQuiz } from "../../../lib/gameEngine";
 import { loadProgress, saveProgress } from "../../../lib/db";
 import { SKILL_LEVELS } from "../../../lib/skillLevels";
 import { t } from "../../../lib/playStrings";
+import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 
 const TIER_ORDER = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
@@ -132,12 +133,15 @@ export default function PlacementQuizPage({ params }) {
     }
   };
 
+  const trackTheme = TRACK_THEMES[track.theme];
+
   return (
     <div style={styles.wrap}>
-      <div style={{ width: "100%", maxWidth: 420 }}>
+      {trackTheme && <div style={animatedBackgroundStyle(trackTheme.gradient)} />}
+      <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480 }}>
         {!done ? (
           <>
-            <p style={{ color: "#7C7395", fontSize: 12 }} className="jm">
+            <p style={{ color: "#9B93B8", fontSize: 12 }} className="jm">
               {qIndex + 1} / {quiz.length} · {T("placementNoTimer")}
             </p>
             <div style={{ ...styles.card, borderColor: feedback === "correct" ? "#5EE0A0" : feedback === "wrong" ? "#FF7B8A" : "#3A3452" }}>
@@ -151,14 +155,14 @@ export default function PlacementQuizPage({ params }) {
               )}
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {q.options.map((opt, i) => {
-                  let bg = "#171423";
+                  let bg = "#1D212B";
                   let border = "#3A3452";
                   if (feedback) {
                     if (i === q.correctIdx) {
-                      bg = "#1B3A2A";
+                      bg = "#1E4A32";
                       border = "#5EE0A0";
                     } else if (i === selected) {
-                      bg = "#3A1B1F";
+                      bg = "#4A1E24";
                       border = "#FF7B8A";
                     }
                   }
@@ -201,7 +205,7 @@ export default function PlacementQuizPage({ params }) {
 }
 
 const styles = {
-  wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
+  wrap: { position: "relative", overflow: "hidden", minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
   card: { background: "#221E33", border: "1px solid", borderRadius: 16, padding: "22px 20px" },
   prompt: { color: "#F3F0FA", fontSize: 18, fontWeight: 500, lineHeight: 1.4, marginBottom: 16 },
   soundBox: { background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "14px", marginBottom: 16, textAlign: "center" },
