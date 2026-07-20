@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 270 tracked files.
+> 286 tracked files.
 
 ```
 .env.local.example
@@ -99,8 +99,12 @@ data/tracks/zhForEn.js
 data/vocab/deWords.js
 data/vocab/esLatAmWords.js
 data/vocab/frCaWords.js
+data/vocab/frWords.js
+data/vocab/itWords.js
 data/vocab/jaWords.js
 data/vocab/koWords.js
+data/vocab/ptBrWords.js
+data/vocab/ptPtWords.js
 data/vocab/ruWords.js
 data/vocab/zhWords.js
 docs/INTEGRATION-NOTES.md
@@ -145,23 +149,29 @@ docs/variant-expansion/README.md
 docs/variant-expansion/frCa-depth-reference.md
 docs/variant-expansion/generated/es_generated.json
 docs/variant-expansion/generated/frCa_depth_generated.json
+docs/variant-expansion/generated/frCa_depth_tenseswap.json
 docs/variant-expansion/generated/frCa_depth_variants.json
 docs/variant-expansion/generated/frCa_generated.json
 docs/variant-expansion/generated/fr_depth_generated.json
+docs/variant-expansion/generated/fr_depth_tenseswap.json
 docs/variant-expansion/generated/fr_depth_variants.json
 docs/variant-expansion/generated/fr_generated.json
 docs/variant-expansion/generated/it_depth_generated.json
+docs/variant-expansion/generated/it_depth_tenseswap.json
 docs/variant-expansion/generated/it_depth_variants.json
 docs/variant-expansion/generated/it_generated.json
 docs/variant-expansion/generated/ptBr_depth_generated.json
+docs/variant-expansion/generated/ptBr_depth_tenseswap.json
 docs/variant-expansion/generated/ptBr_depth_variants.json
 docs/variant-expansion/generated/ptBr_generated.json
 docs/variant-expansion/generated/ptPt_depth_generated.json
+docs/variant-expansion/generated/ptPt_depth_tenseswap.json
 docs/variant-expansion/generated/ptPt_depth_variants.json
 docs/variant-expansion/generated/ptPt_generated.json
 docs/variant-expansion/it-depth-reference.md
 docs/variant-expansion/pipeline/README.md
 docs/variant-expansion/pipeline/apply_phase1.py
+docs/variant-expansion/pipeline/apply_phase2.py
 docs/variant-expansion/pipeline/assemble_g.py
 docs/variant-expansion/pipeline/config_fr.example.json
 docs/variant-expansion/pipeline/config_frCa.json
@@ -174,24 +184,30 @@ docs/variant-expansion/pipeline/frdefs.py
 docs/variant-expansion/pipeline/itdefs.py
 docs/variant-expansion/pipeline/ptdefs.py
 docs/variant-expansion/pipeline/swap_phase1.py
+docs/variant-expansion/pipeline/swap_phase2.py
 docs/variant-expansion/pipeline/vb.py
 docs/variant-expansion/pipeline/wf_depth.js
 docs/variant-expansion/ptBr-depth-reference.md
 docs/variant-expansion/ptPt-depth-reference.md
 docs/variant-expansion/review-packets/es-verb-variants.xlsx
 docs/variant-expansion/review-packets/fr-depth-review.xlsx
+docs/variant-expansion/review-packets/fr-depth-tenseswap.xlsx
 docs/variant-expansion/review-packets/fr-depth-variants.xlsx
 docs/variant-expansion/review-packets/fr-verb-variants.xlsx
 docs/variant-expansion/review-packets/frCa-depth-review.xlsx
+docs/variant-expansion/review-packets/frCa-depth-tenseswap.xlsx
 docs/variant-expansion/review-packets/frCa-depth-variants.xlsx
 docs/variant-expansion/review-packets/frCa-verb-variants.xlsx
 docs/variant-expansion/review-packets/it-depth-review.xlsx
+docs/variant-expansion/review-packets/it-depth-tenseswap.xlsx
 docs/variant-expansion/review-packets/it-depth-variants.xlsx
 docs/variant-expansion/review-packets/it-verb-variants.xlsx
 docs/variant-expansion/review-packets/ptBr-depth-review.xlsx
+docs/variant-expansion/review-packets/ptBr-depth-tenseswap.xlsx
 docs/variant-expansion/review-packets/ptBr-depth-variants.xlsx
 docs/variant-expansion/review-packets/ptBr-verb-variants.xlsx
 docs/variant-expansion/review-packets/ptPt-depth-review.xlsx
+docs/variant-expansion/review-packets/ptPt-depth-tenseswap.xlsx
 docs/variant-expansion/review-packets/ptPt-depth-variants.xlsx
 docs/variant-expansion/review-packets/ptPt-verb-variants.xlsx
 e2e/authenticated-flow.spec.js

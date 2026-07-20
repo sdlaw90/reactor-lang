@@ -1,0 +1,1296 @@
+{
+ "language": "Italian",
+ "track": "itForEn",
+ "generated_date": "2026-07-20",
+ "phase": "Phase 2 — tense-swap of flexible present-tense verbo items (BULK)",
+ "method": "Recast pronoun-subject present-tense depth items into other tenses (past-compound / imperfect / future) with a leading time-marker; person held fixed. Distractors = same verb+person across tenses. verbecc-verified (fr/it). Compound-past skipped for être/essere-auxiliary verbs (participle agreement verbecc does not resolve). Excludes already-time-marked, reflexive, impersonal, implied/ambiguous-subject items. BULK run overrides the methodology hold (sample-only until Phase-1 review); ships to beta pre-review, flagged for native review — tense-swaps can read oddly for stative sentences.",
+ "id_scheme": "<code>-verb-<NNN>-t-<tenseKey>",
+ "verify_verbecc": true,
+ "counts": {
+  "present_bases": 21,
+  "variants": 58,
+  "skipped": {
+   "already-time-marked": 3,
+   "essere/être-aux-agreement": 5,
+   "not-present": 93
+  }
+ },
+ "variants": [
+  {
+   "vid": "it-verb-002-t-imperfetto",
+   "base_vid": "it-verb-002",
+   "prompt": "Una volta, tu ___ molto gentile.",
+   "options": [
+    "sei",
+    "sei stata",
+    "sarai",
+    "eri"
+   ],
+   "correctIndex": 3,
+   "answer": "eri",
+   "lemma": "essere",
+   "tense": "imperfetto",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “eri”.",
+    "es": "Con “Una volta”, usa el imperfecto: “eri”."
+   },
+   "subtitle_en": "In the past, You ___ (essere = to be) very kind."
+  },
+  {
+   "vid": "it-verb-002-t-futuro",
+   "base_vid": "it-verb-002",
+   "prompt": "Domani, tu ___ molto gentile.",
+   "options": [
+    "eri",
+    "sei stata",
+    "sarai",
+    "sei"
+   ],
+   "correctIndex": 2,
+   "answer": "sarai",
+   "lemma": "essere",
+   "tense": "futuro",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “sarai”.",
+    "es": "Con “Domani”, usa el futuro simple: “sarai”."
+   },
+   "subtitle_en": "Tomorrow, You ___ (essere = to be) very kind."
+  },
+  {
+   "vid": "it-verb-003-t-imperfetto",
+   "base_vid": "it-verb-003",
+   "prompt": "Una volta, lei ___ una brava studentessa.",
+   "options": [
+    "sarà",
+    "era",
+    "è stato",
+    "è"
+   ],
+   "correctIndex": 1,
+   "answer": "era",
+   "lemma": "essere",
+   "tense": "imperfetto",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “era”.",
+    "es": "Con “Una volta”, usa el imperfecto: “era”."
+   },
+   "subtitle_en": "In the past, She ___ (essere = to be) a good student."
+  },
+  {
+   "vid": "it-verb-003-t-futuro",
+   "base_vid": "it-verb-003",
+   "prompt": "Domani, lei ___ una brava studentessa.",
+   "options": [
+    "è",
+    "sarà",
+    "era",
+    "è stato"
+   ],
+   "correctIndex": 1,
+   "answer": "sarà",
+   "lemma": "essere",
+   "tense": "futuro",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “sarà”.",
+    "es": "Con “Domani”, usa el futuro simple: “sarà”."
+   },
+   "subtitle_en": "Tomorrow, She ___ (essere = to be) a good student."
+  },
+  {
+   "vid": "it-verb-004-t-imperfetto",
+   "base_vid": "it-verb-004",
+   "prompt": "Una volta, noi ___ pronti.",
+   "options": [
+    "eravamo",
+    "saremo",
+    "siamo",
+    "siamo state"
+   ],
+   "correctIndex": 0,
+   "answer": "eravamo",
+   "lemma": "essere",
+   "tense": "imperfetto",
+   "person": "noi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “eravamo”.",
+    "es": "Con “Una volta”, usa el imperfecto: “eravamo”."
+   },
+   "subtitle_en": "In the past, We ___ (essere = to be) ready."
+  },
+  {
+   "vid": "it-verb-004-t-futuro",
+   "base_vid": "it-verb-004",
+   "prompt": "Domani, noi ___ pronti.",
+   "options": [
+    "eravamo",
+    "saremo",
+    "siamo state",
+    "siamo"
+   ],
+   "correctIndex": 1,
+   "answer": "saremo",
+   "lemma": "essere",
+   "tense": "futuro",
+   "person": "noi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “saremo”.",
+    "es": "Con “Domani”, usa el futuro simple: “saremo”."
+   },
+   "subtitle_en": "Tomorrow, We ___ (essere = to be) ready."
+  },
+  {
+   "vid": "it-verb-005-t-imperfetto",
+   "base_vid": "it-verb-005",
+   "prompt": "Una volta, voi ___ in ritardo.",
+   "options": [
+    "sarete",
+    "siete state",
+    "eravate",
+    "siete"
+   ],
+   "correctIndex": 2,
+   "answer": "eravate",
+   "lemma": "essere",
+   "tense": "imperfetto",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “eravate”.",
+    "es": "Con “Una volta”, usa el imperfecto: “eravate”."
+   },
+   "subtitle_en": "In the past, You all ___ (essere = to be) late."
+  },
+  {
+   "vid": "it-verb-005-t-futuro",
+   "base_vid": "it-verb-005",
+   "prompt": "Domani, voi ___ in ritardo.",
+   "options": [
+    "siete",
+    "sarete",
+    "siete state",
+    "eravate"
+   ],
+   "correctIndex": 1,
+   "answer": "sarete",
+   "lemma": "essere",
+   "tense": "futuro",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “sarete”.",
+    "es": "Con “Domani”, usa el futuro simple: “sarete”."
+   },
+   "subtitle_en": "Tomorrow, You all ___ (essere = to be) late."
+  },
+  {
+   "vid": "it-verb-006-t-imperfetto",
+   "base_vid": "it-verb-006",
+   "prompt": "Una volta, loro ___ contenti.",
+   "options": [
+    "sono state",
+    "erano",
+    "saranno",
+    "sono"
+   ],
+   "correctIndex": 1,
+   "answer": "erano",
+   "lemma": "essere",
+   "tense": "imperfetto",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “erano”.",
+    "es": "Con “Una volta”, usa el imperfecto: “erano”."
+   },
+   "subtitle_en": "In the past, They ___ (essere = to be) happy."
+  },
+  {
+   "vid": "it-verb-006-t-futuro",
+   "base_vid": "it-verb-006",
+   "prompt": "Domani, loro ___ contenti.",
+   "options": [
+    "sono",
+    "sono state",
+    "saranno",
+    "erano"
+   ],
+   "correctIndex": 2,
+   "answer": "saranno",
+   "lemma": "essere",
+   "tense": "futuro",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “saranno”.",
+    "es": "Con “Domani”, usa el futuro simple: “saranno”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (essere = to be) happy."
+  },
+  {
+   "vid": "it-verb-007-t-passatoProssimo",
+   "base_vid": "it-verb-007",
+   "prompt": "Ieri, io ___ due fratelli.",
+   "options": [
+    "avrò",
+    "ho",
+    "avevo",
+    "ho avuto"
+   ],
+   "correctIndex": 3,
+   "answer": "ho avuto",
+   "lemma": "avere",
+   "tense": "passatoProssimo",
+   "person": "io",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “ho avuto”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “ho avuto”."
+   },
+   "subtitle_en": "Yesterday, I ___ (avere = to have) two brothers."
+  },
+  {
+   "vid": "it-verb-007-t-imperfetto",
+   "base_vid": "it-verb-007",
+   "prompt": "Una volta, io ___ due fratelli.",
+   "options": [
+    "avrò",
+    "ho",
+    "avevo",
+    "ho avuto"
+   ],
+   "correctIndex": 2,
+   "answer": "avevo",
+   "lemma": "avere",
+   "tense": "imperfetto",
+   "person": "io",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “avevo”.",
+    "es": "Con “Una volta”, usa el imperfecto: “avevo”."
+   },
+   "subtitle_en": "In the past, I ___ (avere = to have) two brothers."
+  },
+  {
+   "vid": "it-verb-007-t-futuro",
+   "base_vid": "it-verb-007",
+   "prompt": "Domani, io ___ due fratelli.",
+   "options": [
+    "avrò",
+    "ho",
+    "ho avuto",
+    "avevo"
+   ],
+   "correctIndex": 0,
+   "answer": "avrò",
+   "lemma": "avere",
+   "tense": "futuro",
+   "person": "io",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “avrò”.",
+    "es": "Con “Domani”, usa el futuro simple: “avrò”."
+   },
+   "subtitle_en": "Tomorrow, I ___ (avere = to have) two brothers."
+  },
+  {
+   "vid": "it-verb-008-t-passatoProssimo",
+   "base_vid": "it-verb-008",
+   "prompt": "Ieri, tu ___ un cane?",
+   "options": [
+    "avevi",
+    "hai avuto",
+    "hai",
+    "avrai"
+   ],
+   "correctIndex": 1,
+   "answer": "hai avuto",
+   "lemma": "avere",
+   "tense": "passatoProssimo",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “hai avuto”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “hai avuto”."
+   },
+   "subtitle_en": "Yesterday, Do you ___ (avere = to have) a dog?"
+  },
+  {
+   "vid": "it-verb-008-t-imperfetto",
+   "base_vid": "it-verb-008",
+   "prompt": "Una volta, tu ___ un cane?",
+   "options": [
+    "hai avuto",
+    "avevi",
+    "hai",
+    "avrai"
+   ],
+   "correctIndex": 1,
+   "answer": "avevi",
+   "lemma": "avere",
+   "tense": "imperfetto",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “avevi”.",
+    "es": "Con “Una volta”, usa el imperfecto: “avevi”."
+   },
+   "subtitle_en": "In the past, Do you ___ (avere = to have) a dog?"
+  },
+  {
+   "vid": "it-verb-008-t-futuro",
+   "base_vid": "it-verb-008",
+   "prompt": "Domani, tu ___ un cane?",
+   "options": [
+    "avevi",
+    "hai",
+    "hai avuto",
+    "avrai"
+   ],
+   "correctIndex": 3,
+   "answer": "avrai",
+   "lemma": "avere",
+   "tense": "futuro",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “avrai”.",
+    "es": "Con “Domani”, usa el futuro simple: “avrai”."
+   },
+   "subtitle_en": "Tomorrow, Do you ___ (avere = to have) a dog?"
+  },
+  {
+   "vid": "it-verb-009-t-passatoProssimo",
+   "base_vid": "it-verb-009",
+   "prompt": "Ieri, lui ___ sonno.",
+   "options": [
+    "ha",
+    "aveva",
+    "ha avuto",
+    "avrà"
+   ],
+   "correctIndex": 2,
+   "answer": "ha avuto",
+   "lemma": "avere",
+   "tense": "passatoProssimo",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “ha avuto”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “ha avuto”."
+   },
+   "subtitle_en": "Yesterday, He is ___ (avere = to have) sleepy. (Literally: he has sleepiness.)"
+  },
+  {
+   "vid": "it-verb-009-t-imperfetto",
+   "base_vid": "it-verb-009",
+   "prompt": "Una volta, lui ___ sonno.",
+   "options": [
+    "avrà",
+    "ha",
+    "aveva",
+    "ha avuto"
+   ],
+   "correctIndex": 2,
+   "answer": "aveva",
+   "lemma": "avere",
+   "tense": "imperfetto",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “aveva”.",
+    "es": "Con “Una volta”, usa el imperfecto: “aveva”."
+   },
+   "subtitle_en": "In the past, He is ___ (avere = to have) sleepy. (Literally: he has sleepiness.)"
+  },
+  {
+   "vid": "it-verb-009-t-futuro",
+   "base_vid": "it-verb-009",
+   "prompt": "Domani, lui ___ sonno.",
+   "options": [
+    "avrà",
+    "ha avuto",
+    "ha",
+    "aveva"
+   ],
+   "correctIndex": 0,
+   "answer": "avrà",
+   "lemma": "avere",
+   "tense": "futuro",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “avrà”.",
+    "es": "Con “Domani”, usa el futuro simple: “avrà”."
+   },
+   "subtitle_en": "Tomorrow, He is ___ (avere = to have) sleepy. (Literally: he has sleepiness.)"
+  },
+  {
+   "vid": "it-verb-010-t-passatoProssimo",
+   "base_vid": "it-verb-010",
+   "prompt": "Ieri, noi ___ una macchina nuova.",
+   "options": [
+    "abbiamo",
+    "avremo",
+    "abbiamo avuto",
+    "avevamo"
+   ],
+   "correctIndex": 2,
+   "answer": "abbiamo avuto",
+   "lemma": "avere",
+   "tense": "passatoProssimo",
+   "person": "noi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “abbiamo avuto”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “abbiamo avuto”."
+   },
+   "subtitle_en": "Yesterday, We ___ (avere = to have) a new car."
+  },
+  {
+   "vid": "it-verb-010-t-imperfetto",
+   "base_vid": "it-verb-010",
+   "prompt": "Una volta, noi ___ una macchina nuova.",
+   "options": [
+    "abbiamo",
+    "avevamo",
+    "abbiamo avuto",
+    "avremo"
+   ],
+   "correctIndex": 1,
+   "answer": "avevamo",
+   "lemma": "avere",
+   "tense": "imperfetto",
+   "person": "noi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “avevamo”.",
+    "es": "Con “Una volta”, usa el imperfecto: “avevamo”."
+   },
+   "subtitle_en": "In the past, We ___ (avere = to have) a new car."
+  },
+  {
+   "vid": "it-verb-010-t-futuro",
+   "base_vid": "it-verb-010",
+   "prompt": "Domani, noi ___ una macchina nuova.",
+   "options": [
+    "avremo",
+    "abbiamo avuto",
+    "abbiamo",
+    "avevamo"
+   ],
+   "correctIndex": 0,
+   "answer": "avremo",
+   "lemma": "avere",
+   "tense": "futuro",
+   "person": "noi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “avremo”.",
+    "es": "Con “Domani”, usa el futuro simple: “avremo”."
+   },
+   "subtitle_en": "Tomorrow, We ___ (avere = to have) a new car."
+  },
+  {
+   "vid": "it-verb-011-t-passatoProssimo",
+   "base_vid": "it-verb-011",
+   "prompt": "Ieri, voi ___ ragione.",
+   "options": [
+    "avete",
+    "avete avuto",
+    "avrete",
+    "avevate"
+   ],
+   "correctIndex": 1,
+   "answer": "avete avuto",
+   "lemma": "avere",
+   "tense": "passatoProssimo",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “avete avuto”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “avete avuto”."
+   },
+   "subtitle_en": "Yesterday, You all ___ (avere = to have) right. (Literally: you have reason.)"
+  },
+  {
+   "vid": "it-verb-011-t-imperfetto",
+   "base_vid": "it-verb-011",
+   "prompt": "Una volta, voi ___ ragione.",
+   "options": [
+    "avete",
+    "avete avuto",
+    "avrete",
+    "avevate"
+   ],
+   "correctIndex": 3,
+   "answer": "avevate",
+   "lemma": "avere",
+   "tense": "imperfetto",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “avevate”.",
+    "es": "Con “Una volta”, usa el imperfecto: “avevate”."
+   },
+   "subtitle_en": "In the past, You all ___ (avere = to have) right. (Literally: you have reason.)"
+  },
+  {
+   "vid": "it-verb-011-t-futuro",
+   "base_vid": "it-verb-011",
+   "prompt": "Domani, voi ___ ragione.",
+   "options": [
+    "avrete",
+    "avevate",
+    "avete",
+    "avete avuto"
+   ],
+   "correctIndex": 0,
+   "answer": "avrete",
+   "lemma": "avere",
+   "tense": "futuro",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “avrete”.",
+    "es": "Con “Domani”, usa el futuro simple: “avrete”."
+   },
+   "subtitle_en": "Tomorrow, You all ___ (avere = to have) right. (Literally: you have reason.)"
+  },
+  {
+   "vid": "it-verb-012-t-passatoProssimo",
+   "base_vid": "it-verb-012",
+   "prompt": "Ieri, loro ___ molti amici.",
+   "options": [
+    "avevano",
+    "hanno avuto",
+    "avranno",
+    "hanno"
+   ],
+   "correctIndex": 1,
+   "answer": "hanno avuto",
+   "lemma": "avere",
+   "tense": "passatoProssimo",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “hanno avuto”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “hanno avuto”."
+   },
+   "subtitle_en": "Yesterday, They ___ (avere = to have) many friends."
+  },
+  {
+   "vid": "it-verb-012-t-imperfetto",
+   "base_vid": "it-verb-012",
+   "prompt": "Una volta, loro ___ molti amici.",
+   "options": [
+    "avevano",
+    "hanno",
+    "avranno",
+    "hanno avuto"
+   ],
+   "correctIndex": 0,
+   "answer": "avevano",
+   "lemma": "avere",
+   "tense": "imperfetto",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “avevano”.",
+    "es": "Con “Una volta”, usa el imperfecto: “avevano”."
+   },
+   "subtitle_en": "In the past, They ___ (avere = to have) many friends."
+  },
+  {
+   "vid": "it-verb-012-t-futuro",
+   "base_vid": "it-verb-012",
+   "prompt": "Domani, loro ___ molti amici.",
+   "options": [
+    "hanno",
+    "avranno",
+    "avevano",
+    "hanno avuto"
+   ],
+   "correctIndex": 1,
+   "answer": "avranno",
+   "lemma": "avere",
+   "tense": "futuro",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “avranno”.",
+    "es": "Con “Domani”, usa el futuro simple: “avranno”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (avere = to have) many friends."
+  },
+  {
+   "vid": "it-verb-013-t-passatoProssimo",
+   "base_vid": "it-verb-013",
+   "prompt": "Ieri, io ___ italiano e inglese.",
+   "options": [
+    "ho parlato",
+    "parlerò",
+    "parlo",
+    "parlavo"
+   ],
+   "correctIndex": 0,
+   "answer": "ho parlato",
+   "lemma": "parlare",
+   "tense": "passatoProssimo",
+   "person": "io",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “ho parlato”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “ho parlato”."
+   },
+   "subtitle_en": "Yesterday, I ___ (parlare = to speak) Italian and English."
+  },
+  {
+   "vid": "it-verb-013-t-imperfetto",
+   "base_vid": "it-verb-013",
+   "prompt": "Una volta, io ___ italiano e inglese.",
+   "options": [
+    "ho parlato",
+    "parlerò",
+    "parlavo",
+    "parlo"
+   ],
+   "correctIndex": 2,
+   "answer": "parlavo",
+   "lemma": "parlare",
+   "tense": "imperfetto",
+   "person": "io",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “parlavo”.",
+    "es": "Con “Una volta”, usa el imperfecto: “parlavo”."
+   },
+   "subtitle_en": "In the past, I ___ (parlare = to speak) Italian and English."
+  },
+  {
+   "vid": "it-verb-013-t-futuro",
+   "base_vid": "it-verb-013",
+   "prompt": "Domani, io ___ italiano e inglese.",
+   "options": [
+    "parlo",
+    "parlerò",
+    "ho parlato",
+    "parlavo"
+   ],
+   "correctIndex": 1,
+   "answer": "parlerò",
+   "lemma": "parlare",
+   "tense": "futuro",
+   "person": "io",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “parlerò”.",
+    "es": "Con “Domani”, usa el futuro simple: “parlerò”."
+   },
+   "subtitle_en": "Tomorrow, I ___ (parlare = to speak) Italian and English."
+  },
+  {
+   "vid": "it-verb-015-t-passatoProssimo",
+   "base_vid": "it-verb-015",
+   "prompt": "Ieri, voi ___ in un ufficio.",
+   "options": [
+    "lavorerete",
+    "lavorate",
+    "avete lavorato",
+    "lavoravate"
+   ],
+   "correctIndex": 2,
+   "answer": "avete lavorato",
+   "lemma": "lavorare",
+   "tense": "passatoProssimo",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “avete lavorato”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “avete lavorato”."
+   },
+   "subtitle_en": "Yesterday, You all ___ (lavorare = to work) in an office."
+  },
+  {
+   "vid": "it-verb-015-t-imperfetto",
+   "base_vid": "it-verb-015",
+   "prompt": "Una volta, voi ___ in un ufficio.",
+   "options": [
+    "avete lavorato",
+    "lavorerete",
+    "lavorate",
+    "lavoravate"
+   ],
+   "correctIndex": 3,
+   "answer": "lavoravate",
+   "lemma": "lavorare",
+   "tense": "imperfetto",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “lavoravate”.",
+    "es": "Con “Una volta”, usa el imperfecto: “lavoravate”."
+   },
+   "subtitle_en": "In the past, You all ___ (lavorare = to work) in an office."
+  },
+  {
+   "vid": "it-verb-015-t-futuro",
+   "base_vid": "it-verb-015",
+   "prompt": "Domani, voi ___ in un ufficio.",
+   "options": [
+    "lavorate",
+    "lavoravate",
+    "lavorerete",
+    "avete lavorato"
+   ],
+   "correctIndex": 2,
+   "answer": "lavorerete",
+   "lemma": "lavorare",
+   "tense": "futuro",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “lavorerete”.",
+    "es": "Con “Domani”, usa el futuro simple: “lavorerete”."
+   },
+   "subtitle_en": "Tomorrow, You all ___ (lavorare = to work) in an office."
+  },
+  {
+   "vid": "it-verb-016-t-passatoProssimo",
+   "base_vid": "it-verb-016",
+   "prompt": "Ieri, loro ___ la televisione la sera.",
+   "options": [
+    "guarderanno",
+    "guardavano",
+    "hanno guardato",
+    "guardano"
+   ],
+   "correctIndex": 2,
+   "answer": "hanno guardato",
+   "lemma": "guardare",
+   "tense": "passatoProssimo",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “hanno guardato”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “hanno guardato”."
+   },
+   "subtitle_en": "Yesterday, They ___ (guardare = to watch) TV in the evening."
+  },
+  {
+   "vid": "it-verb-016-t-imperfetto",
+   "base_vid": "it-verb-016",
+   "prompt": "Una volta, loro ___ la televisione la sera.",
+   "options": [
+    "hanno guardato",
+    "guardavano",
+    "guardano",
+    "guarderanno"
+   ],
+   "correctIndex": 1,
+   "answer": "guardavano",
+   "lemma": "guardare",
+   "tense": "imperfetto",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “guardavano”.",
+    "es": "Con “Una volta”, usa el imperfecto: “guardavano”."
+   },
+   "subtitle_en": "In the past, They ___ (guardare = to watch) TV in the evening."
+  },
+  {
+   "vid": "it-verb-016-t-futuro",
+   "base_vid": "it-verb-016",
+   "prompt": "Domani, loro ___ la televisione la sera.",
+   "options": [
+    "hanno guardato",
+    "guarderanno",
+    "guardavano",
+    "guardano"
+   ],
+   "correctIndex": 1,
+   "answer": "guarderanno",
+   "lemma": "guardare",
+   "tense": "futuro",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “guarderanno”.",
+    "es": "Con “Domani”, usa el futuro simple: “guarderanno”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (guardare = to watch) TV in the evening."
+  },
+  {
+   "vid": "it-verb-017-t-passatoProssimo",
+   "base_vid": "it-verb-017",
+   "prompt": "Ieri, tu ___ il caffè al bar.",
+   "options": [
+    "prendi",
+    "prenderai",
+    "prendevi",
+    "hai preso"
+   ],
+   "correctIndex": 3,
+   "answer": "hai preso",
+   "lemma": "prendere",
+   "tense": "passatoProssimo",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “hai preso”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “hai preso”."
+   },
+   "subtitle_en": "Yesterday, You ___ (prendere = to take/have) coffee at the bar."
+  },
+  {
+   "vid": "it-verb-017-t-imperfetto",
+   "base_vid": "it-verb-017",
+   "prompt": "Una volta, tu ___ il caffè al bar.",
+   "options": [
+    "prendi",
+    "prendevi",
+    "prenderai",
+    "hai preso"
+   ],
+   "correctIndex": 1,
+   "answer": "prendevi",
+   "lemma": "prendere",
+   "tense": "imperfetto",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “prendevi”.",
+    "es": "Con “Una volta”, usa el imperfecto: “prendevi”."
+   },
+   "subtitle_en": "In the past, You ___ (prendere = to take/have) coffee at the bar."
+  },
+  {
+   "vid": "it-verb-017-t-futuro",
+   "base_vid": "it-verb-017",
+   "prompt": "Domani, tu ___ il caffè al bar.",
+   "options": [
+    "prenderai",
+    "hai preso",
+    "prendevi",
+    "prendi"
+   ],
+   "correctIndex": 0,
+   "answer": "prenderai",
+   "lemma": "prendere",
+   "tense": "futuro",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “prenderai”.",
+    "es": "Con “Domani”, usa el futuro simple: “prenderai”."
+   },
+   "subtitle_en": "Tomorrow, You ___ (prendere = to take/have) coffee at the bar."
+  },
+  {
+   "vid": "it-verb-018-t-passatoProssimo",
+   "base_vid": "it-verb-018",
+   "prompt": "Ieri, lui ___ una lettera alla nonna.",
+   "options": [
+    "scriverà",
+    "ha scritto",
+    "scriveva",
+    "scrive"
+   ],
+   "correctIndex": 1,
+   "answer": "ha scritto",
+   "lemma": "scrivere",
+   "tense": "passatoProssimo",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “ha scritto”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “ha scritto”."
+   },
+   "subtitle_en": "Yesterday, He ___ (scrivere = to write) a letter to grandma."
+  },
+  {
+   "vid": "it-verb-018-t-imperfetto",
+   "base_vid": "it-verb-018",
+   "prompt": "Una volta, lui ___ una lettera alla nonna.",
+   "options": [
+    "scriveva",
+    "ha scritto",
+    "scrive",
+    "scriverà"
+   ],
+   "correctIndex": 0,
+   "answer": "scriveva",
+   "lemma": "scrivere",
+   "tense": "imperfetto",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “scriveva”.",
+    "es": "Con “Una volta”, usa el imperfecto: “scriveva”."
+   },
+   "subtitle_en": "In the past, He ___ (scrivere = to write) a letter to grandma."
+  },
+  {
+   "vid": "it-verb-018-t-futuro",
+   "base_vid": "it-verb-018",
+   "prompt": "Domani, lui ___ una lettera alla nonna.",
+   "options": [
+    "scriverà",
+    "scriveva",
+    "scrive",
+    "ha scritto"
+   ],
+   "correctIndex": 0,
+   "answer": "scriverà",
+   "lemma": "scrivere",
+   "tense": "futuro",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “scriverà”.",
+    "es": "Con “Domani”, usa el futuro simple: “scriverà”."
+   },
+   "subtitle_en": "Tomorrow, He ___ (scrivere = to write) a letter to grandma."
+  },
+  {
+   "vid": "it-verb-019-t-passatoProssimo",
+   "base_vid": "it-verb-019",
+   "prompt": "Ieri, noi ___ un libro insieme.",
+   "options": [
+    "leggiamo",
+    "leggevamo",
+    "leggeremo",
+    "abbiamo letto"
+   ],
+   "correctIndex": 3,
+   "answer": "abbiamo letto",
+   "lemma": "leggere",
+   "tense": "passatoProssimo",
+   "person": "noi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “abbiamo letto”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “abbiamo letto”."
+   },
+   "subtitle_en": "Yesterday, We ___ (leggere = to read) a book together."
+  },
+  {
+   "vid": "it-verb-019-t-imperfetto",
+   "base_vid": "it-verb-019",
+   "prompt": "Una volta, noi ___ un libro insieme.",
+   "options": [
+    "leggiamo",
+    "abbiamo letto",
+    "leggevamo",
+    "leggeremo"
+   ],
+   "correctIndex": 2,
+   "answer": "leggevamo",
+   "lemma": "leggere",
+   "tense": "imperfetto",
+   "person": "noi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “leggevamo”.",
+    "es": "Con “Una volta”, usa el imperfecto: “leggevamo”."
+   },
+   "subtitle_en": "In the past, We ___ (leggere = to read) a book together."
+  },
+  {
+   "vid": "it-verb-019-t-futuro",
+   "base_vid": "it-verb-019",
+   "prompt": "Domani, noi ___ un libro insieme.",
+   "options": [
+    "leggeremo",
+    "leggiamo",
+    "abbiamo letto",
+    "leggevamo"
+   ],
+   "correctIndex": 0,
+   "answer": "leggeremo",
+   "lemma": "leggere",
+   "tense": "futuro",
+   "person": "noi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “leggeremo”.",
+    "es": "Con “Domani”, usa el futuro simple: “leggeremo”."
+   },
+   "subtitle_en": "Tomorrow, We ___ (leggere = to read) a book together."
+  },
+  {
+   "vid": "it-verb-020-t-passatoProssimo",
+   "base_vid": "it-verb-020",
+   "prompt": "Ieri, voi ___ in Italia da molti anni.",
+   "options": [
+    "avete vissuto/vivuto/visso",
+    "vivrete",
+    "vivete",
+    "vivevate"
+   ],
+   "correctIndex": 0,
+   "answer": "avete vissuto/vivuto/visso",
+   "lemma": "vivere",
+   "tense": "passatoProssimo",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “avete vissuto/vivuto/visso”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “avete vissuto/vivuto/visso”."
+   },
+   "subtitle_en": "Yesterday, You all ___ (vivere = to live) in Italy for many years."
+  },
+  {
+   "vid": "it-verb-020-t-imperfetto",
+   "base_vid": "it-verb-020",
+   "prompt": "Una volta, voi ___ in Italia da molti anni.",
+   "options": [
+    "vivrete",
+    "avete vissuto/vivuto/visso",
+    "vivete",
+    "vivevate"
+   ],
+   "correctIndex": 3,
+   "answer": "vivevate",
+   "lemma": "vivere",
+   "tense": "imperfetto",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “vivevate”.",
+    "es": "Con “Una volta”, usa el imperfecto: “vivevate”."
+   },
+   "subtitle_en": "In the past, You all ___ (vivere = to live) in Italy for many years."
+  },
+  {
+   "vid": "it-verb-020-t-futuro",
+   "base_vid": "it-verb-020",
+   "prompt": "Domani, voi ___ in Italia da molti anni.",
+   "options": [
+    "avete vissuto/vivuto/visso",
+    "vivevate",
+    "vivrete",
+    "vivete"
+   ],
+   "correctIndex": 2,
+   "answer": "vivrete",
+   "lemma": "vivere",
+   "tense": "futuro",
+   "person": "voi",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “vivrete”.",
+    "es": "Con “Domani”, usa el futuro simple: “vivrete”."
+   },
+   "subtitle_en": "Tomorrow, You all ___ (vivere = to live) in Italy for many years."
+  },
+  {
+   "vid": "it-verb-021-t-passatoProssimo",
+   "base_vid": "it-verb-021",
+   "prompt": "Ieri, loro ___ fino a tardi la domenica.",
+   "options": [
+    "hanno dormito",
+    "dormivano",
+    "dormono",
+    "dormiranno"
+   ],
+   "correctIndex": 0,
+   "answer": "hanno dormito",
+   "lemma": "dormire",
+   "tense": "passatoProssimo",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “hanno dormito”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “hanno dormito”."
+   },
+   "subtitle_en": "Yesterday, They ___ (dormire = to sleep) until late on Sundays."
+  },
+  {
+   "vid": "it-verb-021-t-imperfetto",
+   "base_vid": "it-verb-021",
+   "prompt": "Una volta, loro ___ fino a tardi la domenica.",
+   "options": [
+    "dormiranno",
+    "hanno dormito",
+    "dormono",
+    "dormivano"
+   ],
+   "correctIndex": 3,
+   "answer": "dormivano",
+   "lemma": "dormire",
+   "tense": "imperfetto",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “dormivano”.",
+    "es": "Con “Una volta”, usa el imperfecto: “dormivano”."
+   },
+   "subtitle_en": "In the past, They ___ (dormire = to sleep) until late on Sundays."
+  },
+  {
+   "vid": "it-verb-021-t-futuro",
+   "base_vid": "it-verb-021",
+   "prompt": "Domani, loro ___ fino a tardi la domenica.",
+   "options": [
+    "dormivano",
+    "dormono",
+    "dormiranno",
+    "hanno dormito"
+   ],
+   "correctIndex": 2,
+   "answer": "dormiranno",
+   "lemma": "dormire",
+   "tense": "futuro",
+   "person": "loro",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “dormiranno”.",
+    "es": "Con “Domani”, usa el futuro simple: “dormiranno”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (dormire = to sleep) until late on Sundays."
+  },
+  {
+   "vid": "it-verb-022-t-passatoProssimo",
+   "base_vid": "it-verb-022",
+   "prompt": "Ieri, io ___ la finestra.",
+   "options": [
+    "ho aperto",
+    "aprivo",
+    "aprirò",
+    "apro"
+   ],
+   "correctIndex": 0,
+   "answer": "ho aperto",
+   "lemma": "aprire",
+   "tense": "passatoProssimo",
+   "person": "io",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “ho aperto”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “ho aperto”."
+   },
+   "subtitle_en": "Yesterday, I ___ (aprire = to open) the window."
+  },
+  {
+   "vid": "it-verb-022-t-imperfetto",
+   "base_vid": "it-verb-022",
+   "prompt": "Una volta, io ___ la finestra.",
+   "options": [
+    "apro",
+    "aprirò",
+    "ho aperto",
+    "aprivo"
+   ],
+   "correctIndex": 3,
+   "answer": "aprivo",
+   "lemma": "aprire",
+   "tense": "imperfetto",
+   "person": "io",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “aprivo”.",
+    "es": "Con “Una volta”, usa el imperfecto: “aprivo”."
+   },
+   "subtitle_en": "In the past, I ___ (aprire = to open) the window."
+  },
+  {
+   "vid": "it-verb-022-t-futuro",
+   "base_vid": "it-verb-022",
+   "prompt": "Domani, io ___ la finestra.",
+   "options": [
+    "aprirò",
+    "aprivo",
+    "ho aperto",
+    "apro"
+   ],
+   "correctIndex": 0,
+   "answer": "aprirò",
+   "lemma": "aprire",
+   "tense": "futuro",
+   "person": "io",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “aprirò”.",
+    "es": "Con “Domani”, usa el futuro simple: “aprirò”."
+   },
+   "subtitle_en": "Tomorrow, I ___ (aprire = to open) the window."
+  },
+  {
+   "vid": "it-verb-024-t-passatoProssimo",
+   "base_vid": "it-verb-024",
+   "prompt": "Ieri, lui ___ la musica in cucina.",
+   "options": [
+    "ha sentito",
+    "sentiva",
+    "sente",
+    "sentirà"
+   ],
+   "correctIndex": 0,
+   "answer": "ha sentito",
+   "lemma": "sentire",
+   "tense": "passatoProssimo",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ieri”, use the passato prossimo: “ha sentito”.",
+    "es": "Con “Ieri”, usa el pretérito perfecto: “ha sentito”."
+   },
+   "subtitle_en": "Yesterday, He ___ (sentire = to hear) the music in the kitchen."
+  },
+  {
+   "vid": "it-verb-024-t-imperfetto",
+   "base_vid": "it-verb-024",
+   "prompt": "Una volta, lui ___ la musica in cucina.",
+   "options": [
+    "sentirà",
+    "ha sentito",
+    "sente",
+    "sentiva"
+   ],
+   "correctIndex": 3,
+   "answer": "sentiva",
+   "lemma": "sentire",
+   "tense": "imperfetto",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Una volta”, use the imperfetto: “sentiva”.",
+    "es": "Con “Una volta”, usa el imperfecto: “sentiva”."
+   },
+   "subtitle_en": "In the past, He ___ (sentire = to hear) the music in the kitchen."
+  },
+  {
+   "vid": "it-verb-024-t-futuro",
+   "base_vid": "it-verb-024",
+   "prompt": "Domani, lui ___ la musica in cucina.",
+   "options": [
+    "sentiva",
+    "sentirà",
+    "ha sentito",
+    "sente"
+   ],
+   "correctIndex": 1,
+   "answer": "sentirà",
+   "lemma": "sentire",
+   "tense": "futuro",
+   "person": "lui",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Domani”, use the futuro semplice: “sentirà”.",
+    "es": "Con “Domani”, usa el futuro simple: “sentirà”."
+   },
+   "subtitle_en": "Tomorrow, He ___ (sentire = to hear) the music in the kitchen."
+  }
+ ]
+}

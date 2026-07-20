@@ -1,0 +1,1516 @@
+{
+ "language": "French (Québec)",
+ "track": "frCaForEn",
+ "generated_date": "2026-07-20",
+ "phase": "Phase 2 — tense-swap of flexible present-tense verbo items (BULK)",
+ "method": "Recast pronoun-subject present-tense depth items into other tenses (past-compound / imperfect / future) with a leading time-marker; person held fixed. Distractors = same verb+person across tenses. verbecc-verified (fr/it). Compound-past skipped for être/essere-auxiliary verbs (participle agreement verbecc does not resolve). Excludes already-time-marked, reflexive, impersonal, implied/ambiguous-subject items. BULK run overrides the methodology hold (sample-only until Phase-1 review); ships to beta pre-review, flagged for native review — tense-swaps can read oddly for stative sentences.",
+ "id_scheme": "<code>-verb-<NNN>-t-<tenseKey>",
+ "verify_verbecc": true,
+ "counts": {
+  "present_bases": 26,
+  "variants": 68,
+  "skipped": {
+   "already-time-marked": 4,
+   "essere/être-aux-agreement": 10,
+   "not-present": 103
+  }
+ },
+ "variants": [
+  {
+   "vid": "frCa-verb-002-t-passeCompose",
+   "base_vid": "frCa-verb-002",
+   "prompt": "Hier, tu ___ mon ami.",
+   "options": [
+    "as été",
+    "es",
+    "étais",
+    "seras"
+   ],
+   "correctIndex": 0,
+   "answer": "as été",
+   "lemma": "être",
+   "tense": "passeCompose",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “as été”.",
+    "es": "Con “Hier”, usa el passé composé: “as été”."
+   },
+   "subtitle_en": "Yesterday, You ___ my friend. (être = to be)"
+  },
+  {
+   "vid": "frCa-verb-002-t-imparfait",
+   "base_vid": "frCa-verb-002",
+   "prompt": "Autrefois, tu ___ mon ami.",
+   "options": [
+    "es",
+    "seras",
+    "étais",
+    "as été"
+   ],
+   "correctIndex": 2,
+   "answer": "étais",
+   "lemma": "être",
+   "tense": "imparfait",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “étais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “étais”."
+   },
+   "subtitle_en": "In the past, You ___ my friend. (être = to be)"
+  },
+  {
+   "vid": "frCa-verb-002-t-futur",
+   "base_vid": "frCa-verb-002",
+   "prompt": "Demain, tu ___ mon ami.",
+   "options": [
+    "es",
+    "seras",
+    "étais",
+    "as été"
+   ],
+   "correctIndex": 1,
+   "answer": "seras",
+   "lemma": "être",
+   "tense": "futur",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “seras”.",
+    "es": "Con “Demain”, usa el futuro simple: “seras”."
+   },
+   "subtitle_en": "Tomorrow, You ___ my friend. (être = to be)"
+  },
+  {
+   "vid": "frCa-verb-003-t-passeCompose",
+   "base_vid": "frCa-verb-003",
+   "prompt": "Hier, nous ___ prêts à partir.",
+   "options": [
+    "avons été",
+    "serons",
+    "étions",
+    "sommes"
+   ],
+   "correctIndex": 0,
+   "answer": "avons été",
+   "lemma": "être",
+   "tense": "passeCompose",
+   "person": "nous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “avons été”.",
+    "es": "Con “Hier”, usa el passé composé: “avons été”."
+   },
+   "subtitle_en": "Yesterday, We ___ ready to leave. (être = to be)"
+  },
+  {
+   "vid": "frCa-verb-003-t-imparfait",
+   "base_vid": "frCa-verb-003",
+   "prompt": "Autrefois, nous ___ prêts à partir.",
+   "options": [
+    "étions",
+    "sommes",
+    "avons été",
+    "serons"
+   ],
+   "correctIndex": 0,
+   "answer": "étions",
+   "lemma": "être",
+   "tense": "imparfait",
+   "person": "nous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “étions”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “étions”."
+   },
+   "subtitle_en": "In the past, We ___ ready to leave. (être = to be)"
+  },
+  {
+   "vid": "frCa-verb-003-t-futur",
+   "base_vid": "frCa-verb-003",
+   "prompt": "Demain, nous ___ prêts à partir.",
+   "options": [
+    "avons été",
+    "serons",
+    "sommes",
+    "étions"
+   ],
+   "correctIndex": 1,
+   "answer": "serons",
+   "lemma": "être",
+   "tense": "futur",
+   "person": "nous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “serons”.",
+    "es": "Con “Demain”, usa el futuro simple: “serons”."
+   },
+   "subtitle_en": "Tomorrow, We ___ ready to leave. (être = to be)"
+  },
+  {
+   "vid": "frCa-verb-004-t-passeCompose",
+   "base_vid": "frCa-verb-004",
+   "prompt": "Hier, vous ___ en retard.",
+   "options": [
+    "serez",
+    "étiez",
+    "avez été",
+    "êtes"
+   ],
+   "correctIndex": 2,
+   "answer": "avez été",
+   "lemma": "être",
+   "tense": "passeCompose",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “avez été”.",
+    "es": "Con “Hier”, usa el passé composé: “avez été”."
+   },
+   "subtitle_en": "Yesterday, You ___ late. (être = to be)"
+  },
+  {
+   "vid": "frCa-verb-004-t-imparfait",
+   "base_vid": "frCa-verb-004",
+   "prompt": "Autrefois, vous ___ en retard.",
+   "options": [
+    "serez",
+    "êtes",
+    "étiez",
+    "avez été"
+   ],
+   "correctIndex": 2,
+   "answer": "étiez",
+   "lemma": "être",
+   "tense": "imparfait",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “étiez”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “étiez”."
+   },
+   "subtitle_en": "In the past, You ___ late. (être = to be)"
+  },
+  {
+   "vid": "frCa-verb-004-t-futur",
+   "base_vid": "frCa-verb-004",
+   "prompt": "Demain, vous ___ en retard.",
+   "options": [
+    "serez",
+    "êtes",
+    "avez été",
+    "étiez"
+   ],
+   "correctIndex": 0,
+   "answer": "serez",
+   "lemma": "être",
+   "tense": "futur",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “serez”.",
+    "es": "Con “Demain”, usa el futuro simple: “serez”."
+   },
+   "subtitle_en": "Tomorrow, You ___ late. (être = to be)"
+  },
+  {
+   "vid": "frCa-verb-005-t-passeCompose",
+   "base_vid": "frCa-verb-005",
+   "prompt": "Hier, j'___ deux chats.",
+   "options": [
+    "ai eu",
+    "avais",
+    "aurai",
+    "ai"
+   ],
+   "correctIndex": 0,
+   "answer": "ai eu",
+   "lemma": "avoir",
+   "tense": "passeCompose",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “ai eu”.",
+    "es": "Con “Hier”, usa el passé composé: “ai eu”."
+   },
+   "subtitle_en": "Yesterday, I ___ two cats. (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-005-t-imparfait",
+   "base_vid": "frCa-verb-005",
+   "prompt": "Autrefois, j'___ deux chats.",
+   "options": [
+    "ai",
+    "aurai",
+    "avais",
+    "ai eu"
+   ],
+   "correctIndex": 2,
+   "answer": "avais",
+   "lemma": "avoir",
+   "tense": "imparfait",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “avais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “avais”."
+   },
+   "subtitle_en": "In the past, I ___ two cats. (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-005-t-futur",
+   "base_vid": "frCa-verb-005",
+   "prompt": "Demain, j'___ deux chats.",
+   "options": [
+    "ai eu",
+    "ai",
+    "avais",
+    "aurai"
+   ],
+   "correctIndex": 3,
+   "answer": "aurai",
+   "lemma": "avoir",
+   "tense": "futur",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “aurai”.",
+    "es": "Con “Demain”, usa el futuro simple: “aurai”."
+   },
+   "subtitle_en": "Tomorrow, I ___ two cats. (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-006-t-passeCompose",
+   "base_vid": "frCa-verb-006",
+   "prompt": "Hier, tu ___ faim?",
+   "options": [
+    "avais",
+    "as eu",
+    "as",
+    "auras"
+   ],
+   "correctIndex": 1,
+   "answer": "as eu",
+   "lemma": "avoir",
+   "tense": "passeCompose",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “as eu”.",
+    "es": "Con “Hier”, usa el passé composé: “as eu”."
+   },
+   "subtitle_en": "Yesterday, Are you ___ (hungry)? (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-006-t-imparfait",
+   "base_vid": "frCa-verb-006",
+   "prompt": "Autrefois, tu ___ faim?",
+   "options": [
+    "avais",
+    "as",
+    "as eu",
+    "auras"
+   ],
+   "correctIndex": 0,
+   "answer": "avais",
+   "lemma": "avoir",
+   "tense": "imparfait",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “avais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “avais”."
+   },
+   "subtitle_en": "In the past, Are you ___ (hungry)? (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-006-t-futur",
+   "base_vid": "frCa-verb-006",
+   "prompt": "Demain, tu ___ faim?",
+   "options": [
+    "as eu",
+    "as",
+    "avais",
+    "auras"
+   ],
+   "correctIndex": 3,
+   "answer": "auras",
+   "lemma": "avoir",
+   "tense": "futur",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “auras”.",
+    "es": "Con “Demain”, usa el futuro simple: “auras”."
+   },
+   "subtitle_en": "Tomorrow, Are you ___ (hungry)? (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-007-t-passeCompose",
+   "base_vid": "frCa-verb-007",
+   "prompt": "Hier, il ___ un char neuf.",
+   "options": [
+    "a eu",
+    "aura",
+    "a",
+    "avait"
+   ],
+   "correctIndex": 0,
+   "answer": "a eu",
+   "lemma": "avoir",
+   "tense": "passeCompose",
+   "person": "il",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “a eu”.",
+    "es": "Con “Hier”, usa el passé composé: “a eu”."
+   },
+   "subtitle_en": "Yesterday, He ___ a new car. (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-007-t-imparfait",
+   "base_vid": "frCa-verb-007",
+   "prompt": "Autrefois, il ___ un char neuf.",
+   "options": [
+    "aura",
+    "avait",
+    "a eu",
+    "a"
+   ],
+   "correctIndex": 1,
+   "answer": "avait",
+   "lemma": "avoir",
+   "tense": "imparfait",
+   "person": "il",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “avait”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “avait”."
+   },
+   "subtitle_en": "In the past, He ___ a new car. (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-007-t-futur",
+   "base_vid": "frCa-verb-007",
+   "prompt": "Demain, il ___ un char neuf.",
+   "options": [
+    "a eu",
+    "avait",
+    "aura",
+    "a"
+   ],
+   "correctIndex": 2,
+   "answer": "aura",
+   "lemma": "avoir",
+   "tense": "futur",
+   "person": "il",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “aura”.",
+    "es": "Con “Demain”, usa el futuro simple: “aura”."
+   },
+   "subtitle_en": "Tomorrow, He ___ a new car. (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-009-t-passeCompose",
+   "base_vid": "frCa-verb-009",
+   "prompt": "Hier, ils ___ beaucoup d'amis.",
+   "options": [
+    "auront",
+    "ont eu",
+    "ont",
+    "avaient"
+   ],
+   "correctIndex": 1,
+   "answer": "ont eu",
+   "lemma": "avoir",
+   "tense": "passeCompose",
+   "person": "ils",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “ont eu”.",
+    "es": "Con “Hier”, usa el passé composé: “ont eu”."
+   },
+   "subtitle_en": "Yesterday, They ___ lots of friends. (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-009-t-imparfait",
+   "base_vid": "frCa-verb-009",
+   "prompt": "Autrefois, ils ___ beaucoup d'amis.",
+   "options": [
+    "avaient",
+    "ont",
+    "auront",
+    "ont eu"
+   ],
+   "correctIndex": 0,
+   "answer": "avaient",
+   "lemma": "avoir",
+   "tense": "imparfait",
+   "person": "ils",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “avaient”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “avaient”."
+   },
+   "subtitle_en": "In the past, They ___ lots of friends. (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-009-t-futur",
+   "base_vid": "frCa-verb-009",
+   "prompt": "Demain, ils ___ beaucoup d'amis.",
+   "options": [
+    "auront",
+    "avaient",
+    "ont eu",
+    "ont"
+   ],
+   "correctIndex": 0,
+   "answer": "auront",
+   "lemma": "avoir",
+   "tense": "futur",
+   "person": "ils",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “auront”.",
+    "es": "Con “Demain”, usa el futuro simple: “auront”."
+   },
+   "subtitle_en": "Tomorrow, They ___ lots of friends. (avoir = to have)"
+  },
+  {
+   "vid": "frCa-verb-010-t-imparfait",
+   "base_vid": "frCa-verb-010",
+   "prompt": "Autrefois, j'___ à l'école.",
+   "options": [
+    "vais",
+    "irai",
+    "suis allée",
+    "allais"
+   ],
+   "correctIndex": 3,
+   "answer": "allais",
+   "lemma": "aller",
+   "tense": "imparfait",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “allais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “allais”."
+   },
+   "subtitle_en": "In the past, I ___ to school. (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-010-t-futur",
+   "base_vid": "frCa-verb-010",
+   "prompt": "Demain, j'___ à l'école.",
+   "options": [
+    "vais",
+    "allais",
+    "suis allée",
+    "irai"
+   ],
+   "correctIndex": 3,
+   "answer": "irai",
+   "lemma": "aller",
+   "tense": "futur",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “irai”.",
+    "es": "Con “Demain”, usa el futuro simple: “irai”."
+   },
+   "subtitle_en": "Tomorrow, I ___ to school. (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-011-t-imparfait",
+   "base_vid": "frCa-verb-011",
+   "prompt": "Autrefois, tu ___ où?",
+   "options": [
+    "iras",
+    "es allée",
+    "allais",
+    "vas"
+   ],
+   "correctIndex": 2,
+   "answer": "allais",
+   "lemma": "aller",
+   "tense": "imparfait",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “allais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “allais”."
+   },
+   "subtitle_en": "In the past, Where are you ___? (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-011-t-futur",
+   "base_vid": "frCa-verb-011",
+   "prompt": "Demain, tu ___ où?",
+   "options": [
+    "allais",
+    "iras",
+    "vas",
+    "es allée"
+   ],
+   "correctIndex": 1,
+   "answer": "iras",
+   "lemma": "aller",
+   "tense": "futur",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “iras”.",
+    "es": "Con “Demain”, usa el futuro simple: “iras”."
+   },
+   "subtitle_en": "Tomorrow, Where are you ___? (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-012-t-imparfait",
+   "base_vid": "frCa-verb-012",
+   "prompt": "Autrefois, il ___ au dépanneur.",
+   "options": [
+    "ira",
+    "est allé",
+    "allait",
+    "va"
+   ],
+   "correctIndex": 2,
+   "answer": "allait",
+   "lemma": "aller",
+   "tense": "imparfait",
+   "person": "il",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “allait”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “allait”."
+   },
+   "subtitle_en": "In the past, He ___ to the corner store. (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-012-t-futur",
+   "base_vid": "frCa-verb-012",
+   "prompt": "Demain, il ___ au dépanneur.",
+   "options": [
+    "ira",
+    "est allé",
+    "allait",
+    "va"
+   ],
+   "correctIndex": 0,
+   "answer": "ira",
+   "lemma": "aller",
+   "tense": "futur",
+   "person": "il",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “ira”.",
+    "es": "Con “Demain”, usa el futuro simple: “ira”."
+   },
+   "subtitle_en": "Tomorrow, He ___ to the corner store. (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-013-t-imparfait",
+   "base_vid": "frCa-verb-013",
+   "prompt": "Autrefois, nous ___ au parc.",
+   "options": [
+    "allions",
+    "sommes allées",
+    "allons",
+    "irons"
+   ],
+   "correctIndex": 0,
+   "answer": "allions",
+   "lemma": "aller",
+   "tense": "imparfait",
+   "person": "nous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “allions”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “allions”."
+   },
+   "subtitle_en": "In the past, We ___ to the park. (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-013-t-futur",
+   "base_vid": "frCa-verb-013",
+   "prompt": "Demain, nous ___ au parc.",
+   "options": [
+    "sommes allées",
+    "allons",
+    "irons",
+    "allions"
+   ],
+   "correctIndex": 2,
+   "answer": "irons",
+   "lemma": "aller",
+   "tense": "futur",
+   "person": "nous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “irons”.",
+    "es": "Con “Demain”, usa el futuro simple: “irons”."
+   },
+   "subtitle_en": "Tomorrow, We ___ to the park. (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-014-t-imparfait",
+   "base_vid": "frCa-verb-014",
+   "prompt": "Autrefois, vous ___ bien?",
+   "options": [
+    "êtes allées",
+    "alliez",
+    "irez",
+    "allez"
+   ],
+   "correctIndex": 1,
+   "answer": "alliez",
+   "lemma": "aller",
+   "tense": "imparfait",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “alliez”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “alliez”."
+   },
+   "subtitle_en": "In the past, Are you doing ___ (well)? (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-014-t-futur",
+   "base_vid": "frCa-verb-014",
+   "prompt": "Demain, vous ___ bien?",
+   "options": [
+    "êtes allées",
+    "allez",
+    "alliez",
+    "irez"
+   ],
+   "correctIndex": 3,
+   "answer": "irez",
+   "lemma": "aller",
+   "tense": "futur",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “irez”.",
+    "es": "Con “Demain”, usa el futuro simple: “irez”."
+   },
+   "subtitle_en": "Tomorrow, Are you doing ___ (well)? (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-015-t-imparfait",
+   "base_vid": "frCa-verb-015",
+   "prompt": "Autrefois, ils ___ à la cabane à sucre.",
+   "options": [
+    "iront",
+    "allaient",
+    "sont allés",
+    "vont"
+   ],
+   "correctIndex": 1,
+   "answer": "allaient",
+   "lemma": "aller",
+   "tense": "imparfait",
+   "person": "ils",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “allaient”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “allaient”."
+   },
+   "subtitle_en": "In the past, They ___ to the sugar shack. (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-015-t-futur",
+   "base_vid": "frCa-verb-015",
+   "prompt": "Demain, ils ___ à la cabane à sucre.",
+   "options": [
+    "allaient",
+    "iront",
+    "vont",
+    "sont allés"
+   ],
+   "correctIndex": 1,
+   "answer": "iront",
+   "lemma": "aller",
+   "tense": "futur",
+   "person": "ils",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “iront”.",
+    "es": "Con “Demain”, usa el futuro simple: “iront”."
+   },
+   "subtitle_en": "Tomorrow, They ___ to the sugar shack. (aller = to go)"
+  },
+  {
+   "vid": "frCa-verb-016-t-passeCompose",
+   "base_vid": "frCa-verb-016",
+   "prompt": "Hier, j'___ du sport le matin.",
+   "options": [
+    "ferai",
+    "fais",
+    "faisais",
+    "ai fait"
+   ],
+   "correctIndex": 3,
+   "answer": "ai fait",
+   "lemma": "faire",
+   "tense": "passeCompose",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “ai fait”.",
+    "es": "Con “Hier”, usa el passé composé: “ai fait”."
+   },
+   "subtitle_en": "Yesterday, I ___ sports in the morning. (faire = to do)"
+  },
+  {
+   "vid": "frCa-verb-016-t-imparfait",
+   "base_vid": "frCa-verb-016",
+   "prompt": "Autrefois, je ___ du sport le matin.",
+   "options": [
+    "ai fait",
+    "faisais",
+    "ferai",
+    "fais"
+   ],
+   "correctIndex": 1,
+   "answer": "faisais",
+   "lemma": "faire",
+   "tense": "imparfait",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “faisais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “faisais”."
+   },
+   "subtitle_en": "In the past, I ___ sports in the morning. (faire = to do)"
+  },
+  {
+   "vid": "frCa-verb-016-t-futur",
+   "base_vid": "frCa-verb-016",
+   "prompt": "Demain, je ___ du sport le matin.",
+   "options": [
+    "faisais",
+    "ai fait",
+    "fais",
+    "ferai"
+   ],
+   "correctIndex": 3,
+   "answer": "ferai",
+   "lemma": "faire",
+   "tense": "futur",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “ferai”.",
+    "es": "Con “Demain”, usa el futuro simple: “ferai”."
+   },
+   "subtitle_en": "Tomorrow, I ___ sports in the morning. (faire = to do)"
+  },
+  {
+   "vid": "frCa-verb-017-t-passeCompose",
+   "base_vid": "frCa-verb-017",
+   "prompt": "Hier, tu ___ quoi?",
+   "options": [
+    "feras",
+    "faisais",
+    "fais",
+    "as fait"
+   ],
+   "correctIndex": 3,
+   "answer": "as fait",
+   "lemma": "faire",
+   "tense": "passeCompose",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “as fait”.",
+    "es": "Con “Hier”, usa el passé composé: “as fait”."
+   },
+   "subtitle_en": "Yesterday, What are you ___? (faire = to do)"
+  },
+  {
+   "vid": "frCa-verb-017-t-imparfait",
+   "base_vid": "frCa-verb-017",
+   "prompt": "Autrefois, tu ___ quoi?",
+   "options": [
+    "faisais",
+    "feras",
+    "fais",
+    "as fait"
+   ],
+   "correctIndex": 0,
+   "answer": "faisais",
+   "lemma": "faire",
+   "tense": "imparfait",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “faisais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “faisais”."
+   },
+   "subtitle_en": "In the past, What are you ___? (faire = to do)"
+  },
+  {
+   "vid": "frCa-verb-017-t-futur",
+   "base_vid": "frCa-verb-017",
+   "prompt": "Demain, tu ___ quoi?",
+   "options": [
+    "faisais",
+    "as fait",
+    "fais",
+    "feras"
+   ],
+   "correctIndex": 3,
+   "answer": "feras",
+   "lemma": "faire",
+   "tense": "futur",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “feras”.",
+    "es": "Con “Demain”, usa el futuro simple: “feras”."
+   },
+   "subtitle_en": "Tomorrow, What are you ___? (faire = to do)"
+  },
+  {
+   "vid": "frCa-verb-018-t-passeCompose",
+   "base_vid": "frCa-verb-018",
+   "prompt": "Hier, il ___ frette dehors.",
+   "options": [
+    "faisait",
+    "fait",
+    "a fait",
+    "fera"
+   ],
+   "correctIndex": 2,
+   "answer": "a fait",
+   "lemma": "faire",
+   "tense": "passeCompose",
+   "person": "il",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “a fait”.",
+    "es": "Con “Hier”, usa el passé composé: “a fait”."
+   },
+   "subtitle_en": "Yesterday, It ___ (is) cold outside. (faire = to do/make)"
+  },
+  {
+   "vid": "frCa-verb-018-t-imparfait",
+   "base_vid": "frCa-verb-018",
+   "prompt": "Autrefois, il ___ frette dehors.",
+   "options": [
+    "a fait",
+    "fait",
+    "faisait",
+    "fera"
+   ],
+   "correctIndex": 2,
+   "answer": "faisait",
+   "lemma": "faire",
+   "tense": "imparfait",
+   "person": "il",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “faisait”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “faisait”."
+   },
+   "subtitle_en": "In the past, It ___ (is) cold outside. (faire = to do/make)"
+  },
+  {
+   "vid": "frCa-verb-018-t-futur",
+   "base_vid": "frCa-verb-018",
+   "prompt": "Demain, il ___ frette dehors.",
+   "options": [
+    "faisait",
+    "fait",
+    "a fait",
+    "fera"
+   ],
+   "correctIndex": 3,
+   "answer": "fera",
+   "lemma": "faire",
+   "tense": "futur",
+   "person": "il",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “fera”.",
+    "es": "Con “Demain”, usa el futuro simple: “fera”."
+   },
+   "subtitle_en": "Tomorrow, It ___ (is) cold outside. (faire = to do/make)"
+  },
+  {
+   "vid": "frCa-verb-019-t-passeCompose",
+   "base_vid": "frCa-verb-019",
+   "prompt": "Hier, vous ___ la vaisselle.",
+   "options": [
+    "avez fait",
+    "ferez",
+    "faites",
+    "faisiez"
+   ],
+   "correctIndex": 0,
+   "answer": "avez fait",
+   "lemma": "faire",
+   "tense": "passeCompose",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “avez fait”.",
+    "es": "Con “Hier”, usa el passé composé: “avez fait”."
+   },
+   "subtitle_en": "Yesterday, You ___ the dishes. (faire = to do/make)"
+  },
+  {
+   "vid": "frCa-verb-019-t-imparfait",
+   "base_vid": "frCa-verb-019",
+   "prompt": "Autrefois, vous ___ la vaisselle.",
+   "options": [
+    "avez fait",
+    "faisiez",
+    "faites",
+    "ferez"
+   ],
+   "correctIndex": 1,
+   "answer": "faisiez",
+   "lemma": "faire",
+   "tense": "imparfait",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “faisiez”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “faisiez”."
+   },
+   "subtitle_en": "In the past, You ___ the dishes. (faire = to do/make)"
+  },
+  {
+   "vid": "frCa-verb-019-t-futur",
+   "base_vid": "frCa-verb-019",
+   "prompt": "Demain, vous ___ la vaisselle.",
+   "options": [
+    "faisiez",
+    "faites",
+    "avez fait",
+    "ferez"
+   ],
+   "correctIndex": 3,
+   "answer": "ferez",
+   "lemma": "faire",
+   "tense": "futur",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “ferez”.",
+    "es": "Con “Demain”, usa el futuro simple: “ferez”."
+   },
+   "subtitle_en": "Tomorrow, You ___ the dishes. (faire = to do/make)"
+  },
+  {
+   "vid": "frCa-verb-020-t-passeCompose",
+   "base_vid": "frCa-verb-020",
+   "prompt": "Hier, nous ___ français à la maison.",
+   "options": [
+    "parlions",
+    "parlerons",
+    "parlons",
+    "avons parlé"
+   ],
+   "correctIndex": 3,
+   "answer": "avons parlé",
+   "lemma": "parler",
+   "tense": "passeCompose",
+   "person": "nous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “avons parlé”.",
+    "es": "Con “Hier”, usa el passé composé: “avons parlé”."
+   },
+   "subtitle_en": "Yesterday, We ___ French at home. (parler = to speak)"
+  },
+  {
+   "vid": "frCa-verb-020-t-imparfait",
+   "base_vid": "frCa-verb-020",
+   "prompt": "Autrefois, nous ___ français à la maison.",
+   "options": [
+    "parlions",
+    "parlons",
+    "avons parlé",
+    "parlerons"
+   ],
+   "correctIndex": 0,
+   "answer": "parlions",
+   "lemma": "parler",
+   "tense": "imparfait",
+   "person": "nous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “parlions”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “parlions”."
+   },
+   "subtitle_en": "In the past, We ___ French at home. (parler = to speak)"
+  },
+  {
+   "vid": "frCa-verb-020-t-futur",
+   "base_vid": "frCa-verb-020",
+   "prompt": "Demain, nous ___ français à la maison.",
+   "options": [
+    "parlerons",
+    "parlons",
+    "parlions",
+    "avons parlé"
+   ],
+   "correctIndex": 0,
+   "answer": "parlerons",
+   "lemma": "parler",
+   "tense": "futur",
+   "person": "nous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “parlerons”.",
+    "es": "Con “Demain”, usa el futuro simple: “parlerons”."
+   },
+   "subtitle_en": "Tomorrow, We ___ French at home. (parler = to speak)"
+  },
+  {
+   "vid": "frCa-verb-021-t-passeCompose",
+   "base_vid": "frCa-verb-021",
+   "prompt": "Hier, tu ___ une poutine.",
+   "options": [
+    "manges",
+    "as mangé",
+    "mangeais",
+    "mangeras"
+   ],
+   "correctIndex": 1,
+   "answer": "as mangé",
+   "lemma": "manger",
+   "tense": "passeCompose",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “as mangé”.",
+    "es": "Con “Hier”, usa el passé composé: “as mangé”."
+   },
+   "subtitle_en": "Yesterday, You ___ a poutine. (manger = to eat)"
+  },
+  {
+   "vid": "frCa-verb-021-t-imparfait",
+   "base_vid": "frCa-verb-021",
+   "prompt": "Autrefois, tu ___ une poutine.",
+   "options": [
+    "mangeais",
+    "manges",
+    "mangeras",
+    "as mangé"
+   ],
+   "correctIndex": 0,
+   "answer": "mangeais",
+   "lemma": "manger",
+   "tense": "imparfait",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “mangeais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “mangeais”."
+   },
+   "subtitle_en": "In the past, You ___ a poutine. (manger = to eat)"
+  },
+  {
+   "vid": "frCa-verb-021-t-futur",
+   "base_vid": "frCa-verb-021",
+   "prompt": "Demain, tu ___ une poutine.",
+   "options": [
+    "mangeras",
+    "as mangé",
+    "manges",
+    "mangeais"
+   ],
+   "correctIndex": 0,
+   "answer": "mangeras",
+   "lemma": "manger",
+   "tense": "futur",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “mangeras”.",
+    "es": "Con “Demain”, usa el futuro simple: “mangeras”."
+   },
+   "subtitle_en": "Tomorrow, You ___ a poutine. (manger = to eat)"
+  },
+  {
+   "vid": "frCa-verb-022-t-passeCompose",
+   "base_vid": "frCa-verb-022",
+   "prompt": "Hier, j'___ le hockey.",
+   "options": [
+    "aimais",
+    "aime",
+    "aimerai",
+    "ai aimé"
+   ],
+   "correctIndex": 3,
+   "answer": "ai aimé",
+   "lemma": "aimer",
+   "tense": "passeCompose",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “ai aimé”.",
+    "es": "Con “Hier”, usa el passé composé: “ai aimé”."
+   },
+   "subtitle_en": "Yesterday, I ___ hockey. (aimer = to like/love)"
+  },
+  {
+   "vid": "frCa-verb-022-t-imparfait",
+   "base_vid": "frCa-verb-022",
+   "prompt": "Autrefois, j'___ le hockey.",
+   "options": [
+    "aime",
+    "aimerai",
+    "ai aimé",
+    "aimais"
+   ],
+   "correctIndex": 3,
+   "answer": "aimais",
+   "lemma": "aimer",
+   "tense": "imparfait",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “aimais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “aimais”."
+   },
+   "subtitle_en": "In the past, I ___ hockey. (aimer = to like/love)"
+  },
+  {
+   "vid": "frCa-verb-022-t-futur",
+   "base_vid": "frCa-verb-022",
+   "prompt": "Demain, j'___ le hockey.",
+   "options": [
+    "aime",
+    "aimerai",
+    "ai aimé",
+    "aimais"
+   ],
+   "correctIndex": 1,
+   "answer": "aimerai",
+   "lemma": "aimer",
+   "tense": "futur",
+   "person": "je",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “aimerai”.",
+    "es": "Con “Demain”, usa el futuro simple: “aimerai”."
+   },
+   "subtitle_en": "Tomorrow, I ___ hockey. (aimer = to like/love)"
+  },
+  {
+   "vid": "frCa-verb-023-t-passeCompose",
+   "base_vid": "frCa-verb-023",
+   "prompt": "Hier, ils ___ au centre-ville.",
+   "options": [
+    "travaillent",
+    "ont travaillé",
+    "travailleront",
+    "travaillaient"
+   ],
+   "correctIndex": 1,
+   "answer": "ont travaillé",
+   "lemma": "travailler",
+   "tense": "passeCompose",
+   "person": "ils",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “ont travaillé”.",
+    "es": "Con “Hier”, usa el passé composé: “ont travaillé”."
+   },
+   "subtitle_en": "Yesterday, They ___ downtown. (travailler = to work)"
+  },
+  {
+   "vid": "frCa-verb-023-t-imparfait",
+   "base_vid": "frCa-verb-023",
+   "prompt": "Autrefois, ils ___ au centre-ville.",
+   "options": [
+    "travaillent",
+    "travailleront",
+    "travaillaient",
+    "ont travaillé"
+   ],
+   "correctIndex": 2,
+   "answer": "travaillaient",
+   "lemma": "travailler",
+   "tense": "imparfait",
+   "person": "ils",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “travaillaient”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “travaillaient”."
+   },
+   "subtitle_en": "In the past, They ___ downtown. (travailler = to work)"
+  },
+  {
+   "vid": "frCa-verb-023-t-futur",
+   "base_vid": "frCa-verb-023",
+   "prompt": "Demain, ils ___ au centre-ville.",
+   "options": [
+    "travaillent",
+    "ont travaillé",
+    "travailleront",
+    "travaillaient"
+   ],
+   "correctIndex": 2,
+   "answer": "travailleront",
+   "lemma": "travailler",
+   "tense": "futur",
+   "person": "ils",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “travailleront”.",
+    "es": "Con “Demain”, usa el futuro simple: “travailleront”."
+   },
+   "subtitle_en": "Tomorrow, They ___ downtown. (travailler = to work)"
+  },
+  {
+   "vid": "frCa-verb-024-t-passeCompose",
+   "base_vid": "frCa-verb-024",
+   "prompt": "Hier, vous ___ à Québec.",
+   "options": [
+    "avez habité",
+    "habiterez",
+    "habitiez",
+    "habitez"
+   ],
+   "correctIndex": 0,
+   "answer": "avez habité",
+   "lemma": "habiter",
+   "tense": "passeCompose",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Hier”, use the passé composé: “avez habité”.",
+    "es": "Con “Hier”, usa el passé composé: “avez habité”."
+   },
+   "subtitle_en": "Yesterday, You ___ in Quebec City. (habiter = to live)"
+  },
+  {
+   "vid": "frCa-verb-024-t-imparfait",
+   "base_vid": "frCa-verb-024",
+   "prompt": "Autrefois, vous ___ à Québec.",
+   "options": [
+    "habiterez",
+    "habitiez",
+    "avez habité",
+    "habitez"
+   ],
+   "correctIndex": 1,
+   "answer": "habitiez",
+   "lemma": "habiter",
+   "tense": "imparfait",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “habitiez”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “habitiez”."
+   },
+   "subtitle_en": "In the past, You ___ in Quebec City. (habiter = to live)"
+  },
+  {
+   "vid": "frCa-verb-024-t-futur",
+   "base_vid": "frCa-verb-024",
+   "prompt": "Demain, vous ___ à Québec.",
+   "options": [
+    "habitiez",
+    "avez habité",
+    "habiterez",
+    "habitez"
+   ],
+   "correctIndex": 2,
+   "answer": "habiterez",
+   "lemma": "habiter",
+   "tense": "futur",
+   "person": "vous",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “habiterez”.",
+    "es": "Con “Demain”, usa el futuro simple: “habiterez”."
+   },
+   "subtitle_en": "Tomorrow, You ___ in Quebec City. (habiter = to live)"
+  },
+  {
+   "vid": "frCa-verb-037-t-imparfait",
+   "base_vid": "frCa-verb-037",
+   "prompt": "Autrefois, j'___ manger tantôt.",
+   "options": [
+    "irai",
+    "suis allée",
+    "vais",
+    "allais"
+   ],
+   "correctIndex": 3,
+   "answer": "allais",
+   "lemma": "aller",
+   "tense": "imparfait",
+   "person": "je",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “allais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “allais”."
+   },
+   "subtitle_en": "In the past, I'm going to eat later. (aller = to go / going to)"
+  },
+  {
+   "vid": "frCa-verb-037-t-futur",
+   "base_vid": "frCa-verb-037",
+   "prompt": "Demain, j'___ manger tantôt.",
+   "options": [
+    "irai",
+    "vais",
+    "suis allée",
+    "allais"
+   ],
+   "correctIndex": 0,
+   "answer": "irai",
+   "lemma": "aller",
+   "tense": "futur",
+   "person": "je",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “irai”.",
+    "es": "Con “Demain”, usa el futuro simple: “irai”."
+   },
+   "subtitle_en": "Tomorrow, I'm going to eat later. (aller = to go / going to)"
+  },
+  {
+   "vid": "frCa-verb-038-t-imparfait",
+   "base_vid": "frCa-verb-038",
+   "prompt": "Autrefois, tu ___ aimer ça.",
+   "options": [
+    "iras",
+    "allais",
+    "es allée",
+    "vas"
+   ],
+   "correctIndex": 1,
+   "answer": "allais",
+   "lemma": "aller",
+   "tense": "imparfait",
+   "person": "tu",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “allais”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “allais”."
+   },
+   "subtitle_en": "In the past, You're going to like that. (aller = to go / going to)"
+  },
+  {
+   "vid": "frCa-verb-038-t-futur",
+   "base_vid": "frCa-verb-038",
+   "prompt": "Demain, tu ___ aimer ça.",
+   "options": [
+    "es allée",
+    "vas",
+    "iras",
+    "allais"
+   ],
+   "correctIndex": 2,
+   "answer": "iras",
+   "lemma": "aller",
+   "tense": "futur",
+   "person": "tu",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “iras”.",
+    "es": "Con “Demain”, usa el futuro simple: “iras”."
+   },
+   "subtitle_en": "Tomorrow, You're going to like that. (aller = to go / going to)"
+  },
+  {
+   "vid": "frCa-verb-041-t-imparfait",
+   "base_vid": "frCa-verb-041",
+   "prompt": "Autrefois, vous ___ adorer le spectacle.",
+   "options": [
+    "alliez",
+    "irez",
+    "êtes allées",
+    "allez"
+   ],
+   "correctIndex": 0,
+   "answer": "alliez",
+   "lemma": "aller",
+   "tense": "imparfait",
+   "person": "vous",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “alliez”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “alliez”."
+   },
+   "subtitle_en": "In the past, You're going to love the show. (aller = to go / going to)"
+  },
+  {
+   "vid": "frCa-verb-041-t-futur",
+   "base_vid": "frCa-verb-041",
+   "prompt": "Demain, vous ___ adorer le spectacle.",
+   "options": [
+    "irez",
+    "allez",
+    "alliez",
+    "êtes allées"
+   ],
+   "correctIndex": 0,
+   "answer": "irez",
+   "lemma": "aller",
+   "tense": "futur",
+   "person": "vous",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “irez”.",
+    "es": "Con “Demain”, usa el futuro simple: “irez”."
+   },
+   "subtitle_en": "Tomorrow, You're going to love the show. (aller = to go / going to)"
+  },
+  {
+   "vid": "frCa-verb-042-t-imparfait",
+   "base_vid": "frCa-verb-042",
+   "prompt": "Autrefois, ils ___ arriver en retard.",
+   "options": [
+    "allaient",
+    "sont allés",
+    "iront",
+    "vont"
+   ],
+   "correctIndex": 0,
+   "answer": "allaient",
+   "lemma": "aller",
+   "tense": "imparfait",
+   "person": "ils",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Autrefois”, use the imparfait: “allaient”.",
+    "es": "Con “Autrefois”, usa el imperfecto: “allaient”."
+   },
+   "subtitle_en": "In the past, They're going to arrive late. (aller = to go / going to)"
+  },
+  {
+   "vid": "frCa-verb-042-t-futur",
+   "base_vid": "frCa-verb-042",
+   "prompt": "Demain, ils ___ arriver en retard.",
+   "options": [
+    "sont allés",
+    "allaient",
+    "vont",
+    "iront"
+   ],
+   "correctIndex": 3,
+   "answer": "iront",
+   "lemma": "aller",
+   "tense": "futur",
+   "person": "ils",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Demain”, use the futur simple: “iront”.",
+    "es": "Con “Demain”, usa el futuro simple: “iront”."
+   },
+   "subtitle_en": "Tomorrow, They're going to arrive late. (aller = to go / going to)"
+  }
+ ]
+}
