@@ -21,6 +21,7 @@
 
 import { buildFrequencyBank } from "../../lib/frequencyVocab";
 import WORDS from "../vocab/jaWords";
+import { THEMES, tagFor } from "./jaForEnTags";
 
 // Japanese prompt formulas for the Word Bank generator. Like DE_FORMULAS,
 // no auto-capitalization — the word field is "漢字 (romaji)" and is presented
@@ -501,6 +502,13 @@ const jaForEn = {
   // #78: Word Bank category — the round-draw engine caps its share of mixed
   // rounds instead of letting the frequency bank dominate the draw.
   wbCatId: "fvocab",
+  // CJK tag pass (2026-07-20): theme filter across vocab/gram/trad + #89
+  // tense/politeness training-wheel chips on ja conjugation items (see
+  // jaForEnTags.js). The engine attaches these onto flattened items;
+  // untagged items carry none. `person` pill is repurposed as a
+  // form/politeness register (ja has no person inflection).
+  themes: THEMES,
+  tagFor,
   extraCatId: "fono",
   extraBank: FONO_BANK.map((item) => ({
     sound: item.sound,

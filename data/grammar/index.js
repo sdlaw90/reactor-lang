@@ -10,6 +10,8 @@ import frCaForEnGrammar from "./frCaForEn";
 import itForEnGrammar from "./itForEn";
 import ptBrForEnGrammar from "./ptBrForEn";
 import ptPtForEnGrammar from "./ptPtForEn";
+import jaForEnGrammar from "./jaForEn";
+import koForEnGrammar from "./koForEn";
 
 const MODULES = {
   "es-latam-for-en": esForEnGrammar,
@@ -19,6 +21,11 @@ const MODULES = {
   "it-for-en": itForEnGrammar,
   "pt-br-for-en": ptBrForEnGrammar,
   "pt-pt-for-en": ptPtForEnGrammar,
+  // #3 (2026-07-20): CJK gyms. ja/ko use the person axis repurposed as a
+  // politeness/speech-level axis (see each module's SCHEMA NOTE). Mandarin has
+  // no conjugation, so zh-for-en is intentionally absent → no gym toggle.
+  "ja-for-en": jaForEnGrammar,
+  "ko-for-en": koForEnGrammar,
 };
 
 export function grammarForTrack(trackId) {

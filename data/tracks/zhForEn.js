@@ -27,6 +27,7 @@
 
 import { buildFrequencyBank } from "../../lib/frequencyVocab";
 import WORDS from "../vocab/zhWords";
+import { THEMES, tagFor } from "./zhForEnTags";
 
 // Mandarin prompt formulas for the Word Bank generator. Like DE_FORMULAS and
 // JA_FORMULAS, no auto-capitalization — the word field is "汉字 (pīnyīn)" and is
@@ -470,6 +471,11 @@ const zhForEn = {
   // #78: Word Bank category — the round-draw engine caps its share of mixed
   // rounds instead of letting the frequency bank dominate the draw.
   wbCatId: "fvocab",
+  // CJK tag pass (2026-07-20): theme filter across vocab/gram/trad. Themes
+  // only — Mandarin has no tense/person inflection, so no grammar chips
+  // (see zhForEnTags.js). Untagged items carry none.
+  themes: THEMES,
+  tagFor,
   extraCatId: "fono",
   extraBank: FONO_BANK.map((item) => ({
     sound: item.sound,

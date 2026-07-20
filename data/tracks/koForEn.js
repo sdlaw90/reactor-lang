@@ -30,6 +30,7 @@
 
 import { buildFrequencyBank } from "../../lib/frequencyVocab";
 import WORDS from "../vocab/koWords";
+import { THEMES, tagFor } from "./koForEnTags";
 
 // Word Bank prompt formulas for the generator. Like JA/DE_FORMULAS, no
 // auto-capitalization — the word field is "한글 (RR)", presented as-is; cap()
@@ -524,6 +525,13 @@ const koForEn = {
   cats: CATS,
   bank: { ...BANK, fvocab: buildFrequencyBank(WORDS, { seed: 20260714, formulas: KO_FORMULAS }) },
   wbCatId: "fvocab",
+  // CJK tag pass (2026-07-20): theme filter across vocab/gram/trad + #89
+  // tense/politeness training-wheel chips on ko conjugation items (see
+  // koForEnTags.js). The engine attaches these onto flattened items;
+  // untagged items carry none. `person` pill is repurposed as a
+  // speech-level register (ko has no person inflection).
+  themes: THEMES,
+  tagFor,
   extraCatId: "fono",
   extraBank: FONO_BANK.map((item) => ({
     sound: item.sound,
