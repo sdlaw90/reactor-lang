@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 305 tracked files.
+> 318 tracked files.
 
 ```
 .env.local.example
@@ -146,10 +146,12 @@ docs/changelog/unreleased/2026-07-15-ru-voice-pin.md
 docs/changelog/unreleased/2026-07-15-voices-list-helper.md
 docs/changelog/unreleased/2026-07-15-zh-deepening.md
 docs/changelog/unreleased/2026-07-15-zh-tts.md
+docs/changelog/unreleased/2026-07-21-v3-prep-engineering.md
 docs/codebase-reference.md
 docs/manual-runbook.md
 docs/repo-tree.md
 docs/squirrelingo-language-wishlist.md
+docs/squirrelingo_shipped_archive.md
 docs/squirrelingo_todo_active.md
 docs/supabase-change-email-email.html
 docs/supabase-confirm-signup-email.html
@@ -244,6 +246,7 @@ lib/PasswordInput.js
 lib/PasswordStrengthMeter.js
 lib/RequireLegalGate.js
 lib/RequireUsernameGate.js
+lib/ReviewBadge.js
 lib/SearchableSelect.js
 lib/SectionToggle.js
 lib/SettingsPanel.js
@@ -271,6 +274,7 @@ lib/notify.js
 lib/passwordStrength.js
 lib/playStrings.js
 lib/reauth.js
+lib/reviewStatus.js
 lib/securityAnswerHash.js
 lib/securityQuestions.js
 lib/skillLevels.js
@@ -288,12 +292,21 @@ scripts/deploy.js
 scripts/gen-repo-tree.mjs
 scripts/generate-tts.mjs
 scripts/generate-version-json.js
+scripts/grammar-engines/de_rules_gen.py
+scripts/grammar-engines/ja_conjugator_gen.py
+scripts/grammar-engines/ja_romaji.py
+scripts/grammar-engines/ko_romaji.py
+scripts/grammar-engines/ko_rules_gen.py
+scripts/grammar-engines/ru_pymorphy3_gen.py
+scripts/grammar-engines/zh_template_gen.py
 scripts/prune-local-tts.mjs
 scripts/publish-ready.mjs
+scripts/rollup-changelog.mjs
 scripts/smoke-check.mjs
 scripts/sweep-tts.mjs
 scripts/sync-tts.mjs
 scripts/tts-on-deploy.mjs
+scripts/validate-wrongnotes.mjs
 scripts/voices-list.mjs
 styles/globals.css
 supabase/migrations.zip

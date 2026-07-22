@@ -34,6 +34,12 @@
 //     voice doesn't mangle the embedded English. Any OTHER prompt containing
 //     a true quoted span is flagged to tts-output/<id>/review.txt for a
 //     manual look rather than guessed at.
+//   - On "flags": there is a small, INTENTIONAL benign accepted-flag class for
+//     ja/ko/ru/zh — leading quoted target-script grammar prompts (e.g.
+//     'Стол' — какого рода? / a leading quoted-hanzi gram prompt) that aren't a
+//     recognition frame. They're spoken correctly as-is, so the flag is
+//     look-don't-block. When the docs say "#93 = 0 flags" they mean 0
+//     UNRESOLVED flags — this benign class is expected, not a defect.
 //   - Prompt-shape rules are per-language (LANG_RULES, keyed by
 //     track.targetLang; tracks without one fall back to the es pilot rules).
 //     French rules are elision-aware: apostrophes inside words (t'as, c'est,

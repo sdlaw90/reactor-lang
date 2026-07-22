@@ -11,7 +11,9 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "gen-tree": "node scripts/gen-repo-tree.mjs",
-    "voices:list": "node scripts/voices-list.mjs"
+    "voices:list": "node scripts/voices-list.mjs",
+    "changelog:rollup": "node scripts/rollup-changelog.mjs",
+    "changelog:check": "node scripts/rollup-changelog.mjs --check"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

@@ -407,6 +407,20 @@ const RAW = {
   "Translate: 'I overslept.' (coloquial, España)": { themes: ["numbers-time"] },
   "Translate: 'in the middle of nowhere' (España)": { themes: ["travel","directions"] },
   "Translate: 'As if we didn't have enough problems already!' (España)": { themes: ["emotions"] },
+
+  // ---- #88 theme coverage pass (2026-07-22, L4/E2 standardization; AI-authored, flag #41) ----
+  "'Beber' significa...": { themes: ["restaurant"] },
+  "Translate: 'Please.'": { themes: ["small-talk"] },
+  "Translate: 'Excuse me.' (to get past someone)": { themes: ["small-talk"] },
+  "Translate: 'This morning I had breakfast at home.' (España)": { themes: ["restaurant"] },
+  "Translate: 'He's completely spaced out.' (coloquial, España)": { themes: ["emotions", "small-talk"] },
+  "Translate: 'That's a whole different kettle of fish.' (España)": { themes: ["emotions"] },
+  "Translate: 'He's completely bonkers.' (coloquial, España)": { themes: ["emotions", "small-talk"] },
+  "Translate: 'He's sleeping off the booze.' (coloquial, España)": { themes: ["emotions", "small-talk"] },
+  "Translate: 'Don't overcomplicate things.' (España)": { themes: ["small-talk"] },
+  "Translate: 'Don't look a gift horse in the mouth.' (España)": { themes: ["small-talk"] },
+  "Translate: 'You're going off on a wild tangent.' (España)": { themes: ["emotions", "small-talk"] },
+  "Translate: 'Don't pretend you didn't hear me.' (coloquial, España)": { themes: ["small-talk"] },
 };
 
 const norm = (s) => String(s).replace(/\s+/g, " ").trim();

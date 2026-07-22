@@ -14,6 +14,7 @@ import Logo from "../lib/Logo";
 import TrackIcon from "../lib/trackIcons";
 import NavDrawer from "../lib/NavDrawer";
 import { trackDisplayName } from "../lib/languageNames";
+import ReviewBadge from "../lib/ReviewBadge";
 
 const GREETINGS = {
   es: "¡Bienvenido/a",
@@ -143,6 +144,7 @@ export default function HomePage() {
             const skillLabel = skillLevelInfo(p?.skill_level || "none").label;
             return (
               <button key={t.id} className="rj" style={styles.bubble} onClick={() => router.push(`/play/${t.id}`)}>
+                <ReviewBadge trackId={t.id} variant="bubble" />
                 <div style={styles.bubbleIconBg}>
                   <TrackIcon trackId={t.id} size={64} />
                 </div>

@@ -26,6 +26,7 @@ import { grammarForTrack } from "../../../data/grammar";
 import SectionToggle from "../../../lib/SectionToggle";
 import { trackDisplayName } from "../../../lib/languageNames";
 import StreakMilestoneCelebration from "../../../lib/StreakMilestoneCelebration";
+import ReviewBadge from "../../../lib/ReviewBadge";
 import {
   loadProgress,
   saveProgress,
@@ -468,6 +469,7 @@ export default function PlayPage({ params }) {
               {trackDisplayName(track, viewerNativeLang)}
             </h1>
             <p style={styles.subtitle}>{useAltPrompt && track.sublabelEn ? track.sublabelEn : track.sublabel}</p>
+            <ReviewBadge trackId={track.id} variant="full" style={{ marginTop: 2, marginBottom: 4 }} />
 
             <SectionToggle trackId={track.id} active="practice" practiceLabel={T("sectionPractice")} listenLabel={T("sectionListen")} speakLabel={T("sectionSpeak")} soonLabel={T("soonTag")} />
             <ModeToggle trackId={track.id} active="quiz" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} scriptLabel={trackScript ? T("modeScript") : null} grammarLabel={grammarForTrack(track.id) ? T("modeGrammar") : null} />
@@ -843,6 +845,33 @@ export default function PlayPage({ params }) {
                 </div>
               )}
 
+              {/* #69: hybrid wrong-answer note. Shown ONLY when the person picked
+                  a wrong option (not on timeouts) and the item carries a note.
+                  Prefers a per-distractor note (keyed by the picked option's
+                  text) and falls back to the general wrongNote. Purely additive:
+                  items without notes render nothing. Never-punish tone. */}
+              {awaitingNext && selected >= 0 && selected !== q.correctIdx &&
+                (q.wrongNote || (q.distractorNotes && q.distractorNotes[q.options[selected]])) && (
+                  (() => {
+                    const note = (q.distractorNotes && q.distractorNotes[q.options[selected]]) || q.wrongNote;
+                    return (
+                      <div style={styles.reviewWrongNoteBox}>
+                        <div style={styles.wrongNoteHeader}>💡 {T("wrongNoteHeader")}</div>
+                        <div style={styles.explainLangRow}>
+                          <span style={styles.explainLangTag}>EN</span>
+                          <p style={styles.explainText}>{note.en}</p>
+                        </div>
+                        {note.es && (
+                          <div style={{ ...styles.explainLangRow, marginTop: 8 }}>
+                            <span style={styles.explainLangTag}>ES</span>
+                            <p style={styles.explainText}>{note.es}</p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()
+                )}
+
               {awaitingNext && (
                 <button className="rj" style={styles.nextBtn} onClick={handleNext}>
                   {T("next")} <ChevronRight size={18} style={{ verticalAlign: "middle" }} />
@@ -1191,6 +1220,9 @@ const styles = {
   optionBtn: { border: "1px solid", borderRadius: 10, padding: "13px 16px", fontSize: 16, fontWeight: 600, textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between" },
   explainBox: { background: "#11141B", border: "1px solid #3A3452", borderRadius: 10, padding: "12px 14px" },
   reviewExplainBox: { background: "#11141B", border: "1px solid #3A3452", borderRadius: 10, padding: "12px 14px", marginTop: 16 },
+  // #69: soft amber "heads up" note on a wrong pick — informative, not punitive.
+  reviewWrongNoteBox: { background: "rgba(255,184,77,0.07)", border: "1px solid rgba(255,184,77,0.35)", borderRadius: 10, padding: "12px 14px", marginTop: 10 },
+  wrongNoteHeader: { fontSize: 11, fontWeight: 700, color: "#FFB84D", marginBottom: 8, letterSpacing: 0.3 },
   nextBtn: {
     width: "100%",
     background: "#FF8FB1",

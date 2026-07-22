@@ -8,3 +8,5 @@ node_modules/
 /playwright/.cache/
 tts-output/
 supabase/.temp/
+# AGPL Korean conjugation engine — reproduced locally, never vendored (see scripts/grammar-engines/ko_conjugation_gen.py)
+scripts/grammar-engines/ko_engine/

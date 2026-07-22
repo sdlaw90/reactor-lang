@@ -1,0 +1,14 @@
+# v3.0.0-prep engineering + polish (2026-07-21)
+
+## User-facing
+- Answer choices can now be read aloud on the Spanish (Latin America) track. In review mode, tap the little speaker on an idiom or verb answer to hear how it's pronounced. It's off by default; turn on "Answer choice audio" in Settings to use it.
+- Tracks whose content is still awaiting a native-speaker check now carry a small "Community review in progress" note — on the home tiles and at the top of each track — so it's clear which languages have been human-reviewed and which are still community-reviewed. The note disappears from a track once its review is logged.
+- Clearer question audio on a few Korean, Mandarin and Russian grammar questions: a handful of prompts that put a word in quotation marks now read that word aloud cleanly instead of tripping over the quotes.
+
+## Internal
+- **#93 TTS quoted-span cleanup** — the 31 gram prompts (ko 10 / zh 19 / ru 2) the native-voice parser flagged with "unrecognized quoted spans" are fixed by converting the flagging ASCII single-quote spans to ASCII double quotes (the accepted embedded-span convention; `quoteDetect` only matches single quotes). Verified by replicating generate-tts.mjs's exact detector in-sandbox (matched the ko10/zh19/ru2 counts, then 0 flags after the fix); node --check clean. Prompt-text change → audioKey change → clips regenerate on next deploy's TTS auto-run.
+- **#87 answer-choice audio** — added the deferred user-facing CHANGELOG line. `npm run deploy dev` will NOT synthesize the esForEn option clips (tts-on-deploy only runs generate-tts for tracks whose content changed in the pushed diff, and esForEn.js isn't changing) — a separate `node scripts/generate-tts.mjs --track esForEn --upload` is required (idempotent; produces the trad+verbo CHOICE_AUDIO option clips).
+- **#41 community-review flag UI** — new lib/reviewStatus.js (default 'in-progress' per track; flip a track id to 'reviewed' to hide) + lib/ReviewBadge.js (bubble + full variants, purple notice tokens, renders null when reviewed); wired into app/page.js (home bubbles) and app/play/[trackId]/page.js (start screen). esbuild JSX-parse clean.
+- **#91 changelog rollup** — new scripts/rollup-changelog.mjs assembles docs/changelog/unreleased/*.md fragments into ready-to-paste CHANGELOG (user-facing) and INTERNAL_CHANGELOG (internal) blocks, with --check (CI well-formedness) and --archive (move fragments to released/vX/). npm scripts: changelog:rollup, changelog:check. Assembly only — never rewrites the hand-owned version.js prose.
+- **Housekeeping confirmed** — buildFrequencyBank Word Bank already wired on fr/frCa/it/ptBr/ptPt and esSpain (import + call + wbCatId + fvocab present); no change needed.
+- No version bump — everything folds under the 2.33.0-beta.15 label per the v3.0.0 roll-up plan.
