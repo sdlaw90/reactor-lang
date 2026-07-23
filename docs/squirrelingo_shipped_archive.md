@@ -2,6 +2,34 @@
 
 > Full technical shipped history, split out of the to-do list on 2026-07-09 to keep project knowledge lean. **Keep this file OUT of project knowledge** — upload it into a chat only if a session genuinely needs deep history. Append new releases at the top. The app's own user-facing changelog (lib/version.js) intentionally stays less detailed than this.
 
+## v3.0.0 — 2026-07-23
+First release to `main` since v2.24.0-beta.3. Consolidates the entire closed-beta content-depth arc — dev betas **2.24.0-beta.4 → 2.33.0-beta.15** — into one major release. Those betas were dev-only and never shipped to prod, so the in-app changelog (lib/version.js CHANGELOG) collapses them into a single 3.0.0 "what's available" entry; full per-beta user-facing bullets remain in git history, and full internal/technical detail remains in `lib/version.js` INTERNAL_CHANGELOG (items A–R under the beta.15 ledger) and `docs/changelog/`.
+
+### What v3.0.0 delivered (by area)
+- **Content depth:** every track built from ~36-item starter sets to full A1–C2 depth (hundreds of questions each) — Romance (es-LatAm/es-Spain, fr/fr-CA, it, pt-BR/pt-PT) + de/ru/ja/ko/zh.
+- **Grammar engines (in-house, machine-verified):** ru (pymorphy3), ja + ko (conjugators; ko later re-done as a permissive clean-room rule-table), de (rule-table), zh (capped template generator). Spain Spanish gained a full verbecc-verified verb deck (~515).
+- **Word Banks:** frequency-ranked bank per track (es 609, ja 713, de 637, fr/it/pt ~570–590, ko 609, ru 188, zh 621, es-Spain ~600).
+- **Grammar Gym:** standalone conjugation trainer beyond Spanish to fr/it/pt/de/ru; ja/ko built around politeness/form; zh none (no conjugation).
+- **Alphabet mode:** ja kana, then ko hangul / ru Cyrillic / zh characters.
+- **Theme tagging (#88) + tense/form hint chips (#89)** across all tracks; **#69 "Heads up" wrong-answer notes** across the engine grammar tracks + full Romance verb/vocab/trad.
+- **Pronunciation** to 79 items/track; **idioms** batches (JA/KO/ZH full, DE/RU near); **native-language subtitles**; **question audio** (es-LatAm/fr-CA/de/ja live; ru/zh/ko pipeline wired) + **answer-choice audio** (esForEn).
+- **Progress/motivation:** level-aware mastery bars, placement quiz across all tiers, never-break streaks + milestones, dashboard.
+- **Onboarding & help:** the animated **intro tour** (auto-once + menu "How to use SquirreLingo"), community-review flags (#41), instant beta approval + one-step account setup, security-question password recovery, bug/feature forms, Facebook group.
+- **Cohesion:** app-wide WCAG contrast fix (#63), BackHome nav on 13 pages (#92), Alphabet↔Grammar reachability, token-driven theme, visual/layout consistency pass.
+
+### Beta run consolidated into this release
+- **2.24.0-beta.4/5** — explanations-screen crash fix, streak-milestone fix, bug/feature forms + error screen; feedback sign-in gate.
+- **2.25.0-beta.1–9** — first depth pass + native subtitles: es-LatAm 65→139 (first C1/C2), fr/it/es-Spain/pt-BR/pt-PT to parity; instant beta approval + one-step account setup; es-LatAm Word Bank pilot (609) → 748.
+- **2.26.0-beta.1–3** — auto error logging, admin tooling, version reconciliation.
+- **2.27.0-beta.1–2** — security-question password recovery; Facebook group.
+- **2.28.0-beta.1** — skill-level descriptions, cleaner progress display, round-focus from complete screen, smarter round variety, localized placement.
+- **2.29.0-beta.1–2 / 2.29.1-beta.1–2** — Alphabet mode (ja kana, then ko/ru/zh); beta-application polish.
+- **2.30.0-beta.1–2** — question audio (es-LatAm); fr-CA 32→712 + Word Bank; de 36→715 + Word Bank; time's-up pause + clearer exit.
+- **2.31.0-beta.1–2** — ja 36→792 + Word Bank; question audio de+ja; update prompt waits for full deploy.
+- **2.32.0-beta.1** — "?" help button, Home button, es-LatAm theme filter, tense hints, Spanish Grammar Gym.
+- **2.33.0-beta.1–13** — es-LatAm category expansions + theme/verb-form work; fr/it/pt-BR/pt-PT/fr-CA big expansions + Word Banks + Grammar Gym; es-Spain Word Bank + Grammar Gym + full depth.
+- **2.33.0-beta.14–15** — ja/ko/zh content depth + Alphabet restyle; ja/ko/de/ru/zh grammar engines + Grammar Gym; #69 Heads-up; pronunciation to 79; idiom + vocab batches; theme tagging; answer-choice audio; community-review flags; #93 TTS quoted-span cleanup; the intro tour.
+
 ## v2.24.0-beta.3 — 2026-07-09
 - Fixed a latent E2E spec bug that had never been reachable: the two beta-apply form specs selected inputs via getByPlaceholder, but those inputs never had placeholder attributes — every prior CI run died at the build step (missing secrets), so the specs had never actually executed. Switched selectors to getByLabel.
 - Programmatically associated all 8 beta-apply text fields with their visible labels (htmlFor/id) — a real screen-reader gap #46's placeholder-derived pass structurally couldn't catch (these fields had neither placeholder nor linked label).
