@@ -18,11 +18,12 @@ export default function AboutPage() {
             SquirreLingo is a language-practice app built around short, low-pressure rounds of questions —
             vocabulary, grammar, idioms, and pronunciation — rather than long, rigid lesson paths. Pick a
             language, answer a handful of questions, see how you did, and stop whenever you want. There's no
-            requirement to finish a full "lesson" in one sitting.
+            requirement to finish a full "lesson" in one sitting. It's a progressive web app, so it runs right
+            in your browser on your phone or computer — nothing to download.
           </P>
         </Section>
 
-        <Section title="Two ways to practice">
+        <Section title="Ways to practice">
           <P>
             <b>Quick Quiz</b> is the original, game-style mode — short, randomly mixed rounds with a timer,
             combo scoring, and streaks. Built for quick, low-friction practice in small bursts.
@@ -31,15 +32,23 @@ export default function AboutPage() {
             <b>Lessons</b> is a calmer, step-by-step mode — no timer, no combo pressure. It walks you through
             one topic at a time, easiest first, showing the explanation right after each answer so you can
             actually absorb it before moving on. A better fit if you'd rather work through material
-            methodically than in quick random bursts.
+            methodically than in quick random bursts. Both modes track the same overall progress, so switching
+            between them never resets anything.
           </P>
-          <P>Both modes track the same overall progress, so switching between them never resets anything.</P>
+          <P>
+            On top of those, most tracks add two focused trainers reachable from the same mode switch:
+            <b> Grammar Gym</b>, a standalone conjugation drill that keeps its own progress and never touches
+            your level or streak, and an <b>Alphabet</b> mode for learning a new writing system — kana, hangul,
+            Cyrillic, or Chinese characters — from scratch.
+          </P>
         </Section>
 
         <Section title="Skill levels & the placement quiz">
           <P>
-            Content is tagged by difficulty (beginner through advanced). If you're not sure where you stand,
-            each language has a short placement quiz that recommends a starting level for you.
+            Every track uses the real CEFR framework that actual language certifications use, with skill levels
+            running from No experience through Beginner, Intermediate, Advanced, and Native (A1–C2). Not sure
+            where you stand? Each language has a short, untimed placement quiz that samples every tier the track
+            has content for, so it can place true beginners and advanced learners alike.
           </P>
         </Section>
 
@@ -53,10 +62,28 @@ export default function AboutPage() {
 
         <Section title="Multiple languages, real dialect differences">
           <P>
-            Where a language has genuinely different regional versions — Latin American vs. European
-            Spanish, US vs. UK English, France vs. Canadian French, Brazilian vs. European Portuguese — this
-            app treats them as separate tracks with real content differences, not the same material with a
-            different flag.
+            For English speakers, SquirreLingo teaches nine languages — Spanish, French, Portuguese, Italian,
+            German, Russian, Japanese, Mandarin Chinese, and Korean — several with genuinely different regional
+            versions (Latin American vs. European Spanish, France vs. Québécois French, Brazilian vs. European
+            Portuguese), for twelve distinct tracks in all. Where a language has real regional differences, this
+            app treats them as separate tracks with different content, not the same material behind a different
+            flag. Learning English is available too, for Spanish- and Italian-speaking users, with more
+            native-language pairings on the way.
+          </P>
+          <P>
+            Languages with their own writing system always show native script and its romanization together —
+            kanji with romaji, hangul, Chinese characters with pinyin. And for German, Russian, Japanese,
+            Korean, and Mandarin, the grammar questions are built by in-house engines, so every verb form is
+            machine-verified for correctness rather than hand-typed.
+          </P>
+        </Section>
+
+        <Section title="Honest about what's human-checked">
+          <P>
+            Building this much content quickly means some of it is still awaiting a native-speaker review.
+            Rather than hide that, tracks still in that queue carry a small "Community review in progress" note,
+            so you always know which languages have been human-reviewed and which haven't yet. The note
+            disappears once a track's review is logged.
           </P>
         </Section>
 
@@ -67,30 +94,24 @@ export default function AboutPage() {
             </P>
 
             <p style={styles.bucketLabel}>In progress</p>
-            <RoadmapItem badge title="Way more questions per language">
-              Deeper content for every track, all the way up to advanced levels.
-            </RoadmapItem>
             <RoadmapItem badge title="Translations under questions">
-              See what a question means in your language while you're still learning.
+              See what a question means in your language while you're still learning — expanding track by track.
+            </RoadmapItem>
+            <RoadmapItem badge title="SquirreLingo in more languages">
+              Learn from your native language, not just English — more source languages are rolling out.
             </RoadmapItem>
 
             <p style={styles.bucketLabel}>Coming soon</p>
             <RoadmapItem title="Mastery quizzes and star rankings">
               Prove you've truly mastered a category and earn stars for it.
             </RoadmapItem>
-            <RoadmapItem title="Alphabet and writing-system lessons">
-              Learn kana, hangul, Cyrillic, and Chinese characters from scratch.
-            </RoadmapItem>
             <RoadmapItem title="Explanations in your language">
-              Answer explanations in both your native and target language.
+              Answer explanations in both your native and target language, not just English and Spanish.
             </RoadmapItem>
 
             <p style={styles.bucketLabel}>Down the road</p>
             <RoadmapItem title="Listening and speaking practice">
               Hear it, say it — a whole new way to practice.
-            </RoadmapItem>
-            <RoadmapItem title="SquirreLingo in more languages">
-              Learn from your native language, not just English.
             </RoadmapItem>
             <RoadmapItem title="App store apps">
               SquirreLingo on Google Play and the App Store.

@@ -26,9 +26,10 @@ export default function HelpPage() {
           </P>
           <P>
             Next to it, your <b>profile picture</b> opens a slide-out menu with everything else: <b>What's New</b>
-            (a dot appears when there's a release you haven't seen yet), <b>About</b> (what the app is, how both
-            modes work, and what's planned next), and <b>Dashboard</b> (your total XP, streak, and rounds across
-            every language). Below a divider, the full <b>Settings</b> section sits right there too — username,
+            (a dot appears when there's a release you haven't seen yet), <b>How to use SquirreLingo</b> (the same
+            quick animated tour you got on your first sign-in — reopen it anytime), <b>About</b> (what the app is,
+            how the modes work, and what's planned next), and <b>Dashboard</b> (your total XP, streak, and rounds
+            across every language). Below a divider, the full <b>Settings</b> section sits right there too — username,
             email, password, native language/country, profile picture, gameplay preferences — no extra tap
             needed to open it.
           </P>
@@ -45,14 +46,18 @@ export default function HelpPage() {
           <P>Each language bubble shows your current skill level and XP progress toward the next one. Tap any bubble to start practicing that language — progress is tracked independently per language.</P>
         </Section>
 
-        <Section title="Two ways to practice: Quick Quiz vs. Lessons">
+        <Section title="Ways to practice: Quick Quiz, Lessons & more">
           <P>
             <b>Quick Quiz</b> is the original game-style mode — short, randomly mixed rounds with a timer,
             combo scoring, and streaks. <b>Lessons</b> is a calmer alternative — no timer, no combo pressure,
             walking through one topic at a time (easiest items first), showing the explanation right after
-            each answer. Switch between them any time using the link at the bottom of either mode's start
-            screen — both count toward the same XP, level, and mastery progress, so nothing is lost by
-            switching.
+            each answer. A segmented switch near the top of either mode's start screen flips between them —
+            both count toward the same XP, level, and mastery progress, so nothing is lost by switching.
+          </P>
+          <P>
+            On tracks that support them, that same switch carries two more segments: an <b>Alphabet</b> mode
+            for languages with their own writing system, and <b>Grammar Gym</b>, a standalone conjugation
+            trainer. Both are described in their own sections below, and each keeps its own separate progress.
           </P>
         </Section>
 
@@ -70,6 +75,11 @@ export default function HelpPage() {
           <P>Some tracks also carry a <b>Word Bank</b> category ("Palabras" / "Mots") — a large layer of the language's most frequent words. It joins the mix like any other category, but the default blend caps how much of a round it can take up, so it never crowds out grammar, expressions, or phonetics.</P>
         </Section>
 
+        <Section title="Practice by theme">
+          <P>Alongside the category picker, a <b>Focus by theme</b> row lets you drill a single topic — travel, food, work, and so on — pulled from every category at once. Leave it on <b>All themes</b> for the usual blend.</P>
+          <P>A theme and a category focus <b>combine</b> when you pick both — say, just the grammar questions inside the "travel" theme. If that particular combination is too thin to fill a full round, the app tells you up front instead of quietly serving a one-item round.</P>
+        </Section>
+
         <Section title="Language switches with your skill level">
           <P>On each language's play page, the on-screen buttons/labels/stats show in your <b>native language</b> while you're at No experience, Beginner, or Intermediate — no need to read instructions in a language you don't know yet. Once you reach Advanced or Native, that same chrome switches to the <b>language you're learning</b>, since by then reading it is good practice.</P>
           <P>Questions themselves follow the same rule where available: the question appears in the language you're learning, with a small <b>translation in your native language</b> right underneath while you're at the lower skill levels — so you always know what's being asked without the translation ever giving away the answer. At Advanced/Native the subtitle disappears along with the rest of the native-language chrome. Translations are being added track by track alongside the deeper-content passes, starting with Latin American Spanish.</P>
@@ -81,6 +91,15 @@ export default function HelpPage() {
           <P><b>Phonetics questions</b> show a written respelling of how a phrase sounds (CAPS = stressed syllable, ‿ = words that blend together in fast speech) instead of real audio, so it works everywhere without needing sound.</P>
           <P><b>Question audio</b>: on tracks where audio has been recorded (Latin American Spanish so far), a speaker button appears beside the question — tap to hear it read aloud in the track's own dialect, tap again to stop. It never plays on its own, and the timer keeps running while it plays. All speaker buttons can be turned off in Settings → Gameplay.</P>
           <P>Right and wrong answers are deliberately hard to miss — a green pulse for correct, a red shake for wrong.</P>
+        </Section>
+
+        <Section title={'The "Heads up" when you miss one'}>
+          <P>Miss a question and, on top of the explanation, you get a quick <b>💡 Heads up</b> that does two things: it names the rule the question was testing, <i>and</i> it speaks to the specific option <b>you</b> picked — why that form is wrong, or what it actually means — so a wrong tap becomes a mini-lesson instead of just a red mark. It shows most fully in <b>Review mode</b> (below), where the card waits for you before moving on.</P>
+        </Section>
+
+        <Section title="Tense hints on verb questions">
+          <P>On conjugation questions, a small <b>🎯 target chip</b> names the tense and person the answer needs, with a one-line reason why — training wheels so you can focus on getting the form right while you're still learning it. They're on by default. Once you reach an advanced level the chip offers a dismiss button, and you can also turn them off in Settings → Gameplay.</P>
+          <P>For German, Russian, Japanese, Korean, and Mandarin, the verb questions themselves are generated by in-house grammar engines, so the forms are correct by construction rather than hand-typed.</P>
         </Section>
 
         <Section title="Review mode">
@@ -108,12 +127,21 @@ export default function HelpPage() {
           <P>Answer consistently well at your current level and you'll be offered a chance to advance. Not sure where you stand? Take the short, untimed <b>placement quiz</b> from that language's start screen — it samples questions across all six CEFR tiers (A1 through C2) that the track has content for, so it can place true beginners and advanced learners accurately, not just people in the middle.</P>
         </Section>
 
+        <Section title="Grammar Gym">
+          <P>Tracks with a conjugation module get a <b>Grammar Gym</b> segment in the mode switch — a standalone place to drill verbs. It has two parts: a <b>Learn</b> view with reference charts (each verb laid out across its tenses and forms) and a <b>Practice</b> view that quizzes you on those forms in short 10-question drills. You can narrow to a single verb group to focus on one pattern at a time.</P>
+          <P>It's deliberately walled off from the rest of the app: its progress is kept on its own and never touches your level, XP, streak, or mastery — so drill as much (or as little) as you like, with nothing to lose either way.</P>
+        </Section>
+
         <Section title="Alphabet / writing-system mode">
-          <P>Tracks whose language uses a different writing system have a third mode next to Quick Quiz and Lessons. Japanese gets hiragana and katakana, Korean gets hangul (with a sampler of real syllable blocks), Russian gets Cyrillic (grouped by how letters relate to the Latin alphabet — false friends defused early), and Mandarin gets a foundational character set with pinyin and meanings. Each offers full reference charts plus short practice quizzes in both directions (see the symbol, pick the sound — and vice versa). It's entirely optional and never required: no timer, no XP, nothing to lose. Symbols you've answered correctly show green in the charts so you can watch the unfamiliar ones shrink. Japanese kanji isn't part of this (that's a much longer journey) — every question in the app shows romanized readings alongside, so these basics are all you need to play.</P>
+          <P>Tracks whose language uses a different writing system get an <b>Alphabet</b> mode in the switch next to Quick Quiz and Lessons. Japanese gets hiragana and katakana, Korean gets hangul (with a sampler of real syllable blocks), Russian gets Cyrillic (grouped by how letters relate to the Latin alphabet — false friends defused early), and Mandarin gets a foundational character set with pinyin and meanings. Each offers full reference charts plus short practice quizzes in both directions (see the symbol, pick the sound — and vice versa). It's entirely optional and never required: no timer, no XP, nothing to lose. Symbols you've answered correctly show green in the charts so you can watch the unfamiliar ones shrink. Japanese kanji isn't part of this (that's a much longer journey) — every question in the app shows romanized readings alongside, so these basics are all you need to play.</P>
         </Section>
 
         <Section title="Gameplay settings">
-          <P>In Settings → Gameplay: turn review mode on/off, adjust how many questions come from each category per round, how many phonetics pairs appear, and the per-question timer — either one shared time limit or separate limits for regular questions vs. phonetics — and turn question audio on or off.</P>
+          <P>In Settings → Gameplay: turn review mode on/off, adjust how many questions come from each category per round, how many phonetics pairs appear, and the per-question timer — either one shared time limit or separate limits for regular questions vs. phonetics — turn question audio on or off, and switch off the tense hints on verb questions once you've outgrown them.</P>
+        </Section>
+
+        <Section title={'"Community review in progress" notes'}>
+          <P>A lot of content was built quickly, and some tracks are still waiting on a native-speaker check. Rather than hide that, a small <b>Community review in progress</b> badge appears on those language bubbles (and their start screens), so you always know which tracks have been human-reviewed and which haven't yet. The badge quietly disappears once a track's review is logged.</P>
         </Section>
 
         <Section title="Feedback">
