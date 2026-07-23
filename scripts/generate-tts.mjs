@@ -703,13 +703,21 @@ async function synthesize(ssml, apiKey, voiceKind = "target") {
   return Buffer.from(json.audioContent, "base64");
 }
 
-async function withRetry(fn, tries = 4) {
+async function withRetry(fn, tries = 5) {
   let wait = 1000;
   for (let attempt = 1; ; attempt++) {
     try {
       return await fn();
     } catch (e) {
-      const retryable = e.status === 429 || (e.status >= 500 && e.status < 600);
+      // Retry on rate-limit / 5xx AND on transport-level failures. A raw
+      // `fetch failed` (undici network error, ECONNRESET, socket timeout)
+      // throws BEFORE any HTTP response, so it carries no `.status` — the old
+      // check treated that as non-retryable and rethrew immediately, which is
+      // why flaky bucket uploads never self-healed within a run. Missing
+      // status = transport error = retryable. Errors WITH a status (401/403/
+      // 404, etc.) keep their old non-retryable behavior.
+      const retryable =
+        e.status === undefined || e.status === 429 || (e.status >= 500 && e.status < 600);
       if (!retryable || attempt === tries) throw e;
       await new Promise((r) => setTimeout(r, wait));
       wait *= 2;
@@ -852,7 +860,60 @@ if (UPLOAD) {
     }
   }
 
-  const files = (await readdir(outDir)).filter((f) => f.endsWith(".mp3"));
+  // Only upload clips the bucket doesn't already have. Keys are immutable
+  // content hashes, so an object that already exists is byte-identical — a
+  // re-run (or the deploy-level retry) then pushes ONLY the missing/failed
+  // clips instead of re-uploading all ~1.4k every time, which is what let a
+  // fresh random flake reappear on each full pass. Fails safe: if the bucket
+  // listing errors, we fall back to uploading everything. `--force` re-uploads all.
+  async function listExisting(prefix) {
+    const names = new Set();
+    for (let offset = 0; ; offset += 1000) {
+      const res = await fetch(`${url}/storage/v1/object/list/tts-audio`, {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${serviceKey}`,
+          apikey: serviceKey,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ prefix, limit: 1000, offset, sortBy: { column: "name", order: "asc" } }),
+      });
+      if (!res.ok) {
+        const detail = await res.text().catch(() => "");
+        const err = new Error(`list ${res.status}: ${detail.slice(0, 120)}`);
+        err.status = res.status;
+        throw err;
+      }
+      const page = await res.json();
+      if (!Array.isArray(page)) break;
+      for (const o of page) {
+        if (o && o.name) {
+          names.add(o.name); // whether the API returns "abc.mp3" or "<track>/abc.mp3",
+          const base = o.name.split("/").pop(); // store the basename too so the match holds
+          if (base) names.add(base);
+        }
+      }
+      if (page.length < 1000) break;
+    }
+    return names;
+  }
+
+  const allFiles = (await readdir(outDir)).filter((f) => f.endsWith(".mp3"));
+  let files = allFiles;
+  if (FORCE) {
+    console.log(`--force: uploading all ${allFiles.length} clips.`);
+  } else {
+    try {
+      const existing = await withRetry(() => listExisting(`${track.id}/`));
+      files = allFiles.filter((f) => !existing.has(f));
+      console.log(
+        `Bucket has ${existing.size} object(s) for this track; uploading ${files.length} missing of ${allFiles.length} clip(s) (use --force to re-upload all).`
+      );
+    } catch (e) {
+      console.error(`⚠ bucket listing failed (${e.message}); uploading all ${allFiles.length} clips as a fallback.`);
+      files = allFiles;
+    }
+  }
   console.log(`Uploading ${files.length} clips + manifest to bucket "tts-audio"...`);
   let up = 0;
   const upErrors = await pool(
