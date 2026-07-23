@@ -176,6 +176,12 @@ export default function PlayPage({ params }) {
   const displayCatLabel = (catId) => categoryDisplayName(uiLang, viewerNativeLang, track, catId);
   const uiLang = uiLangForSkill(progress.skill_level, viewerNativeLang, track);
   const T = (key, vars) => t(uiLang, key, vars);
+  // #60: the learner's "source" language (their native language) + region, used
+  // to resolve explanations/notes into that language, falling back to English
+  // when the source string isn't localized yet. sourceRegion drives the future
+  // es-LatAm/es-Spain variant split (inert until such content is authored).
+  const sourceLang = viewerNativeLang || track.nativeLang;
+  const sourceRegion = session?.user?.user_metadata?.native_country === "ES" ? "spain" : "latam";
   // Small native-language subtitle under the question (target language stays
   // the primary prompt on top). Follows the same skill-level rule as the rest
   // of the page's chrome: shown while the UI is in the viewer's native
@@ -832,18 +838,20 @@ export default function PlayPage({ params }) {
                 <p style={{ color: "#FFB84D", fontSize: 13.5, fontWeight: 600, marginTop: 12 }}>{T("timeUp")}</p>
               )}
 
-              {awaitingNext && q.explain && (
-                <div style={styles.reviewExplainBox}>
-                  <div style={styles.explainLangRow}>
-                    <span style={styles.explainLangTag}>EN</span>
-                    <p style={styles.explainText}>{q.explain.en}</p>
+              {awaitingNext && q.explain && (() => {
+                // #60: render the explanation in the learner's source language,
+                // falling back to English when it isn't localized yet. The lang
+                // tag reflects what's actually shown (so a fallback reads "EN").
+                const ex = resolveExplainText(q.explain, sourceLang, sourceRegion);
+                return ex && ex.text ? (
+                  <div style={styles.reviewExplainBox}>
+                    <div style={styles.explainLangRow}>
+                      <span style={styles.explainLangTag}>{ex.lang.toUpperCase()}</span>
+                      <p style={styles.explainText}>{ex.text}</p>
+                    </div>
                   </div>
-                  <div style={{ ...styles.explainLangRow, marginTop: 8 }}>
-                    <span style={styles.explainLangTag}>ES</span>
-                    <p style={styles.explainText}>{q.explain.es}</p>
-                  </div>
-                </div>
-              )}
+                ) : null;
+              })()}
 
               {/* #69: hybrid wrong-answer note. Shown ONLY when the person picked
                   a wrong option (not on timeouts) and the item carries a note.
@@ -854,19 +862,16 @@ export default function PlayPage({ params }) {
                 (q.wrongNote || (q.distractorNotes && q.distractorNotes[q.options[selected]])) && (
                   (() => {
                     const note = (q.distractorNotes && q.distractorNotes[q.options[selected]]) || q.wrongNote;
+                    // #60: source-language note with English fallback.
+                    const wn = resolveExplainText(note, sourceLang, sourceRegion);
+                    if (!wn || !wn.text) return null;
                     return (
                       <div style={styles.reviewWrongNoteBox}>
                         <div style={styles.wrongNoteHeader}>💡 {T("wrongNoteHeader")}</div>
                         <div style={styles.explainLangRow}>
-                          <span style={styles.explainLangTag}>EN</span>
-                          <p style={styles.explainText}>{note.en}</p>
+                          <span style={styles.explainLangTag}>{wn.lang.toUpperCase()}</span>
+                          <p style={styles.explainText}>{wn.text}</p>
                         </div>
-                        {note.es && (
-                          <div style={{ ...styles.explainLangRow, marginTop: 8 }}>
-                            <span style={styles.explainLangTag}>ES</span>
-                            <p style={styles.explainText}>{note.es}</p>
-                          </div>
-                        )}
                       </div>
                     );
                   })()
@@ -959,7 +964,7 @@ export default function PlayPage({ params }) {
             <p style={styles.subtitle}>{T("explanationsSubtitle")}</p>
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12 }}>
               {explanationLog.map((item, i) => (
-                <ExplanationCard item={item} track={track} uiLang={uiLang} key={item.id || i} />
+                <ExplanationCard item={item} track={track} uiLang={uiLang} sourceLang={sourceLang} sourceRegion={sourceRegion} key={item.id || i} />
               ))}
               {explanationLog.length === 0 && <p style={{ color: "#9B93B8", fontSize: 14 }}>{T("noExplanationsYet")}</p>}
             </div>
@@ -996,7 +1001,7 @@ export default function PlayPage({ params }) {
             <p style={styles.subtitle}>{T("archiveSubtitle")}</p>
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12 }}>
               {archiveLog.map((item, i) => (
-                <ExplanationCard item={item} track={track} uiLang={uiLang} key={item.id || i} />
+                <ExplanationCard item={item} track={track} uiLang={uiLang} sourceLang={sourceLang} sourceRegion={sourceRegion} key={item.id || i} />
               ))}
               {archiveLog.length === 0 && !archiveLoading && <p style={{ color: "#9B93B8", fontSize: 14 }}>{T("archiveEmpty")}</p>}
             </div>
@@ -1016,7 +1021,20 @@ export default function PlayPage({ params }) {
   );
 }
 
-function ExplanationCard({ item, track, uiLang }) {
+// #60: resolve an { en, es, ... } explanation map (optionally with a
+// { latam, spain } regional sub-split) to the learner's source language,
+// falling back to English when that source string isn't authored yet. Returns
+// { text, lang } where lang is what's ACTUALLY shown (the source, or "en" on
+// fallback), or null when there's nothing to show.
+function resolveExplainText(map, sourceLang, sourceRegion = "latam") {
+  if (!map) return null;
+  let val = map[sourceLang];
+  if (val && typeof val === "object") val = val[sourceRegion] ?? val.latam ?? val.spain;
+  if (val == null) return map.en != null ? { text: map.en, lang: "en" } : null;
+  return { text: val, lang: sourceLang };
+}
+
+function ExplanationCard({ item, track, uiLang, sourceLang, sourceRegion }) {
   const catInfo = track.cats[item.cat] || { label: item.cat, color: "#9B93B8" };
   return (
     <div style={{ ...styles.card, borderColor: item.isCorrect || item.is_correct ? "#5EE0A0" : "#FF7B8A", textAlign: "left" }}>
@@ -1068,18 +1086,20 @@ function ExplanationCard({ item, track, uiLang }) {
         })}
       </div>
 
-      {(item.explain || item.explain_en) && (
-        <div style={styles.explainBox}>
-          <div style={styles.explainLangRow}>
-            <span style={styles.explainLangTag}>EN</span>
-            <p style={styles.explainText}>{item.explain ? item.explain.en : item.explain_en}</p>
+      {(() => {
+        // #60: single source-resolved explanation row (English fallback). Handles
+        // both the { en, es } map and the legacy explain_en/explain_es flat shape.
+        const map = item.explain || (item.explain_en != null ? { en: item.explain_en, es: item.explain_es } : null);
+        const ex = resolveExplainText(map, sourceLang || track.nativeLang, sourceRegion);
+        return ex && ex.text ? (
+          <div style={styles.explainBox}>
+            <div style={styles.explainLangRow}>
+              <span style={styles.explainLangTag}>{ex.lang.toUpperCase()}</span>
+              <p style={styles.explainText}>{ex.text}</p>
+            </div>
           </div>
-          <div style={{ ...styles.explainLangRow, marginTop: 8 }}>
-            <span style={styles.explainLangTag}>ES</span>
-            <p style={styles.explainText}>{item.explain ? item.explain.es : item.explain_es}</p>
-          </div>
-        </div>
-      )}
+        ) : null;
+      })()}
     </div>
   );
 }
