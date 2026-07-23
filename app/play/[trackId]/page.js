@@ -182,6 +182,10 @@ export default function PlayPage({ params }) {
   // es-LatAm/es-Spain variant split (inert until such content is authored).
   const sourceLang = viewerNativeLang || track.nativeLang;
   const sourceRegion = session?.user?.user_metadata?.native_country === "ES" ? "spain" : "latam";
+  // #60: the track's target language — surfaced as a second explanation row
+  // below Advanced level (see explainRows), so e.g. English speakers learning
+  // Spanish keep the Spanish reading as exposure.
+  const explainTargetLang = track.targetLang || null;
   // Small native-language subtitle under the question (target language stays
   // the primary prompt on top). Follows the same skill-level rule as the rest
   // of the page's chrome: shown while the UI is in the viewer's native
@@ -839,16 +843,18 @@ export default function PlayPage({ params }) {
               )}
 
               {awaitingNext && q.explain && (() => {
-                // #60: render the explanation in the learner's source language,
-                // falling back to English when it isn't localized yet. The lang
-                // tag reflects what's actually shown (so a fallback reads "EN").
-                const ex = resolveExplainText(q.explain, sourceLang, sourceRegion);
-                return ex && ex.text ? (
+                // #60: explanation rows in the learner's source language (English
+                // fallback), plus the target-language reading below Advanced level
+                // — so e.g. English speakers learning Spanish keep the Spanish row.
+                const rows = explainRows(q.explain, { sourceLang, sourceRegion, targetLang: explainTargetLang, advanced: advancedLevel });
+                return rows.length ? (
                   <div style={styles.reviewExplainBox}>
-                    <div style={styles.explainLangRow}>
-                      <span style={styles.explainLangTag}>{ex.lang.toUpperCase()}</span>
-                      <p style={styles.explainText}>{ex.text}</p>
-                    </div>
+                    {rows.map((r, ri) => (
+                      <div key={r.tag} style={ri === 0 ? styles.explainLangRow : { ...styles.explainLangRow, marginTop: 8 }}>
+                        <span style={styles.explainLangTag}>{r.tag.toUpperCase()}</span>
+                        <p style={styles.explainText}>{r.text}</p>
+                      </div>
+                    ))}
                   </div>
                 ) : null;
               })()}
@@ -862,16 +868,18 @@ export default function PlayPage({ params }) {
                 (q.wrongNote || (q.distractorNotes && q.distractorNotes[q.options[selected]])) && (
                   (() => {
                     const note = (q.distractorNotes && q.distractorNotes[q.options[selected]]) || q.wrongNote;
-                    // #60: source-language note with English fallback.
-                    const wn = resolveExplainText(note, sourceLang, sourceRegion);
-                    if (!wn || !wn.text) return null;
+                    // #60: same source + target treatment as the explanation box.
+                    const rows = explainRows(note, { sourceLang, sourceRegion, targetLang: explainTargetLang, advanced: advancedLevel });
+                    if (!rows.length) return null;
                     return (
                       <div style={styles.reviewWrongNoteBox}>
                         <div style={styles.wrongNoteHeader}>💡 {T("wrongNoteHeader")}</div>
-                        <div style={styles.explainLangRow}>
-                          <span style={styles.explainLangTag}>{wn.lang.toUpperCase()}</span>
-                          <p style={styles.explainText}>{wn.text}</p>
-                        </div>
+                        {rows.map((r, ri) => (
+                          <div key={r.tag} style={ri === 0 ? styles.explainLangRow : { ...styles.explainLangRow, marginTop: 8 }}>
+                            <span style={styles.explainLangTag}>{r.tag.toUpperCase()}</span>
+                            <p style={styles.explainText}>{r.text}</p>
+                          </div>
+                        ))}
                       </div>
                     );
                   })()
@@ -964,7 +972,7 @@ export default function PlayPage({ params }) {
             <p style={styles.subtitle}>{T("explanationsSubtitle")}</p>
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12 }}>
               {explanationLog.map((item, i) => (
-                <ExplanationCard item={item} track={track} uiLang={uiLang} sourceLang={sourceLang} sourceRegion={sourceRegion} key={item.id || i} />
+                <ExplanationCard item={item} track={track} uiLang={uiLang} sourceLang={sourceLang} sourceRegion={sourceRegion} advanced={advancedLevel} key={item.id || i} />
               ))}
               {explanationLog.length === 0 && <p style={{ color: "#9B93B8", fontSize: 14 }}>{T("noExplanationsYet")}</p>}
             </div>
@@ -1001,7 +1009,7 @@ export default function PlayPage({ params }) {
             <p style={styles.subtitle}>{T("archiveSubtitle")}</p>
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12 }}>
               {archiveLog.map((item, i) => (
-                <ExplanationCard item={item} track={track} uiLang={uiLang} sourceLang={sourceLang} sourceRegion={sourceRegion} key={item.id || i} />
+                <ExplanationCard item={item} track={track} uiLang={uiLang} sourceLang={sourceLang} sourceRegion={sourceRegion} advanced={advancedLevel} key={item.id || i} />
               ))}
               {archiveLog.length === 0 && !archiveLoading && <p style={{ color: "#9B93B8", fontSize: 14 }}>{T("archiveEmpty")}</p>}
             </div>
@@ -1034,7 +1042,27 @@ function resolveExplainText(map, sourceLang, sourceRegion = "latam") {
   return { text: val, lang: sourceLang };
 }
 
-function ExplanationCard({ item, track, uiLang, sourceLang, sourceRegion }) {
+// #60: the rows to display for an explanation-style map, honoring skill level.
+// Row 1 is the learner's source language (English fallback). Row 2 is the TARGET
+// language, added only BELOW Advanced (none/beginner/intermediate) so learners
+// still get the target-language reading as exposure — e.g. an English speaker
+// learning Spanish keeps the Spanish row. At Advanced/Native it goes immersive:
+// the target-language row alone (or the source row when no target text exists).
+// Returns [{ tag, text }, ...].
+function explainRows(map, { sourceLang, sourceRegion, targetLang, advanced } = {}) {
+  const native = resolveExplainText(map, sourceLang, sourceRegion);
+  if (!native || !native.text) return [];
+  const tv = map ? map[targetLang] : null;
+  const targetText = targetLang && targetLang !== native.lang && typeof tv === "string" ? tv : null;
+  if (advanced) {
+    return targetText ? [{ tag: targetLang, text: targetText }] : [{ tag: native.lang, text: native.text }];
+  }
+  const rows = [{ tag: native.lang, text: native.text }];
+  if (targetText) rows.push({ tag: targetLang, text: targetText });
+  return rows;
+}
+
+function ExplanationCard({ item, track, uiLang, sourceLang, sourceRegion, advanced }) {
   const catInfo = track.cats[item.cat] || { label: item.cat, color: "#9B93B8" };
   return (
     <div style={{ ...styles.card, borderColor: item.isCorrect || item.is_correct ? "#5EE0A0" : "#FF7B8A", textAlign: "left" }}>
@@ -1087,16 +1115,19 @@ function ExplanationCard({ item, track, uiLang, sourceLang, sourceRegion }) {
       </div>
 
       {(() => {
-        // #60: single source-resolved explanation row (English fallback). Handles
-        // both the { en, es } map and the legacy explain_en/explain_es flat shape.
+        // #60: source + target explanation rows (English fallback), honoring skill
+        // level. Handles both the { en, es } map and the legacy explain_en/explain_es
+        // flat shape.
         const map = item.explain || (item.explain_en != null ? { en: item.explain_en, es: item.explain_es } : null);
-        const ex = resolveExplainText(map, sourceLang || track.nativeLang, sourceRegion);
-        return ex && ex.text ? (
+        const rows = explainRows(map, { sourceLang: sourceLang || track.nativeLang, sourceRegion, targetLang: track.targetLang || null, advanced });
+        return rows.length ? (
           <div style={styles.explainBox}>
-            <div style={styles.explainLangRow}>
-              <span style={styles.explainLangTag}>{ex.lang.toUpperCase()}</span>
-              <p style={styles.explainText}>{ex.text}</p>
-            </div>
+            {rows.map((r, ri) => (
+              <div key={r.tag} style={ri === 0 ? styles.explainLangRow : { ...styles.explainLangRow, marginTop: 8 }}>
+                <span style={styles.explainLangTag}>{r.tag.toUpperCase()}</span>
+                <p style={styles.explainText}>{r.text}</p>
+              </div>
+            ))}
           </div>
         ) : null;
       })()}
