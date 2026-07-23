@@ -54,9 +54,8 @@ export default function AboutPage() {
 
         <Section title="Tracking your progress">
           <P>
-            The Dashboard shows your XP, streak, and rounds across every language. Each language's own screen
-            also has a mastery tracker showing how much of that language's content you've actually learned,
-            category by category.
+            Each language's own screen has a mastery tracker showing how much of that language's content
+            you've actually learned, category by category, along with your XP and streak as you play.
           </P>
         </Section>
 

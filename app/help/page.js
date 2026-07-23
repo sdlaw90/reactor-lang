@@ -27,9 +27,8 @@ export default function HelpPage() {
           <P>
             Next to it, your <b>profile picture</b> opens a slide-out menu with everything else: <b>What's New</b>
             (a dot appears when there's a release you haven't seen yet), <b>How to use SquirreLingo</b> (the same
-            quick animated tour you got on your first sign-in — reopen it anytime), <b>About</b> (what the app is,
-            how the modes work, and what's planned next), and <b>Dashboard</b> (your total XP, streak, and rounds
-            across every language). Below a divider, the full <b>Settings</b> section sits right there too — username,
+            quick animated tour you got on your first sign-in — reopen it anytime), and <b>About</b> (what the app
+            is, how the modes work, and what's planned next). Below a divider, the full <b>Settings</b> section sits right there too — username,
             email, password, native language/country, profile picture, gameplay preferences — no extra tap
             needed to open it.
           </P>

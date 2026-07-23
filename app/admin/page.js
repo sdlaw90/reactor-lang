@@ -2,10 +2,11 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { LayoutDashboard, ClipboardList, MessageSquareWarning, Users, Bug, KeyRound } from "lucide-react";
+import { LayoutDashboard, TrendingUp, ClipboardList, MessageSquareWarning, Users, Bug, KeyRound } from "lucide-react";
 import { supabase } from "../../lib/supabaseClient";
 import { adminFetch, adminColors as c } from "./adminApi";
 import DashboardSection from "./DashboardSection";
+import ProgressSection from "./ProgressSection";
 import ApplicationsSection from "./ApplicationsSection";
 import FeedbackSection from "./FeedbackSection";
 import UsersSection from "./UsersSection";
@@ -20,6 +21,7 @@ import ResetRequestsSection from "./ResetRequestsSection";
 
 const TABS = [
   { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { key: "progress", label: "Progress", icon: TrendingUp },
   { key: "applications", label: "Applications", icon: ClipboardList },
   { key: "feedback", label: "Feedback", icon: MessageSquareWarning },
   { key: "users", label: "Users", icon: Users },
@@ -110,6 +112,7 @@ function AdminHub() {
         </div>
 
         {tab === "dashboard" && <DashboardSection onNavigate={setTab} />}
+        {tab === "progress" && <ProgressSection />}
         {tab === "applications" && <ApplicationsSection />}
         {tab === "feedback" && <FeedbackSection />}
         {tab === "users" && <UsersSection />}

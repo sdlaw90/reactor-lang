@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 325 tracked files.
+> 335 tracked files.
 
 ```
 .env.local.example
@@ -19,6 +19,7 @@ app/admin/ApplicationsSection.js
 app/admin/DashboardSection.js
 app/admin/ErrorsSection.js
 app/admin/FeedbackSection.js
+app/admin/ProgressSection.js
 app/admin/ResetRequestsSection.js
 app/admin/UsersSection.js
 app/admin/adminApi.js
@@ -31,6 +32,11 @@ app/api/admin/errors/route.js
 app/api/admin/feedback/route.js
 app/api/admin/me/route.js
 app/api/admin/overview/route.js
+app/api/admin/progress/overview/route.js
+app/api/admin/progress/settings/route.js
+app/api/admin/progress/track/route.js
+app/api/admin/progress/user/route.js
+app/api/admin/progress/users/route.js
 app/api/admin/reset-requests/route.js
 app/api/admin/users/route.js
 app/api/approve-beta-application/route.js
@@ -288,6 +294,7 @@ lib/skillLevels.js
 lib/supabaseClient.js
 lib/theme.js
 lib/trackIcons.js
+lib/trackItemCounts.js
 lib/version.js
 lib/welcomeVersion.js
 next.config.mjs
@@ -297,6 +304,7 @@ playwright.config.js
 public/version.json
 scripts/deploy.js
 scripts/gen-repo-tree.mjs
+scripts/gen-track-item-counts.mjs
 scripts/generate-tts.mjs
 scripts/generate-version-json.js
 scripts/grammar-engines/de_rules_gen.py
@@ -332,5 +340,7 @@ supabase/migrations/00000000000011_security_questions.sql
 supabase/migrations/00000000000012_client_grants.sql
 supabase/migrations/00000000000013_upsert_grant_fix.sql
 supabase/migrations/00000000000014_tts_audio_bucket.sql
+supabase/migrations/00000000000015_admin_progress_analytics.sql
+supabase/migrations/00000000000016_admin_settings.sql
 supabase/schema.sql
 ```
