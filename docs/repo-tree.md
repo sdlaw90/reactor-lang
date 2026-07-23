@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 318 tracked files.
+> 325 tracked files.
 
 ```
 .env.local.example
@@ -50,6 +50,7 @@ app/feedback/page.js
 app/forgot-password/page.js
 app/global-error.js
 app/grammar/[trackId]/page.js
+app/guide/page.js
 app/help/page.js
 app/icon.svg
 app/layout.js
@@ -147,6 +148,7 @@ docs/changelog/unreleased/2026-07-15-voices-list-helper.md
 docs/changelog/unreleased/2026-07-15-zh-deepening.md
 docs/changelog/unreleased/2026-07-15-zh-tts.md
 docs/changelog/unreleased/2026-07-21-v3-prep-engineering.md
+docs/changelog/unreleased/2026-07-23-intro-tour.md
 docs/codebase-reference.md
 docs/manual-runbook.md
 docs/repo-tree.md
@@ -238,6 +240,9 @@ lib/Avatar.js
 lib/BackHome.js
 lib/ComingSoonSection.js
 lib/GlobalErrorLogger.js
+lib/GuideDemo.js
+lib/GuideOverlay.js
+lib/GuideTour.js
 lib/Logo.js
 lib/ModeToggle.js
 lib/NavDepthTracker.js
@@ -267,6 +272,8 @@ lib/errorReporting.js
 lib/frequencyVocab.js
 lib/gameEngine.js
 lib/grammarGym.js
+lib/guideSteps.js
+lib/guideVersion.js
 lib/languageNames.js
 lib/legalVersions.js
 lib/navDepth.js
