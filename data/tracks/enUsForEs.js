@@ -53,7 +53,7 @@ const FONO_BANK = [
       explain: { en: "This needs a yes/no about eating, not an unrelated answer.", es: "Se necesita un sí/no sobre comer, no una respuesta sin relación." } } },
 ];
 
-const enForEs = {
+const enUsForEs = {
   id: "en-us-for-es",
   label: "English (US)",
   nameEn: "English (US)",
@@ -80,4 +80,4 @@ const enForEs = {
   extraQuestionTime: 30,
 };
 
-export default enForEs;
+export default enUsForEs;

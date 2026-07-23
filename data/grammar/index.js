@@ -4,9 +4,36 @@
 // grammar option.
 
 import esForEnGrammar from "./esForEn";
+import esSpainForEnGrammar from "./esSpainForEn";
+import frForEnGrammar from "./frForEn";
+import frCaForEnGrammar from "./frCaForEn";
+import itForEnGrammar from "./itForEn";
+import ptBrForEnGrammar from "./ptBrForEn";
+import ptPtForEnGrammar from "./ptPtForEn";
+import deForEnGrammar from "./deForEn";
+import ruForEnGrammar from "./ruForEn";
+import jaForEnGrammar from "./jaForEn";
+import koForEnGrammar from "./koForEn";
 
 const MODULES = {
   "es-latam-for-en": esForEnGrammar,
+  "es-spain-for-en": esSpainForEnGrammar,
+  "fr-for-en": frForEnGrammar,
+  "fr-ca-for-en": frCaForEnGrammar,
+  "it-for-en": itForEnGrammar,
+  "pt-br-for-en": ptBrForEnGrammar,
+  "pt-pt-for-en": ptPtForEnGrammar,
+  // #88/#90 (2026-07-20, beta.15): de/ru gyms. Both use the person axis straight
+  // (Romance template drops in for German; Russian repurposes the "tense" axis as
+  // the aspect grid — present vs. perfective/imperfective future — since Russian's
+  // past is gender-based, not person-based; see each module's SCHEMA NOTE).
+  "de-for-en": deForEnGrammar,
+  "ru-for-en": ruForEnGrammar,
+  // #3 (2026-07-20): CJK gyms. ja/ko use the person axis repurposed as a
+  // politeness/speech-level axis (see each module's SCHEMA NOTE). Mandarin has
+  // no conjugation, so zh-for-en is intentionally absent → no gym toggle.
+  "ja-for-en": jaForEnGrammar,
+  "ko-for-en": koForEnGrammar,
 };
 
 export function grammarForTrack(trackId) {

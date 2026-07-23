@@ -53,7 +53,7 @@ export default function GlobalError({ error }) {
                   marginBottom: 14,
                 }}
               >
-                <div style={{ color: "#7C7395", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>
+                <div style={{ color: "#9B93B8", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>
                   Error code
                 </div>
                 <div style={{ color: "#FF8FB1", fontSize: 18, fontWeight: 800, fontFamily: "monospace", letterSpacing: 1 }}>{code}</div>

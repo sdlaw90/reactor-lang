@@ -115,6 +115,42 @@ function synthAndUpload(track) {
   execFileSync("node", [GEN, "--track", track, "--upload"], { cwd: ROOT, stdio: "inherit" });
 }
 
+// T1 (2026-07-22): the deliberate v3.0.0 deploy synthesizes the WHOLE arc's new
+// clips (~1,500+ across ru/ja/ko/de gram, es-Spain verbo, zh gram, new fono), so
+// a transient synth/upload failure is likelier on that one heavy run. Retry the
+// per-track generate-tts up to RETRIES times with a short backoff before falling
+// back to the existing non-blocking warning. generate-tts is idempotent (skips
+// clips already on disk; upload uses x-upsert), so a retry only re-attempts what
+// actually failed — cheap and safe, and it saves a manual per-track re-run.
+// (Per-CLIP transient errors are already retried 4× inside generate-tts's
+// withRetry; this covers PROCESS-level failures where generate-tts exits non-zero
+// — e.g. the voice preflight or a batch of uploads failing.)
+const RETRIES = 2; // up to 2 retries after the first attempt (1–2 attempts max)
+const RETRY_BACKOFF_MS = 5000; // 5s before retry 1, 10s before retry 2
+
+// Synchronous sleep — this script's main runs top-level with execFileSync (no
+// async loop), so block the thread with Atomics.wait rather than a Promise.
+function sleepSync(ms) {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+}
+
+function synthAndUploadWithRetry(track) {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      synthAndUpload(track);
+      return;
+    } catch (e) {
+      if (attempt >= RETRIES) throw e; // exhausted → let the caller warn (non-blocking)
+      const wait = RETRY_BACKOFF_MS * (attempt + 1);
+      const msg = (e && e.message ? e.message : String(e)).split("\n")[0];
+      console.warn(
+        `  ↻ ${track}: TTS attempt ${attempt + 1} failed (${msg}) — retrying in ${wait / 1000}s (${attempt + 1}/${RETRIES})…`
+      );
+      sleepSync(wait);
+    }
+  }
+}
+
 // ---------------- main ----------------
 console.log("\n— TTS post-deploy check —");
 
@@ -142,7 +178,7 @@ for (const track of candidates) {
       continue;
     }
     console.log(`  ${track}: ${n} new clip(s) → synthesizing + uploading…`);
-    synthAndUpload(track);
+    synthAndUploadWithRetry(track);
     synthed++;
   } catch (e) {
     // Non-blocking: record and move on. Most common causes: missing

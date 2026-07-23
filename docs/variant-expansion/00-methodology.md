@@ -7,8 +7,15 @@ practice the underlying grammar instead of memorizing one fixed answer.
 **Authority split (the core principle of this whole effort).**
 - *Design authority = Sean + Claude.* We decide the transformation model, scope, and format.
 - *Correctness authority = a native speaker.* Every generated item is **provisional** until a
-  native reviewer confirms it. We may be confidently wrong about a conjugation or whether a
-  swapped sentence sounds natural — so nothing generated here ships unreviewed.
+  native reviewer confirms it — we may be confidently wrong about a conjugation or whether a
+  swapped sentence sounds natural.
+
+**Where the review gate sits (IMPORTANT — decided policy).** Generated content is loaded and
+shipped to **beta-prod without waiting for review** — every language, by standard. Native
+review runs in parallel and gates only **promotion to real (non-beta) production**. So
+"provisional" means *not yet cleared for real prod*, NOT *can't ship to beta*. The reviewer
+packet + stable IDs are the ledger that makes real-prod promotion a filter on reviewed items.
+(The real-prod branch mechanics are still being planned — see README "Release strategy".)
 
 This doc is written so Claude can run a **new language end-to-end without asking Sean to
 re-confirm each step.** Follow it in order. Deviate only when a language's axis table below
@@ -26,11 +33,13 @@ says to.
 4. **Generate** provisional variants (§6) with a conjugation engine (§8), each with a stable
    ID (§7) and a risk tier (§9).
 5. **Package** into a reviewer workbook (§10) — risk-sorted, plain-language, native-friendly.
-6. **Save** docs + packet to the Project; save generated data + packet copy to the repo
-   `docs/variant-expansion/` (see README).
-7. **Review** — native speaker fills the yellow columns.
-8. **Round-trip** — load approved/corrected variants back into the track file as new bank
-   entries (§7). This is a later, post-review phase; do not load anything unreviewed.
+6. **Save** generated data + packet to the repo `docs/variant-expansion/` (see README).
+7. **Load & ship to beta** — splice the generated variants into the track file as new bank
+   entries (§7), bump the version, ship via `npm run deploy beta`. This happens **before**
+   review, by standard (see the review-gate note above).
+8. **Review (in parallel)** — native speaker fills the yellow columns; corrections round-trip
+   back into the track via the stable IDs (§7). Reviewed status is what gates the eventual
+   promotion to real prod — it does **not** block the beta ship.
 
 ---
 
@@ -118,11 +127,12 @@ multiplier (~4× per eligible base).
 Person cells to use (respect the track's regional convention — e.g. LatAm Spanish = **no
 vosotros**, `ustedes` is plural-you): yo · tú · él/ella(/usted) · nosotros · ellos/ellas(/ustedes).
 
-**Phase 2 — tense-swap (higher risk, do after Phase 1 is validated).**
+**Phase 2 — tense-swap (higher risk; a quality/scope call, not a review gate).**
 Only for **flexible** (present, no time-marker) items. Shift tense; most will need a
-time-marker rewrite to sound natural, so every tense-swap is flagged for the reviewer to
-confirm **or rewrite**. Ship only a small **sample** in the first packet to show the format —
-do not bulk-generate hundreds of shaky tense sentences and dump them on a reviewer.
+time-marker rewrite to sound natural. Because quality is shakier, hold tense-swaps to a small
+**sample** at first (Spanish did) rather than bulk-generating hundreds — this is about not
+shipping low-quality items, independent of the beta review flow. Expand once the approach is
+proven worth it.
 
 **Never generate:** gustar/progressive/impersonal/infinitive naive person-swaps (§3),
 noun-subject person-swaps (§4). Document them in the "Not transformed" tab.
@@ -136,8 +146,10 @@ Every generated item gets a stable ID so a reviewer's "row 47 is wrong" maps to 
 - Variant: `<baseid>-p-<person>` (person-swap) or `<baseid>-t-<tense>` (tense-swap).
 
 Store the machine-readable generated data as JSON (`generated/<lang>_generated.json`) alongside
-the human packet. After review, join the packet's ID column back to the JSON, apply corrections,
-and emit the approved variants as new bank rows in `<lang>ForEn.js` (a later phase).
+the human packet. The variants are spliced into `<lang>ForEn.js` at beta-ship time (before
+review). When review comes back, join the packet's ID column back to the JSON, apply the
+reviewer's corrections to those same IDed rows in the track, and mark them cleared for real-prod
+promotion. IDs are the join key in both directions.
 
 ---
 
@@ -200,5 +212,8 @@ One workbook per language: `review-packets/<lang>-verb-variants.xlsx`. Three tab
 - `NN-<lang>-reference.md` written (decisions + counts, like the Spanish one).
 - `generated/<lang>_generated.json` produced (person set + tense sample + skipped, with IDs).
 - `review-packets/<lang>-verb-variants.xlsx` produced and delivered.
-- README status tracker row updated.
-- Nothing loaded into the track file yet — that waits for native sign-off.
+- Variants **loaded into the track file** (per §7) and included in a version bump — this is the
+  standard beta-ship, done *before* review (see the review-gate note under Purpose).
+- README status tracker row updated (Generated ✅, Loaded ✅, Reviewed ⬜ until native sign-off).
+- The reviewer packet stands as the open correction pass; its sign-off gates real-prod
+  promotion, not the beta ship.

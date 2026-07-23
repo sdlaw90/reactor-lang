@@ -1,0 +1,2000 @@
+{
+ "language": "Portuguese (Portugal)",
+ "track": "ptPtForEn",
+ "generated_date": "2026-07-20",
+ "phase": "Phase 2 — tense-swap of flexible present-tense verbo items (BULK)",
+ "method": "Recast pronoun-subject present-tense depth items into other tenses (past-compound / imperfect / future) with a leading time-marker; person held fixed. Distractors = same verb+person across tenses. verbecc generated, gate OFF (pt). Compound-past skipped for être/essere-auxiliary verbs (participle agreement verbecc does not resolve). Excludes already-time-marked, reflexive, impersonal, implied/ambiguous-subject items. BULK run overrides the methodology hold (sample-only until Phase-1 review); ships to beta pre-review, flagged for native review — tense-swaps can read oddly for stative sentences.",
+ "id_scheme": "<code>-verb-<NNN>-t-<tenseKey>",
+ "verify_verbecc": false,
+ "counts": {
+  "present_bases": 30,
+  "variants": 90,
+  "skipped": {
+   "already-time-marked": 9,
+   "not-present": 95,
+   "no-lemma": 4
+  }
+ },
+ "variants": [
+  {
+   "vid": "ptPt-verb-001-t-pretPerfeito",
+   "base_vid": "ptPt-verb-001",
+   "prompt": "Ontem, eu ___ estudante.",
+   "options": [
+    "fui",
+    "sou",
+    "era",
+    "serei"
+   ],
+   "correctIndex": 0,
+   "answer": "fui",
+   "lemma": "ser",
+   "tense": "pretPerfeito",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “fui”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “fui”."
+   },
+   "subtitle_en": "Yesterday, I ___ (ser = to be) a student."
+  },
+  {
+   "vid": "ptPt-verb-001-t-imperfeito",
+   "base_vid": "ptPt-verb-001",
+   "prompt": "Antigamente, eu ___ estudante.",
+   "options": [
+    "serei",
+    "era",
+    "sou",
+    "fui"
+   ],
+   "correctIndex": 1,
+   "answer": "era",
+   "lemma": "ser",
+   "tense": "imperfeito",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “era”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “era”."
+   },
+   "subtitle_en": "In the past, I ___ (ser = to be) a student."
+  },
+  {
+   "vid": "ptPt-verb-001-t-futuro",
+   "base_vid": "ptPt-verb-001",
+   "prompt": "Amanhã, eu ___ estudante.",
+   "options": [
+    "sou",
+    "era",
+    "serei",
+    "fui"
+   ],
+   "correctIndex": 2,
+   "answer": "serei",
+   "lemma": "ser",
+   "tense": "futuro",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “serei”.",
+    "es": "Con “Amanhã”, usa el futuro: “serei”."
+   },
+   "subtitle_en": "Tomorrow, I ___ (ser = to be) a student."
+  },
+  {
+   "vid": "ptPt-verb-002-t-pretPerfeito",
+   "base_vid": "ptPt-verb-002",
+   "prompt": "Ontem, tu ___ muito simpático.",
+   "options": [
+    "és",
+    "eras",
+    "serás",
+    "foste"
+   ],
+   "correctIndex": 3,
+   "answer": "foste",
+   "lemma": "ser",
+   "tense": "pretPerfeito",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “foste”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “foste”."
+   },
+   "subtitle_en": "Yesterday, You ___ (ser = to be) very nice."
+  },
+  {
+   "vid": "ptPt-verb-002-t-imperfeito",
+   "base_vid": "ptPt-verb-002",
+   "prompt": "Antigamente, tu ___ muito simpático.",
+   "options": [
+    "és",
+    "foste",
+    "serás",
+    "eras"
+   ],
+   "correctIndex": 3,
+   "answer": "eras",
+   "lemma": "ser",
+   "tense": "imperfeito",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “eras”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “eras”."
+   },
+   "subtitle_en": "In the past, You ___ (ser = to be) very nice."
+  },
+  {
+   "vid": "ptPt-verb-002-t-futuro",
+   "base_vid": "ptPt-verb-002",
+   "prompt": "Amanhã, tu ___ muito simpático.",
+   "options": [
+    "és",
+    "foste",
+    "eras",
+    "serás"
+   ],
+   "correctIndex": 3,
+   "answer": "serás",
+   "lemma": "ser",
+   "tense": "futuro",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “serás”.",
+    "es": "Con “Amanhã”, usa el futuro: “serás”."
+   },
+   "subtitle_en": "Tomorrow, You ___ (ser = to be) very nice."
+  },
+  {
+   "vid": "ptPt-verb-003-t-pretPerfeito",
+   "base_vid": "ptPt-verb-003",
+   "prompt": "Ontem, ele ___ o meu irmão.",
+   "options": [
+    "era",
+    "foi",
+    "é",
+    "será"
+   ],
+   "correctIndex": 1,
+   "answer": "foi",
+   "lemma": "ser",
+   "tense": "pretPerfeito",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “foi”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “foi”."
+   },
+   "subtitle_en": "Yesterday, He ___ (ser = to be) my brother."
+  },
+  {
+   "vid": "ptPt-verb-003-t-imperfeito",
+   "base_vid": "ptPt-verb-003",
+   "prompt": "Antigamente, ele ___ o meu irmão.",
+   "options": [
+    "será",
+    "é",
+    "era",
+    "foi"
+   ],
+   "correctIndex": 2,
+   "answer": "era",
+   "lemma": "ser",
+   "tense": "imperfeito",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “era”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “era”."
+   },
+   "subtitle_en": "In the past, He ___ (ser = to be) my brother."
+  },
+  {
+   "vid": "ptPt-verb-003-t-futuro",
+   "base_vid": "ptPt-verb-003",
+   "prompt": "Amanhã, ele ___ o meu irmão.",
+   "options": [
+    "é",
+    "foi",
+    "era",
+    "será"
+   ],
+   "correctIndex": 3,
+   "answer": "será",
+   "lemma": "ser",
+   "tense": "futuro",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “será”.",
+    "es": "Con “Amanhã”, usa el futuro: “será”."
+   },
+   "subtitle_en": "Tomorrow, He ___ (ser = to be) my brother."
+  },
+  {
+   "vid": "ptPt-verb-004-t-pretPerfeito",
+   "base_vid": "ptPt-verb-004",
+   "prompt": "Ontem, nós ___ de Lisboa.",
+   "options": [
+    "fomos",
+    "seremos",
+    "éramos",
+    "somos"
+   ],
+   "correctIndex": 0,
+   "answer": "fomos",
+   "lemma": "ser",
+   "tense": "pretPerfeito",
+   "person": "nós",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “fomos”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “fomos”."
+   },
+   "subtitle_en": "Yesterday, We ___ (ser = to be) from Lisbon."
+  },
+  {
+   "vid": "ptPt-verb-004-t-imperfeito",
+   "base_vid": "ptPt-verb-004",
+   "prompt": "Antigamente, nós ___ de Lisboa.",
+   "options": [
+    "fomos",
+    "éramos",
+    "somos",
+    "seremos"
+   ],
+   "correctIndex": 1,
+   "answer": "éramos",
+   "lemma": "ser",
+   "tense": "imperfeito",
+   "person": "nós",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “éramos”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “éramos”."
+   },
+   "subtitle_en": "In the past, We ___ (ser = to be) from Lisbon."
+  },
+  {
+   "vid": "ptPt-verb-004-t-futuro",
+   "base_vid": "ptPt-verb-004",
+   "prompt": "Amanhã, nós ___ de Lisboa.",
+   "options": [
+    "éramos",
+    "fomos",
+    "seremos",
+    "somos"
+   ],
+   "correctIndex": 2,
+   "answer": "seremos",
+   "lemma": "ser",
+   "tense": "futuro",
+   "person": "nós",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “seremos”.",
+    "es": "Con “Amanhã”, usa el futuro: “seremos”."
+   },
+   "subtitle_en": "Tomorrow, We ___ (ser = to be) from Lisbon."
+  },
+  {
+   "vid": "ptPt-verb-005-t-pretPerfeito",
+   "base_vid": "ptPt-verb-005",
+   "prompt": "Ontem, eles ___ engenheiros.",
+   "options": [
+    "serão",
+    "eram",
+    "são",
+    "foram"
+   ],
+   "correctIndex": 3,
+   "answer": "foram",
+   "lemma": "ser",
+   "tense": "pretPerfeito",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “foram”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “foram”."
+   },
+   "subtitle_en": "Yesterday, They ___ (ser = to be) engineers."
+  },
+  {
+   "vid": "ptPt-verb-005-t-imperfeito",
+   "base_vid": "ptPt-verb-005",
+   "prompt": "Antigamente, eles ___ engenheiros.",
+   "options": [
+    "são",
+    "serão",
+    "eram",
+    "foram"
+   ],
+   "correctIndex": 2,
+   "answer": "eram",
+   "lemma": "ser",
+   "tense": "imperfeito",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “eram”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “eram”."
+   },
+   "subtitle_en": "In the past, They ___ (ser = to be) engineers."
+  },
+  {
+   "vid": "ptPt-verb-005-t-futuro",
+   "base_vid": "ptPt-verb-005",
+   "prompt": "Amanhã, eles ___ engenheiros.",
+   "options": [
+    "serão",
+    "eram",
+    "foram",
+    "são"
+   ],
+   "correctIndex": 0,
+   "answer": "serão",
+   "lemma": "ser",
+   "tense": "futuro",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “serão”.",
+    "es": "Con “Amanhã”, usa el futuro: “serão”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (ser = to be) engineers."
+  },
+  {
+   "vid": "ptPt-verb-006-t-pretPerfeito",
+   "base_vid": "ptPt-verb-006",
+   "prompt": "Ontem, eu ___ em casa.",
+   "options": [
+    "estou",
+    "estava",
+    "estive",
+    "estarei"
+   ],
+   "correctIndex": 2,
+   "answer": "estive",
+   "lemma": "estar",
+   "tense": "pretPerfeito",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “estive”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “estive”."
+   },
+   "subtitle_en": "Yesterday, I ___ (estar = to be) at home."
+  },
+  {
+   "vid": "ptPt-verb-006-t-imperfeito",
+   "base_vid": "ptPt-verb-006",
+   "prompt": "Antigamente, eu ___ em casa.",
+   "options": [
+    "estive",
+    "estarei",
+    "estava",
+    "estou"
+   ],
+   "correctIndex": 2,
+   "answer": "estava",
+   "lemma": "estar",
+   "tense": "imperfeito",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “estava”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “estava”."
+   },
+   "subtitle_en": "In the past, I ___ (estar = to be) at home."
+  },
+  {
+   "vid": "ptPt-verb-006-t-futuro",
+   "base_vid": "ptPt-verb-006",
+   "prompt": "Amanhã, eu ___ em casa.",
+   "options": [
+    "estava",
+    "estarei",
+    "estou",
+    "estive"
+   ],
+   "correctIndex": 1,
+   "answer": "estarei",
+   "lemma": "estar",
+   "tense": "futuro",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “estarei”.",
+    "es": "Con “Amanhã”, usa el futuro: “estarei”."
+   },
+   "subtitle_en": "Tomorrow, I ___ (estar = to be) at home."
+  },
+  {
+   "vid": "ptPt-verb-007-t-pretPerfeito",
+   "base_vid": "ptPt-verb-007",
+   "prompt": "Ontem, tu ___ cansado?",
+   "options": [
+    "estarás",
+    "estás",
+    "estiveste",
+    "estavas"
+   ],
+   "correctIndex": 2,
+   "answer": "estiveste",
+   "lemma": "estar",
+   "tense": "pretPerfeito",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “estiveste”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “estiveste”."
+   },
+   "subtitle_en": "Yesterday, Are you ___ (estar = to be) tired?"
+  },
+  {
+   "vid": "ptPt-verb-007-t-imperfeito",
+   "base_vid": "ptPt-verb-007",
+   "prompt": "Antigamente, tu ___ cansado?",
+   "options": [
+    "estás",
+    "estiveste",
+    "estarás",
+    "estavas"
+   ],
+   "correctIndex": 3,
+   "answer": "estavas",
+   "lemma": "estar",
+   "tense": "imperfeito",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “estavas”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “estavas”."
+   },
+   "subtitle_en": "In the past, Are you ___ (estar = to be) tired?"
+  },
+  {
+   "vid": "ptPt-verb-007-t-futuro",
+   "base_vid": "ptPt-verb-007",
+   "prompt": "Amanhã, tu ___ cansado?",
+   "options": [
+    "estás",
+    "estarás",
+    "estavas",
+    "estiveste"
+   ],
+   "correctIndex": 1,
+   "answer": "estarás",
+   "lemma": "estar",
+   "tense": "futuro",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “estarás”.",
+    "es": "Con “Amanhã”, usa el futuro: “estarás”."
+   },
+   "subtitle_en": "Tomorrow, Are you ___ (estar = to be) tired?"
+  },
+  {
+   "vid": "ptPt-verb-008-t-pretPerfeito",
+   "base_vid": "ptPt-verb-008",
+   "prompt": "Ontem, ele ___ no trabalho.",
+   "options": [
+    "está",
+    "estará",
+    "estava",
+    "esteve"
+   ],
+   "correctIndex": 3,
+   "answer": "esteve",
+   "lemma": "estar",
+   "tense": "pretPerfeito",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “esteve”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “esteve”."
+   },
+   "subtitle_en": "Yesterday, He ___ (estar = to be) at work."
+  },
+  {
+   "vid": "ptPt-verb-008-t-imperfeito",
+   "base_vid": "ptPt-verb-008",
+   "prompt": "Antigamente, ele ___ no trabalho.",
+   "options": [
+    "estará",
+    "esteve",
+    "está",
+    "estava"
+   ],
+   "correctIndex": 3,
+   "answer": "estava",
+   "lemma": "estar",
+   "tense": "imperfeito",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “estava”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “estava”."
+   },
+   "subtitle_en": "In the past, He ___ (estar = to be) at work."
+  },
+  {
+   "vid": "ptPt-verb-008-t-futuro",
+   "base_vid": "ptPt-verb-008",
+   "prompt": "Amanhã, ele ___ no trabalho.",
+   "options": [
+    "estava",
+    "está",
+    "estará",
+    "esteve"
+   ],
+   "correctIndex": 2,
+   "answer": "estará",
+   "lemma": "estar",
+   "tense": "futuro",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “estará”.",
+    "es": "Con “Amanhã”, usa el futuro: “estará”."
+   },
+   "subtitle_en": "Tomorrow, He ___ (estar = to be) at work."
+  },
+  {
+   "vid": "ptPt-verb-009-t-pretPerfeito",
+   "base_vid": "ptPt-verb-009",
+   "prompt": "Ontem, nós ___ contentes.",
+   "options": [
+    "estávamos",
+    "estaremos",
+    "estamos",
+    "estivemos"
+   ],
+   "correctIndex": 3,
+   "answer": "estivemos",
+   "lemma": "estar",
+   "tense": "pretPerfeito",
+   "person": "nós",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “estivemos”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “estivemos”."
+   },
+   "subtitle_en": "Yesterday, We ___ (estar = to be) happy."
+  },
+  {
+   "vid": "ptPt-verb-009-t-imperfeito",
+   "base_vid": "ptPt-verb-009",
+   "prompt": "Antigamente, nós ___ contentes.",
+   "options": [
+    "estivemos",
+    "estamos",
+    "estávamos",
+    "estaremos"
+   ],
+   "correctIndex": 2,
+   "answer": "estávamos",
+   "lemma": "estar",
+   "tense": "imperfeito",
+   "person": "nós",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “estávamos”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “estávamos”."
+   },
+   "subtitle_en": "In the past, We ___ (estar = to be) happy."
+  },
+  {
+   "vid": "ptPt-verb-009-t-futuro",
+   "base_vid": "ptPt-verb-009",
+   "prompt": "Amanhã, nós ___ contentes.",
+   "options": [
+    "estamos",
+    "estivemos",
+    "estaremos",
+    "estávamos"
+   ],
+   "correctIndex": 2,
+   "answer": "estaremos",
+   "lemma": "estar",
+   "tense": "futuro",
+   "person": "nós",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “estaremos”.",
+    "es": "Con “Amanhã”, usa el futuro: “estaremos”."
+   },
+   "subtitle_en": "Tomorrow, We ___ (estar = to be) happy."
+  },
+  {
+   "vid": "ptPt-verb-010-t-pretPerfeito",
+   "base_vid": "ptPt-verb-010",
+   "prompt": "Ontem, eles ___ no café.",
+   "options": [
+    "estarão",
+    "estiveram",
+    "estão",
+    "estavam"
+   ],
+   "correctIndex": 1,
+   "answer": "estiveram",
+   "lemma": "estar",
+   "tense": "pretPerfeito",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “estiveram”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “estiveram”."
+   },
+   "subtitle_en": "Yesterday, They ___ (estar = to be) at the café."
+  },
+  {
+   "vid": "ptPt-verb-010-t-imperfeito",
+   "base_vid": "ptPt-verb-010",
+   "prompt": "Antigamente, eles ___ no café.",
+   "options": [
+    "estarão",
+    "estavam",
+    "estiveram",
+    "estão"
+   ],
+   "correctIndex": 1,
+   "answer": "estavam",
+   "lemma": "estar",
+   "tense": "imperfeito",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “estavam”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “estavam”."
+   },
+   "subtitle_en": "In the past, They ___ (estar = to be) at the café."
+  },
+  {
+   "vid": "ptPt-verb-010-t-futuro",
+   "base_vid": "ptPt-verb-010",
+   "prompt": "Amanhã, eles ___ no café.",
+   "options": [
+    "estarão",
+    "estiveram",
+    "estão",
+    "estavam"
+   ],
+   "correctIndex": 0,
+   "answer": "estarão",
+   "lemma": "estar",
+   "tense": "futuro",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “estarão”.",
+    "es": "Con “Amanhã”, usa el futuro: “estarão”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (estar = to be) at the café."
+  },
+  {
+   "vid": "ptPt-verb-011-t-pretPerfeito",
+   "base_vid": "ptPt-verb-011",
+   "prompt": "Ontem, eu ___ dois gatos.",
+   "options": [
+    "terei",
+    "tinha",
+    "tive",
+    "tenho"
+   ],
+   "correctIndex": 2,
+   "answer": "tive",
+   "lemma": "ter",
+   "tense": "pretPerfeito",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “tive”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “tive”."
+   },
+   "subtitle_en": "Yesterday, I ___ (ter = to have) two cats."
+  },
+  {
+   "vid": "ptPt-verb-011-t-imperfeito",
+   "base_vid": "ptPt-verb-011",
+   "prompt": "Antigamente, eu ___ dois gatos.",
+   "options": [
+    "tive",
+    "tenho",
+    "tinha",
+    "terei"
+   ],
+   "correctIndex": 2,
+   "answer": "tinha",
+   "lemma": "ter",
+   "tense": "imperfeito",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “tinha”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “tinha”."
+   },
+   "subtitle_en": "In the past, I ___ (ter = to have) two cats."
+  },
+  {
+   "vid": "ptPt-verb-011-t-futuro",
+   "base_vid": "ptPt-verb-011",
+   "prompt": "Amanhã, eu ___ dois gatos.",
+   "options": [
+    "tive",
+    "tinha",
+    "tenho",
+    "terei"
+   ],
+   "correctIndex": 3,
+   "answer": "terei",
+   "lemma": "ter",
+   "tense": "futuro",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “terei”.",
+    "es": "Con “Amanhã”, usa el futuro: “terei”."
+   },
+   "subtitle_en": "Tomorrow, I ___ (ter = to have) two cats."
+  },
+  {
+   "vid": "ptPt-verb-013-t-pretPerfeito",
+   "base_vid": "ptPt-verb-013",
+   "prompt": "Ontem, ele ___ vinte anos.",
+   "options": [
+    "terá",
+    "teve",
+    "tem",
+    "tinha"
+   ],
+   "correctIndex": 1,
+   "answer": "teve",
+   "lemma": "ter",
+   "tense": "pretPerfeito",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “teve”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “teve”."
+   },
+   "subtitle_en": "Yesterday, He ___ (ter = to have) twenty years (is 20)."
+  },
+  {
+   "vid": "ptPt-verb-013-t-imperfeito",
+   "base_vid": "ptPt-verb-013",
+   "prompt": "Antigamente, ele ___ vinte anos.",
+   "options": [
+    "tem",
+    "tinha",
+    "teve",
+    "terá"
+   ],
+   "correctIndex": 1,
+   "answer": "tinha",
+   "lemma": "ter",
+   "tense": "imperfeito",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “tinha”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “tinha”."
+   },
+   "subtitle_en": "In the past, He ___ (ter = to have) twenty years (is 20)."
+  },
+  {
+   "vid": "ptPt-verb-013-t-futuro",
+   "base_vid": "ptPt-verb-013",
+   "prompt": "Amanhã, ele ___ vinte anos.",
+   "options": [
+    "terá",
+    "tinha",
+    "tem",
+    "teve"
+   ],
+   "correctIndex": 0,
+   "answer": "terá",
+   "lemma": "ter",
+   "tense": "futuro",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “terá”.",
+    "es": "Con “Amanhã”, usa el futuro: “terá”."
+   },
+   "subtitle_en": "Tomorrow, He ___ (ter = to have) twenty years (is 20)."
+  },
+  {
+   "vid": "ptPt-verb-014-t-pretPerfeito",
+   "base_vid": "ptPt-verb-014",
+   "prompt": "Ontem, nós ___ uma casa grande.",
+   "options": [
+    "tínhamos",
+    "teremos",
+    "temos",
+    "tivemos"
+   ],
+   "correctIndex": 3,
+   "answer": "tivemos",
+   "lemma": "ter",
+   "tense": "pretPerfeito",
+   "person": "nós",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “tivemos”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “tivemos”."
+   },
+   "subtitle_en": "Yesterday, We ___ (ter = to have) a big house."
+  },
+  {
+   "vid": "ptPt-verb-014-t-imperfeito",
+   "base_vid": "ptPt-verb-014",
+   "prompt": "Antigamente, nós ___ uma casa grande.",
+   "options": [
+    "tínhamos",
+    "teremos",
+    "tivemos",
+    "temos"
+   ],
+   "correctIndex": 0,
+   "answer": "tínhamos",
+   "lemma": "ter",
+   "tense": "imperfeito",
+   "person": "nós",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “tínhamos”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “tínhamos”."
+   },
+   "subtitle_en": "In the past, We ___ (ter = to have) a big house."
+  },
+  {
+   "vid": "ptPt-verb-014-t-futuro",
+   "base_vid": "ptPt-verb-014",
+   "prompt": "Amanhã, nós ___ uma casa grande.",
+   "options": [
+    "temos",
+    "tivemos",
+    "teremos",
+    "tínhamos"
+   ],
+   "correctIndex": 2,
+   "answer": "teremos",
+   "lemma": "ter",
+   "tense": "futuro",
+   "person": "nós",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “teremos”.",
+    "es": "Con “Amanhã”, usa el futuro: “teremos”."
+   },
+   "subtitle_en": "Tomorrow, We ___ (ter = to have) a big house."
+  },
+  {
+   "vid": "ptPt-verb-015-t-pretPerfeito",
+   "base_vid": "ptPt-verb-015",
+   "prompt": "Ontem, eles ___ muitos amigos.",
+   "options": [
+    "tinham",
+    "tiveram",
+    "terão",
+    "têm"
+   ],
+   "correctIndex": 1,
+   "answer": "tiveram",
+   "lemma": "ter",
+   "tense": "pretPerfeito",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “tiveram”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “tiveram”."
+   },
+   "subtitle_en": "Yesterday, They ___ (ter = to have) many friends."
+  },
+  {
+   "vid": "ptPt-verb-015-t-imperfeito",
+   "base_vid": "ptPt-verb-015",
+   "prompt": "Antigamente, eles ___ muitos amigos.",
+   "options": [
+    "têm",
+    "tinham",
+    "tiveram",
+    "terão"
+   ],
+   "correctIndex": 1,
+   "answer": "tinham",
+   "lemma": "ter",
+   "tense": "imperfeito",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “tinham”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “tinham”."
+   },
+   "subtitle_en": "In the past, They ___ (ter = to have) many friends."
+  },
+  {
+   "vid": "ptPt-verb-015-t-futuro",
+   "base_vid": "ptPt-verb-015",
+   "prompt": "Amanhã, eles ___ muitos amigos.",
+   "options": [
+    "tiveram",
+    "tinham",
+    "terão",
+    "têm"
+   ],
+   "correctIndex": 2,
+   "answer": "terão",
+   "lemma": "ter",
+   "tense": "futuro",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “terão”.",
+    "es": "Con “Amanhã”, usa el futuro: “terão”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (ter = to have) many friends."
+  },
+  {
+   "vid": "ptPt-verb-016-t-pretPerfeito",
+   "base_vid": "ptPt-verb-016",
+   "prompt": "Ontem, eu ___ ao supermercado.",
+   "options": [
+    "vou",
+    "ia",
+    "fui",
+    "irei"
+   ],
+   "correctIndex": 2,
+   "answer": "fui",
+   "lemma": "ir",
+   "tense": "pretPerfeito",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “fui”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “fui”."
+   },
+   "subtitle_en": "Yesterday, I ___ (ir = to go) to the supermarket."
+  },
+  {
+   "vid": "ptPt-verb-016-t-imperfeito",
+   "base_vid": "ptPt-verb-016",
+   "prompt": "Antigamente, eu ___ ao supermercado.",
+   "options": [
+    "vou",
+    "ia",
+    "fui",
+    "irei"
+   ],
+   "correctIndex": 1,
+   "answer": "ia",
+   "lemma": "ir",
+   "tense": "imperfeito",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “ia”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “ia”."
+   },
+   "subtitle_en": "In the past, I ___ (ir = to go) to the supermarket."
+  },
+  {
+   "vid": "ptPt-verb-016-t-futuro",
+   "base_vid": "ptPt-verb-016",
+   "prompt": "Amanhã, eu ___ ao supermercado.",
+   "options": [
+    "vou",
+    "irei",
+    "ia",
+    "fui"
+   ],
+   "correctIndex": 1,
+   "answer": "irei",
+   "lemma": "ir",
+   "tense": "futuro",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “irei”.",
+    "es": "Con “Amanhã”, usa el futuro: “irei”."
+   },
+   "subtitle_en": "Tomorrow, I ___ (ir = to go) to the supermarket."
+  },
+  {
+   "vid": "ptPt-verb-018-t-pretPerfeito",
+   "base_vid": "ptPt-verb-018",
+   "prompt": "Ontem, ele ___ de comboio.",
+   "options": [
+    "ia",
+    "irá",
+    "vai",
+    "foi"
+   ],
+   "correctIndex": 3,
+   "answer": "foi",
+   "lemma": "ir",
+   "tense": "pretPerfeito",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “foi”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “foi”."
+   },
+   "subtitle_en": "Yesterday, He ___ (ir = to go) by train."
+  },
+  {
+   "vid": "ptPt-verb-018-t-imperfeito",
+   "base_vid": "ptPt-verb-018",
+   "prompt": "Antigamente, ele ___ de comboio.",
+   "options": [
+    "foi",
+    "vai",
+    "irá",
+    "ia"
+   ],
+   "correctIndex": 3,
+   "answer": "ia",
+   "lemma": "ir",
+   "tense": "imperfeito",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “ia”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “ia”."
+   },
+   "subtitle_en": "In the past, He ___ (ir = to go) by train."
+  },
+  {
+   "vid": "ptPt-verb-018-t-futuro",
+   "base_vid": "ptPt-verb-018",
+   "prompt": "Amanhã, ele ___ de comboio.",
+   "options": [
+    "foi",
+    "irá",
+    "ia",
+    "vai"
+   ],
+   "correctIndex": 1,
+   "answer": "irá",
+   "lemma": "ir",
+   "tense": "futuro",
+   "person": "ele",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “irá”.",
+    "es": "Con “Amanhã”, usa el futuro: “irá”."
+   },
+   "subtitle_en": "Tomorrow, He ___ (ir = to go) by train."
+  },
+  {
+   "vid": "ptPt-verb-020-t-pretPerfeito",
+   "base_vid": "ptPt-verb-020",
+   "prompt": "Ontem, eles ___ para o trabalho.",
+   "options": [
+    "irão",
+    "foram",
+    "vão",
+    "iam"
+   ],
+   "correctIndex": 1,
+   "answer": "foram",
+   "lemma": "ir",
+   "tense": "pretPerfeito",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “foram”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “foram”."
+   },
+   "subtitle_en": "Yesterday, They ___ (ir = to go) to work."
+  },
+  {
+   "vid": "ptPt-verb-020-t-imperfeito",
+   "base_vid": "ptPt-verb-020",
+   "prompt": "Antigamente, eles ___ para o trabalho.",
+   "options": [
+    "irão",
+    "foram",
+    "iam",
+    "vão"
+   ],
+   "correctIndex": 2,
+   "answer": "iam",
+   "lemma": "ir",
+   "tense": "imperfeito",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “iam”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “iam”."
+   },
+   "subtitle_en": "In the past, They ___ (ir = to go) to work."
+  },
+  {
+   "vid": "ptPt-verb-020-t-futuro",
+   "base_vid": "ptPt-verb-020",
+   "prompt": "Amanhã, eles ___ para o trabalho.",
+   "options": [
+    "iam",
+    "foram",
+    "irão",
+    "vão"
+   ],
+   "correctIndex": 2,
+   "answer": "irão",
+   "lemma": "ir",
+   "tense": "futuro",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “irão”.",
+    "es": "Con “Amanhã”, usa el futuro: “irão”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (ir = to go) to work."
+  },
+  {
+   "vid": "ptPt-verb-021-t-pretPerfeito",
+   "base_vid": "ptPt-verb-021",
+   "prompt": "Ontem, eu ___ água ao pequeno-almoço.",
+   "options": [
+    "bebia",
+    "bebi",
+    "beberei",
+    "bebo"
+   ],
+   "correctIndex": 1,
+   "answer": "bebi",
+   "lemma": "beber",
+   "tense": "pretPerfeito",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “bebi”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “bebi”."
+   },
+   "subtitle_en": "Yesterday, I ___ (beber = to drink) water at breakfast."
+  },
+  {
+   "vid": "ptPt-verb-021-t-imperfeito",
+   "base_vid": "ptPt-verb-021",
+   "prompt": "Antigamente, eu ___ água ao pequeno-almoço.",
+   "options": [
+    "bebia",
+    "beberei",
+    "bebo",
+    "bebi"
+   ],
+   "correctIndex": 0,
+   "answer": "bebia",
+   "lemma": "beber",
+   "tense": "imperfeito",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “bebia”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “bebia”."
+   },
+   "subtitle_en": "In the past, I ___ (beber = to drink) water at breakfast."
+  },
+  {
+   "vid": "ptPt-verb-021-t-futuro",
+   "base_vid": "ptPt-verb-021",
+   "prompt": "Amanhã, eu ___ água ao pequeno-almoço.",
+   "options": [
+    "beberei",
+    "bebi",
+    "bebo",
+    "bebia"
+   ],
+   "correctIndex": 0,
+   "answer": "beberei",
+   "lemma": "beber",
+   "tense": "futuro",
+   "person": "eu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “beberei”.",
+    "es": "Con “Amanhã”, usa el futuro: “beberei”."
+   },
+   "subtitle_en": "Tomorrow, I ___ (beber = to drink) water at breakfast."
+  },
+  {
+   "vid": "ptPt-verb-022-t-pretPerfeito",
+   "base_vid": "ptPt-verb-022",
+   "prompt": "Ontem, tu ___ em Lisboa.",
+   "options": [
+    "moravas",
+    "moraste",
+    "morarás",
+    "moras"
+   ],
+   "correctIndex": 1,
+   "answer": "moraste",
+   "lemma": "morar",
+   "tense": "pretPerfeito",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “moraste”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “moraste”."
+   },
+   "subtitle_en": "Yesterday, You ___ (morar = to live) in Lisbon."
+  },
+  {
+   "vid": "ptPt-verb-022-t-imperfeito",
+   "base_vid": "ptPt-verb-022",
+   "prompt": "Antigamente, tu ___ em Lisboa.",
+   "options": [
+    "moraste",
+    "moras",
+    "morarás",
+    "moravas"
+   ],
+   "correctIndex": 3,
+   "answer": "moravas",
+   "lemma": "morar",
+   "tense": "imperfeito",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “moravas”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “moravas”."
+   },
+   "subtitle_en": "In the past, You ___ (morar = to live) in Lisbon."
+  },
+  {
+   "vid": "ptPt-verb-022-t-futuro",
+   "base_vid": "ptPt-verb-022",
+   "prompt": "Amanhã, tu ___ em Lisboa.",
+   "options": [
+    "moravas",
+    "moraste",
+    "moras",
+    "morarás"
+   ],
+   "correctIndex": 3,
+   "answer": "morarás",
+   "lemma": "morar",
+   "tense": "futuro",
+   "person": "tu",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “morarás”.",
+    "es": "Con “Amanhã”, usa el futuro: “morarás”."
+   },
+   "subtitle_en": "Tomorrow, You ___ (morar = to live) in Lisbon."
+  },
+  {
+   "vid": "ptPt-verb-024-t-pretPerfeito",
+   "base_vid": "ptPt-verb-024",
+   "prompt": "Ontem, eles ___ numa loja.",
+   "options": [
+    "trabalhavam",
+    "trabalham",
+    "trabalharam",
+    "trabalharão"
+   ],
+   "correctIndex": 2,
+   "answer": "trabalharam",
+   "lemma": "trabalhar",
+   "tense": "pretPerfeito",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “trabalharam”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “trabalharam”."
+   },
+   "subtitle_en": "Yesterday, They ___ (trabalhar = to work) in a shop."
+  },
+  {
+   "vid": "ptPt-verb-024-t-imperfeito",
+   "base_vid": "ptPt-verb-024",
+   "prompt": "Antigamente, eles ___ numa loja.",
+   "options": [
+    "trabalharão",
+    "trabalharam",
+    "trabalhavam",
+    "trabalham"
+   ],
+   "correctIndex": 2,
+   "answer": "trabalhavam",
+   "lemma": "trabalhar",
+   "tense": "imperfeito",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “trabalhavam”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “trabalhavam”."
+   },
+   "subtitle_en": "In the past, They ___ (trabalhar = to work) in a shop."
+  },
+  {
+   "vid": "ptPt-verb-024-t-futuro",
+   "base_vid": "ptPt-verb-024",
+   "prompt": "Amanhã, eles ___ numa loja.",
+   "options": [
+    "trabalharão",
+    "trabalhavam",
+    "trabalham",
+    "trabalharam"
+   ],
+   "correctIndex": 0,
+   "answer": "trabalharão",
+   "lemma": "trabalhar",
+   "tense": "futuro",
+   "person": "eles",
+   "level": "A1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “trabalharão”.",
+    "es": "Con “Amanhã”, usa el futuro: “trabalharão”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (trabalhar = to work) in a shop."
+  },
+  {
+   "vid": "ptPt-verb-032-t-pretPerfeito",
+   "base_vid": "ptPt-verb-032",
+   "prompt": "Ontem, neste momento eu ___ a estudar para o exame.",
+   "options": [
+    "estive",
+    "estava",
+    "estou",
+    "estarei"
+   ],
+   "correctIndex": 0,
+   "answer": "estive",
+   "lemma": "estar",
+   "tense": "pretPerfeito",
+   "person": "eu",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “estive”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “estive”."
+   },
+   "subtitle_en": "Yesterday, Right now I ___ (estar = to be) studying for the exam."
+  },
+  {
+   "vid": "ptPt-verb-032-t-imperfeito",
+   "base_vid": "ptPt-verb-032",
+   "prompt": "Antigamente, neste momento eu ___ a estudar para o exame.",
+   "options": [
+    "estarei",
+    "estou",
+    "estava",
+    "estive"
+   ],
+   "correctIndex": 2,
+   "answer": "estava",
+   "lemma": "estar",
+   "tense": "imperfeito",
+   "person": "eu",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “estava”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “estava”."
+   },
+   "subtitle_en": "In the past, Right now I ___ (estar = to be) studying for the exam."
+  },
+  {
+   "vid": "ptPt-verb-032-t-futuro",
+   "base_vid": "ptPt-verb-032",
+   "prompt": "Amanhã, neste momento eu ___ a estudar para o exame.",
+   "options": [
+    "estive",
+    "estava",
+    "estou",
+    "estarei"
+   ],
+   "correctIndex": 3,
+   "answer": "estarei",
+   "lemma": "estar",
+   "tense": "futuro",
+   "person": "eu",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “estarei”.",
+    "es": "Con “Amanhã”, usa el futuro: “estarei”."
+   },
+   "subtitle_en": "Tomorrow, Right now I ___ (estar = to be) studying for the exam."
+  },
+  {
+   "vid": "ptPt-verb-033-t-pretPerfeito",
+   "base_vid": "ptPt-verb-033",
+   "prompt": "Ontem, ela ___ a falar ao telefone neste momento.",
+   "options": [
+    "esteve",
+    "está",
+    "estava",
+    "estará"
+   ],
+   "correctIndex": 0,
+   "answer": "esteve",
+   "lemma": "estar",
+   "tense": "pretPerfeito",
+   "person": "ele",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “esteve”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “esteve”."
+   },
+   "subtitle_en": "Yesterday, She ___ (estar = to be) talking on the phone right now."
+  },
+  {
+   "vid": "ptPt-verb-033-t-imperfeito",
+   "base_vid": "ptPt-verb-033",
+   "prompt": "Antigamente, ela ___ a falar ao telefone neste momento.",
+   "options": [
+    "esteve",
+    "está",
+    "estará",
+    "estava"
+   ],
+   "correctIndex": 3,
+   "answer": "estava",
+   "lemma": "estar",
+   "tense": "imperfeito",
+   "person": "ele",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “estava”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “estava”."
+   },
+   "subtitle_en": "In the past, She ___ (estar = to be) talking on the phone right now."
+  },
+  {
+   "vid": "ptPt-verb-033-t-futuro",
+   "base_vid": "ptPt-verb-033",
+   "prompt": "Amanhã, ela ___ a falar ao telefone neste momento.",
+   "options": [
+    "esteve",
+    "estava",
+    "estará",
+    "está"
+   ],
+   "correctIndex": 2,
+   "answer": "estará",
+   "lemma": "estar",
+   "tense": "futuro",
+   "person": "ele",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “estará”.",
+    "es": "Con “Amanhã”, usa el futuro: “estará”."
+   },
+   "subtitle_en": "Tomorrow, She ___ (estar = to be) talking on the phone right now."
+  },
+  {
+   "vid": "ptPt-verb-034-t-pretPerfeito",
+   "base_vid": "ptPt-verb-034",
+   "prompt": "Ontem, neste momento nós ___ a preparar o jantar.",
+   "options": [
+    "estaremos",
+    "estávamos",
+    "estamos",
+    "estivemos"
+   ],
+   "correctIndex": 3,
+   "answer": "estivemos",
+   "lemma": "estar",
+   "tense": "pretPerfeito",
+   "person": "nós",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “estivemos”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “estivemos”."
+   },
+   "subtitle_en": "Yesterday, Right now we ___ (estar = to be) preparing dinner."
+  },
+  {
+   "vid": "ptPt-verb-034-t-imperfeito",
+   "base_vid": "ptPt-verb-034",
+   "prompt": "Antigamente, neste momento nós ___ a preparar o jantar.",
+   "options": [
+    "estaremos",
+    "estávamos",
+    "estivemos",
+    "estamos"
+   ],
+   "correctIndex": 1,
+   "answer": "estávamos",
+   "lemma": "estar",
+   "tense": "imperfeito",
+   "person": "nós",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “estávamos”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “estávamos”."
+   },
+   "subtitle_en": "In the past, Right now we ___ (estar = to be) preparing dinner."
+  },
+  {
+   "vid": "ptPt-verb-034-t-futuro",
+   "base_vid": "ptPt-verb-034",
+   "prompt": "Amanhã, neste momento nós ___ a preparar o jantar.",
+   "options": [
+    "estávamos",
+    "estivemos",
+    "estamos",
+    "estaremos"
+   ],
+   "correctIndex": 3,
+   "answer": "estaremos",
+   "lemma": "estar",
+   "tense": "futuro",
+   "person": "nós",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “estaremos”.",
+    "es": "Con “Amanhã”, usa el futuro: “estaremos”."
+   },
+   "subtitle_en": "Tomorrow, Right now we ___ (estar = to be) preparing dinner."
+  },
+  {
+   "vid": "ptPt-verb-035-t-pretPerfeito",
+   "base_vid": "ptPt-verb-035",
+   "prompt": "Ontem, eles ___ a ver televisão na sala neste momento.",
+   "options": [
+    "estarão",
+    "estiveram",
+    "estão",
+    "estavam"
+   ],
+   "correctIndex": 1,
+   "answer": "estiveram",
+   "lemma": "estar",
+   "tense": "pretPerfeito",
+   "person": "eles",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “estiveram”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “estiveram”."
+   },
+   "subtitle_en": "Yesterday, They ___ (estar = to be) watching TV in the living room right now."
+  },
+  {
+   "vid": "ptPt-verb-035-t-imperfeito",
+   "base_vid": "ptPt-verb-035",
+   "prompt": "Antigamente, eles ___ a ver televisão na sala neste momento.",
+   "options": [
+    "estiveram",
+    "estarão",
+    "estavam",
+    "estão"
+   ],
+   "correctIndex": 2,
+   "answer": "estavam",
+   "lemma": "estar",
+   "tense": "imperfeito",
+   "person": "eles",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “estavam”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “estavam”."
+   },
+   "subtitle_en": "In the past, They ___ (estar = to be) watching TV in the living room right now."
+  },
+  {
+   "vid": "ptPt-verb-035-t-futuro",
+   "base_vid": "ptPt-verb-035",
+   "prompt": "Amanhã, eles ___ a ver televisão na sala neste momento.",
+   "options": [
+    "estiveram",
+    "estão",
+    "estarão",
+    "estavam"
+   ],
+   "correctIndex": 2,
+   "answer": "estarão",
+   "lemma": "estar",
+   "tense": "futuro",
+   "person": "eles",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “estarão”.",
+    "es": "Con “Amanhã”, usa el futuro: “estarão”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (estar = to be) watching TV in the living room right now."
+  },
+  {
+   "vid": "ptPt-verb-038-t-pretPerfeito",
+   "base_vid": "ptPt-verb-038",
+   "prompt": "Ontem, nós ___ (ir) comprar pão.",
+   "options": [
+    "fomos",
+    "íamos",
+    "imos",
+    "iremos"
+   ],
+   "correctIndex": 0,
+   "answer": "fomos",
+   "lemma": "ir",
+   "tense": "pretPerfeito",
+   "person": "nós",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “fomos”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “fomos”."
+   },
+   "subtitle_en": "Yesterday, We ___ (ir = to go) buy bread."
+  },
+  {
+   "vid": "ptPt-verb-038-t-imperfeito",
+   "base_vid": "ptPt-verb-038",
+   "prompt": "Antigamente, nós ___ (ir) comprar pão.",
+   "options": [
+    "iremos",
+    "fomos",
+    "imos",
+    "íamos"
+   ],
+   "correctIndex": 3,
+   "answer": "íamos",
+   "lemma": "ir",
+   "tense": "imperfeito",
+   "person": "nós",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “íamos”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “íamos”."
+   },
+   "subtitle_en": "In the past, We ___ (ir = to go) buy bread."
+  },
+  {
+   "vid": "ptPt-verb-038-t-futuro",
+   "base_vid": "ptPt-verb-038",
+   "prompt": "Amanhã, nós ___ (ir) comprar pão.",
+   "options": [
+    "iremos",
+    "imos",
+    "íamos",
+    "fomos"
+   ],
+   "correctIndex": 0,
+   "answer": "iremos",
+   "lemma": "ir",
+   "tense": "futuro",
+   "person": "nós",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “iremos”.",
+    "es": "Con “Amanhã”, usa el futuro: “iremos”."
+   },
+   "subtitle_en": "Tomorrow, We ___ (ir = to go) buy bread."
+  },
+  {
+   "vid": "ptPt-verb-040-t-pretPerfeito",
+   "base_vid": "ptPt-verb-040",
+   "prompt": "Ontem, eles ___ (ir) chegar às oito.",
+   "options": [
+    "iam",
+    "foram",
+    "vão",
+    "irão"
+   ],
+   "correctIndex": 1,
+   "answer": "foram",
+   "lemma": "ir",
+   "tense": "pretPerfeito",
+   "person": "eles",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “foram”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “foram”."
+   },
+   "subtitle_en": "Yesterday, They ___ (ir = to go) arrive at eight."
+  },
+  {
+   "vid": "ptPt-verb-040-t-imperfeito",
+   "base_vid": "ptPt-verb-040",
+   "prompt": "Antigamente, eles ___ (ir) chegar às oito.",
+   "options": [
+    "irão",
+    "vão",
+    "foram",
+    "iam"
+   ],
+   "correctIndex": 3,
+   "answer": "iam",
+   "lemma": "ir",
+   "tense": "imperfeito",
+   "person": "eles",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “iam”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “iam”."
+   },
+   "subtitle_en": "In the past, They ___ (ir = to go) arrive at eight."
+  },
+  {
+   "vid": "ptPt-verb-040-t-futuro",
+   "base_vid": "ptPt-verb-040",
+   "prompt": "Amanhã, eles ___ (ir) chegar às oito.",
+   "options": [
+    "iam",
+    "irão",
+    "vão",
+    "foram"
+   ],
+   "correctIndex": 1,
+   "answer": "irão",
+   "lemma": "ir",
+   "tense": "futuro",
+   "person": "eles",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “irão”.",
+    "es": "Con “Amanhã”, usa el futuro: “irão”."
+   },
+   "subtitle_en": "Tomorrow, They ___ (ir = to go) arrive at eight."
+  },
+  {
+   "vid": "ptPt-verb-041-t-pretPerfeito",
+   "base_vid": "ptPt-verb-041",
+   "prompt": "Ontem, ela ___ (ir) fazer o jantar mais tarde.",
+   "options": [
+    "foi",
+    "ia",
+    "vai",
+    "irá"
+   ],
+   "correctIndex": 0,
+   "answer": "foi",
+   "lemma": "ir",
+   "tense": "pretPerfeito",
+   "person": "ele",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “foi”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “foi”."
+   },
+   "subtitle_en": "Yesterday, She ___ (ir = to go) make dinner later."
+  },
+  {
+   "vid": "ptPt-verb-041-t-imperfeito",
+   "base_vid": "ptPt-verb-041",
+   "prompt": "Antigamente, ela ___ (ir) fazer o jantar mais tarde.",
+   "options": [
+    "vai",
+    "irá",
+    "foi",
+    "ia"
+   ],
+   "correctIndex": 3,
+   "answer": "ia",
+   "lemma": "ir",
+   "tense": "imperfeito",
+   "person": "ele",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “ia”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “ia”."
+   },
+   "subtitle_en": "In the past, She ___ (ir = to go) make dinner later."
+  },
+  {
+   "vid": "ptPt-verb-041-t-futuro",
+   "base_vid": "ptPt-verb-041",
+   "prompt": "Amanhã, ela ___ (ir) fazer o jantar mais tarde.",
+   "options": [
+    "ia",
+    "irá",
+    "foi",
+    "vai"
+   ],
+   "correctIndex": 1,
+   "answer": "irá",
+   "lemma": "ir",
+   "tense": "futuro",
+   "person": "ele",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “irá”.",
+    "es": "Con “Amanhã”, usa el futuro: “irá”."
+   },
+   "subtitle_en": "Tomorrow, She ___ (ir = to go) make dinner later."
+  },
+  {
+   "vid": "ptPt-verb-042-t-pretPerfeito",
+   "base_vid": "ptPt-verb-042",
+   "prompt": "Ontem, vocês ___ (ir) apanhar o autocarro?",
+   "options": [
+    "irão",
+    "vão",
+    "iam",
+    "foram"
+   ],
+   "correctIndex": 3,
+   "answer": "foram",
+   "lemma": "ir",
+   "tense": "pretPerfeito",
+   "person": "vocês",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “foram”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “foram”."
+   },
+   "subtitle_en": "Yesterday, ___ (ir = to go) you all catch the bus?"
+  },
+  {
+   "vid": "ptPt-verb-042-t-imperfeito",
+   "base_vid": "ptPt-verb-042",
+   "prompt": "Antigamente, vocês ___ (ir) apanhar o autocarro?",
+   "options": [
+    "irão",
+    "iam",
+    "vão",
+    "foram"
+   ],
+   "correctIndex": 1,
+   "answer": "iam",
+   "lemma": "ir",
+   "tense": "imperfeito",
+   "person": "vocês",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “iam”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “iam”."
+   },
+   "subtitle_en": "In the past, ___ (ir = to go) you all catch the bus?"
+  },
+  {
+   "vid": "ptPt-verb-042-t-futuro",
+   "base_vid": "ptPt-verb-042",
+   "prompt": "Amanhã, vocês ___ (ir) apanhar o autocarro?",
+   "options": [
+    "iam",
+    "irão",
+    "vão",
+    "foram"
+   ],
+   "correctIndex": 1,
+   "answer": "irão",
+   "lemma": "ir",
+   "tense": "futuro",
+   "person": "vocês",
+   "level": "A2",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “irão”.",
+    "es": "Con “Amanhã”, usa el futuro: “irão”."
+   },
+   "subtitle_en": "Tomorrow, ___ (ir = to go) you all catch the bus?"
+  },
+  {
+   "vid": "ptPt-verb-053-t-pretPerfeito",
+   "base_vid": "ptPt-verb-053",
+   "prompt": "Ontem, nos últimos meses, eu ___ trabalhado imenso.",
+   "options": [
+    "tinha",
+    "tenho",
+    "tive",
+    "terei"
+   ],
+   "correctIndex": 2,
+   "answer": "tive",
+   "lemma": "ter",
+   "tense": "pretPerfeito",
+   "person": "eu",
+   "level": "B1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “tive”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “tive”."
+   },
+   "subtitle_en": "Yesterday, In recent months, I ___ (ter = to have, auxiliary) worked a great deal."
+  },
+  {
+   "vid": "ptPt-verb-053-t-imperfeito",
+   "base_vid": "ptPt-verb-053",
+   "prompt": "Antigamente, nos últimos meses, eu ___ trabalhado imenso.",
+   "options": [
+    "tinha",
+    "tenho",
+    "tive",
+    "terei"
+   ],
+   "correctIndex": 0,
+   "answer": "tinha",
+   "lemma": "ter",
+   "tense": "imperfeito",
+   "person": "eu",
+   "level": "B1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “tinha”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “tinha”."
+   },
+   "subtitle_en": "In the past, In recent months, I ___ (ter = to have, auxiliary) worked a great deal."
+  },
+  {
+   "vid": "ptPt-verb-053-t-futuro",
+   "base_vid": "ptPt-verb-053",
+   "prompt": "Amanhã, nos últimos meses, eu ___ trabalhado imenso.",
+   "options": [
+    "tinha",
+    "terei",
+    "tenho",
+    "tive"
+   ],
+   "correctIndex": 1,
+   "answer": "terei",
+   "lemma": "ter",
+   "tense": "futuro",
+   "person": "eu",
+   "level": "B1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “terei”.",
+    "es": "Con “Amanhã”, usa el futuro: “terei”."
+   },
+   "subtitle_en": "Tomorrow, In recent months, I ___ (ter = to have, auxiliary) worked a great deal."
+  },
+  {
+   "vid": "ptPt-verb-066-t-pretPerfeito",
+   "base_vid": "ptPt-verb-066",
+   "prompt": "Ontem, este ano, nós ___ viajado bastante.",
+   "options": [
+    "tivemos",
+    "tínhamos",
+    "temos",
+    "teremos"
+   ],
+   "correctIndex": 0,
+   "answer": "tivemos",
+   "lemma": "ter",
+   "tense": "pretPerfeito",
+   "person": "nós",
+   "level": "B1",
+   "explanation": {
+    "en": "With “Ontem”, use the pretérito perfeito: “tivemos”.",
+    "es": "Con “Ontem”, usa el pretérito perfecto: “tivemos”."
+   },
+   "subtitle_en": "Yesterday, This year, we ___ (ter = to have, auxiliary) travelled quite a lot."
+  },
+  {
+   "vid": "ptPt-verb-066-t-imperfeito",
+   "base_vid": "ptPt-verb-066",
+   "prompt": "Antigamente, este ano, nós ___ viajado bastante.",
+   "options": [
+    "tínhamos",
+    "temos",
+    "teremos",
+    "tivemos"
+   ],
+   "correctIndex": 0,
+   "answer": "tínhamos",
+   "lemma": "ter",
+   "tense": "imperfeito",
+   "person": "nós",
+   "level": "B1",
+   "explanation": {
+    "en": "With “Antigamente”, use the pretérito imperfeito: “tínhamos”.",
+    "es": "Con “Antigamente”, usa el imperfecto: “tínhamos”."
+   },
+   "subtitle_en": "In the past, This year, we ___ (ter = to have, auxiliary) travelled quite a lot."
+  },
+  {
+   "vid": "ptPt-verb-066-t-futuro",
+   "base_vid": "ptPt-verb-066",
+   "prompt": "Amanhã, este ano, nós ___ viajado bastante.",
+   "options": [
+    "tivemos",
+    "tínhamos",
+    "teremos",
+    "temos"
+   ],
+   "correctIndex": 2,
+   "answer": "teremos",
+   "lemma": "ter",
+   "tense": "futuro",
+   "person": "nós",
+   "level": "B1",
+   "explanation": {
+    "en": "With “Amanhã”, use the futuro: “teremos”.",
+    "es": "Con “Amanhã”, usa el futuro: “teremos”."
+   },
+   "subtitle_en": "Tomorrow, This year, we ___ (ter = to have, auxiliary) travelled quite a lot."
+  }
+ ]
+}

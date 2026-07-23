@@ -30,9 +30,10 @@ these), but every generated form still goes to review.
 
 ## Generation output — SHIPPED to closed beta as `v2.33.0-beta.3` (2026-07-19)
 
-Sean's call: ship Phase 1 to the closed beta now, use the reviewer packet as the correction
-pass (native review still owed under #41). Loaded into `data/tracks/esForEn.js`; verbo bank
-**157 → 515**.
+Loaded into `data/tracks/esForEn.js` and shipped to beta-prod (verbo bank **157 → 515**)
+*before* review — the reviewer packet is the parallel correction pass (native review owed under
+#41). **This ship-to-beta-pre-review flow is now the standard for every language**, not a
+Spanish one-off; native review gates only the real-prod promotion. See README "Release strategy".
 
 **Phase 1 — person-swap (SHIPPED):** **91** pronoun-subject standard/reflexive base items
 yielded **358 person variants** (~3.9 per base). 180 involve an irregular verb, 28 are

@@ -1,0 +1,7 @@
+{
+ "track":"frForEn","code":"fr","verbecc":"fr","defs":"frdefs","id_prefix":"fr","spec_track":"frForEn",
+ "curbank":"curbank_fr.json","variant_ids":"fr_variant_ids.json","base_prompts":"fr_base_prompts.json",
+ "depth_out":"depth_out_fr.json","assembled":"assembled_fr.json",
+ "tense_map_spec":{"present-subjunctive":"subjPresent","conditional":"conditionnel","future":"futur","present":"present","imperative":"imperatif","preterite":"passeCompose"},
+ "verbo_label":"Verbes","verbo_color":"#4DD599","cats_vocab_label":"Vocabulaire","verify_verbo":true,
+ "tags_module":"frForEnTags","track_file":"frForEn.js","tags_file":"frForEnTags.js","lang_name":"French (France)","verbo_cat":"Verbes"}

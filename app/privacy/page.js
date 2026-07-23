@@ -1,16 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { LEGAL_VERSION } from "../../lib/legalVersions";
+import BackHome from "../../lib/BackHome";
 
 export default function PrivacyPage() {
-  const router = useRouter();
   return (
     <div style={styles.wrap}>
       <div style={{ width: "100%", maxWidth: 640 }}>
-        <button className="rj" style={styles.backBtn} onClick={() => router.back()}>
-          ← Back
-        </button>
+        <BackHome />
         <h1 className="rj" style={styles.title}>
           Privacy Policy
         </h1>
@@ -104,7 +101,7 @@ const styles = {
     marginBottom: 16,
   },
   title: { fontSize: 24, fontWeight: 700, color: "#F3F0FA", margin: "0 0 4px" },
-  meta: { color: "#7C7395", fontSize: 12, marginBottom: 16 },
+  meta: { color: "#9B93B8", fontSize: 12, marginBottom: 16 },
   notice: {
     background: "#241B36",
     border: "1px solid #B98EFF",

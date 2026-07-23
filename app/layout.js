@@ -3,7 +3,7 @@ import NavDepthTracker from "../lib/NavDepthTracker";
 import VersionWatcher from "../lib/VersionWatcher";
 import RequireUsernameGate from "../lib/RequireUsernameGate";
 import RequireLegalGate from "../lib/RequireLegalGate";
-import WelcomePopup from "../lib/WelcomePopup";
+import GuideOverlay from "../lib/GuideOverlay";
 import GlobalErrorLogger from "../lib/GlobalErrorLogger";
 
 export const metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
         <VersionWatcher />
         <RequireUsernameGate />
         <RequireLegalGate />
-        <WelcomePopup />
+        <GuideOverlay />
         <GlobalErrorLogger />
       </body>
     </html>

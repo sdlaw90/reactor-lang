@@ -42,21 +42,28 @@ via `node --check` + dry-runs).
 
 ## 3. Commit & deploy to dev
 
-Every delta must include a changelog fragment (§4) — check it's present
-before committing.
+Prereq: you're on `dev`, `lib/version.js` is bumped, and the changelog
+fragment (§4) is present. Then:
 
 ```
-git checkout dev
-git add -A
-git commit -m "short description of the session's work"
-git push
+npm run deploy dev
 ```
+
+`scripts/deploy.js` does the whole dance and refuses to run off `dev`: it
+stages everything, regenerates `docs/repo-tree.md`, commits as
+`v<CURRENT_VERSION>` (skips the commit if nothing changed), `git pull --rebase`,
+`git push`, then auto-synths + uploads any genuinely-new TTS clips to the
+**dev** bucket (non-blocking — a TTS hiccup never aborts the push). You no
+longer run the git commands or the §5 TTS sequence by hand. `public/version.json`
+is regenerated from `lib/version.js` at build, so it needs no hand-editing.
+
+> Bare `npm run deploy` (no target) errors on purpose — you must name the tier
+> (`dev` / `beta` / `prod`) so a wrong-branch push can't happen by reflex.
 
 Pushing `dev` triggers: Vercel Preview deploy + migrations workflow →
-**staging** Supabase. Note: the workflow's old `paths` filter is gone, so
-the staging migration job now runs on *every* dev push — an idempotent
-no-op when no new migration files exist. This is deliberate (the filter
-would have skipped the release sync/smoke jobs on no-migration releases).
+**staging** Supabase. (The old `paths` filter is gone, so the staging
+migration job runs on every dev push — an idempotent no-op when there are no
+new migration files.)
 
 ---
 
@@ -92,7 +99,7 @@ Prod gets this audio automatically at release time: the `sync-tts` CI job
 mirrors the dev bucket into prod on every `main` push (copy-only, never
 deletes). There is no manual prod upload step anymore.
 
-**Deploy-time auto-sync (added 2026-07-19):** `npm run deploy` now runs
+**Deploy-time auto-sync (added 2026-07-19):** `npm run deploy dev` now runs
 `scripts/tts-on-deploy.mjs` after the push — it detects which audio tracks'
 content changed in the deploy, dry-run-gates for genuinely-new clips, and
 synth+uploads only those to the **dev** bucket. So for ordinary content passes
@@ -105,10 +112,14 @@ sync on deploy" for the full behavior.
 
 ---
 
-## 6. Cutting a release (prod)
+## 6. Cutting a release (beta-prod = `main`)
 
-The entire release is: bump + rollup → merge → watch for green. No manual
-prod uploads, no env swapping.
+The entire release is: bump + rollup (§6a) → `npm run deploy beta` (§6b) →
+watch for green (§6c). No manual merge, no manual prod uploads, no env swapping.
+
+> Tier naming: `main` is the **beta-prod** tier (your beta testers). The real
+> live-prod branch isn't stood up yet — `npm run deploy prod` is reserved and
+> errors until it is.
 
 ### 6a. Version bump + changelog rollup (deepening/ledger chat)
 - New `-beta.N` in `lib/version.js` (any change to a built deliverable =
@@ -117,47 +128,42 @@ prod uploads, no env swapping.
   fragments → release notes (regrouped by feature area) → move fragments
   to `released/vX.Y.Z-beta.N/`
 
-### 6b. Merge to main (prod release)
+### 6b. Release to main
 
-Prereqs: `lib/version.js` bumped, `unreleased/` fragments rolled up into
-`released/vX.Y.Z-beta.N/`, everything committed on `dev`.
+Prereqs: `lib/version.js` bumped, `unreleased/` fragments rolled up, everything
+committed **and pushed** on `dev` (via §3). Then, from a clean tree:
 
-1. Get onto an up-to-date main:
-       git checkout main
-       git pull
+```
+npm run deploy beta
+```
 
-2. Merge dev:
-       git merge dev --no-ff -m "Release vX.Y.Z-beta.N"
-   Edit the version in `-m` to match `lib/version.js`. `--no-ff` guarantees a
-   merge commit exists to carry the message (a fast-forward drops it).
+`deploy beta` guards, then automates the whole merge: it refuses on a dirty
+tree, unless local `dev` matches `origin/dev`, or if `v<version>` is already on
+`main` (bump first). Then it checks out main → pulls → `merge dev --no-ff` →
+auto-resolves the one known-safe recurring conflict
+(`.github/workflows/supabase-migrations.yml`, take dev's) → pushes main →
+**back-merges main into dev** (this is what stops the conflicts recurring) →
+leaves you back on `dev`. It finishes by printing the watch-for-green reminder.
 
-   Two conflicts recur every release — resolve them differently:
-   - `.github/workflows/supabase-migrations.yml` — take dev's copy wholesale
-     (dev has the current job chain):
-         git checkout --theirs .github/workflows/supabase-migrations.yml
-         git add .github/workflows/supabase-migrations.yml
-   - `docs/manual-runbook.md` (add/add) — hand-merge. Do NOT use
-     `--ours`/`--theirs`; either silently drops a side. Open it, resolve the
-     `<<<<<<< ======= >>>>>>>` markers, keep both blocks if they're different
-     topics, then `git add docs/manual-runbook.md`.
+**If the merge hits any *other* conflict, the script STOPS** and prints exactly
+what to do — it never auto-resolves anything unexpected on a release. Resolve by
+hand: keep BOTH sides where they're different topics, and never use
+`--ours`/`--theirs` on `docs/manual-runbook.md` (either silently drops a side).
+Then finish as the script instructs:
 
-3. Finish and push:
-       git status                              # "All conflicts fixed"
-       git commit -m "Release vX.Y.Z-beta.N"   # only if the merge paused for conflicts
-       git push origin main
+```
+git add <files>
+git commit -m "Release vX.Y.Z-beta.N"
+git push origin main
+git checkout dev && git merge main && git push origin dev   # back-merge — don't skip
+```
 
-   Pushing main triggers the chain:
-       migrate-production → sync-tts → smoke-check → publish-ready
-   `publish-ready` going green is the real success gate — VersionWatcher fails
-   closed on a missing release-ready marker, so a green Vercel deploy alone is
-   NOT enough. Chain internals + the three one-time Production secrets live in
-   docs/tts-sync-runbook.md.
-
-4. Back-merge so the SAME two conflicts don't return next release:
-       git checkout dev
-       git merge main
-       git push origin dev
-       git checkout main
+Pushing `main` triggers the chain:
+    migrate-production → sync-tts → smoke-check → publish-ready
+`publish-ready` going green is the real success gate — VersionWatcher fails
+closed on a missing release-ready marker, so a green Vercel deploy alone is NOT
+enough. Chain internals + the three one-time Production secrets live in
+`docs/tts-sync-runbook.md`.
 
 ### 6c. Watch for green checks (Actions tab)
 The release is done when the workflow run on the `main` push is fully

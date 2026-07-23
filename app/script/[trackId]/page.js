@@ -6,10 +6,14 @@ import { Check, X } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
 import { getTrack } from "../../../data/tracks";
 import { scriptForTrack, glyphPracticeId } from "../../../data/scripts";
+import { grammarForTrack } from "../../../data/grammar";
 import { shuffle } from "../../../lib/gameEngine";
 import { loadSeenAt, markSeen, loadMissedIds, addMissed, resolveMissed } from "../../../lib/db";
 import { t } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
+import BackHome from "../../../lib/BackHome";
+import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
+import { trackDisplayName } from "../../../lib/languageNames";
 
 // #62 — the generic writing-system teaching block (kana pilots it; hangul,
 // Cyrillic, and the Mandarin curated set are future data files in
@@ -128,7 +132,7 @@ export default function ScriptPracticePage({ params }) {
 
   if (!track || !script) {
     return (
-      <div style={styles.wrap}>
+      <div style={styles.bg}>
         <p style={{ color: "#FF7B8A" }}>No script practice for this track.</p>
       </div>
     );
@@ -190,12 +194,18 @@ export default function ScriptPracticePage({ params }) {
   const toggleGroup = (gid) =>
     setGroupIds((prev) => (prev.includes(gid) ? prev.filter((g) => g !== gid) : [...prev, gid]));
 
+  const trackTheme = TRACK_THEMES[track.theme];
+
   return (
-    <div style={styles.wrap}>
-      <div style={{ width: "100%", maxWidth: 480 }}>
-        <button className="rj" style={styles.backBtn} onClick={() => router.push(`/play/${track.id}`)}>
-          ← {track.flag || ""}
-        </button>
+    <div style={styles.bg}>
+      {trackTheme && <div style={animatedBackgroundStyle(trackTheme.gradient)} />}
+      <div style={styles.container}>
+        <BackHome />
+
+        <div style={styles.header}>
+          <h1 className="rj" style={styles.title}>{trackDisplayName(track, nativeLang)}</h1>
+          <p style={styles.subtitle}>{script.name}</p>
+        </div>
 
         <ModeToggle
           trackId={track.id}
@@ -203,6 +213,7 @@ export default function ScriptPracticePage({ params }) {
           quickQuizLabel={T("modeQuickQuiz")}
           lessonsLabel={T("modeLessons")}
           scriptLabel={script.name}
+          grammarLabel={grammarForTrack(track.id) ? T("modeGrammar") : null}
         />
 
         {tab === "learn" && (
@@ -291,14 +302,14 @@ export default function ScriptPracticePage({ params }) {
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {quiz[qIndex].options.map((opt, i) => {
-                  let bg = "#171423";
+                  let bg = "#1D212B";
                   let border = "#3A3452";
                   if (feedback) {
                     if (i === quiz[qIndex].correctIdx) {
-                      bg = "#1B3A2A";
+                      bg = "#1E4A32";
                       border = "#5EE0A0";
                     } else if (i === selected) {
-                      bg = "#3A1B1F";
+                      bg = "#4A1E24";
                       border = "#FF7B8A";
                     }
                   }
@@ -343,8 +354,13 @@ export default function ScriptPracticePage({ params }) {
 }
 
 const styles = {
-  wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "24px 16px 60px", background: "#171423" },
-  backBtn: { background: "transparent", color: "#B4ABC9", border: "none", fontSize: 14, cursor: "pointer", marginBottom: 12, padding: 0 },
+  bg: { position: "relative", minHeight: "100vh", width: "100%", display: "flex", justifyContent: "center", padding: "24px 16px 60px", background: "#171423", overflow: "hidden" },
+  container: { position: "relative", zIndex: 1, width: "100%", maxWidth: 480 },
+  hudRow: { display: "flex", alignItems: "center", marginBottom: 16 },
+  header: { marginBottom: 18 },
+  title: { fontSize: 22, fontWeight: 700, color: "#F3F0FA", margin: "0 0 4px", textAlign: "center" },
+  subtitle: { color: "#B98EFF", fontSize: 13, fontWeight: 600, margin: 0, textAlign: "center" },
+  backBtn: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
   intro: { color: "#B4ABC9", fontSize: 13.5, lineHeight: 1.6, marginBottom: 16 },
   systemToggle: { display: "flex", gap: 8, marginBottom: 10 },
   systemBtn: { flex: 1, background: "#221E33", color: "#B4ABC9", border: "1px solid #3A3452", borderRadius: 10, padding: "10px 8px", fontSize: 14, fontWeight: 700, cursor: "pointer" },

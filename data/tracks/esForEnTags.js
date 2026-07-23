@@ -439,6 +439,18 @@ const RAW = {
   "Translate: 'It's not worth crying over spilled milk.'": { themes: ["emotions"] },
   "Translate: 'She hit the nail on the head.'": { themes: ["work"] },
   "Translate: 'He's a jack of all trades.'": { themes: ["work"] },
+
+  // ---- #88 theme coverage pass (2026-07-22, L4/E2 standardization; AI-authored, flag #41) ----
+  "'Madrugar' significa...": { themes: ["numbers-time"] },
+  "¿Cómo se dice 'cell phone' en español (Latinoamérica)?": { themes: ["small-talk"] },
+  "'El celular' significa...": { themes: ["small-talk"] },
+  "¿Cómo se dice 'the cell phone' en español (en muchos paises de America Latina)?": { themes: ["small-talk"] },
+  "'El madrugador' significa...": { themes: ["numbers-time"] },
+  "¿Cómo se dice 'to catch up (on something)' en español?": { themes: ["small-talk"] },
+  "Translate: 'It's raining cats and dogs.'": { themes: ["small-talk"] },
+  "Translate: 'Out of sight, out of mind.'": { themes: ["emotions"] },
+  "Translate: 'When pigs fly.'": { themes: ["numbers-time"] },
+  "Translate: 'He kicked the bucket.'": { themes: ["medical"] },
 };
 
 const norm = (s) => String(s).replace(/\s+/g, " ").trim();

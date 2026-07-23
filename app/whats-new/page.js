@@ -38,7 +38,7 @@ export default function WhatsNewPage() {
           What's new
         </h1>
         <p className="jm" style={styles.versionLine}>
-          v{latest.version} <span style={{ color: "#7C7395" }}>&middot; {latest.date}</span>
+          v{latest.version} <span style={{ color: "#9B93B8" }}>&middot; {latest.date}</span>
         </p>
 
         <ul style={styles.list}>

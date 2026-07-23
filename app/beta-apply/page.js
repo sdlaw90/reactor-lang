@@ -588,7 +588,7 @@ const styles = {
   progressRow: { display: "flex", gap: 6, justifyContent: "center", marginBottom: 10 },
   progressDot: { width: 28, height: 4, borderRadius: 2, background: "#3A3452" },
   progressDotActive: { background: "#FF8FB1" },
-  stepLabel: { color: "#7C7395", fontSize: 12, fontWeight: 700, textAlign: "center", marginBottom: 20, textTransform: "uppercase", letterSpacing: 0.5 },
+  stepLabel: { color: "#9B93B8", fontSize: 12, fontWeight: 700, textAlign: "center", marginBottom: 20, textTransform: "uppercase", letterSpacing: 0.5 },
   label: { display: "block", color: "#B4ABC9", fontSize: 13, fontWeight: 600, marginBottom: 8, lineHeight: 1.4 },
   input: {
     width: "100%",
@@ -635,7 +635,7 @@ const styles = {
     cursor: "pointer",
   },
   scaleBtnActive: { background: "#FF8FB1", color: "#171423", borderColor: "#FF8FB1" },
-  scaleLabel: { color: "#7C7395", fontSize: 11 },
+  scaleLabel: { color: "#9B93B8", fontSize: 11 },
   error: { color: "#FF7B8A", fontSize: 13, marginTop: 14 },
   primaryBtn: {
     flex: 1,
@@ -680,6 +680,6 @@ const styles = {
     userSelect: "all",
   },
   credentialHint: { color: "#9B93B8", fontSize: 12, margin: "10px 0 14px" },
-  footer: { color: "#7C7395", fontSize: 12.5, textAlign: "center", marginTop: 20 },
+  footer: { color: "#9B93B8", fontSize: 12.5, textAlign: "center", marginTop: 20 },
   link: { color: "#3DDBFF", textDecoration: "underline" },
 };

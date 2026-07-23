@@ -292,7 +292,7 @@ export default function AuthPage() {
 }
 
 const styles = {
-  betaApplyRow: { textAlign: "center", color: "#7C7395", fontSize: 12.5, marginTop: 18 },
+  betaApplyRow: { textAlign: "center", color: "#9B93B8", fontSize: 12.5, marginTop: 18 },
   betaApplyLink: { color: "#3DDBFF", textDecoration: "underline" },
   agreeRow: {
     display: "flex",
@@ -329,7 +329,7 @@ const styles = {
     fontSize: 15,
     marginBottom: 12,
   },
-  hint: { color: "#7C7395", fontSize: 12, marginTop: -4, marginBottom: 12, lineHeight: 1.4 },
+  hint: { color: "#9B93B8", fontSize: 12, marginTop: -4, marginBottom: 12, lineHeight: 1.4 },
   primaryBtn: {
     width: "100%",
     background: "#FF8FB1",

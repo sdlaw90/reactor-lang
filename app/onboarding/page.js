@@ -278,7 +278,7 @@ const styles = {
   skipBtn: {
     width: "100%",
     background: "transparent",
-    color: "#7C7395",
+    color: "#9B93B8",
     border: "none",
     fontSize: 13,
     cursor: "pointer",

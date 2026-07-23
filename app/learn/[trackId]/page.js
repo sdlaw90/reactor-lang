@@ -15,6 +15,7 @@ import { grammarForTrack } from "../../../data/grammar";
 import SectionToggle from "../../../lib/SectionToggle";
 import { trackDisplayName } from "../../../lib/languageNames";
 import StreakMilestoneCelebration from "../../../lib/StreakMilestoneCelebration";
+import BackHome from "../../../lib/BackHome";
 import {
   loadProgress,
   saveProgress,
@@ -108,7 +109,7 @@ export default function LessonsPage({ params }) {
   if (!loaded || !progress) {
     return (
       <div style={styles.bg}>
-        <p style={{ color: "#7C7395" }} className="jm">
+        <p style={{ color: "#9B93B8" }} className="jm">
           {T("loading")}
         </p>
       </div>
@@ -232,11 +233,15 @@ export default function LessonsPage({ params }) {
     <div style={styles.bg}>
       {trackTheme && <div style={animatedBackgroundStyle(trackTheme.gradient)} />}
       <div style={styles.container}>
-        <div style={styles.hudRow}>
-          <button className="rj" style={styles.backBtn} onClick={() => (screen === "start" ? router.push(`/play/${track.id}`) : exitLesson())}>
-            ← {T("exit")}
-          </button>
-        </div>
+        {screen === "start" ? (
+          <BackHome />
+        ) : (
+          <div style={styles.hudRow}>
+            <button className="rj" style={styles.backBtn} onClick={exitLesson}>
+              ← {T("exit")}
+            </button>
+          </div>
+        )}
 
         {screen === "start" && (
           <div style={styles.centerCol} className="fadein">
@@ -275,7 +280,7 @@ export default function LessonsPage({ params }) {
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span style={{ color: track.cats[catId].color, fontWeight: 700 }}>{displayCatLabel(catId)}</span>
                       {m && (
-                        <span className="jm" style={{ color: "#7C7395", fontSize: 12 }}>
+                        <span className="jm" style={{ color: "#9B93B8", fontSize: 12 }}>
                           {m.learned}/{m.total}
                         </span>
                       )}
@@ -319,13 +324,13 @@ export default function LessonsPage({ params }) {
 
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>
               {q.options.map((opt, i) => {
-                let bg = "#221E33";
+                let bg = "#1D212B";
                 let border = "#3A3452";
                 let borderWidth = 1;
                 let textColor = "#F3F0FA";
                 if (answered) {
                   if (i === q.correctIdx) {
-                    bg = "#0F3324";
+                    bg = "#1E4A32";
                     border = "#5EE0A0";
                     borderWidth = 3;
                     textColor = "#B9FFDA";
@@ -404,7 +409,7 @@ function StatChip({ label, value, color }) {
   return (
     <div style={{ textAlign: "center" }}>
       <div style={{ fontSize: 20, fontWeight: 800, color }}>{value}</div>
-      <div style={{ fontSize: 11, color: "#7C7395", marginTop: 2 }}>{label}</div>
+      <div style={{ fontSize: 11, color: "#9B93B8", marginTop: 2 }}>{label}</div>
     </div>
   );
 }
@@ -450,7 +455,7 @@ const styles = {
   centerCol: { display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" },
   title: { fontSize: 22, fontWeight: 700, color: "#F3F0FA", margin: "0 0 4px" },
   subtitle: { color: "#B98EFF", fontSize: 13, fontWeight: 600, marginBottom: 24 },
-  chooseText: { color: "#7C7395", fontSize: 13, marginBottom: 10, alignSelf: "flex-start" },
+  chooseText: { color: "#9B93B8", fontSize: 13, marginBottom: 10, alignSelf: "flex-start" },
   lessonCard: {
     width: "100%",
     background: "#221E33",
@@ -463,13 +468,13 @@ const styles = {
   switchModeBtn: {
     marginTop: 26,
     background: "transparent",
-    color: "#7C7395",
+    color: "#9B93B8",
     border: "none",
     fontSize: 12.5,
     cursor: "pointer",
     textDecoration: "underline",
   },
-  itemProgress: { color: "#7C7395", fontSize: 12, marginBottom: 10 },
+  itemProgress: { color: "#9B93B8", fontSize: 12, marginBottom: 10 },
   catTag: {
     display: "inline-block",
     fontSize: 11,
@@ -528,7 +533,7 @@ const styles = {
   explainLangTag: {
     fontSize: 10,
     fontWeight: 800,
-    color: "#7C7395",
+    color: "#9B93B8",
     background: "#171423",
     borderRadius: 6,
     padding: "2px 6px",
