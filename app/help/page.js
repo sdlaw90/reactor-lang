@@ -102,7 +102,7 @@ export default function HelpPage() {
         </Section>
 
         <Section title="Review mode">
-          <P>Turn this on in Settings → Gameplay to pause after each answer, read the bilingual explanation right there on the card, and tap "Next" whenever you're ready — instead of auto-advancing after less than a second.</P>
+          <P>Turn this on in Settings → Gameplay to pause after each answer, read the explanation right there on the card, and tap "Next" whenever you're ready — instead of auto-advancing after less than a second.</P>
         </Section>
 
         <Section title="Missed questions & review">
@@ -110,7 +110,7 @@ export default function HelpPage() {
         </Section>
 
         <Section title="Explanations & archive">
-          <P>Every question you've ever answered — right or wrong — gets logged with an explanation of the correct answer, viewable anytime from the round-result screen. Explanations currently show in English and Spanish specifically (not yet your actual native + target language for tracks outside that pair — a known limitation, on the roadmap to fix). Older entries move to an "Archivo" section automatically so the main list stays fast to scroll — nothing is ever deleted unless you choose to clear it.</P>
+          <P>Every question you've ever answered — right or wrong — gets logged with an explanation of the correct answer, viewable anytime from the round-result screen. Explanations show in your native language (falling back to English where a translation isn't written yet), and while you're at No experience, Beginner, or Intermediate you also get the explanation in the language you're learning — so you pick up the phrasing in context. Target-language explanations are being added track by track. Older entries move to an "Archivo" section automatically so the main list stays fast to scroll — nothing is ever deleted unless you choose to clear it.</P>
         </Section>
 
         <Section title="Mastery tracker">

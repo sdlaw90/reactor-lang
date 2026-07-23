@@ -99,13 +99,13 @@ export default function AboutPage() {
             <RoadmapItem badge title="SquirreLingo in more languages">
               Learn from your native language, not just English — more source languages are rolling out.
             </RoadmapItem>
+            <RoadmapItem badge title="Explanations in your language">
+              Now in your native language, not just English — with the language you're learning too, rolling out track by track.
+            </RoadmapItem>
 
             <p style={styles.bucketLabel}>Coming soon</p>
             <RoadmapItem title="Mastery quizzes and star rankings">
               Prove you've truly mastered a category and earn stars for it.
-            </RoadmapItem>
-            <RoadmapItem title="Explanations in your language">
-              Answer explanations in both your native and target language, not just English and Spanish.
             </RoadmapItem>
 
             <p style={styles.bucketLabel}>Down the road</p>
