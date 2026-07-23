@@ -14,6 +14,7 @@
 .github/workflows/supabase-migrations.yml
 .gitignore
 README.md
+_to_delete/enForEs.js
 app/about/page.js
 app/admin/ApplicationsSection.js
 app/admin/DashboardSection.js
@@ -92,7 +93,6 @@ data/scripts/kanaJa.js
 data/scripts/mandarinZh.js
 data/tracks/deForEn.js
 data/tracks/deForEnTags.js
-data/tracks/enForEs.js
 data/tracks/enForIt.js
 data/tracks/enGbForEs.js
 data/tracks/enUsForEs.js
