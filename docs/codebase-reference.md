@@ -57,7 +57,7 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 
 | File | What it does |
 |---|---|
-| `play/[trackId]/page.js` | ★ The gameplay loop. `screen` state machine (`start/playing/result/explain/archive`), Quick Quiz (timed, combo) + shares the engine. Also defines `ExplanationCard`, `StatChip`, `TimerRing`. Uses the new gameEngine combined-focus exports; category and theme filters are no longer mutually exclusive and a live combo-viability note (`combinedPoolSize`/`COMBINED_MIN`) tells the player when a category∩theme round can be built. |
+| `play/[trackId]/page.js` | ★ The gameplay loop. `screen` state machine (`start/playing/result/explain/archive`), Quick Quiz (timed, combo) + shares the engine. Also defines `ExplanationCard`, `StatChip`, `TimerRing`. Uses the new gameEngine combined-focus exports; category and theme filters are no longer mutually exclusive and a live combo-viability note (`combinedPoolSize`/`COMBINED_MIN`) tells the player when a category∩theme round can be built. **#60 (2026-07-23):** `resolveExplainText` + `explainRows` render explanations/notes in the learner's source language (English fallback) plus the target-language row below Advanced (immersive/target-only above); consumed by the review card, wrong-note, and `ExplanationCard`. |
 | `grammar/[trackId]/page.js` | Grammar Gym (#90) — targeted grammar drills backed by `data/grammar` + `lib/grammarGym.js`. |
 | `learn/[trackId]/page.js` | Lessons mode (calm, untimed, flat `XP_PER_CORRECT=10`, no combo). `screen`: `start/lesson/complete`. Uses `buildLessonSequence`. |
 | `placement/[trackId]/page.js` | CEFR placement quiz. Highest tier passed (≥60%) sets the recommendation; `beginner` is the floor; empty tiers are skipped. |
@@ -153,7 +153,7 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 | `enUsForEs.js` | `en-us-for-es` | English (US) for Spanish speakers. |
 | `enGbForEs.js` | `en-gb-for-es` | English (UK) for Spanish speakers (distinct vocab/idioms/phonetics). |
 | `enForIt.js` | `en-for-it` | First native-language track (English for Italian speakers). |
-| `enForEs.js` | `en-for-es` | ⚠️ **Unregistered** — not imported by `index.js` (superseded by the US/UK split). A starter-set legacy file; safe to delete once confirmed dead, or wire up if intended. |
+| `enForEs.js` | `en-for-es` | ⚠️ **RETIRED 2026-07-23 → `_to_delete/enForEs.js`** — was unregistered + unreferenced; content already superseded verbatim by `enUsForEs`/`enGbForEs`. Awaiting Sean's deletion of the `_to_delete/` folder. |
 | `esForEnTags.js` | — | Tense/theme tag layer for esForEn (#88): `tagFor` + the theme/tense model. Coverage pass: 157/157 verbs tense-tagged (was 35), tense defs incl. Pluperfect/Future perfect/Conditional perfect; 255/418 curated items themed. Feeds category∩theme combined rounds. |
 
 *Track object shape* (see any file's tail): `id`, `label`, `nameEn/nameEs`, `sublabel`, `nativeLang`, `targetLang`, `theme`, `cats`, `bank`, `wbCatId`, `extraCatId`/`extraBank`, `perCat`, `extraPairsPerRound`, `questionTime`, `extraQuestionTime`. Questions are 7-slot tuples (see `architecture.md` §4).
@@ -341,7 +341,7 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 
 Found while mapping — none urgent, all fix-at-next-touch:
 
-- **`data/tracks/enForEs.js` is unregistered** — a legacy English-for-Spanish starter set, superseded by `enUsForEs`/`enGbForEs`, not in the `TRACKS` map. Delete or wire up.
+- **`enForEs.js` — RETIRED 2026-07-23** to `_to_delete/enForEs.js` (was unregistered + unreferenced, content superseded by `enUsForEs`/`enGbForEs`). Sean to delete the `_to_delete/` folder.
 - **`lib/db.js`** — `submitFeedback` and `submitBetaApplication` are marked RETIRED with no callers.
 - **`data/tracks/deForEn.js`** header comment cites Neural2-A/B; `TRACK_VOICES` actually uses `de-DE-Neural2-G`. Comment-only.
 - **`lib/audioKey.js`** ~line 46 comment says `<key>.mp3` — stale vs. the voice-keyed schema. Comment-only.
