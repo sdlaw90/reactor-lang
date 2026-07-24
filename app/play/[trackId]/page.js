@@ -20,6 +20,7 @@ import {
 } from "../../../lib/gameEngine";
 import { cefrSetForSkillLevel, masteryBandsForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelLabel, skillLevelDescription, SKILL_LEVELS } from "../../../lib/skillLevels";
 import { getL10n } from "../../../data/tracks/l10n";
+import { regionalVariantFor } from "../../../data/tracks/l10n/regionalVariants";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
 import { scriptForTrack } from "../../../data/scripts";
@@ -183,6 +184,10 @@ export default function PlayPage({ params }) {
   // es-LatAm/es-Spain variant split (inert until such content is authored).
   const sourceLang = viewerNativeLang || track.nativeLang;
   const sourceRegion = session?.user?.user_metadata?.native_country === "ES" ? "spain" : "latam";
+  // U4 dual-version card: the learner's actual country (ISO code) drives which
+  // regional term is highlighted as "en tu región". null → falls back to each
+  // word's default LatAm term.
+  const nativeCountry = session?.user?.user_metadata?.native_country || null;
   // #60: the track's target language — surfaced as a second explanation row
   // below Advanced level (see explainRows), so e.g. English speakers learning
   // Spanish keep the Spanish reading as exposure.
@@ -214,7 +219,17 @@ export default function PlayPage({ params }) {
     setRoundMode(mode);
     const cefrSet = mode === "daily" ? cefrSetForSkillLevel(progress.skill_level) : null;
     const newRound = buildRound(track, mode, missedIds, seenAt, cefrSet, mode === "daily" ? buildOptions : {}, sourceLang, l10nMap);
-    setRound(newRound);
+    // U4: attach the regional-variant record to any item whose correct answer is a
+    // known regional divergence for the learner's source language. Derived centrally
+    // from data/tracks/l10n/regionalVariants.js (per-language) — no per-item tagging.
+    // regionalVariantFor returns null for languages with no map, so this is a no-op
+    // for them.
+    const enrichedRound = newRound.map((q) => {
+      if (!q || !Array.isArray(q.options) || q.correctIdx == null) return q;
+      const v = regionalVariantFor(sourceLang, q.options[q.correctIdx]);
+      return v ? { ...q, variant: v } : q;
+    });
+    setRound(enrichedRound);
 
     if (mode === "daily") {
       const ids = seenIdsForRound(newRound, track.extraCatId);
@@ -890,8 +905,8 @@ export default function PlayPage({ params }) {
                   })()
                 )}
 
-              {awaitingNext && sourceLang === "es" && q.variant && q.variant.latam && q.variant.spain && (
-                <DualVariantCard key={q.id} variant={q.variant} defaultRegion={sourceRegion} />
+              {awaitingNext && q.variant && q.variant.reference && Array.isArray(q.variant.regional) && (
+                <RegionalVariantCard key={q.id} variant={q.variant} nativeCountry={nativeCountry} />
               )}
 
               {awaitingNext && (
@@ -1071,32 +1086,81 @@ function explainRows(map, { sourceLang, sourceRegion, targetLang, advanced } = {
   return rows;
 }
 
-// U4 dual-version card: surfaces both es-LatAm and es-Spain readings for a term
-// that diverges by region, on the explanation screen. Defaults to the learner's
-// region (sourceRegion) with a one-tap toggle to the other — the consolidated-
-// source teaching supplement, not a change to the answer. Rendered only when an
-// item's source surface tags a { latam, spain } variant.
-function DualVariantCard({ variant, defaultRegion }) {
-  const [region, setRegion] = useState(defaultRegion === "spain" ? "spain" : "latam");
-  const mine = variant[region];
-  const otherRegion = region === "latam" ? "spain" : "latam";
-  const other = variant[otherRegion];
-  if (!mine || !other) return null;
-  const regionName = (r) => (r === "latam" ? "Latinoamérica" : "España");
+// U4 regional-variant card: on the explanation screen, teaches how a word's answer
+// varies by region for the learner's SOURCE language (es LatAm↔Spain, pt BR↔PT,
+// fr FR↔Québec, …). Fully data-driven from data/tracks/l10n/regionalVariants.js —
+// the record carries the reference variety, the regional list, and the in-language
+// card chrome (`ui`). Personalized: highlights the term for the learner's own
+// country (nativeCountry), falling back to the word's `default`; reference-region
+// learners get the flip. Multi-variant words collapse the full list behind a tap.
+// Self-suppresses when the learner's term == the reference term. Never changes the
+// answer — pure supplement.
+function RegionalVariantCard({ variant, nativeCountry }) {
+  const [expanded, setExpanded] = useState(false);
+  const ui = variant.ui || {};
+  const regional = Array.isArray(variant.regional) ? variant.regional : [];
+  const isRef = nativeCountry === variant.referenceCode;
+  // The learner's term: reference region → the reference term; else the regional
+  // variant covering their country, else the word's default.
+  const mineTerm = isRef
+    ? variant.reference
+    : (regional.find((v) => Array.isArray(v.countries) && v.countries.includes(nativeCountry))?.term || variant.default);
+  // Nothing to teach if their own word is already the reference-region word.
+  if (!mineTerm || mineTerm === variant.reference) return null;
+  const countryNames = variant.countryNames || {};
+  const regionLabel = isRef ? variant.referenceLabel : (countryNames[nativeCountry] || variant.regionalGroupLabel);
+  const flag = isRef ? ui.refFlag : ui.regFlag;
+  const multi = regional.length > 1;
+
   return (
     <div style={styles.dualCard}>
       <div style={styles.dualHead}>
-        <span style={styles.dualTitle}>🗣 También se dice</span>
-        <div style={styles.dualTabs}>
-          <button className="rj" style={region === "latam" ? styles.dualTabOn : styles.dualTab} onClick={() => setRegion("latam")}>🌎 LatAm</button>
-          <button className="rj" style={region === "spain" ? styles.dualTabOn : styles.dualTab} onClick={() => setRegion("spain")}>🇪🇸 España</button>
-        </div>
+        <span style={styles.dualTitle}>🗣 {ui.title}</span>
+        {variant.gloss && <span style={styles.dualGloss}>{variant.gloss}</span>}
       </div>
       <div style={styles.dualReading}>
-        <span style={styles.dualWord}>{mine}</span>
-        <span style={styles.dualRegionTag}> · en tu región</span>
+        <span style={styles.dualWord}>{mineTerm}</span>
+        <span style={styles.dualRegionTag}> · {ui.inYourRegion} ({regionLabel}) {flag}</span>
       </div>
-      <div style={styles.dualOther}>En {regionName(otherRegion)} se dice <b style={{ color: "#F3F0FA" }}>{other}</b>.</div>
+      {/* one-line counterpart: reference-region learners see the regional side, others the reference side */}
+      {isRef ? (
+        <div style={styles.dualOther}>{ui.regGroupPhrase}: <b style={{ color: "#F3F0FA" }}>{variant.default}</b>.</div>
+      ) : (
+        <div style={styles.dualOther}>{ui.refPhrase}: <b style={{ color: "#F3F0FA" }}>{variant.reference}</b>.</div>
+      )}
+      {/* multi-variant words expand to the full regional map */}
+      {multi && (
+        <div style={{ marginTop: 9 }}>
+          {!expanded ? (
+            <button className="rj" style={styles.dualToggle} onClick={() => setExpanded(true)}>
+              ＋ {regional.length} {ui.variantes}
+            </button>
+          ) : (
+            <>
+              <div style={styles.dualRegionRow}>
+                <span style={styles.dualRegionLabel}>{ui.regFlag} {variant.regionalGroupLabel}</span>
+                <span style={styles.dualChips}>
+                  {regional.map((v) => (
+                    <span key={v.term} style={v.term === mineTerm && !isRef ? styles.dualChipMine : styles.dualChip}>
+                      {v.term}
+                      {v.label ? <span style={styles.dualChipRg}> {v.label}</span> : null}
+                    </span>
+                  ))}
+                </span>
+              </div>
+              <div style={styles.dualRegionRow}>
+                <span style={styles.dualRegionLabel}>{ui.refFlag} {variant.referenceLabel}</span>
+                <span style={styles.dualChips}>
+                  <span style={isRef ? styles.dualChipMine : styles.dualChipSpain}>{variant.reference}</span>
+                </span>
+              </div>
+              <button className="rj" style={{ ...styles.dualToggle, marginTop: 8 }} onClick={() => setExpanded(false)}>
+                – {ui.hide}
+              </button>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -1313,17 +1377,23 @@ const styles = {
   // #69: soft amber "heads up" note on a wrong pick — informative, not punitive.
   reviewWrongNoteBox: { background: "rgba(255,184,77,0.07)", border: "1px solid rgba(255,184,77,0.35)", borderRadius: 10, padding: "12px 14px", marginTop: 10 },
   wrongNoteHeader: { fontSize: 11, fontWeight: 700, color: "#FFB84D", marginBottom: 8, letterSpacing: 0.3 },
-  // U4 dual-version card: regional-variant teaching supplement (es only).
+  // U4 regional-variant card: personalized LatAm↔Spain teaching supplement (es only).
   dualCard: { background: "rgba(185,142,255,0.06)", border: "1px solid rgba(185,142,255,0.35)", borderRadius: 10, padding: "12px 14px", marginTop: 10 },
-  dualHead: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, gap: 8, flexWrap: "wrap" },
+  dualHead: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 9, gap: 8, flexWrap: "wrap" },
   dualTitle: { fontSize: 11, fontWeight: 700, color: "#B98EFF", letterSpacing: 0.3 },
-  dualTabs: { display: "flex", gap: 4 },
-  dualTab: { border: "1px solid #3A3452", background: "transparent", color: "#9B93B8", borderRadius: 20, padding: "3px 10px", fontSize: 11.5, fontWeight: 600, cursor: "pointer" },
-  dualTabOn: { border: "1px solid #B98EFF", background: "rgba(185,142,255,0.15)", color: "#F3F0FA", borderRadius: 20, padding: "3px 10px", fontSize: 11.5, fontWeight: 700, cursor: "pointer" },
-  dualReading: { display: "flex", alignItems: "baseline", gap: 6, marginBottom: 4 },
-  dualWord: { fontSize: 18, fontWeight: 800, color: "#F3F0FA" },
+  dualGloss: { fontSize: 10.5, color: "#6C6684", border: "1px solid #3A3452", borderRadius: 5, padding: "1px 6px" },
+  dualReading: { display: "flex", alignItems: "baseline", gap: 6, marginBottom: 5, flexWrap: "wrap" },
+  dualWord: { fontSize: 18, fontWeight: 800, color: "#5EE0A0" },
   dualRegionTag: { fontSize: 12, color: "#9B93B8" },
   dualOther: { fontSize: 13.5, color: "#C7CAD3", margin: 0 },
+  dualToggle: { border: "1px solid rgba(185,142,255,0.4)", background: "transparent", color: "#B98EFF", borderRadius: 20, padding: "3px 11px", fontSize: 11.5, fontWeight: 600, cursor: "pointer" },
+  dualRegionRow: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center", marginBottom: 7 },
+  dualRegionLabel: { fontSize: 10.5, fontWeight: 700, color: "#9B93B8", minWidth: 62 },
+  dualChips: { display: "flex", flexWrap: "wrap", gap: 6 },
+  dualChip: { display: "inline-flex", alignItems: "baseline", gap: 4, background: "#151925", border: "1px solid #3A3452", borderRadius: 16, padding: "3px 10px", fontSize: 13, color: "#E6E1F5" },
+  dualChipMine: { display: "inline-flex", alignItems: "baseline", gap: 4, background: "rgba(94,224,160,0.12)", border: "1px solid #5EE0A0", borderRadius: 16, padding: "3px 10px", fontSize: 13, fontWeight: 700, color: "#dff6e5" },
+  dualChipSpain: { display: "inline-flex", alignItems: "baseline", gap: 4, background: "#151925", border: "1px solid #B98EFF", borderRadius: 16, padding: "3px 10px", fontSize: 13, color: "#E6E1F5" },
+  dualChipRg: { fontSize: 10, color: "#6C6684" },
   nextBtn: {
     width: "100%",
     background: "#FF8FB1",

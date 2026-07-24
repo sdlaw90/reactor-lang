@@ -260,10 +260,6 @@ export default {
   }
  },
  "vocab-13": {
-  "variant": {
-   "latam": "carro",
-   "spain": "coche"
-  },
   "promptNative": "'Voiture' significa...",
   "options": [
    "carro",
@@ -744,10 +740,6 @@ export default {
   }
  },
  "vocab-37": {
-  "variant": {
-   "latam": "carro",
-   "spain": "coche"
-  },
   "promptNative": "'voiture' significa…",
   "options": [
    "un viaje",

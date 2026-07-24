@@ -64,10 +64,6 @@ export default {
   }
  },
  "vocab-3": {
-  "variant": {
-   "latam": "celular",
-   "spain": "móvil"
-  },
   "promptNative": "«Telemóvel» significa...",
   "options": [
    "celular",
@@ -128,10 +124,6 @@ export default {
   }
  },
  "vocab-6": {
-  "variant": {
-   "latam": "refrigerador",
-   "spain": "nevera"
-  },
   "promptNative": "«Frigorífico» significa...",
   "options": [
    "refrigerador",
@@ -292,10 +284,6 @@ export default {
   }
  },
  "vocab-14": {
-  "variant": {
-   "latam": "jugo",
-   "spain": "zumo"
-  },
   "promptNative": "«Sumo» significa... (Portugal)",
   "options": [
    "jugo",
