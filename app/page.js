@@ -136,21 +136,21 @@ export default function HomePage() {
           {t(nativeLang, "quickWin")}
         </p>
         <div style={styles.bubbleWrap}>
-          {tracks.map((t) => {
-            const p = progressByTrack[t.id];
+          {tracks.map((tr) => {
+            const p = progressByTrack[tr.id];
             // #74: level is the headline; progress toward the next level is a
             // fill-only bar — no "x/100" style numbers anywhere (flat 100
             // XP/level stays permanent under the hood, so the fill is xp % 100).
             const xpFillPct = p ? p.xp % 100 : 0;
             const skillLabel = skillLevelLabel(p?.skill_level || "none", nativeLang);
             return (
-              <button key={t.id} className="rj" style={styles.bubble} onClick={() => router.push(`/play/${t.id}`)}>
-                <ReviewBadge trackId={t.id} variant="bubble" />
+              <button key={tr.id} className="rj" style={styles.bubble} onClick={() => router.push(`/play/${tr.id}`)}>
+                <ReviewBadge trackId={tr.id} variant="bubble" />
                 <div style={styles.bubbleIconBg}>
-                  <TrackIcon trackId={t.id} size={64} />
+                  <TrackIcon trackId={tr.id} size={64} />
                 </div>
                 <div style={styles.bubbleContent}>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>{trackDisplayName(t, nativeLang)}</div>
+                  <div style={{ fontSize: 14, fontWeight: 700 }}>{trackDisplayName(tr, nativeLang)}</div>
                   <div className="jm" style={{ fontSize: 10.5, color: "#B4ABC9", marginTop: 2 }}>
                     {p ? t(nativeLang, "trackLevelChip", { level: p.level || 1, skill: skillLabel }) : t(nativeLang, "trackNotStarted")}
                   </div>
