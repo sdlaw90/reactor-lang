@@ -9,6 +9,9 @@ import PasswordInput from "../../lib/PasswordInput";
 import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
 import Logo from "../../lib/Logo";
 import { LEGAL_VERSION } from "../../lib/legalVersions";
+import { t } from "../../lib/playStrings";
+import { useUiLang } from "../../lib/uiLang";
+import LangSwitcher from "../../lib/LangSwitcher";
 
 // Closed beta: public self-serve sign-up is disabled until launch. Flip this
 // back to true once ready to open sign-ups to everyone -- the sign-up form
@@ -17,6 +20,7 @@ const SIGNUPS_ENABLED = false;
 
 export default function AuthPage() {
   const router = useRouter();
+  const [uiLang] = useUiLang();
   const [mode, setMode] = useState("signin"); // 'signin' | 'signup'
 
   // sign-in
@@ -45,27 +49,27 @@ export default function AuthPage() {
     resetMessages();
 
     if (email !== confirmEmail) {
-      setError("Email addresses don't match.");
+      setError(t(uiLang, "authErrEmailMismatch"));
       return;
     }
     if (password !== confirmPassword) {
-      setError("Passwords don't match.");
+      setError(t(uiLang, "authErrPwMismatch"));
       return;
     }
     if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
+      setError(t(uiLang, "authErrPwLen"));
       return;
     }
     if (!username.trim()) {
-      setError("Username is required.");
+      setError(t(uiLang, "authErrUserRequired"));
       return;
     }
     if (username.trim().length < 3) {
-      setError("Username must be at least 3 characters.");
+      setError(t(uiLang, "authErrUserLen"));
       return;
     }
     if (!agreedToTerms) {
-      setError("You need to agree to the Terms of Service and Privacy Policy to continue.");
+      setError(t(uiLang, "authErrAgree"));
       return;
     }
 
@@ -73,7 +77,7 @@ export default function AuthPage() {
     try {
       const taken = await isUsernameTaken(username.trim());
       if (taken) {
-        setError("That username is already taken — try Verify above for some available alternatives.");
+        setError(t(uiLang, "authErrUserTaken"));
         setBusy(false);
         return;
       }
@@ -90,7 +94,7 @@ export default function AuthPage() {
       // instead the returned user has no identities. This is the standard way
       // to detect it client-side.
       if (data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-        setError("An account with that email already exists. Try signing in, or use 'Forgot password' if you don't remember your password.");
+        setError(t(uiLang, "authErrEmailExists"));
         setBusy(false);
         return;
       }
@@ -113,12 +117,12 @@ export default function AuthPage() {
         return;
       }
 
-      setInfo("Check your email to confirm your account, then sign in.");
+      setInfo(t(uiLang, "authInfoConfirm"));
       setMode("signin");
     } catch (err) {
-      const msg = err.message || "Something went wrong.";
+      const msg = err.message || t(uiLang, "authErrGeneric");
       if (/already registered/i.test(msg)) {
-        setError("An account with that email already exists. Try signing in instead.");
+        setError(t(uiLang, "authErrEmailExistsShort"));
       } else {
         setError(msg);
       }
@@ -138,7 +142,7 @@ export default function AuthPage() {
         // to the caller whether the username exists (same generic error either way).
         const resolved = await emailForUsername(identifier.trim());
         if (!resolved) {
-          setError("Invalid login credentials.");
+          setError(t(uiLang, "authErrInvalidCreds"));
           setBusy(false);
           return;
         }
@@ -166,7 +170,7 @@ export default function AuthPage() {
 
       router.push("/");
     } catch (err) {
-      setError("Invalid login credentials.");
+      setError(t(uiLang, "authErrInvalidCreds"));
     } finally {
       setBusy(false);
     }
@@ -174,6 +178,7 @@ export default function AuthPage() {
 
   return (
     <div style={styles.wrap}>
+      <LangSwitcher />
       <div style={styles.card}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
           <Logo size={30} />
@@ -181,21 +186,21 @@ export default function AuthPage() {
             Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
           </h1>
         </div>
-        <p style={styles.subtitle}>{mode === "signin" ? "Sign in to continue" : "Create an account"}</p>
+        <p style={styles.subtitle}>{mode === "signin" ? t(uiLang, "authSubSignin") : t(uiLang, "authSubSignup")}</p>
 
         {mode === "signin" ? (
           <form onSubmit={submitSignIn} style={{ width: "100%" }}>
             <input
               type="text"
-              placeholder="Email or username"
-              aria-label="Email or username"
+              placeholder={t(uiLang, "authIdentifier")}
+              aria-label={t(uiLang, "authIdentifier")}
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               required
               style={styles.input}
             />
             <PasswordInput
-              placeholder="Password"
+              placeholder={t(uiLang, "authPassword")}
               value={signinPassword}
               onChange={(e) => setSigninPassword(e.target.value)}
               required
@@ -204,19 +209,19 @@ export default function AuthPage() {
             {error && <p style={styles.error}>{error}</p>}
             {info && <p style={styles.info}>{info}</p>}
             <button type="submit" disabled={busy} className="rj" style={styles.primaryBtn}>
-              {busy ? "..." : "SIGN IN"}
+              {busy ? "..." : t(uiLang, "authBtnSignin")}
             </button>
             <button type="button" className="rj" style={styles.linkBtn} onClick={() => router.push("/forgot-password")}>
-              Forgot password?
+              {t(uiLang, "authForgot")}
             </button>
           </form>
         ) : (
           <form onSubmit={submitSignUp} style={{ width: "100%" }}>
-            <UsernameAvailabilityField value={username} onChange={setUsername} placeholder="Username" />
+            <UsernameAvailabilityField value={username} onChange={setUsername} placeholder={t(uiLang, "authUsername")} />
             <input
               type="email"
-              placeholder="Email"
-              aria-label="Email"
+              placeholder={t(uiLang, "authEmail")}
+              aria-label={t(uiLang, "authEmail")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -224,15 +229,15 @@ export default function AuthPage() {
             />
             <input
               type="email"
-              placeholder="Confirm email"
-              aria-label="Confirm email"
+              placeholder={t(uiLang, "authConfirmEmail")}
+              aria-label={t(uiLang, "authConfirmEmail")}
               value={confirmEmail}
               onChange={(e) => setConfirmEmail(e.target.value)}
               required
               style={styles.input}
             />
             <PasswordInput
-              placeholder="Password"
+              placeholder={t(uiLang, "authPassword")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -241,31 +246,31 @@ export default function AuthPage() {
             />
             <PasswordStrengthMeter password={password} />
             <PasswordInput
-              placeholder="Confirm password"
+              placeholder={t(uiLang, "authConfirmPassword")}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               minLength={6}
               style={styles.input}
             />
-            <p style={styles.hint}>You can sign in with either your username or your email — either works.</p>
+            <p style={styles.hint}>{t(uiLang, "authSigninHint")}</p>
             <label style={styles.agreeRow}>
               <input type="checkbox" checked={agreedToTerms} onChange={(e) => setAgreedToTerms(e.target.checked)} />
               <span>
-                I agree to the{" "}
+                {t(uiLang, "authAgreePre")}
                 <a href="/terms" target="_blank" rel="noopener noreferrer" style={styles.legalLink}>
-                  Terms of Service
-                </a>{" "}
-                and{" "}
+                  {t(uiLang, "authAgreeTos")}
+                </a>
+                {t(uiLang, "authAgreeMid")}
                 <a href="/privacy" target="_blank" rel="noopener noreferrer" style={styles.legalLink}>
-                  Privacy Policy
+                  {t(uiLang, "authAgreePp")}
                 </a>
               </span>
             </label>
             {error && <p style={styles.error}>{error}</p>}
             {info && <p style={styles.info}>{info}</p>}
             <button type="submit" disabled={busy} className="rj" style={styles.primaryBtn}>
-              {busy ? "..." : "SIGN UP"}
+              {busy ? "..." : t(uiLang, "authBtnSignup")}
             </button>
           </form>
         )}
@@ -279,12 +284,12 @@ export default function AuthPage() {
               resetMessages();
             }}
           >
-            {mode === "signin" ? "Need an account? Sign up" : "Already have an account? Sign in"}
+            {mode === "signin" ? t(uiLang, "authNeedAccount") : t(uiLang, "authHaveAccount")}
           </button>
         )}
 
         <p style={styles.betaApplyRow}>
-          Don't have an invite yet? <a href="/beta-apply" style={styles.betaApplyLink}>Apply to beta test</a>.
+          {t(uiLang, "authBetaPre")}<a href="/beta-apply" style={styles.betaApplyLink}>{t(uiLang, "authBetaLink")}</a>.
         </p>
       </div>
     </div>

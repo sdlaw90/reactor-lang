@@ -9,11 +9,15 @@ import { AVATAR_EMOJIS, uploadAvatarPhoto } from "../../lib/avatarUpload";
 import { saveAvatar } from "../../lib/db";
 import SearchableSelect from "../../lib/SearchableSelect";
 import Avatar from "../../lib/Avatar";
+import { t } from "../../lib/playStrings";
+import { useUiLang } from "../../lib/uiLang";
+import LangSwitcher from "../../lib/LangSwitcher";
 
 const STEPS = ["language", "country", "picture"];
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const [uiLang] = useUiLang();
   const [session, setSession] = useState(undefined);
   const [step, setStep] = useState(0);
 
@@ -36,10 +40,22 @@ export default function OnboardingPage() {
     });
   }, [router]);
 
+  // Pre-select the native-language picker from the bootstrap UI language
+  // (browser locale or the switcher choice) so a Spanish-locale user lands on
+  // Spanish already selected. They can still change it.
+  useEffect(() => {
+    setNativeLang((cur) => {
+      if (cur) return cur;
+      const opts = listNativeLanguages();
+      return opts.some((o) => o.code === uiLang) ? uiLang : cur;
+    });
+  }, [uiLang]);
+
   if (session === undefined) {
     return (
       <div style={styles.wrap}>
-        <p style={{ color: "#B4ABC9" }}>Loading…</p>
+        <LangSwitcher />
+        <p style={{ color: "#B4ABC9" }}>{t(uiLang, "loading")}</p>
       </div>
     );
   }
@@ -112,6 +128,7 @@ export default function OnboardingPage() {
 
   return (
     <div style={styles.wrap}>
+      <LangSwitcher />
       <div style={{ width: "100%", maxWidth: 420 }}>
         <div style={styles.stepIndicator}>
           {STEPS.map((s, i) => (
@@ -122,19 +139,19 @@ export default function OnboardingPage() {
         {step === 0 && (
           <div className="fadein">
             <h1 className="rj" style={styles.title}>
-              What's your native language?
+              {t(uiLang, "obLangTitle")}
             </h1>
-            <p style={styles.subtitle}>This decides which languages show up for you to learn.</p>
+            <p style={styles.subtitle}>{t(uiLang, "obLangSub")}</p>
             <div style={{ marginTop: 20 }}>
               <SearchableSelect
                 options={langOptions.map((o) => ({ value: o.code, label: o.label }))}
                 value={nativeLang}
                 onChange={setNativeLang}
-                placeholder="Search languages…"
+                placeholder={t(uiLang, "obSearchLang")}
               />
             </div>
             <button className="rj" style={styles.primaryBtn} disabled={!nativeLang || busy} onClick={finishStepLanguage}>
-              {busy ? "..." : "Continue"}
+              {busy ? "..." : t(uiLang, "obContinue")}
             </button>
           </div>
         )}
@@ -142,15 +159,15 @@ export default function OnboardingPage() {
         {step === 1 && (
           <div className="fadein">
             <h1 className="rj" style={styles.title}>
-              What's your native country?
+              {t(uiLang, "obCountryTitle")}
             </h1>
-            <p style={styles.subtitle}>Optional — personalizes a little flag/region tag on your home screen.</p>
+            <p style={styles.subtitle}>{t(uiLang, "obCountrySub")}</p>
             <div style={{ marginTop: 20 }}>
               <SearchableSelect
                 options={COUNTRIES.map((c) => ({ value: c.code, label: c.name }))}
                 value={nativeCountry}
                 onChange={setNativeCountry}
-                placeholder="Search countries…"
+                placeholder={t(uiLang, "obSearchCountry")}
                 renderOption={(o) => (
                   <>
                     <img src={flagImageUrl(o.value)} alt={o.value} style={{ width: 20, height: 14, objectFit: "cover", borderRadius: 2, flexShrink: 0 }} />
@@ -166,10 +183,10 @@ export default function OnboardingPage() {
               )}
             </div>
             <button className="rj" style={styles.primaryBtn} disabled={busy} onClick={() => finishStepCountry(false)}>
-              {busy ? "..." : "Continue"}
+              {busy ? "..." : t(uiLang, "obContinue")}
             </button>
             <button className="rj" style={styles.skipBtn} onClick={() => finishStepCountry(true)}>
-              Skip
+              {t(uiLang, "obSkip")}
             </button>
           </div>
         )}
@@ -177,9 +194,9 @@ export default function OnboardingPage() {
         {step === 2 && (
           <div className="fadein">
             <h1 className="rj" style={styles.title}>
-              Pick a profile picture
+              {t(uiLang, "obPicTitle")}
             </h1>
-            <p style={styles.subtitle}>Optional — a photo, a fun icon, or a flag. You can change this anytime in Settings.</p>
+            <p style={styles.subtitle}>{t(uiLang, "obPicSub")}</p>
 
             <div style={{ display: "flex", gap: 8, marginTop: 20, marginBottom: 14 }}>
               {["photo", "emoji", "flag"].map((m) => (
@@ -189,7 +206,7 @@ export default function OnboardingPage() {
                   onClick={() => setAvatarMode(m)}
                   style={{ ...styles.modeTab, ...(avatarMode === m ? styles.modeTabActive : {}) }}
                 >
-                  {m === "photo" ? "Photo" : m === "emoji" ? "Icon" : "Flag"}
+                  {m === "photo" ? t(uiLang, "obTabPhoto") : m === "emoji" ? t(uiLang, "obTabIcon") : t(uiLang, "obTabFlag")}
                 </button>
               ))}
             </div>
@@ -198,7 +215,7 @@ export default function OnboardingPage() {
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <Avatar type={photoPreview ? "photo" : null} value={photoPreview} size={56} />
                 <label className="rj" style={styles.uploadBtn}>
-                  Choose file…
+                  {t(uiLang, "obChooseFile")}
                   <input type="file" accept="image/*" onChange={onPickPhoto} style={{ display: "none" }} />
                 </label>
               </div>
@@ -223,7 +240,7 @@ export default function OnboardingPage() {
                 options={COUNTRIES.map((c) => ({ value: c.code, label: c.name }))}
                 value={flagChoice}
                 onChange={setFlagChoice}
-                placeholder="Search countries…"
+                placeholder={t(uiLang, "obSearchCountry")}
                 renderOption={(o) => (
                   <>
                     <img src={flagImageUrl(o.value)} alt={o.value} style={{ width: 20, height: 14, objectFit: "cover", borderRadius: 2, flexShrink: 0 }} />
@@ -234,10 +251,10 @@ export default function OnboardingPage() {
             )}
 
             <button className="rj" style={styles.primaryBtn} disabled={busy} onClick={() => finishStepPicture(false)}>
-              {busy ? "..." : "Finish"}
+              {busy ? "..." : t(uiLang, "obFinish")}
             </button>
             <button className="rj" style={styles.skipBtn} onClick={() => finishStepPicture(true)}>
-              Skip
+              {t(uiLang, "obSkip")}
             </button>
           </div>
         )}

@@ -5,9 +5,13 @@ import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabaseClient";
 import PasswordInput from "../../lib/PasswordInput";
 import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
+import { t } from "../../lib/playStrings";
+import { useUiLang } from "../../lib/uiLang";
+import LangSwitcher from "../../lib/LangSwitcher";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
+  const [uiLang] = useUiLang();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -18,11 +22,11 @@ export default function ResetPasswordPage() {
     e.preventDefault();
     setError("");
     if (password !== confirmPassword) {
-      setError("Passwords don't match.");
+      setError(t(uiLang, "authErrPwMismatch"));
       return;
     }
     if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
+      setError(t(uiLang, "authErrPwLen"));
       return;
     }
     setBusy(true);
@@ -35,7 +39,7 @@ export default function ResetPasswordPage() {
       setDone(true);
       setTimeout(() => router.push("/auth"), 2000);
     } catch (err) {
-      setError(err.message || "Something went wrong. The reset link may have expired — request a new one.");
+      setError(err.message || t(uiLang, "fpErrExpired"));
     } finally {
       setBusy(false);
     }
@@ -43,16 +47,17 @@ export default function ResetPasswordPage() {
 
   return (
     <div style={styles.wrap}>
+      <LangSwitcher />
       <div style={styles.card}>
         <h1 className="rj" style={styles.title}>
-          Set a new password
+          {t(uiLang, "rpSetTitle")}
         </h1>
         {done ? (
-          <p style={styles.subtitle}>Password updated — taking you to sign in…</p>
+          <p style={styles.subtitle}>{t(uiLang, "fpDone")}</p>
         ) : (
           <form onSubmit={submit} style={{ width: "100%" }}>
             <PasswordInput
-              placeholder="New password"
+              placeholder={t(uiLang, "fpNewPw")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -61,7 +66,7 @@ export default function ResetPasswordPage() {
             />
             <PasswordStrengthMeter password={password} />
             <PasswordInput
-              placeholder="Confirm new password"
+              placeholder={t(uiLang, "fpConfirmNewPw")}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -70,7 +75,7 @@ export default function ResetPasswordPage() {
             />
             {error && <p style={styles.error}>{error}</p>}
             <button type="submit" disabled={busy} className="rj" style={styles.primaryBtn}>
-              {busy ? "..." : "UPDATE PASSWORD"}
+              {busy ? "..." : t(uiLang, "fpUpdatePassword")}
             </button>
           </form>
         )}

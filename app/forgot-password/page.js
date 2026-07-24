@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import PasswordInput from "../../lib/PasswordInput";
 import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
+import { t } from "../../lib/playStrings";
+import { useUiLang } from "../../lib/uiLang";
+import LangSwitcher from "../../lib/LangSwitcher";
 
 // Security-question password reset (#79). Email-link reset can't reach
 // external addresses until the #65 domain/SMTP chain is done, so recovery
@@ -17,6 +20,7 @@ import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
+  const [uiLang] = useUiLang();
   const [step, setStep] = useState("email"); // email | questions | noQuestions | newPassword | done | requested
   const [email, setEmail] = useState("");
   const [hint, setHint] = useState(null);
@@ -79,11 +83,11 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     setError("");
     if (password !== confirmPassword) {
-      setError("Passwords don't match.");
+      setError(t(uiLang, "authErrPwMismatch"));
       return;
     }
     if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
+      setError(t(uiLang, "authErrPwLen"));
       return;
     }
     setBusy(true);
@@ -113,20 +117,21 @@ export default function ForgotPasswordPage() {
 
   return (
     <div style={styles.wrap}>
+      <LangSwitcher />
       <div style={styles.card}>
         <h1 className="rj" style={styles.title}>
-          Reset your password
+          {t(uiLang, "fpResetTitle")}
         </h1>
 
         {step === "email" && (
           <form onSubmit={lookup} style={{ width: "100%" }}>
             <p style={styles.subtitle}>
-              Enter your account email. If security questions are set up for the account, they&apos;ll appear next.
+              {t(uiLang, "fpEmailSub")}
             </p>
             <input
               type="email"
-              placeholder="Your email"
-              aria-label="Your email"
+              placeholder={t(uiLang, "fpEmailPh")}
+              aria-label={t(uiLang, "fpEmailPh")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -134,10 +139,10 @@ export default function ForgotPasswordPage() {
             />
             {error && <p style={styles.error}>{error}</p>}
             <button type="submit" disabled={busy} className="rj" style={styles.primaryBtn}>
-              {busy ? "..." : "CONTINUE"}
+              {busy ? "..." : t(uiLang, "fpContinue")}
             </button>
             <button type="button" className="rj" style={styles.linkBtn} onClick={() => router.push("/auth")}>
-              Back to sign in
+              {t(uiLang, "fpBackToSignin")}
             </button>
           </form>
         )}
@@ -145,13 +150,13 @@ export default function ForgotPasswordPage() {
         {step === "questions" && (
           <form onSubmit={verify} style={{ width: "100%" }}>
             <p style={styles.subtitle}>
-              Answer your security questions — at least 2 of 3 must match. Answers aren&apos;t case-sensitive.
+              {t(uiLang, "fpQuestionsSub")}
             </p>
             {hint && (
               <p style={styles.hintBox}>
-                <strong>Your password hint:</strong> {hint}
+                <strong>{t(uiLang, "fpHintLabel")}</strong> {hint}
                 <br />
-                <span style={{ fontSize: 12 }}>(Remembered it? <a href="/auth" style={styles.link}>Go sign in</a> instead.)</span>
+                <span style={{ fontSize: 12 }}>{t(uiLang, "fpRememberedPre")}<a href="/auth" style={styles.link}>{t(uiLang, "fpGoSignin")}</a>{t(uiLang, "fpRememberedPost")}</span>
               </p>
             )}
             {questions.map((q) => (
@@ -169,10 +174,10 @@ export default function ForgotPasswordPage() {
             ))}
             {error && <p style={styles.error}>{error}</p>}
             <button type="submit" disabled={busy} className="rj" style={styles.primaryBtn}>
-              {busy ? "..." : "CHECK ANSWERS"}
+              {busy ? "..." : t(uiLang, "fpCheckAnswers")}
             </button>
             <button type="button" className="rj" style={styles.linkBtn} onClick={requestAdmin} disabled={busy}>
-              Can&apos;t remember? Request an admin reset
+              {t(uiLang, "fpCantRemember")}
             </button>
           </form>
         )}
@@ -181,32 +186,31 @@ export default function ForgotPasswordPage() {
           <div style={{ width: "100%", textAlign: "center" }}>
             {hint ? (
               <p style={styles.hintBox}>
-                <strong>Your password hint:</strong> {hint}
+                <strong>{t(uiLang, "fpHintLabel")}</strong> {hint}
               </p>
             ) : (
               <p style={styles.subtitle}>
-                This account doesn&apos;t have security questions set up, so it can&apos;t self-serve a reset.
+                {t(uiLang, "fpNoQuestions")}
               </p>
             )}
             <p style={styles.subtitle}>
-              {hint ? "If the hint doesn't help, an" : "An"} admin can set a temporary password for you — request one below,
-              then check back by trying to sign in later.
+              {hint ? t(uiLang, "fpAdminPre") : t(uiLang, "fpAdminPreNoHint")}
             </p>
             {error && <p style={styles.error}>{error}</p>}
             <button className="rj" style={styles.primaryBtn} onClick={requestAdmin} disabled={busy}>
-              {busy ? "..." : "REQUEST ADMIN RESET"}
+              {busy ? "..." : t(uiLang, "fpRequestAdmin")}
             </button>
             <button type="button" className="rj" style={styles.linkBtn} onClick={() => router.push("/auth")}>
-              Back to sign in
+              {t(uiLang, "fpBackToSignin")}
             </button>
           </div>
         )}
 
         {step === "newPassword" && (
           <form onSubmit={reset} style={{ width: "100%" }}>
-            <p style={styles.subtitle}>Answers matched — set your new password.</p>
+            <p style={styles.subtitle}>{t(uiLang, "fpNewPwSub")}</p>
             <PasswordInput
-              placeholder="New password"
+              placeholder={t(uiLang, "fpNewPw")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -215,7 +219,7 @@ export default function ForgotPasswordPage() {
             />
             <PasswordStrengthMeter password={password} />
             <PasswordInput
-              placeholder="Confirm new password"
+              placeholder={t(uiLang, "fpConfirmNewPw")}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -224,23 +228,22 @@ export default function ForgotPasswordPage() {
             />
             {error && <p style={styles.error}>{error}</p>}
             <button type="submit" disabled={busy} className="rj" style={styles.primaryBtn}>
-              {busy ? "..." : "UPDATE PASSWORD"}
+              {busy ? "..." : t(uiLang, "fpUpdatePassword")}
             </button>
           </form>
         )}
 
         {step === "done" && (
-          <p style={styles.subtitle}>Password updated — taking you to sign in…</p>
+          <p style={styles.subtitle}>{t(uiLang, "fpDone")}</p>
         )}
 
         {step === "requested" && (
           <div style={{ width: "100%", textAlign: "center" }}>
             <p style={styles.subtitle}>
-              Request sent. An admin will set a temporary password for the account if one exists — try signing in again
-              later, and change the temporary password in Settings once you&apos;re in.
+              {t(uiLang, "fpRequested")}
             </p>
             <button className="rj" style={styles.primaryBtn} onClick={() => router.push("/auth")}>
-              Back to sign in
+              {t(uiLang, "fpBackToSignin")}
             </button>
           </div>
         )}
