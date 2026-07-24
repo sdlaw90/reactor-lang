@@ -18,7 +18,8 @@ import {
   combinedPoolSize,
   COMBINED_MIN,
 } from "../../../lib/gameEngine";
-import { cefrSetForSkillLevel, masteryBandsForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
+import { cefrSetForSkillLevel, masteryBandsForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelLabel, skillLevelDescription, SKILL_LEVELS } from "../../../lib/skillLevels";
+import { getL10n } from "../../../data/tracks/l10n";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
 import { scriptForTrack } from "../../../data/scripts";
@@ -186,6 +187,10 @@ export default function PlayPage({ params }) {
   // below Advanced level (see explainRows), so e.g. English speakers learning
   // Spanish keep the Spanish reading as exposure.
   const explainTargetLang = track.targetLang || null;
+  // v3.1: the per-source localized-surface map for this track (Spanish answer
+  // options / trad prompts / subtitles). null for English natives or any track
+  // without a side table yet → base English surface (see data/tracks/l10n).
+  const l10nMap = getL10n(track.id, sourceLang);
   // Small native-language subtitle under the question (target language stays
   // the primary prompt on top). Follows the same skill-level rule as the rest
   // of the page's chrome: shown while the UI is in the viewer's native
@@ -208,7 +213,7 @@ export default function PlayPage({ params }) {
     levelAnswered.current = { correct: 0, total: 0 };
     setRoundMode(mode);
     const cefrSet = mode === "daily" ? cefrSetForSkillLevel(progress.skill_level) : null;
-    const newRound = buildRound(track, mode, missedIds, seenAt, cefrSet, mode === "daily" ? buildOptions : {});
+    const newRound = buildRound(track, mode, missedIds, seenAt, cefrSet, mode === "daily" ? buildOptions : {}, sourceLang, l10nMap);
     setRound(newRound);
 
     if (mode === "daily") {
@@ -533,7 +538,7 @@ export default function PlayPage({ params }) {
             <div style={styles.skillCard}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ color: "#B4ABC9", fontSize: 12 }}>
-                  {T("levelLabel")} <strong style={{ color: "#F3F0FA" }}>{skillLevelInfo(progress.skill_level).label}</strong>
+                  {T("levelLabel")} <strong style={{ color: "#F3F0FA" }}>{skillLevelLabel(progress.skill_level, uiLang)}</strong>
                 </span>
                 <button className="rj" style={styles.skillEditBtn} onClick={() => setShowLevelPicker((v) => !v)}>
                   {showLevelPicker ? T("close") : T("change")}
@@ -552,8 +557,8 @@ export default function PlayPage({ params }) {
                       onClick={() => changeSkillLevel(s.id)}
                       style={{ ...styles.skillOption, borderColor: progress.skill_level === s.id ? "#FF8FB1" : "#3A3452" }}
                     >
-                      <span style={{ display: "block" }}>{s.label}</span>
-                      <span className="jm" style={styles.skillOptionDesc}>{s.description}</span>
+                      <span style={{ display: "block" }}>{skillLevelLabel(s.id, uiLang)}</span>
+                      <span className="jm" style={styles.skillOptionDesc}>{skillLevelDescription(s.id, uiLang)}</span>
                     </button>
                   ))}
                 </div>
@@ -561,7 +566,7 @@ export default function PlayPage({ params }) {
 
               {!showLevelPicker && !advanceDismissed && readyToAdvance(progress.level_correct_count, progress.level_total_count) && nextSkillLevel(progress.skill_level) && (
                 <div style={styles.advanceBanner}>
-                  <span>{T("readyToAdvance", { level: skillLevelInfo(nextSkillLevel(progress.skill_level)).label })}</span>
+                  <span>{T("readyToAdvance", { level: skillLevelLabel(nextSkillLevel(progress.skill_level), uiLang) })}</span>
                   <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
                     <button className="rj" style={styles.advanceYesBtn} onClick={() => changeSkillLevel(nextSkillLevel(progress.skill_level))}>
                       {T("yesAdvance")}

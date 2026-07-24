@@ -7,7 +7,8 @@ import { tracksForNativeLang, listTracks } from "../data/tracks";
 import { HelpCircle } from "lucide-react";
 import { HOME_GRADIENT, animatedBackgroundStyle } from "../lib/theme";
 import { loadProfile, loadAllProgress } from "../lib/db";
-import { skillLevelInfo } from "../lib/skillLevels";
+import { skillLevelLabel } from "../lib/skillLevels";
+import { t } from "../lib/playStrings";
 import { CURRENT_VERSION } from "../lib/version";
 import VersionFooter from "../lib/VersionFooter";
 import Logo from "../lib/Logo";
@@ -127,12 +128,12 @@ export default function HomePage() {
 
         {!nativeLang && (
           <p style={styles.hintBanner}>
-            Showing every track for now — set your native language in Settings to personalize this list.
+            {t(nativeLang || "en", "homeNoNativeHint")}
           </p>
         )}
 
         <p className="rj" style={styles.quickWinPrompt}>
-          Pick your next quick win ⚡
+          {t(nativeLang, "quickWin")}
         </p>
         <div style={styles.bubbleWrap}>
           {tracks.map((t) => {
@@ -141,7 +142,7 @@ export default function HomePage() {
             // fill-only bar — no "x/100" style numbers anywhere (flat 100
             // XP/level stays permanent under the hood, so the fill is xp % 100).
             const xpFillPct = p ? p.xp % 100 : 0;
-            const skillLabel = skillLevelInfo(p?.skill_level || "none").label;
+            const skillLabel = skillLevelLabel(p?.skill_level || "none", nativeLang);
             return (
               <button key={t.id} className="rj" style={styles.bubble} onClick={() => router.push(`/play/${t.id}`)}>
                 <ReviewBadge trackId={t.id} variant="bubble" />
@@ -151,7 +152,7 @@ export default function HomePage() {
                 <div style={styles.bubbleContent}>
                   <div style={{ fontSize: 14, fontWeight: 700 }}>{trackDisplayName(t, nativeLang)}</div>
                   <div className="jm" style={{ fontSize: 10.5, color: "#B4ABC9", marginTop: 2 }}>
-                    {p ? `Level ${p.level || 1} · ${skillLabel}` : "Not started"}
+                    {p ? t(nativeLang, "trackLevelChip", { level: p.level || 1, skill: skillLabel }) : t(nativeLang, "trackNotStarted")}
                   </div>
                   {p && (
                     <div style={styles.bubbleXpBarOuter}>
