@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 335 tracked files.
+> 352 tracked files.
 
 ```
 .env.local.example
@@ -111,6 +111,18 @@ data/tracks/jaForEn.js
 data/tracks/jaForEnTags.js
 data/tracks/koForEn.js
 data/tracks/koForEnTags.js
+data/tracks/l10n/deForEn.es.js
+data/tracks/l10n/frCaForEn.es.js
+data/tracks/l10n/frForEn.es.js
+data/tracks/l10n/index.js
+data/tracks/l10n/itForEn.es.js
+data/tracks/l10n/jaForEn.es.js
+data/tracks/l10n/koForEn.es.js
+data/tracks/l10n/ptBrForEn.es.js
+data/tracks/l10n/ptPtForEn.es.js
+data/tracks/l10n/regionalVariants.js
+data/tracks/l10n/ruForEn.es.js
+data/tracks/l10n/zhForEn.es.js
 data/tracks/ptBrForEn.js
 data/tracks/ptBrForEnTags.js
 data/tracks/ptPtForEn.js
@@ -119,17 +131,22 @@ data/tracks/ruForEn.js
 data/tracks/ruForEnTags.js
 data/tracks/zhForEn.js
 data/tracks/zhForEnTags.js
+data/vocab/deWords.es.js
 data/vocab/deWords.js
 data/vocab/esLatAmWords.js
 data/vocab/esSpainWords.js
 data/vocab/frCaWords.js
 data/vocab/frWords.js
 data/vocab/itWords.js
+data/vocab/jaWords.es.js
 data/vocab/jaWords.js
+data/vocab/koWords.es.js
 data/vocab/koWords.js
 data/vocab/ptBrWords.js
 data/vocab/ptPtWords.js
+data/vocab/ruWords.es.js
 data/vocab/ruWords.js
+data/vocab/zhWords.es.js
 data/vocab/zhWords.js
 docs/INTEGRATION-NOTES.md
 docs/PACKAGING.md

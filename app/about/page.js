@@ -66,8 +66,14 @@ export default function AboutPage() {
             versions (Latin American vs. European Spanish, France vs. Québécois French, Brazilian vs. European
             Portuguese), for twelve distinct tracks in all. Where a language has real regional differences, this
             app treats them as separate tracks with different content, not the same material behind a different
-            flag. Learning English is available too, for Spanish- and Italian-speaking users, with more
-            native-language pairings on the way.
+            flag.
+          </P>
+          <P>
+            The app now works in your own language, not just English. <b>Spanish speakers</b> get the full
+            experience in Spanish — every menu, subtitle, answer choice, explanation and the Word Bank — while
+            learning any of the other languages, and a "También se dice" card teaches how a word shifts between
+            their own country, the rest of Latin America, and Spain. Learning English is available too, and more
+            native-language pairings are on the way.
           </P>
           <P>
             Languages with their own writing system always show native script and its romanization together —
