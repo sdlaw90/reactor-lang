@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 352 tracked files.
+> 354 tracked files.
 
 ```
 .env.local.example
@@ -266,6 +266,7 @@ lib/GlobalErrorLogger.js
 lib/GuideDemo.js
 lib/GuideOverlay.js
 lib/GuideTour.js
+lib/LangSwitcher.js
 lib/Logo.js
 lib/ModeToggle.js
 lib/NavDepthTracker.js
@@ -312,6 +313,7 @@ lib/supabaseClient.js
 lib/theme.js
 lib/trackIcons.js
 lib/trackItemCounts.js
+lib/uiLang.js
 lib/version.js
 lib/welcomeVersion.js
 next.config.mjs
