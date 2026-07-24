@@ -944,7 +944,7 @@ export default {
   }
  },
  "vocab-47": {
-  "promptNative": "un traje (de ropa)",
+  "promptNative": "'Fato' significa...",
   "options": [
    "un hecho",
    "una foto",
@@ -1084,7 +1084,7 @@ export default {
   }
  },
  "vocab-54": {
-  "promptNative": "tirar/jalar",
+  "promptNative": "'Puxar' significa...",
   "options": [
    "pasar",
    "empujar",
@@ -1104,7 +1104,7 @@ export default {
   }
  },
  "vocab-55": {
-  "promptNative": "empujar",
+  "promptNative": "'Empurrar' significa...",
   "options": [
    "empujar",
    "tirar/jalar",
@@ -1144,7 +1144,7 @@ export default {
   }
  },
  "vocab-57": {
-  "promptNative": "cubiertos",
+  "promptNative": "'Talheres' significa...",
   "options": [
    "sastres",
    "estantes",
@@ -1164,7 +1164,7 @@ export default {
   }
  },
  "vocab-58": {
-  "promptNative": "dulce/pasta de membrillo",
+  "promptNative": "'Marmelada' significa...",
   "options": [
    "dulce/pasta de membrillo",
    "una marmota",
@@ -1264,7 +1264,7 @@ export default {
   }
  },
  "vocab-63": {
-  "promptNative": "chicle",
+  "promptNative": "'Pastilha elástica' significa...",
   "options": [
    "chicle",
    "una goma de borrar",
@@ -1304,7 +1304,7 @@ export default {
   }
  },
  "vocab-65": {
-  "promptNative": "empujar",
+  "promptNative": "'Empurrar' significa...",
   "options": [
    "tirar/jalar",
    "empujar",
@@ -1344,7 +1344,7 @@ export default {
   }
  },
  "vocab-67": {
-  "promptNative": "jubilado (persona)",
+  "promptNative": "'Reformado' significa...",
   "options": [
    "jubilado (persona)",
    "rehecho",
@@ -1384,7 +1384,7 @@ export default {
   }
  },
  "vocab-69": {
-  "promptNative": "apellido",
+  "promptNative": "'Apelido' significa... (Portugal)",
   "options": [
    "nombre de pila",
    "apellido",
@@ -1404,7 +1404,7 @@ export default {
   }
  },
  "vocab-70": {
-  "promptNative": "menú",
+  "promptNative": "'Ementa' significa...",
   "options": [
    "enmienda",
    "servilleta",
@@ -1484,7 +1484,7 @@ export default {
   }
  },
  "vocab-74": {
-  "promptNative": "retirar/sacar dinero",
+  "promptNative": "'Levantar dinheiro' significa...",
   "options": [
    "ahorrar dinero",
    "prestar dinero",
@@ -1564,7 +1564,7 @@ export default {
   }
  },
  "vocab-78": {
-  "promptNative": "menú",
+  "promptNative": "'Ementa' significa...",
   "options": [
    "enmienda",
    "receta",
@@ -1624,7 +1624,7 @@ export default {
   }
  },
  "vocab-81": {
-  "promptNative": "mucho / muy",
+  "promptNative": "'Bué' significa...",
   "options": [
    "quizás",
    "nunca",
@@ -1684,7 +1684,7 @@ export default {
   }
  },
  "vocab-84": {
-  "promptNative": "concreto/hormigón",
+  "promptNative": "'Betão' significa...",
   "options": [
    "betún",
    "remolacha",
@@ -1704,7 +1704,7 @@ export default {
   }
  },
  "vocab-85": {
-  "promptNative": "no importarle nada",
+  "promptNative": "'Estar-se nas tintas' significa...",
   "options": [
    "estar borracho",
    "no importarle nada",
@@ -1724,7 +1724,7 @@ export default {
   }
  },
  "vocab-86": {
-  "promptNative": "regalo",
+  "promptNative": "'Prenda' significa... (Portugal)",
   "options": [
    "pinza de ropa",
    "regalo",
@@ -1744,7 +1744,7 @@ export default {
   }
  },
  "vocab-87": {
-  "promptNative": "suscripción",
+  "promptNative": "'Assinatura' significa...",
   "options": [
    "asamblea",
    "tarea asignada",
@@ -1764,7 +1764,7 @@ export default {
   }
  },
  "vocab-88": {
-  "promptNative": "enchufe",
+  "promptNative": "'Ficha' significa...",
   "options": [
    "enchufe",
    "solo ficha/token",
@@ -1804,7 +1804,7 @@ export default {
   }
  },
  "vocab-90": {
-  "promptNative": "camarero/mesero",
+  "promptNative": "'Empregado de mesa' significa...",
   "options": [
    "camarero/mesero",
    "oficinista",
@@ -1824,7 +1824,7 @@ export default {
   }
  },
  "vocab-91": {
-  "promptNative": "computadora portátil",
+  "promptNative": "'Portátil' significa...",
   "options": [
    "baño portátil",
    "portal",
@@ -1844,7 +1844,7 @@ export default {
   }
  },
  "vocab-92": {
-  "promptNative": "decepción",
+  "promptNative": "'Deceção' significa...",
   "options": [
    "decepción",
    "engaño, trampa",
@@ -1864,7 +1864,7 @@ export default {
   }
  },
  "vocab-93": {
-  "promptNative": "librería",
+  "promptNative": "'Livraria' significa...",
   "options": [
    "editorial",
    "liberación",
@@ -1884,7 +1884,7 @@ export default {
   }
  },
  "vocab-94": {
-  "promptNative": "una multa, pago de sanción",
+  "promptNative": "'Coima' significa...",
   "options": [
    "una multa, pago de sanción",
    "una coma",
@@ -2004,7 +2004,7 @@ export default {
   }
  },
  "vocab-100": {
-  "promptNative": "engañar, embaucar",
+  "promptNative": "'Ludibriar' significa...",
   "options": [
    "engañar, embaucar",
    "dudar",
@@ -2024,7 +2024,7 @@ export default {
   }
  },
  "vocab-101": {
-  "promptNative": "a menudo, con frecuencia",
+  "promptNative": "'Amiúde' significa...",
   "options": [
    "a menudo, con frecuencia",
    "de mala gana",
@@ -2104,7 +2104,7 @@ export default {
   }
  },
  "vocab-105": {
-  "promptNative": "un apodo",
+  "promptNative": "'Alcunha' significa...",
   "options": [
    "un rencor",
    "una cuña",
@@ -2124,7 +2124,7 @@ export default {
   }
  },
  "vocab-106": {
-  "promptNative": "burla, desprecio",
+  "promptNative": "'Escárnio' significa...",
   "options": [
    "una advertencia",
    "burla, desprecio",
@@ -2144,7 +2144,7 @@ export default {
   }
  },
  "vocab-107": {
-  "promptNative": "un calcetín",
+  "promptNative": "'Peúga' significa...",
   "options": [
    "un charco",
    "un guisito",
@@ -2184,7 +2184,7 @@ export default {
   }
  },
  "vocab-109": {
-  "promptNative": "una trampilla",
+  "promptNative": "'Alçapão' significa...",
   "options": [
    "una trampilla",
    "una escalera grande",
@@ -2304,7 +2304,7 @@ export default {
   }
  },
  "vocab-115": {
-  "promptNative": "hortera / de mal gusto",
+  "promptNative": "'Piroso' significa... (Portugal)",
   "options": [
    "con forma de pera",
    "pecoso",
@@ -2344,7 +2344,7 @@ export default {
   }
  },
  "vocab-117": {
-  "promptNative": "un vivo / caradura",
+  "promptNative": "'Chico-esperto' significa...",
   "options": [
    "un vivo / caradura",
    "un chico veloz",
@@ -2364,7 +2364,7 @@ export default {
   }
  },
  "vocab-118": {
-  "promptNative": "no importarle nada",
+  "promptNative": "'Estar-se nas tintas (para algo)' significa...",
   "options": [
    "estar en problemas",
    "estar sin dinero",
@@ -2424,7 +2424,7 @@ export default {
   }
  },
  "vocab-121": {
-  "promptNative": "una medusa",
+  "promptNative": "'Alforreca' significa...",
   "options": [
    "una lechuga",
    "una medusa",
@@ -2444,7 +2444,7 @@ export default {
   }
  },
  "vocab-122": {
-  "promptNative": "una persona pesada y molesta",
+  "promptNative": "'Melga' significa... (informal, Portugal)",
   "options": [
    "una broma suave",
    "un charco",
@@ -2524,7 +2524,7 @@ export default {
   }
  },
  "vocab-126": {
-  "promptNative": "una fuente pública",
+  "promptNative": "'Chafariz' significa...",
   "options": [
    "un cerrajero",
    "un espantapájaros",
@@ -2544,7 +2544,7 @@ export default {
   }
  },
  "vocab-127": {
-  "promptNative": "un fanfarrón que busca atención",
+  "promptNative": "'Cabotino' significa...",
   "options": [
    "un fanfarrón que busca atención",
    "un taxista",
