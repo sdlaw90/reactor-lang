@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabaseClient";
 import { listNativeLanguages } from "../../data/tracks";
@@ -29,6 +29,13 @@ export default function OnboardingPage() {
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState("");
   const [busy, setBusy] = useState(false);
+  // Once the user manually picks a native language, stop auto-syncing it to the
+  // UI language so their explicit choice isn't overwritten.
+  const userPickedLang = useRef(false);
+  const pickNativeLang = (v) => {
+    userPickedLang.current = true;
+    setNativeLang(v);
+  };
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -42,13 +49,14 @@ export default function OnboardingPage() {
 
   // Pre-select the native-language picker from the bootstrap UI language
   // (browser locale or the switcher choice) so a Spanish-locale user lands on
-  // Spanish already selected. They can still change it.
+  // Spanish already selected. Keeps following the UI language until the user
+  // makes their own pick (tracked by userPickedLang) — this also corrects the
+  // first-paint value, which starts at the SSR-default "en" before the real
+  // language resolves on the client.
   useEffect(() => {
-    setNativeLang((cur) => {
-      if (cur) return cur;
-      const opts = listNativeLanguages();
-      return opts.some((o) => o.code === uiLang) ? uiLang : cur;
-    });
+    if (userPickedLang.current) return;
+    const opts = listNativeLanguages();
+    if (opts.some((o) => o.code === uiLang)) setNativeLang(uiLang);
   }, [uiLang]);
 
   if (session === undefined) {
@@ -146,7 +154,7 @@ export default function OnboardingPage() {
               <SearchableSelect
                 options={langOptions.map((o) => ({ value: o.code, label: o.label }))}
                 value={nativeLang}
-                onChange={setNativeLang}
+                onChange={pickNativeLang}
                 placeholder={t(uiLang, "obSearchLang")}
               />
             </div>
