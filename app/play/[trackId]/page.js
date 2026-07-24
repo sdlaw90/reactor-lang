@@ -208,7 +208,12 @@ export default function PlayPage({ params }) {
     const nativeLang = viewerNativeLang || track.nativeLang;
     if (uiLang !== nativeLang) return null;
     const txt = q.promptNative[nativeLang] || q.promptNative[track.nativeLang];
-    return txt && txt !== displayPrompt(q) ? txt : null;
+    // Never show a native subtitle that just hands over the answer. Some vocab
+    // items carry the meaning in promptNative (base-content quirk); that must not
+    // leak to the learner in any language.
+    const ci = q.correctIdx ?? q.correct_idx;
+    const answer = Array.isArray(q.options) && ci != null ? q.options[ci] : null;
+    return txt && txt !== displayPrompt(q) && txt !== answer ? txt : null;
   };
   const mastery = computeMastery(track, seenAt, missedIds);
 
