@@ -6,6 +6,7 @@ import { Check, X, ChevronRight, ChevronDown, RotateCcw, Info } from "lucide-rea
 import { supabase } from "../../../lib/supabaseClient";
 import AudioButton from "../../../lib/AudioButton";
 import { getTrack } from "../../../data/tracks";
+import { getL10n } from "../../../data/tracks/l10n";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import { buildLessonSequence, computeMastery, todayStr, computeStreakUpdate } from "../../../lib/gameEngine";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
@@ -119,7 +120,8 @@ export default function LessonsPage({ params }) {
   const mastery = computeMastery(track, seenAt, missedIds);
 
   const startLesson = (catId) => {
-    const seq = buildLessonSequence(track, catId);
+    const srcLang = viewerNativeLang || track.nativeLang;
+    const seq = buildLessonSequence(track, catId, srcLang, getL10n(track.id, srcLang));
     setSelectedCat(catId);
     setSequence(seq);
     setIndex(0);

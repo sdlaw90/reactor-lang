@@ -7,7 +7,8 @@ import { supabase } from "../../../lib/supabaseClient";
 import { getTrack } from "../../../data/tracks";
 import { buildPlacementQuiz } from "../../../lib/gameEngine";
 import { loadProgress, saveProgress } from "../../../lib/db";
-import { SKILL_LEVELS } from "../../../lib/skillLevels";
+import { SKILL_LEVELS, skillLevelLabel } from "../../../lib/skillLevels";
+import { getL10n } from "../../../data/tracks/l10n";
 import { t } from "../../../lib/playStrings";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import BackHome from "../../../lib/BackHome";
@@ -102,7 +103,8 @@ export default function PlacementQuizPage({ params }) {
       if (saved && saved.qIndex > 0 && saved.qIndex < saved.quiz.length) {
         setResume(saved); // quiz stays null until they choose
       } else {
-        setQuiz(buildPlacementQuiz(track, 3));
+        const plSrc = data.session.user.user_metadata?.native_lang || track.nativeLang;
+        setQuiz(buildPlacementQuiz(track, 3, plSrc, getL10n(track.id, plSrc)));
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,7 +126,8 @@ export default function PlacementQuizPage({ params }) {
     setTierResults({});
     setSelected(null);
     setFeedback(null);
-    setQuiz(buildPlacementQuiz(track, 3));
+    const plSrc = viewerNativeLang || track.nativeLang;
+    setQuiz(buildPlacementQuiz(track, 3, plSrc, getL10n(track.id, plSrc)));
   };
 
   if (!track) {
@@ -291,7 +294,7 @@ export default function PlacementQuizPage({ params }) {
               {T("placementResult")}
             </h2>
             <p style={{ color: "#B4ABC9", fontSize: 14, lineHeight: 1.6 }}>
-              {T("placementRecommended")} <strong style={{ color: "#FF8FB1" }}>{SKILL_LEVELS.find((s) => s.id === recommended)?.label}</strong>
+              {T("placementRecommended")} <strong style={{ color: "#FF8FB1" }}>{skillLevelLabel(recommended, viewerNativeLang || track?.nativeLang || "en")}</strong>
             </p>
             <button className="rj" style={styles.primaryBtn} onClick={acceptRecommendation} disabled={saving}>
               {saving ? "..." : T("placementUseLevel")}

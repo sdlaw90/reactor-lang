@@ -890,6 +890,10 @@ export default function PlayPage({ params }) {
                   })()
                 )}
 
+              {awaitingNext && sourceLang === "es" && q.variant && q.variant.latam && q.variant.spain && (
+                <DualVariantCard key={q.id} variant={q.variant} defaultRegion={sourceRegion} />
+              )}
+
               {awaitingNext && (
                 <button className="rj" style={styles.nextBtn} onClick={handleNext}>
                   {T("next")} <ChevronRight size={18} style={{ verticalAlign: "middle" }} />
@@ -1065,6 +1069,36 @@ function explainRows(map, { sourceLang, sourceRegion, targetLang, advanced } = {
   const rows = [{ tag: native.lang, text: native.text }];
   if (targetText) rows.push({ tag: targetLang, text: targetText });
   return rows;
+}
+
+// U4 dual-version card: surfaces both es-LatAm and es-Spain readings for a term
+// that diverges by region, on the explanation screen. Defaults to the learner's
+// region (sourceRegion) with a one-tap toggle to the other — the consolidated-
+// source teaching supplement, not a change to the answer. Rendered only when an
+// item's source surface tags a { latam, spain } variant.
+function DualVariantCard({ variant, defaultRegion }) {
+  const [region, setRegion] = useState(defaultRegion === "spain" ? "spain" : "latam");
+  const mine = variant[region];
+  const otherRegion = region === "latam" ? "spain" : "latam";
+  const other = variant[otherRegion];
+  if (!mine || !other) return null;
+  const regionName = (r) => (r === "latam" ? "Latinoamérica" : "España");
+  return (
+    <div style={styles.dualCard}>
+      <div style={styles.dualHead}>
+        <span style={styles.dualTitle}>🗣 También se dice</span>
+        <div style={styles.dualTabs}>
+          <button className="rj" style={region === "latam" ? styles.dualTabOn : styles.dualTab} onClick={() => setRegion("latam")}>🌎 LatAm</button>
+          <button className="rj" style={region === "spain" ? styles.dualTabOn : styles.dualTab} onClick={() => setRegion("spain")}>🇪🇸 España</button>
+        </div>
+      </div>
+      <div style={styles.dualReading}>
+        <span style={styles.dualWord}>{mine}</span>
+        <span style={styles.dualRegionTag}> · en tu región</span>
+      </div>
+      <div style={styles.dualOther}>En {regionName(otherRegion)} se dice <b style={{ color: "#F3F0FA" }}>{other}</b>.</div>
+    </div>
+  );
 }
 
 function ExplanationCard({ item, track, uiLang, sourceLang, sourceRegion, advanced }) {
@@ -1279,6 +1313,17 @@ const styles = {
   // #69: soft amber "heads up" note on a wrong pick — informative, not punitive.
   reviewWrongNoteBox: { background: "rgba(255,184,77,0.07)", border: "1px solid rgba(255,184,77,0.35)", borderRadius: 10, padding: "12px 14px", marginTop: 10 },
   wrongNoteHeader: { fontSize: 11, fontWeight: 700, color: "#FFB84D", marginBottom: 8, letterSpacing: 0.3 },
+  // U4 dual-version card: regional-variant teaching supplement (es only).
+  dualCard: { background: "rgba(185,142,255,0.06)", border: "1px solid rgba(185,142,255,0.35)", borderRadius: 10, padding: "12px 14px", marginTop: 10 },
+  dualHead: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, gap: 8, flexWrap: "wrap" },
+  dualTitle: { fontSize: 11, fontWeight: 700, color: "#B98EFF", letterSpacing: 0.3 },
+  dualTabs: { display: "flex", gap: 4 },
+  dualTab: { border: "1px solid #3A3452", background: "transparent", color: "#9B93B8", borderRadius: 20, padding: "3px 10px", fontSize: 11.5, fontWeight: 600, cursor: "pointer" },
+  dualTabOn: { border: "1px solid #B98EFF", background: "rgba(185,142,255,0.15)", color: "#F3F0FA", borderRadius: 20, padding: "3px 10px", fontSize: 11.5, fontWeight: 700, cursor: "pointer" },
+  dualReading: { display: "flex", alignItems: "baseline", gap: 6, marginBottom: 4 },
+  dualWord: { fontSize: 18, fontWeight: 800, color: "#F3F0FA" },
+  dualRegionTag: { fontSize: 12, color: "#9B93B8" },
+  dualOther: { fontSize: 13.5, color: "#C7CAD3", margin: 0 },
   nextBtn: {
     width: "100%",
     background: "#FF8FB1",
