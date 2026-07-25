@@ -3,10 +3,13 @@
 // Standalone intro tour, reachable from the nav drawer ("How to use
 // SquirreLingo"). Same GuideTour carousel as the first-run overlay, hosted as a
 // normal page with a Back/Home control. Finishing or skipping returns home.
+// A "Watch the video tour" card sits below the carousel — the richer middle
+// option between the step cards and the full /help text.
 
 import { useRouter } from "next/navigation";
 import BackHome from "../../lib/BackHome";
 import GuideTour from "../../lib/GuideTour";
+import GuideVideoCard from "../../lib/GuideVideoCard";
 import { GUIDE_STEPS } from "../../lib/guideSteps";
 
 export default function GuidePage() {
@@ -28,6 +31,7 @@ export default function GuidePage() {
           .
         </p>
         <GuideTour steps={GUIDE_STEPS} onDone={goHome} doneLabel="Done" />
+        <GuideVideoCard />
       </div>
     </div>
   );
