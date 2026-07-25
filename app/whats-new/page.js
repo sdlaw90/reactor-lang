@@ -4,18 +4,24 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import BackHome from "../../lib/BackHome";
 import { supabase } from "../../lib/supabaseClient";
-import { CURRENT_VERSION, CHANGELOG } from "../../lib/version";
+import { CURRENT_VERSION, CHANGELOG, changeText } from "../../lib/version";
+import { t } from "../../lib/playStrings";
+import { resolveUiLang, SUPPORTED_UI_LANGS } from "../../lib/uiLang";
 
 export default function WhatsNewPage() {
   const router = useRouter();
   const [marked, setMarked] = useState(false);
+  const [uiLang, setUiLang] = useState("en");
   const latest = CHANGELOG[0];
 
   useEffect(() => {
+    setUiLang(resolveUiLang());
     (async () => {
       try {
         const { data } = await supabase.auth.getSession();
         if (!data.session) return;
+        const nl = data.session.user.user_metadata?.native_lang;
+        if (nl && SUPPORTED_UI_LANGS.includes(nl)) setUiLang(nl);
         const lastSeen = data.session.user.user_metadata?.last_seen_version;
         if (lastSeen !== CURRENT_VERSION) {
           await supabase.auth.updateUser({ data: { last_seen_version: CURRENT_VERSION } });
@@ -35,7 +41,7 @@ export default function WhatsNewPage() {
 
         <div style={styles.badge}>!</div>
         <h1 className="rj" style={styles.title}>
-          What's new
+          {t(uiLang, "wnTitle")}
         </h1>
         <p className="jm" style={styles.versionLine}>
           v{latest.version} <span style={{ color: "#9B93B8" }}>&middot; {latest.date}</span>
@@ -45,13 +51,13 @@ export default function WhatsNewPage() {
           {latest.changes.map((c, i) => (
             <li key={i} style={styles.listItem}>
               <span style={styles.bullet}>•</span>
-              {c}
+              {changeText(c, uiLang)}
             </li>
           ))}
         </ul>
 
         <button className="rj" style={styles.secondaryBtn} onClick={() => router.push("/changelog")}>
-          See full changelog
+          {t(uiLang, "wnSeeFullChangelog")}
         </button>
       </div>
     </div>

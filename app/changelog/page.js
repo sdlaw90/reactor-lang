@@ -10,7 +10,10 @@ import {
   INTERNAL_CHANGELOG,
   isNonProdEnv,
   internalNotesByVersion,
+  changeText,
 } from "../../lib/version";
+import { t } from "../../lib/playStrings";
+import { resolveUiLang, SUPPORTED_UI_LANGS } from "../../lib/uiLang";
 
 const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").toLowerCase();
 
@@ -19,12 +22,16 @@ export default function ChangelogPage() {
   // default on any non-production deploy; also on for admins anywhere. Prod
   // non-admins see only the cleaned user-facing CHANGELOG.
   const [isAdmin, setIsAdmin] = useState(false);
+  const [uiLang, setUiLang] = useState("en");
 
   useEffect(() => {
+    setUiLang(resolveUiLang());
     (async () => {
       try {
         const { data } = await supabase.auth.getSession();
         if (!data.session) return;
+        const nl = data.session.user.user_metadata?.native_lang;
+        if (nl && SUPPORTED_UI_LANGS.includes(nl)) setUiLang(nl);
         const email = data.session.user.email?.toLowerCase();
         if (ADMIN_EMAIL && email === ADMIN_EMAIL) {
           setIsAdmin(true);
@@ -54,10 +61,10 @@ export default function ChangelogPage() {
             home → What's New → full changelog). */}
         <BackHome />
         <h1 className="rj" style={styles.title}>
-          Changelog
+          {t(uiLang, "clTitle")}
         </h1>
         <p style={styles.subtitle}>
-          Currently published: <span className="jm" style={{ color: "#FF8FB1", fontWeight: 700 }}>v{CURRENT_VERSION}</span>
+          {t(uiLang, "clCurrentlyPublished")} <span className="jm" style={{ color: "#FF8FB1", fontWeight: 700 }}>v{CURRENT_VERSION}</span>
         </p>
         {internalMode && (
           <p style={styles.internalBanner}>
@@ -96,7 +103,7 @@ export default function ChangelogPage() {
               <ul style={styles.list}>
                 {entry.changes.map((c, i) => (
                   <li key={i} style={styles.listItem}>
-                    {c}
+                    {changeText(c, uiLang)}
                   </li>
                 ))}
               </ul>
