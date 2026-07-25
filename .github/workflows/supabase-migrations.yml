@@ -123,13 +123,42 @@ jobs:
           PROD_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL || secrets.NEXT_PUBLIC_SUPABASE_URL }}
           PROD_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
 
+  # Mirrors the dev tutorial-video bucket into prod — same contract as sync-tts
+  # (runs after migrate-production so the bucket/policy migration lands first;
+  # copy-only, never deletes). Differs only in that it ALWAYS upserts, because
+  # video paths are semantic (en/ch0/co.mp4), not content-hashed. See
+  # scripts/sync-tutorial-video.mjs header.
+  sync-tutorial-video:
+    if: github.ref == 'refs/heads/main'
+    needs: migrate-production
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Mirror dev tutorial-video bucket to prod
+        run: node scripts/sync-tutorial-video.mjs
+        env:
+          DEV_SUPABASE_URL: ${{ secrets.DEV_SUPABASE_URL }}
+          DEV_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.DEV_SUPABASE_SERVICE_ROLE_KEY }}
+          PROD_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL || secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          PROD_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
   # Runs last on every main push; any miss turns the workflow red.
   # Checks 1-3 live in scripts/smoke-check.mjs (version endpoint, bucket
   # key-count parity, canary audio 200). Check 4 (migration alignment) is
   # the shell step below, via the Supabase CLI.
   smoke-check:
     if: github.ref == 'refs/heads/main'
-    needs: [migrate-production, sync-tts]
+    needs: [migrate-production, sync-tts, sync-tutorial-video]
     runs-on: ubuntu-latest
     environment: Production
     steps:
