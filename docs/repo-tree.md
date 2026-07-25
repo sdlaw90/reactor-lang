@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 325 tracked files.
+> 355 tracked files.
 
 ```
 .env.local.example
@@ -14,11 +14,13 @@
 .github/workflows/supabase-migrations.yml
 .gitignore
 README.md
+_to_delete/enForEs.js
 app/about/page.js
 app/admin/ApplicationsSection.js
 app/admin/DashboardSection.js
 app/admin/ErrorsSection.js
 app/admin/FeedbackSection.js
+app/admin/ProgressSection.js
 app/admin/ResetRequestsSection.js
 app/admin/UsersSection.js
 app/admin/adminApi.js
@@ -31,6 +33,11 @@ app/api/admin/errors/route.js
 app/api/admin/feedback/route.js
 app/api/admin/me/route.js
 app/api/admin/overview/route.js
+app/api/admin/progress/overview/route.js
+app/api/admin/progress/settings/route.js
+app/api/admin/progress/track/route.js
+app/api/admin/progress/user/route.js
+app/api/admin/progress/users/route.js
 app/api/admin/reset-requests/route.js
 app/api/admin/users/route.js
 app/api/approve-beta-application/route.js
@@ -86,7 +93,6 @@ data/scripts/kanaJa.js
 data/scripts/mandarinZh.js
 data/tracks/deForEn.js
 data/tracks/deForEnTags.js
-data/tracks/enForEs.js
 data/tracks/enForIt.js
 data/tracks/enGbForEs.js
 data/tracks/enUsForEs.js
@@ -105,6 +111,18 @@ data/tracks/jaForEn.js
 data/tracks/jaForEnTags.js
 data/tracks/koForEn.js
 data/tracks/koForEnTags.js
+data/tracks/l10n/deForEn.es.js
+data/tracks/l10n/frCaForEn.es.js
+data/tracks/l10n/frForEn.es.js
+data/tracks/l10n/index.js
+data/tracks/l10n/itForEn.es.js
+data/tracks/l10n/jaForEn.es.js
+data/tracks/l10n/koForEn.es.js
+data/tracks/l10n/ptBrForEn.es.js
+data/tracks/l10n/ptPtForEn.es.js
+data/tracks/l10n/regionalVariants.js
+data/tracks/l10n/ruForEn.es.js
+data/tracks/l10n/zhForEn.es.js
 data/tracks/ptBrForEn.js
 data/tracks/ptBrForEnTags.js
 data/tracks/ptPtForEn.js
@@ -113,17 +131,22 @@ data/tracks/ruForEn.js
 data/tracks/ruForEnTags.js
 data/tracks/zhForEn.js
 data/tracks/zhForEnTags.js
+data/vocab/deWords.es.js
 data/vocab/deWords.js
 data/vocab/esLatAmWords.js
 data/vocab/esSpainWords.js
 data/vocab/frCaWords.js
 data/vocab/frWords.js
 data/vocab/itWords.js
+data/vocab/jaWords.es.js
 data/vocab/jaWords.js
+data/vocab/koWords.es.js
 data/vocab/koWords.js
 data/vocab/ptBrWords.js
 data/vocab/ptPtWords.js
+data/vocab/ruWords.es.js
 data/vocab/ruWords.js
+data/vocab/zhWords.es.js
 data/vocab/zhWords.js
 docs/INTEGRATION-NOTES.md
 docs/PACKAGING.md
@@ -243,6 +266,7 @@ lib/GlobalErrorLogger.js
 lib/GuideDemo.js
 lib/GuideOverlay.js
 lib/GuideTour.js
+lib/LangSwitcher.js
 lib/Logo.js
 lib/ModeToggle.js
 lib/NavDepthTracker.js
@@ -274,6 +298,7 @@ lib/gameEngine.js
 lib/grammarGym.js
 lib/guideSteps.js
 lib/guideVersion.js
+lib/helpAboutContent.js
 lib/languageNames.js
 lib/legalVersions.js
 lib/navDepth.js
@@ -288,6 +313,8 @@ lib/skillLevels.js
 lib/supabaseClient.js
 lib/theme.js
 lib/trackIcons.js
+lib/trackItemCounts.js
+lib/uiLang.js
 lib/version.js
 lib/welcomeVersion.js
 next.config.mjs
@@ -297,6 +324,7 @@ playwright.config.js
 public/version.json
 scripts/deploy.js
 scripts/gen-repo-tree.mjs
+scripts/gen-track-item-counts.mjs
 scripts/generate-tts.mjs
 scripts/generate-version-json.js
 scripts/grammar-engines/de_rules_gen.py
@@ -332,5 +360,7 @@ supabase/migrations/00000000000011_security_questions.sql
 supabase/migrations/00000000000012_client_grants.sql
 supabase/migrations/00000000000013_upsert_grant_fix.sql
 supabase/migrations/00000000000014_tts_audio_bucket.sql
+supabase/migrations/00000000000015_admin_progress_analytics.sql
+supabase/migrations/00000000000016_admin_settings.sql
 supabase/schema.sql
 ```

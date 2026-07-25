@@ -117,6 +117,9 @@ const enForIt = {
   sublabel: "Per madrelingua italiani · Inglese",
   nativeLang: "it",
   targetLang: "en",
+  // Bespoke English-for-Italian-speakers content (Italian-specific false friends
+  // etc.) — not reusable across sources; stays locked to it natives.
+  sourceSpecific: true,
   theme: "english-us",
   cats: CATS,
   bank: BANK,

@@ -1,143 +1,123 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import BackHome from "../../lib/BackHome";
 import { FACEBOOK_GROUP_URL } from "../../lib/community";
+import { supabase } from "../../lib/supabaseClient";
+import { resolveUiLang, SUPPORTED_UI_LANGS } from "../../lib/uiLang";
+import { ABOUT_CONTENT } from "../../lib/helpAboutContent";
+
+// #72: About renders from the co-located bilingual content module in the
+// reader's language. Language source: the signed-in user's native language
+// (session.user.user_metadata.native_lang) when present and supported, else the
+// pre-login bootstrap resolveUiLang() (switcher choice → browser → English).
+// Paint immediately with the bootstrap language, then upgrade once the session
+// resolves — no loading gate, no jarring flash.
+function useResolvedUiLang() {
+  const [lang, setLang] = useState("en"); // SSR-safe first paint
+  useEffect(() => {
+    let active = true;
+    setLang(resolveUiLang());
+    supabase.auth.getSession().then(({ data }) => {
+      if (!active) return;
+      const nl = data?.session?.user?.user_metadata?.native_lang;
+      if (nl && SUPPORTED_UI_LANGS.includes(nl)) setLang(nl);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+  return lang;
+}
 
 export default function AboutPage() {
+  const uiLang = useResolvedUiLang();
+  const content = ABOUT_CONTENT[uiLang] || ABOUT_CONTENT.en;
+
   return (
     <div style={styles.wrap}>
       <div style={{ width: "100%", maxWidth: 480 }}>
         <BackHome />
         <h1 className="rj" style={styles.title}>
-          About SquirreLingo
+          {content.title}
         </h1>
-        <p style={styles.tagline}>Fast, ADHD-friendly language practice — with a more traditional option too.</p>
+        <p style={styles.tagline}>{content.tagline}</p>
 
-        <Section title="What this app is">
-          <P>
-            SquirreLingo is a language-practice app built around short, low-pressure rounds of questions —
-            vocabulary, grammar, idioms, and pronunciation — rather than long, rigid lesson paths. Pick a
-            language, answer a handful of questions, see how you did, and stop whenever you want. There's no
-            requirement to finish a full "lesson" in one sitting. It's a progressive web app, so it runs right
-            in your browser on your phone or computer — nothing to download.
-          </P>
-        </Section>
+        {content.sections.map((section, i) => {
+          const rendered = (
+            <Section key={i} title={section.title}>
+              {section.roadmap ? (
+                <Roadmap roadmap={section.roadmap} />
+              ) : (
+                section.body.map((para, j) => <P key={j}>{renderRich(para)}</P>)
+              )}
+            </Section>
+          );
+          return section.anchor ? (
+            <div id={section.anchor} key={i}>
+              {rendered}
+            </div>
+          ) : (
+            rendered
+          );
+        })}
 
-        <Section title="Ways to practice">
-          <P>
-            <b>Quick Quiz</b> is the original, game-style mode — short, randomly mixed rounds with a timer,
-            combo scoring, and streaks. Built for quick, low-friction practice in small bursts.
-          </P>
-          <P>
-            <b>Lessons</b> is a calmer, step-by-step mode — no timer, no combo pressure. It walks you through
-            one topic at a time, easiest first, showing the explanation right after each answer so you can
-            actually absorb it before moving on. A better fit if you'd rather work through material
-            methodically than in quick random bursts. Both modes track the same overall progress, so switching
-            between them never resets anything.
-          </P>
-          <P>
-            On top of those, most tracks add two focused trainers reachable from the same mode switch:
-            <b> Grammar Gym</b>, a standalone conjugation drill that keeps its own progress and never touches
-            your level or streak, and an <b>Alphabet</b> mode for learning a new writing system — kana, hangul,
-            Cyrillic, or Chinese characters — from scratch.
-          </P>
-        </Section>
-
-        <Section title="Skill levels & the placement quiz">
-          <P>
-            Every track uses the real CEFR framework that actual language certifications use, with skill levels
-            running from No experience through Beginner, Intermediate, Advanced, and Native (A1–C2). Not sure
-            where you stand? Each language has a short, untimed placement quiz that samples every tier the track
-            has content for, so it can place true beginners and advanced learners alike.
-          </P>
-        </Section>
-
-        <Section title="Tracking your progress">
-          <P>
-            The Dashboard shows your XP, streak, and rounds across every language. Each language's own screen
-            also has a mastery tracker showing how much of that language's content you've actually learned,
-            category by category.
-          </P>
-        </Section>
-
-        <Section title="Multiple languages, real dialect differences">
-          <P>
-            For English speakers, SquirreLingo teaches nine languages — Spanish, French, Portuguese, Italian,
-            German, Russian, Japanese, Mandarin Chinese, and Korean — several with genuinely different regional
-            versions (Latin American vs. European Spanish, France vs. Québécois French, Brazilian vs. European
-            Portuguese), for twelve distinct tracks in all. Where a language has real regional differences, this
-            app treats them as separate tracks with different content, not the same material behind a different
-            flag. Learning English is available too, for Spanish- and Italian-speaking users, with more
-            native-language pairings on the way.
-          </P>
-          <P>
-            Languages with their own writing system always show native script and its romanization together —
-            kanji with romaji, hangul, Chinese characters with pinyin. And for German, Russian, Japanese,
-            Korean, and Mandarin, the grammar questions are built by in-house engines, so every verb form is
-            machine-verified for correctness rather than hand-typed.
-          </P>
-        </Section>
-
-        <Section title="Honest about what's human-checked">
-          <P>
-            Building this much content quickly means some of it is still awaiting a native-speaker review.
-            Rather than hide that, tracks still in that queue carry a small "Community review in progress" note,
-            so you always know which languages have been human-reviewed and which haven't yet. The note
-            disappears once a track's review is logged.
-          </P>
-        </Section>
-
-        <div id="whats-next">
-          <Section title="What's next">
-            <P>
-              A peek at what we're working on. No dates, no promises — things ship when they're ready.
-            </P>
-
-            <p style={styles.bucketLabel}>In progress</p>
-            <RoadmapItem badge title="Translations under questions">
-              See what a question means in your language while you're still learning — expanding track by track.
-            </RoadmapItem>
-            <RoadmapItem badge title="SquirreLingo in more languages">
-              Learn from your native language, not just English — more source languages are rolling out.
-            </RoadmapItem>
-
-            <p style={styles.bucketLabel}>Coming soon</p>
-            <RoadmapItem title="Mastery quizzes and star rankings">
-              Prove you've truly mastered a category and earn stars for it.
-            </RoadmapItem>
-            <RoadmapItem title="Explanations in your language">
-              Answer explanations in both your native and target language, not just English and Spanish.
-            </RoadmapItem>
-
-            <p style={styles.bucketLabel}>Down the road</p>
-            <RoadmapItem title="Listening and speaking practice">
-              Hear it, say it — a whole new way to practice.
-            </RoadmapItem>
-            <RoadmapItem title="App store apps">
-              SquirreLingo on Google Play and the App Store.
-            </RoadmapItem>
-          </Section>
-        </div>
-
-        <Section title="Join the community">
-          <P>
-            SquirreLingo has a Facebook group — release news, tips, and a place to talk with other beta testers{" "}
-            (and the developer) directly. It&apos;s a private group during the beta, so hit{" "}
-            <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer" style={styles.link}>
-              Join Group
-            </a>{" "}
-            and you&apos;ll be approved.
-          </P>
-        </Section>
-
-        <p style={styles.footer}>
-          Questions about how something specific works? The <a href="/help" style={styles.link}>Help page</a>{" "}
-          has a full walkthrough of every screen and icon. Found a bug, or have an idea? There's a{" "}
-          <a href="/feedback" style={styles.link}>feedback form</a> for that too. Know someone who'd like to{" "}
-          <a href="/beta-apply" style={styles.link}>apply to beta test</a>?
-        </p>
+        <p style={styles.footer}>{renderRich(content.footer)}</p>
       </div>
     </div>
+  );
+}
+
+// Inline markup renderer: *bold*, _italic_, {{key|label}} links.
+function renderRich(str) {
+  const re = /\*([^*]+)\*|_([^_]+)_|\{\{(\w+)\|([^}]+)\}\}/g;
+  const out = [];
+  let last = 0;
+  let m;
+  let k = 0;
+  while ((m = re.exec(str))) {
+    if (m.index > last) out.push(str.slice(last, m.index));
+    if (m[1] != null) out.push(<b key={k++}>{m[1]}</b>);
+    else if (m[2] != null) out.push(<i key={k++}>{m[2]}</i>);
+    else out.push(renderLink(m[3], m[4], k++));
+    last = re.lastIndex;
+  }
+  if (last < str.length) out.push(str.slice(last));
+  return out;
+}
+
+function renderLink(key, label, k) {
+  if (key === "fb") {
+    return (
+      <a key={k} href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer" style={styles.link}>
+        {label}
+      </a>
+    );
+  }
+  const to =
+    key === "about" ? "/about" : key === "help" ? "/help" : key === "feedback" ? "/feedback" : key === "beta" ? "/beta-apply" : "/";
+  return (
+    <a key={k} href={to} style={styles.link}>
+      {label}
+    </a>
+  );
+}
+
+function Roadmap({ roadmap }) {
+  return (
+    <>
+      <P>{renderRich(roadmap.intro)}</P>
+      {roadmap.buckets.map((bucket, bi) => (
+        <div key={bi}>
+          <p style={styles.bucketLabel}>{bucket.label}</p>
+          {bucket.items.map((item, ii) => (
+            <RoadmapItem key={ii} title={item.title} badge={item.badge} badgeType={item.badgeType}>
+              {renderRich(item.desc)}
+            </RoadmapItem>
+          ))}
+        </div>
+      ))}
+    </>
   );
 }
 
@@ -156,12 +136,12 @@ function P({ children }) {
   return <p style={styles.p}>{children}</p>;
 }
 
-function RoadmapItem({ title, badge, children }) {
+function RoadmapItem({ title, badge, badgeType, children }) {
   return (
     <div style={styles.roadmapItem}>
       <p style={styles.roadmapTitle}>
         {title}
-        {badge && <span style={styles.rollingOutBadge}>Rolling out</span>}
+        {badge && <span style={badgeType === "done" ? styles.doneBadge : styles.rollingOutBadge}>{badge}</span>}
       </p>
       <p style={styles.roadmapDesc}>{children}</p>
     </div>
@@ -198,6 +178,15 @@ const styles = {
     background: "rgba(61,219,255,0.12)",
     color: "#3DDBFF",
     border: "1px solid rgba(61,219,255,0.35)",
+    borderRadius: 999,
+    padding: "1px 8px",
+    fontSize: 10,
+    fontWeight: 700,
+  },
+  doneBadge: {
+    background: "rgba(94,224,160,0.14)",
+    color: "#5EE0A0",
+    border: "1px solid rgba(94,224,160,0.4)",
     borderRadius: 999,
     padding: "1px 8px",
     fontSize: 10,

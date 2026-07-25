@@ -18,7 +18,9 @@ import {
   combinedPoolSize,
   COMBINED_MIN,
 } from "../../../lib/gameEngine";
-import { cefrSetForSkillLevel, masteryBandsForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelInfo, SKILL_LEVELS } from "../../../lib/skillLevels";
+import { cefrSetForSkillLevel, masteryBandsForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelLabel, skillLevelDescription, SKILL_LEVELS } from "../../../lib/skillLevels";
+import { getL10n } from "../../../data/tracks/l10n";
+import { regionalVariantFor } from "../../../data/tracks/l10n/regionalVariants";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
 import { scriptForTrack } from "../../../data/scripts";
@@ -176,6 +178,24 @@ export default function PlayPage({ params }) {
   const displayCatLabel = (catId) => categoryDisplayName(uiLang, viewerNativeLang, track, catId);
   const uiLang = uiLangForSkill(progress.skill_level, viewerNativeLang, track);
   const T = (key, vars) => t(uiLang, key, vars);
+  // #60: the learner's "source" language (their native language) + region, used
+  // to resolve explanations/notes into that language, falling back to English
+  // when the source string isn't localized yet. sourceRegion drives the future
+  // es-LatAm/es-Spain variant split (inert until such content is authored).
+  const sourceLang = viewerNativeLang || track.nativeLang;
+  const sourceRegion = session?.user?.user_metadata?.native_country === "ES" ? "spain" : "latam";
+  // U4 dual-version card: the learner's actual country (ISO code) drives which
+  // regional term is highlighted as "en tu región". null → falls back to each
+  // word's default LatAm term.
+  const nativeCountry = session?.user?.user_metadata?.native_country || null;
+  // #60: the track's target language — surfaced as a second explanation row
+  // below Advanced level (see explainRows), so e.g. English speakers learning
+  // Spanish keep the Spanish reading as exposure.
+  const explainTargetLang = track.targetLang || null;
+  // v3.1: the per-source localized-surface map for this track (Spanish answer
+  // options / trad prompts / subtitles). null for English natives or any track
+  // without a side table yet → base English surface (see data/tracks/l10n).
+  const l10nMap = getL10n(track.id, sourceLang);
   // Small native-language subtitle under the question (target language stays
   // the primary prompt on top). Follows the same skill-level rule as the rest
   // of the page's chrome: shown while the UI is in the viewer's native
@@ -188,7 +208,12 @@ export default function PlayPage({ params }) {
     const nativeLang = viewerNativeLang || track.nativeLang;
     if (uiLang !== nativeLang) return null;
     const txt = q.promptNative[nativeLang] || q.promptNative[track.nativeLang];
-    return txt && txt !== displayPrompt(q) ? txt : null;
+    // Never show a native subtitle that just hands over the answer. Some vocab
+    // items carry the meaning in promptNative (base-content quirk); that must not
+    // leak to the learner in any language.
+    const ci = q.correctIdx ?? q.correct_idx;
+    const answer = Array.isArray(q.options) && ci != null ? q.options[ci] : null;
+    return txt && txt !== displayPrompt(q) && txt !== answer ? txt : null;
   };
   const mastery = computeMastery(track, seenAt, missedIds);
 
@@ -198,8 +223,18 @@ export default function PlayPage({ params }) {
     levelAnswered.current = { correct: 0, total: 0 };
     setRoundMode(mode);
     const cefrSet = mode === "daily" ? cefrSetForSkillLevel(progress.skill_level) : null;
-    const newRound = buildRound(track, mode, missedIds, seenAt, cefrSet, mode === "daily" ? buildOptions : {});
-    setRound(newRound);
+    const newRound = buildRound(track, mode, missedIds, seenAt, cefrSet, mode === "daily" ? buildOptions : {}, sourceLang, l10nMap);
+    // U4: attach the regional-variant record to any item whose correct answer is a
+    // known regional divergence for the learner's source language. Derived centrally
+    // from data/tracks/l10n/regionalVariants.js (per-language) — no per-item tagging.
+    // regionalVariantFor returns null for languages with no map, so this is a no-op
+    // for them.
+    const enrichedRound = newRound.map((q) => {
+      if (!q || !Array.isArray(q.options) || q.correctIdx == null) return q;
+      const v = regionalVariantFor(sourceLang, q.options[q.correctIdx]);
+      return v ? { ...q, variant: v } : q;
+    });
+    setRound(enrichedRound);
 
     if (mode === "daily") {
       const ids = seenIdsForRound(newRound, track.extraCatId);
@@ -523,7 +558,7 @@ export default function PlayPage({ params }) {
             <div style={styles.skillCard}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ color: "#B4ABC9", fontSize: 12 }}>
-                  {T("levelLabel")} <strong style={{ color: "#F3F0FA" }}>{skillLevelInfo(progress.skill_level).label}</strong>
+                  {T("levelLabel")} <strong style={{ color: "#F3F0FA" }}>{skillLevelLabel(progress.skill_level, uiLang)}</strong>
                 </span>
                 <button className="rj" style={styles.skillEditBtn} onClick={() => setShowLevelPicker((v) => !v)}>
                   {showLevelPicker ? T("close") : T("change")}
@@ -542,8 +577,8 @@ export default function PlayPage({ params }) {
                       onClick={() => changeSkillLevel(s.id)}
                       style={{ ...styles.skillOption, borderColor: progress.skill_level === s.id ? "#FF8FB1" : "#3A3452" }}
                     >
-                      <span style={{ display: "block" }}>{s.label}</span>
-                      <span className="jm" style={styles.skillOptionDesc}>{s.description}</span>
+                      <span style={{ display: "block" }}>{skillLevelLabel(s.id, uiLang)}</span>
+                      <span className="jm" style={styles.skillOptionDesc}>{skillLevelDescription(s.id, uiLang)}</span>
                     </button>
                   ))}
                 </div>
@@ -551,7 +586,7 @@ export default function PlayPage({ params }) {
 
               {!showLevelPicker && !advanceDismissed && readyToAdvance(progress.level_correct_count, progress.level_total_count) && nextSkillLevel(progress.skill_level) && (
                 <div style={styles.advanceBanner}>
-                  <span>{T("readyToAdvance", { level: skillLevelInfo(nextSkillLevel(progress.skill_level)).label })}</span>
+                  <span>{T("readyToAdvance", { level: skillLevelLabel(nextSkillLevel(progress.skill_level), uiLang) })}</span>
                   <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
                     <button className="rj" style={styles.advanceYesBtn} onClick={() => changeSkillLevel(nextSkillLevel(progress.skill_level))}>
                       {T("yesAdvance")}
@@ -832,18 +867,22 @@ export default function PlayPage({ params }) {
                 <p style={{ color: "#FFB84D", fontSize: 13.5, fontWeight: 600, marginTop: 12 }}>{T("timeUp")}</p>
               )}
 
-              {awaitingNext && q.explain && (
-                <div style={styles.reviewExplainBox}>
-                  <div style={styles.explainLangRow}>
-                    <span style={styles.explainLangTag}>EN</span>
-                    <p style={styles.explainText}>{q.explain.en}</p>
+              {awaitingNext && q.explain && (() => {
+                // #60: explanation rows in the learner's source language (English
+                // fallback), plus the target-language reading below Advanced level
+                // — so e.g. English speakers learning Spanish keep the Spanish row.
+                const rows = explainRows(q.explain, { sourceLang, sourceRegion, targetLang: explainTargetLang, advanced: advancedLevel });
+                return rows.length ? (
+                  <div style={styles.reviewExplainBox}>
+                    {rows.map((r, ri) => (
+                      <div key={r.tag} style={ri === 0 ? styles.explainLangRow : { ...styles.explainLangRow, marginTop: 8 }}>
+                        <span style={styles.explainLangTag}>{r.tag.toUpperCase()}</span>
+                        <p style={styles.explainText}>{r.text}</p>
+                      </div>
+                    ))}
                   </div>
-                  <div style={{ ...styles.explainLangRow, marginTop: 8 }}>
-                    <span style={styles.explainLangTag}>ES</span>
-                    <p style={styles.explainText}>{q.explain.es}</p>
-                  </div>
-                </div>
-              )}
+                ) : null;
+              })()}
 
               {/* #69: hybrid wrong-answer note. Shown ONLY when the person picked
                   a wrong option (not on timeouts) and the item carries a note.
@@ -854,23 +893,26 @@ export default function PlayPage({ params }) {
                 (q.wrongNote || (q.distractorNotes && q.distractorNotes[q.options[selected]])) && (
                   (() => {
                     const note = (q.distractorNotes && q.distractorNotes[q.options[selected]]) || q.wrongNote;
+                    // #60: same source + target treatment as the explanation box.
+                    const rows = explainRows(note, { sourceLang, sourceRegion, targetLang: explainTargetLang, advanced: advancedLevel });
+                    if (!rows.length) return null;
                     return (
                       <div style={styles.reviewWrongNoteBox}>
                         <div style={styles.wrongNoteHeader}>💡 {T("wrongNoteHeader")}</div>
-                        <div style={styles.explainLangRow}>
-                          <span style={styles.explainLangTag}>EN</span>
-                          <p style={styles.explainText}>{note.en}</p>
-                        </div>
-                        {note.es && (
-                          <div style={{ ...styles.explainLangRow, marginTop: 8 }}>
-                            <span style={styles.explainLangTag}>ES</span>
-                            <p style={styles.explainText}>{note.es}</p>
+                        {rows.map((r, ri) => (
+                          <div key={r.tag} style={ri === 0 ? styles.explainLangRow : { ...styles.explainLangRow, marginTop: 8 }}>
+                            <span style={styles.explainLangTag}>{r.tag.toUpperCase()}</span>
+                            <p style={styles.explainText}>{r.text}</p>
                           </div>
-                        )}
+                        ))}
                       </div>
                     );
                   })()
                 )}
+
+              {awaitingNext && q.variant && q.variant.reference && Array.isArray(q.variant.regional) && (
+                <RegionalVariantCard key={q.id} variant={q.variant} nativeCountry={nativeCountry} />
+              )}
 
               {awaitingNext && (
                 <button className="rj" style={styles.nextBtn} onClick={handleNext}>
@@ -959,7 +1001,7 @@ export default function PlayPage({ params }) {
             <p style={styles.subtitle}>{T("explanationsSubtitle")}</p>
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12 }}>
               {explanationLog.map((item, i) => (
-                <ExplanationCard item={item} track={track} uiLang={uiLang} key={item.id || i} />
+                <ExplanationCard item={item} track={track} uiLang={uiLang} sourceLang={sourceLang} sourceRegion={sourceRegion} advanced={advancedLevel} key={item.id || i} />
               ))}
               {explanationLog.length === 0 && <p style={{ color: "#9B93B8", fontSize: 14 }}>{T("noExplanationsYet")}</p>}
             </div>
@@ -996,7 +1038,7 @@ export default function PlayPage({ params }) {
             <p style={styles.subtitle}>{T("archiveSubtitle")}</p>
             <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12 }}>
               {archiveLog.map((item, i) => (
-                <ExplanationCard item={item} track={track} uiLang={uiLang} key={item.id || i} />
+                <ExplanationCard item={item} track={track} uiLang={uiLang} sourceLang={sourceLang} sourceRegion={sourceRegion} advanced={advancedLevel} key={item.id || i} />
               ))}
               {archiveLog.length === 0 && !archiveLoading && <p style={{ color: "#9B93B8", fontSize: 14 }}>{T("archiveEmpty")}</p>}
             </div>
@@ -1016,7 +1058,119 @@ export default function PlayPage({ params }) {
   );
 }
 
-function ExplanationCard({ item, track, uiLang }) {
+// #60: resolve an { en, es, ... } explanation map (optionally with a
+// { latam, spain } regional sub-split) to the learner's source language,
+// falling back to English when that source string isn't authored yet. Returns
+// { text, lang } where lang is what's ACTUALLY shown (the source, or "en" on
+// fallback), or null when there's nothing to show.
+function resolveExplainText(map, sourceLang, sourceRegion = "latam") {
+  if (!map) return null;
+  let val = map[sourceLang];
+  if (val && typeof val === "object") val = val[sourceRegion] ?? val.latam ?? val.spain;
+  if (val == null) return map.en != null ? { text: map.en, lang: "en" } : null;
+  return { text: val, lang: sourceLang };
+}
+
+// #60: the rows to display for an explanation-style map, honoring skill level.
+// Row 1 is the learner's source language (English fallback). Row 2 is the TARGET
+// language, added only BELOW Advanced (none/beginner/intermediate) so learners
+// still get the target-language reading as exposure — e.g. an English speaker
+// learning Spanish keeps the Spanish row. At Advanced/Native it goes immersive:
+// the target-language row alone (or the source row when no target text exists).
+// Returns [{ tag, text }, ...].
+function explainRows(map, { sourceLang, sourceRegion, targetLang, advanced } = {}) {
+  const native = resolveExplainText(map, sourceLang, sourceRegion);
+  if (!native || !native.text) return [];
+  const tv = map ? map[targetLang] : null;
+  const targetText = targetLang && targetLang !== native.lang && typeof tv === "string" ? tv : null;
+  if (advanced) {
+    return targetText ? [{ tag: targetLang, text: targetText }] : [{ tag: native.lang, text: native.text }];
+  }
+  const rows = [{ tag: native.lang, text: native.text }];
+  if (targetText) rows.push({ tag: targetLang, text: targetText });
+  return rows;
+}
+
+// U4 regional-variant card: on the explanation screen, teaches how a word's answer
+// varies by region for the learner's SOURCE language (es LatAm↔Spain, pt BR↔PT,
+// fr FR↔Québec, …). Fully data-driven from data/tracks/l10n/regionalVariants.js —
+// the record carries the reference variety, the regional list, and the in-language
+// card chrome (`ui`). Personalized: highlights the term for the learner's own
+// country (nativeCountry), falling back to the word's `default`; reference-region
+// learners get the flip. Multi-variant words collapse the full list behind a tap.
+// Self-suppresses when the learner's term == the reference term. Never changes the
+// answer — pure supplement.
+function RegionalVariantCard({ variant, nativeCountry }) {
+  const [expanded, setExpanded] = useState(false);
+  const ui = variant.ui || {};
+  const regional = Array.isArray(variant.regional) ? variant.regional : [];
+  const isRef = nativeCountry === variant.referenceCode;
+  // The learner's term: reference region → the reference term; else the regional
+  // variant covering their country, else the word's default.
+  const mineTerm = isRef
+    ? variant.reference
+    : (regional.find((v) => Array.isArray(v.countries) && v.countries.includes(nativeCountry))?.term || variant.default);
+  // Nothing to teach if their own word is already the reference-region word.
+  if (!mineTerm || mineTerm === variant.reference) return null;
+  const countryNames = variant.countryNames || {};
+  const regionLabel = isRef ? variant.referenceLabel : (countryNames[nativeCountry] || variant.regionalGroupLabel);
+  const flag = isRef ? ui.refFlag : ui.regFlag;
+  const multi = regional.length > 1;
+
+  return (
+    <div style={styles.dualCard}>
+      <div style={styles.dualHead}>
+        <span style={styles.dualTitle}>🗣 {ui.title}</span>
+        {variant.gloss && <span style={styles.dualGloss}>{variant.gloss}</span>}
+      </div>
+      <div style={styles.dualReading}>
+        <span style={styles.dualWord}>{mineTerm}</span>
+        <span style={styles.dualRegionTag}> · {ui.inYourRegion} ({regionLabel}) {flag}</span>
+      </div>
+      {/* one-line counterpart: reference-region learners see the regional side, others the reference side */}
+      {isRef ? (
+        <div style={styles.dualOther}>{ui.regGroupPhrase}: <b style={{ color: "#F3F0FA" }}>{variant.default}</b>.</div>
+      ) : (
+        <div style={styles.dualOther}>{ui.refPhrase}: <b style={{ color: "#F3F0FA" }}>{variant.reference}</b>.</div>
+      )}
+      {/* multi-variant words expand to the full regional map */}
+      {multi && (
+        <div style={{ marginTop: 9 }}>
+          {!expanded ? (
+            <button className="rj" style={styles.dualToggle} onClick={() => setExpanded(true)}>
+              ＋ {regional.length} {ui.variantes}
+            </button>
+          ) : (
+            <>
+              <div style={styles.dualRegionRow}>
+                <span style={styles.dualRegionLabel}>{ui.regFlag} {variant.regionalGroupLabel}</span>
+                <span style={styles.dualChips}>
+                  {regional.map((v) => (
+                    <span key={v.term} style={v.term === mineTerm && !isRef ? styles.dualChipMine : styles.dualChip}>
+                      {v.term}
+                      {v.label ? <span style={styles.dualChipRg}> {v.label}</span> : null}
+                    </span>
+                  ))}
+                </span>
+              </div>
+              <div style={styles.dualRegionRow}>
+                <span style={styles.dualRegionLabel}>{ui.refFlag} {variant.referenceLabel}</span>
+                <span style={styles.dualChips}>
+                  <span style={isRef ? styles.dualChipMine : styles.dualChipSpain}>{variant.reference}</span>
+                </span>
+              </div>
+              <button className="rj" style={{ ...styles.dualToggle, marginTop: 8 }} onClick={() => setExpanded(false)}>
+                – {ui.hide}
+              </button>
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ExplanationCard({ item, track, uiLang, sourceLang, sourceRegion, advanced }) {
   const catInfo = track.cats[item.cat] || { label: item.cat, color: "#9B93B8" };
   return (
     <div style={{ ...styles.card, borderColor: item.isCorrect || item.is_correct ? "#5EE0A0" : "#FF7B8A", textAlign: "left" }}>
@@ -1068,18 +1222,23 @@ function ExplanationCard({ item, track, uiLang }) {
         })}
       </div>
 
-      {(item.explain || item.explain_en) && (
-        <div style={styles.explainBox}>
-          <div style={styles.explainLangRow}>
-            <span style={styles.explainLangTag}>EN</span>
-            <p style={styles.explainText}>{item.explain ? item.explain.en : item.explain_en}</p>
+      {(() => {
+        // #60: source + target explanation rows (English fallback), honoring skill
+        // level. Handles both the { en, es } map and the legacy explain_en/explain_es
+        // flat shape.
+        const map = item.explain || (item.explain_en != null ? { en: item.explain_en, es: item.explain_es } : null);
+        const rows = explainRows(map, { sourceLang: sourceLang || track.nativeLang, sourceRegion, targetLang: track.targetLang || null, advanced });
+        return rows.length ? (
+          <div style={styles.explainBox}>
+            {rows.map((r, ri) => (
+              <div key={r.tag} style={ri === 0 ? styles.explainLangRow : { ...styles.explainLangRow, marginTop: 8 }}>
+                <span style={styles.explainLangTag}>{r.tag.toUpperCase()}</span>
+                <p style={styles.explainText}>{r.text}</p>
+              </div>
+            ))}
           </div>
-          <div style={{ ...styles.explainLangRow, marginTop: 8 }}>
-            <span style={styles.explainLangTag}>ES</span>
-            <p style={styles.explainText}>{item.explain ? item.explain.es : item.explain_es}</p>
-          </div>
-        </div>
-      )}
+        ) : null;
+      })()}
     </div>
   );
 }
@@ -1223,6 +1382,23 @@ const styles = {
   // #69: soft amber "heads up" note on a wrong pick — informative, not punitive.
   reviewWrongNoteBox: { background: "rgba(255,184,77,0.07)", border: "1px solid rgba(255,184,77,0.35)", borderRadius: 10, padding: "12px 14px", marginTop: 10 },
   wrongNoteHeader: { fontSize: 11, fontWeight: 700, color: "#FFB84D", marginBottom: 8, letterSpacing: 0.3 },
+  // U4 regional-variant card: personalized LatAm↔Spain teaching supplement (es only).
+  dualCard: { background: "rgba(185,142,255,0.06)", border: "1px solid rgba(185,142,255,0.35)", borderRadius: 10, padding: "12px 14px", marginTop: 10 },
+  dualHead: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 9, gap: 8, flexWrap: "wrap" },
+  dualTitle: { fontSize: 11, fontWeight: 700, color: "#B98EFF", letterSpacing: 0.3 },
+  dualGloss: { fontSize: 10.5, color: "#6C6684", border: "1px solid #3A3452", borderRadius: 5, padding: "1px 6px" },
+  dualReading: { display: "flex", alignItems: "baseline", gap: 6, marginBottom: 5, flexWrap: "wrap" },
+  dualWord: { fontSize: 18, fontWeight: 800, color: "#5EE0A0" },
+  dualRegionTag: { fontSize: 12, color: "#9B93B8" },
+  dualOther: { fontSize: 13.5, color: "#C7CAD3", margin: 0 },
+  dualToggle: { border: "1px solid rgba(185,142,255,0.4)", background: "transparent", color: "#B98EFF", borderRadius: 20, padding: "3px 11px", fontSize: 11.5, fontWeight: 600, cursor: "pointer" },
+  dualRegionRow: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center", marginBottom: 7 },
+  dualRegionLabel: { fontSize: 10.5, fontWeight: 700, color: "#9B93B8", minWidth: 62 },
+  dualChips: { display: "flex", flexWrap: "wrap", gap: 6 },
+  dualChip: { display: "inline-flex", alignItems: "baseline", gap: 4, background: "#151925", border: "1px solid #3A3452", borderRadius: 16, padding: "3px 10px", fontSize: 13, color: "#E6E1F5" },
+  dualChipMine: { display: "inline-flex", alignItems: "baseline", gap: 4, background: "rgba(94,224,160,0.12)", border: "1px solid #5EE0A0", borderRadius: 16, padding: "3px 10px", fontSize: 13, fontWeight: 700, color: "#dff6e5" },
+  dualChipSpain: { display: "inline-flex", alignItems: "baseline", gap: 4, background: "#151925", border: "1px solid #B98EFF", borderRadius: 16, padding: "3px 10px", fontSize: 13, color: "#E6E1F5" },
+  dualChipRg: { fontSize: 10, color: "#6C6684" },
   nextBtn: {
     width: "100%",
     background: "#FF8FB1",

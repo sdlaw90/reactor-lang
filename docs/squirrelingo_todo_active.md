@@ -30,7 +30,7 @@
 | 47 | Rate limiting / abuse prevention (down payments shipped: 5/hr beta-apply, 15/hr + account lockout password-reset) | Low-Med | Low (Med-High once #33 ships) |
 | 57 | Demo video(s) of the app | Med | Med |
 | 59 | Re-enable public sign-up before wide launch | Low | Med-High (gated on #65) |
-| 60 | Explanations in native + target language | High | High |
+| 60 | Explanations in native + target language — **FOUNDATION SHIPPED v3.1 S1** (resolver + native+target render); target-language TEXT authoring = separate workstream | High | High |
 | ~~62~~ | ~~Writing-system block v1~~ **SHIPPED — kana (2.29.0-beta.1) + hangul/Cyrillic/Mandarin (2.29.0-beta.2)**; depth layers → #83 | — | — |
 | 63 | Fix #7C7395 muted-text WCAG contrast (4.09:1 → 4.5:1) | Med | Med |
 | 64 | Push release notes to social (FB, Discord…) | Low manual / Med automated | Low-Med, rises at launch |
@@ -76,7 +76,7 @@
 ## Backlog notes (essentials only)
 
 - **38:** **RECONCILED 2026-07-18:** frCa (v2.30.0-beta.1), German (v2.30.0-beta.2) and Japanese (v2.31.0-beta.1) DEEPENED + SHIPPED; ko/ru/zh deepened (in dev, riding the ledger); esForEn content depth SHIPPED v2.33.0-beta.1 — leaving **~12 of 15** — only the native-language-direction tracks (enUsForEs, enGbForEs, enForIt) remain. Standard per pass: ~doubled curated + full A1–C2 (≥3/tier) + `promptNative` + `wrongNote`s (#69) + WB layer (~600 tuples). **NEW rider (2026-07-19):** emit #88 theme tags + #89 tense/grammatical-form tags during the pass (one shared tag model) so we never repeat the esForEn separate-tagging backlog on a new language. Backfill pile: WB for FR/esSpain/IT/PT×2; `wrongNote`s for all deepened.
-- **60:** native + actual target language; track-by-track with #38. Largest content undertaking.
+- **60:** **RESOLVER SHIPPED (v3.1 S1, 2026-07-23)** — `resolveExplainText`/`explainRows` in `app/play/[trackId]/page.js` render source-language explanations (English fallback) + a target-language row below Advanced (immersive/target-only above). Data model = keyed map `{en, es, …}`, no migration. **REMAINING = the target-language explanation TEXT** — only Spanish authored today; ~6k strings across 10 targets (Romance first), tracked as its own workstream: `claude/squirrelingo_target_language_explanation_layer.md`. Native-SOURCE Spanish build = v3.1 (`squirrelingo_v3.1_spanish_source_kickoff.md`).
 - **62:** v1 COMPLETE (2.29.0-beta.2): generic model + all four scripts live — kana (104×2), hangul (40 jamo + 14-block sampler), Cyrillic (33, Latin-similarity grouping), Mandarin foundational set (46 chars, pinyin+gloss in the roman slot). XP-less own lane; never a blocker. Depth work moved to #83.
 
 - **66:** AT BUILD: revisit placement interplay (decision 2026-07-12) — placement never grants XP/levels, but consider whether it should pre-unlock mastery-quiz GATES for the placed tier. N=5 clean non-consecutive runs (N=3 A1/A2); failed quiz re-locks weakest categories only; result always recorded. Medals Bronze=A1+A2 / Silver=B1+B2 / Gold=C1+C2 / Platinum=all six; permanent; curated-only (WB has own lane #77). Gated per-track on #38.

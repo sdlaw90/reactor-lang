@@ -61,6 +61,8 @@ const enUsForEs = {
   sublabel: "Para hispanohablantes · American English · starter content",
   nativeLang: "es",
   targetLang: "en",
+  // Bespoke English-for-Spanish-speakers content — not reusable across sources.
+  sourceSpecific: true,
   theme: "english-us",
   cats: CATS,
   bank: BANK,

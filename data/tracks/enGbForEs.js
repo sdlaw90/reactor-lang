@@ -71,6 +71,10 @@ const enGbForEs = {
   sublabelEn: "For American English speakers · British English · starter content",
   nativeLang: "es",
   targetLang: "en",
+  // Bespoke British-English-for-Spanish-speakers content — not reusable across
+  // sources. (Also surfaced to en natives as a cross-dialect comparison — see
+  // tracksForNativeLang.)
+  sourceSpecific: true,
   theme: "english-uk",
   cats: CATS,
   bank: BANK,
