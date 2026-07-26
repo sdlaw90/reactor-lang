@@ -8,7 +8,45 @@ import { adminFetch, adminColors as c } from "./adminApi";
 // (same set_password action the Users tab uses), tell the person out of
 // band if a channel exists, then mark the request resolved. Reject spam.
 
-export default function ResetRequestsSection() {
+const T = {
+  en: {
+    loading: "Loading…",
+    pwTooShort: "Temporary password must be at least 6 characters.",
+    pending: (n) => `${n} pending request${n === 1 ? "" : "s"}`,
+    showSettled: "Show settled",
+    noRequests: "No reset requests yet.",
+    allClear: "No pending requests — all clear. 🐿️",
+    requested: "Requested",
+    pwPlaceholder: "Temporary password (min 6 chars)",
+    pwAria: (email) => `Temporary password for ${email}`,
+    pwSet: "Password set ✓",
+    setTempPassword: "Set temp password",
+    markResolved: "Mark resolved",
+    reject: "Reject",
+    helpText:
+      "Set the temporary password, share it with the person through whatever channel you have, then mark resolved. They should change it in Settings after signing in.",
+  },
+  es: {
+    loading: "Cargando…",
+    pwTooShort: "La contraseña temporal debe tener al menos 6 caracteres.",
+    pending: (n) => `${n} solicitud${n === 1 ? "" : "es"} pendiente${n === 1 ? "" : "s"}`,
+    showSettled: "Mostrar resueltas",
+    noRequests: "Aún no hay solicitudes de restablecimiento.",
+    allClear: "No hay solicitudes pendientes — todo en orden. 🐿️",
+    requested: "Solicitado",
+    pwPlaceholder: "Contraseña temporal (mín. 6 caracteres)",
+    pwAria: (email) => `Contraseña temporal para ${email}`,
+    pwSet: "Contraseña establecida ✓",
+    setTempPassword: "Establecer contraseña temporal",
+    markResolved: "Marcar como resuelta",
+    reject: "Rechazar",
+    helpText:
+      "Establece la contraseña temporal, compártela con la persona por el canal que tengas y luego marca la solicitud como resuelta. Deberá cambiarla en Configuración después de iniciar sesión.",
+  },
+};
+
+export default function ResetRequestsSection({ lang = "en" }) {
+  const t = T[lang] || T.en;
   const [rows, setRows] = useState(null);
   const [error, setError] = useState("");
   const [busyId, setBusyId] = useState(null);
@@ -33,7 +71,7 @@ export default function ResetRequestsSection() {
   const setTempPassword = async (row) => {
     const newPassword = (pwDraft[row.id] || "").trim();
     if (newPassword.length < 6) {
-      setError("Temporary password must be at least 6 characters.");
+      setError(t.pwTooShort);
       return;
     }
     setBusyId(row.id);
@@ -68,7 +106,7 @@ export default function ResetRequestsSection() {
     }
   };
 
-  if (rows === null && !error) return <p style={{ color: c.muted }}>Loading…</p>;
+  if (rows === null && !error) return <p style={{ color: c.muted }}>{t.loading}</p>;
 
   const pending = (rows || []).filter((r) => r.status === "pending");
   const settled = (rows || []).filter((r) => r.status !== "pending");
@@ -78,11 +116,11 @@ export default function ResetRequestsSection() {
     <div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
         <p style={{ color: c.muted, margin: 0, fontSize: 14 }}>
-          {pending.length} pending request{pending.length === 1 ? "" : "s"}
+          {t.pending(pending.length)}
         </p>
         <label style={{ color: c.muted, fontSize: 13, display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}>
           <input type="checkbox" checked={showResolved} onChange={(e) => setShowResolved(e.target.checked)} />
-          Show settled
+          {t.showSettled}
         </label>
       </div>
 
@@ -90,7 +128,7 @@ export default function ResetRequestsSection() {
 
       {visible.length === 0 && (
         <p style={{ color: c.muted, fontSize: 14 }}>
-          {showResolved ? "No reset requests yet." : "No pending requests — all clear. 🐿️"}
+          {showResolved ? t.noRequests : t.allClear}
         </p>
       )}
 
@@ -102,7 +140,7 @@ export default function ResetRequestsSection() {
                 {row.username ? `${row.username} — ` : ""}{row.email}
               </div>
               <div style={{ color: c.muted, fontSize: 12, marginTop: 2 }}>
-                Requested {new Date(row.requested_at).toLocaleString()}
+                {t.requested} {new Date(row.requested_at).toLocaleString()}
                 {row.status !== "pending" && ` · ${row.status}${row.resolved_at ? ` ${new Date(row.resolved_at).toLocaleString()}` : ""}`}
               </div>
             </div>
@@ -113,8 +151,8 @@ export default function ResetRequestsSection() {
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                 <input
                   type="text"
-                  placeholder="Temporary password (min 6 chars)"
-                  aria-label={`Temporary password for ${row.email}`}
+                  placeholder={t.pwPlaceholder}
+                  aria-label={t.pwAria(row.email)}
                   value={pwDraft[row.id] || ""}
                   onChange={(e) => setPwDraft((d) => ({ ...d, [row.id]: e.target.value }))}
                   style={styles.input}
@@ -125,20 +163,19 @@ export default function ResetRequestsSection() {
                   disabled={busyId === row.id}
                   onClick={() => setTempPassword(row)}
                 >
-                  {pwSetId === row.id ? "Password set ✓" : "Set temp password"}
+                  {pwSetId === row.id ? t.pwSet : t.setTempPassword}
                 </button>
               </div>
               <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
                 <button style={styles.btnGood} disabled={busyId === row.id} onClick={() => updateStatus(row, "resolve")}>
-                  Mark resolved
+                  {t.markResolved}
                 </button>
                 <button style={styles.btnDanger} disabled={busyId === row.id} onClick={() => updateStatus(row, "reject")}>
-                  Reject
+                  {t.reject}
                 </button>
               </div>
               <p style={{ color: c.muted, fontSize: 12, marginTop: 8, marginBottom: 0 }}>
-                Set the temporary password, share it with the person through whatever channel you have, then mark
-                resolved. They should change it in Settings after signing in.
+                {t.helpText}
               </p>
             </div>
           )}

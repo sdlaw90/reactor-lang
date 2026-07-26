@@ -3,11 +3,45 @@
 import { useEffect, useState } from "react";
 import { adminFetch, adminColors as c } from "./adminApi";
 
+const T = {
+  en: {
+    loading: "Loading…",
+    searchAria: "Search by error code",
+    searchCode: "Search code",
+    clear: (code) => `Clear (${code})`,
+    filterUnreviewed: "Unreviewed",
+    filterReviewed: "Reviewed",
+    filterAll: "All",
+    empty: "No error logs here. 🎉",
+    noMessage: "(no message)",
+    reviewedTag: "reviewed",
+    markUnreviewed: "Mark unreviewed",
+    markReviewed: "Mark reviewed",
+    markAllReviewed: (code) => `Mark all “${code}” reviewed`,
+  },
+  es: {
+    loading: "Cargando…",
+    searchAria: "Buscar por código de error",
+    searchCode: "Buscar código",
+    clear: (code) => `Borrar (${code})`,
+    filterUnreviewed: "Sin revisar",
+    filterReviewed: "Revisado",
+    filterAll: "Todos",
+    empty: "No hay registros de errores aquí. 🎉",
+    noMessage: "(sin mensaje)",
+    reviewedTag: "revisado",
+    markUnreviewed: "Marcar sin revisar",
+    markReviewed: "Marcar como revisado",
+    markAllReviewed: (code) => `Marcar todos los “${code}” como revisados`,
+  },
+};
+
 // Error log browser: the server side of the SQ-XXXXXX codes users see on
 // the crash screen (and can prefill into bug reports). Search by exact
 // code, filter by reviewed state, expand for stack traces, mark reviewed
 // per-row or per-code (one crash usually logs several identical rows).
-export default function ErrorsSection() {
+export default function ErrorsSection({ lang = "en" }) {
+  const t = T[lang] || T.en;
   const [rows, setRows] = useState(null);
   const [error, setError] = useState("");
   const [reviewedFilter, setReviewedFilter] = useState("false");
@@ -47,7 +81,7 @@ export default function ErrorsSection() {
     }
   };
 
-  if (rows === null && !error) return <p style={{ color: c.body }}>Loading…</p>;
+  if (rows === null && !error) return <p style={{ color: c.body }}>{t.loading}</p>;
 
   return (
     <div>
@@ -55,7 +89,7 @@ export default function ErrorsSection() {
         <input
           style={styles.codeInput}
           placeholder="SQ-XXXXXX"
-          aria-label="Search by error code"
+          aria-label={t.searchAria}
           value={codeSearch}
           onChange={(e) => setCodeSearch(e.target.value)}
           onKeyDown={(e) => {
@@ -63,7 +97,7 @@ export default function ErrorsSection() {
           }}
         />
         <button className="rj" style={styles.searchBtn} onClick={() => setActiveCode(codeSearch.trim())}>
-          Search code
+          {t.searchCode}
         </button>
         {activeCode && (
           <button
@@ -74,16 +108,16 @@ export default function ErrorsSection() {
               setCodeSearch("");
             }}
           >
-            Clear ({activeCode})
+            {t.clear(activeCode)}
           </button>
         )}
       </div>
 
       <div style={styles.filterRow}>
         {[
-          { value: "false", label: "Unreviewed" },
-          { value: "true", label: "Reviewed" },
-          { value: "", label: "All" },
+          { value: "false", label: t.filterUnreviewed },
+          { value: "true", label: t.filterReviewed },
+          { value: "", label: t.filterAll },
         ].map((f) => (
           <button
             key={f.value}
@@ -97,7 +131,7 @@ export default function ErrorsSection() {
       </div>
 
       {error && <p style={styles.error}>{error}</p>}
-      {rows && rows.length === 0 && <p style={{ color: c.muted }}>No error logs here. 🎉</p>}
+      {rows && rows.length === 0 && <p style={{ color: c.muted }}>{t.empty}</p>}
 
       {(rows || []).map((row) => {
         const expanded = expandedId === row.id;
@@ -107,9 +141,9 @@ export default function ErrorsSection() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
                   <span style={styles.codeTag}>{row.error_code}</span>
-                  {row.reviewed && <span style={styles.reviewedTag}>reviewed</span>}
+                  {row.reviewed && <span style={styles.reviewedTag}>{t.reviewedTag}</span>}
                 </div>
-                <div style={styles.messagePreview}>{row.message || "(no message)"}</div>
+                <div style={styles.messagePreview}>{row.message || t.noMessage}</div>
                 <div style={styles.metaLine}>
                   {new Date(row.created_at).toLocaleString()}
                   {row.url ? ` · ${row.url}` : ""}
@@ -129,7 +163,7 @@ export default function ErrorsSection() {
                     disabled={busy}
                     onClick={() => mark({ id: row.id, reviewed: !row.reviewed })}
                   >
-                    {row.reviewed ? "Mark unreviewed" : "Mark reviewed"}
+                    {row.reviewed ? t.markUnreviewed : t.markReviewed}
                   </button>
                   {!row.reviewed && (
                     <button
@@ -138,7 +172,7 @@ export default function ErrorsSection() {
                       disabled={busy}
                       onClick={() => mark({ errorCode: row.error_code, reviewed: true })}
                     >
-                      Mark all “{row.error_code}” reviewed
+                      {t.markAllReviewed(row.error_code)}
                     </button>
                   )}
                 </div>

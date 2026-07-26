@@ -3,11 +3,93 @@
 import { useEffect, useMemo, useState } from "react";
 import { adminFetch, adminColors as c } from "./adminApi";
 
+const T = {
+  en: {
+    loading: "Loading…",
+    searchPlaceholder: "Search by email or username…",
+    searchAria: "Search users by email or username",
+    noUsers: "No users match.",
+    noUsername: "(no username)",
+    you: "you",
+    owner: "owner",
+    admin: "admin",
+    banned: "banned",
+    statsLine: (u) =>
+      `${u.totalXp} XP · best streak ${u.bestStreak} · ${u.tracksStarted} ${u.tracksStarted === 1 ? "track" : "tracks"}${u.lastPlayed ? ` · last played ${u.lastPlayed}` : " · never played"}`,
+    created: "Created",
+    lastSignIn: "Last sign-in",
+    never: "never",
+    ownerLocked: "This is the owner account — it can't be modified by other admins.",
+    setNewPassword: "Set a new password",
+    newPasswordPlaceholder: "New password (min 6 chars)",
+    newPasswordAria: (email) => `New password for ${email}`,
+    setPassword: "Set password",
+    unban: "Unban",
+    ban: "Ban",
+    banSelf: "You can't ban yourself",
+    removeAdmin: "Remove admin",
+    removeAdminSelf: "You can't remove your own admin access",
+    makeAdmin: "Make admin",
+    deleteTitle: "Delete account (permanent — wipes all their data)",
+    deletePlaceholder: "Type their email to confirm",
+    deleteAria: (email) => `Type ${email} to confirm deletion`,
+    deleteForever: "Delete forever",
+    done: {
+      set_password: (who) => `Password updated for ${who}.`,
+      ban: (who) => `${who} is banned.`,
+      unban: (who) => `${who} is unbanned.`,
+      delete: (who) => `${who} deleted.`,
+      set_admin: (who) => `Admin access updated for ${who}.`,
+      default: "Done.",
+    },
+  },
+  es: {
+    loading: "Cargando…",
+    searchPlaceholder: "Buscar por correo o nombre de usuario…",
+    searchAria: "Buscar usuarios por correo o nombre de usuario",
+    noUsers: "Ningún usuario coincide.",
+    noUsername: "(sin nombre de usuario)",
+    you: "tú",
+    owner: "propietario",
+    admin: "admin",
+    banned: "bloqueado",
+    statsLine: (u) =>
+      `${u.totalXp} XP · mejor racha ${u.bestStreak} · ${u.tracksStarted} ${u.tracksStarted === 1 ? "recorrido" : "recorridos"}${u.lastPlayed ? ` · jugado por última vez ${u.lastPlayed}` : " · nunca jugó"}`,
+    created: "Creado",
+    lastSignIn: "Último inicio de sesión",
+    never: "nunca",
+    ownerLocked: "Esta es la cuenta del propietario: otros admins no pueden modificarla.",
+    setNewPassword: "Establecer una nueva contraseña",
+    newPasswordPlaceholder: "Nueva contraseña (mín. 6 caracteres)",
+    newPasswordAria: (email) => `Nueva contraseña para ${email}`,
+    setPassword: "Establecer contraseña",
+    unban: "Desbloquear",
+    ban: "Bloquear",
+    banSelf: "No puedes bloquearte a ti mismo",
+    removeAdmin: "Quitar admin",
+    removeAdminSelf: "No puedes quitar tu propio acceso de admin",
+    makeAdmin: "Hacer admin",
+    deleteTitle: "Eliminar cuenta (permanente: borra todos sus datos)",
+    deletePlaceholder: "Escribe su correo para confirmar",
+    deleteAria: (email) => `Escribe ${email} para confirmar la eliminación`,
+    deleteForever: "Eliminar para siempre",
+    done: {
+      set_password: (who) => `Contraseña actualizada para ${who}.`,
+      ban: (who) => `${who} está bloqueado.`,
+      unban: (who) => `${who} está desbloqueado.`,
+      delete: (who) => `${who} eliminado.`,
+      set_admin: (who) => `Acceso de admin actualizado para ${who}.`,
+      default: "Listo.",
+    },
+  },
+};
+
 // User management: every account with profile + progress rollup, and the
 // actions that used to require the Supabase dashboard or the break-glass
 // tool — set password, ban/unban, delete, grant/revoke admin. Delete is
 // permanent (FK cascades wipe all their data) and gated by type-to-confirm.
-export default function UsersSection() {
+export default function UsersSection({ lang = "en" }) {
+  const t = T[lang] || T.en;
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
@@ -47,7 +129,7 @@ export default function UsersSection() {
     setInfo("");
     try {
       await adminFetch("/api/admin/users", { method: "POST", body: { userId: user.id, action, ...extra } });
-      setInfo(actionDoneMessage(action, user));
+      setInfo(actionDoneMessage(action, user, lang));
       setPwDraft("");
       setDeleteDraft("");
       if (action === "delete") setExpandedId(null);
@@ -59,21 +141,21 @@ export default function UsersSection() {
     }
   };
 
-  if (data === null && !error) return <p style={{ color: c.body }}>Loading…</p>;
+  if (data === null && !error) return <p style={{ color: c.body }}>{t.loading}</p>;
 
   return (
     <div>
       <input
         style={styles.search}
-        placeholder="Search by email or username…"
-        aria-label="Search users by email or username"
+        placeholder={t.searchPlaceholder}
+        aria-label={t.searchAria}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
 
       {error && <p style={styles.error}>{error}</p>}
       {info && <p style={styles.info}>{info}</p>}
-      {filtered.length === 0 && <p style={{ color: c.muted }}>No users match.</p>}
+      {filtered.length === 0 && <p style={{ color: c.muted }}>{t.noUsers}</p>}
 
       {filtered.map((user) => {
         const expanded = expandedId === user.id;
@@ -96,17 +178,15 @@ export default function UsersSection() {
             >
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
-                  <span style={styles.username}>{user.username || "(no username)"}</span>
-                  {isSelf && <span style={{ ...styles.tag, ...styles.youTag }}>you</span>}
-                  {user.isOwner && <span style={{ ...styles.tag, ...styles.ownerTag }}>owner</span>}
-                  {user.isAdmin && !user.isOwner && <span style={{ ...styles.tag, ...styles.adminTag }}>admin</span>}
-                  {user.banned && <span style={{ ...styles.tag, ...styles.bannedTag }}>banned</span>}
+                  <span style={styles.username}>{user.username || t.noUsername}</span>
+                  {isSelf && <span style={{ ...styles.tag, ...styles.youTag }}>{t.you}</span>}
+                  {user.isOwner && <span style={{ ...styles.tag, ...styles.ownerTag }}>{t.owner}</span>}
+                  {user.isAdmin && !user.isOwner && <span style={{ ...styles.tag, ...styles.adminTag }}>{t.admin}</span>}
+                  {user.banned && <span style={{ ...styles.tag, ...styles.bannedTag }}>{t.banned}</span>}
                 </div>
                 <div style={styles.email}>{user.email}</div>
                 <div style={styles.statsLine}>
-                  {user.totalXp} XP · best streak {user.bestStreak} · {user.tracksStarted}{" "}
-                  {user.tracksStarted === 1 ? "track" : "tracks"}
-                  {user.lastPlayed ? ` · last played ${user.lastPlayed}` : " · never played"}
+                  {t.statsLine(user)}
                 </div>
               </div>
               <span style={{ color: c.muted, fontSize: 18, lineHeight: 1 }}>{expanded ? "−" : "+"}</span>
@@ -115,26 +195,26 @@ export default function UsersSection() {
             {expanded && (
               <div style={styles.expandBody}>
                 <div style={styles.metaGrid}>
-                  <Detail label="Created" value={new Date(user.createdAt).toLocaleString()} />
-                  <Detail label="Last sign-in" value={user.lastSignInAt ? new Date(user.lastSignInAt).toLocaleString() : "never"} />
+                  <Detail label={t.created} value={new Date(user.createdAt).toLocaleString()} />
+                  <Detail label={t.lastSignIn} value={user.lastSignInAt ? new Date(user.lastSignInAt).toLocaleString() : t.never} />
                 </div>
 
                 {ownerLocked && (
                   <p style={{ color: c.muted, fontSize: 12, marginTop: 12 }}>
-                    This is the owner account — it can't be modified by other admins.
+                    {t.ownerLocked}
                   </p>
                 )}
 
                 {/* Set password */}
                 {!ownerLocked && (
                 <div style={styles.actionBlock}>
-                  <div style={styles.actionTitle}>Set a new password</div>
+                  <div style={styles.actionTitle}>{t.setNewPassword}</div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     <input
                       type="password"
                       style={{ ...styles.textInput, flex: 1, minWidth: 160 }}
-                      placeholder="New password (min 6 chars)"
-                      aria-label={`New password for ${user.email}`}
+                      placeholder={t.newPasswordPlaceholder}
+                      aria-label={t.newPasswordAria(user.email)}
                       value={pwDraft}
                       onChange={(e) => setPwDraft(e.target.value)}
                     />
@@ -144,7 +224,7 @@ export default function UsersSection() {
                       disabled={busy || pwDraft.length < 6}
                       onClick={() => act(user, "set_password", { newPassword: pwDraft })}
                     >
-                      Set password
+                      {t.setPassword}
                     </button>
                   </div>
                 </div>
@@ -155,17 +235,17 @@ export default function UsersSection() {
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 14 }}>
                   {user.banned ? (
                     <button className="rj" style={styles.secondaryBtn} disabled={busy} onClick={() => act(user, "unban")}>
-                      Unban
+                      {t.unban}
                     </button>
                   ) : (
                     <button
                       className="rj"
                       style={styles.warnBtn}
                       disabled={busy || isSelf}
-                      title={isSelf ? "You can't ban yourself" : undefined}
+                      title={isSelf ? t.banSelf : undefined}
                       onClick={() => act(user, "ban")}
                     >
-                      Ban
+                      {t.ban}
                     </button>
                   )}
                   {requesterIsOwner && !user.isOwner && (user.isAdmin ? (
@@ -173,14 +253,14 @@ export default function UsersSection() {
                       className="rj"
                       style={styles.secondaryBtn}
                       disabled={busy || isSelf}
-                      title={isSelf ? "You can't remove your own admin access" : undefined}
+                      title={isSelf ? t.removeAdminSelf : undefined}
                       onClick={() => act(user, "set_admin", { value: false })}
                     >
-                      Remove admin
+                      {t.removeAdmin}
                     </button>
                   ) : (
                     <button className="rj" style={styles.secondaryBtn} disabled={busy} onClick={() => act(user, "set_admin", { value: true })}>
-                      Make admin
+                      {t.makeAdmin}
                     </button>
                   ))}
                 </div>
@@ -189,12 +269,12 @@ export default function UsersSection() {
                 {/* Delete, type-to-confirm */}
                 {!isSelf && !ownerLocked && (
                   <div style={styles.dangerBlock}>
-                    <div style={styles.actionTitle}>Delete account (permanent — wipes all their data)</div>
+                    <div style={styles.actionTitle}>{t.deleteTitle}</div>
                     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                       <input
                         style={{ ...styles.textInput, flex: 1, minWidth: 160 }}
-                        placeholder={`Type their email to confirm`}
-                        aria-label={`Type ${user.email} to confirm deletion`}
+                        placeholder={t.deletePlaceholder}
+                        aria-label={t.deleteAria(user.email)}
                         value={deleteDraft}
                         onChange={(e) => setDeleteDraft(e.target.value)}
                       />
@@ -204,7 +284,7 @@ export default function UsersSection() {
                         disabled={busy || deleteDraft.trim().toLowerCase() !== user.email?.toLowerCase()}
                         onClick={() => act(user, "delete")}
                       >
-                        Delete forever
+                        {t.deleteForever}
                       </button>
                     </div>
                   </div>
@@ -218,14 +298,16 @@ export default function UsersSection() {
   );
 }
 
-function actionDoneMessage(action, user) {
+function actionDoneMessage(action, user, lang = "en") {
+  const t = T[lang] || T.en;
   const who = user.username || user.email;
-  if (action === "set_password") return `Password updated for ${who}.`;
-  if (action === "ban") return `${who} is banned.`;
-  if (action === "unban") return `${who} is unbanned.`;
-  if (action === "delete") return `${who} deleted.`;
-  if (action === "set_admin") return `Admin access updated for ${who}.`;
-  return "Done.";
+  const done = t.done;
+  if (action === "set_password") return done.set_password(who);
+  if (action === "ban") return done.ban(who);
+  if (action === "unban") return done.unban(who);
+  if (action === "delete") return done.delete(who);
+  if (action === "set_admin") return done.set_admin(who);
+  return done.default;
 }
 
 function Detail({ label, value }) {
