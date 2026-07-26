@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 362 tracked files.
+> 377 tracked files.
 
 ```
 .env.local.example
@@ -95,7 +95,9 @@ data/tracks/deForEn.js
 data/tracks/deForEnTags.js
 data/tracks/enForIt.js
 data/tracks/enGbForEs.js
+data/tracks/enGbForPt.js
 data/tracks/enUsForEs.js
+data/tracks/enUsForPt.js
 data/tracks/esForEn.js
 data/tracks/esForEnTags.js
 data/tracks/esSpainForEn.js
@@ -112,17 +114,27 @@ data/tracks/jaForEnTags.js
 data/tracks/koForEn.js
 data/tracks/koForEnTags.js
 data/tracks/l10n/deForEn.es.js
+data/tracks/l10n/deForEn.pt.js
+data/tracks/l10n/esForEn.pt.js
+data/tracks/l10n/esSpainForEn.pt.js
 data/tracks/l10n/frCaForEn.es.js
+data/tracks/l10n/frCaForEn.pt.js
 data/tracks/l10n/frForEn.es.js
+data/tracks/l10n/frForEn.pt.js
 data/tracks/l10n/index.js
 data/tracks/l10n/itForEn.es.js
+data/tracks/l10n/itForEn.pt.js
 data/tracks/l10n/jaForEn.es.js
+data/tracks/l10n/jaForEn.pt.js
 data/tracks/l10n/koForEn.es.js
+data/tracks/l10n/koForEn.pt.js
 data/tracks/l10n/ptBrForEn.es.js
 data/tracks/l10n/ptPtForEn.es.js
 data/tracks/l10n/regionalVariants.js
 data/tracks/l10n/ruForEn.es.js
+data/tracks/l10n/ruForEn.pt.js
 data/tracks/l10n/zhForEn.es.js
+data/tracks/l10n/zhForEn.pt.js
 data/tracks/ptBrForEn.js
 data/tracks/ptBrForEnTags.js
 data/tracks/ptPtForEn.js
@@ -176,6 +188,9 @@ docs/changelog/unreleased/2026-07-25-admin-localized.md
 docs/changelog/unreleased/2026-07-25-english-content-parity.md
 docs/changelog/unreleased/2026-07-25-guide-localized-video-top.md
 docs/changelog/unreleased/2026-07-25-guide-video-tour.md
+docs/changelog/unreleased/2026-07-26-pt-directed-tracks.md
+docs/changelog/unreleased/2026-07-26-pt-fono-and-help-about.md
+docs/changelog/unreleased/2026-07-26-pt-source-foundation.md
 docs/codebase-reference.md
 docs/manual-runbook.md
 docs/repo-tree.md
