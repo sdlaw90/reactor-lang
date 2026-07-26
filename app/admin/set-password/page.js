@@ -1,8 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "../../../lib/supabaseClient";
+import { resolveUiLang, SUPPORTED_UI_LANGS } from "../../../lib/uiLang";
+
+function useResolvedUiLang() {
+  const [lang, setLang] = useState("en");
+  useEffect(() => {
+    let active = true;
+    setLang(resolveUiLang());
+    supabase.auth.getSession().then(({ data }) => {
+      if (!active) return;
+      const nl = data?.session?.user?.user_metadata?.native_lang;
+      if (nl && SUPPORTED_UI_LANGS.includes(nl)) setLang(nl);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+  return lang;
+}
+
+const T = {
+  en: {
+    title: "Set a user's password",
+    subtitle:
+      "Break-glass tool — bypasses the email reset flow entirely. Requires the admin secret, not an app sign-in.",
+    adminSecret: "Admin secret",
+    accountEmail: "Account email",
+    newPasswordPlaceholder: "New password (6+ characters)",
+    newPasswordAria: "New password, minimum 6 characters",
+    unexpectedResponse: (status, snippet) =>
+      `Server returned an unexpected response (HTTP ${status}). This usually means the API route isn't deployed yet, or crashed before it could respond. First 120 characters of the response: ${snippet}`,
+    setFailed: (status) => `Failed to set password (HTTP ${status})`,
+    networkError:
+      "Network error (request never reached the server) — check your connection and try again",
+    success: "Password updated. Sign in with the new password now.",
+    busy: "...",
+    setPassword: "SET PASSWORD",
+  },
+  es: {
+    title: "Establecer la contraseña de un usuario",
+    subtitle:
+      "Herramienta de emergencia — omite por completo el flujo de restablecimiento por correo. Requiere el admin secret, no un inicio de sesión de la app.",
+    adminSecret: "Admin secret",
+    accountEmail: "Correo de la cuenta",
+    newPasswordPlaceholder: "Nueva contraseña (6+ caracteres)",
+    newPasswordAria: "Nueva contraseña, mínimo 6 caracteres",
+    unexpectedResponse: (status, snippet) =>
+      `El servidor devolvió una respuesta inesperada (HTTP ${status}). Esto normalmente significa que la ruta de la API aún no está desplegada, o que falló antes de poder responder. Primeros 120 caracteres de la respuesta: ${snippet}`,
+    setFailed: (status) => `No se pudo establecer la contraseña (HTTP ${status})`,
+    networkError:
+      "Error de red (la solicitud nunca llegó al servidor) — revisa tu conexión e inténtalo de nuevo",
+    success: "Contraseña actualizada. Inicia sesión con la nueva contraseña ahora.",
+    busy: "...",
+    setPassword: "ESTABLECER CONTRASEÑA",
+  },
+};
 
 export default function AdminSetPasswordPage() {
+  const lang = useResolvedUiLang();
+  const t = T[lang] || T.en;
+
   const [secret, setSecret] = useState("");
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -28,17 +87,17 @@ export default function AdminSetPasswordPage() {
         // deployed yet) or a platform error page. Surface the real status
         // instead of a generic "network error" that hides what happened.
         setResult({
-          error: `Server returned an unexpected response (HTTP ${res.status}). This usually means the API route isn't deployed yet, or crashed before it could respond. First 120 characters of the response: ${rawText.slice(0, 120)}`,
+          error: t.unexpectedResponse(res.status, rawText.slice(0, 120)),
         });
         return;
       }
       if (!res.ok) {
-        setResult({ error: body.error || `Failed to set password (HTTP ${res.status})` });
+        setResult({ error: body.error || t.setFailed(res.status) });
       } else {
         setResult({ ok: true });
       }
     } catch (e) {
-      setResult({ error: "Network error (request never reached the server) — check your connection and try again" });
+      setResult({ error: t.networkError });
     } finally {
       setBusy(false);
     }
@@ -48,18 +107,17 @@ export default function AdminSetPasswordPage() {
     <div style={styles.wrap}>
       <div style={styles.card}>
         <h1 className="rj" style={styles.title}>
-          Set a user's password
+          {t.title}
         </h1>
         <p style={styles.subtitle}>
-          Break-glass tool — bypasses the email reset flow entirely. Requires the admin secret, not an app
-          sign-in.
+          {t.subtitle}
         </p>
 
         <form onSubmit={submit} style={{ width: "100%" }}>
           <input
             type="password"
-            placeholder="Admin secret"
-            aria-label="Admin secret"
+            placeholder={t.adminSecret}
+            aria-label={t.adminSecret}
             value={secret}
             onChange={(e) => setSecret(e.target.value)}
             required
@@ -67,8 +125,8 @@ export default function AdminSetPasswordPage() {
           />
           <input
             type="email"
-            placeholder="Account email"
-            aria-label="Account email"
+            placeholder={t.accountEmail}
+            aria-label={t.accountEmail}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -76,8 +134,8 @@ export default function AdminSetPasswordPage() {
           />
           <input
             type="password"
-            placeholder="New password (6+ characters)"
-            aria-label="New password, minimum 6 characters"
+            placeholder={t.newPasswordPlaceholder}
+            aria-label={t.newPasswordAria}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
@@ -86,10 +144,10 @@ export default function AdminSetPasswordPage() {
           />
 
           {result?.error && <p style={styles.error}>{result.error}</p>}
-          {result?.ok && <p style={styles.success}>Password updated. Sign in with the new password now.</p>}
+          {result?.ok && <p style={styles.success}>{t.success}</p>}
 
           <button type="submit" disabled={busy} className="rj" style={styles.primaryBtn}>
-            {busy ? "..." : "SET PASSWORD"}
+            {busy ? t.busy : t.setPassword}
           </button>
         </form>
       </div>

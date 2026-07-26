@@ -7,24 +7,67 @@ import { adminFetch, adminColors as c } from "./adminApi";
 // submissions, with a workflow status + private admin notes per row.
 // Screenshots come through as 1-hour signed URLs (private bucket).
 
+const T = {
+  en: {
+    loading: "Loading…",
+    anyStatus: "Any status",
+    noFeedback: "No feedback here.",
+    unknownUser: "unknown user",
+    status: { new: "New", in_progress: "In progress", resolved: "Resolved", wont_fix: "Won't do" },
+    types: { "": "All types", bug: "Bugs", feature: "Features", beta_survey: "Surveys", general: "General" },
+    detailPage: "Page",
+    detailSessions: "Sessions completed",
+    detailContinued: "Continued-use likelihood",
+    detailRecommend: "Recommend likelihood",
+    openScreenshot: "Open screenshot (link valid ~1 hour)",
+    saved: "Saved ✓",
+    autosaveHint: "Status saves instantly when clicked — only notes need the button.",
+    adminNotes: "Admin notes (private)",
+    saveNotes: "Save notes",
+    yes: "Yes",
+    no: "No",
+  },
+  es: {
+    loading: "Cargando…",
+    anyStatus: "Cualquier estado",
+    noFeedback: "No hay comentarios aquí.",
+    unknownUser: "usuario desconocido",
+    status: { new: "Nuevo", in_progress: "En progreso", resolved: "Resuelta", wont_fix: "No se hará" },
+    types: { "": "Todos los tipos", bug: "Errores", feature: "Sugerencias", beta_survey: "Encuestas", general: "General" },
+    detailPage: "Página",
+    detailSessions: "Sesiones completadas",
+    detailContinued: "Probabilidad de uso continuo",
+    detailRecommend: "Probabilidad de recomendación",
+    openScreenshot: "Abrir captura de pantalla (enlace válido ~1 hora)",
+    saved: "Guardado ✓",
+    autosaveHint: "El estado se guarda al instante al hacer clic — solo las notas necesitan el botón.",
+    adminNotes: "Notas de admin (privadas)",
+    saveNotes: "Guardar notas",
+    yes: "Sí",
+    no: "No",
+  },
+};
+
+// Stored values are contracts (API/data keys); labels are resolved from T.
 const STATUS_OPTIONS = [
-  { value: "new", label: "New" },
-  { value: "in_progress", label: "In progress" },
-  { value: "resolved", label: "Resolved" },
+  { value: "new" },
+  { value: "in_progress" },
+  { value: "resolved" },
   // Label is generic across bugs AND features; the stored value stays
   // 'wont_fix' (no migration, existing rows unaffected).
-  { value: "wont_fix", label: "Won't do" },
+  { value: "wont_fix" },
 ];
 
 const TYPE_FILTERS = [
-  { value: "", label: "All types" },
-  { value: "bug", label: "Bugs" },
-  { value: "feature", label: "Features" },
-  { value: "beta_survey", label: "Surveys" },
-  { value: "general", label: "General" },
+  { value: "" },
+  { value: "bug" },
+  { value: "feature" },
+  { value: "beta_survey" },
+  { value: "general" },
 ];
 
-export default function FeedbackSection() {
+export default function FeedbackSection({ lang = "en" }) {
+  const t = T[lang] || T.en;
   const [rows, setRows] = useState(null);
   const [error, setError] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
@@ -69,7 +112,7 @@ export default function FeedbackSection() {
     }
   };
 
-  if (rows === null && !error) return <p style={{ color: c.body }}>Loading…</p>;
+  if (rows === null && !error) return <p style={{ color: c.body }}>{t.loading}</p>;
 
   return (
     <div>
@@ -81,7 +124,7 @@ export default function FeedbackSection() {
             style={{ ...styles.filterChip, ...(typeFilter === f.value ? styles.filterChipActive : {}) }}
             onClick={() => setTypeFilter(f.value)}
           >
-            {f.label}
+            {t.types[f.value]}
           </button>
         ))}
       </div>
@@ -91,7 +134,7 @@ export default function FeedbackSection() {
           style={{ ...styles.filterChip, ...(statusFilter === "" ? styles.filterChipActive : {}) }}
           onClick={() => setStatusFilter("")}
         >
-          Any status
+          {t.anyStatus}
         </button>
         {STATUS_OPTIONS.map((s) => (
           <button
@@ -100,17 +143,17 @@ export default function FeedbackSection() {
             style={{ ...styles.filterChip, ...(statusFilter === s.value ? styles.filterChipActive : {}) }}
             onClick={() => setStatusFilter(s.value)}
           >
-            {s.label}
+            {t.status[s.value]}
           </button>
         ))}
       </div>
 
       {error && <p style={styles.error}>{error}</p>}
-      {rows && rows.length === 0 && <p style={{ color: c.muted }}>No feedback here.</p>}
+      {rows && rows.length === 0 && <p style={{ color: c.muted }}>{t.noFeedback}</p>}
 
       {(rows || []).map((row) => {
         const expanded = expandedId === row.id;
-        const who = [row.username, row.email].filter(Boolean).join(" · ") || "unknown user";
+        const who = [row.username, row.email].filter(Boolean).join(" · ") || t.unknownUser;
         return (
           <div key={row.id} style={styles.card}>
             <button className="rj" style={styles.cardHeader} onClick={() => setExpandedId(expanded ? null : row.id)}>
@@ -118,7 +161,7 @@ export default function FeedbackSection() {
                 <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
                   <span style={{ ...styles.typeTag, ...typeColor(row.type) }}>{row.type}</span>
                   <span style={{ ...styles.typeTag, ...statusStyle(row.status) }}>
-                    {STATUS_OPTIONS.find((s) => s.value === row.status)?.label || row.status}
+                    {t.status[row.status] || row.status}
                   </span>
                   {row.error_code && <span style={{ ...styles.typeTag, ...styles.codeTag }}>{row.error_code}</span>}
                 </div>
@@ -134,24 +177,24 @@ export default function FeedbackSection() {
               <div style={styles.expandBody}>
                 <p style={styles.fullMessage}>{row.message}</p>
 
-                {row.page_context && <Detail label="Page" value={row.page_context} />}
-                {row.sessions_completed && <Detail label="Sessions completed" value={row.sessions_completed} />}
+                {row.page_context && <Detail label={t.detailPage} value={row.page_context} />}
+                {row.sessions_completed && <Detail label={t.detailSessions} value={row.sessions_completed} />}
                 {row.continued_use_likelihood != null && (
-                  <Detail label="Continued-use likelihood" value={String(row.continued_use_likelihood)} />
+                  <Detail label={t.detailContinued} value={String(row.continued_use_likelihood)} />
                 )}
                 {row.recommend_likelihood != null && (
-                  <Detail label="Recommend likelihood" value={String(row.recommend_likelihood)} />
+                  <Detail label={t.detailRecommend} value={String(row.recommend_likelihood)} />
                 )}
                 {row.details && Object.keys(row.details).length > 0 && (
                   <div style={{ marginBottom: 8 }}>
                     {Object.entries(row.details).map(([key, value]) => (
-                      <Detail key={key} label={prettifyKey(key)} value={prettifyValue(value)} />
+                      <Detail key={key} label={prettifyKey(key)} value={prettifyValue(value, lang)} />
                     ))}
                   </div>
                 )}
                 {row.screenshotUrl && (
                   <a href={row.screenshotUrl} target="_blank" rel="noreferrer" style={styles.screenshotLink}>
-                    Open screenshot (link valid ~1 hour)
+                    {t.openScreenshot}
                   </a>
                 )}
 
@@ -167,15 +210,15 @@ export default function FeedbackSection() {
                       }}
                       onClick={() => update(row, { status: s.value })}
                     >
-                      {s.label}
+                      {t.status[s.value]}
                     </button>
                   ))}
-                  {savedId === row.id && <span style={styles.savedFlash}>Saved ✓</span>}
+                  {savedId === row.id && <span style={styles.savedFlash}>{t.saved}</span>}
                 </div>
-                <p style={styles.autosaveHint}>Status saves instantly when clicked — only notes need the button.</p>
+                <p style={styles.autosaveHint}>{t.autosaveHint}</p>
 
                 <label style={styles.notesLabel} htmlFor={`notes-${row.id}`}>
-                  Admin notes (private)
+                  {t.adminNotes}
                 </label>
                 <textarea
                   id={`notes-${row.id}`}
@@ -190,7 +233,7 @@ export default function FeedbackSection() {
                   disabled={busyId === row.id || (notesDraft[row.id] ?? row.admin_notes ?? "") === (row.admin_notes ?? "")}
                   onClick={() => update(row, { adminNotes: notesDraft[row.id] ?? "" })}
                 >
-                  {busyId === row.id ? "..." : "Save notes"}
+                  {busyId === row.id ? "..." : t.saveNotes}
                 </button>
               </div>
             )}
@@ -218,10 +261,11 @@ function prettifyKey(key) {
   return label.charAt(0).toUpperCase() + label.slice(1);
 }
 
-function prettifyValue(value) {
+function prettifyValue(value, lang = "en") {
+  const t = T[lang] || T.en;
   if (value === null || value === undefined || value === "") return "—";
-  if (Array.isArray(value)) return value.map(prettifyValue).join(", ");
-  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (Array.isArray(value)) return value.map((v) => prettifyValue(v, lang)).join(", ");
+  if (typeof value === "boolean") return value ? t.yes : t.no;
   if (typeof value === "object") return JSON.stringify(value);
   return String(value);
 }

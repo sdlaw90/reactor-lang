@@ -113,7 +113,7 @@ export default function HomePage() {
             >
               <HelpCircle size={20} />
             </button>
-            <NavDrawer profile={profile} displayName={displayName} hasUnseenWhatsNew={hasUnseenWhatsNew} userEmail={session?.user?.email} />
+            <NavDrawer profile={profile} displayName={displayName} hasUnseenWhatsNew={hasUnseenWhatsNew} userEmail={session?.user?.email} nativeLang={nativeLang} />
           </div>
         </div>
 

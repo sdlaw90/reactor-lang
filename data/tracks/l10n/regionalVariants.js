@@ -251,6 +251,117 @@ const LANGS = {
     { gloss: "to grab / take", reference: "coger", default: "agarrar", regional: [
       { term: "agarrar", countries: [], label: "LatAm" },
     ]},
+    { gloss: "popcorn", reference: "palomitas", default: "palomitas de maíz", regional: [
+      { term: "palomitas", countries: ["MX"], label: "Méx" },
+      { term: "pochoclo", countries: ["AR"], label: "Argentina" },
+      { term: "pororó", countries: ["PY"], label: "Paraguay" },
+      { term: "cotufas", countries: ["VE"], label: "Venezuela" },
+      { term: "cabritas", countries: ["CL"], label: "Chile" },
+      { term: "canchita", countries: ["PE"], label: "Perú" },
+      { term: "crispetas", countries: ["CO"], label: "Colombia" },
+      { term: "poporopo", countries: ["GT"], label: "Guatemala" },
+    ]},
+    { gloss: "beans", reference: "judías / alubias", default: "frijoles", regional: [
+      { term: "frijoles", countries: ["MX", "GT", "HN", "SV", "NI", "CR", "PA", "CO"], label: "Méx·CA·Col" },
+      { term: "porotos", countries: ["AR", "UY", "PY", "CL", "BO"], label: "Cono Sur·Bol" },
+      { term: "caraotas", countries: ["VE"], label: "Venezuela" },
+      { term: "habichuelas", countries: ["CU", "DO", "PR"], label: "Caribe" },
+      { term: "frejoles", countries: ["PE", "EC"], label: "Perú·Ecuador" },
+    ]},
+    { gloss: "peas", reference: "guisantes", default: "arvejas", regional: [
+      { term: "arvejas", countries: ["CO", "VE", "EC", "PE", "BO", "AR", "UY", "PY", "CL"], label: "Andes·Cono Sur·Col" },
+      { term: "chícharos", countries: ["MX", "CU", "DO", "PR", "GT", "HN", "SV", "NI", "CR", "PA"], label: "Méx·CA·Caribe" },
+    ]},
+    { gloss: "drinking straw", reference: "pajita", default: "sorbete", regional: [
+      { term: "popote", countries: ["MX"], label: "Méx" },
+      { term: "pitillo", countries: ["CO", "VE"], label: "Col·Ven" },
+      { term: "sorbete", countries: ["CU", "DO", "PR", "GT", "HN", "SV", "NI", "CR", "PA"], label: "Caribe·CA" },
+      { term: "cañita", countries: ["PE"], label: "Perú" },
+      { term: "pajita", countries: ["AR", "UY", "PY", "BO", "EC"], label: "Cono Sur·Andes" },
+    ]},
+    { gloss: "cake", reference: "tarta", default: "torta", regional: [
+      { term: "pastel", countries: ["MX", "GT", "HN", "SV", "NI", "CR", "PA", "CU", "DO", "PR"], label: "Méx·CA·Caribe" },
+      { term: "torta", countries: ["AR", "UY", "PY", "CL", "BO", "CO", "VE", "EC", "PE"], label: "Cono Sur·Andes·Col" },
+    ]},
+    { gloss: "soft drink / soda", reference: "refresco", default: "gaseosa", regional: [
+      { term: "refresco", countries: ["MX", "CU", "DO", "PR", "GT", "HN", "SV", "NI"], label: "Méx·Caribe·CA" },
+      { term: "gaseosa", countries: ["CO", "VE", "EC", "PE", "BO", "AR", "UY", "PY", "CR", "PA"], label: "Andes·Cono Sur" },
+      { term: "bebida", countries: ["CL"], label: "Chile" },
+    ]},
+    { gloss: "grapefruit", reference: "pomelo", default: "toronja", regional: [
+      { term: "toronja", countries: ["MX", "CO", "VE", "EC", "PE", "BO", "CU", "DO", "PR", "GT", "HN", "SV", "NI", "CR", "PA"], label: "Méx·Andes·Caribe·CA" },
+      { term: "pomelo", countries: ["AR", "UY", "PY", "CL"], label: "Cono Sur" },
+    ]},
+    { gloss: "faucet / tap", reference: "grifo", default: "llave", regional: [
+      { term: "llave", countries: ["MX", "GT", "HN", "SV", "NI", "CR", "PA", "CO", "VE", "EC", "CL", "BO"], label: "Méx·CA·Col·Andes·Chile" },
+      { term: "canilla", countries: ["AR", "UY", "PY"], label: "Río de la Plata" },
+      { term: "caño", countries: ["PE"], label: "Perú" },
+    ]},
+    { gloss: "bucket", reference: "cubo", default: "balde", regional: [
+      { term: "cubeta", countries: ["MX"], label: "Méx" },
+      { term: "tobo", countries: ["VE"], label: "Venezuela" },
+      { term: "balde", countries: ["AR", "UY", "PY", "CL", "PE", "EC", "BO", "CO", "CU", "DO", "PR", "GT", "HN", "SV", "NI", "CR", "PA"], label: "resto de LatAm" },
+    ]},
+    { gloss: "sidewalk", reference: "acera", default: "vereda", regional: [
+      { term: "banqueta", countries: ["MX", "GT"], label: "Méx·Guat" },
+      { term: "vereda", countries: ["AR", "UY", "PY", "CL", "PE", "BO", "EC"], label: "Cono Sur·Andes" },
+      { term: "acera", countries: ["CO", "VE", "CU", "DO", "PR", "HN", "SV", "NI", "CR", "PA"], label: "Col·Ven·Caribe·CA" },
+    ]},
+    { gloss: "stove", reference: "cocina", default: "estufa", regional: [
+      { term: "estufa", countries: ["MX", "CO", "VE", "EC", "CU", "DO", "PR", "GT", "HN", "SV", "NI", "CR", "PA"], label: "Méx·Col·Andes·Caribe·CA" },
+      { term: "cocina", countries: ["AR", "UY", "PY", "CL", "BO", "PE"], label: "Cono Sur·Bol·Perú" },
+    ]},
+    { gloss: "sneakers", reference: "zapatillas", default: "zapatillas", regional: [
+      { term: "tenis", countries: ["MX", "CO", "GT", "HN", "SV", "NI", "CR", "PA"], label: "Méx·Col·CA" },
+      { term: "zapatillas", countries: ["AR", "PY", "CL", "PE", "BO", "EC"], label: "Cono Sur·Andes" },
+      { term: "championes", countries: ["UY"], label: "Uruguay" },
+      { term: "zapatos de goma", countries: ["VE", "CU", "DO", "PR"], label: "Ven·Caribe" },
+    ]},
+    { gloss: "socks", reference: "calcetines", default: "medias", regional: [
+      { term: "calcetines", countries: ["MX", "GT", "HN", "SV", "NI", "CR", "PA"], label: "Méx·CA" },
+      { term: "medias", countries: ["CO", "VE", "EC", "PE", "BO", "AR", "UY", "PY", "CL", "CU", "DO", "PR"], label: "Col·Andes·Cono Sur·Caribe" },
+    ]},
+    { gloss: "swimsuit", reference: "bañador", default: "traje de baño", regional: [
+      { term: "malla", countries: ["AR", "UY", "PY"], label: "Río de la Plata" },
+      { term: "vestido de baño", countries: ["CO"], label: "Colombia" },
+      { term: "terno de baño", countries: ["PE"], label: "Perú" },
+      { term: "traje de baño", countries: ["MX", "VE", "EC", "BO", "CL", "CU", "DO", "PR", "GT", "HN", "SV", "NI", "CR", "PA"], label: "resto de LatAm" },
+    ]},
+    { gloss: "bus", reference: "autobús", default: "autobús", regional: [
+      { term: "camión", countries: ["MX"], label: "Méx" },
+      { term: "guagua", countries: ["CU", "DO", "PR"], label: "Caribe" },
+      { term: "colectivo", countries: ["AR", "BO"], label: "Arg·Bol" },
+      { term: "micro", countries: ["CL"], label: "Chile" },
+      { term: "ómnibus", countries: ["UY"], label: "Uruguay" },
+      { term: "bus", countries: ["CO", "EC", "VE", "PE", "GT", "HN", "SV", "NI", "CR", "PA"], label: "Col·Andes·CA" },
+    ]},
+    { gloss: "bus stop", reference: "parada", default: "parada", regional: [
+      { term: "paradero", countries: ["MX", "CO", "PE", "CL", "EC", "PA"], label: "Méx·Col·Andes·Chile·Pan" },
+      { term: "parada", countries: ["AR", "UY", "PY", "VE", "BO", "CU", "DO", "PR", "GT", "HN", "SV", "NI", "CR"], label: "Cono Sur·Ven·Caribe·CA" },
+    ]},
+    { gloss: "gas station", reference: "gasolinera", default: "gasolinera", regional: [
+      { term: "gasolinera", countries: ["MX", "CO", "VE", "EC", "CU", "DO", "PR", "GT", "HN", "SV", "NI", "CR", "PA"], label: "Méx·Col·Andes·Caribe·CA" },
+      { term: "estación de servicio", countries: ["AR", "UY", "PY"], label: "Río de la Plata" },
+      { term: "bencinera", countries: ["CL", "BO"], label: "Chile·Bol" },
+    ]},
+    { gloss: "job / work (informal)", reference: "curro", default: "trabajo", regional: [
+      { term: "chamba", countries: ["MX", "PE"], label: "Méx·Perú" },
+      { term: "laburo", countries: ["AR", "UY", "PY"], label: "Río de la Plata" },
+      { term: "pega", countries: ["CL"], label: "Chile" },
+      { term: "trabajo", countries: ["CO", "VE", "EC", "BO", "CU", "DO", "PR", "GT", "HN", "SV", "NI", "CR", "PA"], label: "resto de LatAm" },
+    ]},
+    { gloss: "pen", reference: "bolígrafo", default: "lapicero", regional: [
+      { term: "pluma", countries: ["MX"], label: "Méx" },
+      { term: "birome", countries: ["AR", "UY", "PY"], label: "Río de la Plata" },
+      { term: "esfero", countries: ["CO", "EC"], label: "Col·Ecuador" },
+      { term: "lápiz pasta", countries: ["CL"], label: "Chile" },
+      { term: "lapicero", countries: ["PE", "GT", "HN", "SV", "NI", "CR", "PA"], label: "Perú·CA" },
+      { term: "bolígrafo", countries: ["VE", "CU", "DO", "PR", "BO"], label: "Ven·Caribe·Bol" },
+    ]},
+    { gloss: "eraser", reference: "goma de borrar", default: "borrador", regional: [
+      { term: "goma de borrar", countries: ["AR", "UY", "PY", "CL", "PE", "BO", "EC"], label: "Cono Sur·Andes" },
+      { term: "borrador", countries: ["MX", "CO", "VE", "CU", "DO", "PR", "GT", "HN", "SV", "NI", "CR", "PA"], label: "Méx·Col·Ven·Caribe·CA" },
+    ]},
     ],
   },
   pt: {

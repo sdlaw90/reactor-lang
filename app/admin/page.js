@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LayoutDashboard, TrendingUp, ClipboardList, MessageSquareWarning, Users, Bug, KeyRound } from "lucide-react";
 import { supabase } from "../../lib/supabaseClient";
+import { resolveUiLang, SUPPORTED_UI_LANGS } from "../../lib/uiLang";
 import { adminFetch, adminColors as c } from "./adminApi";
 import DashboardSection from "./DashboardSection";
 import ProgressSection from "./ProgressSection";
@@ -18,27 +19,67 @@ import ResetRequestsSection from "./ResetRequestsSection";
 // Auth-guarded (session required) AND admin-gated: the server decides who's
 // an admin via /api/admin/me (profiles.is_admin or the ADMIN_EMAIL
 // bootstrap) — no admin identity is ever compared in the browser.
+//
+// #72: the hub resolves the viewer's language once (native_lang → bootstrap
+// uiLang → English) and passes `lang` down to every section, so admins see the
+// panel in their own language. es copy is AI-authored pending review (#41).
 
-const TABS = [
-  { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { key: "progress", label: "Progress", icon: TrendingUp },
-  { key: "applications", label: "Applications", icon: ClipboardList },
-  { key: "feedback", label: "Feedback", icon: MessageSquareWarning },
-  { key: "users", label: "Users", icon: Users },
-  { key: "resets", label: "Reset Requests", icon: KeyRound },
-  { key: "errors", label: "Error Logs", icon: Bug },
+const TAB_DEFS = [
+  { key: "dashboard", icon: LayoutDashboard },
+  { key: "progress", icon: TrendingUp },
+  { key: "applications", icon: ClipboardList },
+  { key: "feedback", icon: MessageSquareWarning },
+  { key: "users", icon: Users },
+  { key: "resets", icon: KeyRound },
+  { key: "errors", icon: Bug },
 ];
+
+const T = {
+  en: {
+    admin: "Admin",
+    back: "← Back",
+    loading: "Loading…",
+    ariaSections: "Admin sections",
+    tabs: {
+      dashboard: "Dashboard",
+      progress: "Progress",
+      applications: "Applications",
+      feedback: "Feedback",
+      users: "Users",
+      resets: "Reset Requests",
+      errors: "Error Logs",
+    },
+  },
+  es: {
+    admin: "Administración",
+    back: "← Volver",
+    loading: "Cargando…",
+    ariaSections: "Secciones de administración",
+    tabs: {
+      dashboard: "Panel",
+      progress: "Progreso",
+      applications: "Solicitudes",
+      feedback: "Comentarios",
+      users: "Usuarios",
+      resets: "Restablecimientos",
+      errors: "Registros de errores",
+    },
+  },
+};
 
 function AdminHub() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [ready, setReady] = useState(false);
   const [gateError, setGateError] = useState("");
+  const [lang, setLang] = useState("en");
 
   const urlTab = searchParams.get("tab");
-  const tab = TABS.some((t) => t.key === urlTab) ? urlTab : "dashboard";
+  const tab = TAB_DEFS.some((t) => t.key === urlTab) ? urlTab : "dashboard";
+  const t = T[lang] || T.en;
 
   useEffect(() => {
+    setLang(resolveUiLang());
     (async () => {
       // Standing practice: this page is auth-guarded — signed out goes to
       // /auth, signed in but not admin goes home. Server-verified.
@@ -47,6 +88,8 @@ function AdminHub() {
         router.push("/auth");
         return;
       }
+      const nl = data.session.user?.user_metadata?.native_lang;
+      if (nl && SUPPORTED_UI_LANGS.includes(nl)) setLang(nl);
       try {
         await adminFetch("/api/admin/me");
         setReady(true);
@@ -78,7 +121,7 @@ function AdminHub() {
   if (!ready) {
     return (
       <div style={styles.wrap}>
-        <p style={{ color: c.body }}>Loading…</p>
+        <p style={{ color: c.body }}>{t.loading}</p>
       </div>
     );
   }
@@ -88,15 +131,15 @@ function AdminHub() {
       <div style={{ width: "100%", maxWidth: 860 }}>
         <div style={styles.headerRow}>
           <button className="rj" style={styles.backBtn} onClick={() => router.push("/")}>
-            ← Back
+            {t.back}
           </button>
           <h1 className="rj" style={styles.title}>
-            Admin
+            {t.admin}
           </h1>
         </div>
 
-        <div style={styles.tabRow} role="tablist" aria-label="Admin sections">
-          {TABS.map(({ key, label, icon: Icon }) => (
+        <div style={styles.tabRow} role="tablist" aria-label={t.ariaSections}>
+          {TAB_DEFS.map(({ key, icon: Icon }) => (
             <button
               key={key}
               className="rj"
@@ -106,18 +149,18 @@ function AdminHub() {
               onClick={() => setTab(key)}
             >
               <Icon size={15} style={{ flexShrink: 0 }} />
-              {label}
+              {t.tabs[key]}
             </button>
           ))}
         </div>
 
-        {tab === "dashboard" && <DashboardSection onNavigate={setTab} />}
-        {tab === "progress" && <ProgressSection />}
-        {tab === "applications" && <ApplicationsSection />}
-        {tab === "feedback" && <FeedbackSection />}
-        {tab === "users" && <UsersSection />}
-        {tab === "resets" && <ResetRequestsSection />}
-        {tab === "errors" && <ErrorsSection />}
+        {tab === "dashboard" && <DashboardSection onNavigate={setTab} lang={lang} />}
+        {tab === "progress" && <ProgressSection lang={lang} />}
+        {tab === "applications" && <ApplicationsSection lang={lang} />}
+        {tab === "feedback" && <FeedbackSection lang={lang} />}
+        {tab === "users" && <UsersSection lang={lang} />}
+        {tab === "resets" && <ResetRequestsSection lang={lang} />}
+        {tab === "errors" && <ErrorsSection lang={lang} />}
       </div>
     </div>
   );
