@@ -67,9 +67,9 @@ export default function WhatsNewPage() {
 const styles = {
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
   backBtn: {
-    background: "rgba(255,143,177,0.12)",
-    color: "#FF8FB1",
-    border: "1px solid #FF8FB1",
+    background: "rgba(255,166,190,0.12)",
+    color: "#FFA6BE",
+    border: "1px solid #FFA6BE",
     borderRadius: 8,
     padding: "7px 14px",
     fontSize: 14,
@@ -81,7 +81,7 @@ const styles = {
     width: 40,
     height: 40,
     borderRadius: "50%",
-    background: "linear-gradient(135deg, #FF8FB1, #B98EFF)",
+    background: "linear-gradient(135deg, #FFA6BE, #D3B0BF)",
     color: "#171423",
     fontWeight: 800,
     fontSize: 20,
@@ -91,7 +91,7 @@ const styles = {
     marginBottom: 12,
   },
   title: { fontSize: 24, fontWeight: 700, color: "#F3F0FA", margin: "0 0 4px" },
-  versionLine: { color: "#FF8FB1", fontSize: 13, fontWeight: 700, marginBottom: 20 },
+  versionLine: { color: "#FFA6BE", fontSize: 13, fontWeight: 700, marginBottom: 20 },
   list: { margin: "0 0 24px", padding: 0, listStyle: "none" },
   listItem: {
     color: "#D9D3EC",
@@ -101,7 +101,7 @@ const styles = {
     paddingLeft: 20,
     position: "relative",
   },
-  bullet: { position: "absolute", left: 0, color: "#FF8FB1", fontWeight: 700 },
+  bullet: { position: "absolute", left: 0, color: "#FFA6BE", fontWeight: 700 },
   secondaryBtn: {
     width: "100%",
     background: "transparent",

@@ -151,9 +151,9 @@ function RoadmapItem({ title, badge, badgeType, children }) {
 const styles = {
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
   backBtn: {
-    background: "rgba(255,143,177,0.12)",
-    color: "#FF8FB1",
-    border: "1px solid #FF8FB1",
+    background: "rgba(255,166,190,0.12)",
+    color: "#FFA6BE",
+    border: "1px solid #FFA6BE",
     borderRadius: 8,
     padding: "7px 14px",
     fontSize: 14,
@@ -162,10 +162,10 @@ const styles = {
     marginBottom: 16,
   },
   title: { fontSize: 24, fontWeight: 700, color: "#F3F0FA", margin: "0 0 6px" },
-  tagline: { color: "#B98EFF", fontSize: 13.5, fontWeight: 600, marginBottom: 24 },
-  sectionTitle: { fontSize: 15.5, fontWeight: 700, color: "#FF8FB1", margin: "0 0 8px" },
+  tagline: { color: "#D3B0BF", fontSize: 13.5, fontWeight: 600, marginBottom: 24 },
+  sectionTitle: { fontSize: 15.5, fontWeight: 700, color: "#FFA6BE", margin: "0 0 8px" },
   p: { color: "#B4ABC9", fontSize: 13.5, lineHeight: 1.6, margin: "0 0 8px" },
-  bucketLabel: { color: "#B98EFF", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.6, margin: "14px 0 6px" },
+  bucketLabel: { color: "#D3B0BF", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.6, margin: "14px 0 6px" },
   roadmapItem: {
     background: "#1F1B30",
     border: "1px solid #2B2740",

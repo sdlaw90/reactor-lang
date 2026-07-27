@@ -17,15 +17,15 @@
 // content splice that shifts indices does not orphan a tag. AI-authored.
 
 export const THEMES = [
-  {"id":"numbers-time","en":"Numbers, dates & time","ja":"数字と時間"},
-  {"id":"directions","en":"Directions","ja":"道案内"},
-  {"id":"shopping","en":"Shopping","ja":"買い物"},
-  {"id":"restaurant","en":"Restaurant & food","ja":"食事"},
-  {"id":"travel","en":"Travel","ja":"旅行"},
-  {"id":"medical","en":"Medical & doctor","ja":"健康"},
-  {"id":"small-talk","en":"Small talk","ja":"会話"},
-  {"id":"work","en":"Work & office","ja":"仕事"},
-  {"id":"emotions","en":"Emotions","ja":"感情"},
+  {"id":"numbers-time","en":"Numbers, dates & time","ja":"数字と時間","pt":"Números e tempo"},
+  {"id":"directions","en":"Directions","ja":"道案内","pt":"Direções"},
+  {"id":"shopping","en":"Shopping","ja":"買い物","pt":"Compras"},
+  {"id":"restaurant","en":"Restaurant & food","ja":"食事","pt":"Restaurante"},
+  {"id":"travel","en":"Travel","ja":"旅行","pt":"Viagens"},
+  {"id":"medical","en":"Medical & doctor","ja":"健康","pt":"Saúde"},
+  {"id":"small-talk","en":"Small talk","ja":"会話","pt":"Conversa"},
+  {"id":"work","en":"Work & office","ja":"仕事","pt":"Trabalho"},
+  {"id":"emotions","en":"Emotions","ja":"感情","pt":"Emoções"},
 ];
 
 // key (prompt text) -> { themes?: [id], grammar?: {tense,why}, person?: {en,ja} }

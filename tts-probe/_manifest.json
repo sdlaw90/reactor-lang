@@ -1,0 +1,242 @@
+[
+  {
+    "file": "en-us-hello-Puck.mp3",
+    "ok": true,
+    "locale": "en-US",
+    "persona": "Puck",
+    "text": "Hello! Welcome to SquirreLingo.",
+    "note": "Do these match the Puck/Aoede you used in the videos?"
+  },
+  {
+    "file": "en-us-hello-Aoede.mp3",
+    "ok": true,
+    "locale": "en-US",
+    "persona": "Aoede",
+    "text": "Hello! Welcome to SquirreLingo.",
+    "note": "Do these match the Puck/Aoede you used in the videos?"
+  },
+  {
+    "file": "en-us-word-Puck.mp3",
+    "ok": true,
+    "locale": "en-US",
+    "persona": "Puck",
+    "text": "Boring",
+    "note": "Clean single-word (English-target vocab)."
+  },
+  {
+    "file": "en-us-word-Aoede.mp3",
+    "ok": true,
+    "locale": "en-US",
+    "persona": "Aoede",
+    "text": "Boring",
+    "note": "Clean single-word (English-target vocab)."
+  },
+  {
+    "file": "en-gb-word-Puck.mp3",
+    "ok": true,
+    "locale": "en-GB",
+    "persona": "Puck",
+    "text": "aluminium",
+    "note": "UK pronunciation vs US."
+  },
+  {
+    "file": "en-gb-word-Aoede.mp3",
+    "ok": true,
+    "locale": "en-GB",
+    "persona": "Aoede",
+    "text": "aluminium",
+    "note": "UK pronunciation vs US."
+  },
+  {
+    "file": "es-word-Puck.mp3",
+    "ok": true,
+    "locale": "es-US",
+    "persona": "Puck",
+    "text": "la almohada",
+    "note": "Plain Spanish word."
+  },
+  {
+    "file": "es-word-Aoede.mp3",
+    "ok": true,
+    "locale": "es-US",
+    "persona": "Aoede",
+    "text": "la almohada",
+    "note": "Plain Spanish word."
+  },
+  {
+    "file": "es-crosslang-Puck.mp3",
+    "ok": true,
+    "locale": "es-US",
+    "persona": "Puck",
+    "text": "¿Cómo se dice 'window' en español?",
+    "note": "HARD: 'window' is English inside a Spanish prompt — is it mangled? (SSML used <lang> here.)"
+  },
+  {
+    "file": "es-crosslang-Aoede.mp3",
+    "ok": true,
+    "locale": "es-US",
+    "persona": "Aoede",
+    "text": "¿Cómo se dice 'window' en español?",
+    "note": "HARD: 'window' is English inside a Spanish prompt — is it mangled? (SSML used <lang> here.)"
+  },
+  {
+    "file": "fr-word-Puck.mp3",
+    "ok": true,
+    "locale": "fr-FR",
+    "persona": "Puck",
+    "text": "Bonjour, une grenouille.",
+    "note": "French nasal/liaison."
+  },
+  {
+    "file": "fr-word-Aoede.mp3",
+    "ok": true,
+    "locale": "fr-FR",
+    "persona": "Aoede",
+    "text": "Bonjour, une grenouille.",
+    "note": "French nasal/liaison."
+  },
+  {
+    "file": "frca-word-Puck.mp3",
+    "ok": true,
+    "locale": "fr-CA",
+    "persona": "Puck",
+    "text": "Bonjour, un dépanneur.",
+    "note": "Québécois — does fr-CA Puck/Aoede exist?"
+  },
+  {
+    "file": "frca-word-Aoede.mp3",
+    "ok": true,
+    "locale": "fr-CA",
+    "persona": "Aoede",
+    "text": "Bonjour, un dépanneur.",
+    "note": "Québécois — does fr-CA Puck/Aoede exist?"
+  },
+  {
+    "file": "it-word-Puck.mp3",
+    "ok": true,
+    "locale": "it-IT",
+    "persona": "Puck",
+    "text": "Buongiorno, un cappello.",
+    "note": "Italian double consonant."
+  },
+  {
+    "file": "it-word-Aoede.mp3",
+    "ok": true,
+    "locale": "it-IT",
+    "persona": "Aoede",
+    "text": "Buongiorno, un cappello.",
+    "note": "Italian double consonant."
+  },
+  {
+    "file": "de-word-Puck.mp3",
+    "ok": true,
+    "locale": "de-DE",
+    "persona": "Puck",
+    "text": "Das Eichhörnchen hat Fingerspitzengefühl.",
+    "note": "German ö/ü/compound."
+  },
+  {
+    "file": "de-word-Aoede.mp3",
+    "ok": true,
+    "locale": "de-DE",
+    "persona": "Aoede",
+    "text": "Das Eichhörnchen hat Fingerspitzengefühl.",
+    "note": "German ö/ü/compound."
+  },
+  {
+    "file": "ru-word-Puck.mp3",
+    "ok": true,
+    "locale": "ru-RU",
+    "persona": "Puck",
+    "text": "Здравствуйте! Привет.",
+    "note": "Russian stress/palatalization."
+  },
+  {
+    "file": "ru-word-Aoede.mp3",
+    "ok": true,
+    "locale": "ru-RU",
+    "persona": "Aoede",
+    "text": "Здравствуйте! Привет.",
+    "note": "Russian stress/palatalization."
+  },
+  {
+    "file": "ko-word-Puck.mp3",
+    "ok": true,
+    "locale": "ko-KR",
+    "persona": "Puck",
+    "text": "안녕하세요. 반갑습니다.",
+    "note": "Korean."
+  },
+  {
+    "file": "ko-word-Aoede.mp3",
+    "ok": true,
+    "locale": "ko-KR",
+    "persona": "Aoede",
+    "text": "안녕하세요. 반갑습니다.",
+    "note": "Korean."
+  },
+  {
+    "file": "ja-kanji-Puck.mp3",
+    "ok": true,
+    "locale": "ja-JP",
+    "persona": "Puck",
+    "text": "橋を渡る。端に立つ。",
+    "note": "HARD: 橋(hashi)/端(hashi) heteronyms — does it read them right WITHOUT <sub>?"
+  },
+  {
+    "file": "ja-kanji-Aoede.mp3",
+    "ok": true,
+    "locale": "ja-JP",
+    "persona": "Aoede",
+    "text": "橋を渡る。端に立つ。",
+    "note": "HARD: 橋(hashi)/端(hashi) heteronyms — does it read them right WITHOUT <sub>?"
+  },
+  {
+    "file": "ja-frame-Puck.mp3",
+    "ok": true,
+    "locale": "ja-JP",
+    "persona": "Puck",
+    "text": "'こんにちは (konnichiwa)' はどういう意味ですか？(wa dou iu imi desu ka?)",
+    "note": "HARD: does it READ the (romaji) aloud? SSML pipeline suppressed that."
+  },
+  {
+    "file": "ja-frame-Aoede.mp3",
+    "ok": true,
+    "locale": "ja-JP",
+    "persona": "Aoede",
+    "text": "'こんにちは (konnichiwa)' はどういう意味ですか？(wa dou iu imi desu ka?)",
+    "note": "HARD: does it READ the (romaji) aloud? SSML pipeline suppressed that."
+  },
+  {
+    "file": "zh-tones-Puck.mp3",
+    "ok": true,
+    "locale": "cmn-CN",
+    "persona": "Puck",
+    "text": "妈 麻 马 骂。银行。",
+    "note": "HARD: four tones + 行 heteronym (háng/xíng) — tones correct WITHOUT tone control?"
+  },
+  {
+    "file": "zh-tones-Aoede.mp3",
+    "ok": true,
+    "locale": "cmn-CN",
+    "persona": "Aoede",
+    "text": "妈 麻 马 骂。银行。",
+    "note": "HARD: four tones + 行 heteronym (háng/xíng) — tones correct WITHOUT tone control?"
+  },
+  {
+    "file": "zh-frame-Puck.mp3",
+    "ok": true,
+    "locale": "cmn-CN",
+    "persona": "Puck",
+    "text": "'你好 (nǐ hǎo)' 是什么意思？(shì shénme yìsi?)",
+    "note": "HARD: does it read the (pinyin) aloud?"
+  },
+  {
+    "file": "zh-frame-Aoede.mp3",
+    "ok": true,
+    "locale": "cmn-CN",
+    "persona": "Aoede",
+    "text": "'你好 (nǐ hǎo)' 是什么意思？(shì shénme yìsi?)",
+    "note": "HARD: does it read the (pinyin) aloud?"
+  }
+]

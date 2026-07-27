@@ -247,7 +247,7 @@ const styles = {
     fontWeight: 700,
     padding: "3px 9px",
     borderRadius: 999,
-    background: "rgba(185,142,255,0.15)",
+    background: "rgba(211,176,191,0.15)",
     color: c.purple,
     fontFamily: "monospace",
   },

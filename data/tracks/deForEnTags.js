@@ -17,15 +17,15 @@
 // PENDING native review.
 
 export const THEMES = [
-  { id: "numbers-time", en: "Numbers, dates & time", de: "Zahlen & Zeit" },
-  { id: "directions", en: "Directions", de: "Wegbeschreibung" },
-  { id: "shopping", en: "Shopping", de: "Einkaufen" },
-  { id: "restaurant", en: "Restaurant & food", de: "Essen & Restaurant" },
-  { id: "travel", en: "Travel", de: "Reisen" },
-  { id: "medical", en: "Medical & doctor", de: "Gesundheit" },
-  { id: "small-talk", en: "Small talk", de: "Small Talk" },
-  { id: "work", en: "Work & office", de: "Arbeit & Büro" },
-  { id: "emotions", en: "Emotions", de: "Gefühle" },
+  { id: "numbers-time", en: "Numbers, dates & time", de: "Zahlen & Zeit", pt: "Números e tempo" },
+  { id: "directions", en: "Directions", de: "Wegbeschreibung", pt: "Direções" },
+  { id: "shopping", en: "Shopping", de: "Einkaufen", pt: "Compras" },
+  { id: "restaurant", en: "Restaurant & food", de: "Essen & Restaurant", pt: "Restaurante" },
+  { id: "travel", en: "Travel", de: "Reisen", pt: "Viagens" },
+  { id: "medical", en: "Medical & doctor", de: "Gesundheit", pt: "Saúde" },
+  { id: "small-talk", en: "Small talk", de: "Small Talk", pt: "Conversa" },
+  { id: "work", en: "Work & office", de: "Arbeit & Büro", pt: "Trabalho" },
+  { id: "emotions", en: "Emotions", de: "Gefühle", pt: "Emoções" },
 ];
 
 // key (prompt text) -> { themes?: [id], grammar?: {tense,why}, person?: {en,de} }

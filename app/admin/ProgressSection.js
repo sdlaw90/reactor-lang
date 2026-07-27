@@ -986,7 +986,7 @@ const styles = {
   uName: { color: c.text, fontSize: 13.5, fontWeight: 700, display: "flex", alignItems: "center", gap: 6 },
   uEmail: { color: c.muted, fontSize: 11, marginTop: 2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" },
   uCell: { color: c.body, fontSize: 12.5 },
-  adminTag: { fontSize: 9.5, fontWeight: 700, color: c.purple, background: "rgba(185,142,255,0.15)", padding: "2px 6px", borderRadius: 999, textTransform: "uppercase" },
+  adminTag: { fontSize: 9.5, fontWeight: 700, color: c.purple, background: "rgba(211,176,191,0.15)", padding: "2px 6px", borderRadius: 999, textTransform: "uppercase" },
 
   h2: { color: c.text, fontSize: 18, fontWeight: 700, margin: "14px 0 4px", display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" },
   h2sub: { color: c.muted, fontSize: 12, fontWeight: 600 },

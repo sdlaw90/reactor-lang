@@ -227,9 +227,9 @@ function Field({ label, required, children }) {
 const styles = {
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
   backBtn: {
-    background: "rgba(255,143,177,0.12)",
-    color: "#FF8FB1",
-    border: "1px solid #FF8FB1",
+    background: "rgba(255,166,190,0.12)",
+    color: "#FFA6BE",
+    border: "1px solid #FFA6BE",
     borderRadius: 8,
     padding: "7px 14px",
     fontSize: 14,
@@ -291,7 +291,7 @@ const styles = {
   error: { color: "#FF7B8A", fontSize: 13, marginTop: 14 },
   primaryBtn: {
     width: "100%",
-    background: "#FF8FB1",
+    background: "#FFA6BE",
     color: "#171423",
     border: "none",
     borderRadius: 12,

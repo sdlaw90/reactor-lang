@@ -294,7 +294,7 @@ export default function PlacementQuizPage({ params }) {
               {T("placementResult")}
             </h2>
             <p style={{ color: "#B4ABC9", fontSize: 14, lineHeight: 1.6 }}>
-              {T("placementRecommended")} <strong style={{ color: "#FF8FB1" }}>{skillLevelLabel(recommended, viewerNativeLang || track?.nativeLang || "en")}</strong>
+              {T("placementRecommended")} <strong style={{ color: "#FFA6BE" }}>{skillLevelLabel(recommended, viewerNativeLang || track?.nativeLang || "en")}</strong>
             </p>
             <button className="rj" style={styles.primaryBtn} onClick={acceptRecommendation} disabled={saving}>
               {saving ? "..." : T("placementUseLevel")}
@@ -313,9 +313,9 @@ const styles = {
   wrap: { position: "relative", overflow: "hidden", minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
   card: { background: "#221E33", border: "1px solid", borderRadius: 16, padding: "22px 20px" },
   prompt: { color: "#F3F0FA", fontSize: 18, fontWeight: 500, lineHeight: 1.4, marginBottom: 16 },
-  soundBox: { background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "14px", marginBottom: 16, textAlign: "center" },
+  soundBox: { background: "#241B36", border: "1px solid #D3B0BF", borderRadius: 10, padding: "14px", marginBottom: 16, textAlign: "center" },
   soundText: { color: "#E4D6FF", fontSize: 18, fontWeight: 600, margin: 0 },
   optionBtn: { border: "1px solid", borderRadius: 10, padding: "12px 14px", fontSize: 15, fontWeight: 600, color: "#F3F0FA", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between" },
-  primaryBtn: { width: "100%", background: "#FF8FB1", color: "#171423", border: "none", borderRadius: 10, padding: "13px", fontSize: 16, fontWeight: 700, cursor: "pointer", marginTop: 16 },
+  primaryBtn: { width: "100%", background: "#FFA6BE", color: "#171423", border: "none", borderRadius: 10, padding: "13px", fontSize: 16, fontWeight: 700, cursor: "pointer", marginTop: 16 },
   secondaryBtn: { width: "100%", background: "transparent", color: "#B4ABC9", border: "1px solid #3A3452", borderRadius: 10, padding: "10px", fontSize: 13, fontWeight: 600, cursor: "pointer", marginTop: 8 },
 };

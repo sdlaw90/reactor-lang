@@ -2,15 +2,15 @@
 // Keyed by normalized PROMPT TEXT. AI-authored in the content-depth pass — PENDING native review.
 
 export const THEMES = [
-  { id: "numbers-time", en: "Numbers, dates & time", es: "Números y tiempo" },
-  { id: "directions", en: "Directions", es: "Direcciones" },
-  { id: "shopping", en: "Shopping", es: "Compras" },
-  { id: "restaurant", en: "Restaurant & food", es: "Restaurante" },
-  { id: "travel", en: "Travel", es: "Viajes" },
-  { id: "medical", en: "Medical & doctor", es: "Salud" },
-  { id: "small-talk", en: "Small talk", es: "Conversación" },
-  { id: "work", en: "Work & office", es: "Trabajo" },
-  { id: "emotions", en: "Emotions", es: "Emociones" },
+  { id: "numbers-time", en: "Numbers, dates & time", es: "Números y tiempo", pt: "Números e tempo" },
+  { id: "directions", en: "Directions", es: "Direcciones", pt: "Direções" },
+  { id: "shopping", en: "Shopping", es: "Compras", pt: "Compras" },
+  { id: "restaurant", en: "Restaurant & food", es: "Restaurante", pt: "Restaurante" },
+  { id: "travel", en: "Travel", es: "Viajes", pt: "Viagens" },
+  { id: "medical", en: "Medical & doctor", es: "Salud", pt: "Saúde" },
+  { id: "small-talk", en: "Small talk", es: "Conversación", pt: "Conversa" },
+  { id: "work", en: "Work & office", es: "Trabajo", pt: "Trabalho" },
+  { id: "emotions", en: "Emotions", es: "Emociones", pt: "Emoções" },
 ];
 
 const T = {

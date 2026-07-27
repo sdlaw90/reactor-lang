@@ -82,13 +82,27 @@ test.describe("Beta application form", () => {
 
     // This is the specific regression class flagged by a real beta tester:
     // clicking a different option should un-highlight the previous one.
+    //
+    // Deliberately COLOUR-AGNOSTIC: it compares a selected option's background
+    // against an unselected sibling's rather than hardcoding a brand hex. Two
+    // reasons, both learned the hard way in v3.2.0:
+    //   1. The old assertion pinned the literal accent `255, 143, 177`, so the
+    //      accent repalette turned this into a false failure with no real bug.
+    //   2. The old un-highlight check was `not.toBe("rgb(255, 143, 177)")`, but
+    //      the active background is `rgba(<accent>, 0.12)` — never that exact
+    //      string — so it passed VACUOUSLY. The actual regression this test
+    //      exists to catch was not being tested at all.
     const commitmentOptions = page.getByRole("button", { name: /sessions per week|most days|occasional/i });
+    const bgOf = (n) => commitmentOptions.nth(n).evaluate((el) => getComputedStyle(el).backgroundColor);
+
+    const restingBg = await bgOf(1); // nothing selected yet
     await commitmentOptions.first().click();
-    await expect(commitmentOptions.first()).toHaveCSS("background-color", /255, 143, 177|rgb\(255, 143, 177\)/);
+    const selectedBg = await bgOf(0);
+    expect(selectedBg).not.toBe(restingBg); // clicking actually highlights
+
     await commitmentOptions.nth(1).click();
-    // The first option should no longer show the active/highlighted background.
-    const firstBg = await commitmentOptions.first().evaluate((el) => getComputedStyle(el).backgroundColor);
-    expect(firstBg).not.toBe("rgb(255, 143, 177)");
+    expect(await bgOf(0)).toBe(restingBg); // the previous option returns to resting
+    expect(await bgOf(1)).toBe(selectedBg); // and the new one takes the highlight
   });
 });
 

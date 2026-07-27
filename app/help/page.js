@@ -78,7 +78,7 @@ function renderRich(str) {
 function renderLink(key, label, k) {
   if (key === "fb") {
     return (
-      <a key={k} href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#FF8FB1" }}>
+      <a key={k} href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#FFA6BE" }}>
         {label}
       </a>
     );
@@ -122,9 +122,9 @@ function IconRow({ icon, label, text }) {
 const styles = {
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
   backBtn: {
-    background: "rgba(255,143,177,0.12)",
-    color: "#FF8FB1",
-    border: "1px solid #FF8FB1",
+    background: "rgba(255,166,190,0.12)",
+    color: "#FFA6BE",
+    border: "1px solid #FFA6BE",
     borderRadius: 8,
     padding: "7px 14px",
     fontSize: 14,
@@ -134,7 +134,7 @@ const styles = {
   },
   title: { fontSize: 24, fontWeight: 700, color: "#F3F0FA", margin: "0 0 20px" },
   section: { background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "16px 18px", marginBottom: 14 },
-  sectionTitle: { fontSize: 15, fontWeight: 700, color: "#FF8FB1", margin: "0 0 10px" },
+  sectionTitle: { fontSize: 15, fontWeight: 700, color: "#FFA6BE", margin: "0 0 10px" },
   p: { color: "#B4ABC9", fontSize: 13.5, lineHeight: 1.6, margin: "0 0 8px" },
   iconRow: { display: "flex", gap: 12, marginBottom: 12, alignItems: "flex-start" },
   iconBadge: {

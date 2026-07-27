@@ -2,6 +2,8 @@ import esForEn from "./esForEn";
 import esSpainForEn from "./esSpainForEn";
 import enUsForEs from "./enUsForEs";
 import enGbForEs from "./enGbForEs";
+import enUsForPt from "./enUsForPt";
+import enGbForPt from "./enGbForPt";
 import itForEn from "./itForEn";
 import frForEn from "./frForEn";
 import frCaForEn from "./frCaForEn";
@@ -19,6 +21,8 @@ export const TRACKS = {
   [esSpainForEn.id]: esSpainForEn,
   [enUsForEs.id]: enUsForEs,
   [enGbForEs.id]: enGbForEs,
+  [enUsForPt.id]: enUsForPt,
+  [enGbForPt.id]: enGbForPt,
   [itForEn.id]: itForEn,
   [frForEn.id]: frForEn,
   [frCaForEn.id]: frCaForEn,
@@ -66,7 +70,7 @@ export function listNativeLanguages() {
 // experience. This grows by ONE per v3.x minor, matching the release roadmap:
 // v3.0 English · v3.1 Spanish · v3.2 Portuguese · … (see
 // claude/squirrelingo_v3.x_to_v4.0.0_deployment_plan.md).
-const RELEASED_SOURCE_LANGS = new Set(["en", "es"]);
+const RELEASED_SOURCE_LANGS = new Set(["en", "es", "pt"]);
 
 // Tracks available to learn, given the person's native language.
 //

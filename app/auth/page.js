@@ -183,7 +183,7 @@ export default function AuthPage() {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
           <Logo size={30} />
           <h1 className="rj" style={{ ...styles.title, marginBottom: 0 }}>
-            Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
+            Squirre<span style={{ color: "#FFA6BE" }}>Lingo</span>
           </h1>
         </div>
         <p style={styles.subtitle}>{mode === "signin" ? t(uiLang, "authSubSignin") : t(uiLang, "authSubSignup")}</p>
@@ -337,7 +337,7 @@ const styles = {
   hint: { color: "#9B93B8", fontSize: 12, marginTop: -4, marginBottom: 12, lineHeight: 1.4 },
   primaryBtn: {
     width: "100%",
-    background: "#FF8FB1",
+    background: "#FFA6BE",
     color: "#171423",
     border: "none",
     borderRadius: 10,

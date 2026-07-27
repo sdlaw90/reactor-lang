@@ -90,9 +90,9 @@ function Section({ title, children }) {
 const styles = {
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
   backBtn: {
-    background: "rgba(255,143,177,0.12)",
-    color: "#FF8FB1",
-    border: "1px solid #FF8FB1",
+    background: "rgba(255,166,190,0.12)",
+    color: "#FFA6BE",
+    border: "1px solid #FFA6BE",
     borderRadius: 8,
     padding: "7px 14px",
     fontSize: 14,
@@ -104,7 +104,7 @@ const styles = {
   meta: { color: "#9B93B8", fontSize: 12, marginBottom: 16 },
   notice: {
     background: "#241B36",
-    border: "1px solid #B98EFF",
+    border: "1px solid #D3B0BF",
     borderRadius: 10,
     padding: "12px 14px",
     color: "#E4D6FF",
@@ -113,6 +113,6 @@ const styles = {
     marginBottom: 20,
   },
   section: { marginBottom: 18 },
-  sectionTitle: { fontSize: 14.5, fontWeight: 700, color: "#FF8FB1", margin: "0 0 6px" },
+  sectionTitle: { fontSize: 14.5, fontWeight: 700, color: "#FFA6BE", margin: "0 0 6px" },
   p: { color: "#B4ABC9", fontSize: 13.5, lineHeight: 1.6, margin: 0 },
 };

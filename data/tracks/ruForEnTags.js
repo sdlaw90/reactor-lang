@@ -18,15 +18,15 @@
 // PENDING native review.
 
 export const THEMES = [
-  { id: "numbers-time", en: "Numbers, dates & time", ru: "Числа и время" },
-  { id: "directions", en: "Directions", ru: "Направления" },
-  { id: "shopping", en: "Shopping", ru: "Покупки" },
-  { id: "restaurant", en: "Restaurant & food", ru: "Еда" },
-  { id: "travel", en: "Travel", ru: "Путешествия" },
-  { id: "medical", en: "Medical & doctor", ru: "Здоровье" },
-  { id: "small-talk", en: "Small talk", ru: "Разговор" },
-  { id: "work", en: "Work & office", ru: "Работа" },
-  { id: "emotions", en: "Emotions", ru: "Эмоции" },
+  { id: "numbers-time", en: "Numbers, dates & time", ru: "Числа и время", pt: "Números e tempo" },
+  { id: "directions", en: "Directions", ru: "Направления", pt: "Direções" },
+  { id: "shopping", en: "Shopping", ru: "Покупки", pt: "Compras" },
+  { id: "restaurant", en: "Restaurant & food", ru: "Еда", pt: "Restaurante" },
+  { id: "travel", en: "Travel", ru: "Путешествия", pt: "Viagens" },
+  { id: "medical", en: "Medical & doctor", ru: "Здоровье", pt: "Saúde" },
+  { id: "small-talk", en: "Small talk", ru: "Разговор", pt: "Conversa" },
+  { id: "work", en: "Work & office", ru: "Работа", pt: "Trabalho" },
+  { id: "emotions", en: "Emotions", ru: "Эмоции", pt: "Emoções" },
 ];
 
 // key (prompt text) -> { themes?: [id], grammar?: {tense,why}, person?: {en,ru} }

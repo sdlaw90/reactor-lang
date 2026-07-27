@@ -129,7 +129,7 @@ export default function DashboardPage() {
 
 const styles = {
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: "#171423" },
-  backBtn: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "7px 14px", fontSize: 14, fontWeight: 700, cursor: "pointer", marginBottom: 16 },
+  backBtn: { background: "rgba(255,166,190,0.12)", color: "#FFA6BE", border: "1px solid #FFA6BE", borderRadius: 8, padding: "7px 14px", fontSize: 14, fontWeight: 700, cursor: "pointer", marginBottom: 16 },
   title: { fontSize: 24, fontWeight: 700, color: "#F3F0FA", margin: "0 0 16px" },
   overallCard: { background: "#221E33", border: "1px solid #3A3452", borderRadius: 14, padding: "18px 16px", marginBottom: 24 },
   overallRow: { display: "flex", justifyContent: "space-around" },
@@ -140,5 +140,5 @@ const styles = {
   trackRow: { textAlign: "left", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "14px 16px", cursor: "pointer" },
   trackStatsRow: { display: "flex", gap: 14, marginTop: 6, color: "#B4ABC9", fontSize: 12 },
   rowXpBarOuter: { width: "100%", height: 4, background: "#171423", borderRadius: 2, marginTop: 8, overflow: "hidden" },
-  rowXpBarInner: { height: "100%", background: "linear-gradient(90deg, #FF8FB1, #B98EFF)", borderRadius: 2 },
+  rowXpBarInner: { height: "100%", background: "linear-gradient(90deg, #FFA6BE, #D3B0BF)", borderRadius: 2 },
 };

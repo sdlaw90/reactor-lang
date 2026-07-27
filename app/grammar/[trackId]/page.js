@@ -303,7 +303,7 @@ export default function GrammarGymPage({ params }) {
 }
 
 function chipStyle(active, green) {
-  const on = green ? "#B98EFF" : "#7BE495";
+  const on = green ? "#D3B0BF" : "#7BE495";
   return {
     background: "#171423",
     border: `1px solid ${active ? on : "#3A3452"}`,
@@ -320,9 +320,9 @@ const styles = {
   bg: { position: "relative", minHeight: "100vh", width: "100%", background: "#171423", display: "flex", justifyContent: "center", padding: "20px 16px 60px", overflow: "hidden" },
   wrap: { position: "relative", zIndex: 1, width: "100%", maxWidth: 480 },
   col: { display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" },
-  badge: { width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg, #7BE495, #B98EFF)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10 },
+  badge: { width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg, #7BE495, #D3B0BF)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10 },
   title: { fontSize: 26, fontWeight: 800, color: "#F3F0FA", margin: "0 0 4px" },
-  subtitle: { color: "#B98EFF", fontSize: 13, fontWeight: 600, margin: "0 0 14px" },
+  subtitle: { color: "#D3B0BF", fontSize: 13, fontWeight: 600, margin: "0 0 14px" },
   intro: { color: "#B4ABC9", fontSize: 13.5, lineHeight: 1.5, margin: "0 0 18px" },
   statCard: { width: "100%", background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "12px 16px", marginBottom: 16 },
   filterWrap: { display: "flex", flexWrap: "wrap", gap: 6, width: "100%", marginBottom: 14, justifyContent: "center" },
@@ -334,11 +334,11 @@ const styles = {
   tdPerson: { color: "#B4ABC9", fontSize: 13, padding: "6px 8px", borderBottom: "1px solid #2A2740", textAlign: "left", whiteSpace: "nowrap" },
   tdPersonEn: { color: "#9B93B8", fontSize: 11 },
   tdForm: { color: "#7BE495", fontSize: 15, fontWeight: 600, padding: "6px 8px", borderBottom: "1px solid #2A2740", textAlign: "right" },
-  qCard: { width: "100%", background: "#221E33", border: "1px solid #B98EFF", borderRadius: 16, padding: "20px 18px", marginBottom: 14 },
-  qTense: { display: "inline-block", color: "#E4D6FF", background: "#241B36", border: "1px solid #B98EFF", borderRadius: 999, fontSize: 11, fontWeight: 800, padding: "3px 10px", marginBottom: 12 },
+  qCard: { width: "100%", background: "#221E33", border: "1px solid #D3B0BF", borderRadius: 16, padding: "20px 18px", marginBottom: 14 },
+  qTense: { display: "inline-block", color: "#E4D6FF", background: "#241B36", border: "1px solid #D3B0BF", borderRadius: 999, fontSize: 11, fontWeight: 800, padding: "3px 10px", marginBottom: 12 },
   qPrompt: { color: "#F3F0FA", fontSize: 20, fontWeight: 600, lineHeight: 1.5, margin: 0 },
   optionBtn: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "13px 16px", borderRadius: 10, border: "1px solid", cursor: "pointer", fontSize: 16, fontWeight: 600, textAlign: "left" },
   whyLine: { color: "#B4ABC9", fontSize: 12.5, lineHeight: 1.5, marginTop: 14, marginBottom: 0, textAlign: "left" },
-  primaryBtn: { width: "100%", background: "#FF8FB1", color: "#171423", border: "none", borderRadius: 12, padding: "14px", fontSize: 15, fontWeight: 700, cursor: "pointer", marginTop: 8 },
+  primaryBtn: { width: "100%", background: "#FFA6BE", color: "#171423", border: "none", borderRadius: 12, padding: "14px", fontSize: 15, fontWeight: 700, cursor: "pointer", marginTop: 8 },
   secondaryBtn: { width: "100%", background: "transparent", color: "#B4ABC9", border: "1px solid #3A3452", borderRadius: 12, padding: "12px", fontSize: 14, fontWeight: 600, cursor: "pointer", marginTop: 10 },
 };

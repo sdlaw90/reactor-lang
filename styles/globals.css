@@ -211,10 +211,10 @@ select:focus-visible,
 .gd-bub .lvl { font-size: 8.5px; color: #b4abc9; margin-top: 2px; }
 .gd-wm { position: absolute; right: -4px; top: 50%; transform: translateY(-50%); opacity: 0.22; pointer-events: none; display: flex; }
 .gd-target { animation: gdTap 4.6s ease-in-out infinite; }
-.gd-ripple { position: absolute; top: 50%; left: 46%; width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 143, 177, 0.55); transform: translate(-50%, -50%) scale(0); animation: gdRipple 4.6s ease-out infinite; z-index: 2; }
+.gd-ripple { position: absolute; top: 50%; left: 46%; width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 166, 190, 0.55); transform: translate(-50%, -50%) scale(0); animation: gdRipple 4.6s ease-out infinite; z-index: 2; }
 @keyframes gdTap {
   0%, 38% { border-color: #3a3452; transform: none; box-shadow: none; }
-  46%, 76% { border-color: #ff8fb1; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 16px rgba(255, 143, 177, 0.35); }
+  46%, 76% { border-color: #ffa6be; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 16px rgba(255, 166, 190, 0.35); }
   88%, 100% { border-color: #3a3452; transform: none; box-shadow: none; }
 }
 @keyframes gdRipple {
@@ -228,7 +228,7 @@ select:focus-visible,
 .gd-ladder { position: relative; display: flex; justify-content: space-between; align-items: center; margin: 6px 6px 0; height: 22px; }
 .gd-ladder::before { content: ""; position: absolute; left: 4px; right: 4px; top: 50%; height: 3px; background: #2b2740; border-radius: 2px; }
 .gd-node { position: relative; width: 9px; height: 9px; border-radius: 50%; background: #3a3452; z-index: 1; }
-.gd-marker { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: #ff8fb1; box-shadow: 0 0 0 4px rgba(255, 143, 177, 0.2); transform: translate(-50%, -50%); left: 4%; animation: gdMarker 5s ease-in-out infinite; z-index: 2; }
+.gd-marker { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: #ffa6be; box-shadow: 0 0 0 4px rgba(255, 166, 190, 0.2); transform: translate(-50%, -50%); left: 4%; animation: gdMarker 5s ease-in-out infinite; z-index: 2; }
 .gd-lvlLabels { display: flex; justify-content: space-between; margin: 9px 0 0; }
 .gd-lvlLabels span { font-size: 8px; color: #9b93b8; flex: 1; text-align: center; }
 .gd-suggest { margin: 10px auto 0; background: rgba(94, 224, 160, 0.14); color: #5ee0a0; border: 1px solid rgba(94, 224, 160, 0.4); border-radius: 999px; font-size: 10px; font-weight: 800; padding: 3px 10px; opacity: 0; animation: gdSuggest 5s ease-in-out infinite; }
@@ -245,15 +245,15 @@ select:focus-visible,
 .gd-modeCap span { position: absolute; left: 0; right: 0; font-size: 10.5px; color: #b4abc9; }
 .gd-modeCap .c1 { animation: gdCap1 5s ease-in-out infinite; }
 .gd-modeCap .c2 { opacity: 0; animation: gdCap2 5s ease-in-out infinite; }
-@keyframes gdSeg1 { 0%, 42% { background: #ff8fb1; color: #171423; } 58%, 92% { background: transparent; color: #9b93b8; } 100% { background: #ff8fb1; color: #171423; } }
-@keyframes gdSeg2 { 0%, 42% { background: transparent; color: #9b93b8; } 58%, 92% { background: #ff8fb1; color: #171423; } 100% { background: transparent; color: #9b93b8; } }
+@keyframes gdSeg1 { 0%, 42% { background: #ffa6be; color: #171423; } 58%, 92% { background: transparent; color: #9b93b8; } 100% { background: #ffa6be; color: #171423; } }
+@keyframes gdSeg2 { 0%, 42% { background: transparent; color: #9b93b8; } 58%, 92% { background: #ffa6be; color: #171423; } 100% { background: transparent; color: #9b93b8; } }
 @keyframes gdCap1 { 0%, 42% { opacity: 1; } 58%, 95% { opacity: 0; } 100% { opacity: 1; } }
 @keyframes gdCap2 { 0%, 45% { opacity: 0; } 58%, 92% { opacity: 1; } 100% { opacity: 0; } }
 
 /* 5 — play a round: catTag + Zap combo + correct pulse */
 .gd-play { gap: 8px; }
 .gd-tagrow { display: flex; justify-content: space-between; align-items: center; }
-.gd-tag { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #b98eff; border: 1px solid #b98eff; border-radius: 20px; padding: 2px 9px; }
+.gd-tag { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #d3b0bf; border: 1px solid #d3b0bf; border-radius: 20px; padding: 2px 9px; }
 .gd-combo { display: inline-flex; align-items: center; gap: 3px; color: #ffb84d; font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 600; }
 .gd-comboNum { position: relative; display: inline-block; width: 16px; height: 14px; }
 .gd-comboNum i { position: absolute; left: 0; top: 0; font-style: normal; }
@@ -278,8 +278,8 @@ select:focus-visible,
 .gd-ptr { position: absolute; left: 22%; top: 58px; font-size: 17px; opacity: 0; z-index: 5; animation: gdPtr 5.6s ease-in-out infinite; }
 .gd-wrong { animation: gdWrong 5.6s ease-in-out infinite; }
 .gd-right { animation: gdRight 5.6s ease-in-out infinite; }
-.gd-headsnote { margin-top: 9px; background: rgba(255, 143, 177, 0.08); border: 1px solid rgba(255, 143, 177, 0.35); border-radius: 8px; padding: 7px 9px; color: #b4abc9; font-size: 10px; line-height: 1.45; opacity: 0; transform: translateY(5px); animation: gdHeads 5.6s ease-in-out infinite; }
-.gd-headsnote b { color: #ff8fb1; }
+.gd-headsnote { margin-top: 9px; background: rgba(255, 166, 190, 0.08); border: 1px solid rgba(255, 166, 190, 0.35); border-radius: 8px; padding: 7px 9px; color: #b4abc9; font-size: 10px; line-height: 1.45; opacity: 0; transform: translateY(5px); animation: gdHeads 5.6s ease-in-out infinite; }
+.gd-headsnote b { color: #ffa6be; }
 @keyframes gdPtr {
   0%, 18% { opacity: 0; transform: translateY(0); }
   24% { opacity: 1; transform: translateY(0); }
@@ -309,7 +309,7 @@ select:focus-visible,
 .gd-focusLabel { color: #9b93b8; font-size: 9px; margin-bottom: 6px; }
 .gd-chiprow { display: flex; flex-wrap: wrap; gap: 5px; }
 .gd-catchip { background: #171423; border: 1px solid #3a3452; border-radius: 999px; padding: 3px 10px; font-size: 9.5px; font-weight: 700; color: #b4abc9; }
-.gd-catchip.mixed { border-color: #ff8fb1; color: #ff8fb1; }
+.gd-catchip.mixed { border-color: #ffa6be; color: #ffa6be; }
 .gd-themeSel { animation: gdThemeSel 4.8s ease-in-out infinite; }
 @keyframes gdThemeSel {
   0%, 25% { background: #171423; border-color: #3a3452; color: #b4abc9; }
@@ -343,7 +343,7 @@ select:focus-visible,
 .gd-lvl3 { color: #b4abc9; animation: gdLvl3 5s ease-in-out infinite; }
 .gd-lvl4 { color: #5ee0a0; font-weight: 700; opacity: 0; animation: gdLvl4 5s ease-in-out infinite; }
 .gd-xpout { display: block; width: 100%; height: 5px; background: #171423; border-radius: 3px; margin-top: 7px; overflow: hidden; }
-.gd-xpin { display: block; height: 100%; width: 28%; background: linear-gradient(90deg, #ff8fb1, #b98eff); border-radius: 3px; animation: gdXp 5s ease-in-out infinite; }
+.gd-xpin { display: block; height: 100%; width: 28%; background: linear-gradient(90deg, #ffa6be, #d3b0bf); border-radius: 3px; animation: gdXp 5s ease-in-out infinite; }
 .gd-pwm { position: absolute; right: -6px; top: 50%; transform: translateY(-50%); opacity: 0.22; }
 .gd-pop { position: absolute; top: 6px; right: 8px; z-index: 3; background: rgba(94, 224, 160, 0.16); color: #5ee0a0; border: 1px solid rgba(94, 224, 160, 0.45); border-radius: 999px; font-size: 9px; font-weight: 800; padding: 2px 8px; opacity: 0; transform: translateY(-2px) scale(0.85); animation: gdPop 5s ease-in-out infinite; }
 .gd-streak { display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 12px; font-size: 10.5px; color: #ffb84d; font-weight: 700; }
@@ -364,10 +364,10 @@ select:focus-visible,
     animation: none !important;
   }
   .gd-spark { opacity: 1; }
-  .gd-target { border-color: #ff8fb1; box-shadow: 0 6px 16px rgba(255, 143, 177, 0.35); }
+  .gd-target { border-color: #ffa6be; box-shadow: 0 6px 16px rgba(255, 166, 190, 0.35); }
   .gd-marker { left: 27%; }
   .gd-suggest { opacity: 1; }
-  .gd-seg1 { background: #ff8fb1; color: #171423; }
+  .gd-seg1 { background: #ffa6be; color: #171423; }
   .gd-seg2 { background: transparent; color: #9b93b8; }
   .gd-modeCap .c2 { opacity: 0; }
   .gd-comboNum .n3 { opacity: 0; }
