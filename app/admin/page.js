@@ -185,7 +185,7 @@ const styles = {
   wrap: { minHeight: "100vh", display: "flex", justifyContent: "center", padding: "40px 20px", background: c.bg },
   headerRow: { display: "flex", alignItems: "center", gap: 14, marginBottom: 16 },
   backBtn: {
-    background: "rgba(255,143,177,0.12)",
+    background: "rgba(255,166,190,0.12)",
     color: c.pink,
     border: `1px solid ${c.pink}`,
     borderRadius: 8,

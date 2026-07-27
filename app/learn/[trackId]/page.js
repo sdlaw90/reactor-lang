@@ -450,9 +450,9 @@ const styles = {
   container: { position: "relative", zIndex: 1, width: "100%", maxWidth: 480, padding: "20px 20px 60px" },
   hudRow: { display: "flex", alignItems: "center", marginBottom: 16 },
   backBtn: {
-    background: "rgba(255,143,177,0.12)",
-    color: "#FF8FB1",
-    border: "1px solid #FF8FB1",
+    background: "rgba(255,166,190,0.12)",
+    color: "#FFA6BE",
+    border: "1px solid #FFA6BE",
     borderRadius: 8,
     padding: "7px 14px",
     fontSize: 13,
@@ -461,7 +461,7 @@ const styles = {
   },
   centerCol: { display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" },
   title: { fontSize: 22, fontWeight: 700, color: "#F3F0FA", margin: "0 0 4px" },
-  subtitle: { color: "#B98EFF", fontSize: 13, fontWeight: 600, marginBottom: 24 },
+  subtitle: { color: "#D3B0BF", fontSize: 13, fontWeight: 600, marginBottom: 24 },
   chooseText: { color: "#9B93B8", fontSize: 13, marginBottom: 10, alignSelf: "flex-start" },
   lessonCard: {
     width: "100%",
@@ -501,7 +501,7 @@ const styles = {
     gap: "2px 8px",
     width: "100%",
     background: "#241B36",
-    border: "1px solid #B98EFF",
+    border: "1px solid #D3B0BF",
     borderRadius: 10,
     padding: "8px 12px",
     marginTop: 12,
@@ -550,7 +550,7 @@ const styles = {
   nextBtn: {
     marginTop: 18,
     width: "100%",
-    background: "#FF8FB1",
+    background: "#FFA6BE",
     color: "#171423",
     border: "none",
     borderRadius: 12,
@@ -562,7 +562,7 @@ const styles = {
   statRow: { display: "flex", gap: 32, marginBottom: 24 },
   primaryBtn: {
     width: "100%",
-    background: "#FF8FB1",
+    background: "#FFA6BE",
     color: "#171423",
     border: "none",
     borderRadius: 12,

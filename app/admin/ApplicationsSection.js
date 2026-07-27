@@ -190,7 +190,7 @@ function Meta({ label, value }) {
 function statusColor(status) {
   if (status === "approved") return { background: "rgba(94,224,160,0.15)", color: c.green };
   if (status === "rejected") return { background: "rgba(255,123,138,0.15)", color: c.red };
-  return { background: "rgba(255,143,177,0.15)", color: c.pink };
+  return { background: "rgba(255,166,190,0.15)", color: c.pink };
 }
 
 const styles = {
@@ -223,7 +223,7 @@ const styles = {
   name: { color: c.text, fontWeight: 700, fontSize: 15 },
   email: { color: c.muted, fontSize: 12.5 },
   statusTag: { fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 999, textTransform: "uppercase" },
-  autoTag: { background: "rgba(185,142,255,0.15)", color: c.purple },
+  autoTag: { background: "rgba(211,176,191,0.15)", color: c.purple },
   metaGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 14 },
   metaLabel: { color: c.muted, fontSize: 10.5, textTransform: "uppercase", letterSpacing: 0.5 },
   metaValue: { color: c.body, fontSize: 13, marginTop: 2 },

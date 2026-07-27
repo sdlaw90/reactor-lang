@@ -56,14 +56,14 @@ export default function GlobalError({ error }) {
                 <div style={{ color: "#9B93B8", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>
                   Error code
                 </div>
-                <div style={{ color: "#FF8FB1", fontSize: 18, fontWeight: 800, fontFamily: "monospace", letterSpacing: 1 }}>{code}</div>
+                <div style={{ color: "#FFA6BE", fontSize: 18, fontWeight: 800, fontFamily: "monospace", letterSpacing: 1 }}>{code}</div>
               </div>
             )}
             <button
               onClick={() => window.location.reload()}
               style={{
                 width: "100%",
-                background: "#FF8FB1",
+                background: "#FFA6BE",
                 color: "#171423",
                 border: "none",
                 borderRadius: 12,

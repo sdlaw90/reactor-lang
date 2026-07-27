@@ -272,7 +272,7 @@ export default function BetaApplyPage() {
           </p>
           <p style={styles.body}>
             {t(uiLang, "baFbPre")}
-            <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#FF8FB1" }}>
+            <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#FFA6BE" }}>
               {t(uiLang, "baFbLink")}
             </a>
             {t(uiLang, "baFbPost")}
@@ -299,7 +299,7 @@ export default function BetaApplyPage() {
           </p>
           <p style={styles.body}>
             {t(uiLang, "baFbPre")}
-            <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#FF8FB1" }}>
+            <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#FFA6BE" }}>
               {t(uiLang, "baFbLink")}
             </a>
             {t(uiLang, "baFbPost")}
@@ -616,7 +616,7 @@ const styles = {
   fieldOk: { color: "#5EE0A0", fontSize: 12, margin: "6px 0 0" },
   progressRow: { display: "flex", gap: 6, justifyContent: "center", marginBottom: 10 },
   progressDot: { width: 28, height: 4, borderRadius: 2, background: "#3A3452" },
-  progressDotActive: { background: "#FF8FB1" },
+  progressDotActive: { background: "#FFA6BE" },
   stepLabel: { color: "#9B93B8", fontSize: 12, fontWeight: 700, textAlign: "center", marginBottom: 20, textTransform: "uppercase", letterSpacing: 0.5 },
   label: { display: "block", color: "#B4ABC9", fontSize: 13, fontWeight: 600, marginBottom: 8, lineHeight: 1.4 },
   input: {
@@ -651,7 +651,7 @@ const styles = {
     fontSize: 13.5,
     cursor: "pointer",
   },
-  choiceBtnActive: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", borderColor: "#FF8FB1" },
+  choiceBtnActive: { background: "rgba(255,166,190,0.12)", color: "#FFA6BE", borderColor: "#FFA6BE" },
   scaleBtn: {
     flex: 1,
     background: "#221E33",
@@ -663,12 +663,12 @@ const styles = {
     fontWeight: 700,
     cursor: "pointer",
   },
-  scaleBtnActive: { background: "#FF8FB1", color: "#171423", borderColor: "#FF8FB1" },
+  scaleBtnActive: { background: "#FFA6BE", color: "#171423", borderColor: "#FFA6BE" },
   scaleLabel: { color: "#9B93B8", fontSize: 11 },
   error: { color: "#FF7B8A", fontSize: 13, marginTop: 14 },
   primaryBtn: {
     flex: 1,
-    background: "#FF8FB1",
+    background: "#FFA6BE",
     color: "#171423",
     border: "none",
     borderRadius: 12,

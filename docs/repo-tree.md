@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 419 tracked files.
+> 420 tracked files.
 
 ```
 .env.local.example
@@ -175,27 +175,28 @@ docs/changelog/released/v2.31.0-beta.2/2026-07-13-de-tts-lang-rules.md
 docs/changelog/released/v2.31.0-beta.2/2026-07-13-ja-deepening-wordbank.md
 docs/changelog/released/v2.31.0-beta.2/2026-07-13-ja-tts-pass.md
 docs/changelog/released/v2.31.0-beta.2/2026-07-14-tts-sync-ci.md
+docs/changelog/released/v3.2.0/2026-07-12-runbook-and-changelog.md
+docs/changelog/released/v3.2.0/2026-07-14-ko-tts-lang-rules.md
+docs/changelog/released/v3.2.0/2026-07-14-koforen-wordbank.md
+docs/changelog/released/v3.2.0/2026-07-14-ru-deepening.md
+docs/changelog/released/v3.2.0/2026-07-15-repo-tree-generator.md
+docs/changelog/released/v3.2.0/2026-07-15-ru-tts.md
+docs/changelog/released/v3.2.0/2026-07-15-ru-voice-pin.md
+docs/changelog/released/v3.2.0/2026-07-15-voices-list-helper.md
+docs/changelog/released/v3.2.0/2026-07-15-zh-deepening.md
+docs/changelog/released/v3.2.0/2026-07-15-zh-tts.md
+docs/changelog/released/v3.2.0/2026-07-21-v3-prep-engineering.md
+docs/changelog/released/v3.2.0/2026-07-23-intro-tour.md
+docs/changelog/released/v3.2.0/2026-07-25-admin-localized.md
+docs/changelog/released/v3.2.0/2026-07-25-english-content-parity.md
+docs/changelog/released/v3.2.0/2026-07-25-guide-localized-video-top.md
+docs/changelog/released/v3.2.0/2026-07-25-guide-video-tour.md
+docs/changelog/released/v3.2.0/2026-07-26-logo-rebrand-icons-pwa.md
+docs/changelog/released/v3.2.0/2026-07-26-pt-directed-tracks.md
+docs/changelog/released/v3.2.0/2026-07-26-pt-fono-and-help-about.md
+docs/changelog/released/v3.2.0/2026-07-26-pt-source-foundation.md
+docs/changelog/released/v3.2.0/2026-07-27-rebrand-in-app-and-repalette.md
 docs/changelog/unreleased/.gitkeep
-docs/changelog/unreleased/2026-07-12-runbook-and-changelog.md
-docs/changelog/unreleased/2026-07-14-ko-tts-lang-rules.md
-docs/changelog/unreleased/2026-07-14-koforen-wordbank.md
-docs/changelog/unreleased/2026-07-14-ru-deepening.md
-docs/changelog/unreleased/2026-07-15-repo-tree-generator.md
-docs/changelog/unreleased/2026-07-15-ru-tts.md
-docs/changelog/unreleased/2026-07-15-ru-voice-pin.md
-docs/changelog/unreleased/2026-07-15-voices-list-helper.md
-docs/changelog/unreleased/2026-07-15-zh-deepening.md
-docs/changelog/unreleased/2026-07-15-zh-tts.md
-docs/changelog/unreleased/2026-07-21-v3-prep-engineering.md
-docs/changelog/unreleased/2026-07-23-intro-tour.md
-docs/changelog/unreleased/2026-07-25-admin-localized.md
-docs/changelog/unreleased/2026-07-25-english-content-parity.md
-docs/changelog/unreleased/2026-07-25-guide-localized-video-top.md
-docs/changelog/unreleased/2026-07-25-guide-video-tour.md
-docs/changelog/unreleased/2026-07-26-logo-rebrand-icons-pwa.md
-docs/changelog/unreleased/2026-07-26-pt-directed-tracks.md
-docs/changelog/unreleased/2026-07-26-pt-fono-and-help-about.md
-docs/changelog/unreleased/2026-07-26-pt-source-foundation.md
 docs/codebase-reference.md
 docs/manual-runbook.md
 docs/repo-tree.md

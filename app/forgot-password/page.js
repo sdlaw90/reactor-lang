@@ -294,7 +294,7 @@ const styles = {
   },
   primaryBtn: {
     width: "100%",
-    background: "#FF8FB1",
+    background: "#FFA6BE",
     color: "#171423",
     border: "none",
     borderRadius: 10,
@@ -314,6 +314,6 @@ const styles = {
     textDecoration: "underline",
     width: "100%",
   },
-  link: { color: "#FF8FB1" },
+  link: { color: "#FFA6BE" },
   error: { color: "#FF7B8A", fontSize: 13, marginTop: 4, marginBottom: 4 },
 };

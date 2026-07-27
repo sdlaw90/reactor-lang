@@ -551,7 +551,7 @@ export default function PlayPage({ params }) {
 
             <div style={styles.statRow} className="jm">
               <StatChip label={T("statXpTotal")} value={progress.xp} color="#3DDBFF" />
-              <StatChip label={T("statBestCombo")} value={progress.best_combo} color="#FF8FB1" />
+              <StatChip label={T("statBestCombo")} value={progress.best_combo} color="#FFA6BE" />
               <StatChip label={T("statRounds")} value={progress.rounds_completed} color="#FFB84D" />
             </div>
 
@@ -575,7 +575,7 @@ export default function PlayPage({ params }) {
                       key={s.id}
                       className="rj"
                       onClick={() => changeSkillLevel(s.id)}
-                      style={{ ...styles.skillOption, borderColor: progress.skill_level === s.id ? "#FF8FB1" : "#3A3452" }}
+                      style={{ ...styles.skillOption, borderColor: progress.skill_level === s.id ? "#FFA6BE" : "#3A3452" }}
                     >
                       <span style={{ display: "block" }}>{skillLevelLabel(s.id, uiLang)}</span>
                       <span className="jm" style={styles.skillOptionDesc}>{skillLevelDescription(s.id, uiLang)}</span>
@@ -604,7 +604,7 @@ export default function PlayPage({ params }) {
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                 <button
                   className="rj"
-                  style={{ ...styles.catChip, borderColor: categoryFilter.length === 0 ? "#FF8FB1" : "#3A3452", color: categoryFilter.length === 0 ? "#FF8FB1" : "#B4ABC9" }}
+                  style={{ ...styles.catChip, borderColor: categoryFilter.length === 0 ? "#FFA6BE" : "#3A3452", color: categoryFilter.length === 0 ? "#FFA6BE" : "#B4ABC9" }}
                   onClick={() => { setCategoryFilter([]); setThemeFilter(null); }}
                 >
                   {T("mixed")}
@@ -932,7 +932,7 @@ export default function PlayPage({ params }) {
               <StatChip label={T("statCorrect")} value={`${sessionCorrect}/${round.length}`} color="#5EE0A0" />
               <StatChip label={T("statXpEarned")} value={`+${sessionXP}`} color="#3DDBFF" />
               {roundMode === "review" ? (
-                <StatChip label={T("statMistakesResolved")} value={resolvedCount} color="#FF8FB1" />
+                <StatChip label={T("statMistakesResolved")} value={resolvedCount} color="#FFA6BE" />
               ) : (
                 <StatChip label={T("statDailyStreak")} value={`${progress.streak}d`} color="#FF7B8A" />
               )}
@@ -959,7 +959,7 @@ export default function PlayPage({ params }) {
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8, justifyContent: "center" }}>
                 <button
                   className="rj"
-                  style={{ ...styles.catChip, borderColor: categoryFilter.length === 0 ? "#FF8FB1" : "#3A3452", color: categoryFilter.length === 0 ? "#FF8FB1" : "#B4ABC9" }}
+                  style={{ ...styles.catChip, borderColor: categoryFilter.length === 0 ? "#FFA6BE" : "#3A3452", color: categoryFilter.length === 0 ? "#FFA6BE" : "#B4ABC9" }}
                   onClick={() => { setCategoryFilter([]); setThemeFilter(null); }}
                 >
                   {T("mixed")}
@@ -1305,22 +1305,22 @@ const styles = {
     fontWeight: 700,
     cursor: "pointer",
   },
-  skillEditBtn: { background: "transparent", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "4px 12px", fontSize: 11, fontWeight: 700, cursor: "pointer" },
-  scriptNotice: { width: "100%", background: "#241B36", border: "1px solid #B98EFF", borderRadius: 12, padding: "12px 14px", marginBottom: 16, boxSizing: "border-box" },
+  skillEditBtn: { background: "transparent", color: "#FFA6BE", border: "1px solid #FFA6BE", borderRadius: 8, padding: "4px 12px", fontSize: 11, fontWeight: 700, cursor: "pointer" },
+  scriptNotice: { width: "100%", background: "#241B36", border: "1px solid #D3B0BF", borderRadius: 12, padding: "12px 14px", marginBottom: 16, boxSizing: "border-box" },
   scriptNoticeTitle: { color: "#E4D6FF", fontSize: 14, fontWeight: 700, margin: 0 },
   scriptNoticeBody: { color: "#B4ABC9", fontSize: 12.5, lineHeight: 1.5, margin: "6px 0 10px" },
-  scriptNoticeCta: { background: "#B98EFF", color: "#171423", border: "none", borderRadius: 8, padding: "7px 14px", fontSize: 12, fontWeight: 700, cursor: "pointer" },
+  scriptNoticeCta: { background: "#D3B0BF", color: "#171423", border: "none", borderRadius: 8, padding: "7px 14px", fontSize: 12, fontWeight: 700, cursor: "pointer" },
   scriptNoticeDismiss: { background: "transparent", color: "#9B93B8", border: "1px solid #3A3452", borderRadius: 8, padding: "7px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer" },
   skillOptionDesc: { display: "block", color: "#9B93B8", fontSize: 11, fontWeight: 400, marginTop: 3, lineHeight: 1.4 },
   skillOption: { textAlign: "left", background: "#171423", border: "1px solid", borderRadius: 8, padding: "8px 12px", color: "#F3F0FA", fontSize: 13, fontWeight: 600, cursor: "pointer" },
   placementLinkBtn: { background: "transparent", color: "#3DDBFF", border: "1px solid #3DDBFF", borderRadius: 8, padding: "8px 12px", fontSize: 12, fontWeight: 700, cursor: "pointer", marginTop: 4 },
-  advanceBanner: { marginTop: 10, background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "10px 12px", color: "#E4D6FF", fontSize: 13 },
-  advanceYesBtn: { flex: 1, background: "#B98EFF", color: "#171423", border: "none", borderRadius: 8, padding: "7px 0", fontSize: 12, fontWeight: 700, cursor: "pointer" },
+  advanceBanner: { marginTop: 10, background: "#241B36", border: "1px solid #D3B0BF", borderRadius: 10, padding: "10px 12px", color: "#E4D6FF", fontSize: 13 },
+  advanceYesBtn: { flex: 1, background: "#D3B0BF", color: "#171423", border: "none", borderRadius: 8, padding: "7px 0", fontSize: 12, fontWeight: 700, cursor: "pointer" },
   advanceNoBtn: { flex: 1, background: "transparent", color: "#B4ABC9", border: "1px solid #3A3452", borderRadius: 8, padding: "7px 0", fontSize: 12, fontWeight: 600, cursor: "pointer" },
   bg: { position: "relative", minHeight: "100vh", width: "100%", background: "#171423", display: "flex", justifyContent: "center", padding: "20px 14px", overflow: "hidden" },
   wrap: { position: "relative", zIndex: 1, width: "100%", maxWidth: 480 },
   hud: { display: "flex", alignItems: "center", gap: 10, marginBottom: 22, fontSize: 12 },
-  backBtn: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "6px 14px", fontSize: 15, fontWeight: 700, cursor: "pointer" },
+  backBtn: { background: "rgba(255,166,190,0.12)", color: "#FFA6BE", border: "1px solid #FFA6BE", borderRadius: 8, padding: "6px 14px", fontSize: 15, fontWeight: 700, cursor: "pointer" },
   hudItem: { display: "flex", alignItems: "center", whiteSpace: "nowrap" },
   xpBarOuter: { flex: 1, height: 6, background: "#1D212B", borderRadius: 3, overflow: "hidden" },
   xpBarInner: { height: "100%", background: "linear-gradient(90deg,#3DDBFF,#FFB84D)", borderRadius: 3, transition: "width 0.4s ease" },
@@ -1329,15 +1329,15 @@ const styles = {
   subtitle: { color: "#B4ABC9", fontSize: 14, margin: "0 0 20px", maxWidth: 340 },
   statRow: { display: "flex", gap: 10, marginBottom: 26, width: "100%" },
   chip: { flex: 1, border: "1px solid", borderRadius: 12, padding: "10px 6px", background: "#221E33" },
-  primaryBtn: { background: "#FF8FB1", color: "#171423", border: "none", padding: "14px 28px", borderRadius: 10, fontSize: 18, fontWeight: 700, cursor: "pointer", width: "100%" },
-  reviewBtn: { background: "transparent", color: "#FF8FB1", border: "1px solid #FF8FB1", padding: "12px 24px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 10, display: "flex", alignItems: "center", justifyContent: "center" },
-  missedBadge: { marginLeft: 10, background: "#FF8FB1", color: "#171423", borderRadius: 20, padding: "1px 8px", fontSize: 12, fontWeight: 700 },
+  primaryBtn: { background: "#FFA6BE", color: "#171423", border: "none", padding: "14px 28px", borderRadius: 10, fontSize: 18, fontWeight: 700, cursor: "pointer", width: "100%" },
+  reviewBtn: { background: "transparent", color: "#FFA6BE", border: "1px solid #FFA6BE", padding: "12px 24px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 10, display: "flex", alignItems: "center", justifyContent: "center" },
+  missedBadge: { marginLeft: 10, background: "#FFA6BE", color: "#171423", borderRadius: 20, padding: "1px 8px", fontSize: 12, fontWeight: 700 },
   explainOpenBtn: { background: "transparent", color: "#3DDBFF", border: "1px solid #3DDBFF", padding: "12px 24px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 10 },
   secondaryBtn: { background: "transparent", color: "#9B93B8", border: "1px solid #3A3452", padding: "10px 20px", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", width: "100%" },
   topRow: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: 14, gap: 10 },
   // Matches Lessons' exit styling — mid-round Exit is the single escape
   // route, so it gets the same prominent treatment, not muted chrome.
-  exitBtn: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
+  exitBtn: { background: "rgba(255,166,190,0.12)", color: "#FFA6BE", border: "1px solid #FFA6BE", borderRadius: 8, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
   comboWrap: { display: "flex", alignItems: "center" },
   card: { width: "100%", background: "#221E33", border: "1px solid", borderRadius: 16, padding: "22px 20px", textAlign: "left" },
   catTag: { display: "inline-block", fontSize: 12, fontWeight: 700, textTransform: "uppercase", border: "1px solid", borderRadius: 20, padding: "3px 10px", marginBottom: 14 },
@@ -1350,7 +1350,7 @@ const styles = {
     flexWrap: "wrap",
     gap: "2px 8px",
     background: "#241B36",
-    border: "1px solid #B98EFF",
+    border: "1px solid #D3B0BF",
     borderRadius: 10,
     padding: "8px 12px",
     marginBottom: 16,
@@ -1372,7 +1372,7 @@ const styles = {
     flexShrink: 0,
     padding: 0,
   },
-  soundBox: { background: "#241B36", border: "1px solid #B98EFF", borderRadius: 10, padding: "16px 14px", marginBottom: 16, textAlign: "center" },
+  soundBox: { background: "#241B36", border: "1px solid #D3B0BF", borderRadius: 10, padding: "16px 14px", marginBottom: 16, textAlign: "center" },
   soundText: { color: "#E4D6FF", fontSize: 21, fontWeight: 600, margin: 0, lineHeight: 1.6 },
   soundLegend: { color: "#9B93B8", fontSize: 11, marginTop: 10, marginBottom: 0 },
   optionsGrid: { display: "flex", flexDirection: "column", gap: 10 },
@@ -1383,25 +1383,25 @@ const styles = {
   reviewWrongNoteBox: { background: "rgba(255,184,77,0.07)", border: "1px solid rgba(255,184,77,0.35)", borderRadius: 10, padding: "12px 14px", marginTop: 10 },
   wrongNoteHeader: { fontSize: 11, fontWeight: 700, color: "#FFB84D", marginBottom: 8, letterSpacing: 0.3 },
   // U4 regional-variant card: personalized LatAm↔Spain teaching supplement (es only).
-  dualCard: { background: "rgba(185,142,255,0.06)", border: "1px solid rgba(185,142,255,0.35)", borderRadius: 10, padding: "12px 14px", marginTop: 10 },
+  dualCard: { background: "rgba(211,176,191,0.06)", border: "1px solid rgba(211,176,191,0.35)", borderRadius: 10, padding: "12px 14px", marginTop: 10 },
   dualHead: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 9, gap: 8, flexWrap: "wrap" },
-  dualTitle: { fontSize: 11, fontWeight: 700, color: "#B98EFF", letterSpacing: 0.3 },
+  dualTitle: { fontSize: 11, fontWeight: 700, color: "#D3B0BF", letterSpacing: 0.3 },
   dualGloss: { fontSize: 10.5, color: "#6C6684", border: "1px solid #3A3452", borderRadius: 5, padding: "1px 6px" },
   dualReading: { display: "flex", alignItems: "baseline", gap: 6, marginBottom: 5, flexWrap: "wrap" },
   dualWord: { fontSize: 18, fontWeight: 800, color: "#5EE0A0" },
   dualRegionTag: { fontSize: 12, color: "#9B93B8" },
   dualOther: { fontSize: 13.5, color: "#C7CAD3", margin: 0 },
-  dualToggle: { border: "1px solid rgba(185,142,255,0.4)", background: "transparent", color: "#B98EFF", borderRadius: 20, padding: "3px 11px", fontSize: 11.5, fontWeight: 600, cursor: "pointer" },
+  dualToggle: { border: "1px solid rgba(211,176,191,0.4)", background: "transparent", color: "#D3B0BF", borderRadius: 20, padding: "3px 11px", fontSize: 11.5, fontWeight: 600, cursor: "pointer" },
   dualRegionRow: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center", marginBottom: 7 },
   dualRegionLabel: { fontSize: 10.5, fontWeight: 700, color: "#9B93B8", minWidth: 62 },
   dualChips: { display: "flex", flexWrap: "wrap", gap: 6 },
   dualChip: { display: "inline-flex", alignItems: "baseline", gap: 4, background: "#151925", border: "1px solid #3A3452", borderRadius: 16, padding: "3px 10px", fontSize: 13, color: "#E6E1F5" },
   dualChipMine: { display: "inline-flex", alignItems: "baseline", gap: 4, background: "rgba(94,224,160,0.12)", border: "1px solid #5EE0A0", borderRadius: 16, padding: "3px 10px", fontSize: 13, fontWeight: 700, color: "#dff6e5" },
-  dualChipSpain: { display: "inline-flex", alignItems: "baseline", gap: 4, background: "#151925", border: "1px solid #B98EFF", borderRadius: 16, padding: "3px 10px", fontSize: 13, color: "#E6E1F5" },
+  dualChipSpain: { display: "inline-flex", alignItems: "baseline", gap: 4, background: "#151925", border: "1px solid #D3B0BF", borderRadius: 16, padding: "3px 10px", fontSize: 13, color: "#E6E1F5" },
   dualChipRg: { fontSize: 10, color: "#6C6684" },
   nextBtn: {
     width: "100%",
-    background: "#FF8FB1",
+    background: "#FFA6BE",
     color: "#171423",
     border: "none",
     borderRadius: 10,

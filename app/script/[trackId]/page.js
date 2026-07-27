@@ -240,7 +240,7 @@ export default function ScriptPracticePage({ params }) {
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
               <button
                 className="rj"
-                style={{ ...styles.groupChip, borderColor: groupIds.length === 0 ? "#FF8FB1" : "#3A3452", color: groupIds.length === 0 ? "#FF8FB1" : "#B4ABC9" }}
+                style={{ ...styles.groupChip, borderColor: groupIds.length === 0 ? "#FFA6BE" : "#3A3452", color: groupIds.length === 0 ? "#FFA6BE" : "#B4ABC9" }}
                 onClick={() => setGroupIds([])}
               >
                 {T("scriptAllGroups")}
@@ -249,7 +249,7 @@ export default function ScriptPracticePage({ params }) {
                 <button
                   key={g.id}
                   className="rj"
-                  style={{ ...styles.groupChip, borderColor: groupIds.includes(g.id) ? "#B98EFF" : "#3A3452", color: groupIds.includes(g.id) ? "#B98EFF" : "#B4ABC9" }}
+                  style={{ ...styles.groupChip, borderColor: groupIds.includes(g.id) ? "#D3B0BF" : "#3A3452", color: groupIds.includes(g.id) ? "#D3B0BF" : "#B4ABC9" }}
                   onClick={() => toggleGroup(g.id)}
                 >
                   {g.title}
@@ -359,12 +359,12 @@ const styles = {
   hudRow: { display: "flex", alignItems: "center", marginBottom: 16 },
   header: { marginBottom: 18 },
   title: { fontSize: 22, fontWeight: 700, color: "#F3F0FA", margin: "0 0 4px", textAlign: "center" },
-  subtitle: { color: "#B98EFF", fontSize: 13, fontWeight: 600, margin: 0, textAlign: "center" },
-  backBtn: { background: "rgba(255,143,177,0.12)", color: "#FF8FB1", border: "1px solid #FF8FB1", borderRadius: 8, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
+  subtitle: { color: "#D3B0BF", fontSize: 13, fontWeight: 600, margin: 0, textAlign: "center" },
+  backBtn: { background: "rgba(255,166,190,0.12)", color: "#FFA6BE", border: "1px solid #FFA6BE", borderRadius: 8, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
   intro: { color: "#B4ABC9", fontSize: 13.5, lineHeight: 1.6, marginBottom: 16 },
   systemToggle: { display: "flex", gap: 8, marginBottom: 10 },
   systemBtn: { flex: 1, background: "#221E33", color: "#B4ABC9", border: "1px solid #3A3452", borderRadius: 10, padding: "10px 8px", fontSize: 14, fontWeight: 700, cursor: "pointer" },
-  systemBtnActive: { borderColor: "#FF8FB1", color: "#FF8FB1" },
+  systemBtnActive: { borderColor: "#FFA6BE", color: "#FFA6BE" },
   blurb: { color: "#9B93B8", fontSize: 12.5, lineHeight: 1.5, marginBottom: 14 },
   groupChip: { background: "transparent", border: "1px solid", borderRadius: 999, padding: "5px 12px", fontSize: 12, fontWeight: 700, cursor: "pointer" },
   groupCard: { background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "14px 14px 10px", marginTop: 12 },
@@ -379,6 +379,6 @@ const styles = {
   bigGlyph: { color: "#F3F0FA", fontSize: 56, textAlign: "center", margin: "6px 0 18px", lineHeight: 1.2 },
   bigRoman: { color: "#F3F0FA", fontSize: 34, fontWeight: 700, textAlign: "center", margin: "10px 0 18px" },
   optionBtn: { border: "1px solid", borderRadius: 10, padding: "12px 14px", fontWeight: 600, color: "#F3F0FA", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between" },
-  primaryBtn: { width: "100%", background: "#FF8FB1", color: "#171423", border: "none", borderRadius: 10, padding: "13px", fontSize: 15, fontWeight: 700, cursor: "pointer", marginBottom: 4 },
+  primaryBtn: { width: "100%", background: "#FFA6BE", color: "#171423", border: "none", borderRadius: 10, padding: "13px", fontSize: 15, fontWeight: 700, cursor: "pointer", marginBottom: 4 },
   secondaryBtn: { width: "100%", background: "transparent", color: "#B4ABC9", border: "1px solid #3A3452", borderRadius: 10, padding: "10px", fontSize: 13, fontWeight: 600, cursor: "pointer", marginTop: 8 },
 };

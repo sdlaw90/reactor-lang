@@ -94,9 +94,9 @@ export default function HomePage() {
       <div style={styles.content}>
         <div style={styles.topRow}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <Logo size={28} />
+            <Logo size={34} />
             <h1 className="rj" style={styles.title}>
-              Squirre<span style={{ color: "#FF8FB1" }}>L</span>ingo
+              Squirre<span style={{ color: "#FFA6BE" }}>L</span>ingo
             </h1>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -183,7 +183,7 @@ const styles = {
   usernameDisplay: {
     fontWeight: 800,
     letterSpacing: 0.3,
-    background: "linear-gradient(90deg, #FF8FB1, #B98EFF)",
+    background: "linear-gradient(90deg, #FFA6BE, #D3B0BF)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     backgroundClip: "text",
@@ -216,9 +216,9 @@ const styles = {
   // #85: Help trigger on the home top bar. Muted pink so it reads as a helper
   // affordance, not a primary action; circular to match the avatar trigger.
   helpIconBtn: {
-    background: "rgba(255,143,177,0.12)",
-    color: "#FF8FB1",
-    border: "1px solid #FF8FB1",
+    background: "rgba(255,166,190,0.12)",
+    color: "#FFA6BE",
+    border: "1px solid #FFA6BE",
     borderRadius: "50%",
     width: 34,
     height: 34,
@@ -267,7 +267,7 @@ const styles = {
     zIndex: 1,
   },
   bubbleXpBarOuter: { width: "100%", height: 5, background: "#171423", borderRadius: 3, marginTop: 6, overflow: "hidden" },
-  bubbleXpBarInner: { height: "100%", background: "linear-gradient(90deg, #FF8FB1, #B98EFF)", borderRadius: 3, transition: "width 0.3s" },
+  bubbleXpBarInner: { height: "100%", background: "linear-gradient(90deg, #FFA6BE, #D3B0BF)", borderRadius: 3, transition: "width 0.3s" },
   quickWinPrompt: {
     fontSize: 22,
     fontWeight: 800,

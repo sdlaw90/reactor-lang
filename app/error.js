@@ -81,11 +81,11 @@ const styles = {
     marginBottom: 14,
   },
   codeLabel: { color: "#9B93B8", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" },
-  code: { color: "#FF8FB1", fontSize: 18, fontWeight: 800, fontFamily: "monospace", letterSpacing: 1 },
+  code: { color: "#FFA6BE", fontSize: 18, fontWeight: 800, fontFamily: "monospace", letterSpacing: 1 },
   hint: { color: "#9B93B8", fontSize: 12, lineHeight: 1.5, margin: "0 0 20px" },
   primaryBtn: {
     flex: 1,
-    background: "#FF8FB1",
+    background: "#FFA6BE",
     color: "#171423",
     border: "none",
     borderRadius: 12,

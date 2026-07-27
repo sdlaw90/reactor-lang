@@ -111,7 +111,7 @@ const styles = {
   },
   primaryBtn: {
     width: "100%",
-    background: "#FF8FB1",
+    background: "#FFA6BE",
     color: "#171423",
     border: "none",
     borderRadius: 10,

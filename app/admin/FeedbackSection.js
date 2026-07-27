@@ -273,14 +273,14 @@ function prettifyValue(value, lang = "en") {
 function typeColor(type) {
   if (type === "bug") return { background: "rgba(255,123,138,0.15)", color: c.red };
   if (type === "feature") return { background: "rgba(255,196,107,0.15)", color: c.amber };
-  return { background: "rgba(185,142,255,0.15)", color: c.purple };
+  return { background: "rgba(211,176,191,0.15)", color: c.purple };
 }
 
 function statusStyle(status) {
   if (status === "resolved") return { background: "rgba(94,224,160,0.15)", color: c.green };
   if (status === "in_progress") return { background: "rgba(255,196,107,0.15)", color: c.amber };
   if (status === "wont_fix") return { background: "rgba(155,147,184,0.15)", color: c.muted };
-  return { background: "rgba(255,143,177,0.15)", color: c.pink };
+  return { background: "rgba(255,166,190,0.15)", color: c.pink };
 }
 
 const styles = {
@@ -310,7 +310,7 @@ const styles = {
     textAlign: "left",
   },
   typeTag: { fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 999, textTransform: "uppercase" },
-  codeTag: { background: "rgba(185,142,255,0.15)", color: c.purple, textTransform: "none", fontFamily: "monospace" },
+  codeTag: { background: "rgba(211,176,191,0.15)", color: c.purple, textTransform: "none", fontFamily: "monospace" },
   messagePreview: {
     color: c.text,
     fontSize: 13.5,
@@ -353,7 +353,7 @@ const styles = {
   },
   saveNotesBtn: {
     marginTop: 8,
-    background: "rgba(255,143,177,0.12)",
+    background: "rgba(255,166,190,0.12)",
     color: c.pink,
     border: `1px solid ${c.pink}`,
     borderRadius: 8,

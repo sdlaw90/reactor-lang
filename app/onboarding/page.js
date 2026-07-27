@@ -140,7 +140,7 @@ export default function OnboardingPage() {
       <div style={{ width: "100%", maxWidth: 420 }}>
         <div style={styles.stepIndicator}>
           {STEPS.map((s, i) => (
-            <div key={s} style={{ ...styles.stepDot, background: i <= step ? "#FF8FB1" : "#3A3452" }} />
+            <div key={s} style={{ ...styles.stepDot, background: i <= step ? "#FFA6BE" : "#3A3452" }} />
           ))}
         </div>
 
@@ -235,7 +235,7 @@ export default function OnboardingPage() {
                   <button
                     key={e}
                     onClick={() => setEmojiChoice(e)}
-                    style={{ ...styles.emojiBtn, borderColor: emojiChoice === e ? "#FF8FB1" : "#3A3452" }}
+                    style={{ ...styles.emojiBtn, borderColor: emojiChoice === e ? "#FFA6BE" : "#3A3452" }}
                   >
                     {e}
                   </button>
@@ -290,7 +290,7 @@ const styles = {
   },
   primaryBtn: {
     width: "100%",
-    background: "#FF8FB1",
+    background: "#FFA6BE",
     color: "#171423",
     border: "none",
     borderRadius: 10,
@@ -321,11 +321,11 @@ const styles = {
     fontWeight: 700,
     cursor: "pointer",
   },
-  modeTabActive: { background: "#FF8FB1", color: "#171423", borderColor: "#FF8FB1" },
+  modeTabActive: { background: "#FFA6BE", color: "#171423", borderColor: "#FFA6BE" },
   uploadBtn: {
     background: "transparent",
-    color: "#FF8FB1",
-    border: "1px solid #FF8FB1",
+    color: "#FFA6BE",
+    border: "1px solid #FFA6BE",
     borderRadius: 8,
     padding: "8px 14px",
     fontSize: 13,

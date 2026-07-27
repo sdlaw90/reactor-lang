@@ -64,7 +64,7 @@ export default function ChangelogPage() {
           {t(uiLang, "clTitle")}
         </h1>
         <p style={styles.subtitle}>
-          {t(uiLang, "clCurrentlyPublished")} <span className="jm" style={{ color: "#FF8FB1", fontWeight: 700 }}>v{CURRENT_VERSION}</span>
+          {t(uiLang, "clCurrentlyPublished")} <span className="jm" style={{ color: "#FFA6BE", fontWeight: 700 }}>v{CURRENT_VERSION}</span>
         </p>
         {internalMode && (
           <p style={styles.internalBanner}>
@@ -76,7 +76,7 @@ export default function ChangelogPage() {
           {internalOnlyEntries.map((entry) => (
             <div key={`internal-${entry.version}`} style={{ ...styles.entry, ...styles.internalEntry }}>
               <div style={styles.entryHeader}>
-                <span className="jm" style={{ ...styles.entryVersion, color: "#B98EFF" }}>
+                <span className="jm" style={{ ...styles.entryVersion, color: "#D3B0BF" }}>
                   {entry.version}
                 </span>
                 <span style={styles.entryDate}>{entry.date}</span>
@@ -134,18 +134,18 @@ const styles = {
   internalBanner: {
     color: "#E4D6FF",
     background: "#241B36",
-    border: "1px solid #B98EFF",
+    border: "1px solid #D3B0BF",
     borderRadius: 8,
     padding: "8px 12px",
     fontSize: 12.5,
     marginTop: 10,
   },
   entry: { background: "#221E33", border: "1px solid #3A3452", borderRadius: 12, padding: "14px 18px" },
-  internalEntry: { borderColor: "#B98EFF", background: "#201A31" },
+  internalEntry: { borderColor: "#D3B0BF", background: "#201A31" },
   entryHeader: { display: "flex", alignItems: "baseline", gap: 10, marginBottom: 8 },
-  entryVersion: { color: "#FF8FB1", fontSize: 15, fontWeight: 700 },
+  entryVersion: { color: "#FFA6BE", fontSize: 15, fontWeight: 700 },
   entryDate: { color: "#9B93B8", fontSize: 12 },
-  internalTag: { color: "#B98EFF", fontSize: 10, fontWeight: 800, letterSpacing: 1, marginBottom: 4 },
+  internalTag: { color: "#D3B0BF", fontSize: 10, fontWeight: 800, letterSpacing: 1, marginBottom: 4 },
   list: { margin: 0, paddingLeft: 18 },
   listItem: { color: "#D9D3EC", fontSize: 13.5, lineHeight: 1.6, marginBottom: 4 },
 };

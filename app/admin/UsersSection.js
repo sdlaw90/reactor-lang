@@ -347,7 +347,7 @@ const styles = {
   username: { color: c.text, fontWeight: 700, fontSize: 15 },
   tag: { fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 999, textTransform: "uppercase" },
   youTag: { background: "rgba(94,224,160,0.15)", color: c.green },
-  adminTag: { background: "rgba(185,142,255,0.15)", color: c.purple },
+  adminTag: { background: "rgba(211,176,191,0.15)", color: c.purple },
   ownerTag: { background: "rgba(255,196,107,0.15)", color: c.amber },
   bannedTag: { background: "rgba(255,123,138,0.15)", color: c.red },
   email: { color: c.muted, fontSize: 12.5, marginTop: 3 },
