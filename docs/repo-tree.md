@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 377 tracked files.
+> 419 tracked files.
 
 ```
 .env.local.example
@@ -46,11 +46,13 @@ app/api/log-error/route.js
 app/api/notify-change/route.js
 app/api/password-reset/route.js
 app/api/submit-feedback/route.js
+app/apple-icon.png
 app/auth/page.js
 app/beta-apply/page.js
 app/changelog/page.js
 app/dashboard/page.js
 app/error.js
+app/favicon.ico
 app/feedback/bug/page.js
 app/feedback/feature/page.js
 app/feedback/page.js
@@ -63,7 +65,9 @@ app/icon.svg
 app/layout.js
 app/learn/[trackId]/page.js
 app/listen/[trackId]/page.js
+app/manifest.js
 app/onboarding/page.js
+app/opengraph-image.png
 app/page.js
 app/placement/[trackId]/page.js
 app/play/[trackId]/page.js
@@ -188,6 +192,7 @@ docs/changelog/unreleased/2026-07-25-admin-localized.md
 docs/changelog/unreleased/2026-07-25-english-content-parity.md
 docs/changelog/unreleased/2026-07-25-guide-localized-video-top.md
 docs/changelog/unreleased/2026-07-25-guide-video-tour.md
+docs/changelog/unreleased/2026-07-26-logo-rebrand-icons-pwa.md
 docs/changelog/unreleased/2026-07-26-pt-directed-tracks.md
 docs/changelog/unreleased/2026-07-26-pt-fono-and-help-about.md
 docs/changelog/unreleased/2026-07-26-pt-source-foundation.md
@@ -341,6 +346,11 @@ next.config.mjs
 package-lock.json
 package.json
 playwright.config.js
+public/facebook-banner.png
+public/icon-192.png
+public/icon-512.png
+public/icon-maskable-512.png
+public/splash.png
 public/version.json
 scripts/deploy.js
 scripts/gen-repo-tree.mjs
@@ -361,6 +371,7 @@ scripts/smoke-check.mjs
 scripts/sweep-tts.mjs
 scripts/sync-tts.mjs
 scripts/sync-tutorial-video.mjs
+scripts/tts-chirp-probe.mjs
 scripts/tts-on-deploy.mjs
 scripts/validate-wrongnotes.mjs
 scripts/voices-list.mjs
@@ -385,4 +396,35 @@ supabase/migrations/00000000000015_admin_progress_analytics.sql
 supabase/migrations/00000000000016_admin_settings.sql
 supabase/migrations/00000000000017_tutorial_video_bucket.sql
 supabase/schema.sql
+tts-probe/_manifest.json
+tts-probe/de-word-Aoede.mp3
+tts-probe/de-word-Puck.mp3
+tts-probe/en-gb-word-Aoede.mp3
+tts-probe/en-gb-word-Puck.mp3
+tts-probe/en-us-hello-Aoede.mp3
+tts-probe/en-us-hello-Puck.mp3
+tts-probe/en-us-word-Aoede.mp3
+tts-probe/en-us-word-Puck.mp3
+tts-probe/es-crosslang-Aoede.mp3
+tts-probe/es-crosslang-Puck.mp3
+tts-probe/es-word-Aoede.mp3
+tts-probe/es-word-Puck.mp3
+tts-probe/fr-word-Aoede.mp3
+tts-probe/fr-word-Puck.mp3
+tts-probe/frca-word-Aoede.mp3
+tts-probe/frca-word-Puck.mp3
+tts-probe/it-word-Aoede.mp3
+tts-probe/it-word-Puck.mp3
+tts-probe/ja-frame-Aoede.mp3
+tts-probe/ja-frame-Puck.mp3
+tts-probe/ja-kanji-Aoede.mp3
+tts-probe/ja-kanji-Puck.mp3
+tts-probe/ko-word-Aoede.mp3
+tts-probe/ko-word-Puck.mp3
+tts-probe/ru-word-Aoede.mp3
+tts-probe/ru-word-Puck.mp3
+tts-probe/zh-frame-Aoede.mp3
+tts-probe/zh-frame-Puck.mp3
+tts-probe/zh-tones-Aoede.mp3
+tts-probe/zh-tones-Puck.mp3
 ```
