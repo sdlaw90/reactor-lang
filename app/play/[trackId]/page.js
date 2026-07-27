@@ -27,6 +27,7 @@ import { scriptForTrack } from "../../../data/scripts";
 import { grammarForTrack } from "../../../data/grammar";
 import SectionToggle from "../../../lib/SectionToggle";
 import { trackDisplayName } from "../../../lib/languageNames";
+import { trackSublabel } from "../../../lib/trackSublabels";
 import StreakMilestoneCelebration from "../../../lib/StreakMilestoneCelebration";
 import ReviewBadge from "../../../lib/ReviewBadge";
 import {
@@ -503,8 +504,8 @@ export default function PlayPage({ params }) {
             <h1 className="rj" style={styles.title}>
               {trackDisplayName(track, viewerNativeLang)}
             </h1>
-            <p style={styles.subtitle}>{useAltPrompt && track.sublabelEn ? track.sublabelEn : track.sublabel}</p>
-            <ReviewBadge trackId={track.id} variant="full" style={{ marginTop: 2, marginBottom: 4 }} />
+            <p style={styles.subtitle}>{trackSublabel(track, viewerNativeLang, useAltPrompt)}</p>
+            <ReviewBadge trackId={track.id} variant="full" lang={viewerNativeLang} style={{ marginTop: 2, marginBottom: 4 }} />
 
             <SectionToggle trackId={track.id} active="practice" practiceLabel={T("sectionPractice")} listenLabel={T("sectionListen")} speakLabel={T("sectionSpeak")} soonLabel={T("soonTag")} />
             <ModeToggle trackId={track.id} active="quiz" quickQuizLabel={T("modeQuickQuiz")} lessonsLabel={T("modeLessons")} scriptLabel={trackScript ? T("modeScript") : null} grammarLabel={grammarForTrack(track.id) ? T("modeGrammar") : null} />
@@ -526,7 +527,7 @@ export default function PlayPage({ params }) {
 
             <button className="rj" style={styles.pageHelpToggle} onClick={() => setShowPageHelp((v) => !v)}>
               <Info size={16} />
-              <span style={{ flex: 1, textAlign: "left" }}>What's on this page?</span>
+              <span style={{ flex: 1, textAlign: "left" }}>{T("whatsOnThisPage")}</span>
               <ChevronDown size={16} style={{ transform: showPageHelp ? "rotate(180deg)" : "none", transition: "transform 0.15s" }} />
             </button>
             {showPageHelp && (

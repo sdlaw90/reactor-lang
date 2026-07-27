@@ -17,15 +17,15 @@
 // content splice that shifts indices does not orphan a tag. AI-authored.
 
 export const THEMES = [
-  {"id":"numbers-time","en":"Numbers, dates & time","ko":"숫자와 시간"},
-  {"id":"directions","en":"Directions","ko":"길 안내"},
-  {"id":"shopping","en":"Shopping","ko":"쇼핑"},
-  {"id":"restaurant","en":"Restaurant & food","ko":"식사"},
-  {"id":"travel","en":"Travel","ko":"여행"},
-  {"id":"medical","en":"Medical & doctor","ko":"건강"},
-  {"id":"small-talk","en":"Small talk","ko":"잡담"},
-  {"id":"work","en":"Work & office","ko":"일과 직장"},
-  {"id":"emotions","en":"Emotions","ko":"감정"},
+  {"id":"numbers-time","en":"Numbers, dates & time","ko":"숫자와 시간","pt":"Números e tempo"},
+  {"id":"directions","en":"Directions","ko":"길 안내","pt":"Direções"},
+  {"id":"shopping","en":"Shopping","ko":"쇼핑","pt":"Compras"},
+  {"id":"restaurant","en":"Restaurant & food","ko":"식사","pt":"Restaurante"},
+  {"id":"travel","en":"Travel","ko":"여행","pt":"Viagens"},
+  {"id":"medical","en":"Medical & doctor","ko":"건강","pt":"Saúde"},
+  {"id":"small-talk","en":"Small talk","ko":"잡담","pt":"Conversa"},
+  {"id":"work","en":"Work & office","ko":"일과 직장","pt":"Trabalho"},
+  {"id":"emotions","en":"Emotions","ko":"감정","pt":"Emoções"},
 ];
 
 // key (prompt text) -> { themes?: [id], grammar?: {tense,why}, person?: {en,ko} }

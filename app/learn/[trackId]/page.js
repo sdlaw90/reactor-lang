@@ -262,7 +262,7 @@ export default function LessonsPage({ params }) {
 
             <button className="rj" style={styles.pageHelpToggle} onClick={() => setShowPageHelp((v) => !v)}>
               <Info size={16} />
-              <span style={{ flex: 1, textAlign: "left" }}>What's on this page?</span>
+              <span style={{ flex: 1, textAlign: "left" }}>{T("whatsOnThisPage")}</span>
               <ChevronDown size={16} style={{ transform: showPageHelp ? "rotate(180deg)" : "none", transition: "transform 0.15s" }} />
             </button>
             {showPageHelp && (

@@ -17,13 +17,10 @@ import NavDrawer from "../lib/NavDrawer";
 import { trackDisplayName } from "../lib/languageNames";
 import ReviewBadge from "../lib/ReviewBadge";
 
-const GREETINGS = {
-  es: "¡Bienvenido/a",
-  en: "Welcome",
-};
-
+// #72: was a local {es,en} map, so every new source language fell back to English
+// while the rest of the page was translated. Lives in the shared table now.
 function welcomeGreeting(nativeLang) {
-  return GREETINGS[nativeLang] || "Welcome";
+  return t(nativeLang || "en", "homeGreeting");
 }
 
 export default function HomePage() {
@@ -96,7 +93,7 @@ export default function HomePage() {
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <Logo size={34} />
             <h1 className="rj" style={styles.title}>
-              Squirre<span style={{ color: "#FFA6BE" }}>L</span>ingo
+              Squirre<span style={{ color: "#FFA6BE" }}>Lingo</span>
             </h1>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -145,7 +142,7 @@ export default function HomePage() {
             const skillLabel = skillLevelLabel(p?.skill_level || "none", nativeLang);
             return (
               <button key={tr.id} className="rj" style={styles.bubble} onClick={() => router.push(`/play/${tr.id}`)}>
-                <ReviewBadge trackId={tr.id} variant="bubble" />
+                <ReviewBadge trackId={tr.id} variant="bubble" lang={nativeLang} />
                 <div style={styles.bubbleIconBg}>
                   <TrackIcon trackId={tr.id} size={64} />
                 </div>

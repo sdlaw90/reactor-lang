@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 420 tracked files.
+> 422 tracked files.
 
 ```
 .env.local.example
@@ -197,6 +197,7 @@ docs/changelog/released/v3.2.0/2026-07-26-pt-fono-and-help-about.md
 docs/changelog/released/v3.2.0/2026-07-26-pt-source-foundation.md
 docs/changelog/released/v3.2.0/2026-07-27-rebrand-in-app-and-repalette.md
 docs/changelog/unreleased/.gitkeep
+docs/changelog/unreleased/2026-07-27-smoke-test-fixes.md
 docs/codebase-reference.md
 docs/manual-runbook.md
 docs/repo-tree.md
@@ -340,6 +341,7 @@ lib/supabaseClient.js
 lib/theme.js
 lib/trackIcons.js
 lib/trackItemCounts.js
+lib/trackSublabels.js
 lib/uiLang.js
 lib/version.js
 lib/welcomeVersion.js
