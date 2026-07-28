@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 433 tracked files.
+> 462 tracked files.
 
 ```
 .env.local.example
@@ -165,6 +165,7 @@ data/vocab/zhWords.es.js
 data/vocab/zhWords.js
 docs/INTEGRATION-NOTES.md
 docs/PACKAGING.md
+docs/_run-log-v3.3.md
 docs/architecture.md
 docs/beta-feedback-email-draft.md
 docs/changelog/README.md
@@ -198,9 +199,37 @@ docs/changelog/released/v3.2.0/2026-07-27-rebrand-in-app-and-repalette.md
 docs/changelog/released/v3.2.0/2026-07-27-smoke-test-fixes.md
 docs/changelog/unreleased/.gitkeep
 docs/changelog/unreleased/2026-07-28-e2e-credential-gate.md
+docs/changelog/unreleased/2026-07-28-language-review-lane.md
 docs/changelog/unreleased/2026-07-28-marketing-asset-library.md
 docs/changelog/unreleased/2026-07-28-versioning-and-process-docs.md
 docs/codebase-reference.md
+docs/language-review/README.md
+docs/language-review/es-latam/STATUS.md
+docs/language-review/es-latam/changesets/.gitkeep
+docs/language-review/es-latam/implemented/.gitkeep
+docs/language-review/es-latam/submitted/.gitkeep
+docs/language-review/es-latam/template/es-latam-explanation-review-v3.2.0.md
+docs/language-review/es-latam/template/es-latam-explanation-review-v3.2.0.xlsx
+docs/language-review/es-latam/template/es-latam-interface-review-v3.2.0.md
+docs/language-review/es-latam/template/es-latam-interface-review-v3.2.0.xlsx
+docs/language-review/es-latam/template/es-latam-taught-review-v3.2.0.md
+docs/language-review/es-latam/template/es-latam-taught-review-v3.2.0.xlsx
+docs/language-review/es-spain/STATUS.md
+docs/language-review/es-spain/changesets/.gitkeep
+docs/language-review/es-spain/implemented/.gitkeep
+docs/language-review/es-spain/submitted/.gitkeep
+docs/language-review/es-spain/template/.gitkeep
+docs/language-review/pipeline/.gitignore
+docs/language-review/pipeline/README.md
+docs/language-review/pipeline/build_workbook.py
+docs/language-review/pipeline/check_example.py
+docs/language-review/pipeline/check_freshness.py
+docs/language-review/pipeline/example/2026-08-14-maria-r-interface-v3.2.0.changeset.md
+docs/language-review/pipeline/example/2026-08-14-maria-r-interface-v3.2.0.xlsx
+docs/language-review/pipeline/example/README.md
+docs/language-review/pipeline/extract.mjs
+docs/language-review/pipeline/i18n/es-latam.json
+docs/language-review/pipeline/ingest.py
 docs/manual-runbook.md
 docs/marketing/README.md
 docs/marketing/covers/forest-cover-1640x856.png

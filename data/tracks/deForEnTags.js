@@ -17,15 +17,15 @@
 // PENDING native review.
 
 export const THEMES = [
-  { id: "numbers-time", en: "Numbers, dates & time", de: "Zahlen & Zeit", pt: "Números e tempo" },
-  { id: "directions", en: "Directions", de: "Wegbeschreibung", pt: "Direções" },
-  { id: "shopping", en: "Shopping", de: "Einkaufen", pt: "Compras" },
-  { id: "restaurant", en: "Restaurant & food", de: "Essen & Restaurant", pt: "Restaurante" },
-  { id: "travel", en: "Travel", de: "Reisen", pt: "Viagens" },
-  { id: "medical", en: "Medical & doctor", de: "Gesundheit", pt: "Saúde" },
-  { id: "small-talk", en: "Small talk", de: "Small Talk", pt: "Conversa" },
-  { id: "work", en: "Work & office", de: "Arbeit & Büro", pt: "Trabalho" },
-  { id: "emotions", en: "Emotions", de: "Gefühle", pt: "Emoções" },
+  { id: "numbers-time", en: "Numbers, dates & time", de: "Zahlen & Zeit", pt: "Números e tempo", fr: "Nombres, dates et heures" },
+  { id: "directions", en: "Directions", de: "Wegbeschreibung", pt: "Direções", fr: "Directions" },
+  { id: "shopping", en: "Shopping", de: "Einkaufen", pt: "Compras", fr: "Achats" },
+  { id: "restaurant", en: "Restaurant & food", de: "Essen & Restaurant", pt: "Restaurante", fr: "Restaurant" },
+  { id: "travel", en: "Travel", de: "Reisen", pt: "Viagens", fr: "Voyages" },
+  { id: "medical", en: "Medical & doctor", de: "Gesundheit", pt: "Saúde", fr: "Santé" },
+  { id: "small-talk", en: "Small talk", de: "Small Talk", pt: "Conversa", fr: "Conversation" },
+  { id: "work", en: "Work & office", de: "Arbeit & Büro", pt: "Trabalho", fr: "Travail" },
+  { id: "emotions", en: "Emotions", de: "Gefühle", pt: "Emoções", fr: "Émotions" },
 ];
 
 // key (prompt text) -> { themes?: [id], grammar?: {tense,why}, person?: {en,de} }

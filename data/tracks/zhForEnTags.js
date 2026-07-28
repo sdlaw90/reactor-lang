@@ -11,15 +11,15 @@
 // content splice that shifts indices does not orphan a tag. AI-authored.
 
 export const THEMES = [
-  {"id":"numbers-time","en":"Numbers, dates & time","zh":"数字与时间","pt":"Números e tempo"},
-  {"id":"directions","en":"Directions","zh":"方向","pt":"Direções"},
-  {"id":"shopping","en":"Shopping","zh":"购物","pt":"Compras"},
-  {"id":"restaurant","en":"Restaurant & food","zh":"餐厅","pt":"Restaurante"},
-  {"id":"travel","en":"Travel","zh":"旅行","pt":"Viagens"},
-  {"id":"medical","en":"Medical & doctor","zh":"健康","pt":"Saúde"},
-  {"id":"small-talk","en":"Small talk","zh":"闲聊","pt":"Conversa"},
-  {"id":"work","en":"Work & office","zh":"工作","pt":"Trabalho"},
-  {"id":"emotions","en":"Emotions","zh":"情绪","pt":"Emoções"},
+  {"id":"numbers-time","en":"Numbers, dates & time","zh":"数字与时间","pt":"Números e tempo","fr":"Nombres, dates et heures"},
+  {"id":"directions","en":"Directions","zh":"方向","pt":"Direções","fr":"Directions"},
+  {"id":"shopping","en":"Shopping","zh":"购物","pt":"Compras","fr":"Achats"},
+  {"id":"restaurant","en":"Restaurant & food","zh":"餐厅","pt":"Restaurante","fr":"Restaurant"},
+  {"id":"travel","en":"Travel","zh":"旅行","pt":"Viagens","fr":"Voyages"},
+  {"id":"medical","en":"Medical & doctor","zh":"健康","pt":"Saúde","fr":"Santé"},
+  {"id":"small-talk","en":"Small talk","zh":"闲聊","pt":"Conversa","fr":"Conversation"},
+  {"id":"work","en":"Work & office","zh":"工作","pt":"Trabalho","fr":"Travail"},
+  {"id":"emotions","en":"Emotions","zh":"情绪","pt":"Emoções","fr":"Émotions"},
 ];
 
 // key (prompt text) -> { themes?: [id] }

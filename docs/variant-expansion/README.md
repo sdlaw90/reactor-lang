@@ -6,6 +6,14 @@ Design by Sean + Claude. **The native-review gate sits before REAL (non-beta) pr
 before beta.** Generated content ships to beta-prod *pre-review by standard* (fast momentum for
 beta testers); native review is what gates promotion to the real live app. See *Release strategy*.
 
+
+> **Related, but a different lane.** `docs/language-review/` is the standing #41 native-review
+> lane: localization, regional variants, and the content of every user-facing surface, per
+> language *variety*, with a return path and a per-lane ledger. The packets in
+> `review-packets/` here belong to THIS pipeline (verb/tense variants for a target track) and
+> keep their own lifecycle — they are deliberately not migrated. Same reviewer may work both;
+> the artifacts are not interchangeable.
+
 ## Contents
 - `00-methodology.md` — master playbook. **Read first.** Language-agnostic pipeline + the
   per-language axis reference table that lets Claude run a new language without re-confirming.

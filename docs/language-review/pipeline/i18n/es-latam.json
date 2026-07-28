@@ -1,0 +1,1002 @@
+{
+ "verdicts": [
+  "OK",
+  "CAMBIAR",
+  "DUDA"
+ ],
+ "decisionVerdicts": [
+  "APRUEBO",
+  "CAMBIAR",
+  "DUDA"
+ ],
+ "signoffValues": [
+  "SÍ",
+  "SÍ CON CAMBIOS",
+  "TODAVÍA NO"
+ ],
+ "validationTitle": "Veredicto",
+ "validationMsg": "Elige uno de los valores de la lista.",
+ "advisory": "orientativo",
+ "totalLabel": "TOTAL",
+ "exampleAnchor": "Ejemplo de una fila bien llenada",
+ "summaryTitle": "Resumen y firma de la revisión — {lane} · {scope}",
+ "signoffFields": [
+  "Nombre de quien revisa:",
+  "País / región de origen:",
+  "Fecha de entrega:",
+  "¿Doy el visto bueno general?"
+ ],
+ "summaryFootnote": "«Sin revisar» baja a cero solo cuando cada fila tiene un veredicto. No hace falta llegar a cero para devolvernos el archivo: manda lo que tengas y seguimos desde ahí.",
+ "priority": {
+  "high": "Alta",
+  "medium": "Media",
+  "low": "Baja"
+ },
+ "sheets": {
+  "readme": "LÉEME",
+  "summary": "RESUMEN",
+  "variants": "1-Variantes-regionales",
+  "decisions": "2-Decisiones",
+  "variantConfig": "3-Config-tarjeta",
+  "security": "4-Preguntas-seguridad",
+  "ui": "5-Interfaz",
+  "components": "6-Otros-textos",
+  "prose": "7-Ayuda-AcercaDe",
+  "sample": "8-Muestra-contenido",
+  "changelog": "9-Novedades",
+  "questions": "1-Preguntas",
+  "fono": "2-Pronunciación",
+  "vocab": "3-Banco-de-palabras",
+  "overlay": "4-Muestra-explicaciones",
+  "decisionsContent": "5-Decisiones"
+ },
+ "sheetBlurbs": {
+  "variants": "Términos por país. LO MÁS IMPORTANTE — empieza por aquí.",
+  "decisions": "Decisiones que tomamos a propósito y necesitan tu opinión.",
+  "variantConfig": "Textos de la tarjeta de variantes, nombres de países y etiquetas.",
+  "security": "Las 10 preguntas de recuperación de contraseña.",
+  "ui": "Toda la interfaz: cuenta, ajustes, formularios, juego.",
+  "components": "Tour guiado, nombres de idiomas, niveles, subtítulos.",
+  "prose": "Texto largo de las páginas de Ayuda y Acerca de.",
+  "sample": "Muestra de preguntas de los cursos (de ~{corpus} en total).",
+  "changelog": "Notas de versión traducidas. Prioridad baja, es histórico.",
+  "questions": "Cada pregunta completa: enunciado, respuesta correcta, opciones incorrectas y explicación.",
+  "fono": "Ejercicios de pronunciación: frase, respelling y pares mínimos.",
+  "vocab": "El Banco de Palabras — vocabulario de alta frecuencia.",
+  "overlay": "Muestra de la capa en español sobre los cursos de otros idiomas."
+ },
+ "groups": {
+  "auth": "Inicio de sesión y registro",
+  "onboarding": "Bienvenida (onboarding)",
+  "password-recovery": "Recuperar contraseña",
+  "settings": "Ajustes",
+  "beta-apply": "Solicitud de beta",
+  "gameplay-and-chrome": "Juego e interfaz general",
+  "help-page": "Página de Ayuda",
+  "about-page": "Página Acerca de",
+  "guided-tour": "Tour guiado (primer inicio)",
+  "language-names": "Nombres de idiomas",
+  "skill-levels": "Niveles de habilidad",
+  "language-switcher": "Selector de idioma",
+  "track-sublabels": "Subtítulos de idioma (pantalla de inicio)",
+  "security-question": "Pregunta de seguridad",
+  "card-chrome": "Textos de la tarjeta",
+  "country-names": "Nombres de países",
+  "country-group-labels": "Etiquetas de grupo de países"
+ },
+ "variantKinds": {
+  "reference": "REFERENCIA",
+  "default": "PREDETERMINADO",
+  "regional": "REGIONAL"
+ },
+ "headers": {
+  "text": [
+   "ID",
+   "Sección",
+   "Clave / ubicación",
+   "Inglés (referencia)",
+   "Español actual",
+   "VEREDICTO",
+   "CORRECCIÓN SUGERIDA",
+   "NOTA / MOTIVO",
+   "Prioridad",
+   "Nota del equipo",
+   "Archivo"
+  ],
+  "variants": [
+   "ID",
+   "Concepto Nº",
+   "Concepto (inglés)",
+   "Tipo",
+   "Término actual",
+   "Países asignados",
+   "Etiqueta de grupo",
+   "Variedad responsable",
+   "VEREDICTO",
+   "TÉRMINO CORREGIDO",
+   "PAÍSES CORREGIDOS",
+   "NOTA / MOTIVO"
+  ],
+  "sample": [
+   "ID",
+   "Idioma del curso",
+   "Clave",
+   "Enunciado en español",
+   "Opciones de respuesta",
+   "Notas de explicación",
+   "VEREDICTO",
+   "CORRECCIÓN SUGERIDA",
+   "NOTA / MOTIVO",
+   "Archivo"
+  ],
+  "decisions": [
+   "ID",
+   "Tema",
+   "Qué decidimos y por qué",
+   "Ejemplo / dónde",
+   "DECISIÓN",
+   "ALTERNATIVA PROPUESTA",
+   "NOTA"
+  ],
+  "summary": [
+   "Orden",
+   "Pestaña",
+   "Qué contiene",
+   "Filas",
+   "OK",
+   "CAMBIAR",
+   "DUDA",
+   "Sin revisar"
+  ],
+  "questions": [
+   "ID",
+   "Curso",
+   "Categoría",
+   "Nivel",
+   "Clave",
+   "Enunciado",
+   "Respuesta correcta",
+   "Opciones incorrectas",
+   "Explicación en español",
+   "Explicación en inglés (referencia)",
+   "Notas de las opciones",
+   "VEREDICTO",
+   "CORRECCIÓN SUGERIDA",
+   "NOTA / MOTIVO",
+   "Archivo"
+  ],
+  "fono": [
+   "ID",
+   "Curso",
+   "Clave",
+   "Nivel",
+   "Frase",
+   "Pronunciación escrita",
+   "Respuesta correcta",
+   "Opciones incorrectas",
+   "Explicación en español",
+   "Pares mínimos",
+   "VEREDICTO",
+   "CORRECCIÓN SUGERIDA",
+   "NOTA / MOTIVO",
+   "Archivo"
+  ],
+  "vocabTaught": [
+   "ID",
+   "Clave",
+   "Palabra en español",
+   "Significado en inglés",
+   "Categoría gramatical",
+   "Nivel",
+   "Nota didáctica",
+   "VEREDICTO",
+   "CORRECCIÓN SUGERIDA",
+   "NOTA / MOTIVO",
+   "Archivo"
+  ],
+  "vocabGlossary": [
+   "ID",
+   "Clave",
+   "Palabra del curso",
+   "Significado en inglés (referencia)",
+   "Glosa en español",
+   "Nivel",
+   "VEREDICTO",
+   "GLOSA CORREGIDA",
+   "NOTA / MOTIVO",
+   "Archivo"
+  ],
+  "overlay": [
+   "ID",
+   "Idioma del curso",
+   "Clave",
+   "Enunciado en español",
+   "Opciones de respuesta",
+   "Notas de explicación",
+   "VEREDICTO",
+   "CORRECCIÓN SUGERIDA",
+   "NOTA / MOTIVO",
+   "Archivo"
+  ]
+ },
+ "readme": [
+  [
+   "h1",
+   "SquirreLingo — Revisión de español ({lane})"
+  ],
+  [
+   "p",
+   "Gracias por revisar. Este archivo contiene todo el español que la app le muestra a una persona usuaria en la versión {version}. Está escrito por IA y necesita el visto bueno de alguien nativo antes de que salga públicamente."
+  ],
+  [
+   "h2",
+   "Lo primero: qué español queremos"
+  ],
+  [
+   "b",
+   "Variedad: español latinoamericano. NO español de España. Donde un término cambie (computadora/ordenador, celular/móvil, jugo/zumo), queremos el latinoamericano."
+  ],
+  [
+   "b",
+   "Trato: «tú» informal en toda la app. Nunca «vosotros». «Usted» solo si una frase concreta lo pide."
+  ],
+  [
+   "b",
+   "Género: la app le habla directamente a quien la usa, así que buscamos redacción neutra donde se pueda — sin formas «/a» y sin dar por hecho el género de quien lee."
+  ],
+  [
+   "b",
+   "Tono: cercano, breve y alentador. Nunca regaña ni castiga."
+  ],
+  [
+   "h2",
+   "Cómo llenar el archivo"
+  ],
+  [
+   "n",
+   "1. Revisa una pestaña a la vez. El orden sugerido está en la pestaña RESUMEN."
+  ],
+  [
+   "n",
+   "2. En cada fila hay una columna VEREDICTO con un menú desplegable. Elige un valor:"
+  ],
+  [
+   "i",
+   "OK — el español está bien tal como está. No hace falta escribir nada más."
+  ],
+  [
+   "i",
+   "CAMBIAR — hay algo que corregir. Escribe el texto corregido completo en «CORRECCIÓN SUGERIDA»."
+  ],
+  [
+   "i",
+   "DUDA — no lo tienes claro, o depende del país. Explica en «NOTA / MOTIVO» y lo resolvemos contigo."
+  ],
+  [
+   "n",
+   "3. Escribe SOLO en las celdas de fondo amarillo. Las demás son de referencia; si las cambias, perdemos la conexión con el código."
+  ],
+  [
+   "n",
+   "4. En «CORRECCIÓN SUGERIDA» escribe la frase completa ya corregida, no solo la palabra que cambia."
+  ],
+  [
+   "n",
+   "5. Si una fila no aplica o no sabes juzgarla, déjala en blanco. Preferimos un hueco a una adivinanza."
+  ],
+  [
+   "h2",
+   "Reglas técnicas — importantes"
+  ],
+  [
+   "b",
+   "Los textos entre llaves — {level}, {n}, {current}, {total}, {time} — son huecos que la app rellena sola. Cópialos tal cual en tu corrección: no los traduzcas ni los borres."
+  ],
+  [
+   "b",
+   "&nbsp; es un espacio. Consérvalo donde aparezca."
+  ],
+  [
+   "b",
+   "Los emoji (🐿️ 🐞 💡 ⚡ 🌎 🇪🇸) y las comillas angulares « » son intencionales."
+  ],
+  [
+   "b",
+   "En la pestaña de Ayuda y Acerca de verás marcas de formato: *negrita*, _cursiva_ y {{clave|texto del enlace}}. Consérvalas igual; solo cambia el texto que se lee."
+  ],
+  [
+   "h2",
+   "Ejemplo de una fila bien llenada"
+  ],
+  [
+   "h2",
+   "Qué es lo más importante"
+  ],
+  [
+   "b",
+   "La pestaña 1-Variantes-regionales es la de mayor riesgo. Ahí la app afirma «en México se dice X, en el Cono Sur Y». Una atribución equivocada es un error visible que daña la credibilidad. Si solo tienes tiempo para una pestaña, que sea esa."
+  ],
+  [
+   "b",
+   "En esa pestaña, las filas de tipo REFERENCIA son términos de ESPAÑA, con el fondo gris y la letra en cursiva. No son tu responsabilidad: están ahí porque la tarjeta muestra las dos mitades juntas y sin ver el contraste cuesta juzgar la tuya. Si algo te salta a la vista, dilo — lo tomamos como orientación, no como veredicto."
+  ],
+  [
+   "b",
+   "La pestaña 2-Decisiones recoge decisiones que tomamos a propósito y sobre las que necesitamos tu opinión explícita. Son pocas filas y valen mucho."
+  ],
+  [
+   "b",
+   "La pestaña 8-Muestra-contenido es una MUESTRA (unas 40 preguntas por idioma, de unas {corpus} en total). Sirve para detectar problemas sistemáticos. Si ves un patrón que se repite, dilo en la nota: lo arreglamos en todo el corpus, no solo en esa fila."
+  ],
+  [
+   "h2",
+   "Al terminar"
+  ],
+  [
+   "p",
+   "Llena tu nombre y la fecha en la pestaña RESUMEN y devuelve este mismo archivo .xlsx. No hace falta que lo cambies de formato ni que escribas un informe aparte: leemos las columnas directamente."
+  ]
+ ],
+ "example": {
+  "headers": [
+   "Español actual",
+   "VEREDICTO",
+   "CORRECCIÓN SUGERIDA",
+   "NOTA / MOTIVO"
+  ],
+  "row": [
+   "Elige tu próxima victoria rápida ⚡",
+   "CAMBIAR",
+   "Elige tu próximo logro rápido ⚡",
+   "«victoria» suena a competencia; «logro» encaja mejor con el tono. Aplica igual en toda la app."
+  ]
+ },
+ "notes": {
+  "homeGreeting": "Usa la forma con barra «/a». El resto de la app evita estas formas. ¿Qué forma neutra prefieres?",
+  "childhood_street": "«de niño» tiene género. En otras partes la infancia se menciona de forma neutra («de la infancia»). ¿Alternativa preferida?",
+  "setRecNoteNone": "«restablecerla tú mismo» tiene género masculino. ¿Alternativa neutra?",
+  "LEVEL_DESCRIPTIONS.expert": "«Te sientes cómodo» tiene género masculino. ¿Alternativa neutra?",
+  "notSureTakeQuiz": "«¿No estás seguro?» tiene género masculino. ¿Alternativa neutra?",
+  "setGpTogCaudio": "«por pista»: aquí «track» significa CURSO de idioma, no pista de audio. ¿Se entiende «pista», o es mejor «por idioma» / «por curso»?",
+  "setGpTogTense": "«Rueditas de apoyo» = «training wheels». El tono juguetón es intencional. ¿Funciona en Latinoamérica?",
+  "authAgreeMid": "Fragmento que se concatena. Confirma que se lee bien completo: «Acepto los Términos del servicio y la Política de privacidad».",
+  "authAgreePre": "Fragmento que se concatena — ver authAgreeMid.",
+  "baTitle": "Anglicismo «beta tester» conservado a propósito. ¿Se entiende, o prefieres otra forma?",
+  "authBetaLink": "Anglicismo «beta tester» conservado a propósito.",
+  "baDevTablet": "Anglicismo «Tablet» conservado a propósito.",
+  "baDevDesktop": "«computadora o laptop» (LatAm), no «ordenador/portátil». Confirma.",
+  "baAppAnki": "«tarjetas de memoria» para «flashcards». ¿Es la forma más natural?",
+  "readyToAdvance": "Confirma que «{level}» encaja gramaticalmente con todos los niveles.",
+  "setCountryNote": "Contiene un ejemplo entre comillas rectas \" \" en vez de comillas angulares « ». ¿Unificamos?"
+ },
+ "decisions": [
+  [
+   "Variedad y trato",
+   "Todo el español es latinoamericano con «tú» informal. Nunca «vosotros»; «usted» solo si una frase lo pidiera (ninguna lo hace hoy).",
+   "«¿Olvidaste tu contraseña?», «Puedes cambiarlo cuando quieras»"
+  ],
+  [
+   "Redacción neutra en género",
+   "La app le habla directamente a quien la usa, así que evitamos formas «/a» y adjetivos con género. Quedan al menos cinco excepciones sin resolver.",
+   "«¡Bienvenido/a» (homeGreeting) · «de niño» (pregunta de seguridad) · «restablecerla tú mismo» · «Te sientes cómodo» · «¿No estás seguro?»"
+  ],
+  [
+   "Anglicismos conservados",
+   "Dejamos en inglés los términos tecnológicos que ya se usan tal cual: «beta tester», «beta», «Tablet», «laptop», «Chromebook», y los nombres de marcas.",
+   "«Solicita ser beta tester» en vez de «probador de la versión beta»"
+  ],
+  [
+   "Léxico latinoamericano",
+   "Elegimos deliberadamente el término latinoamericano frente al peninsular. Confirma que no se coló ninguno de España.",
+   "computadora / laptop / celular / correo / Ajustes / ícono / tarjetas de memoria"
+  ],
+  [
+   "«pista» = curso de idioma",
+   "En el código un «track» es un curso de idioma. Lo tradujimos como «pista», que también significa pista de audio.",
+   "«Se habilita por pista» (setGpTogCaudio). Alternativas: «por idioma», «por curso»"
+  ],
+  [
+   "«Rueditas de apoyo»",
+   "Traducción de «training wheels» para las pistas de tiempo verbal. El tono juguetón es intencional.",
+   "«Rueditas de apoyo para tiempos verbales» (setGpTogTense)"
+  ],
+  [
+   "Comillas y rayas",
+   "Usamos comillas angulares « » y raya — de forma consistente como estilo de la casa.",
+   "«Verificar», «¿Olvidaste tu contraseña?»"
+  ],
+  [
+   "Glosario del producto",
+   "Nombres fijos que se repiten en toda la app. Si cambias uno, hay que cambiarlo en todas partes: dilo una vez aquí.",
+   "Quiz Rápido · Lecciones · Gimnasio de Gramática · Banco de Palabras · modo Alfabeto · Ajustes · MCER · prueba de nivel · racha · combo · Modo repaso · «Ojo» · TDAH"
+  ],
+  [
+   "Atribuciones por país (riesgo alto)",
+   "Cada fila REGIONAL de la pestaña 1 afirma que un término se usa en unos países concretos. Es lo más visible y lo más fácil de equivocar.",
+   "«banana / guineo / cambur / plátano», «playera / remera / polera / franela / camiseta»"
+  ],
+  [
+   "Términos de España (fuera de tu alcance)",
+   "Las filas REFERENCIA son los términos peninsulares. Todavía no tenemos a nadie de España revisando; tu opinión aquí es orientativa, no vinculante.",
+   "«coche», «ordenador», «pajita», «bombilla», «zumo»"
+  ],
+  [
+   "Colisión: «bombilla»",
+   "«bombilla» ya está usada como el término de España para el foco (concepto 28), así que no pudimos usarla también para el sorbete chileno. Hoy Chile ve «sorbete», que no es correcto para Chile.",
+   "Concepto 55 (drinking straw). ¿Ponemos «pajita» para Chile, lo dejamos fuera, u otra opción?"
+  ],
+  [
+   "Colisión: «grifo»",
+   "«grifo» ya está usada como el término de España para la llave del agua (concepto 59), así que no pudimos usarla también para la gasolinera peruana. Hoy Perú ve «gasolinera», aunque en Perú se dice «grifo».",
+   "Concepto 68 (gas station). ¿Aceptable así, o preferimos «grifo» para Perú?"
+  ],
+  [
+   "Cola excluida a propósito",
+   "Dejamos fuera palabras cuyo reparto por país es difuso o muy coloquial. Puedes autorizar que se agreguen.",
+   "green beans (ejote/vainita/chaucha/poroto verde) · sandwich · niño/chamaco/pibe/chamo · tipo/chavo/parce · ropa interior · calcomanía"
+  ],
+  [
+   "Registro coloquial en «trabajo»",
+   "El concepto 69 usa formas informales (chamba, laburo, pega). ¿Encaja el registro en una app de aprendizaje?",
+   "Concepto 69 (job/work informal)"
+  ],
+  [
+   "Novedades: «Cuatro idiomas nuevos»",
+   "Una nota de la versión 2.13.0 dice «Cuatro idiomas nuevos» pero enumera tres. El error viene del inglés original y lo tradujimos igual, a propósito.",
+   "Pestaña 9 — v2.13.0, primera viñeta"
+  ],
+  [
+   "Muestra de contenido",
+   "La pestaña 8 es una muestra de 400 preguntas de unas 14.000. Buscamos problemas SISTEMÁTICOS, no una revisión exhaustiva.",
+   "Si algo se repite (por ejemplo una fórmula de explicación que suena rara), señálalo una vez y lo arreglamos en todo el corpus."
+  ]
+ ],
+ "scopes": {
+  "interface": {
+   "title": "Interfaz",
+   "subtitle": "Lo que la app te dice a ti",
+   "sheets": [
+    "variants",
+    "decisions",
+    "variantConfig",
+    "security",
+    "ui",
+    "components",
+    "prose",
+    "changelog"
+   ],
+   "readme": [
+    [
+     "h1",
+     "SquirreLingo — Revisión de español ({lane})"
+    ],
+    [
+     "p",
+     "Gracias por revisar. Este archivo contiene todo el español que la app le muestra a una persona usuaria en la versión {version}. Está escrito por IA y necesita el visto bueno de alguien nativo antes de que salga públicamente."
+    ],
+    [
+     "h2",
+     "Lo primero: qué español queremos"
+    ],
+    [
+     "b",
+     "Variedad: español latinoamericano. NO español de España. Donde un término cambie (computadora/ordenador, celular/móvil, jugo/zumo), queremos el latinoamericano."
+    ],
+    [
+     "b",
+     "Trato: «tú» informal en toda la app. Nunca «vosotros». «Usted» solo si una frase concreta lo pide."
+    ],
+    [
+     "b",
+     "Género: la app le habla directamente a quien la usa, así que buscamos redacción neutra donde se pueda — sin formas «/a» y sin dar por hecho el género de quien lee."
+    ],
+    [
+     "b",
+     "Tono: cercano, breve y alentador. Nunca regaña ni castiga."
+    ],
+    [
+     "h2",
+     "Cómo llenar el archivo"
+    ],
+    [
+     "n",
+     "1. Revisa una pestaña a la vez. El orden sugerido está en la pestaña RESUMEN."
+    ],
+    [
+     "n",
+     "2. En cada fila hay una columna VEREDICTO con un menú desplegable. Elige un valor:"
+    ],
+    [
+     "i",
+     "OK — el español está bien tal como está. No hace falta escribir nada más."
+    ],
+    [
+     "i",
+     "CAMBIAR — hay algo que corregir. Escribe el texto corregido completo en «CORRECCIÓN SUGERIDA»."
+    ],
+    [
+     "i",
+     "DUDA — no lo tienes claro, o depende del país. Explica en «NOTA / MOTIVO» y lo resolvemos contigo."
+    ],
+    [
+     "n",
+     "3. Escribe SOLO en las celdas de fondo amarillo. Las demás son de referencia; si las cambias, perdemos la conexión con el código."
+    ],
+    [
+     "n",
+     "4. En «CORRECCIÓN SUGERIDA» escribe la frase completa ya corregida, no solo la palabra que cambia."
+    ],
+    [
+     "n",
+     "5. Si una fila no aplica o no sabes juzgarla, déjala en blanco. Preferimos un hueco a una adivinanza."
+    ],
+    [
+     "h2",
+     "Reglas técnicas — importantes"
+    ],
+    [
+     "b",
+     "Los textos entre llaves — {level}, {n}, {current}, {total}, {time} — son huecos que la app rellena sola. Cópialos tal cual en tu corrección: no los traduzcas ni los borres."
+    ],
+    [
+     "b",
+     "&nbsp; es un espacio. Consérvalo donde aparezca."
+    ],
+    [
+     "b",
+     "Los emoji (🐿️ 🐞 💡 ⚡ 🌎 🇪🇸) y las comillas angulares « » son intencionales."
+    ],
+    [
+     "b",
+     "En la pestaña de Ayuda y Acerca de verás marcas de formato: *negrita*, _cursiva_ y {{clave|texto del enlace}}. Consérvalas igual; solo cambia el texto que se lee."
+    ],
+    [
+     "h2",
+     "Ejemplo de una fila bien llenada"
+    ],
+    [
+     "h2",
+     "Qué es lo más importante"
+    ],
+    [
+     "b",
+     "La pestaña 1-Variantes-regionales es la de mayor riesgo. Ahí la app afirma «en México se dice X, en el Cono Sur Y». Una atribución equivocada es un error visible que daña la credibilidad. Si solo tienes tiempo para una pestaña, que sea esa."
+    ],
+    [
+     "b",
+     "En esa pestaña, las filas de tipo REFERENCIA son términos de ESPAÑA, con el fondo gris y la letra en cursiva. No son tu responsabilidad: están ahí porque la tarjeta muestra las dos mitades juntas y sin ver el contraste cuesta juzgar la tuya. Si algo te salta a la vista, dilo — lo tomamos como orientación, no como veredicto."
+    ],
+    [
+     "b",
+     "La pestaña 2-Decisiones recoge decisiones que tomamos a propósito y sobre las que necesitamos tu opinión explícita. Son pocas filas y valen mucho."
+    ],
+    [
+     "b",
+     "La pestaña 8-Muestra-contenido es una MUESTRA (unas 40 preguntas por idioma, de unas {corpus} en total). Sirve para detectar problemas sistemáticos. Si ves un patrón que se repite, dilo en la nota: lo arreglamos en todo el corpus, no solo en esa fila."
+    ],
+    [
+     "h2",
+     "Al terminar"
+    ],
+    [
+     "p",
+     "Llena tu nombre y la fecha en la pestaña RESUMEN y devuelve este mismo archivo .xlsx. No hace falta que lo cambies de formato ni que escribas un informe aparte: leemos las columnas directamente."
+    ]
+   ],
+   "decisions": [
+    [
+     "Variedad y trato",
+     "Todo el español es latinoamericano con «tú» informal. Nunca «vosotros»; «usted» solo si una frase lo pidiera (ninguna lo hace hoy).",
+     "«¿Olvidaste tu contraseña?», «Puedes cambiarlo cuando quieras»"
+    ],
+    [
+     "Redacción neutra en género",
+     "La app le habla directamente a quien la usa, así que evitamos formas «/a» y adjetivos con género. Quedan al menos cinco excepciones sin resolver.",
+     "«¡Bienvenido/a» (homeGreeting) · «de niño» (pregunta de seguridad) · «restablecerla tú mismo» · «Te sientes cómodo» · «¿No estás seguro?»"
+    ],
+    [
+     "Anglicismos conservados",
+     "Dejamos en inglés los términos tecnológicos que ya se usan tal cual: «beta tester», «beta», «Tablet», «laptop», «Chromebook», y los nombres de marcas.",
+     "«Solicita ser beta tester» en vez de «probador de la versión beta»"
+    ],
+    [
+     "Léxico latinoamericano",
+     "Elegimos deliberadamente el término latinoamericano frente al peninsular. Confirma que no se coló ninguno de España.",
+     "computadora / laptop / celular / correo / Ajustes / ícono / tarjetas de memoria"
+    ],
+    [
+     "«pista» = curso de idioma",
+     "En el código un «track» es un curso de idioma. Lo tradujimos como «pista», que también significa pista de audio.",
+     "«Se habilita por pista» (setGpTogCaudio). Alternativas: «por idioma», «por curso»"
+    ],
+    [
+     "«Rueditas de apoyo»",
+     "Traducción de «training wheels» para las pistas de tiempo verbal. El tono juguetón es intencional.",
+     "«Rueditas de apoyo para tiempos verbales» (setGpTogTense)"
+    ],
+    [
+     "Comillas y rayas",
+     "Usamos comillas angulares « » y raya — de forma consistente como estilo de la casa.",
+     "«Verificar», «¿Olvidaste tu contraseña?»"
+    ],
+    [
+     "Glosario del producto",
+     "Nombres fijos que se repiten en toda la app. Si cambias uno, hay que cambiarlo en todas partes: dilo una vez aquí.",
+     "Quiz Rápido · Lecciones · Gimnasio de Gramática · Banco de Palabras · modo Alfabeto · Ajustes · MCER · prueba de nivel · racha · combo · Modo repaso · «Ojo» · TDAH"
+    ],
+    [
+     "Atribuciones por país (riesgo alto)",
+     "Cada fila REGIONAL de la pestaña 1 afirma que un término se usa en unos países concretos. Es lo más visible y lo más fácil de equivocar.",
+     "«banana / guineo / cambur / plátano», «playera / remera / polera / franela / camiseta»"
+    ],
+    [
+     "Términos de España (fuera de tu alcance)",
+     "Las filas REFERENCIA son los términos peninsulares. Todavía no tenemos a nadie de España revisando; tu opinión aquí es orientativa, no vinculante.",
+     "«coche», «ordenador», «pajita», «bombilla», «zumo»"
+    ],
+    [
+     "Colisión: «bombilla»",
+     "«bombilla» ya está usada como el término de España para el foco (concepto 28), así que no pudimos usarla también para el sorbete chileno. Hoy Chile ve «sorbete», que no es correcto para Chile.",
+     "Concepto 55 (drinking straw). ¿Ponemos «pajita» para Chile, lo dejamos fuera, u otra opción?"
+    ],
+    [
+     "Colisión: «grifo»",
+     "«grifo» ya está usada como el término de España para la llave del agua (concepto 59), así que no pudimos usarla también para la gasolinera peruana. Hoy Perú ve «gasolinera», aunque en Perú se dice «grifo».",
+     "Concepto 68 (gas station). ¿Aceptable así, o preferimos «grifo» para Perú?"
+    ],
+    [
+     "Cola excluida a propósito",
+     "Dejamos fuera palabras cuyo reparto por país es difuso o muy coloquial. Puedes autorizar que se agreguen.",
+     "green beans (ejote/vainita/chaucha/poroto verde) · sandwich · niño/chamaco/pibe/chamo · tipo/chavo/parce · ropa interior · calcomanía"
+    ],
+    [
+     "Registro coloquial en «trabajo»",
+     "El concepto 69 usa formas informales (chamba, laburo, pega). ¿Encaja el registro en una app de aprendizaje?",
+     "Concepto 69 (job/work informal)"
+    ],
+    [
+     "Novedades: «Cuatro idiomas nuevos»",
+     "Una nota de la versión 2.13.0 dice «Cuatro idiomas nuevos» pero enumera tres. El error viene del inglés original y lo tradujimos igual, a propósito.",
+     "Pestaña 9 — v2.13.0, primera viñeta"
+    ],
+    [
+     "Muestra de contenido",
+     "La pestaña 8 es una muestra de 400 preguntas de unas 14.000. Buscamos problemas SISTEMÁTICOS, no una revisión exhaustiva.",
+     "Si algo se repite (por ejemplo una fórmula de explicación que suena rara), señálalo una vez y lo arreglamos en todo el corpus."
+    ]
+   ],
+   "example": {
+    "headers": [
+     "Español actual",
+     "VEREDICTO",
+     "CORRECCIÓN SUGERIDA",
+     "NOTA / MOTIVO"
+    ],
+    "row": [
+     "Elige tu próxima victoria rápida ⚡",
+     "CAMBIAR",
+     "Elige tu próximo logro rápido ⚡",
+     "«victoria» suena a competencia; «logro» encaja mejor con el tono. Aplica igual en toda la app."
+    ]
+   },
+   "sheetNames": {
+    "changelog": "8-Novedades"
+   }
+  },
+  "taught": {
+   "title": "Contenido enseñado",
+   "subtitle": "El español que la app le enseña a quien lo está aprendiendo",
+   "sheets": [
+    "questions",
+    "fono",
+    "vocab",
+    "decisionsContent"
+   ],
+   "decisions": [
+    [
+     "Qué estamos preguntando aquí",
+     "Este paquete NO es sobre cómo se lee la app. Es sobre el español que la app ENSEÑA a personas angloparlantes que están aprendiendo. Un error aquí no incomoda: enseña mal.",
+     "Curso «Español (Latinoamérica)» para hablantes de inglés"
+    ],
+    [
+     "Las opciones incorrectas importan tanto como la correcta",
+     "Cada pregunta tiene una respuesta correcta y tres incorrectas. Si alguna «incorrecta» también es válida, la pregunta está rota aunque la respuesta marcada sea buena.",
+     "«¿Cómo se dice 'window'?» → la ventana / la puerta / el techo / el suelo"
+    ],
+    [
+     "Variedad",
+     "El curso enseña español latinoamericano neutro: seseo, yeísmo, sin vosotros. Donde hay divergencia regional se enseña como contenido, no se esconde.",
+     "carro/coche · celular/móvil · jugo/zumo · chévere/chido/bacán"
+    ],
+    [
+     "Explicaciones sin traducir (problema conocido)",
+     "Unas 400 notas de opciones incorrectas tienen el texto en inglés en el campo español. Ya lo detectamos y lo vamos a rehacer — no hace falta que las marques una por una, pero avísanos si ves otras formas del mismo problema.",
+     "«el techo → ceiling/roof.» en el campo español"
+    ],
+    [
+     "Explicaciones circulares (problema conocido)",
+     "Algunas explicaciones en español se generaron traduciendo la explicación inglesa, y quedaron sin decir nada.",
+     "«'La puerta' es puerta, 'el techo' es techo»"
+    ],
+    [
+     "Nivel MCER",
+     "Cada pregunta lleva un nivel (A1–C2). Si una te parece mal ubicada, dilo: cambia a quién se le muestra.",
+     "Columna «Nivel»"
+    ],
+    [
+     "Notas didácticas del Banco de Palabras",
+     "Las notas del Banco de Palabras están en inglés a propósito (el curso es para angloparlantes). Revisa que el dato sea correcto, no el idioma.",
+     "«el día» → «Ends in -a but is masculine»"
+    ],
+    [
+     "Pronunciación escrita",
+     "La pronunciación se escribe con un respelling legible, no con AFI. Confirma que se lee bien para una persona angloparlante.",
+     "«¿Qué hora es?» → keh‿OH-rah‿ehs"
+    ]
+   ],
+   "readme": [
+    [
+     "h1",
+     "SquirreLingo — Contenido enseñado en español ({lane})"
+    ],
+    [
+     "p",
+     "Este archivo es el español que la app ENSEÑA: las preguntas, las respuestas, las explicaciones y el vocabulario del curso de español para personas angloparlantes, en la versión {version}. Es distinto del paquete de interfaz: aquí un error no incomoda, enseña mal."
+    ],
+    [
+     "h2",
+     "Qué te estamos pidiendo"
+    ],
+    [
+     "b",
+     "¿La respuesta marcada como correcta es correcta?"
+    ],
+    [
+     "b",
+     "¿Alguna de las opciones incorrectas también podría ser válida? Si es así, la pregunta está rota aunque la respuesta marcada sea buena. Esto es lo más valioso que puedes encontrar."
+    ],
+    [
+     "b",
+     "¿La explicación en español dice algo cierto y útil, y suena natural?"
+    ],
+    [
+     "b",
+     "¿El nivel (A1–C2) está bien puesto para esa pregunta?"
+    ],
+    [
+     "h2",
+     "Variedad"
+    ],
+    [
+     "b",
+     "Español latinoamericano neutro: seseo, yeísmo, sin vosotros. Donde hay divergencia regional, el curso la enseña como contenido en vez de esconderla (carro/coche, celular/móvil, jugo/zumo)."
+    ],
+    [
+     "b",
+     "Las explicaciones y las notas del Banco de Palabras están en INGLÉS a propósito: quien estudia este curso habla inglés. Revisa que el dato sea correcto, no que esté traducido."
+    ],
+    [
+     "h2",
+     "Cómo llenar el archivo"
+    ],
+    [
+     "n",
+     "1. Revisa una pestaña a la vez. El orden sugerido está en la pestaña RESUMEN."
+    ],
+    [
+     "n",
+     "2. En cada fila hay una columna VEREDICTO con un menú desplegable. Elige un valor:"
+    ],
+    [
+     "i",
+     "OK — está bien tal como está. No hace falta escribir nada más."
+    ],
+    [
+     "i",
+     "CAMBIAR — hay algo que corregir. Escribe el texto corregido completo en «CORRECCIÓN SUGERIDA»."
+    ],
+    [
+     "i",
+     "DUDA — no lo tienes claro, o depende del país. Explica en «NOTA / MOTIVO» y lo resolvemos contigo."
+    ],
+    [
+     "n",
+     "3. Escribe SOLO en las celdas de fondo amarillo. Las demás son de referencia; si las cambias, perdemos la conexión con el código."
+    ],
+    [
+     "n",
+     "4. Si una fila no aplica o no sabes juzgarla, déjala en blanco. Preferimos un hueco a una adivinanza."
+    ],
+    [
+     "h2",
+     "Dos problemas que ya conocemos"
+    ],
+    [
+     "b",
+     "Unas 400 notas de opciones incorrectas tienen texto en inglés dentro del campo español. Ya está detectado y lo vamos a rehacer: no hace falta que las marques una por una."
+    ],
+    [
+     "b",
+     "Algunas explicaciones en español salieron circulares («'La puerta' es puerta»). Mismo origen, misma solución. Si ves otras formas del mismo problema, dilo en la nota."
+    ],
+    [
+     "h2",
+     "Ejemplo de una fila bien llenada"
+    ],
+    [
+     "h2",
+     "Al terminar"
+    ],
+    [
+     "p",
+     "Llena tu nombre y la fecha en la pestaña RESUMEN y devuelve este mismo archivo .xlsx."
+    ]
+   ],
+   "example": {
+    "headers": [
+     "Enunciado",
+     "VEREDICTO",
+     "CORRECCIÓN SUGERIDA",
+     "NOTA / MOTIVO"
+    ],
+    "row": [
+     "¿Cómo se dice 'window' en español?",
+     "CAMBIAR",
+     "Cambiar 'el suelo' por 'la pared'",
+     "'el suelo' funciona, pero 'la pared' contrasta mejor con 'la ventana'. La explicación en español además es circular: dice «'la puerta' es puerta»."
+    ]
+   },
+   "sheetNames": {
+    "decisionsContent": "4-Decisiones"
+   }
+  },
+  "explanation": {
+   "title": "Explicaciones en español",
+   "subtitle": "El español que explica OTROS idiomas",
+   "sheets": [
+    "questions",
+    "fono",
+    "vocab",
+    "overlay",
+    "decisionsContent"
+   ],
+   "decisions": [
+    [
+     "Qué estamos preguntando aquí",
+     "Aquí el español no es lo que se enseña: es la voz que EXPLICA otro idioma. Lo que revisas es si la explicación en español es correcta y natural.",
+     "Cursos de inglés para hispanohablantes · glosas del Banco de Palabras de alemán, japonés, coreano, ruso y chino"
+    ],
+    [
+     "Necesitamos las dos cosas",
+     "Una explicación puede estar en español impecable y aun así ser falsa sobre el inglés o el alemán. Si detectas un error de contenido, dilo: es tan útil como el de idioma.",
+     "«'Boring' se traduce como aburrido (que causa aburrimiento)»"
+    ],
+    [
+     "Glosas del Banco de Palabras",
+     "Son traducciones de una sola palabra. La columna de en medio trae la palabra original y su significado en inglés como referencia; la glosa en español es lo que revisas.",
+     "die Zeit (time) → «tiempo»"
+    ],
+    [
+     "Registro",
+     "«tú» informal, igual que en el resto de la app.",
+     "«¿Cómo se dice…?»"
+    ],
+    [
+     "Muestra, no revisión exhaustiva",
+     "La pestaña de muestra trae unas 40 preguntas por idioma de unas {corpus} en total. Buscamos problemas que se repitan. Si ves un patrón, señálalo UNA vez y lo arreglamos en todo el corpus.",
+     "Pestaña 4-Muestra-explicaciones"
+    ],
+    [
+     "Idiomas que quizá no domines",
+     "No hace falta que sepas japonés o ruso para revisar la glosa en español: la referencia en inglés te dice qué debería significar. Si no te alcanza el contexto, marca DUDA.",
+     "Glosas de jaWords, koWords, ruWords, zhWords"
+    ]
+   ],
+   "readme": [
+    [
+     "h1",
+     "SquirreLingo — Explicaciones en español ({lane})"
+    ],
+    [
+     "p",
+     "En este archivo el español no es lo que se enseña: es la voz que EXPLICA otro idioma. Son los cursos de inglés para hispanohablantes, las glosas en español del Banco de Palabras de otros idiomas, y una muestra de la capa en español que acompaña a cada curso. Versión {version}."
+    ],
+    [
+     "h2",
+     "Qué te estamos pidiendo"
+    ],
+    [
+     "b",
+     "¿La explicación en español es correcta sobre el idioma que describe?"
+    ],
+    [
+     "b",
+     "¿Suena natural, o se nota traducida del inglés?"
+    ],
+    [
+     "b",
+     "En las glosas del Banco de Palabras: ¿es la mejor palabra en español para ese significado?"
+    ],
+    [
+     "b",
+     "Una explicación puede estar en español impecable y aun así decir algo falso sobre el inglés. Si ves un error de contenido, dilo: nos sirve tanto como el de idioma."
+    ],
+    [
+     "h2",
+     "Si no dominas el idioma del curso"
+    ],
+    [
+     "b",
+     "No hace falta que sepas japonés o ruso. La columna de referencia en inglés te dice qué debería significar la palabra; tú juzgas si la glosa en español lo dice bien. Si no te alcanza el contexto, marca DUDA y seguimos nosotros."
+    ],
+    [
+     "h2",
+     "Cómo llenar el archivo"
+    ],
+    [
+     "n",
+     "1. Revisa una pestaña a la vez. El orden sugerido está en la pestaña RESUMEN."
+    ],
+    [
+     "n",
+     "2. En cada fila hay una columna VEREDICTO con un menú desplegable. Elige un valor:"
+    ],
+    [
+     "i",
+     "OK — está bien tal como está. No hace falta escribir nada más."
+    ],
+    [
+     "i",
+     "CAMBIAR — hay algo que corregir. Escribe el texto corregido completo en «CORRECCIÓN SUGERIDA»."
+    ],
+    [
+     "i",
+     "DUDA — no lo tienes claro, o depende del país. Explica en «NOTA / MOTIVO» y lo resolvemos contigo."
+    ],
+    [
+     "n",
+     "3. Escribe SOLO en las celdas de fondo amarillo. Las demás son de referencia; si las cambias, perdemos la conexión con el código."
+    ],
+    [
+     "n",
+     "4. Si una fila no aplica o no sabes juzgarla, déjala en blanco. Preferimos un hueco a una adivinanza."
+    ],
+    [
+     "h2",
+     "Ejemplo de una fila bien llenada"
+    ],
+    [
+     "h2",
+     "Sobre la pestaña de muestra"
+    ],
+    [
+     "b",
+     "Trae unas 40 preguntas por idioma de unas {corpus} en total. Sirve para detectar problemas que se repiten. Si ves un patrón, señálalo UNA vez en la nota: lo arreglamos en todo el corpus, no solo en esa fila."
+    ],
+    [
+     "h2",
+     "Al terminar"
+    ],
+    [
+     "p",
+     "Llena tu nombre y la fecha en la pestaña RESUMEN y devuelve este mismo archivo .xlsx."
+    ]
+   ],
+   "example": {
+    "headers": [
+     "Glosa en español",
+     "VEREDICTO",
+     "CORRECCIÓN SUGERIDA",
+     "NOTA / MOTIVO"
+    ],
+    "row": [
+     "hora; clase",
+     "CAMBIAR",
+     "hora (de reloj); clase (lección)",
+     "«hora; clase» sin aclaración es ambiguo — parecen dos cosas sin relación. Conviene marcar cuál es cuál."
+    ]
+   },
+   "sheetNames": {}
+  }
+ }
+}

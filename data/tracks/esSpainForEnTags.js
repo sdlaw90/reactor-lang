@@ -11,15 +11,15 @@
 
 // ---- #88: theme catalog ----
 export const THEMES = [
-  { id: "numbers-time", en: "Numbers, dates & time", es: "Números y tiempo", pt: "Números e tempo" },
-  { id: "directions", en: "Directions", es: "Direcciones", pt: "Direções" },
-  { id: "shopping", en: "Shopping", es: "Compras", pt: "Compras" },
-  { id: "restaurant", en: "Restaurant & food", es: "Restaurante", pt: "Restaurante" },
-  { id: "travel", en: "Travel", es: "Viajes", pt: "Viagens" },
-  { id: "medical", en: "Medical & doctor", es: "Salud", pt: "Saúde" },
-  { id: "small-talk", en: "Small talk", es: "Conversación", pt: "Conversa" },
-  { id: "work", en: "Work & office", es: "Trabajo", pt: "Trabalho" },
-  { id: "emotions", en: "Emotions", es: "Emociones", pt: "Emoções" },
+  { id: "numbers-time", en: "Numbers, dates & time", es: "Números y tiempo", pt: "Números e tempo", fr: "Nombres, dates et heures" },
+  { id: "directions", en: "Directions", es: "Direcciones", pt: "Direções", fr: "Directions" },
+  { id: "shopping", en: "Shopping", es: "Compras", pt: "Compras", fr: "Achats" },
+  { id: "restaurant", en: "Restaurant & food", es: "Restaurante", pt: "Restaurante", fr: "Restaurant" },
+  { id: "travel", en: "Travel", es: "Viajes", pt: "Viagens", fr: "Voyages" },
+  { id: "medical", en: "Medical & doctor", es: "Salud", pt: "Saúde", fr: "Santé" },
+  { id: "small-talk", en: "Small talk", es: "Conversación", pt: "Conversa", fr: "Conversation" },
+  { id: "work", en: "Work & office", es: "Trabajo", pt: "Trabalho", fr: "Travail" },
+  { id: "emotions", en: "Emotions", es: "Emociones", pt: "Emoções", fr: "Émotions" },
 ];
 
 // ---- #89: tense/mood definitions ----
