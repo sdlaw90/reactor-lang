@@ -12,11 +12,6 @@ Built from:
 - `data/vocab/*` — 2768 word-bank entries
 - `data/tracks/l10n/*.es.js` — 10 tracks, 13974 items → 400 sampled (2.9%)
 
-## Extractor warnings
-
-- bilingual maps found in files this extractor does not know — add them to KNOWN_SOURCES and to a section above, or confirm they are out of scope:
-     lib/frequencyVocab.js
-
 ## 1-Preguntas
 
 | ID | Curso | Categoría | Nivel | Clave | Enunciado | Respuesta correcta | Opciones incorrectas | Explicación en español | Explicación en inglés (referencia) | Notas de las opciones | VEREDICTO | CORRECCIÓN SUGERIDA | NOTA / MOTIVO | Archivo |

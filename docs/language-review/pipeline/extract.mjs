@@ -30,6 +30,7 @@
  * being quietly left out of the next review packet. Add it to KNOWN_SOURCES and,
  * if it needs extracting, to the relevant section below.
  */
+import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
@@ -129,10 +130,16 @@ const warn = (m) => { warnings.push(m); console.warn("  ! " + m); };
 const R = (...p) => path.join(REPO, ...p);
 
 /**
- * Every repo file this run actually read, fingerprinted by size + mtime. A packet is a
+ * Every repo file this run actually read, fingerprinted by a content hash. A packet is a
  * snapshot of a moving `dev`; without this there is no way to tell a fresh packet from one
  * built before a release beat landed, and a stale packet costs a reviewer's whole pass.
  * `check_freshness.py` compares this against the repo before you send anything.
+ *
+ * The hash is taken over CRLF-normalised bytes, and mtime is NOT recorded. This repo is
+ * checked out on Windows (CRLF) while git stores LF, so raw size and raw hash both differ
+ * between a working copy and a fresh clone for byte-identical content — and mtime differs
+ * on every checkout. Fingerprinting on either would cry stale constantly and get ignored,
+ * which is worse than not checking at all.
  */
 const touched = new Set();
 const imp = (rel) => { touched.add(rel); return import(pathToFileURL(R(rel)).href); };
@@ -255,6 +262,9 @@ if (SCOPE === "interface") {
 
   const LANG_LABELS = readLiteral("lib/LangSwitcher.js", "LANG_LABELS");
   push("language-switcher", "LANG_LABELS", LANG_LABELS.en, LANG_LABELS[LANG], "lib/LangSwitcher.js");
+
+  const OVERLAY_DONE = readLiteral("lib/GuideOverlay.js", "OVERLAY_DONE");
+  push("guided-tour", "OVERLAY_DONE", OVERLAY_DONE.en, OVERLAY_DONE[LANG], "lib/GuideOverlay.js");
 
   const SUBLABELS = (await imp("lib/trackSublabels.js")).default;
   for (const [tid, m] of Object.entries(SUBLABELS))
@@ -481,8 +491,15 @@ if (SCOPE !== "interface") {
   const KNOWN = new Set([
     "lib/playStrings.js", "lib/version.js", "lib/helpAboutContent.js", "lib/guideSteps.js",
     "lib/languageNames.js", "lib/skillLevels.js", "lib/LangSwitcher.js", "lib/trackSublabels.js",
-    "lib/securityQuestions.js", "data/tracks/l10n/regionalVariants.js",
+    "lib/securityQuestions.js", "lib/GuideOverlay.js", "data/tracks/l10n/regionalVariants.js",
+    // Not user-facing copy: a frequency-ranked word list feeding the Word Bank generator.
+    // Its words ARE reviewed — as data/vocab/<lang>Words.js, in the `taught` scope.
+    "lib/frequencyVocab.js",
   ]);
+  // Comments describe string shapes ("Slot 6 is an optional { en: …, es: … } object") and
+  // would otherwise report forever as a surface that doesn't exist.
+  const stripComments = (src) =>
+    src.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/(^|[^:])\/\/[^\n]*/g, "$1 ");
   const re = new RegExp(`\\ben\\s*:\\s*["'\`][\\s\\S]{0,4000}?\\b${LANG}\\s*:\\s*["'\`]`);
   const walk = (dir, acc = []) => {
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -496,7 +513,7 @@ if (SCOPE !== "interface") {
   for (const abs of [...walk(R("lib")), ...walk(R("app"))]) {
     const rel = path.relative(REPO, abs).replace(/\\/g, "/");
     if (KNOWN.has(rel)) continue;
-    if (re.test(fs.readFileSync(abs, "utf8"))) unknown.push(rel);
+    if (re.test(stripComments(fs.readFileSync(abs, "utf8")))) unknown.push(rel);
   }
   if (unknown.length) {
     warn(`bilingual maps found in files this extractor does not know — add them to KNOWN_SOURCES ` +
@@ -510,12 +527,23 @@ if (SCOPE !== "interface") {
   const fp = {};
   for (const rel of [...touched].sort()) {
     try {
-      const st = fs.statSync(R(rel));
-      fp[rel] = { bytes: st.size, mtimeMs: Math.round(st.mtimeMs) };
+      const raw = fs.readFileSync(R(rel));
+      const norm = Buffer.from(raw.toString("utf8").replace(/\r\n/g, "\n"), "utf8");
+      fp[rel] = { bytes: norm.length,
+                  sha256: crypto.createHash("sha256").update(norm).digest("hex") };
     } catch (e) { warn(`could not fingerprint ${rel}: ${e.message}`); }
   }
   out.sourceFingerprint = fp;
-  console.log(`fingerprinted ${Object.keys(fp).length} source files`);
+
+  // The signal that actually matters: a hash of the rows THIS packet contains. Source-file
+  // hashes alone cry stale for changes that cannot affect this packet — the v3.3 beat added a
+  // French column to playStrings.js and helpAboutContent.js, growing both files by ~47 KB
+  // while changing not one Spanish string. A check that fires on that gets ignored, and an
+  // ignored check is worse than none.
+  out.contentHash = crypto.createHash("sha256")
+    .update(JSON.stringify(out.sections)).digest("hex");
+  console.log(`fingerprinted ${Object.keys(fp).length} source files · ` +
+              `content ${out.contentHash.slice(0, 12)}`);
 }
 
 // ================================================================ write

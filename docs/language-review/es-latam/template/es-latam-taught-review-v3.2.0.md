@@ -11,11 +11,6 @@ Built from:
 - `data/tracks/esForEn.js` — 665 questions + 79 pronunciation items
 - `data/vocab/*` — 609 word-bank entries
 
-## Extractor warnings
-
-- bilingual maps found in files this extractor does not know — add them to KNOWN_SOURCES and to a section above, or confirm they are out of scope:
-     lib/frequencyVocab.js
-
 ## 1-Preguntas
 
 | ID | Curso | Categoría | Nivel | Clave | Enunciado | Respuesta correcta | Opciones incorrectas | Explicación en español | Explicación en inglés (referencia) | Notas de las opciones | VEREDICTO | CORRECCIÓN SUGERIDA | NOTA / MOTIVO | Archivo |

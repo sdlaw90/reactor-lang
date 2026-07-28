@@ -354,6 +354,10 @@ def main():
     # from a stale one. check_freshness.py reads this.
     (out_dir / f"{stem}.sources.json").write_text(json.dumps({
         "lane": lane, "scope": scope, "version": version,
+        # contentHash is the staleness signal: the rows this packet actually contains.
+        # builtFrom is provenance only — a source file can change in ways that cannot touch
+        # this packet (another language's column landing in the same table).
+        "contentHash": D.get("contentHash"),
         "builtFrom": D.get("sourceFingerprint", {}),
     }, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
 

@@ -1,0 +1,96 @@
+{
+ "lane": "es-latam",
+ "scope": "explanation",
+ "version": "3.2.0",
+ "contentHash": "95c52d4da0859bdf36fd9615999dffb25f180cfc7ff60a29e972e20ef775e0f1",
+ "builtFrom": {
+  "data/tracks/enGbForEs.js": {
+   "bytes": 345531,
+   "sha256": "f9cfa05aaacfa2dddc0a36f0887ed4f7c25879d21dba1c230b3fa0453b0a59cb"
+  },
+  "data/tracks/enUsForEs.js": {
+   "bytes": 296928,
+   "sha256": "03bafbefb3dfbfe514a47953121e2677f09285f6c108e9085780431facc9aceb"
+  },
+  "data/tracks/l10n/deForEn.es.js": {
+   "bytes": 177403,
+   "sha256": "8415ecc751ab143ed40290ab356c7fadc7669f1bed204ac0b2fa4da6e08f191a"
+  },
+  "data/tracks/l10n/frCaForEn.es.js": {
+   "bytes": 227352,
+   "sha256": "e9668be9fb03f8a688fc47168c67993c3d15905974ae28d7b3cf0b296b859742"
+  },
+  "data/tracks/l10n/frForEn.es.js": {
+   "bytes": 217918,
+   "sha256": "4175bcc4807661bb479ef8d1a33de48069dbf09f8bb10ce3af3b67751a624952"
+  },
+  "data/tracks/l10n/itForEn.es.js": {
+   "bytes": 213022,
+   "sha256": "350b41b1677c8818e4bb47e5335ce2db2c21e92414c28549aa370f71250aab0e"
+  },
+  "data/tracks/l10n/jaForEn.es.js": {
+   "bytes": 226319,
+   "sha256": "03dcc290a05d182b47595090a68b5045ab105e8a095fcf78182497894c82f34c"
+  },
+  "data/tracks/l10n/koForEn.es.js": {
+   "bytes": 210870,
+   "sha256": "18266b8742374564b32823ec9b9cb92c5a79b039dc21a1f211b7885b01fb2698"
+  },
+  "data/tracks/l10n/ptBrForEn.es.js": {
+   "bytes": 210013,
+   "sha256": "cea19413396a3d2e3494dea4b6dfbc4f224fc526e20cccc472030871bcf0b989"
+  },
+  "data/tracks/l10n/ptPtForEn.es.js": {
+   "bytes": 241605,
+   "sha256": "4d7673eaf3c550fd448d9b2d2f39691ab3451c3004609ffe125ce7aaa28ccb0a"
+  },
+  "data/tracks/l10n/ruForEn.es.js": {
+   "bytes": 96884,
+   "sha256": "a1a86ecbfdb8ef3ef555d097c77a9211ad451e7cc001ab1bef7c6df99cf4b581"
+  },
+  "data/tracks/l10n/zhForEn.es.js": {
+   "bytes": 183039,
+   "sha256": "0a64bd9c6fd4cec292aae76aaee328182d36cef49b16baa1437a750f8c6bb3cd"
+  },
+  "data/vocab/deWords.es.js": {
+   "bytes": 12439,
+   "sha256": "8f54d4a8a573c5564aed9c521d9ac8434f7760126ad4ccc772fb661e7914c2c1"
+  },
+  "data/vocab/deWords.js": {
+   "bytes": 66881,
+   "sha256": "6ee2b2a3ab90c5e6c9ce0bac7aae4be7a756c77a6e7e172d54ad9dcb89357ed2"
+  },
+  "data/vocab/jaWords.es.js": {
+   "bytes": 16071,
+   "sha256": "b4f9049762c4d61b2a688929ada2844b84a04932d2f275beb060c8af8677e05e"
+  },
+  "data/vocab/jaWords.js": {
+   "bytes": 88399,
+   "sha256": "2f50bcab0735031370af0f445cfe23af5e01890b868485f68c72a9766b2334e5"
+  },
+  "data/vocab/koWords.es.js": {
+   "bytes": 14616,
+   "sha256": "57729966b4a6d6e7ec950ab60cc6294fc5cfe15a1bbcfbe5cd19c68af12fd759"
+  },
+  "data/vocab/koWords.js": {
+   "bytes": 57160,
+   "sha256": "27091a7ca200799f7da4a1fbce28c0cf59b2c42065f4289ba9526c114fe8840d"
+  },
+  "data/vocab/ruWords.es.js": {
+   "bytes": 3782,
+   "sha256": "6e4b99a95ef9f4b7ab6b1be360040bc609371e0613ada49c230bc2240c38089b"
+  },
+  "data/vocab/ruWords.js": {
+   "bytes": 13852,
+   "sha256": "3af0d35625b51d39fcdcc65664567f3352d35c5dc94f3e47b3ea10e66698cf8f"
+  },
+  "data/vocab/zhWords.es.js": {
+   "bytes": 13496,
+   "sha256": "9bb770f3babd85b835da95dc3d4fa5d6cca5925b99127558e7fd7be8fd06ce0c"
+  },
+  "data/vocab/zhWords.js": {
+   "bytes": 38349,
+   "sha256": "f6ee0e57b204aabe0f5632aa7d3892a3de9879332b3bea94367c3391d876de9d"
+  }
+ }
+}

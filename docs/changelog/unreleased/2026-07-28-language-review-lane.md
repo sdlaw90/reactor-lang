@@ -61,14 +61,22 @@ app, content or component changes._
   failure mode: a moved column or an unmatched verdict word making a reviewer's corrections
   silently vanish. Kept out of `es-latam/submitted/` on purpose — that folder holds real
   reviewer testimony.
-- **Freshness guard** — every packet now ships a `<stem>.sources.json` fingerprinting the repo
-  files it was built from, and `pipeline/check_freshness.py` diffs that against the repo. A
-  packet is a snapshot of a moving `dev`; the version in its filename cannot tell you whether a
-  release beat landed underneath it. This bit immediately: the first `es-latam` `interface`
-  packet was built from a snapshot taken minutes before the v3.3 beat rewrote
-  `lib/playStrings.js` (64,523 → 83,237 bytes) and `lib/helpAboutContent.js` (76,524 → 104,449)
-  underneath it, so it is marked STALE in `es-latam/STATUS.md` and must be regenerated before
-  it goes to a reviewer. `taught` and `explanation` read `data/tracks/` and `data/vocab/`,
-  untouched by v3.3, and are unaffected.
+- **Freshness guard, content-based.** Every packet ships a `<stem>.sources.json` carrying a
+  `contentHash` over the rows it contains plus a `builtFrom` fingerprint of its sources;
+  `pipeline/check_freshness.py` re-extracts and compares. It deliberately does NOT judge
+  staleness from source size, mtime or file hash — the v3.3 beat added a **French** column to
+  `lib/playStrings.js` (64,523 → 82,530 bytes) and `lib/helpAboutContent.js` (76,524 →
+  103,448), changing **zero Spanish values and no keys**. A source-keyed check calls that a
+  stale Spanish packet; it isn't, and a check that fires on non-events gets ignored, which is
+  worse than no check. Verified: the regenerated `.xlsx` cell content is byte-identical.
+- **Packets rebuilt from a full clone of `dev` @ 01e90e6, and that mattered.** The drift sweep
+  walks `lib/` and `app/` on disk, so it can only report files it can see; the first build ran
+  against a partial copy and its clean result was not trustworthy. Against a complete checkout
+  it immediately found a user-facing Spanish string that had never been in a packet:
+  `lib/GuideOverlay.js` → `OVERLAY_DONE` = `"¡Vamos!"`. Now extracted — `interface` went
+  1,207 → 1,208 rows. The sweep also strips comments before testing, so a comment describing a
+  string's shape stops reporting as a surface that doesn't exist, and `lib/frequencyVocab.js`
+  is now in `KNOWN` with a reason (its words are reviewed as `data/vocab/*Words.js` in the
+  `taught` scope).
 - Every `.xlsx` ships with a generated `.md` twin so git can diff a packet and a string can be
   grepped without opening Excel.

@@ -1,0 +1,16 @@
+{
+ "lane": "es-latam",
+ "scope": "taught",
+ "version": "3.2.0",
+ "contentHash": "4e28eafcd84c952092bb377f9b147ba102d62bf4b75c8119d4509d9be6aaa565",
+ "builtFrom": {
+  "data/tracks/esForEn.js": {
+   "bytes": 845294,
+   "sha256": "d68d7b391a3e435b25014c3acc6fa873cd2339f52220031b1ab5fdb3d889a348"
+  },
+  "data/vocab/esLatAmWords.js": {
+   "bytes": 32484,
+   "sha256": "1a46a963a708a6fd78502e1b8bc83019d8db78bf325d9129b624ede9b028be74"
+  }
+ }
+}

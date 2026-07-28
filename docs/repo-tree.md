@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 462 tracked files.
+> 465 tracked files.
 
 ```
 .env.local.example
@@ -209,10 +209,13 @@ docs/language-review/es-latam/changesets/.gitkeep
 docs/language-review/es-latam/implemented/.gitkeep
 docs/language-review/es-latam/submitted/.gitkeep
 docs/language-review/es-latam/template/es-latam-explanation-review-v3.2.0.md
+docs/language-review/es-latam/template/es-latam-explanation-review-v3.2.0.sources.json
 docs/language-review/es-latam/template/es-latam-explanation-review-v3.2.0.xlsx
 docs/language-review/es-latam/template/es-latam-interface-review-v3.2.0.md
+docs/language-review/es-latam/template/es-latam-interface-review-v3.2.0.sources.json
 docs/language-review/es-latam/template/es-latam-interface-review-v3.2.0.xlsx
 docs/language-review/es-latam/template/es-latam-taught-review-v3.2.0.md
+docs/language-review/es-latam/template/es-latam-taught-review-v3.2.0.sources.json
 docs/language-review/es-latam/template/es-latam-taught-review-v3.2.0.xlsx
 docs/language-review/es-spain/STATUS.md
 docs/language-review/es-spain/changesets/.gitkeep
