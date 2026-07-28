@@ -44,9 +44,13 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           NEXT_PUBLIC_ADMIN_EMAIL: ${{ secrets.NEXT_PUBLIC_ADMIN_EMAIL }}
           NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
-          # Optional -- authenticated-flow tests skip cleanly if these aren't
-          # set, so this workflow still runs (and is useful) before a
-          # dedicated test account exists.
+          # REQUIRED in CI. These were once optional, on the theory that the
+          # workflow was "still useful" without them -- but the authenticated
+          # suite (6 of 20 tests) then skipped silently in every run, and the
+          # board showed green while a third of the suite tested nothing.
+          # e2e/authenticated-flow.spec.js now FAILS in CI when either is
+          # absent. Both live under the "Production" Environment, which this
+          # job declares above. Setup: docs/manual-runbook.md §9.
           E2E_TEST_EMAIL: ${{ secrets.E2E_TEST_EMAIL }}
           E2E_TEST_PASSWORD: ${{ secrets.E2E_TEST_PASSWORD }}
 

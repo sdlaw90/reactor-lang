@@ -32,7 +32,8 @@ Never `npm install`.
 ```
 npm ci
 npm run build        # includes ESLint (no-undef catches the undefined-component bug class)
-npx playwright test  # E2E — verify this matches the actual script name in package.json
+npm run test:e2e     # E2E (= `playwright test`); needs the §9 test-account env vars
+                     # for the authenticated half, or those 6 tests skip locally
 ```
 
 Skip for copy tweaks and script-only changes (those are verified in-session
@@ -233,7 +234,60 @@ or the old value bakes in. `NEXT_PUBLIC_SUPABASE_URL` must be the API URL
   environment):** `DEV_SUPABASE_URL`, `DEV_SUPABASE_SERVICE_ROLE_KEY`,
   `SUPABASE_SERVICE_ROLE_KEY` (prod service role). Details in the
   workflow file header. The workflow is inert-but-red without them.
+- **`E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD` (Production environment) — see §9.**
+  Until these exist the E2E workflow now fails red by design.
 - Delete stale nested `reactor-lang/reactor-lang/` directory **before the
   next full-repo zip upload** for a release session.
 - Exclude `node_modules` from future repo-zip uploads.
-- Verify §2 Playwright command against the actual package.json script name.
+- ~~Verify §2 Playwright command against the actual package.json script
+  name.~~ Done 2026-07-28 — it's `npm run test:e2e`; §2 corrected.
+- Decide keep-or-gitignore on `tts-probe/` (~30 mp3s + `_manifest.json` +
+  `scripts/tts-chirp-probe.mjs`, currently tracked; `tts-output/` is ignored).
+
+---
+
+## 9. E2E test account (authenticated suite)
+
+`e2e/authenticated-flow.spec.js` covers 6 of the suite's 20 tests — sign-in,
+the profile drawer, a Quick Quiz round, Lessons chrome, the dashboard, and the
+explanations view. All 6 need a real account to sign in as.
+
+**Why this is worth doing properly.** These 6 skipped silently in every CI run
+for months. The workflow reported green while testing only the public pages —
+and the v3.1.1 production bug (raw string keys rendered to every user in every
+language) shipped under exactly that green-looking board. **As of 2026-07-28 the
+spec FAILS in CI when the credentials are absent**, so the gap can't hide again.
+Locally it still skips, so you can run the public suite without an account.
+
+### 9a. Create the account (one time)
+
+Use a **dedicated throwaway account** — never a personal or beta-tester one.
+The suite plays rounds to completion and writes real history rows to whichever
+Supabase project the build points at, which for this workflow is **prod**.
+
+1. Temporarily flip `SIGNUPS_ENABLED` to `true`.
+2. Sign up through the normal flow with a plus-addressed email you control,
+   e.g. `you+e2etest@example.com`. Use a long random password.
+3. **Complete onboarding fully** — username, native language, at least one
+   language selected. The suite asserts it lands on `/` right after sign-in, so
+   an account still sitting behind an onboarding gate fails `beforeEach`.
+4. Flip `SIGNUPS_ENABLED` back to `false`.
+
+### 9b. Wire it up
+
+- **CI:** add `E2E_TEST_EMAIL` and `E2E_TEST_PASSWORD` as **Environment
+  secrets under `Production`** (Settings → Environments → Production →
+  Environment secrets) — not repository-level secrets. `e2e-tests.yml`
+  declares `environment: Production`, and repo-level secrets won't resolve.
+- **Locally:** the same two vars in `.env.local` (both are listed, blank, in
+  `.env.local.example`). Leave them blank to skip the authenticated half.
+
+### 9c. Verify
+
+Push to `dev` and watch the **E2E tests** workflow. Green with 20 tests run
+(not 14 run / 6 skipped) means it's wired. If the credentials are missing you
+now get a named failing check, `authenticated-suite credentials are configured`,
+whose message says exactly what to add and where.
+
+**Watch this workflow on every release.** It was red and unnoticed before the
+v3.2.0 session; a test suite nobody looks at is a suite that isn't running.

@@ -53,5 +53,24 @@ first, roll the fragment into that instead and correct the line.
    folder means prod is fully current; a non-empty one shows exactly
    what's still pending on dev, and for which version
 
-Manual rollup for now. Add `scripts/rollup-changelog.mjs` only if fragment
-volume per release makes assembly annoying.
+## The script does the selecting
+
+`scripts/rollup-changelog.mjs` exists and implements all of the above — the
+rollup is mechanical, not manual:
+
+```
+npm run changelog:check                              # every fragment well-formed + tagged
+node scripts/rollup-changelog.mjs                    # assemble THIS version's blocks
+node scripts/rollup-changelog.mjs --archive          # file THIS version's fragments
+node scripts/rollup-changelog.mjs --version 3.2.1 …  # target a version other than CURRENT_VERSION
+```
+
+It reads `CURRENT_VERSION` from `lib/version.js`, operates only on fragments
+declaring that version, and **prints every held-back fragment with the version
+it's waiting for** — so a non-empty `unreleased/` after an archive is visibly
+expected rather than looking like a leftover.
+
+`--check` **fails** on a fragment with no target-version line. That's what keeps
+the declaration from rotting: forget it and CI tells you, instead of the fragment
+silently landing in the wrong release. Authorship stays human — the script never
+rewrites the prose in `lib/version.js`, it only collates.

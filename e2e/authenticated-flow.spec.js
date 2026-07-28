@@ -1,21 +1,49 @@
 // Authenticated-flow tests -- these need a real dedicated test account
-// (never use a real personal or beta-tester account for this). Skips
-// entirely if credentials aren't supplied, rather than failing, so the
-// public-pages suite can still run cleanly without them.
+// (never use a real personal or beta-tester account for this).
 //
 // Set up: create one throwaway account through the normal sign-up flow
 // (temporarily flip SIGNUPS_ENABLED to true, create it, flip back to
 // false), then set these as environment variables before running:
 //   E2E_TEST_EMAIL=you+e2etest@example.com
 //   E2E_TEST_PASSWORD=<a real password for that account>
+// Full procedure, including the GitHub secrets: docs/manual-runbook.md §9.
+//
+// CREDENTIAL POLICY -- deliberately asymmetric:
+//   * LOCALLY, missing credentials SKIP. You should be able to run the
+//     public-pages suite without a test account.
+//   * In CI, missing credentials FAIL. These six tests skipped silently in
+//     every CI run for months, so the suite reported green while testing
+//     roughly a third of what it claims to. A suite that quietly tests
+//     nothing is worse than no suite, because it buys false confidence --
+//     the v3.1.1 production bug (raw string keys shipped to every user in
+//     every language) went out under a green-looking board. If the secrets
+//     go missing again, the board goes red and says why.
 
 const { test, expect } = require("@playwright/test");
 
 const EMAIL = process.env.E2E_TEST_EMAIL;
 const PASSWORD = process.env.E2E_TEST_PASSWORD;
+const HAVE_CREDS = Boolean(EMAIL && PASSWORD);
+
+// Runs as its own test so the failure is visible in the report as a named
+// check rather than a collection-time crash. Outside CI this never registers.
+if (process.env.CI && !HAVE_CREDS) {
+  const missing = [!EMAIL && "E2E_TEST_EMAIL", !PASSWORD && "E2E_TEST_PASSWORD"]
+    .filter(Boolean)
+    .join(" and ");
+  test("authenticated-suite credentials are configured", () => {
+    throw new Error(
+      `${missing} not set in CI, so the authenticated suite (6 tests) would skip ` +
+        `silently and the run would look green while covering only the public pages. ` +
+        `Add the secret(s) under the repository's "Production" Environment ` +
+        `(Settings -> Environments -> Production -> Environment secrets). ` +
+        `Setup procedure: docs/manual-runbook.md §9.`
+    );
+  });
+}
 
 test.describe("Authenticated flow", () => {
-  test.skip(!EMAIL || !PASSWORD, "E2E_TEST_EMAIL / E2E_TEST_PASSWORD not set -- skipping authenticated tests");
+  test.skip(!HAVE_CREDS, "E2E_TEST_EMAIL / E2E_TEST_PASSWORD not set -- skipping authenticated tests");
 
   test.beforeEach(async ({ page }) => {
     await page.goto("/auth");
