@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#08060f;font-family:'Baloo 2','Trebuchet MS',system-ui,sans-serif;}
+  #banner{position:relative;width:1640px;height:856px;overflow:hidden;background:#cfe6db;}
+  #stage{position:absolute;inset:0;}
+  svg{position:absolute;inset:0;width:100%;height:100%;}
+  .brand{position:absolute;left:48px;top:100px;display:flex;align-items:center;gap:10px;z-index:5;}
+  .brand svg{position:static;width:60px;height:52px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.55));}
+  .wm{font-weight:800;font-size:28px;letter-spacing:.4px;line-height:1;text-shadow:0 2px 12px rgba(10,30,20,.75);}
+  .wm .a{color:#FFFFFF;}.wm .b{color:#FFC6DA;}
+  .headline{position:absolute;left:50px;top:156px;z-index:5;font-weight:800;font-size:38px;line-height:1.03;color:#FFFFFF;text-shadow:0 3px 16px rgba(8,26,18,.9);}
+  .headline .g{color:#BFF7D6;}
+  .sub{position:absolute;left:52px;top:242px;z-index:5;font-family:'Nunito',system-ui,sans-serif;font-weight:700;font-size:15px;color:#EAFBF1;max-width:425px;line-height:1.4;text-shadow:0 2px 10px rgba(8,26,18,1);}
+  .pill{position:absolute;left:52px;top:296px;z-index:5;display:inline-flex;align-items:center;gap:8px;font-family:'Nunito',system-ui,sans-serif;font-weight:700;font-size:15px;color:#FFFFFF;background:rgba(20,50,36,.5);border:2px solid rgba(255,255,255,.6);border-radius:999px;padding:6px 14px;}
+  .legend{position:absolute;right:30px;top:100px;z-index:5;display:flex;flex-direction:column;gap:8px;align-items:flex-start;font-family:'Nunito',system-ui,sans-serif;font-weight:700;font-size:15px;color:#FFFFFF;background:rgba(24,44,30,.72);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:11px 16px;}
+  .legend span{display:flex;align-items:center;gap:9px;white-space:nowrap;}
+  .legend .ic{position:static;width:30px;height:30px;flex:none;}
+</style>
+</head>
+<body>
+<div id="banner">
+  <div id="stage">
+  <svg id="svg" viewBox="0 0 1640 856"></svg>
+  <div class="brand">
+    <svg viewBox="0 0 172 150"><g transform="translate(80 24) scale(0.74)"><g class="ears"><ellipse cx="30" cy="30" rx="19" ry="20.5" fill="#a16e80"/><ellipse cx="90" cy="30" rx="19" ry="20.5" fill="#a16e80"/><ellipse cx="31" cy="32" rx="9.5" ry="11" fill="#d6b6c3"/><ellipse cx="89" cy="32" rx="9.5" ry="11" fill="#d6b6c3"/></g><ellipse cx="60" cy="70" rx="47" ry="45" fill="#a16e80"/><path d="M34 55 Q45 49 56 54" fill="none" stroke="#6f4a58" stroke-width="4.2" stroke-linecap="round" opacity=".8"/><path d="M64 54 Q75 49 86 55" fill="none" stroke="#6f4a58" stroke-width="4.2" stroke-linecap="round" opacity=".8"/><ellipse cx="45" cy="75" rx="13.5" ry="15.5" fill="#fdfbff"/><ellipse cx="75" cy="75" rx="13.5" ry="15.5" fill="#fdfbff"/><circle cx="46" cy="72.5" r="7.6" fill="#2c2140"/><circle cx="74" cy="72.5" r="7.6" fill="#2c2140"/><circle cx="48.8" cy="69.6" r="2.9" fill="#fff"/><circle cx="76.8" cy="69.6" r="2.9" fill="#fff"/><ellipse cx="27" cy="88" rx="10" ry="6.4" fill="#e08a86" opacity=".9"/><ellipse cx="93" cy="88" rx="10" ry="6.4" fill="#e08a86" opacity=".9"/><ellipse cx="60" cy="88" rx="4.6" ry="3.6" fill="#6f4a58"/><path d="M48 94 Q60 108 72 94 Q60 100 48 94 Z" fill="#6f4a58"/></g><g transform="translate(4 20) scale(0.92)"><g fill="none" stroke="#3a2a1c" stroke-width="4" opacity=".55"><ellipse cx="30" cy="30" rx="19" ry="20.5"/><ellipse cx="90" cy="30" rx="19" ry="20.5"/><ellipse cx="60" cy="70" rx="47" ry="45"/></g><g class="ears"><ellipse cx="30" cy="30" rx="19" ry="20.5" fill="#a77a4e"/><ellipse cx="90" cy="30" rx="19" ry="20.5" fill="#a77a4e"/><ellipse cx="31" cy="32" rx="9.5" ry="11" fill="#ecd6ac"/><ellipse cx="89" cy="32" rx="9.5" ry="11" fill="#ecd6ac"/></g><ellipse cx="60" cy="70" rx="47" ry="45" fill="#a77a4e"/><path d="M34 55 Q45 49 56 54" fill="none" stroke="#6f4c2f" stroke-width="4.2" stroke-linecap="round" opacity=".8"/><path d="M64 54 Q75 49 86 55" fill="none" stroke="#6f4c2f" stroke-width="4.2" stroke-linecap="round" opacity=".8"/><ellipse cx="45" cy="75" rx="13.5" ry="15.5" fill="#fdfbff"/><ellipse cx="75" cy="75" rx="13.5" ry="15.5" fill="#fdfbff"/><circle cx="46" cy="72.5" r="7.6" fill="#2c2140"/><circle cx="74" cy="72.5" r="7.6" fill="#2c2140"/><circle cx="48.8" cy="69.6" r="2.9" fill="#fff"/><circle cx="76.8" cy="69.6" r="2.9" fill="#fff"/><ellipse cx="27" cy="88" rx="10" ry="6.4" fill="#e08a86" opacity=".9"/><ellipse cx="93" cy="88" rx="10" ry="6.4" fill="#e08a86" opacity=".9"/><ellipse cx="60" cy="88" rx="4.6" ry="3.6" fill="#6f4c2f"/><path d="M48 94 Q60 108 72 94 Q60 100 48 94 Z" fill="#6f4c2f"/></g></svg>
+    <div class="wm"><span class="a">Squirre</span><span class="b">Lingo</span></div>
+  </div>
+  <div class="headline">One forest.<br><span class="g">Every language.</span></div>
+  <div class="sub">Fast, friendly, ADHD-built practice — new languages sprouting every release. 🌱</div>
+  <div class="pill">🌐 squirrelingo.vercel.app</div>
+  <div class="legend">
+    <span><svg class="ic" viewBox="0 0 26 26"><rect x="12" y="3.4" width="2.2" height="3.4" rx="1.1" fill="#33220f"/><path d="M6.4 11 a6.6 7 0 0 0 13.2 0 Z" fill="#5E3E24" stroke="#33220f" stroke-width="0.7"/><ellipse cx="13" cy="10.4" rx="7.7" ry="3.9" fill="#4a3018"/><path d="M5.3 10.4 a7.7 3.9 0 0 1 15.4 0" fill="none" stroke="#D8B98A" stroke-width="1"/><text x="13" y="16.7" text-anchor="middle" font-family="'Baloo 2'" font-weight="800" font-size="9" fill="#ffffff">AB</text></svg> Brown acorn = learnable</span>
+    <span><svg class="ic" viewBox="0 0 26 26"><rect x="12" y="3.4" width="2.2" height="3.4" rx="1.1" fill="#b5820f"/><path d="M6.4 11 a6.6 7 0 0 0 13.2 0 Z" fill="#FFD23F" stroke="#B8860B" stroke-width="0.7"/><ellipse cx="13" cy="10.4" rx="7.7" ry="3.9" fill="#EDBE2A"/><path d="M5.3 10.4 a7.7 3.9 0 0 1 15.4 0" fill="none" stroke="#FCE486" stroke-width="1"/><text x="13" y="16.6" text-anchor="middle" font-family="'Baloo 2'" font-weight="800" font-size="8.4" fill="#5a3d10">AB</text></svg> Gold acorn = native mode</span>
+    <span><svg class="ic" viewBox="0 0 26 26"><path d="M13 23.5 L13 9" stroke="#8a5f37" stroke-width="2.4" stroke-linecap="round"/><path d="M13 15 Q8 14 5.5 9.5" stroke="#8a5f37" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M13 13 Q18 12 20.5 7.5" stroke="#8a5f37" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M5.5 9.5 Q3.4 4.8 6.6 3.4 Q8.6 7 5.5 9.5 Z" fill="#58c88a"/><path d="M20.5 7.5 Q22.6 2.8 19.4 1.4 Q17.4 5 20.5 7.5 Z" fill="#58c88a"/><path d="M13 9 Q11.4 4 13 1.4 Q14.6 4 13 9 Z" fill="#6bd096"/></svg> Baby tree = coming</span>
+  </div>
+  </div>
+</div>
+<script>
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const rad=d=>d*Math.PI/180;
+const svg=document.getElementById("svg");
+let _s=90210; const rng=()=>{_s=(_s*1664525+1013904223)>>>0;return _s/4294967296;};
+const jit=(a,b)=>a+(b-a)*rng();
+
+el("defs",{},svg).innerHTML=`
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e7eee9"/><stop offset="45%" stop-color="#cfe6da"/><stop offset="100%" stop-color="#bfe0c9"/></linearGradient>
+  <radialGradient id="sun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff6d8" stop-opacity=".95"/><stop offset="45%" stop-color="#ffe6a8" stop-opacity=".4"/><stop offset="100%" stop-color="#ffe6a8" stop-opacity="0"/></radialGradient>
+  <radialGradient id="cBack" cx="42%" cy="34%" r="72%"><stop offset="0%" stop-color="#3f9e68"/><stop offset="100%" stop-color="#236b45"/></radialGradient>
+  <radialGradient id="cMid" cx="40%" cy="26%" r="74%"><stop offset="0%" stop-color="#9CEFC0"/><stop offset="50%" stop-color="#58c88a"/><stop offset="100%" stop-color="#31905d"/></radialGradient>
+  <radialGradient id="cMid2" cx="40%" cy="26%" r="74%"><stop offset="0%" stop-color="#B6F2C8"/><stop offset="50%" stop-color="#6bcf8e"/><stop offset="100%" stop-color="#379a60"/></radialGradient>
+  <radialGradient id="cMist" cx="45%" cy="35%" r="70%"><stop offset="0%" stop-color="#bfe0cf"/><stop offset="100%" stop-color="#9ec9b0"/></radialGradient>
+  <linearGradient id="bark" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6e4d34"/><stop offset="50%" stop-color="#946c49"/><stop offset="100%" stop-color="#5a3d28"/></linearGradient>
+  <radialGradient id="acorn" cx="40%" cy="28%" r="75%"><stop offset="0%" stop-color="#F5C878"/><stop offset="60%" stop-color="#E8A94E"/><stop offset="100%" stop-color="#B77C34"/></radialGradient>
+  <linearGradient id="hill" x1="0" y1="0" x2="0.2" y2="1"><stop offset="0%" stop-color="#8fc06a"/><stop offset="42%" stop-color="#5f9a4a"/><stop offset="100%" stop-color="#356234"/></linearGradient>
+  <linearGradient id="path" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#dcb782"/><stop offset="100%" stop-color="#b98c56"/></linearGradient>
+  <radialGradient id="scrim" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(12,34,22,0.62)"/><stop offset="55%" stop-color="rgba(12,34,22,0.34)"/><stop offset="100%" stop-color="rgba(12,34,22,0)"/></radialGradient>
+  <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#bfe8f4"/><stop offset="50%" stop-color="#5cc0dd"/><stop offset="100%" stop-color="#2b86b2"/></linearGradient>
+  <radialGradient id="leafGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#BFF7D6" stop-opacity=".35"/><stop offset="100%" stop-color="#BFF7D6" stop-opacity="0"/></radialGradient>
+  <radialGradient id="goldGlow" cx="50%" cy="46%" r="50%"><stop offset="0%" stop-color="#FFEEB0" stop-opacity=".9"/><stop offset="45%" stop-color="#F6C560" stop-opacity=".4"/><stop offset="100%" stop-color="#F6C560" stop-opacity="0"/></radialGradient>
+  <linearGradient id="goldPlate" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F9D585"/><stop offset="100%" stop-color="#D69A34"/></linearGradient>
+  <radialGradient id="goldNut" cx="38%" cy="26%" r="74%"><stop offset="0%" stop-color="#FFF3AE"/><stop offset="48%" stop-color="#FFD23F"/><stop offset="100%" stop-color="#DFA015"/></radialGradient>
+  <radialGradient id="greenNut" cx="38%" cy="26%" r="74%"><stop offset="0%" stop-color="#C5F5D6"/><stop offset="48%" stop-color="#57c68a"/><stop offset="100%" stop-color="#2c8f57"/></radialGradient>
+  <radialGradient id="brownNut" cx="38%" cy="26%" r="76%"><stop offset="0%" stop-color="#9A6E45"/><stop offset="46%" stop-color="#5E3E24"/><stop offset="100%" stop-color="#34220f"/></radialGradient>`;
+
+el("rect",{x:0,y:0,width:1640,height:856,fill:"url(#sky)"},svg);
+// SUN — moved to the LEFT (soft warm morning light)
+el("circle",{cx:250,cy:210,r:300,fill:"url(#sun)"},svg);
+el("circle",{cx:250,cy:210,r:66,fill:"#fff3cf",opacity:.9},svg);
+// birds, right side
+[[1120,120],[1165,132],[1300,96],[1345,108]].forEach(b=>el("path",{d:`M${b[0]-9},${b[1]} q9,-8 9,0 q0,-8 9,0`,fill:"none",stroke:"#5a7a63","stroke-width":2.4,opacity:.5},svg));
+
+// ---------- big wide HILL the path climbs ----------
+const HILL="M0,405 C 240,323 470,171 760,131 C 1010,97 1240,197 1640,253 L1640,856 L0,856 Z";
+// misty distant trees peeking beyond the crest
+for(let i=0;i<11;i++){const x=360+i*110+jit(-20,20),y=jit(85,145),r=jit(40,66);
+  el("ellipse",{cx:x,cy:y,rx:r,ry:r*0.82,fill:"url(#cMist)",opacity:.5},svg);
+  el("rect",{x:x-4,y:y,width:8,height:34,fill:"#9ec9b0",opacity:.35},svg);}
+el("path",{d:HILL,fill:"url(#hill)"},svg);
+// soft light band down the hill
+el("path",{d:"M0,405 C 240,323 470,171 760,131 C 1010,97 1240,197 1640,253 L1640,295 C1240,235 1010,143 760,179 C470,217 240,367 0,451 Z",fill:"#a6d07a",opacity:.35},svg);
+// text scrim (over the sun so white text stays legible)
+el("ellipse",{cx:235,cy:220,rx:450,ry:240,fill:"url(#scrim)"},svg);
+
+// ---------- path climbing the hill ----------
+const CP=[[36,793],[140,723],[214,639],[452,587],[604,533],[540,447],[726,393],[884,333],[900,300],[965,342]];
+function catmull(pts,seg){const out=[];for(let i=0;i<pts.length-1;i++){const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||pts[i+1];for(let j=0;j<seg;j++){const t=j/seg,t2=t*t,t3=t2*t;out.push([0.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),0.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)]);}}out.push(pts[pts.length-1]);return out;}
+const SP=catmull(CP,20),SL=[];let TOT=0;
+for(let i=0;i<SP.length-1;i++){const dx=SP[i+1][0]-SP[i][0],dy=SP[i+1][1]-SP[i][1],L=Math.hypot(dx,dy);SL.push({x:SP[i][0],y:SP[i][1],dx,dy,L});TOT+=L;}
+function pointAt(t){let d=t*TOT;for(let i=0;i<SL.length;i++){if(d<=SL[i].L||i===SL.length-1){const f=Math.min(d/SL[i].L,1);return{x:SL[i].x+SL[i].dx*f,y:SL[i].y+SL[i].dy*f};}d-=SL[i].L;}}
+const widthAt=t=>58*(1-t)+4*t;
+let lp=[],rp=[];for(let k=0;k<=120;k++){const t=k/120,p=pointAt(t),pn=pointAt(Math.min(1,t+0.008)),dx=pn.x-p.x,dy=pn.y-p.y,n=Math.hypot(dx,dy)||1,tx=dx/n,ty=dy/n,w=widthAt(t);lp.push([p.x-ty*w/2,p.y+tx*w/2]);rp.push([p.x+ty*w/2,p.y-tx*w/2]);}
+let dd="M"+lp[0][0]+","+lp[0][1];lp.forEach(q=>dd+=" L"+q[0]+","+q[1]);for(let k=rp.length-1;k>=0;k--)dd+=" L"+rp[k][0]+","+rp[k][1];dd+=" Z";
+el("path",{d:dd,fill:"url(#path)"},svg);
+el("path",{d:dd,fill:"none",stroke:"#a37e4f","stroke-width":2,opacity:.4},svg);
+
+const world=el("g",{},svg);
+
+// ---------- primitives ----------
+const ABFLAG={ES:"🇪🇸",PT:"🇵🇹",FR:"🇫🇷",IT:"🇮🇹",EN:"🇬🇧",DE:"🇩🇪",RU:"🇷🇺",ZH:"🇨🇳",JA:"🇯🇵",KO:"🇰🇷"};
+function acorn(g,x,y,s){s=s||1;el("path",{d:`M${x-6*s},${y} a${6*s},${6.4*s} 0 0 0 ${12*s},0 Z`,fill:"url(#acorn)"},g);el("ellipse",{cx:x,cy:y-1*s,rx:7*s,ry:3.6*s,fill:"#7a4b2e"},g);el("rect",{x:x-0.9*s,y:y-7*s,width:1.8*s,height:3.4*s,rx:0.9*s,fill:"#7a4b2e"},g);}
+// language badge = an acorn with the abbreviation inside. green = learnable, gold = native mode available
+function langAcorn(g,x,y,s,ab,native){s=s||1;const R=18.5*s;
+  const nut=native?"url(#goldNut)":"url(#brownNut)";
+  const cap=native?"#B5820F":"#33220f", rim=native?"#FDE38A":"#D8B98A", txt=native?"#4a2f08":"#ffffff";
+  el("rect",{x:x-1.7*s,y:y-R-9*s,width:3.4*s,height:7.5*s,rx:1.7*s,fill:cap},g);                       // stem
+  el("path",{d:`M${x-R*1.16},${y-R*0.38} Q ${x},${y-R*1.24} ${x+R*1.16},${y-R*0.38} Z`,fill:cap},g);   // cap dome
+  el("path",{d:`M${x-R*1.16},${y-R*0.38} Q ${x},${y-R*1.24} ${x+R*1.16},${y-R*0.38}`,fill:"none",stroke:rim,"stroke-width":1.4*s,opacity:.85},g);
+  el("ellipse",{cx:x-R*0.3,cy:y-R*0.66,rx:R*0.34,ry:R*0.14,fill:"#ffffff",opacity:.3},g);              // small cap shine (clear of text)
+  el("path",{d:`M${x-R},${y-R*0.4} C ${x-R},${y+R*0.86} ${x-R*0.45},${y+R*1.22} ${x},${y+R*1.22} C ${x+R*0.45},${y+R*1.22} ${x+R},${y+R*0.86} ${x+R},${y-R*0.4} Z`,fill:nut,stroke:rim,"stroke-width":1.6*s},g);
+  el("text",{x,y:y+R*0.52,"text-anchor":"middle","font-family":"'Baloo 2'","font-weight":800,"font-size":16*s,fill:txt},g).textContent=ab;}
+function nameplate(g,x,y,s,text,leafy,gold){const fs=Math.max(13.5*s,12),w=text.length*(fs*0.6)+20,h=fs*1.75;
+  el("rect",{x:x-w/2,y:y-h/2,width:w,height:h,rx:h/2,fill:gold?"url(#goldPlate)":(leafy?"rgba(24,66,45,.95)":"rgba(52,34,16,.96)"),stroke:gold?"#FFF3C4":(leafy?"#7BF0B6":"#D8B98A"),"stroke-width":gold?2.2:1.5},g);
+  el("text",{x,y:y+fs*0.35,"text-anchor":"middle","font-family":"'Baloo 2'","font-weight":700,"font-size":fs,fill:gold?"#5a3d10":"#FFFFFF"},g).textContent=text;}
+
+// ---- NEW rebrand squirrels ----
+const SQ_BROWN=`<g class="tailWrap"><g transform="translate(21.6 0.4) scale(0.8)"><path d="M78 272 C 20 270 -14 205 -6 150 C -1 116 30 100 56 116 C 78 130 74 160 56 162 C 74 168 80 200 70 232 C 63 254 86 274 78 274 Z" fill="#a77a4e"/><path d="M64 250 C 24 236 6 186 22 150 C 34 122 58 122 64 144" fill="none" stroke="#c69a63" stroke-width="17" stroke-linecap="round" opacity=".85"/></g></g><ellipse cx="100" cy="168" rx="60" ry="64" fill="#a77a4e"/><ellipse cx="100" cy="182" rx="35" ry="44" fill="#ecd6ac"/><ellipse cx="100" cy="88" rx="62" ry="60" fill="#a77a4e"/><ellipse cx="60" cy="40" rx="21" ry="27" fill="#a77a4e"/><ellipse cx="60" cy="42" rx="10" ry="15" fill="#ecd6ac"/><ellipse cx="140" cy="40" rx="21" ry="27" fill="#a77a4e"/><ellipse cx="140" cy="42" rx="10" ry="15" fill="#ecd6ac"/><ellipse cx="68" cy="118" rx="13" ry="8.5" fill="#e08a86" opacity=".85"/><ellipse cx="132" cy="118" rx="13" ry="8.5" fill="#e08a86" opacity=".85"/><ellipse cx="80" cy="92" rx="16" ry="18" fill="#fdfbff"/><ellipse cx="120" cy="92" rx="16" ry="18" fill="#fdfbff"/><circle cx="81" cy="88" r="9" fill="#2c2140"/><circle cx="119" cy="88" r="9" fill="#2c2140"/><circle cx="84.5" cy="84.5" r="3.2" fill="#fff"/><circle cx="122.5" cy="84.5" r="3.2" fill="#fff"/><path d="M66,72 Q80,64 94,71" stroke="#6f4c2f" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M106,71 Q120,64 134,72" stroke="#6f4c2f" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="100" cy="110" rx="6.5" ry="5" fill="#6f4c2f"/><path d="M85,119 Q100,115 115,119 Q100,125 85,119 Z" fill="#47222b"/><ellipse cx="48" cy="184" rx="11" ry="27" fill="#3cd9ff"/><ellipse cx="152" cy="184" rx="11" ry="27" fill="#8a5f37"/>`;
+const SQ_MAUVE=`<g transform="translate(200,0) scale(-1,1)"><g transform="translate(21.6 0.4) scale(0.8)"><path d="M78 272 C 20 270 -14 205 -6 150 C -1 116 30 100 56 116 C 78 130 74 160 56 162 C 74 168 80 200 70 232 C 63 254 86 274 78 274 Z" fill="#a16e80"/><path d="M64 250 C 24 236 6 186 22 150 C 34 122 58 122 64 144" fill="none" stroke="#c098ac" stroke-width="17" stroke-linecap="round" opacity=".85"/></g></g><ellipse cx="100" cy="168" rx="60" ry="64" fill="#a16e80"/><ellipse cx="100" cy="182" rx="35" ry="44" fill="#d6b6c3"/><ellipse cx="100" cy="88" rx="62" ry="60" fill="#a16e80"/><ellipse cx="60" cy="40" rx="21" ry="27" fill="#a16e80"/><ellipse cx="60" cy="42" rx="10" ry="15" fill="#d6b6c3"/><ellipse cx="140" cy="40" rx="21" ry="27" fill="#a16e80"/><ellipse cx="140" cy="42" rx="10" ry="15" fill="#d6b6c3"/><ellipse cx="68" cy="118" rx="13" ry="8.5" fill="#e08a86" opacity=".85"/><ellipse cx="132" cy="118" rx="13" ry="8.5" fill="#e08a86" opacity=".85"/><ellipse cx="80" cy="92" rx="16" ry="18" fill="#fdfbff"/><ellipse cx="120" cy="92" rx="16" ry="18" fill="#fdfbff"/><circle cx="81" cy="88" r="9" fill="#2c2140"/><circle cx="119" cy="88" r="9" fill="#2c2140"/><circle cx="84.5" cy="84.5" r="3.2" fill="#fff"/><circle cx="122.5" cy="84.5" r="3.2" fill="#fff"/><path d="M66,72 Q80,64 94,71" stroke="#6f4a58" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M106,71 Q120,64 134,72" stroke="#6f4a58" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="100" cy="110" rx="6.5" ry="5" fill="#6f4a58"/><path d="M85,119 Q100,115 115,119 Q100,125 85,119 Z" fill="#47222b"/><ellipse cx="152" cy="184" rx="11" ry="27" fill="#f48fb1"/><ellipse cx="48" cy="184" rx="11" ry="27" fill="#855b6a"/>`;
+const SQ_DUO=`<g transform="translate(6 14)"><path d="M78 272 C 20 270 -14 205 -6 150 C -1 116 30 100 56 116 C 78 130 74 160 56 162 C 74 168 80 200 70 232 C 63 254 86 274 78 274 Z" fill="#a77a4e"/><path d="M64 250 C 24 236 6 186 22 150 C 34 122 58 122 64 144" fill="none" stroke="#c69a63" stroke-width="17" stroke-linecap="round" opacity=".85"/><ellipse cx="120" cy="208" rx="78" ry="82" fill="#a77a4e"/><ellipse cx="120" cy="226" rx="49" ry="58" fill="#ecd6ac"/><path d="M112 170 C 98 168 88 180 92 196 C 95 208 110 208 114 196 C 116 188 116 176 112 170 Z" fill="#3cd9ff"/><path d="M128 170 C 142 168 152 180 148 196 C 145 208 130 208 126 196 C 124 188 124 176 128 170 Z" fill="#a77a4e"/><g transform="translate(37.5 -2) scale(1.375)"><ellipse cx="30" cy="30" rx="19" ry="20.5" fill="#a77a4e"/><ellipse cx="90" cy="30" rx="19" ry="20.5" fill="#a77a4e"/><ellipse cx="31" cy="32" rx="9.5" ry="11" fill="#ecd6ac"/><ellipse cx="89" cy="32" rx="9.5" ry="11" fill="#ecd6ac"/><ellipse cx="60" cy="70" rx="47" ry="45" fill="#a77a4e"/><path d="M34 55 Q45 49 56 54" fill="none" stroke="#6f4c2f" stroke-width="4.2" stroke-linecap="round" opacity=".8"/><path d="M64 54 Q75 49 86 55" fill="none" stroke="#6f4c2f" stroke-width="4.2" stroke-linecap="round" opacity=".8"/><ellipse cx="45" cy="75" rx="13.5" ry="15.5" fill="#fdfbff"/><ellipse cx="75" cy="75" rx="13.5" ry="15.5" fill="#fdfbff"/><circle cx="46" cy="72.5" r="7.6" fill="#2c2140"/><circle cx="74" cy="72.5" r="7.6" fill="#2c2140"/><circle cx="48.8" cy="69.6" r="2.9" fill="#fff"/><circle cx="76.8" cy="69.6" r="2.9" fill="#fff"/><ellipse cx="27" cy="88" rx="10" ry="6.4" fill="#e08a86" opacity=".9"/><ellipse cx="93" cy="88" rx="10" ry="6.4" fill="#e08a86" opacity=".9"/><ellipse cx="60" cy="88" rx="4.6" ry="3.6" fill="#6f4c2f"/><path d="M48 94 Q60 108 72 94 Q60 100 48 94 Z" fill="#6f4c2f"/></g></g>
+<g transform="translate(208 18) scale(0.96)"><g transform="translate(240,0) scale(-1,1)"><path d="M78 272 C 20 270 -14 205 -6 150 C -1 116 30 100 56 116 C 78 130 74 160 56 162 C 74 168 80 200 70 232 C 63 254 86 274 78 274 Z" fill="#a16e80"/><path d="M64 250 C 24 236 6 186 22 150 C 34 122 58 122 64 144" fill="none" stroke="#c098ac" stroke-width="17" stroke-linecap="round" opacity=".85"/></g><ellipse cx="120" cy="208" rx="78" ry="82" fill="#a16e80"/><ellipse cx="120" cy="226" rx="49" ry="58" fill="#d6b6c3"/><path d="M112 170 C 98 168 88 180 92 196 C 95 208 110 208 114 196 C 116 188 116 176 112 170 Z" fill="#a16e80"/><path d="M128 170 C 142 168 152 180 148 196 C 145 208 130 208 126 196 C 124 188 124 176 128 170 Z" fill="#f48fb1"/><g transform="translate(37.5 -2) scale(1.375)"><ellipse cx="30" cy="30" rx="19" ry="20.5" fill="#a16e80"/><ellipse cx="90" cy="30" rx="19" ry="20.5" fill="#a16e80"/><ellipse cx="31" cy="32" rx="9.5" ry="11" fill="#d6b6c3"/><ellipse cx="89" cy="32" rx="9.5" ry="11" fill="#d6b6c3"/><ellipse cx="60" cy="70" rx="47" ry="45" fill="#a16e80"/><path d="M34 55 Q45 49 56 54" fill="none" stroke="#6f4a58" stroke-width="4.2" stroke-linecap="round" opacity=".8"/><path d="M64 54 Q75 49 86 55" fill="none" stroke="#6f4a58" stroke-width="4.2" stroke-linecap="round" opacity=".8"/><ellipse cx="45" cy="75" rx="13.5" ry="15.5" fill="#fdfbff"/><ellipse cx="75" cy="75" rx="13.5" ry="15.5" fill="#fdfbff"/><circle cx="46" cy="72.5" r="7.6" fill="#2c2140"/><circle cx="74" cy="72.5" r="7.6" fill="#2c2140"/><circle cx="48.8" cy="69.6" r="2.9" fill="#fff"/><circle cx="76.8" cy="69.6" r="2.9" fill="#fff"/><ellipse cx="27" cy="88" rx="10" ry="6.4" fill="#e08a86" opacity=".9"/><ellipse cx="93" cy="88" rx="10" ry="6.4" fill="#e08a86" opacity=".9"/><ellipse cx="60" cy="88" rx="4.6" ry="3.6" fill="#6f4a58"/><path d="M48 94 Q60 108 72 94 Q60 100 48 94 Z" fill="#6f4a58"/></g></g>`;
+function placeSq(g,inner,x,y,s,flip,ax,ay){const w=el("g",{transform:`translate(${x},${y}) scale(${flip?-s:s},${s}) translate(${-ax},${-ay})`},g);w.innerHTML=inner;}
+
+const LOBES=[[-0.78,-0.08,0.5],[-0.4,-0.34,0.6],[0.08,-0.32,0.64],[0.52,-0.2,0.56],[0.82,0.06,0.46],
+ [-0.9,0.2,0.42],[-0.5,0.36,0.56],[0.02,0.44,0.54],[0.5,0.36,0.54],[0.85,0.34,0.42],
+ [-0.22,0.64,0.5],[0.32,0.62,0.48],[0.05,0.12,0.72]];
+function crown(g,cx,cyc,w,h,mist,alt){
+  const back=mist?"url(#cMist)":"url(#cBack)",mid=mist?"url(#cMist)":(alt?"url(#cMid2)":"url(#cMid)");
+  LOBES.forEach(L=>{const px=cx+L[0]*w*0.5,py=cyc-L[1]*h*0.5,r=L[2]*w*0.44;el("ellipse",{cx:px+5,cy:py+7,rx:r,ry:r*0.94,fill:back,opacity:.95},g);});
+  LOBES.forEach(L=>{const px=cx+L[0]*w*0.5,py=cyc-L[1]*h*0.5,r=L[2]*w*0.44;el("ellipse",{cx:px,cy:py,rx:r,ry:r*0.94,fill:mid},g);});
+  if(!mist)LOBES.filter(L=>L[1]>0.12).forEach(L=>{const r=L[2]*w*0.44,px=cx+L[0]*w*0.5-r*0.26,py=cyc-L[1]*h*0.5-r*0.3;el("ellipse",{cx:px,cy:py,rx:r*0.32,ry:r*0.26,fill:"#CFF8E0",opacity:.4},g);});
+}
+const TAGPOS={1:[[0,0.12]],2:[[-0.5,0.16],[0.5,0.0]],3:[[-0.58,0.1],[0.1,0.4],[0.58,-0.08]],4:[[-0.66,0.06],[0.62,0.14],[-0.26,0.46],[0.34,-0.4]]};
+const PLATES=[];
+function bigTree(g,x,gy,s,leafs,fam,hm,alt,leafy){
+  hm=hm||1;const trunkH=120*s*hm,topW=9*s,botW=21*s,cy=gy-trunkH;
+  el("path",{d:`M${x-botW},${gy} C${x-topW*1.7},${gy-trunkH*.55} ${x-topW},${cy+20*s} ${x-topW*0.8},${cy} L${x+topW*0.8},${cy} C${x+topW},${cy+20*s} ${x+topW*1.7},${gy-trunkH*.55} ${x+botW},${gy} Z`,fill:"url(#bark)"},g);
+  el("path",{d:`M${x-botW},${gy} q${-14*s},${-2*s} ${-24*s},${6*s} M${x+botW},${gy} q${14*s},${-2*s} ${24*s},${6*s}`,stroke:"#5a3d28","stroke-width":3.4*s,fill:"none","stroke-linecap":"round"},g);
+  el("path",{d:`M${x},${cy+24*s} q${-30*s},${-14*s} ${-46*s},${-40*s} M${x},${cy+30*s} q${30*s},${-14*s} ${46*s},${-40*s}`,stroke:"url(#bark)","stroke-width":5*s,fill:"none","stroke-linecap":"round"},g);
+  const w=166*s*hm,h=146*s*hm,cyc=cy-h*0.28;
+  crown(g,x,cyc,w,h,false,alt);
+  const pos=TAGPOS[leafs.length]||TAGPOS[4];
+  leafs.forEach((l,k)=>{const rel=pos[k%pos.length],tx=x+rel[0]*w*0.5,ty=cyc-rel[1]*h*0.5;
+    langAcorn(g,tx,ty,s,l.ab,l.acorn==="full");});
+  PLATES.push({x:x,y:gy+18*s,s:Math.max(s,0.66),fam:fam,leafy:(leafy!==false)});
+}
+function leafShape(g,x,y,s,ang,alt){const gg=el("g",{transform:`translate(${x},${y}) rotate(${ang})`},g);
+  el("path",{d:`M0,0 Q${6*s},${-10*s} 0,${-20*s} Q${-6*s},${-10*s} 0,0 Z`,fill:alt?"url(#cMid2)":"url(#cMid)"},gg);
+  el("path",{d:`M0,${-2*s} L0,${-17*s}`,stroke:"#2f7d4e","stroke-width":1.1*s},gg);}
+function babyTree(g,x,gy,s,fam){
+  const h=112*s,cy=gy-h;
+  el("ellipse",{cx:x,cy:gy+2,rx:17*s,ry:4.5*s,fill:"#6b4a30",opacity:.55},g);
+  el("path",{d:`M${x-5*s},${gy} C${x-3*s},${gy-h*.5} ${x+3*s},${gy-h*.55} ${x+1*s},${cy} L${x+3*s},${cy} C${x+5*s},${gy-h*.55} ${x+5*s},${gy-h*.5} ${x+5*s},${gy} Z`,fill:"url(#bark)"},g);
+  const segs=[[0.44,-1,30],[0.6,1,32],[0.76,-1,24],[0.9,1,20]];
+  segs.forEach(([f,side,ln],idx)=>{const by=gy-h*f,ex=x+side*ln*s,ey=by-ln*0.75*s;
+    el("path",{d:`M${x},${by} Q${x+side*ln*0.5*s},${by-ln*0.28*s} ${ex},${ey}`,stroke:"url(#bark)","stroke-width":2.8*s,fill:"none","stroke-linecap":"round"},g);
+    leafShape(g,ex,ey,s,side*44,idx%2);leafShape(g,ex+side*5*s,ey-7*s,s,side*12,idx%2);});
+  leafShape(g,x+2*s,cy+2*s,s,-6,1);leafShape(g,x-8*s,cy+8*s,s,-42,0);leafShape(g,x+11*s,cy+6*s,s,40,1);
+  PLATES.push({x:x,y:gy+16*s,s:Math.max(s,0.72),fam:fam,leafy:false});
+}
+function star(g,x,y,r){const pts=[];for(let i=0;i<8;i++){const a=rad(i*45-90),rr=i%2?r*0.4:r;pts.push([x+Math.cos(a)*rr,y+Math.sin(a)*rr]);}
+  el("polygon",{points:pts.map(p=>p.join(",")).join(" "),fill:"#FFF3C4"},g);el("circle",{cx:x,cy:y,r:r*0.32,fill:"#fff"},g);}
+function goldAcorn(g,x,y,s){s=s||1;
+  el("path",{d:`M${x-6*s},${y} a${6*s},${6.4*s} 0 0 0 ${12*s},0 Z`,fill:"url(#goldNut)",stroke:"#B8860B","stroke-width":0.6*s},g);
+  el("ellipse",{cx:x,cy:y-1*s,rx:7*s,ry:3.6*s,fill:"#EDBE2A"},g);
+  el("path",{d:`M${x-7*s},${y-1*s} a${7*s},${3.6*s} 0 0 1 ${14*s},0`,fill:"none",stroke:"#FCE486","stroke-width":0.9*s},g);
+  el("rect",{x:x-0.9*s,y:y-7*s,width:1.8*s,height:3.4*s,rx:0.9*s,fill:"#D99A1C"},g);
+  el("ellipse",{cx:x-2*s,cy:y+2*s,rx:1.8*s,ry:2.6*s,fill:"#FFF7CC",opacity:.8},g);}
+// ---------- the MASTER TREE — golden goal at the crest, where the path ends ----------
+function masterTree(g,x,gy){
+  const trunkH=82,topW=14,botW=34,cy=gy-trunkH,W=250,H=210,cyc=cy-H*0.2;
+  el("ellipse",{cx:x,cy:cyc,rx:W*0.92,ry:H*0.9,fill:"url(#goldGlow)"},g);            // radiant halo
+  for(let i=0;i<12;i++){const a=rad(i*30-90);el("path",{d:`M${x},${cyc} L${x+Math.cos(a)*W*0.98},${cyc+Math.sin(a)*H*0.98}`,stroke:"#FCE3A0","stroke-width":3,opacity:.15,"stroke-linecap":"round"},g);}
+  el("path",{d:`M${x-botW},${gy} C${x-topW*1.8},${gy-trunkH*.5} ${x-topW},${cy+26} ${x-topW*0.9},${cy} L${x+topW*0.9},${cy} C${x+topW},${cy+26} ${x+topW*1.8},${gy-trunkH*.5} ${x+botW},${gy} Z`,fill:"url(#bark)"},g);
+  el("path",{d:`M${x-botW},${gy} q${-24},${-3} ${-46},${11} M${x+botW},${gy} q${24},${-3} ${46},${11}`,stroke:"#5a3d28","stroke-width":6,fill:"none","stroke-linecap":"round"},g);
+  el("path",{d:`M${x},${cy+42} q${-56},${-24} ${-86},${-74} M${x},${cy+50} q${56},${-24} ${86},${-74} M${x},${cy+30} l0,${-74}`,stroke:"url(#bark)","stroke-width":9,fill:"none","stroke-linecap":"round"},g);
+  crown(g,x,cyc,W,H,false,true);
+  crown(g,x,cyc-H*0.08,W*0.68,H*0.6,false,false);
+  const ac=[[-0.2,0.52],[0.2,0.5],
+    [-0.5,0.34],[-0.12,0.36],[0.28,0.34],[0.56,0.26],
+    [-0.76,0.16],[0.76,0.12],
+    [-0.56,0.05],[-0.18,0.1],[0.22,0.07],[0.54,0.0],
+    [-0.64,-0.13],[-0.28,-0.18],[0.12,-0.2],[0.46,-0.14],
+    [-0.08,-0.32],[0.32,-0.3]];
+  ac.forEach(p=>{const px=x+p[0]*W*0.5,py=cyc-p[1]*H*0.5;goldAcorn(g,px,py,1.5);});
+  star(g,x,cyc-H*0.5-8,17);
+  [[-0.5,-0.34],[0.48,-0.28],[0.12,0.5],[-0.16,-0.44]].forEach(p=>star(g,x+p[0]*W*0.5,cyc-p[1]*H*0.5,7));
+  PLATES.push({x:x,y:gy+24,s:1.08,fam:"Mastery",leafy:true,gold:true});
+}
+function flowerBush(g,x,y,s){const cols=["#FF6B6B","#FF9F43","#FFD93D","#FF8FB1","#B98EFF"];
+  [[0,0,1],[-.6,.1,.7],[.6,.1,.7],[-.25,-.4,.7],[.3,-.35,.65]].forEach(b=>el("ellipse",{cx:x+b[0]*48*s,cy:y+b[1]*42*s-16*s,rx:48*s*b[2],ry:42*s*b[2]*.9,fill:"url(#cMid)"},g));
+  for(let i=0;i<8;i++){const fx=x+jit(-54,54)*s,fy=y-jit(4,54)*s,col=cols[Math.floor(rng()*cols.length)];
+    for(let a=0;a<5;a++){const an=a*72;el("circle",{cx:fx+Math.sin(an*Math.PI/180)*6*s,cy:fy-Math.cos(an*Math.PI/180)*6*s,r:4.4*s,fill:col},g);}el("circle",{cx:fx,cy:fy,r:3*s,fill:"#FFE9A8"},g);}}
+function bigLeaf(g,x,y,s,ang,col){const gg=el("g",{transform:`translate(${x},${y}) rotate(${ang})`},g);
+  el("path",{d:`M0,0 Q${-28*s},${-74*s} 0,${-150*s} Q${28*s},${-74*s} 0,0 Z`,fill:col||"#4aa06a"},gg);
+  el("path",{d:`M0,0 L0,${-144*s}`,stroke:"#2f7d4e","stroke-width":2.6*s},gg);
+  for(let i=1;i<=5;i++){el("path",{d:`M0,${-i*24*s} q${-15*s},${-6*s} ${-22*s},${-22*s} M0,${-i*24*s} q${15*s},${-6*s} ${22*s},${-22*s}`,stroke:"#2f7d4e","stroke-width":1.7*s,fill:"none",opacity:.7},gg);} }
+function grass(g,x,y,s){for(let i=-2;i<=2;i++)el("path",{d:`M${x+i*3*s},${y} q${i*2*s},${-13*s} ${i*3.4*s},${-19*s}`,stroke:i%2?"#8fd9a8":"#4aa06a","stroke-width":2.2*s,fill:"none","stroke-linecap":"round"},g);}
+const scaleAtY=y=>0.4+Math.max(0,Math.min(1,(y-230)/(810-230)))*0.72;
+const scaleSq=y=>0.15+Math.max(0,Math.min(1,(y-260)/(830-260)))*0.34;
+function bush(g,x,y,s){el("ellipse",{cx:x,cy:y+2,rx:34*s,ry:8*s,fill:"#274626",opacity:.32},g);
+  [[0,0,1],[-.62,.16,.64],[.62,.16,.64],[-.3,-.34,.52],[.32,-.32,.5]].forEach(b=>el("ellipse",{cx:x+b[0]*30*s,cy:y+b[1]*22*s-13*s,rx:30*s*b[2],ry:22*s*b[2]*.92,fill:"url(#cBack)"},g));
+  [[0,-1,.9],[-.5,.12,.56],[.5,.1,.56]].forEach(b=>el("ellipse",{cx:x+b[0]*30*s,cy:y+b[1]*10*s-13*s,rx:30*s*b[2],ry:22*s*b[2]*.86,fill:"url(#cMid)"},g));}
+function mush(g,x,y,s){el("rect",{x:x-2.4*s,y:y-9*s,width:4.8*s,height:10*s,rx:2.4*s,fill:"#F3E9D8"},g);el("path",{d:`M${x-9*s},${y-7*s} a${9*s},${8*s} 0 0 1 ${18*s},0 Z`,fill:"#FF8FB1"},g);el("circle",{cx:x-3*s,cy:y-9*s,r:1.6*s,fill:"#fff",opacity:.85},g);el("circle",{cx:x+3.4*s,cy:y-8*s,r:1.2*s,fill:"#fff",opacity:.85},g);}
+function flowerPatch(g,x,y,s){const cols=["#FF6B6B","#FF9F43","#FFD93D","#FF8FB1","#B98EFF","#6BC5FF"];for(let i=0;i<3;i++){const fx=x+jit(-15,15)*s,fy=y-jit(0,16)*s,col=cols[Math.floor(rng()*cols.length)];el("path",{d:`M${fx},${fy} l0,${-13*s}`,stroke:"#3f8f5c","stroke-width":1.6*s,"stroke-linecap":"round"},g);for(let a=0;a<5;a++){const an=a*72;el("circle",{cx:fx+Math.sin(an*Math.PI/180)*3.4*s,cy:fy-13*s-Math.cos(an*Math.PI/180)*3.4*s,r:2.2*s,fill:col},g);}el("circle",{cx:fx,cy:fy-13*s,r:1.5*s,fill:"#FFE9A8"},g);}}
+function rock(g,x,y,s){el("ellipse",{cx:x,cy:y+2,rx:26*s,ry:6*s,fill:"#274626",opacity:.28},g);el("path",{d:`M${x-24*s},${y} Q${x-26*s},${y-20*s} ${x-6*s},${y-22*s} Q${x+16*s},${y-26*s} ${x+24*s},${y-6*s} Q${x+26*s},${y} ${x+24*s},${y} Z`,fill:"#9aa3ad"},g);el("path",{d:`M${x-24*s},${y} Q${x-26*s},${y-20*s} ${x-6*s},${y-22*s} Q${x-2*s},${y-14*s} ${x-14*s},${y} Z`,fill:"#b6bec7",opacity:.7},g);}
+function reed(g,x,y,s){for(let i=-1;i<=1;i++)el("path",{d:`M${x+i*4*s},${y} q${i*3*s},${-18*s} ${i*3*s},${-30*s}`,stroke:"#4a9e5e","stroke-width":2.4*s,fill:"none","stroke-linecap":"round"},g);}
+function pond(g,cx,cy,w,h){el("ellipse",{cx,cy,rx:w/2+9,ry:h/2+6,fill:"#4f8a5a",opacity:.4},g);
+  el("ellipse",{cx,cy,rx:w/2,ry:h/2,fill:"url(#water)"},g);
+  el("ellipse",{cx:cx-w*0.12,cy:cy-h*0.16,rx:w*0.32,ry:h*0.24,fill:"#e6f7f8",opacity:.5},g);
+  el("path",{d:`M${cx-w*0.3},${cy+h*0.06} q${w*0.3},${h*0.16} ${w*0.6},0`,stroke:"#e6f7f8","stroke-width":2,fill:"none",opacity:.55},g);
+  el("path",{d:`M${cx-w*0.16},${cy+h*0.26} q${w*0.18},${h*0.1} ${w*0.36},0`,stroke:"#e6f7f8","stroke-width":1.6,fill:"none",opacity:.4},g);
+  [[-.24,.02],[.18,-.05],[.02,.22]].forEach(p=>el("ellipse",{cx:cx+p[0]*w,cy:cy+p[1]*h,rx:w*0.075,ry:h*0.17,fill:"#4fae74"},g));
+  reed(g,cx-w*0.44,cy+h*0.06,h/32);reed(g,cx+w*0.46,cy-h*0.02,h/32);}
+
+// ---------- content: trees climb the hill (spread top→bottom) ----------
+const SHOW_ALL_FULL=false;   // true = preview every family full-grown (collision check); false = real mix
+// full-grown, collision-free slots. Undeveloped families render as saplings until they graduate,
+// but occupy their FULL-grown footprint so nothing collides when a sapling becomes a tree.
+const FAMS=[
+ {fam:"Romance",x:280,y:725,s:1.0,hm:1.12,built:1,leafs:[{ab:"ES",acorn:"full"},{ab:"PT",acorn:"full"},{ab:"FR"},{ab:"IT",acorn:"stub"}]},
+ {fam:"Sinitic",x:1040,y:725,s:1.0,hm:1.0,built:1,leafs:[{ab:"ZH"}]},
+ {fam:"Germanic",x:1420,y:727,s:1.0,hm:1.04,built:1,leafs:[{ab:"EN",acorn:"full"},{ab:"DE"}]},
+ {fam:"Balto-Slavic",x:150,y:603,s:0.86,hm:1.06,alt:1,built:1,leafs:[{ab:"RU"}]},
+ {fam:"Japonic",x:1300,y:605,s:0.86,hm:0.98,alt:1,built:1,leafs:[{ab:"JA"}]},
+ {fam:"Koreanic",x:760,y:487,s:0.76,hm:0.98,built:1,leafs:[{ab:"KO"}]},
+ {fam:"Semitic",x:630,y:725,s:1.0,hm:1.0,leafs:[]},
+ {fam:"Hellenic",x:480,y:605,s:0.86,hm:1.0,leafs:[]},
+ {fam:"Turkic",x:900,y:587,s:0.86,hm:1.0,leafs:[]},
+ {fam:"Indo-Iranian",x:300,y:405,s:0.74,hm:1.0,leafs:[]},
+ {fam:"Niger-Congo",x:1175,y:483,s:0.74,hm:1.0,leafs:[]},
+ {fam:"Dravidian",x:1558,y:487,s:0.74,hm:1.0,leafs:[]},
+ {fam:"Tai-Kadai",x:160,y:350,s:0.62,hm:1.0,leafs:[]},
+ {fam:"Austroasiatic",x:600,y:377,s:0.62,hm:1.0,leafs:[]},
+ {fam:"Sign",x:1050,y:398,s:0.62,hm:1.0,leafs:[]},
+ {fam:"Classical",x:1440,y:383,s:0.62,hm:1.0,leafs:[]},
+ {fam:"Uralic",x:720,y:283,s:0.53,hm:1.0,leafs:[]},
+ {fam:"Austronesian",x:1240,y:275,s:0.54,hm:1.0,leafs:[]},
+ {fam:"Celtic",x:1560,y:291,s:0.54,hm:1.0,leafs:[]},
+ {fam:"Constructed",x:430,y:345,s:0.46,hm:1.0,leafs:[]},
+ {fam:"Isolate",x:1360,y:330,s:0.46,hm:1.0,leafs:[]},
+ {fam:"Kartvelian",x:530,y:207,s:0.46,hm:1.0,leafs:[]},
+];
+const items=[];
+FAMS.forEach(o=>items.push({kind:"fam",...o}));
+items.push({kind:"master",x:965,y:348});   // the golden Master Tree at the crest
+const DEC=["grass","grass","bush","mush","flower","grass","rock","flower","bush","grass","mush"];
+const PATHSAMP=[];for(let k=0;k<=90;k++){const t=k/90,p=pointAt(t);PATHSAMP.push({x:p.x,y:p.y,w:widthAt(t)});}
+function onPath(x,y,m){for(const q of PATHSAMP){if(Math.hypot(x-q.x,y-q.y)<q.w/2+(m||16))return true;}return false;}
+let dpl=0,dtr=0;
+while(dpl<50&&dtr<600){dtr++;const x=jit(15,1625),y=jit(159,779);if(x<620&&y<350){continue;}if(onPath(x,y,20)){continue;}items.push({kind:DEC[Math.floor(rng()*DEC.length)],x,y,s:scaleAtY(y)*jit(0.55,1.05)});dpl++;}
+// squirrels — in clearings that stay open when everything grows in
+items.push({kind:"duo",x:206,y:769});               // hero pair, front-left
+items.push({kind:"duo",x:1120,y:342});              // beside the Master Tree (clear of the text block)
+items.push({kind:"duo",x:1180,y:635});              // mid-right, Sinitic↔Japonic gap
+items.push({kind:"brown",x:400,y:520,flip:true});   // mid-left clearing
+items.push({kind:"brown",x:828,y:460,flip:false});  // peeking from Koreanic's right edge
+items.push({kind:"mauve",x:900,y:372,flip:false});  // gazing up at the Master Tree from its base
+
+pond(world,850,657,178,56);
+items.sort((a,b)=>a.y-b.y).forEach(it=>{const g=el("g",{},world);
+  if(it.kind==="fam"){ if(it.built) bigTree(g,it.x,it.y,it.s,it.leafs,it.fam,it.hm,it.alt,true); else if(SHOW_ALL_FULL) bigTree(g,it.x,it.y,it.s,[],it.fam,it.hm,it.alt,false); else babyTree(g,it.x,it.y,it.s,it.fam); }
+  else if(it.kind==="master")masterTree(g,it.x,it.y);
+  else if(it.kind==="grass")grass(g,it.x,it.y,it.s);
+  else if(it.kind==="bush")bush(g,it.x,it.y,it.s);
+  else if(it.kind==="mush")mush(g,it.x,it.y,it.s);
+  else if(it.kind==="flower")flowerPatch(g,it.x,it.y,it.s);
+  else if(it.kind==="rock")rock(g,it.x,it.y,it.s);
+  else if(it.kind==="duo")placeSq(g,SQ_DUO,it.x,it.y,scaleSq(it.y)*0.72,false,232,306);
+  else if(it.kind==="brown")placeSq(g,SQ_BROWN,it.x,it.y,scaleSq(it.y),it.flip,100,232);
+  else if(it.kind==="mauve")placeSq(g,SQ_MAUVE,it.x,it.y,scaleSq(it.y),it.flip,100,232);});
+
+// foreground framing foliage
+bigLeaf(world,40,872,1.2,18,"#3f8f5c");bigLeaf(world,116,876,1.25,-8,"#4aa06a");
+flowerBush(world,74,850,1.15);
+bigLeaf(world,1622,876,1.25,-16,"#3f8f5c");bigLeaf(world,1556,880,1.3,10,"#4aa06a");
+flowerBush(world,1584,852,1.2);
+
+// nameplates on top
+PLATES.forEach(p=>nameplate(world,p.x,p.y,p.s,p.fam,p.leafy,p.gold));
+</script>
+</body>
+</html>
