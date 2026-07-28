@@ -48,6 +48,29 @@ _Folds into the **3.3.0** release entry (internal-only — rides with whatever s
     rollup for a fragment with a "Changed files:" sub-list was effectively unreadable. Nested
     bullets are now their own entries, flattened with a `· ` prefix (the target is a flat array
     of strings in `lib/version.js`, so depth can't survive, but subordination stays visible).
+- **Two more ways this suite was blind, both found by actually running it:**
+  - **The report artifact never uploaded.** `playwright.config.js` set
+    `reporter: "github"` in CI, but only the `html` reporter writes
+    `playwright-report/` — so the upload step found nothing on every run and said so
+    in a warning nobody read. A CI failure left no screenshot, no trace, no
+    `error-context.md`. Reporter is now `[["github"], ["html", { open: "never" }]]`,
+    and a second artifact uploads `test-results/` (per-failure screenshot, trace.zip,
+    error-context.md) with `if-no-files-found` set explicitly on both.
+  - **`.env.local` credentials never reached the tests.** Playwright runs as its own
+    Node process and does not inherit Next.js's env loading, so the documented local
+    setup could not have worked: the app under test saw the vars, the spec that needed
+    them did not, and the authenticated tests skipped regardless of what was in the
+    file. `playwright.config.js` now parses `.env.local` itself (~10 lines, no dotenv
+    dependency); existing env vars win, so CI is unaffected.
+  - Runbook §9b corrected and **§9d added** — which artifact to grab and what's in it.
+- **First real run of the authenticated suite: 38/40 pass.** The failure is
+  `explanations view opens without crashing after a completed round` on both browser
+  projects — the round never reaches ROUND COMPLETE inside the spec's 40-iteration
+  loop. Written to catch a v2.24.0-beta.4 regression and never executed since, so it
+  is stale-test-or-real-bug, unresolved at time of writing. Ruled out by reading
+  `app/play/[trackId]/page.js`: the Home button is gated on `screen !== "playing"`,
+  `AudioButton` carries no `.rj` class, and the `roundComplete` / `next` / `startRound`
+  copy all still match the spec's regexes.
 - **Verified:** esbuild parse of the spec; `node --check` on the rollup script; YAML parse of the
   workflow asserting `environment: Production` and both vars on the right step; and the rollup
   script exercised against a scratch repo across six cases — check-pass, check-fail on a missing

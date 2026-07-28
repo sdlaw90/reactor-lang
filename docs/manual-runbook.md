@@ -265,13 +265,54 @@ Use a **dedicated throwaway account** — never a personal or beta-tester one.
 The suite plays rounds to completion and writes real history rows to whichever
 Supabase project the build points at, which for this workflow is **prod**.
 
-1. Temporarily flip `SIGNUPS_ENABLED` to `true`.
-2. Sign up through the normal flow with a plus-addressed email you control,
-   e.g. `you+e2etest@example.com`. Use a long random password.
-3. **Complete onboarding fully** — username, native language, at least one
-   language selected. The suite asserts it lands on `/` right after sign-in, so
-   an account still sitting behind an onboarding gate fails `beforeEach`.
-4. Flip `SIGNUPS_ENABLED` back to `false`.
+> **Do NOT flip `SIGNUPS_ENABLED` for this.** It reads like an env toggle but
+> it is a hardcoded `const SIGNUPS_ENABLED = false` at the top of
+> `app/auth/page.js`, and all it does is show/hide the "need an account?" link.
+> Changing it means editing source, committing, and **deploying to `main`** —
+> because the E2E workflow builds with the Production secrets, so the account
+> has to exist in the **prod** Supabase project. That's two releases to the live
+> beta branch, with public self-serve sign-up open on the real site in between,
+> to create one test user. (Earlier versions of this doc and of the spec header
+> said to flip it; that advice predates the flag becoming a compile-time const.)
+
+**Create the user directly in Supabase instead** — no code change, no deploy,
+nothing exposed publicly:
+
+1. Supabase dashboard (**prod project**) → Authentication → Users → **Add user**.
+   Use a plus-addressed email you control, e.g. `you+e2etest@example.com`, and a
+   long random password. Tick **auto-confirm** so there's no email round-trip.
+2. **Nothing to seed in user metadata** — the app gates for this itself:
+   - `lib/RequireUsernameGate.js` loads the profile, and when there's no
+     `username` it renders an inline form to set one. It never reads the
+     `pending_username` that the sign-up form writes; that value is just how the
+     sign-up path carries a chosen name across email confirmation.
+   - `lib/RequireLegalGate.js` compares `user_metadata.legal_accepted_version`
+     against `LEGAL_VERSION` and shows an accept form when they differ.
+
+   Both are self-service, so a dashboard-created user with empty metadata simply
+   gets prompted for the missing pieces on first sign-in.
+3. **Sign in as the account once, by hand, in a browser**, and clear every gate —
+   username, legal acceptance, then native language and at least one language via
+   `/onboarding`. Both gates suppress themselves on `/auth`, `/onboarding`,
+   `/terms` and `/privacy` and render as overlays everywhere else, so work
+   through them starting from `/`.
+
+   **This is the step that decides whether the suite works.** The gates render
+   over `/` without changing the URL, so `beforeEach`'s `toHaveURL(/\/$/)` passes
+   on a half-configured account — it looks signed in while an overlay silently
+   eats every click the other five tests make. A fully cleared account is the
+   difference between six passing tests and six confusing failures.
+4. Play one round manually if you want the explanations test on solid ground —
+   it seeds its own history, but an account with some history is closer to what
+   that test assumes.
+
+Nothing needs flipping back afterwards, because nothing was flipped.
+
+**Alternative, if you'd rather use the app's own machinery:**
+`/admin/beta-applications` approval calls `supabaseAdmin.auth.admin.inviteUserByEmail`,
+which creates the account and sends an invite whose acceptance sets a password.
+It needs a `beta_applications` row to approve and an email round-trip, so it's
+more steps for the same result — but it exercises a path you actually ship.
 
 ### 9b. Wire it up
 
@@ -281,13 +322,38 @@ Supabase project the build points at, which for this workflow is **prod**.
   declares `environment: Production`, and repo-level secrets won't resolve.
 - **Locally:** the same two vars in `.env.local` (both are listed, blank, in
   `.env.local.example`). Leave them blank to skip the authenticated half.
+  `playwright.config.js` parses `.env.local` itself. It has to: Playwright runs
+  as its own Node process and does **not** inherit Next.js's env loading, so
+  before 2026-07-28 putting credentials in that file did nothing whatsoever —
+  the app under test could see them, the spec that needed them could not, and
+  the authenticated tests skipped regardless. A real shell env var still wins
+  over the file.
 
 ### 9c. Verify
 
-Push to `dev` and watch the **E2E tests** workflow. Green with 20 tests run
-(not 14 run / 6 skipped) means it's wired. If the credentials are missing you
-now get a named failing check, `authenticated-suite credentials are configured`,
-whose message says exactly what to add and where.
+Push to `dev` and watch the **E2E tests** workflow. Green with 20 tests run per
+browser project (not 14 run / 6 skipped) means it's wired. If the credentials are
+missing you now get a named failing check, `authenticated-suite credentials are
+configured`, whose message says exactly what to add and where.
 
 **Watch this workflow on every release.** It was red and unnoticed before the
 v3.2.0 session; a test suite nobody looks at is a suite that isn't running.
+
+### 9d. Diagnosing a CI-only failure
+
+A failed run uploads two artifacts (Actions → the run → Artifacts):
+
+| Artifact | Contains | Use it for |
+|---|---|---|
+| `playwright-report` | the browsable HTML report | reading the run like a human |
+| `playwright-test-results` | per-failure `test-failed-1.png`, `trace.zip`, `error-context.md` | working out *why* |
+
+**`error-context.md` is usually the fastest answer** — it's an accessibility
+snapshot of the page at the moment the assertion gave up, so it tells you which
+screen the test was actually looking at. `npx playwright show-trace <trace.zip>`
+gives a step-by-step replay when the snapshot isn't enough.
+
+Neither existed before 2026-07-28: the config set `reporter: "github"` in CI,
+and only the `html` reporter writes `playwright-report/`, so the upload step
+found nothing on every single run and said so in a warning nobody read. The
+reporter is now `[["github"], ["html"]]` and `test-results/` uploads too.

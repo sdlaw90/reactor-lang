@@ -1,11 +1,18 @@
 // Authenticated-flow tests -- these need a real dedicated test account
 // (never use a real personal or beta-tester account for this).
 //
-// Set up: create one throwaway account through the normal sign-up flow
-// (temporarily flip SIGNUPS_ENABLED to true, create it, flip back to
-// false), then set these as environment variables before running:
+// Set up: create one throwaway account DIRECTLY IN THE SUPABASE DASHBOARD
+// (Authentication -> Users -> Add user, auto-confirm), then sign in as it once
+// by hand and clear the username / legal / onboarding gates -- they're all
+// self-service, so nothing needs seeding into user metadata. Then set:
 //   E2E_TEST_EMAIL=you+e2etest@example.com
 //   E2E_TEST_PASSWORD=<a real password for that account>
+//
+// Do NOT flip SIGNUPS_ENABLED to do this, whatever older comments said. It is
+// a hardcoded const in app/auth/page.js that only shows/hides the sign-up
+// link, so changing it means a source edit plus a deploy to main -- and it
+// would put public self-serve sign-up on the live beta site meanwhile.
+//
 // Full procedure, including the GitHub secrets: docs/manual-runbook.md §9.
 //
 // CREDENTIAL POLICY -- deliberately asymmetric:
