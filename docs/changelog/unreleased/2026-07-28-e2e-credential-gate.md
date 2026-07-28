@@ -89,6 +89,17 @@ _Folds into the **3.3.0** release entry (internal-only — rides with whatever s
   - **Also removes a latent v3.3 break:** the old loop matched on English/Spanish copy
     (`/round complete|ronda completa/`). That would have failed the moment the suite
     ran under a French — or Portuguese — native account. Testids are language-agnostic.
+- **A second test was vacuous — and passing.** `Quick Quiz mode: start a round and answer
+  without a crash` did `page.locator("button").filter({ hasText: /.+/ }).nth(0).click()`
+  immediately after Start Round: the first button carrying any text, with no wait for the round
+  to render. That's the HUD back arrow ("←") on the start screen, or the exit button ("← Exit")
+  if the round had rendered — so it never answered anything, and its only assertion (no
+  `pageerror`) is trivially true on the home page it had navigated to. Same bug class as the
+  explanations failure, but green, which is worse: it reported coverage it did not have.
+  Rewritten to drive off `start-round` / `answer-option`, assert at least two real options are
+  on screen, assert answering does not navigate away, and assert the round then either advanced
+  or completed. Written as an either/or rather than asserting the post-answer disabled state,
+  since default pacing auto-advances in under a second and that would flake.
 - **Verified:** esbuild parse of the spec; `node --check` on the rollup script; YAML parse of the
   workflow asserting `environment: Production` and both vars on the right step; and the rollup
   script exercised against a scratch repo across six cases — check-pass, check-fail on a missing

@@ -82,16 +82,40 @@ test.describe("Authenticated flow", () => {
   });
 
   test("Quick Quiz mode: start a round and answer without a crash", async ({ page }) => {
+    // This test used to be VACUOUS and green, which is worse than red. It did:
+    //   await page.locator("button").filter({ hasText: /.+/ }).nth(0).click();
+    // -- the first button with any text, clicked without waiting for the round
+    // to render. On the play start screen that's the HUD back arrow ("←"),
+    // which navigates home; if the round had rendered it's the exit button
+    // ("← Exit"), which leaves the round. Either way it never answered a
+    // question, and the only assertion (no pageerror) is trivially true on the
+    // home page. Same bug class as the explanations test below: a too-broad
+    // locator doesn't fail, it succeeds at something else.
     const errors = [];
     page.on("pageerror", (err) => errors.push(err.message));
-    // Click the first visible language bubble.
+
     await page.locator("a, button").filter({ hasText: /spanish|italian|french/i }).first().click();
     await expect(page).toHaveURL(/\/play\//);
-    await page.getByRole("button", { name: /start round/i }).click();
-    // Answer the first question with whatever option is first -- this is a
-    // smoke test for "does the round render and accept an answer", not a
-    // correctness check.
-    await page.locator("button").filter({ hasText: /.+/ }).nth(0).click();
+    await page.getByTestId("start-round").click();
+
+    // The round must actually be on screen, with real options, before we touch it.
+    const options = page.getByTestId("answer-option");
+    await expect(options.first()).toBeVisible({ timeout: 10_000 });
+    expect(await options.count()).toBeGreaterThanOrEqual(2);
+
+    await options.first().click();
+
+    // Answering must not navigate away -- that's precisely what the old version
+    // did without noticing.
+    await expect(page).toHaveURL(/\/play\//);
+
+    // The round either moved to another question or finished. Both prove the
+    // answer was accepted; neither is reachable from the home screen. Written as
+    // an either/or rather than asserting the disabled state, because default
+    // (non-review) pacing auto-advances in well under a second and that assertion
+    // would flake.
+    await expect(options.first().or(page.getByTestId("round-complete"))).toBeVisible({ timeout: 10_000 });
+
     expect(errors).toEqual([]);
   });
 
