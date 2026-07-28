@@ -86,7 +86,10 @@ and greppable from a terminal. Both are generated; neither is hand-edited.
 1. **Generate** — `pipeline/extract.mjs` reads the repo, `pipeline/build_workbook.py` writes
    the packet into `template/`, once per scope. Regenerate after any content or localization
    change; never hand-patch a packet.
-2. **Send** — reviewer gets the `.xlsx`. All instructions inside it are in their language.
+2. **Send** — run `node pipeline/check_freshness.mjs --lane <lane>` first; it re-extracts and
+   tells you whether the packet still matches the repo. Node only, no dependencies, because it
+   has to work at the moment a packet goes out. Then the reviewer gets the `.xlsx`, with every
+   instruction inside it in their language.
 3. **Receive** — drop the returned file into `submitted/` as
    `YYYY-MM-DD-<reviewer>-<scope>-v<version>.xlsx`. Keep the scope in the name: `ingest.py`
    reads it back out. Do not open and "tidy" it.

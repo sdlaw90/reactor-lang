@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 465 tracked files.
+> 466 tracked files.
 
 ```
 .env.local.example
@@ -226,6 +226,7 @@ docs/language-review/pipeline/.gitignore
 docs/language-review/pipeline/README.md
 docs/language-review/pipeline/build_workbook.py
 docs/language-review/pipeline/check_example.py
+docs/language-review/pipeline/check_freshness.mjs
 docs/language-review/pipeline/check_freshness.py
 docs/language-review/pipeline/example/2026-08-14-maria-r-interface-v3.2.0.changeset.md
 docs/language-review/pipeline/example/2026-08-14-maria-r-interface-v3.2.0.xlsx

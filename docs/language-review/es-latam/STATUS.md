@@ -19,12 +19,15 @@ answers pre-resolve rows in the other two, and the packet format has never been 
 reviewer. A format problem caught there costs one correction instead of three. This is the
 calibration sample the handoff strategy §4 has been owing since Spanish shipped.
 
-Run both checks before sending:
+Before sending, run:
 
 ```
-python docs/language-review/pipeline/check_freshness.py --lane es-latam
-python docs/language-review/pipeline/check_example.py
+node docs/language-review/pipeline/check_freshness.mjs --lane es-latam
 ```
+
+Node only, no dependencies — it has to work on send day regardless of toolchain.
+`check_example.py` is the other check, but it needs Python + `openpyxl` and only matters when
+`ingest.py` or a sheet layout changes.
 
 ### On the v3.3 rebuild (2026-07-28)
 

@@ -4,12 +4,25 @@ Generates a reviewer packet from the repo, and turns a returned packet back into
 changeset. Reusable across every lane — standing up a new language is a config entry and a
 translated copy file, not a new script.
 
-## Requirements
+## Requirements — what needs what
 
-- Node (already required to build the app) — no extra npm dependencies. `extract.mjs`
-  deliberately avoids a parser dependency; see the note in its header.
-- Python with `openpyxl` (`pip install openpyxl`) for the workbook steps.
-- LibreOffice (`soffice`), optional, to cache the summary formulas after generating.
+| Script | Needs | Who runs it |
+|---|---|---|
+| `extract.mjs` | Node only, zero npm deps | whoever builds a packet |
+| **`check_freshness.mjs`** | **Node only, zero deps** | **whoever SENDS a packet — run it every time** |
+| `build_workbook.py` | Python 3 + `openpyxl` | whoever builds a packet |
+| `ingest.py` | Python 3 + `openpyxl` | whoever processes a return |
+| `check_example.py` | Python 3 + `openpyxl` | whoever edits `ingest.py` or a sheet layout |
+
+Anything that reads or writes a workbook needs Python and `openpyxl` (`pip install openpyxl`).
+Everything on the send path deliberately does not — the freshness check is the one thing that
+has to work at the moment a packet goes out, and it must not depend on a toolchain the sender
+may not have.
+
+LibreOffice (`soffice`) is optional, to cache the summary formulas after generating.
+
+Today the Python steps run wherever the packets are built rather than on the maintainer's
+machine. If you want to build or ingest locally, install Python 3 and `openpyxl` first.
 
 ## Scopes
 
@@ -72,7 +85,7 @@ the counterpart lane. The submission itself is never touched.
 ## Freshness check — run before sending anything
 
 ```bash
-python docs/language-review/pipeline/check_freshness.py
+node docs/language-review/pipeline/check_freshness.mjs --lane es-latam
 ```
 
 Every packet ships a `<stem>.sources.json` fingerprinting the repo files it was built from.
@@ -95,6 +108,9 @@ or rendered announces itself:
 ```bash
 python docs/language-review/pipeline/check_example.py
 ```
+
+(This one needs Python + `openpyxl`, because it has to read a workbook. It only matters when
+someone edits `ingest.py` or a sheet layout — pipeline work, not send-day work.)
 
 It guards the quiet failure — a moved column or an unmatched verdict word making a reviewer's
 corrections silently vanish. See `example/README.md` before regenerating the fixture.

@@ -69,6 +69,12 @@ app, content or component changes._
   103,448), changing **zero Spanish values and no keys**. A source-keyed check calls that a
   stale Spanish packet; it isn't, and a check that fires on non-events gets ignored, which is
   worse than no check. Verified: the regenerated `.xlsx` cell content is byte-identical.
+- **The freshness check is Node, not Python** (`pipeline/check_freshness.mjs`; the `.py` is a
+  stub pointing at it). It is the one check that has to run at the moment a packet is sent to a
+  reviewer, and the sender may not have a Python toolchain — this repo requires Node and
+  nothing else. It reads no workbook, so there was never a reason for it to be Python.
+  Everything that does touch a `.xlsx` (`build_workbook.py`, `ingest.py`, `check_example.py`)
+  still needs Python + `openpyxl`, and those all run at build/ingest time rather than send time.
 - **Packets rebuilt from a full clone of `dev` @ 01e90e6, and that mattered.** The drift sweep
   walks `lib/` and `app/` on disk, so it can only report files it can see; the first build ran
   against a partial copy and its clean result was not trustworthy. Against a complete checkout
