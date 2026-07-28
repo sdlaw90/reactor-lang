@@ -10,3 +10,7 @@ tts-output/
 supabase/.temp/
 # AGPL Korean conjugation engine — reproduced locally, never vendored (see scripts/grammar-engines/ko_conjugation_gen.py)
 scripts/grammar-engines/ko_engine/
+# Retirement staging for the straggler sweep (deployment plan §4 step 6). Files are moved
+# here for Sean to delete by hand — they must never be tracked, or "deleted" files keep
+# round-tripping through commits and stay in history.
+_to_delete/

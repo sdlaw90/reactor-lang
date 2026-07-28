@@ -42,8 +42,10 @@ via `node --check` + dry-runs).
 
 ## 3. Commit & deploy to dev
 
-Prereq: you're on `dev`, `lib/version.js` is bumped, and the changelog
-fragment (§4) is present. Then:
+Prereq: you're on `dev` and the changelog fragment (§4) is present.
+**Do NOT bump `lib/version.js` here** — `CURRENT_VERSION` moves once, at the
+release (§6a). Day-to-day dev commits carry the *previous* version's label on
+purpose; that's expected, not a mistake. Then:
 
 ```
 npm run deploy dev
@@ -71,8 +73,16 @@ new migration files.)
 
 One fragment per delta at `docs/changelog/unreleased/YYYY-MM-DD-slug.md`.
 Format, rules, and the rollup procedure live in `docs/changelog/README.md`.
-Unique filenames = no parallel-chat collisions; `lib/version.js` remains
-solely owned by the deepening/ledger chat.
+Unique filenames = no collisions between parallel sessions.
+
+**Every fragment names the version it belongs to** in its subtitle line, because
+`unreleased/` can now hold fragments for more than one pending version at a time
+(a Z release can ship while a Y milestone is still being built — deployment plan
+§5). A release rolls up only the fragments naming the version being cut.
+
+`lib/version.js` is bumped only at the release (§6a). If two sessions are ever
+in flight at once, whichever one cuts the release owns that edit — but the
+normal case now is one session carrying a release end to end.
 
 ---
 
@@ -121,17 +131,44 @@ watch for green (§6c). No manual merge, no manual prod uploads, no env swapping
 > live-prod branch isn't stood up yet — `npm run deploy prod` is reserved and
 > errors until it is.
 
-### 6a. Version bump + changelog rollup (deepening/ledger chat)
-- New `-beta.N` in `lib/version.js` (any change to a built deliverable =
-  new increment, never repackage)
-- Roll up `docs/changelog/unreleased/` per `docs/changelog/README.md`:
-  fragments → release notes (regrouped by feature area) → move fragments
-  to `released/vX.Y.Z-beta.N/`
+### 6a. Version bump + changelog rollup
+
+**Set `CURRENT_VERSION` in `lib/version.js` to the version being cut — a plain
+`X.Y.Z`, no suffix.** The `-beta.N` scheme is **retired**; v3.1.1 and v3.2.0 both
+shipped as plain versions. `main` is still the *beta-prod tier* — that's a tier
+name for who's on the other end, not a version suffix.
+
+Which digit moves is set by the versioning convention (deployment plan §5 is the
+authority):
+
+| Digit | Moves when | Example |
+|---|---|---|
+| **Z** | minor bug / UI / feature fix, or a native-review correction to shipped content | 3.2.0 → 3.2.1 |
+| **Y** | a major part of the roadmapped plan lands | 3.2.x → 3.3.0 (French) |
+| **X** | the roadmapped arc itself completes | 3.9.x → 4.0.0 (matrix complete) |
+
+Releases are kept **as small as they safely can be** — a finished, verified
+Z-sized change ships on its own rather than waiting for whatever Y it happens to
+sit next to.
+
+**Rollup:** per `docs/changelog/README.md`, take **only the fragments naming the
+version being cut**, fold their user-facing bullets into the release notes
+(regrouped by feature area), and move **those** fragments to `released/vX.Y.Z/`.
+Fragments targeting a later version stay in `unreleased/` — do not sweep the
+folder wholesale.
 
 ### 6b. Release to main
 
-Prereqs: `lib/version.js` bumped, `unreleased/` fragments rolled up, everything
-committed **and pushed** on `dev` (via §3). Then, from a clean tree:
+Prereqs: `lib/version.js` bumped, the cut version's `unreleased/` fragments rolled
+up, everything committed **and pushed** on `dev` (via §3). Then, from a clean tree:
+
+> **Cutting a Z while a Y is half-built on `dev`.** This is allowed and expected —
+> it's the whole point of small releases — but it merges *all* of `dev` to `main`,
+> including in-progress milestone work. It's only safe because **the offering flip
+> goes last**: a source's content, tracks and localization land while nothing in the
+> UI can reach them, and the flip that makes them visible is the final beat. Before
+> cutting a Z mid-milestone, confirm the in-flight work is still unreachable in the
+> UI. If a beat can't be made inert, it must not land on `dev` until its Y is ready.
 
 ```
 npm run deploy beta
@@ -153,7 +190,7 @@ Then finish as the script instructs:
 
 ```
 git add <files>
-git commit -m "Release vX.Y.Z-beta.N"
+git commit -m "Release vX.Y.Z"
 git push origin main
 git checkout dev && git merge main && git push origin dev   # back-merge — don't skip
 ```
