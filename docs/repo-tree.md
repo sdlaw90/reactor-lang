@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 422 tracked files.
+> 431 tracked files.
 
 ```
 .env.local.example
@@ -14,7 +14,6 @@
 .github/workflows/supabase-migrations.yml
 .gitignore
 README.md
-_to_delete/enForEs.js
 app/about/page.js
 app/admin/ApplicationsSection.js
 app/admin/DashboardSection.js
@@ -198,8 +197,18 @@ docs/changelog/released/v3.2.0/2026-07-26-pt-source-foundation.md
 docs/changelog/released/v3.2.0/2026-07-27-rebrand-in-app-and-repalette.md
 docs/changelog/released/v3.2.0/2026-07-27-smoke-test-fixes.md
 docs/changelog/unreleased/.gitkeep
+docs/changelog/unreleased/2026-07-28-marketing-asset-library.md
 docs/codebase-reference.md
 docs/manual-runbook.md
+docs/marketing/README.md
+docs/marketing/covers/forest-cover-1640x856.png
+docs/marketing/social/brand-rebrand-announcement-square.png
+docs/marketing/social/v3.0.0-what-the-app-offers.jpg
+docs/marketing/social/v3.1.0-release-banner.png
+docs/marketing/social/v3.1.0-release-square.png
+docs/marketing/social/v3.2.0-release-square.png
+docs/marketing/sources/forest-cover.html
+docs/marketing/sources/v3.2.0-release-square.html
 docs/repo-tree.md
 docs/squirrelingo-language-wishlist.md
 docs/squirrelingo_shipped_archive.md
