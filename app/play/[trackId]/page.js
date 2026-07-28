@@ -735,7 +735,7 @@ export default function PlayPage({ params }) {
               )}
             </div>
 
-            <button className="rj" style={styles.primaryBtn} onClick={() => startRound("daily")}>
+            <button className="rj" data-testid="start-round" style={styles.primaryBtn} onClick={() => startRound("daily")}>
               {T("startRound")} <ChevronRight size={20} style={{ verticalAlign: "middle" }} />
             </button>
 
@@ -750,7 +750,7 @@ export default function PlayPage({ params }) {
             )}
 
             {explanationLog.length > 0 && (
-              <button className="rj" style={styles.explainOpenBtn} onClick={() => setScreen("explain")}>
+              <button className="rj" data-testid="view-explanations" style={styles.explainOpenBtn} onClick={() => setScreen("explain")}>
                 {T("viewExplanations", { n: explanationLog.length })}
               </button>
             )}
@@ -851,6 +851,7 @@ export default function PlayPage({ params }) {
                       <button
                         onClick={() => handleAnswer(i)}
                         disabled={!!feedback}
+                        data-testid="answer-option"
                         className="rj"
                         style={{ ...styles.optionBtn, flex: 1, background: bg, borderColor: border, borderWidth, color: textColor }}
                       >
@@ -916,7 +917,7 @@ export default function PlayPage({ params }) {
               )}
 
               {awaitingNext && (
-                <button className="rj" style={styles.nextBtn} onClick={handleNext}>
+                <button className="rj" data-testid="next-question" style={styles.nextBtn} onClick={handleNext}>
                   {T("next")} <ChevronRight size={18} style={{ verticalAlign: "middle" }} />
                 </button>
               )}
@@ -926,7 +927,7 @@ export default function PlayPage({ params }) {
 
         {screen === "result" && (
           <div style={styles.centerCol} className="fadein">
-            <h2 className="rj" style={styles.title}>
+            <h2 className="rj" data-testid="round-complete" style={styles.title}>
               {roundMode === "review" ? T("reviewComplete") : T("roundComplete")}
             </h2>
             <div style={styles.statRow} className="jm">
@@ -938,12 +939,12 @@ export default function PlayPage({ params }) {
                 <StatChip label={T("statDailyStreak")} value={`${progress.streak}d`} color="#FF7B8A" />
               )}
             </div>
-            <button className="rj" style={styles.primaryBtn} onClick={() => startRound("daily")}>
+            <button className="rj" data-testid="start-round" style={styles.primaryBtn} onClick={() => startRound("daily")}>
               <RotateCcw size={18} style={{ verticalAlign: "middle", marginRight: 8 }} />
               {T("anotherRound")}
             </button>
             {explanationLog.length > 0 && (
-              <button className="rj" style={styles.explainOpenBtn} onClick={() => setScreen("explain")}>
+              <button className="rj" data-testid="view-explanations" style={styles.explainOpenBtn} onClick={() => setScreen("explain")}>
                 {T("viewExplanations", { n: explanationLog.length })}
               </button>
             )}

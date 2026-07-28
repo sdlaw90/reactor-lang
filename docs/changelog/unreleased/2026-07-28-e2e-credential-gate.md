@@ -63,14 +63,32 @@ _Folds into the **3.3.0** release entry (internal-only — rides with whatever s
     file. `playwright.config.js` now parses `.env.local` itself (~10 lines, no dotenv
     dependency); existing env vars win, so CI is unaffected.
   - Runbook §9b corrected and **§9d added** — which artifact to grab and what's in it.
-- **First real run of the authenticated suite: 38/40 pass.** The failure is
-  `explanations view opens without crashing after a completed round` on both browser
-  projects — the round never reaches ROUND COMPLETE inside the spec's 40-iteration
-  loop. Written to catch a v2.24.0-beta.4 regression and never executed since, so it
-  is stale-test-or-real-bug, unresolved at time of writing. Ruled out by reading
-  `app/play/[trackId]/page.js`: the Home button is gated on `screen !== "playing"`,
-  `AudioButton` carries no `.rj` class, and the `roundComplete` / `next` / `startRound`
-  copy all still match the spec's regexes.
+- **First real run of the authenticated suite: 38/40, and the failure was the test,
+  not the app.** `explanations view opens without crashing after a completed round`
+  failed on both browser projects. The `error-context.md` accessibility snapshot —
+  available only because of the reporter fix above — showed the page sitting on the
+  **Help page**, not on a round. Diagnosis:
+  - The spec picked answer options with `locator("button.rj").first()`. **`.rj` is on
+    every styled button in the app** — the HUD home arrow, the help toggle, the exit
+    button. It also fired immediately after clicking Start Round, before the round
+    screen had rendered, so `.first()` matched the HUD home arrow (which only renders
+    while `screen !== "playing"`), navigated to `/`, and spent its 40 iterations
+    wandering home → help → back.
+  - The symptom ("ROUND COMPLETE never appeared") pointed at the round; the cause was
+    the selector. Worth remembering as a class of bug: a too-broad locator fails by
+    *doing something else successfully*.
+  - **Fix, `app/play/[trackId]/page.js`:** added `data-testid` to the five elements the
+    suite drives — `answer-option`, `next-question`, `round-complete`, `start-round`,
+    `view-explanations`. Attributes only; no visible surface, so no UI preview needed.
+    `start-round` and `view-explanations` appear twice each (start screen and result
+    screen) and resolve uniquely at runtime since only one screen mounts at a time.
+  - **Fix, `e2e/authenticated-flow.spec.js`:** the test now drives entirely off those
+    testids, waits for `answer-option` to be visible before looping, clicks only
+    enabled options, raises the bound to 60 iterations and the test timeout to 60s
+    (a full round plus sign-in genuinely does not fit in the default 30s).
+  - **Also removes a latent v3.3 break:** the old loop matched on English/Spanish copy
+    (`/round complete|ronda completa/`). That would have failed the moment the suite
+    ran under a French — or Portuguese — native account. Testids are language-agnostic.
 - **Verified:** esbuild parse of the spec; `node --check` on the rollup script; YAML parse of the
   workflow asserting `environment: Production` and both vars on the right step; and the rollup
   script exercised against a scratch repo across six cases — check-pass, check-fail on a missing

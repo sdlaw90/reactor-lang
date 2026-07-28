@@ -110,44 +110,64 @@ test.describe("Authenticated flow", () => {
     expect(errors).toEqual([]);
   });
 
+  // 60s: a full round is many question->answer->advance cycles plus the
+  // sign-in in beforeEach, and the default 30s was not enough even when the
+  // round was progressing normally.
   test("explanations view opens without crashing after a completed round", async ({ page }) => {
+    test.setTimeout(60_000);
     // Regression for v2.24.0-beta.4: a component referencing PlayPage state
     // was accidentally rendered inside ExplanationCard, so the explanations
     // view crashed for ANY account with at least one history row -- and the
     // suite stayed green because no spec ever completed a round and opened
     // it. This one does both, seeding its own history in the process.
+    //
+    // Driven by data-testid, NOT by visible copy or the shared .rj button
+    // class. Both of those bit us:
+    //   * .rj is on every styled button in the app -- the HUD home arrow, the
+    //     help toggle, the exit button. `locator("button.rj").first()` picked
+    //     the home arrow off the play start screen (the round had not rendered
+    //     yet), navigated away, and then spent its 40 iterations wandering
+    //     home -> help -> back. The failure surfaced as "ROUND COMPLETE never
+    //     appeared", which pointed at the round rather than at the selector.
+    //   * matching on English/Spanish strings breaks the moment this runs
+    //     under a different native language -- v3.3 French is next.
     const errors = [];
     page.on("pageerror", (err) => errors.push(err.message));
 
     await page.locator("a, button").filter({ hasText: /spanish|italian|french/i }).first().click();
     await expect(page).toHaveURL(/\/play\//);
-    await page.getByRole("button", { name: /start round/i }).click();
+    await page.getByTestId("start-round").click();
 
-    // Play the round to completion: answer with the first option; in
-    // Lessons/review pacing a "Next" button appears between questions.
-    // Bounded loop -- if the round somehow never ends, the assertion below
-    // fails rather than hanging.
-    for (let i = 0; i < 40; i++) {
-      if (await page.getByText(/round complete|ronda completa/i).isVisible().catch(() => false)) break;
-      const next = page.getByRole("button", { name: /^(next|siguiente)/i });
+    // Wait for the round to actually be on screen before touching anything.
+    // Without this the loop races the state transition and clicks whatever
+    // chrome is still mounted.
+    await expect(page.getByTestId("answer-option").first()).toBeVisible({ timeout: 10_000 });
+
+    // Play to completion. Bounded so a stuck round fails the assertion below
+    // rather than hanging. Generous enough for a long round: the loop exits as
+    // soon as the result screen appears.
+    const roundComplete = page.getByTestId("round-complete");
+    for (let i = 0; i < 60; i++) {
+      if (await roundComplete.isVisible().catch(() => false)) break;
+      // Review pacing shows a Next between questions; default pacing does not.
+      const next = page.getByTestId("next-question");
       if (await next.isVisible().catch(() => false)) {
         await next.click();
-        await page.waitForTimeout(150);
+        await page.waitForTimeout(100);
         continue;
       }
-      const option = page
-        .locator("button.rj")
-        .filter({ hasNotText: /exit|salir|start round|empezar/i })
-        .first();
-      if (await option.isVisible().catch(() => false)) await option.click();
-      await page.waitForTimeout(250);
+      const option = page.getByTestId("answer-option").first();
+      if (await option.isEnabled().catch(() => false)) {
+        await option.click();
+      }
+      await page.waitForTimeout(200);
     }
-    await expect(page.getByText(/round complete|ronda completa/i)).toBeVisible({ timeout: 5000 });
+    await expect(roundComplete).toBeVisible({ timeout: 5000 });
 
     // Now the part that used to crash: open the explanations view, which
     // renders one ExplanationCard per history row.
-    await page.getByRole("button", { name: /view explanations|ver explicaciones/i }).click();
-    await expect(page.getByText(/explanations|explicaciones/i).first()).toBeVisible();
+    await page.getByTestId("view-explanations").click();
+    await expect(page.getByText(/explanations|explicaciones|explicações/i).first()).toBeVisible();
     expect(errors).toEqual([]);
   });
 });
