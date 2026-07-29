@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 466 tracked files.
+> 504 tracked files.
 
 ```
 .env.local.example
@@ -98,8 +98,10 @@ data/tracks/deForEn.js
 data/tracks/deForEnTags.js
 data/tracks/enForIt.js
 data/tracks/enGbForEs.js
+data/tracks/enGbForFr.js
 data/tracks/enGbForPt.js
 data/tracks/enUsForEs.js
+data/tracks/enUsForFr.js
 data/tracks/enUsForPt.js
 data/tracks/esForEn.js
 data/tracks/esForEnTags.js
@@ -117,8 +119,11 @@ data/tracks/jaForEnTags.js
 data/tracks/koForEn.js
 data/tracks/koForEnTags.js
 data/tracks/l10n/deForEn.es.js
+data/tracks/l10n/deForEn.fr.js
 data/tracks/l10n/deForEn.pt.js
+data/tracks/l10n/esForEn.fr.js
 data/tracks/l10n/esForEn.pt.js
+data/tracks/l10n/esSpainForEn.fr.js
 data/tracks/l10n/esSpainForEn.pt.js
 data/tracks/l10n/frCaForEn.es.js
 data/tracks/l10n/frCaForEn.pt.js
@@ -126,17 +131,24 @@ data/tracks/l10n/frForEn.es.js
 data/tracks/l10n/frForEn.pt.js
 data/tracks/l10n/index.js
 data/tracks/l10n/itForEn.es.js
+data/tracks/l10n/itForEn.fr.js
 data/tracks/l10n/itForEn.pt.js
 data/tracks/l10n/jaForEn.es.js
+data/tracks/l10n/jaForEn.fr.js
 data/tracks/l10n/jaForEn.pt.js
 data/tracks/l10n/koForEn.es.js
+data/tracks/l10n/koForEn.fr.js
 data/tracks/l10n/koForEn.pt.js
 data/tracks/l10n/ptBrForEn.es.js
+data/tracks/l10n/ptBrForEn.fr.js
 data/tracks/l10n/ptPtForEn.es.js
+data/tracks/l10n/ptPtForEn.fr.js
 data/tracks/l10n/regionalVariants.js
 data/tracks/l10n/ruForEn.es.js
+data/tracks/l10n/ruForEn.fr.js
 data/tracks/l10n/ruForEn.pt.js
 data/tracks/l10n/zhForEn.es.js
+data/tracks/l10n/zhForEn.fr.js
 data/tracks/l10n/zhForEn.pt.js
 data/tracks/ptBrForEn.js
 data/tracks/ptBrForEnTags.js
@@ -165,7 +177,9 @@ data/vocab/zhWords.es.js
 data/vocab/zhWords.js
 docs/INTEGRATION-NOTES.md
 docs/PACKAGING.md
+docs/_fr-offering-flip.md
 docs/_run-log-v3.3.md
+docs/_v3.3-phase2-3-prompt.md
 docs/architecture.md
 docs/beta-feedback-email-draft.md
 docs/changelog/README.md
@@ -202,6 +216,7 @@ docs/changelog/unreleased/2026-07-28-e2e-credential-gate.md
 docs/changelog/unreleased/2026-07-28-language-review-lane.md
 docs/changelog/unreleased/2026-07-28-marketing-asset-library.md
 docs/changelog/unreleased/2026-07-28-versioning-and-process-docs.md
+docs/changelog/unreleased/2026-07-29-language-table-sweep.md
 docs/codebase-reference.md
 docs/language-review/README.md
 docs/language-review/es-latam/STATUS.md
@@ -222,6 +237,24 @@ docs/language-review/es-spain/changesets/.gitkeep
 docs/language-review/es-spain/implemented/.gitkeep
 docs/language-review/es-spain/submitted/.gitkeep
 docs/language-review/es-spain/template/.gitkeep
+docs/language-review/fr-ca/STATUS.md
+docs/language-review/fr-ca/changesets/.gitkeep
+docs/language-review/fr-ca/implemented/.gitkeep
+docs/language-review/fr-ca/submitted/.gitkeep
+docs/language-review/fr-ca/template/.gitkeep
+docs/language-review/fr-fr/STATUS.md
+docs/language-review/fr-fr/changesets/.gitkeep
+docs/language-review/fr-fr/implemented/.gitkeep
+docs/language-review/fr-fr/submitted/.gitkeep
+docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.2.0.md
+docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.2.0.sources.json
+docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.2.0.xlsx
+docs/language-review/fr-fr/template/fr-fr-interface-review-v3.2.0.md
+docs/language-review/fr-fr/template/fr-fr-interface-review-v3.2.0.sources.json
+docs/language-review/fr-fr/template/fr-fr-interface-review-v3.2.0.xlsx
+docs/language-review/fr-fr/template/fr-fr-taught-review-v3.2.0.md
+docs/language-review/fr-fr/template/fr-fr-taught-review-v3.2.0.sources.json
+docs/language-review/fr-fr/template/fr-fr-taught-review-v3.2.0.xlsx
 docs/language-review/pipeline/.gitignore
 docs/language-review/pipeline/README.md
 docs/language-review/pipeline/build_workbook.py
@@ -233,7 +266,11 @@ docs/language-review/pipeline/example/2026-08-14-maria-r-interface-v3.2.0.xlsx
 docs/language-review/pipeline/example/README.md
 docs/language-review/pipeline/extract.mjs
 docs/language-review/pipeline/i18n/es-latam.json
+docs/language-review/pipeline/i18n/es-spain.json
+docs/language-review/pipeline/i18n/fr-ca.json
+docs/language-review/pipeline/i18n/fr-fr.json
 docs/language-review/pipeline/ingest.py
+docs/language-review/pipeline/render_email.mjs
 docs/manual-runbook.md
 docs/marketing/README.md
 docs/marketing/covers/forest-cover-1640x856.png
@@ -399,6 +436,7 @@ public/icon-512.png
 public/icon-maskable-512.png
 public/splash.png
 public/version.json
+scripts/_fr-parity-harness.mjs
 scripts/deploy.js
 scripts/gen-repo-tree.mjs
 scripts/gen-track-item-counts.mjs

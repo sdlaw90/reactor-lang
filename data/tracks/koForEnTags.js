@@ -17,15 +17,15 @@
 // content splice that shifts indices does not orphan a tag. AI-authored.
 
 export const THEMES = [
-  {"id":"numbers-time","en":"Numbers, dates & time","ko":"숫자와 시간","pt":"Números e tempo","fr":"Nombres, dates et heures"},
-  {"id":"directions","en":"Directions","ko":"길 안내","pt":"Direções","fr":"Directions"},
-  {"id":"shopping","en":"Shopping","ko":"쇼핑","pt":"Compras","fr":"Achats"},
-  {"id":"restaurant","en":"Restaurant & food","ko":"식사","pt":"Restaurante","fr":"Restaurant"},
-  {"id":"travel","en":"Travel","ko":"여행","pt":"Viagens","fr":"Voyages"},
-  {"id":"medical","en":"Medical & doctor","ko":"건강","pt":"Saúde","fr":"Santé"},
-  {"id":"small-talk","en":"Small talk","ko":"잡담","pt":"Conversa","fr":"Conversation"},
-  {"id":"work","en":"Work & office","ko":"일과 직장","pt":"Trabalho","fr":"Travail"},
-  {"id":"emotions","en":"Emotions","ko":"감정","pt":"Emoções","fr":"Émotions"},
+  {"id":"numbers-time","en":"Numbers, dates & time","ko":"숫자와 시간","pt":"Números e tempo","fr":"Nombres, dates et heures","es":"Números y tiempo"},
+  {"id":"directions","en":"Directions","ko":"길 안내","pt":"Direções","fr":"Directions","es":"Direcciones"},
+  {"id":"shopping","en":"Shopping","ko":"쇼핑","pt":"Compras","fr":"Achats","es":"Compras"},
+  {"id":"restaurant","en":"Restaurant & food","ko":"식사","pt":"Restaurante","fr":"Restaurant","es":"Restaurante"},
+  {"id":"travel","en":"Travel","ko":"여행","pt":"Viagens","fr":"Voyages","es":"Viajes"},
+  {"id":"medical","en":"Medical & doctor","ko":"건강","pt":"Saúde","fr":"Santé","es":"Salud"},
+  {"id":"small-talk","en":"Small talk","ko":"잡담","pt":"Conversa","fr":"Conversation","es":"Conversación"},
+  {"id":"work","en":"Work & office","ko":"일과 직장","pt":"Trabalho","fr":"Travail","es":"Trabajo"},
+  {"id":"emotions","en":"Emotions","ko":"감정","pt":"Emoções","fr":"Émotions","es":"Emociones"},
 ];
 
 // key (prompt text) -> { themes?: [id], grammar?: {tense,why}, person?: {en,ko} }

@@ -3,6 +3,13 @@
  "scope": "taught",
  "version": "3.2.0",
  "contentHash": "4e28eafcd84c952092bb377f9b147ba102d62bf4b75c8119d4509d9be6aaa565",
+ "rowCounts": {
+  "1-Preguntas": 665,
+  "2-Pronunciación": 79,
+  "3-Banco-de-palabras": 609,
+  "4-Decisiones": 8
+ },
+ "rowTotal": 1353,
  "builtFrom": {
   "data/tracks/esForEn.js": {
    "bytes": 845294,

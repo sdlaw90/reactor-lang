@@ -3,6 +3,17 @@
  "scope": "interface",
  "version": "3.2.0",
  "contentHash": "568bee502067189a4fa95b562337b000962eed387c2a20378c0d79fee88e0aca",
+ "rowCounts": {
+  "1-Variantes-regionales": 325,
+  "2-Decisiones": 16,
+  "3-Config-tarjeta": 117,
+  "4-Preguntas-seguridad": 10,
+  "5-Interfaz": 403,
+  "6-Otros-textos": 59,
+  "7-Ayuda-AcercaDe": 110,
+  "8-Novedades": 184
+ },
+ "rowTotal": 1208,
  "builtFrom": {
   "data/tracks/l10n/regionalVariants.js": {
    "bytes": 43017,
@@ -13,8 +24,8 @@
    "sha256": "831ada5e12df97c359e00c8151897d8240c0fa8a7dbc61b58a0ed2798bf9bd4a"
   },
   "lib/LangSwitcher.js": {
-   "bytes": 2966,
-   "sha256": "a6bcfe27b730df12048d5f54e897557e5a83d436550b2ee968c0687aaf6e978a"
+   "bytes": 3534,
+   "sha256": "75e01d5bb1805903e795289e84e9208e8f74547600a5a63576bd27473768b0fd"
   },
   "lib/guideSteps.js": {
    "bytes": 7425,

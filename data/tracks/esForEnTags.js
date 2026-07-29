@@ -42,23 +42,23 @@ export const THEMES = [
 
 // ---- #89: tense/mood definitions (each item references one) ----
 const T = {
-  present: { tense: { en: "Present", es: "Presente" }, why: { en: "Habitual or current actions.", es: "Acciones habituales o actuales." } },
-  preterite: { tense: { en: "Preterite", es: "Pretérito" }, why: { en: "A completed action at a specific point in the past.", es: "Una acción completada en un momento concreto del pasado." } },
-  imperfect: { tense: { en: "Imperfect", es: "Imperfecto" }, why: { en: "Ongoing, habitual, or background past actions.", es: "Acciones pasadas en curso, habituales o de fondo." } },
-  future: { tense: { en: "Simple future", es: "Futuro simple" }, why: { en: "What will happen.", es: "Lo que ocurrirá." } },
-  conditional: { tense: { en: "Conditional", es: "Condicional" }, why: { en: "What would happen — often paired with a hypothetical 'si'.", es: "Lo que ocurriría — suele ir con un 'si' hipotético." } },
-  presSubj: { tense: { en: "Present subjunctive", es: "Presente de subjuntivo" }, why: { en: "Triggered by wishes, doubt, emotion, or 'cuando' about the future.", es: "Lo activan deseos, dudas, emociones o 'cuando' sobre el futuro." } },
-  presPerfect: { tense: { en: "Present perfect", es: "Pretérito perfecto" }, why: { en: "A past action with present relevance ('have done').", es: "Una acción pasada con relevancia presente ('he hecho')." } },
-  presPerfectSubj: { tense: { en: "Present perfect subjunctive", es: "Pretérito perfecto de subjuntivo" }, why: { en: "A completed action seen through doubt or disbelief.", es: "Una acción completada vista con duda o incredulidad." } },
-  imperfectSubj: { tense: { en: "Imperfect subjunctive", es: "Imperfecto de subjuntivo" }, why: { en: "Wishes/hypotheticals about the past, or softened requests.", es: "Deseos/hipótesis sobre el pasado o peticiones suavizadas." } },
-  pluperfectSubj: { tense: { en: "Pluperfect subjunctive", es: "Pluscuamperfecto de subjuntivo" }, why: { en: "An unreal past condition ('had I known…').", es: "Una condición irreal del pasado ('si hubiera sabido…')." } },
-  progressive: { tense: { en: "Present progressive", es: "Presente progresivo" }, why: { en: "estar + gerund — an action happening right now.", es: "estar + gerundio — una acción que ocurre ahora mismo." } },
-  cmdAff: { tense: { en: "Affirmative command", es: "Imperativo afirmativo" }, why: { en: "Telling someone to do something.", es: "Decirle a alguien que haga algo." } },
-  cmdNeg: { tense: { en: "Negative command", es: "Imperativo negativo" }, why: { en: "'no' + the subjunctive form.", es: "'no' + la forma del subjuntivo." } },
-  infinitive: { tense: { en: "Infinitive", es: "Infinitivo" }, why: { en: "The unconjugated verb, used after expressions like 'hay que' or 'de'.", es: "El verbo sin conjugar, tras expresiones como 'hay que' o 'de'." } },
-  pluperfect: { tense: { en: "Pluperfect", es: "Pluscuamperfecto" }, why: { en: "A past action finished before another past moment ('had done').", es: "Una acción pasada anterior a otro momento pasado ('había hecho')." } },
-  futurePerfect: { tense: { en: "Future perfect", es: "Futuro perfecto" }, why: { en: "What will have happened by a point in the future.", es: "Lo que habrá ocurrido para un momento futuro." } },
-  conditionalPerfect: { tense: { en: "Conditional perfect", es: "Condicional perfecto" }, why: { en: "What would have happened ('would have done').", es: "Lo que habría ocurrido ('habría hecho')." } },
+  present: { tense: { en: "Present", es: "Presente", fr: "Présent", pt: "Presente" }, why: { en: "Habitual or current actions.", es: "Acciones habituales o actuales.", fr: "Actions habituelles ou actuelles.", pt: "Ações habituais ou atuais." } },
+  preterite: { tense: { en: "Preterite", es: "Pretérito", fr: "Prétérit", pt: "Pretérito" }, why: { en: "A completed action at a specific point in the past.", es: "Una acción completada en un momento concreto del pasado.", fr: "Une action achevée à un moment précis du passé.", pt: "Uma ação concluída em um momento específico do passado." } },
+  imperfect: { tense: { en: "Imperfect", es: "Imperfecto", fr: "Imparfait", pt: "Imperfeito" }, why: { en: "Ongoing, habitual, or background past actions.", es: "Acciones pasadas en curso, habituales o de fondo.", fr: "Actions passées en cours, habituelles ou de fond.", pt: "Ações passadas em curso, habituais ou de fundo." } },
+  future: { tense: { en: "Simple future", es: "Futuro simple", fr: "Futur simple", pt: "Futuro simples" }, why: { en: "What will happen.", es: "Lo que ocurrirá.", fr: "Ce qui arrivera.", pt: "O que vai acontecer." } },
+  conditional: { tense: { en: "Conditional", es: "Condicional", fr: "Conditionnel", pt: "Condicional" }, why: { en: "What would happen — often paired with a hypothetical 'si'.", es: "Lo que ocurriría — suele ir con un 'si' hipotético.", fr: "Ce qui arriverait — souvent avec un « si » hypothétique.", pt: "O que aconteceria — geralmente com um 'si' hipotético." } },
+  presSubj: { tense: { en: "Present subjunctive", es: "Presente de subjuntivo", fr: "Subjonctif présent", pt: "Presente do subjuntivo" }, why: { en: "Triggered by wishes, doubt, emotion, or 'cuando' about the future.", es: "Lo activan deseos, dudas, emociones o 'cuando' sobre el futuro.", fr: "Déclenché par un souhait, un doute, une émotion ou « cuando » au futur.", pt: "Ativado por desejos, dúvida, emoção ou 'cuando' sobre o futuro." } },
+  presPerfect: { tense: { en: "Present perfect", es: "Pretérito perfecto", fr: "Passé composé", pt: "Pretérito perfeito composto" }, why: { en: "A past action with present relevance ('have done').", es: "Una acción pasada con relevancia presente ('he hecho').", fr: "Une action passée qui compte encore au présent (« j’ai fait »).", pt: "Uma ação passada com relevância no presente ('tenho feito / fiz')." } },
+  presPerfectSubj: { tense: { en: "Present perfect subjunctive", es: "Pretérito perfecto de subjuntivo", fr: "Subjonctif passé", pt: "Pretérito perfeito do subjuntivo" }, why: { en: "A completed action seen through doubt or disbelief.", es: "Una acción completada vista con duda o incredulidad.", fr: "Une action achevée vue à travers le doute ou l’incrédulité.", pt: "Uma ação concluída vista com dúvida ou incredulidade." } },
+  imperfectSubj: { tense: { en: "Imperfect subjunctive", es: "Imperfecto de subjuntivo", fr: "Subjonctif imparfait", pt: "Imperfeito do subjuntivo" }, why: { en: "Wishes/hypotheticals about the past, or softened requests.", es: "Deseos/hipótesis sobre el pasado o peticiones suavizadas.", fr: "Souhaits/hypothèses sur le passé, ou demandes adoucies.", pt: "Desejos/hipóteses sobre o passado, ou pedidos suavizados." } },
+  pluperfectSubj: { tense: { en: "Pluperfect subjunctive", es: "Pluscuamperfecto de subjuntivo", fr: "Plus-que-parfait du subjonctif", pt: "Mais-que-perfeito do subjuntivo" }, why: { en: "An unreal past condition ('had I known…').", es: "Una condición irreal del pasado ('si hubiera sabido…').", fr: "Une condition irréelle du passé (« si j’avais su… »).", pt: "Uma condição irreal do passado ('se eu soubesse…')." } },
+  progressive: { tense: { en: "Present progressive", es: "Presente progresivo", fr: "Présent progressif", pt: "Presente progressivo" }, why: { en: "estar + gerund — an action happening right now.", es: "estar + gerundio — una acción que ocurre ahora mismo.", fr: "estar + gérondif — une action en train de se passer.", pt: "estar + gerúndio — uma ação que acontece agora mesmo." } },
+  cmdAff: { tense: { en: "Affirmative command", es: "Imperativo afirmativo", fr: "Impératif affirmatif", pt: "Imperativo afirmativo" }, why: { en: "Telling someone to do something.", es: "Decirle a alguien que haga algo.", fr: "Dire à quelqu’un de faire quelque chose.", pt: "Dizer a alguém para fazer algo." } },
+  cmdNeg: { tense: { en: "Negative command", es: "Imperativo negativo", fr: "Impératif négatif", pt: "Imperativo negativo" }, why: { en: "'no' + the subjunctive form.", es: "'no' + la forma del subjuntivo.", fr: "« no » + la forme du subjonctif.", pt: "'no' + a forma do subjuntivo." } },
+  infinitive: { tense: { en: "Infinitive", es: "Infinitivo", fr: "Infinitif", pt: "Infinitivo" }, why: { en: "The unconjugated verb, used after expressions like 'hay que' or 'de'.", es: "El verbo sin conjugar, tras expresiones como 'hay que' o 'de'.", fr: "Le verbe non conjugué, après des expressions comme « hay que » ou « de ».", pt: "O verbo não conjugado, depois de expressões como 'hay que' ou 'de'." } },
+  pluperfect: { tense: { en: "Pluperfect", es: "Pluscuamperfecto", fr: "Plus-que-parfait", pt: "Mais-que-perfeito" }, why: { en: "A past action finished before another past moment ('had done').", es: "Una acción pasada anterior a otro momento pasado ('había hecho').", fr: "Une action passée achevée avant un autre moment passé (« j’avais fait »).", pt: "Uma ação passada concluída antes de outro momento passado ('tinha feito')." } },
+  futurePerfect: { tense: { en: "Future perfect", es: "Futuro perfecto", fr: "Futur antérieur", pt: "Futuro perfeito" }, why: { en: "What will have happened by a point in the future.", es: "Lo que habrá ocurrido para un momento futuro.", fr: "Ce qui aura eu lieu à un moment futur.", pt: "O que terá acontecido até um momento futuro." } },
+  conditionalPerfect: { tense: { en: "Conditional perfect", es: "Condicional perfecto", fr: "Conditionnel passé", pt: "Condicional composto" }, why: { en: "What would have happened ('would have done').", es: "Lo que habría ocurrido ('habría hecho').", fr: "Ce qui serait arrivé (« j’aurais fait »).", pt: "O que teria acontecido ('teria feito')." } },
 };
 
 // ---- #89 (person extension): which pronoun the target conjugation is for ----
@@ -70,13 +70,13 @@ const T = {
 // thing liked / the noun), e.g. "me gustan los tacos" -> ellos. AI-authored;
 // PENDING the LatAm native review (#41) alongside the tense calls.
 const P = {
-  yo:      { en: "yo (I)",              es: "yo" },
-  tu:      { en: "tú (you)",            es: "tú" },
-  usted:   { en: "usted (you, formal)", es: "usted" },
-  el:      { en: "él / ella",           es: "él / ella" },
-  nos:     { en: "nosotros (we)",       es: "nosotros" },
-  ellos:   { en: "ellos / ellas",       es: "ellos / ellas" },
-  ustedes: { en: "ustedes (you all)",   es: "ustedes" },
+  yo:      { en: "yo (I)",              es: "yo", fr: "yo (je)", pt: "yo (eu)" },
+  tu:      { en: "tú (you)",            es: "tú", fr: "tú (tu)", pt: "tú (você)" },
+  usted:   { en: "usted (you, formal)", es: "usted", fr: "usted (vous, formel)", pt: "usted (você, formal)" },
+  el:      { en: "él / ella",           es: "él / ella", fr: "él / ella (il / elle)", pt: "él / ella (ele / ela)" },
+  nos:     { en: "nosotros (we)",       es: "nosotros", fr: "nosotros (nous)", pt: "nosotros (nós)" },
+  ellos:   { en: "ellos / ellas",       es: "ellos / ellas", fr: "ellos / ellas (ils / elles)", pt: "ellos / ellas (eles / elas)" },
+  ustedes: { en: "ustedes (you all)",   es: "ustedes", fr: "ustedes (vous, pluriel)", pt: "ustedes (vocês)" },
 };
 
 // key (prompt text) -> { themes?: [id], grammar?: {tense, why}, person?: {en, es} }

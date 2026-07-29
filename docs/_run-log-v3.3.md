@@ -331,3 +331,499 @@ still owed before the v3.3 cut.**
 | **Total** | **~636 rows / ~537 distinct strings** | **~6,500 words** |
 
 Packet: `claude/squirrelingo_fr_review_packet.md`.
+
+---
+---
+
+# v3.3.0 French — run 2 (Phases 2, 3, 3.5)
+
+Run started 2026-07-28, unattended. Continues the log above; the Phase 1 sections are unchanged.
+
+**Outcome: Phases 2, 3 and 3.5 all completed and gate-passed. Run stopped at the Phase 3.5 cap
+as instructed — and independently hit the "found an existing production bug" FULL STOP trigger
+during Phase 3.5 extraction (see §Stop reason).**
+
+## Mode
+
+**No shell on the Windows machine**, same as run 1 — the device bridge exposed folder listing,
+staging and writing only. Gate checks **2** (`node scripts/rollup-changelog.mjs --check`) and
+**6** (`git status` / branch confirmation) are therefore **NOT RUN** at every gate below, and are
+handed to Sean in the state-of-the-app doc. They were never reported as passed.
+
+Everything else ran in the cloud sandbox against staged copies: esbuild JSX-parsing, acorn AST
+extraction/injection/sweeps, the greps, the register check, the parity harness, the review
+pipeline, and one independent subagent per gate.
+
+## Tooling built for this run (sandbox-only, not committed)
+
+- **A batched translation pipeline.** 127 input batches → 127 agent runs → mechanical
+  reassembly. Agents wrote JSON to disk and returned one line, so ~1.4 M characters of French
+  never passed through the orchestrator's context. A shared `STYLE.md` (register, typography,
+  the source-vs-target rule, the structural contract) was pinned into every agent.
+- **`validate.py`** — per-batch structural validation: id set, field set, option-array length,
+  placeholder parity, edge whitespace.
+- **`verify.mjs`** — post-assembly parity against the pristine originals, via acorn.
+- **`postfix.py`** — the terminology + typography normalisation pass, with **residual counts
+  asserted to zero** afterwards (the Phase 1 F4 lesson).
+- **`register_check.py`** — the scoped register assertion, with a negative control.
+- **`chips_extract.mjs` / `chips_inject.mjs` / `chips_verify.mjs`** — the #89 chip pass. Inject
+  refuses to run if extract and inject disagree on object count or offsets.
+- **`sweep.mjs` / `perfile.mjs`** — the offering-flip AST sweep, per-shape and per-file.
+
+---
+
+## Phase 2 — directed tracks + side tables
+
+### Scope, measured before anything was written
+
+| Deliverable | Volume |
+|---|---|
+| `enUsForFr.js` + `enGbForFr.js` | 1,548 bank items + 156 fono items |
+| 10 × `data/tracks/l10n/<track>.fr.js` | 13,554 entries / 18,077 unique source strings |
+| **Total French authored** | **~920,000 characters ≈ 150,000 words** |
+
+Roughly **20× Phase 1's** content volume.
+
+### What was written (14 files, uncommitted, on `dev`)
+
+**New (13):**
+
+| File | Content |
+|---|---|
+| `data/tracks/enUsForFr.js` | 777 bank items (vocab 133 / gram 519 / trad 125) + 77 fono |
+| `data/tracks/enGbForFr.js` | 771 bank items (vocab 131 / gram 518 / trad 122) + 79 fono |
+| `data/tracks/l10n/esForEn.fr.js` | 1,274 entries — translated from the `.pt` sibling |
+| `data/tracks/l10n/esSpainForEn.fr.js` | 1,380 — from `.pt` |
+| `data/tracks/l10n/ptBrForEn.fr.js` | 1,603 — from `.es` |
+| `data/tracks/l10n/ptPtForEn.fr.js` | 1,529 — from `.es` |
+| `data/tracks/l10n/itForEn.fr.js` | 1,480 — from `.es` |
+| `data/tracks/l10n/deForEn.fr.js` | 1,400 — from `.es` |
+| `data/tracks/l10n/ruForEn.fr.js` | 937 — from `.es` |
+| `data/tracks/l10n/jaForEn.fr.js` | 1,456 — from `.es` |
+| `data/tracks/l10n/koForEn.fr.js` | 1,364 — from `.es` |
+| `data/tracks/l10n/zhForEn.fr.js` | 1,131 — from `.es` |
+| `docs/_fr-offering-flip.md` | the flip patch + the checklist run against it |
+
+**Modified (1):** `data/tracks/l10n/index.js` — 10 `fr` imports + 10 `fr` registrations.
+
+**Source choice:** es-latam and es-spain have only a `.pt` sibling; pt-br and pt-pt have only
+`.es`. For the other six, `.es` was chosen over `.pt` deliberately — the pt tables were
+themselves translated es→pt, so going from `.es` avoids a double-translation.
+
+**`data/tracks/index.js` and `lib/uiLang.js` untouched.** French is not reachable.
+
+### GATE 2 — Part A (mechanical)
+
+| # | Check | Result |
+|---|---|---|
+| 1 | esbuild JSX-parse every written file | **PASS** — 13/13. Three negative controls (unterminated string, dangling array, corrupted object) all failed as required. The first version of this check was passing for the wrong reason (a bad `--loader` flag made *everything* fail, including the control); caught and fixed. |
+| 2 | `rollup-changelog --check` | **NOT RUN** — no shell. No v3.3 fragment exists yet either. |
+| 3 | `profile?.native_lang` grep | **PASS** — zero hits. |
+| 4 | AST sweep for objects with `en` but no `fr` | **PASS** — 1,860 language-map objects across the written files, 1,860 carry `fr`, 0 missing. |
+| 5 | Line endings | **PASS** — all 13 pure CRLF, matching the `data/` convention. |
+| 6 | `git status` / branch `dev` | **NOT RUN** — no shell. |
+| 7 | Invisible-transform output counts | **PASS after a fix** — 41,242 NBSP · 31,688 guillemets · 5,792 typographic apostrophes, every count non-zero. See F3 below: the first run of this check reported "non-zero" while 163 sites were still wrong, because it counted presence and not residual. |
+| 8 | Offering-flip sweep | **PASS** — no new incomplete language map introduced. |
+
+Structural verification beyond the gate's own list: every side table has the **same item ids in
+the same order**, the **same field set per id**, and **option arrays of the same length**, so
+`correctIdx` never moves; both track files keep `explain.en` **byte-identical** (777/777 and
+771/771), `correctIdx`, CEFR level and the enGb 6th element unchanged, and no `pt` key survives.
+
+### GATE 2 — Part B (independent subagent), verdict verbatim
+
+> **PASS-conditional** — the mechanical contract holds and nothing is reachable, but claim 5
+> (typography) is false in three countable ways, the `tu`-only rule was applied so literally that
+> ~250 French subtitles are ungrammatical or not French, and `_fr-offering-flip.md` reports
+> Phase-3 work as already closed when it isn't. Fix F1–F4 before this is signed off.
+
+Seven findings. All addressed in-phase.
+
+- **F1 · HIGH · the `vous` ban produced subtitles that aren't French.** Four dodges across ~250
+  strings: a raw Spanish pronoun left inside a French sentence (`"Hier, vosotros _____"`),
+  `"Toi et les autres"` as a bare subject (French needs the resumptive *vous* to agree),
+  `"2e pers. pl. ___"` as an abbreviation, and plural imperatives paired with `s'il te plaît`.
+  **This one changes a rule** — see §Assumptions A11.
+- **F2 · MEDIUM · the sign-off artifact reported unshipped work as closed.** `_fr-offering-flip.md`
+  marked the #89 chips "CLOSED in Phase 3" and cited a harness that did not yet exist.
+- **F3 · MEDIUM · claim 5 is false in three countable ways; the transform silently no-op'd.**
+  18 strings with a plain space inside `« »` (one contiguous `fono-59`…`fono-76` block the pass
+  skipped), 48 with U+0020 immediately followed by U+00A0 (a visible double gap), 34 with a plain
+  space before `;`. *"The spec says: if a transform's whole job is invisible, assert on its output
+  count. That assertion was not written; had it been, all three would have surfaced."*
+- **F4 · LOW/MED · `_fr-offering-flip.md` was LF** where `docs/*.md` is CRLF.
+- **F5 · LOW/MED · the flip doc's apply-order produces a half-French app** —
+  `SUPPORTED_UI_LANGS` is also a **post-login** gate in nine places.
+- **F6 · LOW · independent batches left terminology inconsistent** — `sería` rendered "se dit"
+  for items 0–18, "se dirait" for 19–100, "se dit" again for 101–126 (clean batch boundaries);
+  `baño` → "bain"; `salle de bain` vs `salle de bains`.
+- **F7 · LOW · every new file pointed at a review lane that didn't exist yet.**
+
+Its own control work is worth recording: it re-derived the id/order/option-length checks
+independently with negative controls, confirmed **0 orphan `distractorNotes` keys** and **0 new
+duplicate-option collisions** (a French merge of two distinct options would make an item
+unanswerable), and confirmed kana/hangul/hanzi/Cyrillic byte-identical across all 3,165 strings
+carrying them.
+
+### GATE 2 — Part C (decide)
+
+All Part A green (2 and 6 not runnable). Part B conditional. **Fixed in-phase, then re-assembled
+from the batch outputs and re-verified end to end:**
+
+- **F1** — 371 entries re-rendered with proper plural agreement by a dedicated repair pass.
+  The gate check was replaced (see A11).
+- **F3** — root-caused and fixed with counted assertions: 48 double-gaps collapsed, 34
+  space-before-`;` converted, 81 + 81 guillemet spaces converted. **Residuals asserted to 0.**
+- **F6** — 135 `se dit` → `se dirait` (keyed on the source containing `sería`, not on the French,
+  so the rewrite cannot over-reach), 7 `salle de bain` → `salle de bains`, 1 `bain` → `salle de
+  bains`, 3 `aburrido` person-state glosses corrected.
+- **F2, F4, F5** — the flip doc corrected: chips restated as OPEN-pending-Phase-3, the harness
+  claim removed until it existed, the nine post-login `SUPPORTED_UI_LANGS` consumers listed, the
+  apply-order recommendation reversed to "2c and 2d together", CRLF restored.
+- **F7** — deferred to Phase 3.5, which creates the lane; the paths were corrected then.
+
+Post-fix: 13/13 esbuild clean · 0 structural failures · 0 placeholder mismatches · CRLF intact.
+
+**GATE 2 PASSED.** 14 files written, `rejected: []`.
+
+---
+
+## Phase 3 — target-parity audit (§4b)
+
+### The simulated-registry harness — `scripts/_fr-parity-harness.mjs` (NEW, one-off)
+
+`tracksForNativeLang("fr")` cannot be called for real, because registering the two new tracks
+*is* the flip. The harness reads the shipped `data/tracks/index.js` as **text** (never imports —
+the track modules use extensionless specifiers only Next resolves, and this has to run with Node
+alone and zero deps, same rule as `check_freshness.mjs`), adds the two unregistered tracks to a
+copy of `TRACKS`, adds `"fr"` to a copy of `RELEASED_SOURCE_LANGS`, reimplements the filter
+verbatim, and asserts.
+
+**Result: 232 assertions, 0 failures.** `tracksForNativeLang("fr")` returns exactly the expected
+12 — es-latam, es-spain, pt-br, pt-pt, it, de, ru, ja, ko, zh, en-us-for-fr, en-gb-for-fr — both
+English variants present, no French-target track leaking to a French native, and no change to
+what `en`/`es`/`pt`/`it` natives are offered.
+
+Two things it got wrong first and how:
+
+- It asserted `tracksForNativeLang("en")` returns **12**. It returns **13** — `tracksForNativeLang`
+  pushes `en-gb-for-es` for non-GB English natives on top of the 12 reusable targets. The
+  hardcoded baseline was an assertion about the author's memory, not about the code. Replaced
+  with a **derived** pre-flip/post-flip comparison that cannot be wrong about a magic number.
+- Its negative control popped the **last** registered track, which is `enForIt` —
+  `sourceSpecific`/`it`, therefore invisible to an `es` native, so the control passed while
+  proving nothing. Now it removes a track that is genuinely in the result set.
+
+### The #89 training-wheel chips
+
+230 chip objects across 7 tag files, extracted by acorn with source offsets, translated, and
+injected back at exact byte offsets preserving each object's key style, key/value separator and
+inter-property separator.
+
+| File | Objects | Keys added |
+|---|---:|---|
+| `esForEnTags.js` | 41 | `fr` + `pt` |
+| `esSpainForEnTags.js` | 42 | `fr` + `pt` |
+| `itForEnTags.js` | 27 | `fr` + `pt` |
+| `ptBrForEnTags.js` | 29 | `fr` |
+| `ptPtForEnTags.js` | 29 | `fr` |
+| `frForEnTags.js` | 31 | `pt` |
+| `frCaForEnTags.js` | 31 | `pt` |
+| **Total** | **230** | **340 keys** |
+
+Matches the phase spec's own counts exactly. `fr` where a French native is offered the track;
+`pt` where a Portuguese native is; neither on a track whose target is the reader's own language.
+
+**Diff proven purely additive:** 775 pre-existing language values byte-identical, 340 new keys,
+line counts and CRLF unchanged, with a negative control confirming the comparison detects a
+mutated value.
+
+### GATE 3 — Part A (mechanical)
+
+esbuild 7/7 + harness clean, with a negative control · `profile?.native_lang` zero hits · CRLF
+preserved on all 7 (463/433/854/996/905/939/839 lines, unchanged) · new-key counts asserted
+(466 `fr:`/`pt:` sites) · AST sweep: 0 objects still missing a required language in any of the 7.
+**Checks 2 and 6 NOT RUN.**
+
+### GATE 3 — Part B (independent subagent), verdict verbatim
+
+> **VERDICT: PASS-conditional** — on fixing ~24 chip strings (12 of which ship live to Portuguese
+> users today) and on closing two provable holes in the harness. The mechanical work is sound and
+> byte-exact; the *verification* is weaker than it reports, and the copy has real errors.
+
+Twelve findings. All addressed in-phase. The two that matter most were **proved by mutation, not
+argued**:
+
+- **F1 · HIGH · the "no stubs / full grammar depth" assertion was vacuous.** It checked
+  "≥ 3 categories, none empty, has a grammar category, has a fono bank". The reviewer spliced the
+  repo's own half-shipped `enForIt` bank (12 vocab / 9 gram / 7 trad / 4 fono) into `zhForEn` and
+  the harness reported **232 assertions, 0 failures**. *"A 28-item track passes as full grammar
+  depth… this one was born unable to fail."*
+  **Fixed:** hard floors (vocab ≥ 100, grammar ≥ 200, trad ≥ 80, fono ≥ 50) **and** a frozen
+  per-track baseline measured 2026-07-29 — counts may grow, never shrink — plus a built-in
+  negative control asserting `enForIt` fails the floors. Re-mutated: now goes red.
+- **F2 · HIGH · the harness could not detect a silent no-op localization transform.** The
+  reviewer replaced all ten `*.fr.js` with **byte-identical copies of their es/pt siblings** — a
+  French native getting a wholly Spanish surface — and the harness still reported 0 failures.
+  **Fixed:** assert the fr file is not a byte-copy of its sibling, and assert a French-marker
+  ratio **against the sibling file** (comparing markers *within* one file fails, because the
+  `prompt` field is target-language by design). Re-mutated: now goes red on all ten.
+- **F3 · MEDIUM · the chip fix had zero automated coverage.** Added a chip block to the harness;
+  mutation-tested by stripping one key from the `T` block and one from the `P` block — both
+  detected.
+- **F4 · MEDIUM · wrong-language example glosses**, 16 strings: the convention is
+  *reader*-language examples (proved from `frForEnTags`'s own pre-existing `es` row), but
+  `esForEnTags`/`esSpainForEnTags` got Spanish forms inside French and Portuguese sentences.
+  Fixed to `« j'ai fait »` / `'tenho feito / fiz'` etc.
+- **F5 · MEDIUM · `fr: "Prétérit parfait"` is not a French grammatical term** (2 strings) → `Passé composé`.
+- **F6 · MEDIUM · French words shipped as Portuguese, live-facing** (4 strings): `pt: "Présent"`
+  and `pt: "Passé composé"` on the two French-target tag files, copied from the already-anomalous
+  `es` value → `Presente` / `Pretérito perfeito composto`.
+- **F7 · MEDIUM · `você (vous, politesse)` inverts Brazilian register** — in pt-BR `você` is the
+  *default familiar* form → `você (vous/tu — usuel au Brésil)`, and ptPt made consistent.
+- **F8 · LOW/MED · two distinct conjugation slots got byte-identical chips** (`vosotros` and
+  `ustedes` both "(vous, pluriel)") → informel / formel.
+- **F9 · LOW · column alignment broken.** The injector reused each line's *leading* alignment
+  padding as a *trailing* pad. Fixed: multi-line separators kept verbatim, single-line alignment
+  padding collapsed to `", "`.
+- **F10–F12 · LOW · doc figures mis-scoped, §3 overstated on the strength of F1, and the
+  harness's pre-flip asserts contradicted the doc's post-flip instruction** — all corrected; the
+  harness now takes `--post-flip` and inverts those two assertions rather than silently becoming
+  wrong.
+
+**The framing worth carrying:** *"What breaks first? Not French — French is provably inert.
+**Portuguese.** 172 new `pt` chip strings go live to existing pt-BR/pt-PT beta users the moment
+these seven files land, none of them through the #41 review lane."*
+
+**GATE 3 PASSED** after those fixes. 9 files written, `rejected: []`.
+
+---
+
+## Phase 3.5 — the French review lanes
+
+### Lane naming — a deviation from the prompt, on purpose
+
+The prompt asked for `fr-france` / `fr-quebec`. The repo's own `LANES` registry in
+`pipeline/extract.mjs` — which is what `--lane` resolves against — **already contained `fr-fr`
+and `fr-ca`**, and `docs/language-review/README.md` sketches the tree the same way. Lane codes
+follow the repo. Used `fr-fr` / `fr-ca`; no change to the lane registry was needed.
+
+### What was built
+
+- `docs/language-review/fr-fr/` — `STATUS.md` + `template/` with **three** generated packets
+  (`.xlsx` + `.md` twin + `.sources.json` each) + empty `submitted/`, `changesets/`, `implemented/`.
+- `docs/language-review/fr-ca/` — `STATUS.md` scaffold recording exactly what it waits on, and
+  the empty subfolders.
+- `docs/language-review/pipeline/i18n/fr-fr.json` — the reviewer-facing copy, ~600 strings.
+- `pipeline/extract.mjs` — `CONTENT["fr-fr"].explanation.tracks` now lists `enUsForFr` /
+  `enGbForFr`, which did not exist before Phase 2.
+- `pipeline/build_workbook.py` — two defect fixes (below).
+
+| Scope | fr-fr rows | es-latam | why they differ |
+|---|---:|---:|---|
+| `interface` | **785** | 1,208 | French has 6 variant rows / 15 card-config rows vs Spanish's 325 / 117 — the `fr` block is a 2-concept seed |
+| `taught` | **1,623** | 1,353 | `frForEn.js` is the bigger track |
+| `explanation` | **2,104** | 4,872 | Spanish contributes 2,768 glossary rows from `data/vocab/*.es.js`; French has none |
+
+`check_freshness.mjs`: **3 fresh · 0 stale · 0 unverifiable**, and it correctly reports
+`fr-ca: no packets built`.
+
+### Pipeline defects found by the French lane and fixed
+
+1. **`build_workbook.py` crashed on a zero-row section.** The `explanation` packet has an empty
+   Word Bank sheet (French has no `data/vocab/<x>Words.fr.js`), and the data-validation range is
+   built as `<col>2:<col><nrows+1>` — `"D2:D1"` when `nrows` is 0 →
+   `ValueError: 1 must be greater than 2`. Guarded. **Every non-Spanish lane would have hit this.**
+2. **The thousands separator was hardcoded Spanish.** `f"{n:,}".replace(",", ".")` renders
+   **"13.554"**, which a French reader parses as a decimal. Now lane-aware.
+3. **The summary sheet emitted a reversed range** for the zero-row sheet
+   (`COUNTIF('3-Banque-de-mots'!$G$2:$G$1,…)`). Excel normalises it and counts the header — right
+   answer, wrong reason, and a repair-prompt risk in stricter readers. Now emits literal zeros.
+
+### GATE 3.5 — Part A (mechanical)
+
+`node --check` / `py_compile` / JSON parse all clean with a negative control · zero
+`profile?.native_lang` · CRLF correct on all changed files (one FAIL caught and fixed:
+`i18n/fr-fr.json` was written LF where `es-latam.json` is CRLF — the same per-extension blind
+spot as Gate 2's F4) · all 9 packet artifacts non-empty, 1.87 MB total · freshness green.
+**Checks 2 and 6 NOT RUN.**
+
+### GATE 3.5 — Part B (independent subagent), verdict verbatim
+
+> **VERDICT: REJECT** — the pipeline plumbing is genuinely correct and reproducible, but the
+> reviewer-facing content is a mechanical translation of the Spanish lane: the variant-scope
+> instruction is inverted, and ~9 of 16 "team notes" plus at least 8 decision rows describe
+> French strings that do not exist in this repo. Sending this burns the engagement it exists to
+> protect.
+
+Fourteen findings. What it verified as sound first: the packets **regenerate byte-identically**
+(all three `.md` twins and `.sources.json` identical; `.xlsx` differ only in the openpyxl
+creation timestamp); row counts exact; `check_freshness.mjs` proven able to go stale, and to
+scope correctly (mutating `playStrings.js` staled only `interface`; mutating `frForEn.js` staled
+only `taught`); the `build_workbook.py` change inert for non-empty sections (es-latam rebuilt
+before and after — identical); `i18n/fr-fr.json` structurally identical to `es-latam.json`;
+typography flawless across 599 strings; the lane-naming justification factually true; nothing
+reachable.
+
+The findings, and what was done:
+
+- **F1 · HIGH · 9 of 16 team notes quote text that isn't in the cell they annotate** — and
+  `build_workbook.py` forces `Priorité = Haute` on any row carrying a note, so these are the rows
+  the reviewer is steered to first. Several were written against the **pre-fix Phase-1 draft**:
+  `Petites roues`, `Tu te sens confiant`, straight quotes — exactly the strings the Phase-1 gate's
+  own F2/F5/F7 fixes removed. **Fixed:** all 16 re-derived from the current `lib/*.js` values.
+- **F2 · HIGH · the variant-scope instruction is inverted.** `fr-fr` is `variantScope:
+  "reference"`, the mirror image of `es-latam` — so the **RÉFÉRENCE (France) rows are the only
+  ones this lane owns**, and the grey italic advisory rows are the Québec ones. The readme and
+  DEC-10 told the reviewer the opposite. Traced through `ingest.py`: everything they did on the
+  sheet the packet itself calls *"LE PLUS IMPORTANT — commencez par là"* would have been filed
+  under "Advisory — outside this lane's scope", and the packet would have returned **zero**
+  sign-off on the France side. **Fixed**, along with DEC-09.
+- **F3 · HIGH · the decision sheet was a 1:1 translation with invented French specifics** —
+  « piste » (0 occurrences in the French column), « Paramètres » (the app says **« Réglages »**,
+  5× + 11×), « Petites roues », « Deviens beta tester », `pain au chocolat / chocolatine` in a
+  packet containing two concepts, and *"le concept 69"* in a registry with two. **Fixed:** all 28
+  decisions across the three scopes re-derived from the French repo; the dead ones replaced with
+  real French questions rather than deleted.
+- **F4 · HIGH · the superseded doc was never marked historical** — the one instruction the spec
+  spelled out. `claude/squirrelingo_fr_review_packet.md` still opened *"It will be extended as
+  those phases land."* **Fixed:** replaced with a historical stub pointing at the lane, carrying
+  the full 16-term glossary, the tense-naming rationale, the eight divergence terms and the
+  excluded-tail boundary (the carry-forward into `STATUS.md` had kept only 5 of 16 glossary terms
+  and dropped the tense-naming split — also fixed).
+- **F5 · HIGH · "named here and on the packets' decision sheets" was false** — none of the
+  recorded defects appeared anywhere in the deliverable. **Fixed:** a "what we already know"
+  block folded into each scope's readme.
+- **F6 · MEDIUM · four unrecorded extraction-surfaced defects.** All 959 `taught` "Explication en
+  français" cells contain **English**; all 76 `taught` pronunciation rows have empty French
+  explanation **and** empty minimal pairs (root cause: `extract.mjs:398` has no `.en` fallback,
+  unlike the questions path one line up); all 156 `explanation` minimal-pair cells empty; zero
+  option notes in either content packet. **Recorded in `STATUS.md` and explained in the packets.**
+- **F7 · MEDIUM · a Spanish corpus fact presented as a French one** ("environ 400 notes d'options
+  … contiennent du texte anglais" — the French packet has zero notes). **Fixed.**
+- **F8 · MEDIUM · 12 dangling `fr-france` references** in the Phase 2 file headers — the naming
+  decision was defended in `STATUS.md` but the references it invalidated weren't swept. **Fixed**
+  in all 12; files re-parsed and re-verified afterwards.
+- **F9 · MEDIUM · `STATUS.md` misattributed the v3.3 stop reason.** **Fixed** — and the reviewer
+  surfaced the *worse half* of that defect, now recorded (below).
+- **F10 · MEDIUM · theme labels and #89 chips are in NO packet.** `extract.mjs` reads no
+  `*Tags.js`, and its drift sweep walks only `lib/` and `app/`, never `data/`. The 108 theme rows
+  and 168 chip objects are invisible to the lane. **Recorded as defect 7 in `STATUS.md`; not
+  fixed** — it needs a new extractor section, which is beyond this phase.
+- **F11 · MEDIUM · accents stripped from Excel tab names** (`Decisions`, `securite`,
+  `Nouveautes`, and `regionales`, which is the *Spanish* spelling) while `SYNTHÈSE` two tabs over
+  carries its accent. **Fixed.**
+- **F12–F13 · MEDIUM/LOW · the `{corpus}` separator and the reversed summary range.** **Fixed**
+  (see pipeline defects above).
+- **F14 · LOW · assorted** — `extract.mjs:376` still hardcodes the Spanish literal
+  `"(respuesta incorrecta) → "`; `README.md` says es-latam interface = 1,207 where the measurement
+  is 1,208; the `soffice` recalc step was not run, so summary formulas ship without cached values.
+  **Recorded, not fixed.**
+
+Its closing judgment of the French prose is worth keeping verbatim, because it separates the two
+halves cleanly:
+
+> **As prose: good — better than good in places.** … `une espace insécable` is correctly feminine
+> … these are written, not translated. Typography is flawless across 599 strings. …
+> **As a document a paid native opens: it fails on the first sheet**, and for reasons a French
+> reader spots immediately and cannot un-see.
+
+### GATE 3.5 — Part C (decide)
+
+Part A green (2 and 6 not runnable). Part B **REJECT**. Eleven of the fourteen findings were
+fixed in-phase and the packets rebuilt from the corrected copy; F10 and F14 are recorded as open;
+**the re-derivation has not itself been independently reviewed**, and `fr-fr/STATUS.md` now
+carries a *BUILT, NOT CLEARED TO SEND* banner saying so. That is the honest state.
+
+---
+
+## Stop reason — the Phase 3.5 cap, and a production bug
+
+The run reached its instructed cap (*"STOP HERE. Phases 4–6 are NOT part of this run."*).
+
+It also hit the FULL STOP trigger independently, during Phase 3.5 extraction:
+
+**`lib/securityQuestions.js` — Portuguese users see the ten security questions in English, and
+the resolver cannot be fixed by adding data.**
+
+```js
+export function questionLabel(key, lang) {
+  const q = byKey.get(key);
+  if (!q) return key;
+  if (lang === "es" && q.label_es) return q.label_es;   // hardcoded to Spanish
+  return q.label || key;                                 // English
+}
+```
+
+All ten questions carry `label_es` and nothing else — no `label_pt`, no `label_fr` — and even if
+`label_pt` were added, the function would ignore it.
+
+- **Live on `main`** (v3.2.0, released 2026-07-27). Rendered at `lib/SettingsPanel.js:681` and
+  `app/beta-apply/page.js:488`, both called with the viewer's `uiLang`, and `pt` is reachable on
+  both paths.
+- **Severity: cosmetic.** Answers are stored and compared by `key`, so account recovery is
+  unaffected. No raw keys, no crash. Graceful English fallback — which is why it has been
+  invisible.
+- **The worse half, found by the Gate 3.5 reviewer and not recorded anywhere before now:**
+  `app/forgot-password/page.js:164` renders `q.label` straight from the API, so the **reset flow
+  shows the question in English to everyone** — including Spanish users who chose it in Spanish.
+- **Why the standing sweep missed it:** the offering-flip AST sweep flags objects carrying `en`
+  plus another language code. These keys are `label_es`, `label_pt` — **prefixed**, so the sweep
+  cannot see them. That is a blind spot in the standing checklist, not a one-off.
+
+Same family as the v3.1.1 nav-drawer bug and the v3.2 LangSwitcher bug: a language added to the
+tables everyone remembers and not to a sibling. Worse than both in one respect — here the
+*resolver* is hardcoded, so it is a code fix rather than a data fix.
+
+**Deliberately NOT fixed here.** It is Z-sized and belongs in its own release off `dev`, not
+folded into a half-built Y milestone.
+
+---
+
+## Assumptions made (operator asleep)
+
+- **A11 (NEW, and it amends A5) — the `tu` rule governs APP VOICE, not grammatical number.**
+  A5 and the run prompt both say `tu`, settled, with a gate check expecting **zero**
+  `vous`/`votre`/`vos`. Applied literally to exercise content, that produced ungrammatical
+  French in ~370 drill items whose drilled sentence has a genuine 2nd-person-**plural** subject
+  (Spanish `vosotros`/`ustedes`, Portuguese `vocês`, German `ihr`). Those now use `vous` with
+  proper agreement. **App voice is still `tu` everywhere, with zero exceptions.**
+  The gate check was replaced with a scoped one that can still fail: *every* `vous` in a French
+  string must sit in an item whose **source** carries a 2nd-person-plural marker. Result:
+  **345 sanctioned, 0 leaks**, in the track files **0** (zero tolerance there — they are app
+  voice), and a negative control confirms an injected `vous` in an unmarked item is caught.
+  **This is the assumption most worth Sean's explicit confirmation.** Reversing it is one
+  re-run of the repair pass over the same 371 entries.
+- **A12 — six of the ten side tables were translated from the `.es` sibling, not `.pt`.** The pt
+  tables were themselves translated es→pt, so going from `.es` avoids a double-translation.
+  es-latam/es-spain had only `.pt`; pt-br/pt-pt had only `.es`.
+- **A13 — lane codes are `fr-fr` / `fr-ca`, not the prompt's `fr-france` / `fr-quebec`**, because
+  the repo's `LANES` registry and README already said so. Recorded in `fr-fr/STATUS.md`.
+- **A14 — three pipeline defects were fixed rather than only recorded.** The prompt says record
+  extraction-surfaced defects in `STATUS.md` rather than fixing them mid-run; that guidance is
+  about *content* defects a reviewer would re-report. A crash in the packet generator blocks the
+  deliverable, so it was fixed, minimally, and recorded.
+- **A15 — the `_fr-parity-harness.mjs` baselines are frozen at 2026-07-29 counts.** It asserts
+  content may grow but never shrink. It is a one-off; delete it when v3.3 ships.
+
+## Deviations from the gate protocol
+
+Unchanged from run 1: **no shell**, so gate checks 2 and 6 could not be executed at any gate.
+`npm ci` and `npm run build` likewise not run — every touched file was esbuild-JSX-parsed
+instead, and no dependency or lockfile changed. **A real `npm run build` is still owed before the
+v3.3 cut.**
+
+One additional note: the es-latam packets were rebuilt **in the sandbox mirror only**, to prove
+the `build_workbook.py` change is inert for a non-empty section. They were **not** written back
+to the repo; the `es-latam/template/` files on disk are untouched.
+
+## Content produced this run (all AI-authored, zero native review)
+
+| Surface | Volume |
+|---|---|
+| 10 × `l10n/*.fr.js` side tables | 13,554 entries |
+| `enUsForFr.js` + `enGbForFr.js` | 1,548 questions + 156 fono items |
+| `#89` chips — `fr` | 168 objects across 5 files |
+| `#89` chips — `pt` | 172 objects across 5 files (**live-facing**) |
+| `pipeline/i18n/fr-fr.json` | ~600 reviewer-facing strings |
+| **Total French** | **≈ 920,000 characters ≈ 150,000 words** |

@@ -98,7 +98,12 @@ const CONTENT = {
     explanation: { tracks: ["enUsForPt", "enGbForPt"], glossaries: [], l10nSample: true },
   },
   "pt-pt":    { taught: { tracks: ["ptPtForEn"], vocab: ["ptPtWords"] }, explanation: { tracks: [], glossaries: [], l10nSample: false } },
-  "fr-fr":    { taught: { tracks: ["frForEn"],   vocab: ["frWords"] },   explanation: { tracks: [], glossaries: [], l10nSample: true } },
+  // v3.3: the two French-source English tracks now exist (authored in Phase 2, deliberately
+  // unregistered until the offering flip — docs/_fr-offering-flip.md). They are the French
+  // voice explaining English, so they belong to fr-fr's `explanation` scope regardless of
+  // whether they are reachable in the UI yet: a reviewer judges the content, not the routing.
+  "fr-fr":    { taught: { tracks: ["frForEn"],   vocab: ["frWords"] },
+                explanation: { tracks: ["enUsForFr", "enGbForFr"], glossaries: [], l10nSample: true } },
   "fr-ca":    { taught: { tracks: ["frCaForEn"], vocab: ["frCaWords"] }, explanation: { tracks: [], glossaries: [], l10nSample: false } },
   "de":       { taught: { tracks: ["deForEn"],   vocab: ["deWords"] },   explanation: { tracks: [], glossaries: [], l10nSample: true } },
   "it":       { taught: { tracks: ["itForEn"],   vocab: ["itWords"] },   explanation: { tracks: ["enForIt"], glossaries: [], l10nSample: true } },

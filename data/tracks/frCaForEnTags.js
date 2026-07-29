@@ -14,28 +14,28 @@ export const THEMES = [
 ];
 
 const T = {
-  present: { tense: { en: "Présent", es: "Présent" }, why: { en: "Habitual or current actions.", es: "Acciones habituales o actuales." } },
-  passeCompose: { tense: { en: "Passé composé", es: "Passé composé" }, why: { en: "A completed past action (\"have done / did\").", es: "Una acción pasada completada (\"he hecho / hice\")." } },
-  imparfait: { tense: { en: "Imparfait", es: "Imperfecto" }, why: { en: "Ongoing, habitual, or background past actions.", es: "Acciones pasadas en curso, habituales o de fondo." } },
-  futur: { tense: { en: "Futur simple", es: "Futuro simple" }, why: { en: "What will happen.", es: "Lo que ocurrirá." } },
-  conditionnel: { tense: { en: "Conditionnel", es: "Condicional" }, why: { en: "What would happen — often with a hypothetical 'si'.", es: "Lo que ocurriría — suele ir con un 'si' hipotético." } },
-  subjPresent: { tense: { en: "Subjonctif présent", es: "Presente de subjuntivo" }, why: { en: "Triggered by necessity, wish, doubt or emotion (il faut que, vouloir que, bien que).", es: "Lo activan la necesidad, el deseo, la duda o la emoción (il faut que, vouloir que, bien que)." } },
-  subjImparfait: { tense: { en: "Subjonctif imparfait", es: "Imperfecto de subjuntivo" }, why: { en: "The literary subjunctive for past hypotheticals.", es: "El subjuntivo literario para hipótesis del pasado." } },
-  plusQueParfait: { tense: { en: "Plus-que-parfait", es: "Pluscuamperfecto" }, why: { en: "A past action finished before another past moment (\"had done\").", es: "Una acción pasada anterior a otro momento pasado (\"había hecho\")." } },
-  futurAnterieur: { tense: { en: "Futur antérieur", es: "Futuro anterior" }, why: { en: "What will have happened by a point in the future.", es: "Lo que habrá ocurrido para un momento futuro." } },
-  conditionnelPasse: { tense: { en: "Conditionnel passé", es: "Condicional perfecto" }, why: { en: "What would have happened (\"would have done\").", es: "Lo que habría ocurrido (\"habría hecho\")." } },
-  imperatif: { tense: { en: "Impératif", es: "Imperativo" }, why: { en: "Telling someone to do something.", es: "Decirle a alguien que haga algo." } },
-  infinitif: { tense: { en: "Infinitif", es: "Infinitivo" }, why: { en: "The unconjugated verb, used after another verb or preposition.", es: "El verbo sin conjugar, tras otro verbo o preposición." } },
+  present: { tense: { en: "Présent", es: "Présent", pt: "Presente" }, why: { en: "Habitual or current actions.", es: "Acciones habituales o actuales.", pt: "Ações habituais ou atuais." } },
+  passeCompose: { tense: { en: "Passé composé", es: "Passé composé", pt: "Pretérito perfeito composto" }, why: { en: "A completed past action (\"have done / did\").", es: "Una acción pasada completada (\"he hecho / hice\").", pt: "Uma ação passada concluída (\"tenho feito / fiz\")." } },
+  imparfait: { tense: { en: "Imparfait", es: "Imperfecto", pt: "Imperfeito" }, why: { en: "Ongoing, habitual, or background past actions.", es: "Acciones pasadas en curso, habituales o de fondo.", pt: "Ações passadas em curso, habituais ou de fundo." } },
+  futur: { tense: { en: "Futur simple", es: "Futuro simple", pt: "Futuro simples" }, why: { en: "What will happen.", es: "Lo que ocurrirá.", pt: "O que acontecerá." } },
+  conditionnel: { tense: { en: "Conditionnel", es: "Condicional", pt: "Condicional" }, why: { en: "What would happen — often with a hypothetical 'si'.", es: "Lo que ocurriría — suele ir con un 'si' hipotético.", pt: "O que aconteceria — costuma vir com um 'si' hipotético." } },
+  subjPresent: { tense: { en: "Subjonctif présent", es: "Presente de subjuntivo", pt: "Presente do subjuntivo" }, why: { en: "Triggered by necessity, wish, doubt or emotion (il faut que, vouloir que, bien que).", es: "Lo activan la necesidad, el deseo, la duda o la emoción (il faut que, vouloir que, bien que).", pt: "Ativado pela necessidade, pelo desejo, pela dúvida ou pela emoção (il faut que, vouloir que, bien que)." } },
+  subjImparfait: { tense: { en: "Subjonctif imparfait", es: "Imperfecto de subjuntivo", pt: "Imperfeito do subjuntivo" }, why: { en: "The literary subjunctive for past hypotheticals.", es: "El subjuntivo literario para hipótesis del pasado.", pt: "O subjuntivo literário para hipóteses do passado." } },
+  plusQueParfait: { tense: { en: "Plus-que-parfait", es: "Pluscuamperfecto", pt: "Mais-que-perfeito" }, why: { en: "A past action finished before another past moment (\"had done\").", es: "Una acción pasada anterior a otro momento pasado (\"había hecho\").", pt: "Uma ação passada anterior a outro momento passado (\"tinha feito\")." } },
+  futurAnterieur: { tense: { en: "Futur antérieur", es: "Futuro anterior", pt: "Futuro anterior" }, why: { en: "What will have happened by a point in the future.", es: "Lo que habrá ocurrido para un momento futuro.", pt: "O que terá acontecido até um momento futuro." } },
+  conditionnelPasse: { tense: { en: "Conditionnel passé", es: "Condicional perfecto", pt: "Condicional composto" }, why: { en: "What would have happened (\"would have done\").", es: "Lo que habría ocurrido (\"habría hecho\").", pt: "O que teria acontecido (\"teria feito\")." } },
+  imperatif: { tense: { en: "Impératif", es: "Imperativo", pt: "Imperativo" }, why: { en: "Telling someone to do something.", es: "Decirle a alguien que haga algo.", pt: "Dizer a alguém para fazer algo." } },
+  infinitif: { tense: { en: "Infinitif", es: "Infinitivo", pt: "Infinitivo" }, why: { en: "The unconjugated verb, used after another verb or preposition.", es: "El verbo sin conjugar, tras otro verbo o preposición.", pt: "O verbo não conjugado, depois de outro verbo ou preposição." } },
 };
 
 const P = {
-  je: { en: "je (I)", es: "yo" },
-  tu: { en: "tu (you)", es: "tú" },
-  il: { en: "il / elle / on", es: "él / ella" },
-  nous: { en: "nous (we)", es: "nosotros" },
-  vous: { en: "vous (you, pl/formal)", es: "vosotros / ustedes" },
-  ils: { en: "ils / elles", es: "ellos / ellas" },
-  impersonal: { en: "impersonal (il / ce)", es: "impersonal" },
+  je: { en: "je (I)", es: "yo", pt: "je (eu)" },
+  tu: { en: "tu (you)", es: "tú", pt: "tu (você)" },
+  il: { en: "il / elle / on", es: "él / ella", pt: "il / elle / on (ele / ela)" },
+  nous: { en: "nous (we)", es: "nosotros", pt: "nous (nós)" },
+  vous: { en: "vous (you, pl/formal)", es: "vosotros / ustedes", pt: "vous (vocês / formal)" },
+  ils: { en: "ils / elles", es: "ellos / ellas", pt: "ils / elles (eles / elas)" },
+  impersonal: { en: "impersonal (il / ce)", es: "impersonal", pt: "impessoal (il / ce)" },
 };
 
 const RAW = {

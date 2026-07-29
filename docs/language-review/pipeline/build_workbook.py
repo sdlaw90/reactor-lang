@@ -31,7 +31,7 @@ ALL REVIEWER-FACING TEXT LIVES IN i18n/<lane>.json — a reviewer should never w
 instructions in a language they are being hired for their fluency in. Adding a lane means
 writing that file; the script refuses to fall back to English silently.
 """
-import argparse, json, sys
+import argparse, json, re, sys
 from pathlib import Path
 
 from openpyxl import Workbook
@@ -56,6 +56,14 @@ _T = Side(style="thin", color="D5CCE4")
 BORDER = Border(left=_T, right=_T, top=_T, bottom=_T)
 WRAP = Alignment(vertical="top", wrap_text=True)
 TOP = Alignment(vertical="top")
+
+
+# Thousands separator is language-dependent, and getting it wrong is not cosmetic:
+# "13.554" reads as a decimal in French, where the separator is a narrow no-break space.
+# es/pt/de/it use the point; the rest of the lanes we ship get U+202F.
+def _thousands(n, lane):
+    sep = "." if str(lane).split("-")[0] in ("es", "pt", "de", "it") else "\u202f"
+    return f"{n:,}".replace(",", sep)
 
 
 def main():
@@ -96,10 +104,33 @@ def main():
     wb = Workbook(); wb.remove(wb.active)
     mirror, built = [], []          # built: (sheet_key, sheet_name, rows, verdict_col)
 
+    corpus_size = D.get("corpusSize", 0)
+
+    def _sheet_token(m):
+        key = m.group(1)
+        if key not in S:
+            sys.exit(f'{i18n_path} scope "{scope}" uses {{sheet:{key}}}, but "{key}" is not a '
+                     f'sheet key. Known keys: {", ".join(sorted(S))}')
+        return S[key]
+
     def sub(text):
+        # A missing corpusSize used to render silently as "0", so reviewer copy could ship
+        # reading "a sample of 40 per language, of about 0 in total". Copy that cites the
+        # corpus has to be built against a scope that actually counts one.
+        if "{corpus}" in text and not corpus_size:
+            sys.exit(
+                f'{i18n_path} scope "{scope}" uses {{corpus}}, but this extract carries no '
+                f'corpusSize - it would render as "0" in the reviewer\'s instructions. '
+                f'Either drop {{corpus}} from that string, or make extract.mjs emit '
+                f'corpusSize for the {scope} scope.')
+        # {sheet:KEY} resolves to whatever this scope numbered that tab. Copy that names a tab
+        # by hand goes stale the moment a scope renumbers (which is how the es-latam interface
+        # packet came to cite an "8-Muestra-contenido" tab it does not contain). Whether the
+        # tab is actually built is checked once, below, when every sheet exists.
+        text = re.sub(r"\{sheet:([A-Za-z]+)\}", _sheet_token, text)
         return (text.replace("{lane}", D["laneLabel"]).replace("{version}", version)
                     .replace("{scope}", SC["title"])
-                    .replace("{corpus}", f'{D.get("corpusSize", 0):,}'.replace(",", ".")))
+                    .replace("{corpus}", _thousands(corpus_size, lane)))
 
     def finish(ws, ncols, widths, nrows, dv_col, dv_formula=None):
         for c in range(1, ncols + 1):
@@ -111,6 +142,13 @@ def main():
             ws.column_dimensions[get_column_letter(i)].width = w
         ws.freeze_panes = "A2"
         ws.auto_filter.ref = f"A1:{get_column_letter(ncols)}{ws.max_row}"
+        # A section can legitimately have ZERO rows: the fr-fr lane has no
+        # data/vocab/<x>Words.fr.js glossaries, because the French Word Bank glosses were
+        # translated in place inside data/tracks/l10n/*.fr.js instead of into separate
+        # files. openpyxl builds the validation range as "<col>2:<col><nrows+1>", which is
+        # "D2:D1" when nrows is 0 and raises ValueError. Header-only sheet, no dropdown.
+        if nrows < 1:
+            return
         dv = DataValidation(type="list", formula1=dv_formula or VERD, allow_blank=True, showDropDown=False)
         dv.error = dv.prompt = T["validationMsg"]
         dv.errorTitle = dv.promptTitle = T["validationTitle"]
@@ -227,6 +265,31 @@ def main():
                  {7, 8, 9}, {4, 5, 6, 8, 9, 10}, "G")
         decisions_sheet("decisionsContent")
 
+    # ======================================= stale tab-reference lint
+    # Scopes renumber their tabs (interface drops the sample sheet and moves the changelog
+    # from 9 to 8), but reviewer copy is written once and drifts. Any tab named in the copy
+    # that this scope does not build is an instruction the reviewer cannot act on, so fail
+    # the build rather than ship it. Runs here because it needs the full built set.
+    _built_names = [name for _, name, _, _ in built] + [S["readme"], S["summary"]]
+    _absent = {n for n in S.values() if n not in _built_names}
+    _stale = []
+    for section in ("readme", "decisions", "example"):
+        for idx, entry in enumerate(SC.get(section, [])):
+            for cell in (entry if isinstance(entry, (list, tuple)) else [entry]):
+                if not isinstance(cell, str):
+                    continue
+                for key in re.findall(r"\{sheet:([A-Za-z]+)\}", cell):
+                    if key in S and S[key] not in _built_names:
+                        _stale.append(f'  {section}[{idx}]: {{sheet:{key}}} -> "{S[key]}"')
+                for name in _absent:
+                    if name in cell:
+                        _stale.append(f'  {section}[{idx}]: literal "{name}"')
+    if _stale:
+        sys.exit(f'{i18n_path} scope "{scope}" points the reviewer at tabs this packet does '
+                 f'not build:\n' + "\n".join(_stale)
+                 + f'\n\nBuilt: {", ".join(_built_names)}\n'
+                   f'Fix the copy, or use {{sheet:KEY}} so the name follows the scope.')
+
     # ================================================================ LÉEME
     ws = wb.create_sheet(S["readme"])
     ws.column_dimensions["A"].width = 4; ws.column_dimensions["B"].width = 118
@@ -293,6 +356,13 @@ def main():
         ws.cell(row=rr, column=2, value=name)
         ws.cell(row=rr, column=3, value=sub(T["sheetBlurbs"].get(key, T["sheetBlurbs"].get("decisions", "")) if not key.startswith("decisions") else T["sheetBlurbs"]["decisions"]))
         ws.cell(row=rr, column=4, value=n)
+        if n < 1:
+            # Header-only sheet (a lane can have an empty section — see the nrows guard in
+            # finish()). "$G$2:$G$1" is a reversed range; Excel silently normalises it and
+            # counts the header, and stricter readers flag the file for repair. Emit zeros.
+            for col in (5, 6, 7):
+                ws.cell(row=rr, column=col, value=0)
+            continue
         ws.cell(row=rr, column=5, value=f'=COUNTIF({q},"{ok}")')
         ws.cell(row=rr, column=6, value=f'=COUNTIF({q},"{CHW}")')
         ws.cell(row=rr, column=7, value=f'=COUNTIF({q},"{DQW}")')
@@ -358,6 +428,15 @@ def main():
         # builtFrom is provenance only — a source file can change in ways that cannot touch
         # this packet (another language's column landing in the same table).
         "contentHash": D.get("contentHash"),
+        # What render_email.mjs reads to state the size of the ask. Recorded here rather than
+        # recomputed at send time, so the number in the covering email and the number in the
+        # workbook cannot drift apart.
+        "rowCounts": {name: n for _, name, n, _ in built},
+        # rowTotal counts REVIEW rows and so excludes the decisions sheet, matching what
+        # extract.mjs reports and what STATUS.md quotes. A decision is a policy question, not
+        # a row of content, and folding the two together would inflate the size of the ask
+        # stated in the covering email.
+        "rowTotal": sum(len(v) for v in sect.values()),
         "builtFrom": D.get("sourceFingerprint", {}),
     }, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
 

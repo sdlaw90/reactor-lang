@@ -4,20 +4,30 @@
 localization (there is only one `es` block in `lib/playStrings.js`, and it is written
 LatAm). Counterpart lane: [`es-spain`](../es-spain/STATUS.md).
 
-**Reviewer:** confirmed available, not yet engaged. No packet has been sent.
+**Reviewer:** engaged. All three packets sent 2026-07-29 — the first real use of this format by a native reviewer.
 
 ## Packets
 
 | Scope | Rows | Built from | Verified |
 |---|---:|---|---|
-| `interface` — how the app reads | 1,208 | `dev` @ 01e90e6 (v3.2.0) | ✅ fresh |
+| `interface` — how the app reads | 1,208 | `dev` @ 01e90e6 (v3.2.0) | ✅ fresh · **corrected + resent 2026-07-29** |
 | `taught` — the Spanish it teaches | 1,353 | `dev` @ 01e90e6 (v3.2.0) | ✅ fresh |
 | `explanation` — Spanish explaining other languages | 4,872 | `dev` @ 01e90e6 (v3.2.0) | ✅ fresh |
 
-None sent yet. **Send `interface` first** — smallest, it carries the decisions sheet whose
-answers pre-resolve rows in the other two, and the packet format has never been used by a real
-reviewer. A format problem caught there costs one correction instead of three. This is the
-calibration sample the handoff strategy §4 has been owing since Spanish shipped.
+All three sent 2026-07-29. The covering email asks the reviewer to complete `interface`
+and return it **before opening the other two** — it carries the decisions sheet whose answers
+pre-resolve rows in the other two, and the format had never been used by a real reviewer. This
+is the calibration sample the handoff strategy §4 has been owing since Spanish shipped, and the
+sequencing preserves most of its value even though all three files went out together.
+
+Render the covering email rather than writing one:
+
+```
+node docs/language-review/pipeline/render_email.mjs --lane es-latam --name <reviewer>
+```
+
+Its row counts come from each packet's `sources.json`, so they cannot drift from the workbooks.
+It deliberately does not restate anything the LÉEME sheet already says.
 
 Before sending, run:
 
@@ -51,10 +61,53 @@ and did not do, because the first read of it was wrong:
   reported. Regenerating from a full clone of `dev` is what surfaced `GuideOverlay.js`. Always
   build packets from a complete checkout.
 
+### The stale tab-reference correction (2026-07-29)
+
+The `interface` packet went out with instructions pointing at a tab it does not contain, and
+had to be corrected and resent. Three symptoms, one cause:
+
+- The LÉEME sheet read *"tab 8-Muestra-contenido is a SAMPLE (about 40 questions per language,
+  of about **0** in total)"*. There is no sample tab in the interface packet, and the count
+  rendered as literal zero.
+- `DEC-16` asked for a verdict on that same absent tab. The 400-of-13,974 sample it describes
+  is real, but it lives in the `explanation` packet as `4-Muestra-explicaciones`.
+- `DEC-15` cited "tab 9". The changelog tab in this scope is 8.
+
+**Cause: scope tab-renumbering that the copy never followed.** The base `sheets` map numbers
+the sample tab 8 and the changelog 9. The `interface` scope overrides `changelog` to 8 and
+drops the sample entirely — but `readme` and `decisions` had been written against the base
+numbering. `{corpus}` compounded it by defaulting to `0` when the extract carried no
+`corpusSize`, so a missing number rendered as a confident wrong one.
+
+**Fixed in the generator, not just the copy.** `build_workbook.py` now fails the build when a
+scope's `readme`, `decisions` or `example` names a tab that scope does not build, and `{corpus}`
+hard-stops instead of rendering `0`. Copy that must name a tab should use `{sheet:KEY}`, which
+resolves to whatever the scope numbered it. The three es-latam strings were rewritten and every
+tab reference in the interface scope tokenized.
+
+**Only `interface` was affected** — `taught` and `explanation` pass the new lint unchanged, and
+`fr-fr` had already corrected all three by hand, which is what identified the fix.
+
+**The reviewer lost no work.** The rebuilt packet's `contentHash` is `568bee502067…`, identical
+to the one already sent, and a cell-by-cell diff of every content sheet showed zero differences.
+Only the LÉEME sheet and decision rows 16–17 changed.
+
+**Two things this near-miss confirmed about the checks:**
+
+- `data/tracks/esForEn.js` has grown 2,658 bytes since the `taught` packet was built, but that
+  packet's `contentHash` is unchanged — nothing reviewable moved. Second time the byte-level
+  signal would have sent someone chasing a non-problem, and the reason the freshness check is
+  content-based.
+- A first `explanation` extract run without the base Word Bank files (`data/vocab/deWords.js`
+  and its siblings) still produced 4,872 rows and a plausible packet — with 15 ENOENT warnings
+  and a *different* `contentHash`. Unread, it would have shipped with an empty reference column,
+  the column a reviewer needs to judge a Japanese or Russian gloss at all. **Incomplete
+  checkouts fail quietly and convincingly. Read the warning count.**
+
 ## What each packet covers
 
-**interface** (1,207) — `playStrings` (403) · Help/About prose (110) · component string maps
-(58) · security questions (10) · regional variants (325, of which 71 are peninsular terms
+**interface** (1,208) — `playStrings` (403) · Help/About prose (110) · component string maps
+(59) · security questions (10) · regional variants (325, of which 71 are peninsular terms
 carried as advisory context) · card config (117) · changelog (184).
 
 **taught** (1,353) — `data/tracks/esForEn.js`: 665 questions + 79 pronunciation items ·

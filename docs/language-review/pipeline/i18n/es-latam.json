@@ -500,7 +500,7 @@
     ],
     [
      "n",
-     "1. Revisa una pestaña a la vez. El orden sugerido está en la pestaña RESUMEN."
+     "1. Revisa una pestaña a la vez. El orden sugerido está en la pestaña {sheet:summary}."
     ],
     [
      "n",
@@ -560,7 +560,7 @@
     ],
     [
      "b",
-     "La pestaña 1-Variantes-regionales es la de mayor riesgo. Ahí la app afirma «en México se dice X, en el Cono Sur Y». Una atribución equivocada es un error visible que daña la credibilidad. Si solo tienes tiempo para una pestaña, que sea esa."
+     "La pestaña {sheet:variants} es la de mayor riesgo. Ahí la app afirma «en México se dice X, en el Cono Sur Y». Una atribución equivocada es un error visible que daña la credibilidad. Si solo tienes tiempo para una pestaña, que sea esa."
     ],
     [
      "b",
@@ -568,11 +568,11 @@
     ],
     [
      "b",
-     "La pestaña 2-Decisiones recoge decisiones que tomamos a propósito y sobre las que necesitamos tu opinión explícita. Son pocas filas y valen mucho."
+     "La pestaña {sheet:decisions} recoge decisiones que tomamos a propósito y sobre las que necesitamos tu opinión explícita. Son pocas filas y valen mucho."
     ],
     [
      "b",
-     "La pestaña 8-Muestra-contenido es una MUESTRA (unas 40 preguntas por idioma, de unas {corpus} en total). Sirve para detectar problemas sistemáticos. Si ves un patrón que se repite, dilo en la nota: lo arreglamos en todo el corpus, no solo en esa fila."
+     "Este paquete es SOLO de interfaz: no trae ninguna muestra del contenido de los cursos. El español que la app enseña y el español que explica otros idiomas se revisan en los otros dos paquetes. Lo que sí te pedimos aquí: si ves un motivo que se repite —una fórmula, una elección de término, una regla tipográfica—, señálalo UNA vez en la nota y lo aplicamos a todo el corpus, no solo a la fila donde lo viste."
     ],
     [
      "h2",
@@ -580,7 +580,7 @@
     ],
     [
      "p",
-     "Llena tu nombre y la fecha en la pestaña RESUMEN y devuelve este mismo archivo .xlsx. No hace falta que lo cambies de formato ni que escribas un informe aparte: leemos las columnas directamente."
+     "Llena tu nombre y la fecha en la pestaña {sheet:summary} y devuelve este mismo archivo .xlsx. No hace falta que lo cambies de formato ni que escribas un informe aparte: leemos las columnas directamente."
     ]
    ],
    "decisions": [
@@ -657,12 +657,12 @@
     [
      "Novedades: «Cuatro idiomas nuevos»",
      "Una nota de la versión 2.13.0 dice «Cuatro idiomas nuevos» pero enumera tres. El error viene del inglés original y lo tradujimos igual, a propósito.",
-     "Pestaña 9 — v2.13.0, primera viñeta"
+     "Pestaña {sheet:changelog} — v2.13.0, primera viñeta"
     ],
     [
-     "Muestra de contenido",
-     "La pestaña 8 es una muestra de 400 preguntas de unas 14.000. Buscamos problemas SISTEMÁTICOS, no una revisión exhaustiva.",
-     "Si algo se repite (por ejemplo una fórmula de explicación que suena rara), señálalo una vez y lo arreglamos en todo el corpus."
+     "El contenido de los cursos no está en este paquete",
+     "Este paquete no trae ninguna muestra de contenido: solo cubre la interfaz. El español de los cursos se revisa en los otros dos paquetes — 665 preguntas del curso de español y 609 entradas del Banco de Palabras en «contenido enseñado»; 1.548 preguntas, 2.768 glosas y una muestra de 400 filas de unas 13.974 en «explicaciones». Lo que te pedimos aquí es que señales cualquier motivo que se repita: una fórmula, una elección de término, una regla tipográfica.",
+     "Señala el motivo UNA vez en la nota; nosotros lo propagamos a todo el corpus."
     ]
    ],
    "example": {
@@ -998,5 +998,59 @@
    },
    "sheetNames": {}
   }
+ },
+ "dispatchEmail": {
+  "subject": "SquirreLingo — revisión de español (es-LatAm): los tres cuadernos y en qué orden",
+  "greeting": "Hola {name}:",
+  "namePlaceholder": "[nombre]",
+  "senderDefault": "Sean",
+  "opening": [
+   "Ahí van los tres cuadernos de revisión de SquirreLingo, generados desde la versión {version} de la app. Cada uno es un archivo .xlsx y trae adentro una pestaña LÉEME con las instrucciones completas: qué variedad de español buscamos, cómo se llenan las celdas y cómo devolverlo. Empieza por ahí en cada archivo — no te repito nada de eso acá.",
+   "Lo que sí te cuento es cómo se relacionan entre sí, porque eso no está adentro de los archivos."
+  ],
+  "tableHeaders": [
+   "#",
+   "Cuaderno",
+   "Qué revisas",
+   "Filas",
+   "Tiempo aprox."
+  ],
+  "scopeOrder": [
+   "interface",
+   "taught",
+   "explanation"
+  ],
+  "scopeCopy": {
+   "interface": {
+    "what": "Cómo se lee la app en español: menús, ajustes, formularios, y sobre todo las variantes regionales por país",
+    "hours": "4–6 h"
+   },
+   "taught": {
+    "what": "El español que la app enseña a quien lo está aprendiendo",
+    "hours": "10–15 h"
+   },
+   "explanation": {
+    "what": "El español que explica otros idiomas (inglés, alemán, japonés, ruso, chino…)",
+    "hours": "18–25 h"
+   }
+  },
+  "notBuilt": "(por construir)",
+  "notCounted": "(recuento pendiente)",
+  "weightNote": "Las filas no pesan igual. En el primer cuaderno casi todas son frases sueltas y avanzas rápido; en el segundo y el tercero muchas filas son una pregunta entera —enunciado, cuatro opciones, la explicación y sus notas—, así que rinden bastante menos por hora. Son cálculos nuestros, no medidos: si te resultan muy lejos de la realidad, avísanos y los ajustamos.",
+  "orderHeading": "El orden importa — haz el primero y para ahí",
+  "orderIntro": "Haz el cuaderno de interfaz completo y devuélvemelo antes de abrir los otros dos. Dos razones:",
+  "orderReasons": [
+   "Trae una pestaña de decisiones con preguntas de criterio (formas neutras de género, anglicismos que dejamos a propósito, cómo traducir «track», el léxico latinoamericano frente al peninsular…). Tus respuestas ahí fijan criterios que se repiten cientos de veces en los otros dos cuadernos, así que contestarlas primero te evita tomar la misma decisión una y otra vez después.",
+   "Es la primera vez que alguien usa este formato. Si algo está mal armado, preferimos descubrirlo en el cuaderno más corto y no cuando ya llevas horas en el más largo."
+  ],
+  "laneNotes": [
+   "Dentro del cuaderno de interfaz, la pestaña de variantes regionales es la de mayor riesgo y va primero: ahí la app afirma «en México se dice X, en el Cono Sur Y», y una atribución equivocada es un error visible.",
+   "La pestaña de Novedades es la de menor prioridad — son notas de versiones viejas. Si te queda corta la energía, esa es la que se puede dejar para después."
+  ],
+  "closing": [
+   "Después seguimos con el cuaderno de contenido enseñado y dejamos el de explicaciones para el final. Ese último es largo: hazlo por lotes y mándamelo por partes cuando quieras, no hace falta terminarlo entero para devolvérmelo. Lo mismo aplica a los otros dos, en realidad — preferimos recibir avances a esperar.",
+   "Sin prisa con ninguno. Cualquier fila que no te cuadre, mándamela y la vemos."
+  ],
+  "signoff": "Gracias,\n{sender}"
  }
 }

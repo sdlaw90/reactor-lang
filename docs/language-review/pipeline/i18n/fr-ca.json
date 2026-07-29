@@ -1,0 +1,57 @@
+{
+ "_status": "Email-only lane file. This lane has no packet copy yet, so build_workbook.py will hard-stop on it by design — add a \"scopes\" block (see es-latam.json for the shape) before generating packets. render_email.mjs works from dispatchEmail alone.",
+ "dispatchEmail": {
+  "subject": "SquirreLingo — relecture du français québécois (fr-CA) : les cahiers et dans quel ordre",
+  "greeting": "Bonjour {name},",
+  "namePlaceholder": "[prénom]",
+  "senderDefault": "Sean",
+  "opening": [
+   "Voici les cahiers de relecture de SquirreLingo, générés depuis la version {version} de l’application. Chacun est un fichier .xlsx et contient un onglet LISEZ-MOI avec les consignes complètes : quelle variété de français nous visons, comment remplir les cellules et comment nous le renvoyer. Commencez par là dans chaque fichier — je n’en répète rien ici.",
+   "Ce que je vous explique en revanche, c’est comment les cahiers s’articulent, parce que cela ne figure dans aucun des fichiers."
+  ],
+  "tableHeaders": [
+   "#",
+   "Cahier",
+   "Ce que vous relisez",
+   "Lignes",
+   "Durée estimée"
+  ],
+  "scopeOrder": [
+   "interface",
+   "taught",
+   "explanation"
+  ],
+  "scopeCopy": {
+   "interface": {
+    "what": "La façon dont l’application se lit en français québécois, et surtout les termes du Québec sur la carte des variantes",
+    "hours": "—"
+   },
+   "taught": {
+    "what": "Le français québécois que l’application enseigne à qui l’apprend",
+    "hours": "—"
+   },
+   "explanation": {
+    "what": "Le français québécois qui explique d’autres langues",
+    "hours": "—"
+   }
+  },
+  "notBuilt": "(à construire)",
+  "notCounted": "(décompte à refaire)",
+  "weightNote": "Les lignes ne pèsent pas la même chose : dans le cahier d’interface ce sont presque toutes des phrases isolées, alors que dans les autres beaucoup de lignes sont une question entière — énoncé, quatre options, l’explication et ses notes — donc le rendement horaire est bien plus faible.",
+  "orderHeading": "L’ordre compte — faites le premier et arrêtez-vous là",
+  "orderIntro": "Faites le cahier d’interface en entier et renvoyez-le-moi avant d’ouvrir les autres. Deux raisons :",
+  "orderReasons": [
+   "Il contient un onglet de décisions avec des questions d’arbitrage. Vos réponses y fixent des critères qui reviennent des dizaines de fois dans les autres cahiers : y répondre d’abord vous évite de reprendre le même arbitrage ligne après ligne.",
+   "Nous préférons découvrir un éventuel défaut de format sur le cahier le plus court plutôt qu’après des heures passées sur le plus long."
+  ],
+  "laneNotes": [
+   "Le point propre à cette variété : sur l’onglet des variantes régionales, ce sont les lignes PAR DÉFAUT et RÉGIONAL — les termes du QUÉBEC — qui vous reviennent. Les lignes RÉFÉRENCE portent les termes de France, apparaissent en gris et en italique, et relèvent de l’autre voie : elles sont affichées parce que la carte montre les deux moitiés ensemble.",
+   "Sachez toutefois ce que vous regardez : le registre français de la carte n’est encore qu’une amorce de deux concepts, pas un répertoire construit. La vraie question est ce qu’il faudrait y ajouter."
+  ],
+  "closing": [
+   "Rien ne presse. Vous pouvez procéder par lots et me renvoyer des avancées en plusieurs fois ; inutile de terminer un cahier entier.",
+   "Si une ligne vous laisse perplexe, envoyez-la-moi et nous la regarderons ensemble."
+  ],
+  "signoff": "Merci,\n{sender}"
+ }
+}

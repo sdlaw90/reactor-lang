@@ -18,15 +18,15 @@
 // PENDING native review.
 
 export const THEMES = [
-  { id: "numbers-time", en: "Numbers, dates & time", ru: "Числа и время", pt: "Números e tempo", fr: "Nombres, dates et heures" },
-  { id: "directions", en: "Directions", ru: "Направления", pt: "Direções", fr: "Directions" },
-  { id: "shopping", en: "Shopping", ru: "Покупки", pt: "Compras", fr: "Achats" },
-  { id: "restaurant", en: "Restaurant & food", ru: "Еда", pt: "Restaurante", fr: "Restaurant" },
-  { id: "travel", en: "Travel", ru: "Путешествия", pt: "Viagens", fr: "Voyages" },
-  { id: "medical", en: "Medical & doctor", ru: "Здоровье", pt: "Saúde", fr: "Santé" },
-  { id: "small-talk", en: "Small talk", ru: "Разговор", pt: "Conversa", fr: "Conversation" },
-  { id: "work", en: "Work & office", ru: "Работа", pt: "Trabalho", fr: "Travail" },
-  { id: "emotions", en: "Emotions", ru: "Эмоции", pt: "Emoções", fr: "Émotions" },
+  { id: "numbers-time", en: "Numbers, dates & time", ru: "Числа и время", pt: "Números e tempo", fr: "Nombres, dates et heures", es: "Números y tiempo" },
+  { id: "directions", en: "Directions", ru: "Направления", pt: "Direções", fr: "Directions", es: "Direcciones" },
+  { id: "shopping", en: "Shopping", ru: "Покупки", pt: "Compras", fr: "Achats", es: "Compras" },
+  { id: "restaurant", en: "Restaurant & food", ru: "Еда", pt: "Restaurante", fr: "Restaurant", es: "Restaurante" },
+  { id: "travel", en: "Travel", ru: "Путешествия", pt: "Viagens", fr: "Voyages", es: "Viajes" },
+  { id: "medical", en: "Medical & doctor", ru: "Здоровье", pt: "Saúde", fr: "Santé", es: "Salud" },
+  { id: "small-talk", en: "Small talk", ru: "Разговор", pt: "Conversa", fr: "Conversation", es: "Conversación" },
+  { id: "work", en: "Work & office", ru: "Работа", pt: "Trabalho", fr: "Travail", es: "Trabajo" },
+  { id: "emotions", en: "Emotions", ru: "Эмоции", pt: "Emoções", fr: "Émotions", es: "Emociones" },
 ];
 
 // key (prompt text) -> { themes?: [id], grammar?: {tense,why}, person?: {en,ru} }

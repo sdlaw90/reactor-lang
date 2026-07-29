@@ -89,7 +89,12 @@ and greppable from a terminal. Both are generated; neither is hand-edited.
 2. **Send** — run `node pipeline/check_freshness.mjs --lane <lane>` first; it re-extracts and
    tells you whether the packet still matches the repo. Node only, no dependencies, because it
    has to work at the moment a packet goes out. Then the reviewer gets the `.xlsx`, with every
-   instruction inside it in their language.
+   instruction inside it in their language, plus a covering email from
+   `node pipeline/render_email.mjs --lane <lane>` — also Node-only, also send-day. The email
+   carries only what a workbook cannot know about itself: how the scopes relate, which to do
+   first, and roughly how long each takes. It deliberately does not restate the instructions
+   sheet; two descriptions of the same rule in different words is a contradiction waiting to
+   happen, and the reviewer has no way to tell which one wins.
 3. **Receive** — drop the returned file into `submitted/` as
    `YYYY-MM-DD-<reviewer>-<scope>-v<version>.xlsx`. Keep the scope in the name: `ingest.py`
    reads it back out. Do not open and "tidy" it.

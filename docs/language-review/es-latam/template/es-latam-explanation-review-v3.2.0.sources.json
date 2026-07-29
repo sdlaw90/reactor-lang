@@ -3,6 +3,14 @@
  "scope": "explanation",
  "version": "3.2.0",
  "contentHash": "95c52d4da0859bdf36fd9615999dffb25f180cfc7ff60a29e972e20ef775e0f1",
+ "rowCounts": {
+  "1-Preguntas": 1548,
+  "2-Pronunciación": 156,
+  "3-Banco-de-palabras": 2768,
+  "4-Muestra-explicaciones": 400,
+  "5-Decisiones": 6
+ },
+ "rowTotal": 4872,
  "builtFrom": {
   "data/tracks/enGbForEs.js": {
    "bytes": 345531,
