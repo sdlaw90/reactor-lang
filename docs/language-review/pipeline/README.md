@@ -13,7 +13,7 @@ translated copy file, not a new script.
 | `build_workbook.py` | Python 3 + `openpyxl` | whoever builds a packet |
 | `ingest.py` | Python 3 + `openpyxl` | whoever processes a return |
 | `check_example.py` | Python 3 + `openpyxl` | whoever edits `ingest.py` or a sheet layout |
-| **`render_email.mjs`** | **Node only, zero deps** | **whoever SENDS a packet — the covering email** |
+| `check_roundtrip.py` | Python 3 + `openpyxl` | **whoever regenerates packets — run before sending** |
 
 Anything that reads or writes a workbook needs Python and `openpyxl` (`pip install openpyxl`).
 Everything on the send path deliberately does not — the freshness check is the one thing that
@@ -82,33 +82,6 @@ the counterpart lane. The submission itself is never touched.
 4. Run the commands above, once per scope. `build_workbook.py` **hard-stops** if the i18n file is
    missing rather than falling back to English — handing a native reviewer instructions in
    a language you're hiring them for fluency in is worse than not sending the packet.
-5. Add a `dispatchEmail` block to `i18n/<lane>.json` — the covering email that goes out *with*
-   the packets, in the reviewer's language. `render_email.mjs` **hard-stops** without it, for
-   the same reason step 4 does. A lane can carry `dispatchEmail` before it has any `scopes`
-   (see `i18n/es-spain.json`): the email is useful to draft early, and the packet build will
-   keep hard-stopping until the packet copy is written.
-
-## The covering email — render it, don't retype it
-
-```bash
-node docs/language-review/pipeline/render_email.mjs --lane es-latam --name Ana --out email.md
-```
-
-The packets explain themselves: every workbook opens on an instructions sheet covering the
-variety, the register, the verdict columns and how to return the file. The covering email
-exists only for what a workbook cannot know about itself — how the three relate, which one to
-do first, and roughly how long each takes. Anything the instructions sheet already says is
-left out on purpose: restating it in slightly different words is how an email and a workbook
-come to contradict each other, and the reviewer then has to guess which one is authoritative.
-
-It reads `dispatchEmail` from `i18n/<lane>.json`, so the email is reviewer-facing copy sitting
-beside every other reviewer-facing word rather than in a document that drifts. Row counts come
-from each packet's `sources.json`, never typed by hand — a hand-typed count goes stale the
-moment a packet is regenerated, and the reviewer plans against a number that is not what they
-received. A scope with no built packet renders as a placeholder and is reported on stderr, so
-an unbuilt scope is visible rather than quietly missing.
-
-Warnings go to stderr, so `--out` (or a plain redirect) gives a clean email either way.
 
 ## Freshness check — run before sending anything
 
@@ -127,6 +100,32 @@ scarce resource. It has already happened once: the first `es-latam` `interface` 
 built minutes before the v3.3 beat rewrote `playStrings.js` and `helpAboutContent.js`
 underneath it.
 
+## Round-trip check — run after regenerating, before sending
+
+```bash
+python docs/language-review/pipeline/check_roundtrip.py
+```
+
+Fills every built packet the way a reviewer would — a verdict, a correction and a note on each
+data sheet — runs `ingest.py` over the result, and checks every planted answer comes back out.
+Read-only against the committed packets; everything happens in a temp directory.
+
+**This is not the same guarantee as `check_example.py`.** That one ingests a frozen fixture, so
+it proves `ingest.py` still reads the packet shape it was written against. It never opens the
+packets you are about to send. Retitle a reviewer column in `build_workbook.py` without updating
+`i18n/<lane>.json` and the fixture check stays green while `ingest.py` skips six sheets — the
+reviewer fills them in, the file comes back, and their corrections are simply absent from the
+changeset with no error anyone reads. Verified: that exact break passes `check_example.py` and
+fails this.
+
+It finds the verdict column by its dropdown and the reviewer's cells by their fill colour rather
+than reusing `ingest.py`'s column mapping, because a check that shares the assumption it is
+testing cannot fail when that assumption is wrong. It also **fails rather than passes when it
+cannot plant anything** — an earlier draft matched the input fill on all eight hex digits, which
+silently matched nothing on packets that had not been through the LibreOffice recalculation pass,
+and it reported a clean run having tested zero sheets. A check that can pass while testing
+nothing is worse than no check.
+
 ## Regression check
 
 `example/` holds a fabricated but complete filled-in submission and the changeset it produces.
@@ -144,20 +143,6 @@ It guards the quiet failure — a moved column or an unmatched verdict word maki
 corrections silently vanish. See `example/README.md` before regenerating the fixture.
 
 ## Drift protection
-
-**Stale tab references.** Scopes renumber their tabs — `interface` drops the sample sheet and
-moves the changelog from 9 to 8 — but the reviewer copy in `i18n/<lane>.json` is written once
-and drifts behind. `build_workbook.py` fails the build if a scope's `readme`, `decisions` or
-`example` names a tab that scope does not build. Prefer `{sheet:KEY}` in copy that has to name
-a tab: it resolves to whatever the scope numbered it, so the sentence follows the layout.
-
-This is not hypothetical. The shipped `es-latam` `interface` packet told reviewers that
-"tab 8-Muestra-contenido is a SAMPLE (about 40 questions per language, of about **0** in
-total)" — a tab that packet has never contained, with a corpus count that resolved to zero
-because `{corpus}` silently defaulted to `0` when the extract carried no `corpusSize`. A second
-decision row asked for a verdict on that same absent tab, and a third pointed at "tab 9" when
-the tab in question is 8. `{corpus}` now hard-stops instead of rendering `0`.
-
 
 After extracting the surfaces it knows, `extract.mjs` sweeps `app/` and `lib/` for any
 *other* file containing a bilingual `{ en: …, <lang>: … }` map and warns about ones missing

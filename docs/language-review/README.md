@@ -85,16 +85,14 @@ and greppable from a terminal. Both are generated; neither is hand-edited.
 
 1. **Generate** — `pipeline/extract.mjs` reads the repo, `pipeline/build_workbook.py` writes
    the packet into `template/`, once per scope. Regenerate after any content or localization
-   change; never hand-patch a packet.
+   change; never hand-patch a packet. Then run `python pipeline/check_roundtrip.py`: it fills
+   each freshly built packet as a reviewer would and confirms every answer survives `ingest.py`.
+   A packet whose columns have drifted out from under the ingester loses corrections silently,
+   and the reviewer's pass is the one thing here that cannot be redone cheaply.
 2. **Send** — run `node pipeline/check_freshness.mjs --lane <lane>` first; it re-extracts and
    tells you whether the packet still matches the repo. Node only, no dependencies, because it
    has to work at the moment a packet goes out. Then the reviewer gets the `.xlsx`, with every
-   instruction inside it in their language, plus a covering email from
-   `node pipeline/render_email.mjs --lane <lane>` — also Node-only, also send-day. The email
-   carries only what a workbook cannot know about itself: how the scopes relate, which to do
-   first, and roughly how long each takes. It deliberately does not restate the instructions
-   sheet; two descriptions of the same rule in different words is a contradiction waiting to
-   happen, and the reviewer has no way to tell which one wins.
+   instruction inside it in their language.
 3. **Receive** — drop the returned file into `submitted/` as
    `YYYY-MM-DD-<reviewer>-<scope>-v<version>.xlsx`. Keep the scope in the name: `ingest.py`
    reads it back out. Do not open and "tidy" it.
