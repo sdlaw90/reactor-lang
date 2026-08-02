@@ -911,3 +911,97 @@ Per track, all green (`_frfono/verify.mjs`):
 - **Phase 6** — offering flip, straggler sweep, changelog, Help/About.
 - **`sound` respellings** are English-oriented for every source. Cross-source, needs a decision.
 - **`scripts/_fr-parity-harness.mjs` is still the one-off from A15** — delete it when v3.3 ships.
+
+---
+
+# Phase 5 — the French regional-variant registry (§4c) — 2026-08-02
+
+**2 → 80 records** (es 71 · pt 64). 31 fire on content that already exists; 73 answer slots across
+the 12 French tracks. Domain-grouped in the file: table/cuisine/courses · transport/ville/argent ·
+maison/vêtements/technologie · gens/travail/école/temps et nombres.
+
+## How the scope was chosen — measure, don't guess
+
+Before authoring anything, the whole answer surface a French native can meet was harvested:
+`flattenBank()` over the 10 reused tracks with their `.fr.js` side tables **plus** the two
+unregistered English-target tracks, giving **9,804 distinct normalised correct-answer strings**
+across 15,102 answer slots (`_frvar/fr-answer-index.json`). Every candidate record was then checked
+against it, so "high-frequency ceiling" is a measured claim per record rather than a vibe.
+
+The check also settled a prior worry: the card *does* fire for a source language, because the l10n
+side tables localise recognition **options** into the learner's language. A pt-source learner
+studying Spanish answers `travesseiro`, and the pt record fires. Confirmed by measurement — es 123
+fires, pt 71 — before a single French record was written.
+
+## Two defects in the data model, both found by replaying the component
+
+**1. `default` was the wrong shape for French.** `default` is the term shown when the learner's
+country isn't in `regional`. Spanish uses it as a catch-all across twenty Latin American countries.
+French's regional group is Québec alone and BE/CH mostly follow France — so a Québec-term default
+showed a Belgian `fin de semaine` tagged **"dans ta région (Belgique)"**.
+
+Fixed by mirroring `reference` and listing each divergent variety explicitly — which is exactly what
+the original 2-record seed did. **The seed was right and the brief written for the authoring pass
+was wrong**; 75 records were rewritten mechanically at merge.
+
+Related and worth knowing: `RegionalVariantCard`'s `isRef` branches are **unreachable**. The
+component computes `mineTerm = isRef ? reference : …` and then returns null when
+`mineTerm === reference`, so a reference-region learner is always suppressed before the branch that
+renders "Au Québec: …" can run. The `default` field is therefore never displayed — it only decides
+whether the card appears at all. Not a bug; worth a comment before someone "fixes" it.
+
+**2. The index keyed on the other variety's word.** New per-language flag `indexRegionalTerms`,
+`true` for es/pt, off for fr.
+
+es/pt reusable tracks are authored in the regional variety (es-LatAm, pt-BR) as well as the
+reference one, so both words legitimately appear as answers. French tracks are authored in France
+French only, so indexing the Québec word fires the card on a homograph. **Measured, not argued:**
+`bas` is socks in Québec, and both corpus items answering `bas` are the adjective *low*
+(`'Bajo' significa…` / `'Baixo' significa…`). Same class for `arrêt` (`die Haltestelle` — France
+says `arrêt` too), `bienvenue` (only ever the "welcome to the shop" sense in the corpus), and
+latently `fête`, `trafic`, `gomme`, `job`.
+
+**Reference-only keying is the correct default for a single-variety corpus — v3.4 Italian onward
+should leave the flag off.** A pleasant side effect: the three meal records no longer collide, so
+the load-bearing `dinner → lunch → breakfast` ordering the authoring pass had to rely on is gone.
+
+## Dropped on purpose
+
+| What | Why |
+|---|---|
+| `de rien` / `bienvenue` ("you're welcome") | `norm()` strips a leading `de`, so the reference indexes as the bare key **`rien`**. Certain false positive. Needs a normalisation change or a multi-word guard — recorded, not bodged. |
+| 4 cross-domain duplicates | convenience store · supermarket · grocery shopping · the restaurant bill |
+| ~30 authoring candidates | vulgar or offensive in one variety, archaic, spelling-only, or no stable France-side reference (`breuvage`, `liqueur`, `pistolet`, `poêle`, `comptoir`, `gosse`, `cartable`, `kot`) |
+| `octante` | archaic. Belgium says `quatre-vingts` like France; only Switzerland diverges (`huitante`). |
+
+## Verification
+
+| Check | Result |
+|---|---|
+| es / pt card fires, before → after | **123 → 123** · **71 → 71** |
+| `default === reference` on every fr record | 80/80 |
+| every `regional` entry has ≥1 country from CA/BE/CH and a label; no term equals its reference | 80/80 |
+| index keys are the France term only — no Québec/Belgian/Swiss word is a key | 80 keys, 0 stray |
+| **card resolution replayed, 80 records × {FR, CA, BE, CH, no country}** | France never sees a card · no-country never sees a card · BE and CH never shown a term not listed for them |
+| fires on real content | 73 slots, 31 distinct records |
+| ESLint · parity harness · `npm run build` (Next 16) | clean · 232/232 · green |
+
+**All 7 checks mutation-tested; each goes red on its own check.**
+
+### The mutation pass caught the harness again
+
+The first run reported `esUnregressed` and `recordCount` **green while the failure list was
+non-empty**. `checks.x = cond || fail(...)` assigned `fail()`'s `undefined`, and the normalisation
+line `if (checks[k] !== false) checks[k] = true` then flipped it to `true`. `fail()` now returns
+`false`. That is the third instance this session, across two phases, of a check that could not fail
+— and the third time the mutation pass is what found it.
+
+## Still open after Phase 5
+
+- **Phase 6** — the offering flip, straggler sweep, changelog, Help/About. **Only phase left.**
+- **`norm()` strips a leading `de`/`le`/`la`**, which makes any two-word French reference beginning
+  with an article unusable as a key. Blocks the `de rien` record and anything shaped like it.
+- **The `isRef` branches of `RegionalVariantCard` are dead code.** Either make reference-region
+  learners see the card or delete the branches — don't leave it ambiguous.
+- **`fr-ca` review lane** is now unblocked on the data side: the registry is no longer a seed.
+- `scripts/_fr-parity-harness.mjs` is still the A15 one-off — delete it when v3.3 ships.

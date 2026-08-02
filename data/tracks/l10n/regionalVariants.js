@@ -18,7 +18,7 @@
 //   The card highlights the learner's-country term (or `default`), shows the other
 //   side as "<refPhrase|regGroupPhrase>: …", and self-suppresses when they're equal.
 //
-// ⚠️ es fully populated (first-pass, #41 review). pt/fr/de = rock-solid SEEDS only.
+// ⚠️ es + fr fully populated (first-pass, #41 review). pt/de = rock-solid SEEDS only.
 //    it/ru/ja/ko/zh/en = scaffolding + notes (populate per build). All flagged.
 
 function norm(s) {
@@ -32,6 +32,7 @@ function norm(s) {
 
 const LANGS = {
   es: {
+    indexRegionalTerms: true,
     reference: { code: "ES", label: "España" },
     regionalGroupLabel: "Latinoamérica",
     ui: { title: "También se dice", inYourRegion: "en tu región", variantes: "variantes regionales", hide: "ocultar", refPhrase: "En España", regGroupPhrase: "En Latinoamérica", refFlag: "🇪🇸", regFlag: "🌎" },
@@ -366,6 +367,7 @@ const LANGS = {
   },
   pt: {
     // BR↔PT: the big split. reference=European PT; default=Brazilian. SEED — #41-equiv review.
+    indexRegionalTerms: true,
     reference: { code: "PT", label: "Portugal" },
     regionalGroupLabel: "Brasil",
     ui: { title: "Também se diz", inYourRegion: "na sua região", variantes: "variantes regionais", hide: "ocultar", refPhrase: "Em Portugal", regGroupPhrase: "No Brasil", refFlag: "🇵🇹", regFlag: "🇧🇷" },
@@ -438,17 +440,152 @@ const LANGS = {
     ],
   },
   fr: {
-    // FR↔Québec (+BE/CH minor). reference=France; Québec learners (CA) see the card. SEED.
+    // FR↔Québec (+BE/CH). reference=France; Québec, Belgian and Swiss learners see the card.
+    // v3.3 Phase 5: taken to its high-frequency ceiling (§4c) — 80 records. Keys are the
+    // FRANCE term only (indexRegionalTerms is off, see the index builder below), because all
+    // reusable-track content is authored in France French. A record whose Québec term equals
+    // the France term but which splits in BE/CH keeps default === reference and lists the
+    // Belgian/Swiss term in `regional`, so it stays hidden for everyone else. AI-authored → #41.
     reference: { code: "FR", label: "France" },
     regionalGroupLabel: "Québec",
     ui: { title: "On dit aussi", inYourRegion: "dans ta région", variantes: "variantes régionales", hide: "masquer", refPhrase: "En France", regGroupPhrase: "Au Québec", refFlag: "🇫🇷", regFlag: "🇨🇦" },
-    countryNames: { FR: "France", CA: "Quebec", BE: "Belgique", CH: "Suisse" },
+    countryNames: { FR: "France", CA: "Québec", BE: "Belgique", CH: "Suisse" },
     records: [
     { gloss: "car", reference: "voiture", default: "voiture", regional: [
       { term: "char", countries: ["CA"], label: "Québec" },
     ]},
     { gloss: "girlfriend", reference: "copine", default: "copine", regional: [
       { term: "blonde", countries: ["CA"], label: "Québec" },
+    ]},
+    // — table, cuisine, courses
+    { gloss: "dinner / evening meal", reference: "dîner", default: "dîner", regional: [
+      { term: "souper", countries: ["CA", "BE", "CH"], label: "Québec·Belgique·Suisse" },
+    ]},
+    { gloss: "lunch / midday meal", reference: "déjeuner", default: "déjeuner", regional: [
+      { term: "dîner", countries: ["CA", "BE", "CH"], label: "Québec·Belgique·Suisse" },
+    ]},
+    { gloss: "breakfast", reference: "petit-déjeuner", default: "petit-déjeuner", regional: [
+      { term: "déjeuner", countries: ["CA", "BE", "CH"], label: "Québec·Belgique·Suisse" },
+    ]},
+    { gloss: "grocery store", reference: "supermarché", default: "supermarché", regional: [{ term: "épicerie", countries: ["CA"], label: "Québec" }] },
+    { gloss: "to do the grocery shopping", reference: "faire les courses", default: "faire les courses", regional: [
+      { term: "faire l'épicerie", countries: ["CA"], label: "Québec" },
+      { term: "faire ses commissions", countries: ["BE", "CH"], label: "Belgique·Suisse" },
+    ]},
+    { gloss: "convenience store", reference: "supérette", default: "supérette", regional: [{ term: "dépanneur", countries: ["CA"], label: "Québec" }] },
+    { gloss: "blueberry", reference: "myrtille", default: "myrtille", regional: [{ term: "bleuet", countries: ["CA"], label: "Québec" }] },
+    { gloss: "watermelon", reference: "pastèque", default: "pastèque", regional: [{ term: "melon d'eau", countries: ["CA"], label: "Québec" }] },
+    { gloss: "peanut", reference: "cacahuète", default: "cacahuète", regional: [{ term: "arachide", countries: ["CA"], label: "Québec" }] },
+    { gloss: "peanut butter", reference: "beurre de cacahuète", default: "beurre de cacahuète", regional: [
+      { term: "beurre d'arachide", countries: ["CA"], label: "Québec" },
+    ]},
+    { gloss: "corn on the cob", reference: "maïs", default: "maïs", regional: [{ term: "blé d'Inde", countries: ["CA"], label: "Québec" }] },
+    { gloss: "ice cream", reference: "glace", default: "glace", regional: [{ term: "crème glacée", countries: ["CA"], label: "Québec" }] },
+    { gloss: "soft drink / soda", reference: "soda", default: "soda", regional: [{ term: "boisson gazeuse", countries: ["CA"], label: "Québec" }] },
+    { gloss: "chewing gum", reference: "chewing-gum", default: "chewing-gum", regional: [{ term: "gomme", countries: ["CA"], label: "Québec" }] },
+    { gloss: "oatmeal / porridge", reference: "porridge", default: "porridge", regional: [{ term: "gruau", countries: ["CA"], label: "Québec" }] },
+    { gloss: "the bill (restaurant)", reference: "addition", default: "addition", regional: [{ term: "facture", countries: ["CA"], label: "Québec" }] },
+    { gloss: "drive-through", reference: "drive", default: "drive", regional: [{ term: "service au volant", countries: ["CA"], label: "Québec" }] },
+    { gloss: "afternoon snack", reference: "goûter", default: "goûter", regional: [{ term: "collation", countries: ["CA"], label: "Québec" }] },
+    { gloss: "cutlery / silverware", reference: "couverts", default: "couverts", regional: [{ term: "ustensiles", countries: ["CA"], label: "Québec" }] },
+    { gloss: "dish soap", reference: "liquide vaisselle", default: "liquide vaisselle", regional: [
+      { term: "savon à vaisselle", countries: ["CA"], label: "Québec" },
+    ]},
+    { gloss: "endive / chicory", reference: "endive", default: "endive", regional: [{ term: "chicon", countries: ["BE"], label: "Belgique" }] },
+    { gloss: "plastic bag", reference: "sac en plastique", default: "sac en plastique", regional: [{ term: "cornet", countries: ["CH"], label: "Suisse" }] },
+    // — transport, ville, argent
+    { gloss: "parking lot", reference: "parking", default: "parking", regional: [{ term: "stationnement", countries: ["CA"], label: "Québec" }] },
+    { gloss: "to park", reference: "se garer", default: "se garer", regional: [
+      { term: "stationner", countries: ["CA"], label: "Québec" },
+      { term: "parquer", countries: ["BE", "CH"], label: "Belgique·Suisse" },
+    ]},
+    { gloss: "stop sign", reference: "stop", default: "stop", regional: [{ term: "arrêt", countries: ["CA"], label: "Québec" }] },
+    { gloss: "bus", reference: "bus", default: "bus", regional: [{ term: "autobus", countries: ["CA"], label: "Québec" }] },
+    { gloss: "traffic jam", reference: "embouteillage", default: "embouteillage", regional: [{ term: "trafic", countries: ["CA"], label: "Québec" }] },
+    { gloss: "traffic light", reference: "feu rouge", default: "feu rouge", regional: [{ term: "lumière rouge", countries: ["CA"], label: "Québec" }] },
+    { gloss: "bus shelter", reference: "abribus", default: "abribus", regional: [{ term: "aubette", countries: ["BE"], label: "Belgique" }] },
+    { gloss: "to hitchhike", reference: "faire du stop", default: "faire du stop", regional: [{ term: "faire du pouce", countries: ["CA"], label: "Québec" }] },
+    { gloss: "shopping (the activity)", reference: "shopping", default: "shopping", regional: [{ term: "magasinage", countries: ["CA"], label: "Québec" }] },
+    { gloss: "to go shopping", reference: "faire les magasins", default: "faire les magasins", regional: [
+      { term: "magasiner", countries: ["CA"], label: "Québec" },
+    ]},
+    { gloss: "shopping mall", reference: "centre commercial", default: "centre commercial", regional: [
+      { term: "centre d'achats", countries: ["CA"], label: "Québec" },
+    ]},
+    { gloss: "on sale / special offer", reference: "en promotion", default: "en promotion", regional: [
+      { term: "en spécial", countries: ["CA"], label: "Québec" },
+      { term: "en action", countries: ["CH"], label: "Suisse" },
+    ]},
+    { gloss: "ATM", reference: "distributeur automatique", default: "distributeur automatique", regional: [
+      { term: "guichet automatique", countries: ["CA"], label: "Québec" },
+      { term: "bancomat", countries: ["CH"], label: "Suisse" },
+    ]},
+    { gloss: "debit card", reference: "carte bancaire", default: "carte bancaire", regional: [{ term: "carte de débit", countries: ["CA"], label: "Québec" }] },
+    { gloss: "cash (payment)", reference: "espèces", default: "espèces", regional: [{ term: "argent comptant", countries: ["CA"], label: "Québec" }] },
+    { gloss: "checking account", reference: "compte courant", default: "compte courant", regional: [
+      { term: "compte-chèques", countries: ["CA"], label: "Québec" },
+      { term: "compte à vue", countries: ["BE"], label: "Belgique" },
+    ]},
+    // — maison, vêtements, technologie
+    { gloss: "cell phone", reference: "téléphone portable", default: "téléphone portable", regional: [
+      { term: "cellulaire", countries: ["CA"], label: "Québec" },
+      { term: "GSM", countries: ["BE"], label: "Belgique" },
+      { term: "natel", countries: ["CH"], label: "Suisse" },
+    ]},
+    { gloss: "email", reference: "e-mail", default: "e-mail", regional: [{ term: "courriel", countries: ["CA"], label: "Québec" }] },
+    { gloss: "spam / junk mail", reference: "spam", default: "spam", regional: [{ term: "pourriel", countries: ["CA"], label: "Québec" }] },
+    { gloss: "to chat online", reference: "chatter", default: "chatter", regional: [{ term: "clavarder", countries: ["CA"], label: "Québec" }] },
+    { gloss: "podcast", reference: "podcast", default: "podcast", regional: [{ term: "balado", countries: ["CA"], label: "Québec" }] },
+    { gloss: "washing machine", reference: "machine à laver", default: "machine à laver", regional: [{ term: "laveuse", countries: ["CA"], label: "Québec" }] },
+    { gloss: "clothes dryer", reference: "sèche-linge", default: "sèche-linge", regional: [{ term: "sécheuse", countries: ["CA"], label: "Québec" }] },
+    { gloss: "sofa", reference: "canapé", default: "canapé", regional: [{ term: "divan", countries: ["CA"], label: "Québec" }] },
+    { gloss: "closet / wardrobe", reference: "placard", default: "placard", regional: [{ term: "garde-robe", countries: ["CA"], label: "Québec" }] },
+    { gloss: "air conditioning", reference: "climatisation", default: "climatisation", regional: [
+      { term: "air climatisé", countries: ["CA"], label: "Québec" },
+    ]},
+    { gloss: "towel", reference: "serviette", default: "serviette", regional: [{ term: "essuie", countries: ["BE"], label: "Belgique" }] },
+    { gloss: "washcloth", reference: "gant de toilette", default: "gant de toilette", regional: [
+      { term: "débarbouillette", countries: ["CA"], label: "Québec" },
+    ]},
+    { gloss: "mop / floor cloth", reference: "serpillière", default: "serpillière", regional: [
+      { term: "vadrouille", countries: ["CA"], label: "Québec" },
+      { term: "panosse", countries: ["CH"], label: "Suisse" },
+    ]},
+    { gloss: "sweater", reference: "pull", default: "pull", regional: [{ term: "chandail", countries: ["CA"], label: "Québec" }] },
+    { gloss: "shoes", reference: "chaussures", default: "chaussures", regional: [{ term: "souliers", countries: ["CA"], label: "Québec" }] },
+    { gloss: "sneakers", reference: "baskets", default: "baskets", regional: [{ term: "espadrilles", countries: ["CA"], label: "Québec" }] },
+    { gloss: "socks", reference: "chaussette", default: "chaussette", regional: [{ term: "bas", countries: ["CA"], label: "Québec" }] },
+    { gloss: "mittens", reference: "moufles", default: "moufles", regional: [{ term: "mitaines", countries: ["CA"], label: "Québec" }] },
+    { gloss: "winter hat", reference: "bonnet", default: "bonnet", regional: [{ term: "tuque", countries: ["CA"], label: "Québec" }] },
+    { gloss: "scarf", reference: "écharpe", default: "écharpe", regional: [{ term: "foulard", countries: ["CA"], label: "Québec" }] },
+    { gloss: "slush (melting snow)", reference: "neige fondue", default: "neige fondue", regional: [{ term: "sloche", countries: ["CA"], label: "Québec" }] },
+    { gloss: "garbage / trash", reference: "ordures", default: "ordures", regional: [{ term: "vidanges", countries: ["CA"], label: "Québec" }] },
+    // — gens, travail, école, temps et nombres
+    { gloss: "weekend", reference: "week-end", default: "week-end", regional: [{ term: "fin de semaine", countries: ["CA"], label: "Québec" }] },
+    { gloss: "babysitter", reference: "baby-sitter", default: "baby-sitter", regional: [{ term: "gardienne", countries: ["CA"], label: "Québec" }] },
+    { gloss: "boyfriend", reference: "copain", default: "copain", regional: [{ term: "chum", countries: ["CA"], label: "Québec" }] },
+    { gloss: "birthday", reference: "anniversaire", default: "anniversaire", regional: [{ term: "fête", countries: ["CA"], label: "Québec" }] },
+    { gloss: "guy (informal)", reference: "mec", default: "mec", regional: [{ term: "gars", countries: ["CA"], label: "Québec" }] },
+    { gloss: "job (informal)", reference: "boulot", default: "boulot", regional: [{ term: "job", countries: ["CA"], label: "Québec" }] },
+    { gloss: "job interview", reference: "entretien", default: "entretien", regional: [{ term: "entrevue", countries: ["CA"], label: "Québec" }] },
+    { gloss: "high school", reference: "lycée", default: "lycée", regional: [{ term: "école secondaire", countries: ["CA"], label: "Québec" }] },
+    { gloss: "daycare / nursery", reference: "crèche", default: "crèche", regional: [{ term: "garderie", countries: ["CA"], label: "Québec" }] },
+    { gloss: "school bag", reference: "cartable", default: "cartable", regional: [{ term: "sac d'école", countries: ["CA"], label: "Québec" }] },
+    { gloss: "eraser", reference: "gomme", default: "gomme", regional: [{ term: "efface", countries: ["CA"], label: "Québec" }] },
+    { gloss: "pencil sharpener", reference: "taille-crayon", default: "taille-crayon", regional: [{ term: "aiguisoir", countries: ["CA"], label: "Québec" }] },
+    { gloss: "pencil case", reference: "trousse", default: "trousse", regional: [{ term: "étui à crayons", countries: ["CA"], label: "Québec" }] },
+    { gloss: "prescription (medical)", reference: "ordonnance", default: "ordonnance", regional: [
+      { term: "prescription", countries: ["CA"], label: "Québec" },
+    ]},
+    { gloss: "right now / currently", reference: "en ce moment", default: "en ce moment", regional: [
+      { term: "présentement", countries: ["CA"], label: "Québec" },
+    ]},
+    { gloss: "seventy (70)", reference: "soixante-dix", default: "soixante-dix", regional: [
+      { term: "septante", countries: ["BE", "CH"], label: "Belgique·Suisse" },
+    ]},
+    { gloss: "eighty (80)", reference: "quatre-vingts", default: "quatre-vingts", regional: [{ term: "huitante", countries: ["CH"], label: "Suisse" }] },
+    { gloss: "ninety (90)", reference: "quatre-vingt-dix", default: "quatre-vingt-dix", regional: [
+      { term: "nonante", countries: ["BE", "CH"], label: "Belgique·Suisse" },
     ]},
     ],
   },
@@ -525,7 +662,14 @@ for (const code of Object.keys(LANGS)) {
   lang.index = new Map();
   for (const rec of lang.records) {
     const keys = new Set([norm(rec.reference), rec.default ? norm(rec.default) : null]);
-    for (const v of rec.regional) keys.add(norm(v.term));
+    // `indexRegionalTerms` — index the OTHER variety's word as a lookup key too.
+    // True only where the reusable tracks are authored in the regional variety as well
+    // as the reference one (es content is es-LatAm, pt content is pt-BR). French content
+    // is authored in France French only, so indexing the Québec word makes the card fire
+    // on a homograph: `bas` is socks in Québec, but every France-authored item that
+    // answers `bas` means "low". Reference-only keying is the correct default for a
+    // single-variety corpus — v3.4 Italian onward should leave this off.
+    if (lang.indexRegionalTerms) for (const v of rec.regional) keys.add(norm(v.term));
     for (const k of keys) {
       if (!k) continue;
       if (!lang.index.has(k)) lang.index.set(k, rec); // first record wins on collision
