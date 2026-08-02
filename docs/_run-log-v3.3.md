@@ -827,3 +827,87 @@ to the repo; the `es-latam/template/` files on disk are untouched.
 | `#89` chips — `pt` | 172 objects across 5 files (**live-facing**) |
 | `pipeline/i18n/fr-fr.json` | ~600 reviewer-facing strings |
 | **Total French** | **≈ 920,000 characters ≈ 150,000 words** |
+
+---
+
+# Phase 4 — fono in French orthography (#71) — 2026-08-02
+
+**Scope decision (Sean, this session):** match the v3.2 Portuguese precedent — localize the fono
+**explanations and subtitles**, leave the `sound` respelling string alone. The deployment plan
+defines #71 as "respellings in the source language's orthography," but no source has ever done
+that: `sound` is byte-identical across en/es/pt/fr, written for an English reader
+(`eye NEED-uh GLASS-uh WAH-der`). Logged as a cross-source item alongside the ~83 unlocalized
+strings and the 721 non-Romance `#89` chips; **not** a French-specific gap.
+
+**Volume:** 795 FONO_BANK items across the 10 reused tracks → **1,590 explanations** + 20
+promptNative subtitles = **1,610 insertions**. `frForEn` / `frCaForEn` correctly excluded
+(target == source).
+
+**Translation source: the English original, not the Spanish sibling.** A12 says translate from
+`.es` rather than `.pt` to avoid a double translation; applied to fono, `en` is the original and
+`es` is already one hop away, so `en` wins and `es` served only as a Romance register reference.
+
+## The L1 anchor pass — the finding worth remembering
+
+61 of the 1,590 explanations anchored a target sound to **English**, because that is who the
+English original was written for. Translated faithfully, a francophone is told that German `ö`
+— which is the *eu* of « peur » — has "no equivalent in English." True, useless, and
+slightly absurd to the reader.
+
+**54 re-anchored to French. 7 kept**, because English is the content rather than an L1 crutch:
+
+| Track | Item | Why it stays |
+|---|---|---|
+| `esSpainForEn` | 26:respond | the drill *is* "do you speak English" |
+| `jaForEn` | 24:respond | the answer content is "I teach English" |
+| `jaForEn` | 44:identify | teaches the English loanword テレビ ← *television* |
+| `jaForEn` | 66:identify | teaches the English loanword ベッド ← *bed* |
+| `ptBrForEn` | 15:respond | the drill is a child studying English |
+| `ptPtForEn` | 22:respond | the drill is speaking-English ability |
+| `zhForEn` | 45:identify | unaspirated k is already French-anchored (« car »); aspirated k has no French counterpart, so « key » adds real information |
+
+Where French has no counterpart either, the explanation now describes the articulation instead of
+naming a language (Spanish/Peninsular `d`/`ci`, the Japanese tap and pitch accent, the German
+glottal stop, Korean ㅡ, Italian *gli*).
+
+**Three places where the French trap differs from the English one** and the explanation was
+rewritten to the French trap rather than translated: German final `-e` (a francophone drops it →
+"LAMP", not "LAM-pay"), German final devoicing (anchored to the *d→t* of « grand » in liaison),
+and pinyin `-ong` (a francophone reads it as the nasal « on »).
+
+**This generalizes.** Every later source — v3.4 Italian onward — needs the same pass, and the
+**pt layer inherited the English anchors untouched** because it was translated es→pt from
+explanations that already carried them. Recorded, not fixed here.
+
+## Verification
+
+Per track, all green (`_frfono/verify.mjs`):
+
+| Check | Result |
+|---|---|
+| `extraBank` deep-equal to the original once `fr` is stripped | 0 mismatches, 10/10 tracks |
+| every `fr` byte-equal to its translated source | 1,590 / 1,590 |
+| both promptNative strings equal the expected **rendered** value, `respondPromptNative(i)` interpolation included | 10/10 |
+| comment count unchanged · line count unchanged · CRLF preserved | 10/10 |
+| residual assertions (8 of them, counting offenders — never presence) | all zero |
+| `scripts/_fr-parity-harness.mjs` | 232 assertions, 0 failures |
+| ESLint on the 10 files · `npm run build` on Next 16 / React 19 / Node 24 | clean |
+
+**All 12 checks were mutation-tested** and each went red on its own check.
+
+### The mutation test earned its keep — twice
+
+1. **The verifier's own NBSP constant was a plain space (U+0020).** The identical trap as Phase 1.
+   Two checks passed while comparing the wrong character. Caught only because the numbers looked
+   wrong, then locked shut by defining the constant as `' '` rather than a literal.
+2. **An NBSP written as a doubled `\\u00A0` escape renders as literal text**, and the first
+   version of the promptNative check — `fr.includes(NBSP)` — passed it, because JS interprets a
+   single-backslash ` ` inside a string literal. The check now asserts the exact rendered
+   string. **A presence check would have shipped `dit ?` to every French user.**
+
+## Still open after Phase 4
+
+- **Phase 5** — the `fr` regional-variant registry is still a 2-record seed against es 71 / pt 64.
+- **Phase 6** — offering flip, straggler sweep, changelog, Help/About.
+- **`sound` respellings** are English-oriented for every source. Cross-source, needs a decision.
+- **`scripts/_fr-parity-harness.mjs` is still the one-off from A15** — delete it when v3.3 ships.
