@@ -5,14 +5,14 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 505 tracked files.
+> 507 tracked files.
 
 ```
 .env.local.example
-.eslintrc.json
 .github/workflows/e2e-tests.yml
 .github/workflows/supabase-migrations.yml
 .gitignore
+.nvmrc
 README.md
 app/about/page.js
 app/admin/ApplicationsSection.js
@@ -217,6 +217,7 @@ docs/changelog/unreleased/2026-07-28-language-review-lane.md
 docs/changelog/unreleased/2026-07-28-marketing-asset-library.md
 docs/changelog/unreleased/2026-07-28-versioning-and-process-docs.md
 docs/changelog/unreleased/2026-07-29-language-table-sweep.md
+docs/changelog/unreleased/2026-08-02-next16-react19-node24-upgrade.md
 docs/codebase-reference.md
 docs/language-review/README.md
 docs/language-review/es-latam/STATUS.md
@@ -366,6 +367,7 @@ docs/variant-expansion/review-packets/ptPt-depth-variants.xlsx
 docs/variant-expansion/review-packets/ptPt-verb-variants.xlsx
 e2e/authenticated-flow.spec.js
 e2e/public-pages.spec.js
+eslint.config.mjs
 lib/AudioButton.js
 lib/Avatar.js
 lib/BackHome.js
