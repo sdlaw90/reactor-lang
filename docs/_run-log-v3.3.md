@@ -1005,3 +1005,298 @@ line `if (checks[k] !== false) checks[k] = true` then flipped it to `true`. `fai
   learners see the card or delete the branches — don't leave it ambiguous.
 - **`fr-ca` review lane** is now unblocked on the data side: the registry is no longer a seed.
 - `scripts/_fr-parity-harness.mjs` is still the A15 one-off — delete it when v3.3 ships.
+
+---
+
+# Phase 6 — the offering flip and the release cut — 2026-08-02
+
+**Both flip conditions were put to Sean and decided, which is what §5 of `docs/_fr-offering-flip.md`
+asked for.**
+
+| Condition | Decision |
+|---|---|
+| ~83 user-facing strings localized into no source language | **Flip, and stop overclaiming.** Reword the Help/About interface-language sentence in all four languages rather than hold the milestone for a release's worth of string work already owed to Portuguese. The completeness release stays its own roadmapped beat. |
+| 721 non-Romance `#89` chips (de 515, ja 84, ko 78, ru 44) | **Do them now, in v3.3.** Closes the gap for every released source at once instead of leaving es and pt behind. |
+
+## 1. The 721 chips → es, pt, fr
+
+**721 chip objects, 2,163 new keys**, across `deForEnTags` 515 · `jaForEnTags` 84 · `koForEnTags`
+78 · `ruForEnTags` 44. Every one carried `en` + the target language only.
+
+**The work was 313 strings, not 2,163.** The chips are three kinds — `tense` (the tense/mood
+label), `why` (one clause on what's being tested) and `person` (the subject, repurposed as a
+**politeness register** for Japanese and Korean) — and the same English text repeats heavily
+across items. Deduping to distinct `(lang, kind, en)` triples cut the authoring job by 85%:
+de 155 · ja 70 · ko 55 · ru 33. Translation was applied back by triple, so identical English
+always yields identical output.
+
+Grammatical terminology follows each source language's own tradition, except where the label names
+a target-language category with an established name (German `Perfekt`/`Konjunktiv II`, Japanese
+非過去, Korean 해요체, Russian aspect) — those keep their own name. Subject pronouns stay in the
+target language; only the parenthetical person/number gloss is translated.
+
+**Verified per file:** `tagFor()` replayed over **every** prompt key (304 · 141 · 118 · 135) and
+deep-equal to the original once es/pt/fr are stripped · every chip carries all three · `THEMES`
+untouched · comment count, line count and CRLF unchanged · 5 French residual assertions zero.
+**All 7 checks mutation-tested.**
+
+## 2. The flip
+
+`data/tracks/index.js` 2a–2c and `lib/uiLang.js` 2d applied **in one commit**, as §6 of the flip
+doc requires — 2c without 2d would have given a French native French gameplay and an English
+Help/About/Guide/Changelog/What's-New.
+
+`tracksForNativeLang("fr")` returns **exactly the 12 tracks §3 predicted**, French-target tracks
+correctly excluded, en/es/pt unregressed at 13/12/12. Thinnest French-reachable track is
+`es-spain-for-en` at 127 vocab / 517 gram / 127 trad / 79 fono — comfortably over the floors, with
+the `enForIt` stub still failing them as the negative control.
+
+## 3. The honesty fix — 8 strings
+
+Help's "the whole interface follows it" bullet and About's roadmap card now name what is still
+English for everyone: the **How to use SquirreLingo** tour, the **Grammar Gym** page, and some
+status and error screens. Changed in en/es/pt/fr; nothing else on either page moves. UI preview
+was built and signed off before the write.
+
+This is the smallest honest change available. It does not close the ~83 gaps — it stops the app
+asserting they're closed, in four languages instead of making it false in a fourth.
+
+## 4. Changelog and the version bump
+
+- **184 user-facing changelog bullets given `fr`** (~5,200 words), translated from the English with
+  the Spanish column as a register reference, `*emphasis*` markers preserved and asserted per
+  bullet.
+- **New `CHANGELOG` v3.3.0 entry**, five bullets in en/es/pt/fr: French as a native language; the
+  France↔Québec card and its Belgian/Swiss awareness; security questions in your own language; the
+  🌐 pill's raw `pt`; and the catch-all line.
+- **New `INTERNAL_CHANGELOG` v3.3.0 entry** — 174 notes rolled up from the nine fragments plus a
+  release-rollup header. `internalNotesByVersion()` re-checked: 254 raw notes → 271 after merge,
+  nothing lost (it concatenates rather than assigning — the trap from #91).
+- `CURRENT_VERSION` **3.2.0 → 3.3.0**. `npm run changelog:check` → 9 fragments, all well-formed,
+  all v3.3.0.
+
+**Two of this session's own fragments failed `changelog:check`** (`missing "## Internal" section`)
+and were fixed before the rollup. The checker earned its keep.
+
+## 5. Straggler sweep — a sign-off list, not a fait accompli
+
+Candidates are **unregistered AND unreferenced**, verified by grep against code, `package.json`
+and `.github/workflows/`. Four apparent orphans were false positives (`generate-version-json`,
+`publish-ready`, `smoke-check`, `voices-list`, `sync-tutorial-video` are all live via
+`package.json` scripts or a workflow).
+
+| File | Why it can go |
+|---|---|
+| `scripts/_fr-parity-harness.mjs` | The **A15 one-off**. It simulates the *pre-flip* world, so now that the flip is applied its two PRE-FLIP assertions fail by design and it double-counts the two registered tracks. Its job is done; `_flip/verify.mjs`'s post-flip equivalent replaces it. |
+| `lib/WelcomePopup.js` | Superseded by `lib/GuideOverlay.js` in v3.2 — `app/layout.js` renders GuideOverlay **in its place**, and nothing imports WelcomePopup any more. |
+| the 9 `fr-fr-*-review-v3.2.0.*` packet files | Superseded by the v3.3.0 regeneration below. |
+
+**Nothing was moved or deleted.** Move them to `_to_delete/` yourself if you agree.
+
+## 6. Review packets regenerated
+
+All three fr-fr packets rebuilt at v3.3.0 and recalculated so the summary tallies carry cached
+values: **interface 1,036 rows** (was 785 — the extra rows are Phase 5's 80 variant records and
+this phase's Help/About and changelog changes), **taught 1,623**, **explanation 2,104**.
+`check_freshness.mjs`: all three fresh, 0 warnings on extract.
+
+The lane is still marked **not cleared to send** for the Gate 3.5 reason (the reviewer-facing copy
+was re-derived and never independently checked), and no French reviewer is recruited — so nothing
+is blocked on this today.
+
+## 7. Verification
+
+| Check | Result |
+|---|---|
+| `tracksForNativeLang` — fr / en / es / pt | **12** (exact set) / 13 / 12 / 12 |
+| French-reachable tracks at full depth (floors vocab ≥100, gram ≥200, trad ≥80, fono ≥50) | 12/12, with the `enForIt` stub failing as the negative control |
+| every changelog bullet carries `fr` | 189/189 |
+| the carve-out present in all four languages; roadmap no longer says "the whole interface" | pass |
+| chips: `tagFor()` additive-only across every prompt | 4/4 files |
+| ESLint | 0 errors (67 known React-Compiler warnings, #98) |
+| `npm run build` on Next 16 / React 19 / Node 24 | green |
+| `npm run changelog:check` | 9 fragments, all v3.3.0 |
+
+**All 17 flip checks and all 7 chip checks mutation-tested; each goes red on its own check.**
+
+### The NBSP trap, fourth occurrence — and this one nearly shipped
+
+`const NB = ' '` in the chip injector was **U+0020, not U+00A0**, so every French chip that needed
+a non-breaking space silently got an ordinary one — 2,163 strings written through a transform that
+looked correct. The residual check caught it only because a *different* check (plain space before
+French punctuation) fired on five strings and the numbers didn't add up; the guillemet check, which
+also compared against the bad constant, passed happily.
+
+**Both constants now assert their own codepoint at load:**
+`if (NB.codePointAt(0) !== 0xA0) throw`. Do this in every future pass — the character is invisible,
+so no amount of reading catches it, and it degrades differently in different files (Phase 4's
+injector kept a real NBSP while Phase 6's didn't).
+
+## What's left after v3.3.0
+
+- **The completeness release** — the ~83 user-facing strings localized into no source language, in
+  es + pt + fr. The Help/About carve-out names exactly what it has to close.
+- **The L1 anchor pass is owed to Portuguese**, and to v3.4 Italian onward.
+- **`norm()` in `regionalVariants.js` strips a leading article**, blocking `de rien` and anything
+  shaped like it.
+- **`RegionalVariantCard`'s `isRef` branches are dead code.**
+- **`CATEGORY_NAMES.fvocab.fr` is "Mots courants" while the French Help prose calls it "Banque de
+  mots"** — the same feature under two names. Found by the changelog translators.
+- **Fono `sound` respellings are English-oriented for every source.**
+
+---
+
+# Phase 6 addendum — pre-release adversarial audit — 2026-08-02
+
+Run at Sean's request before the deploy: not a re-run of the phase checks, but a hunt for what
+those checks would miss **by construction**. Two real defects, both introduced by this milestone,
+both fixed before the cut.
+
+## Fixed
+
+**1. `bonnet`/`tuque` — a homograph collision arriving from the TARGET side.** The Phase 5 record
+`winter hat` keys on the France term `bonnet`, which is also a correct **English** answer in
+`en-gb-for-fr` vocab-115 (« En anglais britannique, « le capot » d'une voiture se dit… »). A Québec
+learner answering that car question correctly got a card teaching them `tuque`.
+
+Same class as `bas` (socks / *low*), but `indexRegionalTerms: false` cannot catch it: that flag
+stops the *Québec* word being a key, and here the collision is on the *France* word against a
+*target-language* answer. Swept all 15,102 correct answers across the 12 French tracks — this was
+the only one, and it was the record's **only** fire. **Record dropped, 80 → 79.**
+
+**New standing guard** (`_audit/collide.mjs`): every regional-card fire inside a source-specific
+English-target track, frozen at a 13-entry baseline across es/pt/fr. Those tracks are the only
+place a correct answer can be a target-language word, so the set is small enough to eyeball and any
+new entry is a prompt to check by hand. All 13 current entries verified to be source-language
+answers. Mutation-tested: restoring the dropped record takes it to 14 and names `bonnet` as new.
+
+**2. The expanded regional panel filed Belgian and Swiss terms under "🇨🇦 Québec".**
+`app/play/[trackId]/page.js` hardcoded a single group header from `regionalGroupLabel`. French is
+the **first source language whose regional set spans more than one region** — es was LatAm-only, pt
+BR-only — and all 7 multi-variant French records mix Québec with BE/CH, so a Belgian expanding
+*cell phone* saw their own `GSM` under a Canadian flag. The card's top line was always right; only
+the expansion was wrong.
+
+Now renders **one row per region**, grouped by each entry's own `label`, with a per-region flag from
+a new optional `regionFlags` field on the language block. es/pt have no `regionFlags` and fall back
+to the existing single flag, so they render exactly as before. UI-previewed across Québec, Belgium
+and Switzerland before the write.
+
+**3. Three comments asserted the opposite of reality.** `enUsForFr.js`, `enGbForFr.js` and
+`l10n/index.js` all still said French was unregistered and the flip unapplied. They were written as
+deliberate safety gates, so an inverted one is worse than merely stale. Corrected.
+
+**4. The v3.3.0 changelog bullet overclaimed.** It listed "the explanations" as following into
+French; only the **phonetics** explanations do — bank explanations still fall back to English, as
+they do for Portuguese today (10.3% coverage, `gameEngine.js:75` reads `explain` from the base bank,
+which the l10n side tables do not overlay). Tightened to "pronunciation explanations" in all four
+languages. Shipping an overclaim in the release note days after an honesty pass on Help/About would
+have been a poor look.
+
+## Confirmed clean
+
+`git add -A` in `scripts/deploy.js` would sweep untracked scratch into the commit — **checked and
+not a risk here**: the audit harnesses live only in the cloud sandbox, and Sean's `git status` shows
+no untracked `_*` directories. Worth remembering for any future session that works directly on the
+Windows tree.
+
+Also verified with nothing found: no crash path from missing French copy (every lang-indexed lookup
+in `app/` and `lib/` has an `|| .en` fallback, checked by AST sweep, including the nine
+`SUPPORTED_UI_LANGS` gates beyond Help/About); no persisted state keyed on the version string
+(`WELCOME_VERSION` and `GUIDE_VERSION` both still `1.0`, so no popup or tour re-fires — only the
+What's-New dot, which is meant to); no `INTERNAL_CHANGELOG` entry without a `CHANGELOG` counterpart
+(the #91 trap); chip injection structurally clean (0 stray keys, 0 `grammar` objects missing
+`tense`/`why` — either would throw at `page.js:804`); `promptNative` answer-leakage lower for fr
+(191) than for pt (363) or es (509).
+
+## Recorded, not fixed
+
+| Finding | Why it can wait |
+|---|---|
+| **6 items with two identical answer options** in `frCaForEn.pt.js` (×3), `jaForEn.pt.js`, `koForEn.pt.js`, `jaForEn.es.js` — picking the second is scored wrong | Pre-existing v3.1/v3.2, not French. The 10 fr side tables are clean: 0 duplicates, 0 option-count mismatches, 0 out-of-range `correctIdx`, 0 orphan ids. Its own Z. |
+| **`lib/NavDrawer.js:16` reads `profile?.native_lang`** — the §4a trap shape | Dead in practice: `app/page.js:113` threads `nativeLang` from `session.user.user_metadata`. One-line cleanup, no user impact. |
+| **The French card is invisible unless `native_country ∈ {CA, BE, CH}`** | By design — all 79 records have `default === reference`, so France (and an unset country) suppress. A behavioural divergence from es/pt worth knowing, not a defect. |
+| **`e2e/authenticated-flow.spec.js:194`** asserts `/explanations\|explicaciones\|explicações/i` — no French | Passes today; the test account is English-native. The spec's own comment predicted this. |
+| **`app/layout.js:38` hardcodes `<html lang="en">`** while French copy is now auto-served to `fr-*` browsers | Pre-existing for es and pt. Accessibility nit, own Z. |
+| **No question audio for `en-us-for-fr` / `en-gb-for-fr`** — absent from `AUDIO_TRACKS` in `scripts/tts-on-deploy.mjs` | Degrades cleanly; `AudioButton` renders nothing on a manifest miss. |
+| **The guided tour is the first screen a French account sees, and it is English** | Known, decided, and now disclosed in Help — but it is the first impression, so worth prioritising inside the completeness release. |
+
+## Re-verified after the fixes
+
+All 17 flip checks · all 7 chip checks · the regional-variant suite · the full audit ·
+`npm run build` green · ESLint 0 errors. fr records 79, index keys 79, `bonnet` no longer a key.
+
+---
+
+# Pre-existing fixes, cleared before the cut — 2026-08-02
+
+Sean: *"fix the pre-existing items so they don't compound later."* Nine fixes, none of them French,
+all of them things the audit surfaced and the milestone would otherwise have carried forward.
+
+## Content — 6 items shipped two identical answer buttons
+
+Every one is a **translation collapse**: two distinct English options rendered to the same word in
+the source language, so the learner saw the same string twice and picking the second was scored
+wrong. All six are in localized side tables; the base English is correct in every case.
+
+| Item | English options | Was | Now |
+|---|---|---|---|
+| `ja-for-en fvocab-6` **es** | tomorrow / **morning** / midday / yesterday | `mañana` ×2 | `la mañana` for *morning* |
+| `ja-for-en fvocab-6` **pt** | tomorrow / **morning** / midday / **yesterday** | `amanhã` ×2, and *yesterday* rendered `avião` (**airplane**) | `manhã`, `ontem` |
+| `fr-ca-for-en vocab-20` **pt** | lock / **block** / cross out / slam | `trancar a porta` ×2 | `bloquear a porta` |
+| `fr-ca-for-en vocab-60` **pt** | boots / low shoes / **tights** / socks | `meias` ×2 | `meia-calça` for *tights* |
+| `fr-ca-for-en fvocab-172` **pt** | a lot / **very** / never / tomorrow | `muito` ×2 | `bem` for *very* |
+| `ko-for-en fvocab-196` **pt** | **song** / music / cellphone / side dish | `música` ×2 | `canção` for *song* |
+
+**Two `distractorNotes` keys had to move with them** (`vocab-20`, `vocab-60`). The note's outer key
+must equal the option string character for character or it silently stops rendering — the standing
+trap — and in both cases the note was keyed to the *collided* text, so fixing the option without
+rekeying would have orphaned it.
+
+`bem` for Portuguese *very* is the one judgement call: `muito` genuinely covers both senses, so
+there is no clean one-word split the way Spanish has `mucho`/`muy`. Flagged for the pt #41 lane.
+
+**New standing guard:** a sweep asserting every `distractorNotes` key still matches an option string
+in its own item — **4,302 keys checked, 0 orphaned** — and a duplicate-option sweep across all four
+source languages, now **0**.
+
+## Code
+
+| Fix | Why it mattered |
+|---|---|
+| **#95 — `/play/<unknown-track>` returned 500.** Four top-level `track.*` reads and one loader effect ran above the `if (!track)` guard; hooks can't early-return, so they are optional-chained and the effect bails. | A real 500 on a malformed URL, pre-existing and confirmed identical on a Next 14 baseline. |
+| **`<html lang>` stayed `en`.** `useUiLang` now syncs `document.documentElement.lang` on resolve. | The flip auto-selects French for `fr-*` browsers, so screen readers and Chrome's translate prompt were being told English on a French page. Pre-existing for es/pt. |
+| **`lib/NavDrawer.js` read `profile?.native_lang`.** Removed; the session-resolved `nativeLang` prop is now the only source, with the §4a reasoning in a comment. | The exact shape of the v3.1.1 drawer bug. Dead in practice, but it is the line the offering-flip checklist tells you to grep for. |
+| **`e2e/authenticated-flow.spec.js:194`** asserted `/explanations\|explicaciones\|explicações/i`. Added `explications`. | The spec's own comment predicted it would break the moment the suite ran under a different native language. |
+| **`extract.mjs` hardcoded `(respuesta incorrecta)`** into every lane's packet. Now a per-lane label with an English fallback. | Reviewer-facing copy in the wrong language: invisible while Spanish was the only live lane, wrong for every lane after — 665 rows for es, inert for fr until content lands. |
+
+## Two audit checks were themselves wrong
+
+Both reported findings that were not real, which is how a check earns being ignored:
+
+- the `profile.native_lang` sweep matched **comments and changelog prose** — it now strips comments
+  and skips `lib/version.js`, which is changelog data rather than a surface;
+- the track-icon probe called an export that does not exist (`trackIcons.js` exports a
+  `<TrackIcon>` component, not a lookup), so it reported "no icon" for all 12 tracks while every one
+  of them renders. It now renders the component and treats a blank as a **blocker**.
+
+**The audit is now 0 blockers, 1 informational note.**
+
+## Not fixed, deliberately
+
+- **`norm()` in `regionalVariants.js` strips a leading article.** Changing normalisation would move
+  es/pt card firing, which is not a change to make at a release gate. Still blocks `de rien`.
+- **`RegionalVariantCard`'s `isRef` branches are dead code.** Whether a France-based learner should
+  see the card at all is a product call, not a cleanup.
+- **`CATEGORY_NAMES.fvocab` short chips diverge from the Help prose in every language**
+  (`Palabras`/`Palavras`/`Mots courants` vs *Word Bank*). Checked: en is the only one that matches,
+  and the pattern is consistent across es/pt/fr — a naming choice, not a French defect.
+- **`es-latam-interface-review-v3.2.0.xlsx` is stale** (as it was before this session) — it is on the
+  retire list, superseded whenever the es lane is next regenerated.
+
+## Re-verified after all nine
+
+All 17 flip checks · 7 chip checks · the regional-variant suite · the collision baseline (13/13) ·
+duplicate options 0 · orphaned distractorNotes 0 · the full audit at **0 blockers** ·
+`npm run build` green · ESLint 0 errors · fr-fr interface packet regenerated (1,033 rows) and all
+three fr-fr packets fresh.

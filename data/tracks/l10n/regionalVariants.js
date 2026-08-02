@@ -441,6 +441,11 @@ const LANGS = {
   },
   fr: {
     // FR↔Québec (+BE/CH). reference=France; Québec, Belgian and Swiss learners see the card.
+    // DROPPED: `bonnet`/`tuque` (winter hat). `bonnet` is also a correct ENGLISH answer in
+    // en-gb-for-fr vocab-115 ("a car's capot is called…"), so the card fired on a British-English
+    // car item and taught a Québec learner winter-hat vocabulary. Same homograph class as `bas`,
+    // but arriving from the TARGET side, which indexRegionalTerms cannot guard. Before adding a
+    // record, check its France term against the English-target tracks' correct answers.
     // v3.3 Phase 5: taken to its high-frequency ceiling (§4c) — 80 records. Keys are the
     // FRANCE term only (indexRegionalTerms is off, see the index builder below), because all
     // reusable-track content is authored in France French. A record whose Québec term equals
@@ -450,6 +455,7 @@ const LANGS = {
     regionalGroupLabel: "Québec",
     ui: { title: "On dit aussi", inYourRegion: "dans ta région", variantes: "variantes régionales", hide: "masquer", refPhrase: "En France", regGroupPhrase: "Au Québec", refFlag: "🇫🇷", regFlag: "🇨🇦" },
     countryNames: { FR: "France", CA: "Québec", BE: "Belgique", CH: "Suisse" },
+    regionFlags: { CA: "🇨🇦", BE: "🇧🇪", CH: "🇨🇭" },
     records: [
     { gloss: "car", reference: "voiture", default: "voiture", regional: [
       { term: "char", countries: ["CA"], label: "Québec" },
@@ -556,7 +562,6 @@ const LANGS = {
     { gloss: "sneakers", reference: "baskets", default: "baskets", regional: [{ term: "espadrilles", countries: ["CA"], label: "Québec" }] },
     { gloss: "socks", reference: "chaussette", default: "chaussette", regional: [{ term: "bas", countries: ["CA"], label: "Québec" }] },
     { gloss: "mittens", reference: "moufles", default: "moufles", regional: [{ term: "mitaines", countries: ["CA"], label: "Québec" }] },
-    { gloss: "winter hat", reference: "bonnet", default: "bonnet", regional: [{ term: "tuque", countries: ["CA"], label: "Québec" }] },
     { gloss: "scarf", reference: "écharpe", default: "écharpe", regional: [{ term: "foulard", countries: ["CA"], label: "Québec" }] },
     { gloss: "slush (melting snow)", reference: "neige fondue", default: "neige fondue", regional: [{ term: "sloche", countries: ["CA"], label: "Québec" }] },
     { gloss: "garbage / trash", reference: "ordures", default: "ordures", regional: [{ term: "vidanges", countries: ["CA"], label: "Québec" }] },

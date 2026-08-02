@@ -191,7 +191,7 @@ test.describe("Authenticated flow", () => {
     // Now the part that used to crash: open the explanations view, which
     // renders one ExplanationCard per history row.
     await page.getByTestId("view-explanations").click();
-    await expect(page.getByText(/explanations|explicaciones|explicações/i).first()).toBeVisible();
+    await expect(page.getByText(/explanations|explicaciones|explicações|explications/i).first()).toBeVisible();
     expect(errors).toEqual([]);
   });
 });

@@ -4566,7 +4566,7 @@ export default {
   "fvocab-196": {
     "promptNative": "'노래 (norae)' significa...",
     "options": [
-      "música",
+      "canção",
       "música",
       "celular",
       "acompanhamento"

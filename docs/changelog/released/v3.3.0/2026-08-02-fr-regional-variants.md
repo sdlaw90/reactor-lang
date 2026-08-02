@@ -11,7 +11,9 @@ _Folds into the **3.3.0** release entry._
 - **Belgian and Swiss learners stop being shown Québec words as their own.** See below — this was
   a live defect in the data model, not just a gap in coverage.
 
-## Content
+## Internal
+
+### Content
 
 - `data/tracks/l10n/regionalVariants.js`, `fr` block: **2 → 80 records**, against Spanish's 71 and
   Portuguese's 64. §4c satisfied — the registry is at its high-frequency ceiling before a native
@@ -31,7 +33,7 @@ _Folds into the **3.3.0** release entry._
   only Switzerland diverges.
 - `countryNames.CA` corrected `"Quebec"` → `"Québec"`.
 
-## Two data-model corrections — this is the part worth reading
+### Two data-model corrections — this is the part worth reading
 
 **1. `default` must mirror `reference` for French.** `default` is what a learner sees when their
 country isn't listed in `regional`. For Spanish that is a sensible catch-all: twenty Latin American
@@ -59,7 +61,7 @@ Reference-only keying is the correct default for a single-variety corpus, so **v
 should leave the flag off**. es/pt behaviour is unchanged and asserted (123 and 71 card fires,
 identical before and after).
 
-## Dropped on purpose
+### Dropped on purpose
 
 - **"you're welcome" (`de rien` / `bienvenue`)** — a real and high-value split, but `norm()` strips
   a leading `de`, so `de rien` indexes as the bare key **`rien`**. Certain to false-fire the moment
@@ -70,7 +72,7 @@ identical before and after).
   spelling-only differences, and anything where the France-side reference term isn't stable
   (`breuvage`, `liqueur`, `pistolet`, `poêle`, `comptoir`, `gosse`, `cartable`, `kot`, …).
 
-## Verified
+### Verified
 
 - **es and pt card fires identical before and after** (123 / 71) — the flag changes nothing for
   released sources.
@@ -84,7 +86,7 @@ identical before and after).
   step then flipped it to `true`. `fail()` now returns `false`.
 - ESLint clean · `scripts/_fr-parity-harness.mjs` 232/232 · `npm run build` green on Next 16.
 
-## Native review
+### Native review
 
 All 78 new records are AI-authored → **#41 French lane**, and this is the block §4c wants cleared
 in a single pass. Register calls a reviewer should look at first: `char`, `blonde`, `bas`,

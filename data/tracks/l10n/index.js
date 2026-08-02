@@ -27,8 +27,9 @@
 // natives are never offered the French-target tracks, so fr-for-en / fr-ca-for-en
 // deliberately have no `fr` sibling. Registering these is INERT: getL10n(id, "fr")
 // is only reachable when sourceLang === "fr", which cannot happen while `fr` is
-// absent from RELEASED_SOURCE_LANGS and from the native-language picker. The patch
-// that makes French reachable is docs/_fr-offering-flip.md — not applied.
+// absent from RELEASED_SOURCE_LANGS and from the native-language picker. That was true
+// until v3.3.0; the flip (docs/_fr-offering-flip.md) has since been applied, so these
+// tables are now live for French natives.
 
 import frForEn_es from "./frForEn.es";
 import frCaForEn_es from "./frCaForEn.es";

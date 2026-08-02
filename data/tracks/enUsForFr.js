@@ -6,7 +6,8 @@
 // review (#41), lane docs/language-review/fr-fr. Register: informal `tu`
 // (settled 2026-07-29). French typography: U+00A0 before : ; ? !, guillemets « ».
 //
-// NOT REGISTERED in data/tracks/index.js — registering a sourceSpecific track puts
+// REGISTERED in data/tracks/index.js as of v3.3.0 (the offering flip). Until then it was
+// deliberately unregistered, because registering a sourceSpecific track puts
 // Français in the onboarding picker immediately (listNativeLanguages derives from
 // listTracks().map(t => t.nativeLang)). That is the offering flip and needs sign-off;
 // the exact patch is in docs/_fr-offering-flip.md.

@@ -11,7 +11,9 @@ _Folds into the **3.3.0** release entry._
   "read the sound, what does it say?" subtitle, the reply subtitle, and both post-answer
   explanations.
 
-## Content — #71 fono in the source language
+## Internal
+
+### Content — #71 fono in the source language
 
 - **`fr` added to all 795 FONO_BANK items across the 10 tracks a French native reaches**
   (`deForEn` 79 · `esForEn` 79 · `esSpainForEn` 79 · `itForEn` 80 · `jaForEn` 79 · `koForEn` 79 ·
@@ -44,7 +46,7 @@ This is the difference between translating the fono layer and localizing it, and
 noting for v3.4 Italian onward: **every later source needs the same pass.** The pt layer inherited
 the English anchors untouched — logged as a cross-source item, not fixed here.
 
-## How it was built and verified
+### How it was built and verified
 
 - Surgical acorn AST injection: `fr` inserted after the last existing property of each `explain`
   object at exact byte offsets, copying that object's separator, key quoting and colon spacing.
@@ -64,7 +66,7 @@ the English anchors untouched — logged as a cross-source item, not fixed here.
 - `scripts/_fr-parity-harness.mjs` 232 assertions pass. ESLint clean on all 10 files.
   `npm run build` succeeds on Next 16 / React 19 / Node 24.
 
-## Native review
+### Native review
 
 All 1,590 explanations and the 20 subtitles are AI-authored → **#41 French lane**. The 54
 re-anchored explanations deserve a reviewer's attention first: they assert facts about French

@@ -7,7 +7,8 @@
 // review (#41), lane docs/language-review/fr-fr. Register: informal `tu`
 // (settled 2026-07-29). French typography: U+00A0 before : ; ? !, guillemets « ».
 //
-// NOT REGISTERED in data/tracks/index.js — see docs/_fr-offering-flip.md.
+// REGISTERED in data/tracks/index.js as of v3.3.0 — the offering flip
+// (docs/_fr-offering-flip.md) has been applied. It was deliberately unregistered until then.
 
 const CATS = {
   vocab: { label: "Vocabulaire", labelEn: "Vocabulary", color: "#3DDBFF" },

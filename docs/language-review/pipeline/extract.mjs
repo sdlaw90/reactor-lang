@@ -127,6 +127,12 @@ if (!SCOPES.includes(SCOPE)) {
 }
 const CFG = LANES[LANE];
 const LANG = CFG.lang;
+// Read by the native reviewer, so it has to be in THEIR language. It was hardcoded
+// Spanish — invisible while es was the only live lane, wrong for every lane after.
+const WRONG_ANSWER_LABEL = {
+  en: "(wrong answer)", es: "(respuesta incorrecta)",
+  pt: "(resposta incorreta)", fr: "(réponse incorrecte)",
+};
 const CONTENT_CFG = (CONTENT[LANE] || {})[SCOPE] || {};
 const OUT = path.resolve(arg("out", path.join(HERE, ".cache", `${LANE}-${SCOPE}-review-data.json`)));
 
@@ -373,7 +379,7 @@ if (SCOPE !== "interface") {
         const ex = it[BANK_SLOTS.explain] || {};
         const extras = it[BANK_SLOTS.extras] || {};
         const notes = [];
-        if (extras.wrongNote?.[LANG]) notes.push(`(respuesta incorrecta) → ${extras.wrongNote[LANG]}`);
+        if (extras.wrongNote?.[LANG]) notes.push(`${WRONG_ANSWER_LABEL[LANG] || WRONG_ANSWER_LABEL.en} → ${extras.wrongNote[LANG]}`);
         for (const [o, v] of Object.entries(extras.distractorNotes || {}))
           if (v?.[LANG]) notes.push(`${o} → ${v[LANG]}`);
         questions.push({

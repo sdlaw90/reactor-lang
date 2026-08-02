@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 510 tracked files.
+> 519 tracked files.
 
 ```
 .env.local.example
@@ -211,16 +211,16 @@ docs/changelog/released/v3.2.0/2026-07-26-pt-fono-and-help-about.md
 docs/changelog/released/v3.2.0/2026-07-26-pt-source-foundation.md
 docs/changelog/released/v3.2.0/2026-07-27-rebrand-in-app-and-repalette.md
 docs/changelog/released/v3.2.0/2026-07-27-smoke-test-fixes.md
+docs/changelog/released/v3.3.0/2026-07-28-e2e-credential-gate.md
+docs/changelog/released/v3.3.0/2026-07-28-language-review-lane.md
+docs/changelog/released/v3.3.0/2026-07-28-marketing-asset-library.md
+docs/changelog/released/v3.3.0/2026-07-28-versioning-and-process-docs.md
+docs/changelog/released/v3.3.0/2026-07-29-language-table-sweep.md
+docs/changelog/released/v3.3.0/2026-08-02-fr-fono-layer.md
+docs/changelog/released/v3.3.0/2026-08-02-fr-regional-variants.md
+docs/changelog/released/v3.3.0/2026-08-02-next16-react19-node24-upgrade.md
+docs/changelog/released/v3.3.0/2026-08-02-security-question-localization.md
 docs/changelog/unreleased/.gitkeep
-docs/changelog/unreleased/2026-07-28-e2e-credential-gate.md
-docs/changelog/unreleased/2026-07-28-language-review-lane.md
-docs/changelog/unreleased/2026-07-28-marketing-asset-library.md
-docs/changelog/unreleased/2026-07-28-versioning-and-process-docs.md
-docs/changelog/unreleased/2026-07-29-language-table-sweep.md
-docs/changelog/unreleased/2026-08-02-fr-fono-layer.md
-docs/changelog/unreleased/2026-08-02-fr-regional-variants.md
-docs/changelog/unreleased/2026-08-02-next16-react19-node24-upgrade.md
-docs/changelog/unreleased/2026-08-02-security-question-localization.md
 docs/codebase-reference.md
 docs/language-review/README.md
 docs/language-review/es-latam/STATUS.md
@@ -253,12 +253,21 @@ docs/language-review/fr-fr/submitted/.gitkeep
 docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.2.0.md
 docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.2.0.sources.json
 docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.2.0.xlsx
+docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.3.0.md
+docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.3.0.sources.json
+docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.3.0.xlsx
 docs/language-review/fr-fr/template/fr-fr-interface-review-v3.2.0.md
 docs/language-review/fr-fr/template/fr-fr-interface-review-v3.2.0.sources.json
 docs/language-review/fr-fr/template/fr-fr-interface-review-v3.2.0.xlsx
+docs/language-review/fr-fr/template/fr-fr-interface-review-v3.3.0.md
+docs/language-review/fr-fr/template/fr-fr-interface-review-v3.3.0.sources.json
+docs/language-review/fr-fr/template/fr-fr-interface-review-v3.3.0.xlsx
 docs/language-review/fr-fr/template/fr-fr-taught-review-v3.2.0.md
 docs/language-review/fr-fr/template/fr-fr-taught-review-v3.2.0.sources.json
 docs/language-review/fr-fr/template/fr-fr-taught-review-v3.2.0.xlsx
+docs/language-review/fr-fr/template/fr-fr-taught-review-v3.3.0.md
+docs/language-review/fr-fr/template/fr-fr-taught-review-v3.3.0.sources.json
+docs/language-review/fr-fr/template/fr-fr-taught-review-v3.3.0.xlsx
 docs/language-review/pipeline/.gitignore
 docs/language-review/pipeline/README.md
 docs/language-review/pipeline/build_workbook.py
