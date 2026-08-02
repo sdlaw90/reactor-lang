@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Check, X } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
@@ -75,7 +75,8 @@ function buildScriptQuiz(system, groupIds) {
   return questions;
 }
 
-export default function ScriptPracticePage({ params }) {
+export default function ScriptPracticePage(props) {
+  const params = use(props.params);
   const router = useRouter();
   const track = getTrack(params.trackId);
   const script = track ? scriptForTrack(track.id) : null;

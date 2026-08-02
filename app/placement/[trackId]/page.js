@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Check, X } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
@@ -72,7 +72,8 @@ function recommendLevel(tierResults) {
   return "expert";
 }
 
-export default function PlacementQuizPage({ params }) {
+export default function PlacementQuizPage(props) {
+  const params = use(props.params);
   const router = useRouter();
   const track = getTrack(params.trackId);
   const [userId, setUserId] = useState(null);

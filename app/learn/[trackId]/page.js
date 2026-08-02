@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Check, X, ChevronRight, ChevronDown, RotateCcw, Info } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
@@ -30,7 +30,8 @@ import {
 
 const XP_PER_CORRECT = 10; // flat, on purpose -- no combo mechanic in Lessons mode
 
-export default function LessonsPage({ params }) {
+export default function LessonsPage(props) {
+  const params = use(props.params);
   const router = useRouter();
   const track = getTrack(params.trackId);
 

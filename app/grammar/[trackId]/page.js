@@ -4,7 +4,7 @@
 // tracker: progress lives in localStorage (lib/grammarGym.js) and never touches
 // XP / level / streak / mastery or the mix-and-match picker.
 
-import { useEffect, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Check, X, ChevronRight, ChevronDown, RotateCcw, Dumbbell, BookOpen } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
@@ -20,7 +20,8 @@ import { buildDrill, loadGrammarProgress, saveGrammarProgress } from "../../../l
 
 const DRILL_SIZE = 10;
 
-export default function GrammarGymPage({ params }) {
+export default function GrammarGymPage(props) {
+  const params = use(props.params);
   const router = useRouter();
   const track = getTrack(params.trackId);
   const gym = grammarForTrack(params.trackId);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Flame, Zap, Check, X, ChevronRight, ChevronDown, RotateCcw, Trophy, Info } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
@@ -45,7 +45,8 @@ import {
   clearExplanations,
 } from "../../../lib/db";
 
-export default function PlayPage({ params }) {
+export default function PlayPage(props) {
+  const params = use(props.params);
   const router = useRouter();
   const track = getTrack(params.trackId);
 

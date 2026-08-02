@@ -2,11 +2,15 @@
   "name": "squirrelingo",
   "private": true,
   "version": "1.0.0",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "node scripts/generate-version-json.js && next dev",
     "build": "node scripts/generate-version-json.js && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "deploy": "node scripts/deploy.js",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
@@ -16,16 +20,17 @@
     "changelog:check": "node scripts/rollup-changelog.mjs --check"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.45.4",
-    "lucide-react": "^0.383.0",
-    "next": "14.2.35",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "@supabase/supabase-js": "^2.111.0",
+    "lucide-react": "^1.28.0",
+    "next": "16.2.12",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.1",
+    "@playwright/test": "^1.62.1",
     "esbuild": "^0.28.1",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.35"
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.2.12",
+    "globals": "^17.9.0"
   }
 }
