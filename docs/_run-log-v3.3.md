@@ -1300,3 +1300,35 @@ All 17 flip checks · 7 chip checks · the regional-variant suite · the collisi
 duplicate options 0 · orphaned distractorNotes 0 · the full audit at **0 blockers** ·
 `npm run build` green · ESLint 0 errors · fr-fr interface packet regenerated (1,033 rows) and all
 three fr-fr packets fresh.
+
+---
+
+# Post-deploy catch — the NBSP trap, FIFTH occurrence — 2026-08-02
+
+Caught by re-cloning `origin/dev` after the deploy and re-running the audit against **exactly what
+shipped**, rather than against the sandbox the files were built in.
+
+**The bullet announcing the duplicate-answer fix had plain spaces where French needs U+00A0.**
+`Corrigé : six questions…` with U+0020 before the colon, and every `« … »` in it likewise. Written
+minutes after documenting the trap four times over, in the copy announcing that other bugs were
+fixed.
+
+**Two process failures, and the second is the more important one:**
+
+1. The `NB` constant in the fix script was a **pasted character** rather than the `' '` escape.
+   Same root cause as Phase 6's chip injector. The rule is not "be careful" — it is **never type the
+   character, always write the escape, and assert `ord(NB) == 0xA0` before using it.** That assert is
+   now in the script.
+2. **The French typography scan was reporting the defect and the audit still said "0 blockers."**
+   It was an `ok.push()` printing a count — `{"marker":0,"plainSpaceBeforePunct":1,"guillemetNoNbsp":1}`
+   — sitting in the PASSED section. A check that reports a non-zero defect count under a green
+   headline is worse than no check: it trains you to skim past it. **Promoted to a BLOCKER.**
+
+**Also learned:** verifying in the sandbox where the work was done is not the same as verifying what
+shipped. `_chips/verify.mjs` restores the pre-injection originals in its `finally` block, so the
+sandbox tree no longer matched what was written to the repo. **Re-clone `origin/dev` and run the
+audit there before the `dev → main` cut** — that is what found this.
+
+Fixed, packet regenerated (1,034 rows), audit back to 0 blockers with the typography check now able
+to fail. **`lib/version.js` and the three interface-packet files need one more `npm run deploy dev`
+before the release.**

@@ -2,7 +2,7 @@
  "lane": "fr-fr",
  "scope": "interface",
  "version": "3.3.0",
- "contentHash": "0c087a9a7200b3ce2d069a5f7bc80c6396dd997da30c0746a5aaa50cfdeda1ca",
+ "contentHash": "5dd2a3b051a07ad78b391b120ee95501a7a5ffd07e809d84b5f9441090c9b73d",
  "rowCounts": {
   "1-Variantes-régionales": 245,
   "2-Décisions": 16,
@@ -56,8 +56,8 @@
    "sha256": "f0e936d7f0f7703f2d231f28811d45b601db5b1c82394c3694047c508d25cca1"
   },
   "lib/version.js": {
-   "bytes": 273381,
-   "sha256": "cedff9f71b59291d6aa62115ffb5a7c13f16bd17d7fce0f09047ce9f75de4843"
+   "bytes": 273390,
+   "sha256": "f16aff073dc95d7089a3049fa81c9d1c5aee0e88cede47ca032e5d3f1ec72daa"
   }
  }
 }
