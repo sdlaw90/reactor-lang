@@ -1,0 +1,23 @@
+{
+ "lane": "fr-fr",
+ "scope": "taught",
+ "version": "3.2.0",
+ "contentHash": "fc5f4df163dc28e17c0c63f94c5e5f561745ea7a230d1bbe22e39daa915cc8ee",
+ "rowCounts": {
+  "1-Questions": 959,
+  "2-Prononciation": 76,
+  "3-Banque-de-mots": 588,
+  "4-Décisions": 8
+ },
+ "rowTotal": 1623,
+ "builtFrom": {
+  "data/tracks/frForEn.js": {
+   "bytes": 1484744,
+   "sha256": "528d6b1581c864067e5124357d53af75f25190100b6e17bd75bac1e68a5dd4a3"
+  },
+  "data/vocab/frWords.js": {
+   "bytes": 32766,
+   "sha256": "886fd5c3b9804ff8a23be29fa7a9f38c1047107499c83e3b7bc0bb9ab3d7c498"
+  }
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "lane": "fr-fr",
+ "scope": "interface",
+ "version": "3.2.0",
+ "contentHash": "0c16baa2cd815e8bce4f8f0f9ee52d39e9dd66b29a3b7cead8968cf5b7a3928d",
+ "rowCounts": {
+  "1-Variantes-régionales": 6,
+  "2-Décisions": 16,
+  "3-Config-carte": 15,
+  "4-Questions-sécurité": 10,
+  "5-Interface": 403,
+  "6-Autres-textes": 57,
+  "7-Aide-APropos": 110,
+  "8-Nouveautés": 184
+ },
+ "rowTotal": 785,
+ "builtFrom": {
+  "data/tracks/l10n/regionalVariants.js": {
+   "bytes": 43017,
+   "sha256": "7cf9733ca00c97bccb78b7b3d1ddd0f7b016175a0992d206150ea2d8af1b2c39"
+  },
+  "lib/GuideOverlay.js": {
+   "bytes": 2846,
+   "sha256": "831ada5e12df97c359e00c8151897d8240c0fa8a7dbc61b58a0ed2798bf9bd4a"
+  },
+  "lib/LangSwitcher.js": {
+   "bytes": 3534,
+   "sha256": "75e01d5bb1805903e795289e84e9208e8f74547600a5a63576bd27473768b0fd"
+  },
+  "lib/guideSteps.js": {
+   "bytes": 7425,
+   "sha256": "919ba2d6763514fad4bc79279f790313270cbcd4c66caf83b0ffcbe5e7bbf335"
+  },
+  "lib/helpAboutContent.js": {
+   "bytes": 103448,
+   "sha256": "9dba587b72b535b3199d49b253794cfebd2452764beafb879446c154b2009dac"
+  },
+  "lib/languageNames.js": {
+   "bytes": 7036,
+   "sha256": "4ba51a7d3543baaa95fdfd1eb7fc98083b2741933e7cdf0170319885d458b635"
+  },
+  "lib/playStrings.js": {
+   "bytes": 82530,
+   "sha256": "ce1410ddebfb311b74127e0488a1b349a141549d450ef4bb03d04f9106b87639"
+  },
+  "lib/securityQuestions.js": {
+   "bytes": 3531,
+   "sha256": "78d4bca7d405d157f8b2e32756348ee8f741529f14d78a6e86dbe31ae6e7eb8f"
+  },
+  "lib/skillLevels.js": {
+   "bytes": 6118,
+   "sha256": "e926f839fa8410d8370c2a0853707395b234d6e850e944266f5e8181b6ae71ce"
+  },
+  "lib/trackSublabels.js": {
+   "bytes": 3753,
+   "sha256": "f0e936d7f0f7703f2d231f28811d45b601db5b1c82394c3694047c508d25cca1"
+  },
+  "lib/version.js": {
+   "bytes": 176130,
+   "sha256": "2eecb916bacea14304d1139552b1d08dbfd1e6238893dcc7367d256486a3f491"
+  }
+ }
+}

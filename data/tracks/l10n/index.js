@@ -20,6 +20,16 @@
 // fvocab), and the two Spanish-target tables (es-latam / es-spain) are net-new
 // for pt natives (es never needed them). All flagged for #41 native review.
 // A missing entry → base English surface (safe).
+//
+// fr (French) surfaces added 2026-07-29 (v3.3): all 10 tables were translated in
+// place from their `.es` sibling (or `.pt` where no `.es` exists — the two
+// Spanish-target tables), which carries the Word Bank (fvocab-*) for free. French
+// natives are never offered the French-target tracks, so fr-for-en / fr-ca-for-en
+// deliberately have no `fr` sibling. Registering these is INERT: getL10n(id, "fr")
+// is only reachable when sourceLang === "fr", which cannot happen while `fr` is
+// absent from RELEASED_SOURCE_LANGS and from the native-language picker. That was true
+// until v3.3.0; the flip (docs/_fr-offering-flip.md) has since been applied, so these
+// tables are now live for French natives.
 
 import frForEn_es from "./frForEn.es";
 import frCaForEn_es from "./frCaForEn.es";
@@ -45,19 +55,33 @@ import zhForEn_pt from "./zhForEn.pt";
 import esForEn_pt from "./esForEn.pt";
 import esSpainForEn_pt from "./esSpainForEn.pt";
 
+// v3.3 fr side tables. No fr sibling for fr-for-en / fr-ca-for-en: a French
+// native is never offered a French-target track (data/tracks/index.js, t.targetLang
+// !== nativeLang).
+import esForEn_fr from "./esForEn.fr";
+import esSpainForEn_fr from "./esSpainForEn.fr";
+import ptBrForEn_fr from "./ptBrForEn.fr";
+import ptPtForEn_fr from "./ptPtForEn.fr";
+import itForEn_fr from "./itForEn.fr";
+import deForEn_fr from "./deForEn.fr";
+import ruForEn_fr from "./ruForEn.fr";
+import jaForEn_fr from "./jaForEn.fr";
+import koForEn_fr from "./koForEn.fr";
+import zhForEn_fr from "./zhForEn.fr";
+
 const L10N = {
   "fr-for-en": { es: frForEn_es, pt: frForEn_pt },
   "fr-ca-for-en": { es: frCaForEn_es, pt: frCaForEn_pt },
-  "it-for-en": { es: itForEn_es, pt: itForEn_pt },
-  "pt-br-for-en": { es: ptBrForEn_es },
-  "pt-pt-for-en": { es: ptPtForEn_es },
-  "de-for-en": { es: deForEn_es, pt: deForEn_pt },
-  "ru-for-en": { es: ruForEn_es, pt: ruForEn_pt },
-  "ja-for-en": { es: jaForEn_es, pt: jaForEn_pt },
-  "ko-for-en": { es: koForEn_es, pt: koForEn_pt },
-  "zh-for-en": { es: zhForEn_es, pt: zhForEn_pt },
-  "es-latam-for-en": { pt: esForEn_pt },
-  "es-spain-for-en": { pt: esSpainForEn_pt },
+  "it-for-en": { es: itForEn_es, pt: itForEn_pt, fr: itForEn_fr },
+  "pt-br-for-en": { es: ptBrForEn_es, fr: ptBrForEn_fr },
+  "pt-pt-for-en": { es: ptPtForEn_es, fr: ptPtForEn_fr },
+  "de-for-en": { es: deForEn_es, pt: deForEn_pt, fr: deForEn_fr },
+  "ru-for-en": { es: ruForEn_es, pt: ruForEn_pt, fr: ruForEn_fr },
+  "ja-for-en": { es: jaForEn_es, pt: jaForEn_pt, fr: jaForEn_fr },
+  "ko-for-en": { es: koForEn_es, pt: koForEn_pt, fr: koForEn_fr },
+  "zh-for-en": { es: zhForEn_es, pt: zhForEn_pt, fr: zhForEn_fr },
+  "es-latam-for-en": { pt: esForEn_pt, fr: esForEn_fr },
+  "es-spain-for-en": { pt: esSpainForEn_pt, fr: esSpainForEn_fr },
 };
 
 // Localized-surface map for a track + source language, or null. Synchronous +

@@ -2,39 +2,39 @@
 // Keyed by normalized PROMPT TEXT. AI-authored in the content-depth pass — PENDING native review.
 
 export const THEMES = [
-  { id: "numbers-time", en: "Numbers, dates & time", es: "Números y tiempo", pt: "Números e tempo" },
-  { id: "directions", en: "Directions", es: "Direcciones", pt: "Direções" },
-  { id: "shopping", en: "Shopping", es: "Compras", pt: "Compras" },
-  { id: "restaurant", en: "Restaurant & food", es: "Restaurante", pt: "Restaurante" },
-  { id: "travel", en: "Travel", es: "Viajes", pt: "Viagens" },
-  { id: "medical", en: "Medical & doctor", es: "Salud", pt: "Saúde" },
-  { id: "small-talk", en: "Small talk", es: "Conversación", pt: "Conversa" },
-  { id: "work", en: "Work & office", es: "Trabajo", pt: "Trabalho" },
-  { id: "emotions", en: "Emotions", es: "Emociones", pt: "Emoções" },
+  { id: "numbers-time", en: "Numbers, dates & time", es: "Números y tiempo", pt: "Números e tempo", fr: "Nombres, dates et heures" },
+  { id: "directions", en: "Directions", es: "Direcciones", pt: "Direções", fr: "Directions" },
+  { id: "shopping", en: "Shopping", es: "Compras", pt: "Compras", fr: "Achats" },
+  { id: "restaurant", en: "Restaurant & food", es: "Restaurante", pt: "Restaurante", fr: "Restaurant" },
+  { id: "travel", en: "Travel", es: "Viajes", pt: "Viagens", fr: "Voyages" },
+  { id: "medical", en: "Medical & doctor", es: "Salud", pt: "Saúde", fr: "Santé" },
+  { id: "small-talk", en: "Small talk", es: "Conversación", pt: "Conversa", fr: "Conversation" },
+  { id: "work", en: "Work & office", es: "Trabajo", pt: "Trabalho", fr: "Travail" },
+  { id: "emotions", en: "Emotions", es: "Emociones", pt: "Emoções", fr: "Émotions" },
 ];
 
 const T = {
-  presente: { tense: { en: "Presente", es: "Presente" }, why: { en: "Habitual or current actions.", es: "Acciones habituales o actuales." } },
-  pretPerfeito: { tense: { en: "Pretérito perfeito", es: "Pretérito perfecto" }, why: { en: "A completed past action (\"did\").", es: "Una acción pasada completada." } },
-  imperfeito: { tense: { en: "Pretérito imperfeito", es: "Imperfecto" }, why: { en: "Ongoing, habitual or background past actions.", es: "Acciones pasadas en curso o habituales." } },
-  futuro: { tense: { en: "Futuro", es: "Futuro" }, why: { en: "What will happen.", es: "Lo que ocurrirá." } },
-  condicional: { tense: { en: "Futuro do pretérito", es: "Condicional" }, why: { en: "What would happen, and polite requests.", es: "Lo que ocurriría, y peticiones corteses." } },
-  presSubj: { tense: { en: "Presente do subjuntivo", es: "Presente de subjuntivo" }, why: { en: "Triggered by wish, doubt, emotion (espero que, talvez, embora).", es: "Lo activan el deseo, la duda o la emoción (espero que, talvez, embora)." } },
-  impSubj: { tense: { en: "Imperfeito do subjuntivo", es: "Imperfecto de subjuntivo" }, why: { en: "Past-subjunctive contexts and the 'se' hypothetical.", es: "Contextos de subjuntivo pasado y la hipótesis con 'se'." } },
-  futSubj: { tense: { en: "Futuro do subjuntivo", es: "Futuro de subjuntivo" }, why: { en: "After 'quando' or 'se' about the future — a Portuguese-specific tense.", es: "Tras 'quando' o 'se' sobre el futuro — un tiempo propio del portugués." } },
-  infPessoal: { tense: { en: "Infinitivo pessoal", es: "Infinitivo personal" }, why: { en: "The inflected infinitive — a Portuguese-specific form.", es: "El infinitivo flexionado — una forma propia del portugués." } },
-  imperativo: { tense: { en: "Imperativo", es: "Imperativo" }, why: { en: "Telling someone to do something.", es: "Decirle a alguien que haga algo." } },
-  maisQuePerfeito: { tense: { en: "Mais-que-perfeito", es: "Pluscuamperfecto" }, why: { en: "A past action before another past moment (\"had done\").", es: "Una acción pasada anterior a otro momento pasado." } },
+  presente: { tense: { en: "Presente", es: "Presente", fr: "Présent" }, why: { en: "Habitual or current actions.", es: "Acciones habituales o actuales.", fr: "Actions habituelles ou actuelles." } },
+  pretPerfeito: { tense: { en: "Pretérito perfeito", es: "Pretérito perfecto", fr: "Passé composé" }, why: { en: "A completed past action (\"did\").", es: "Una acción pasada completada.", fr: "Une action passée achevée." } },
+  imperfeito: { tense: { en: "Pretérito imperfeito", es: "Imperfecto", fr: "Imparfait" }, why: { en: "Ongoing, habitual or background past actions.", es: "Acciones pasadas en curso o habituales.", fr: "Actions passées en cours ou habituelles." } },
+  futuro: { tense: { en: "Futuro", es: "Futuro", fr: "Futur" }, why: { en: "What will happen.", es: "Lo que ocurrirá.", fr: "Ce qui arrivera." } },
+  condicional: { tense: { en: "Futuro do pretérito", es: "Condicional", fr: "Conditionnel" }, why: { en: "What would happen, and polite requests.", es: "Lo que ocurriría, y peticiones corteses.", fr: "Ce qui arriverait, et les demandes polies." } },
+  presSubj: { tense: { en: "Presente do subjuntivo", es: "Presente de subjuntivo", fr: "Subjonctif présent" }, why: { en: "Triggered by wish, doubt, emotion (espero que, talvez, embora).", es: "Lo activan el deseo, la duda o la emoción (espero que, talvez, embora).", fr: "Déclenché par le souhait, le doute ou l’émotion (espero que, talvez, embora)." } },
+  impSubj: { tense: { en: "Imperfeito do subjuntivo", es: "Imperfecto de subjuntivo", fr: "Subjonctif imparfait" }, why: { en: "Past-subjunctive contexts and the 'se' hypothetical.", es: "Contextos de subjuntivo pasado y la hipótesis con 'se'.", fr: "Contextes de subjonctif passé et hypothèse avec « se »." } },
+  futSubj: { tense: { en: "Futuro do subjuntivo", es: "Futuro de subjuntivo", fr: "Subjonctif futur" }, why: { en: "After 'quando' or 'se' about the future — a Portuguese-specific tense.", es: "Tras 'quando' o 'se' sobre el futuro — un tiempo propio del portugués.", fr: "Après « quando » ou « se » à propos du futur — un temps propre au portugais." } },
+  infPessoal: { tense: { en: "Infinitivo pessoal", es: "Infinitivo personal", fr: "Infinitif personnel" }, why: { en: "The inflected infinitive — a Portuguese-specific form.", es: "El infinitivo flexionado — una forma propia del portugués.", fr: "L’infinitif fléchi — une forme propre au portugais." } },
+  imperativo: { tense: { en: "Imperativo", es: "Imperativo", fr: "Impératif" }, why: { en: "Telling someone to do something.", es: "Decirle a alguien que haga algo.", fr: "Dire à quelqu’un de faire quelque chose." } },
+  maisQuePerfeito: { tense: { en: "Mais-que-perfeito", es: "Pluscuamperfecto", fr: "Plus-que-parfait" }, why: { en: "A past action before another past moment (\"had done\").", es: "Una acción pasada anterior a otro momento pasado.", fr: "Une action passée antérieure à un autre moment passé." } },
 };
 
 const P = {
-  eu: { en: "eu (I)", es: "yo" },
-  tu: { en: "tu (you)", es: "tú" },
-  você: { en: "você (you)", es: "usted" },
-  ele: { en: "ele / ela (he/she)", es: "él / ella" },
-  nós: { en: "nós (we)", es: "nosotros" },
-  eles: { en: "eles / elas (they)", es: "ellos / ellas" },
-  vocês: { en: "vocês (you all)", es: "ustedes" },
+  eu: { en: "eu (I)", es: "yo", fr: "eu (je)" },
+  tu: { en: "tu (you)", es: "tú", fr: "tu (tu)" },
+  você: { en: "você (you)", es: "usted", fr: "você (vous/tu — usuel au Brésil)" },
+  ele: { en: "ele / ela (he/she)", es: "él / ella", fr: "ele / ela (il / elle)" },
+  nós: { en: "nós (we)", es: "nosotros", fr: "nós (nous)" },
+  eles: { en: "eles / elas (they)", es: "ellos / ellas", fr: "eles / elas (ils / elles)" },
+  vocês: { en: "vocês (you all)", es: "ustedes", fr: "vocês (vous, pluriel)" },
 };
 
 const RAW = {

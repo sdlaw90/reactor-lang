@@ -3208,7 +3208,7 @@ export default {
   "promptNative": "'明日 (ashita)' significa...",
   "options": [
    "mañana",
-   "mañana",
+   "la mañana",
    "mediodía/día",
    "ayer"
   ]

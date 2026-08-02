@@ -1,0 +1,57 @@
+{
+ "_status": "Email-only lane file. This lane has no packet copy yet, so build_workbook.py will hard-stop on it by design — add a \"scopes\" block (see es-latam.json for the shape) before generating packets. render_email.mjs works from dispatchEmail alone.",
+ "dispatchEmail": {
+  "subject": "SquirreLingo — revisión de español peninsular (es-ES): los cuadernos y en qué orden",
+  "greeting": "Hola {name}:",
+  "namePlaceholder": "[nombre]",
+  "senderDefault": "Sean",
+  "opening": [
+   "Ahí van los cuadernos de revisión de SquirreLingo, generados desde la versión {version} de la app. Cada uno es un archivo .xlsx y trae adentro una pestaña LÉEME con las instrucciones completas: qué variedad de español buscamos, cómo se llenan las celdas y cómo devolverlo. Empieza por ahí en cada archivo — no te repito nada de eso acá.",
+   "Lo que sí te cuento es cómo se relacionan entre sí, porque eso no está adentro de los archivos."
+  ],
+  "tableHeaders": [
+   "#",
+   "Cuaderno",
+   "Qué revisas",
+   "Filas",
+   "Tiempo aprox."
+  ],
+  "scopeOrder": [
+   "interface",
+   "taught",
+   "explanation"
+  ],
+  "scopeCopy": {
+   "interface": {
+    "what": "Cómo se lee la app en español peninsular, y sobre todo los términos de España de la tarjeta de variantes",
+    "hours": "—"
+   },
+   "taught": {
+    "what": "El español peninsular que la app enseña a quien lo está aprendiendo",
+    "hours": "—"
+   },
+   "explanation": {
+    "what": "El español peninsular que explica otros idiomas",
+    "hours": "—"
+   }
+  },
+  "notBuilt": "(por construir)",
+  "notCounted": "(recuento pendiente)",
+  "weightNote": "Las filas no pesan igual: en el cuaderno de interfaz casi todas son frases sueltas, mientras que en los otros muchas filas son una pregunta entera —enunciado, cuatro opciones, la explicación y sus notas— y rinden bastante menos por hora.",
+  "orderHeading": "El orden importa — haz el primero y para ahí",
+  "orderIntro": "Haz el cuaderno de interfaz completo y devuélvemelo antes de abrir los demás. Dos razones:",
+  "orderReasons": [
+   "Trae una pestaña de decisiones con preguntas de criterio. Tus respuestas ahí fijan criterios que se repiten cientos de veces en los otros cuadernos, así que contestarlas primero te evita tomar la misma decisión una y otra vez después.",
+   "Preferimos descubrir cualquier problema de formato en el cuaderno más corto y no cuando ya llevas horas en el más largo."
+  ],
+  "laneNotes": [
+   "Lo específico de esta variante: en la tarjeta de variantes regionales, las filas que te corresponden son las de REFERENCIA — los términos de España. Las filas latinoamericanas aparecen en gris y en cursiva, marcadas como orientativas: las revisa otra persona. Están ahí porque la tarjeta muestra las dos mitades juntas y sin ver el contraste cuesta juzgar la tuya.",
+   "Si algo del lado latinoamericano te salta a la vista, dilo igual — lo tomamos como orientación, no como veredicto."
+  ],
+  "closing": [
+   "Sin prisa. Se puede hacer por lotes y mandarme avances por partes; no hace falta terminar un cuaderno entero para devolvérmelo.",
+   "Cualquier fila que no te cuadre, mándamela y la vemos."
+  ],
+  "signoff": "Gracias,\n{sender}"
+ }
+}

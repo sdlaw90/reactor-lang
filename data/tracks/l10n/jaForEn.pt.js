@@ -748,7 +748,7 @@ export default {
  "fvocab-3": {"prompt":"'dia/sol' は日本語で何と言いますか？(wa nihongo de nan to iimasu ka?)","promptNative":"Como se diz 'dia/sol' em japonês?"},
  "fvocab-4": {"promptNative":"'今 (ima)' significa...","options":["agulha","muito","mais","juntos"]},
  "fvocab-5": {"prompt":"'hoje' は日本語で何と言いますか？(wa nihongo de nan to iimasu ka?)","promptNative":"Como se diz 'hoje' em japonês?"},
- "fvocab-6": {"promptNative":"'明日 (ashita)' significa...","options":["amanhã","amanhã","meio-dia/dia","avião"]},
+ "fvocab-6": {"promptNative":"'明日 (ashita)' significa...","options":["amanhã","manhã","meio-dia/dia","ontem"]},
  "fvocab-7": {"prompt":"'avião' は日本語で何と言いますか？(wa nihongo de nan to iimasu ka?)","promptNative":"Como se diz 'avião' em japonês?"},
  "fvocab-8": {"promptNative":"'時間 (jikan)' significa...","options":["tempo (duração)","trem","amanhã","caro E alto (a mesma palavra)"]},
  "fvocab-9": {"prompt":"'azul' は日本語で何と言いますか？(wa nihongo de nan to iimasu ka?)","promptNative":"Como se diz 'azul' em japonês?"},

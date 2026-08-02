@@ -1,0 +1,1056 @@
+{
+ "verdicts": [
+  "OK",
+  "CORRIGER",
+  "DOUTE"
+ ],
+ "decisionVerdicts": [
+  "VALIDÉ",
+  "CORRIGER",
+  "DOUTE"
+ ],
+ "signoffValues": [
+  "OUI",
+  "SOUS RÉSERVE",
+  "PAS ENCORE"
+ ],
+ "validationTitle": "Verdict",
+ "validationMsg": "Choisissez une des valeurs de la liste.",
+ "advisory": "indicatif",
+ "totalLabel": "TOTAL",
+ "exampleAnchor": "Exemple d’une ligne correctement remplie",
+ "summaryTitle": "Bilan et signature de la relecture — {lane} · {scope}",
+ "signoffFields": [
+  "Nom de la personne qui relit :",
+  "Pays / région d’origine :",
+  "Date de remise :",
+  "Est-ce que je valide l’ensemble ?"
+ ],
+ "summaryFootnote": "« Non relu » ne tombe à zéro que lorsque chaque ligne porte un verdict. Il n’est pas nécessaire d’arriver à zéro pour nous renvoyer le fichier : envoyez ce que vous avez et nous repartons de là.",
+ "priority": {
+  "high": "Haute",
+  "medium": "Moyenne",
+  "low": "Basse"
+ },
+ "sheets": {
+  "readme": "LISEZ-MOI",
+  "summary": "SYNTHÈSE",
+  "variants": "1-Variantes-régionales",
+  "decisions": "2-Décisions",
+  "variantConfig": "3-Config-carte",
+  "security": "4-Questions-sécurité",
+  "ui": "5-Interface",
+  "components": "6-Autres-textes",
+  "prose": "7-Aide-APropos",
+  "sample": "8-Échantillon-contenu",
+  "changelog": "9-Nouveautés",
+  "questions": "1-Questions",
+  "fono": "2-Prononciation",
+  "vocab": "3-Banque-de-mots",
+  "overlay": "4-Échantillon-explications",
+  "decisionsContent": "5-Décisions"
+ },
+ "sheetBlurbs": {
+  "variants": "Termes par région. LE PLUS IMPORTANT — commencez par là. Les lignes RÉFÉRENCE (France) sont les vôtres.",
+  "decisions": "Décisions prises à dessein, sur lesquelles nous voulons votre avis.",
+  "variantConfig": "Textes de la carte des variantes, noms de régions et libellés.",
+  "security": "Les 10 questions de récupération du mot de passe.",
+  "ui": "Toute l’interface : compte, paramètres, formulaires, jeu.",
+  "components": "Visite guidée, noms de langues, niveaux, sous-titres.",
+  "prose": "Textes longs des pages Aide et À propos.",
+  "sample": "Échantillon de questions des cours — repérage de motifs, pas relecture exhaustive.",
+  "changelog": "Notes de version traduites. Priorité basse, c’est de l’historique.",
+  "questions": "Chaque question entière : énoncé, bonne réponse, options incorrectes et explication.",
+  "fono": "Exercices de prononciation : phrase, transcription et paires minimales.",
+  "vocab": "La Banque de mots — vocabulaire à haute fréquence.",
+  "overlay": "Échantillon de la couche française posée sur les cours des autres langues (400 lignes sur 13 554)."
+ },
+ "groups": {
+  "auth": "Connexion et inscription",
+  "onboarding": "Bienvenue (onboarding)",
+  "password-recovery": "Récupération du mot de passe",
+  "settings": "Réglages",
+  "beta-apply": "Candidature à la bêta",
+  "gameplay-and-chrome": "Jeu et interface générale",
+  "help-page": "Page d’aide",
+  "about-page": "Page À propos",
+  "guided-tour": "Visite guidée (premier lancement)",
+  "language-names": "Noms de langues",
+  "skill-levels": "Niveaux de compétence",
+  "language-switcher": "Sélecteur de langue",
+  "track-sublabels": "Sous-titres de langue (écran d’accueil)",
+  "security-question": "Question de sécurité",
+  "card-chrome": "Textes de la carte",
+  "country-names": "Noms de pays",
+  "country-group-labels": "Libellés de groupes de pays"
+ },
+ "variantKinds": {
+  "reference": "RÉFÉRENCE",
+  "default": "PAR DÉFAUT",
+  "regional": "RÉGIONAL"
+ },
+ "headers": {
+  "text": [
+   "ID",
+   "Section",
+   "Clé / emplacement",
+   "Anglais (référence)",
+   "Français actuel",
+   "VERDICT",
+   "CORRECTION PROPOSÉE",
+   "NOTE / MOTIF",
+   "Priorité",
+   "Note de l’équipe",
+   "Fichier"
+  ],
+  "variants": [
+   "ID",
+   "Concept nº",
+   "Concept (anglais)",
+   "Type",
+   "Terme actuel",
+   "Régions attribuées",
+   "Libellé de groupe",
+   "Variété responsable",
+   "VERDICT",
+   "TERME CORRIGÉ",
+   "RÉGIONS CORRIGÉES",
+   "NOTE / MOTIF"
+  ],
+  "sample": [
+   "ID",
+   "Langue du cours",
+   "Clé",
+   "Énoncé en français",
+   "Options de réponse",
+   "Notes d’explication",
+   "VERDICT",
+   "CORRECTION PROPOSÉE",
+   "NOTE / MOTIF",
+   "Fichier"
+  ],
+  "decisions": [
+   "ID",
+   "Sujet",
+   "Ce que nous avons décidé et pourquoi",
+   "Exemple / où",
+   "DÉCISION",
+   "AUTRE PROPOSITION",
+   "NOTE"
+  ],
+  "summary": [
+   "Ordre",
+   "Onglet",
+   "Contenu",
+   "Lignes",
+   "OK",
+   "CORRIGER",
+   "DOUTE",
+   "Non relu"
+  ],
+  "questions": [
+   "ID",
+   "Cours",
+   "Catégorie",
+   "Niveau",
+   "Clé",
+   "Énoncé",
+   "Bonne réponse",
+   "Options incorrectes",
+   "Explication en français",
+   "Explication en anglais (référence)",
+   "Notes des options",
+   "VERDICT",
+   "CORRECTION PROPOSÉE",
+   "NOTE / MOTIF",
+   "Fichier"
+  ],
+  "fono": [
+   "ID",
+   "Cours",
+   "Clé",
+   "Niveau",
+   "Phrase",
+   "Prononciation écrite",
+   "Bonne réponse",
+   "Options incorrectes",
+   "Explication en français",
+   "Paires minimales",
+   "VERDICT",
+   "CORRECTION PROPOSÉE",
+   "NOTE / MOTIF",
+   "Fichier"
+  ],
+  "vocabTaught": [
+   "ID",
+   "Clé",
+   "Mot en français",
+   "Sens en anglais",
+   "Catégorie grammaticale",
+   "Niveau",
+   "Note pédagogique",
+   "VERDICT",
+   "CORRECTION PROPOSÉE",
+   "NOTE / MOTIF",
+   "Fichier"
+  ],
+  "vocabGlossary": [
+   "ID",
+   "Clé",
+   "Mot du cours",
+   "Sens en anglais (référence)",
+   "Glose en français",
+   "Niveau",
+   "VERDICT",
+   "GLOSE CORRIGÉE",
+   "NOTE / MOTIF",
+   "Fichier"
+  ],
+  "overlay": [
+   "ID",
+   "Langue du cours",
+   "Clé",
+   "Énoncé en français",
+   "Options de réponse",
+   "Notes d’explication",
+   "VERDICT",
+   "CORRECTION PROPOSÉE",
+   "NOTE / MOTIF",
+   "Fichier"
+  ]
+ },
+ "readme": [
+  [
+   "h1",
+   "SquirreLingo — Relecture du français ({lane})"
+  ],
+  [
+   "p",
+   "Merci d’avoir accepté cette relecture. Ce fichier contient tout le français que l’application affiche à ses utilisateurs dans la version {version}. Il a été rédigé par une IA et n’a jamais été relu par un locuteur natif ; vos corrections sont reprises telles quelles dans le produit. Ne jugez que le français : les autres langues présentes ici (espagnol, portugais, italien, allemand, japonais, coréen, chinois, anglais) sont la matière enseignée et ont leur propre relecteur natif."
+  ],
+  [
+   "h2",
+   "D’abord : quel français nous voulons"
+  ],
+  [
+   "b",
+   "Variété : français de France. PAS de français québécois. Là où un terme diverge — « bug » contre « bogue », « e-mail » contre « courriel », « appli » contre « application », « chrono » contre « minuteur » — nous voulons la forme de France."
+  ],
+  [
+   "b",
+   "Registre : tutoiement (« tu ») dans toute l’application, jamais de vouvoiement. La question est tranchée — arbitrage du propriétaire du produit le 29 juillet 2026 — et elle n’est pas rouverte ici. Signalez seulement les phrases où le tutoiement sonne forcé, en proposant une meilleure tournure au « tu »."
+  ],
+  [
+   "b",
+   "Genre : l’application s’adresse directement à la personne qui l’utilise, donc nous cherchons des formulations épicènes partout où c’est possible — pas de parenthèse de genre, pas de point médian, et pas d’accord de participe ou d’adjectif qui présume du genre de la personne qui lit."
+  ],
+  [
+   "b",
+   "Ton : proche, bref et encourageant. L’application ne gronde jamais et ne punit jamais."
+  ],
+  [
+   "h2",
+   "Comment remplir le fichier"
+  ],
+  [
+   "n",
+   "1. Traitez un onglet à la fois. L’ordre conseillé figure dans l’onglet SYNTHÈSE."
+  ],
+  [
+   "n",
+   "2. Chaque ligne porte une colonne VERDICT avec une liste déroulante. Choisissez une valeur :"
+  ],
+  [
+   "i",
+   "OK — le français convient tel quel. Rien d’autre à écrire."
+  ],
+  [
+   "i",
+   "CORRIGER — il y a quelque chose à reprendre. Écrivez le texte corrigé en entier dans « CORRECTION PROPOSÉE »."
+  ],
+  [
+   "i",
+   "DOUTE — vous hésitez, ou cela dépend de la région. Expliquez dans « NOTE / MOTIF » et nous tranchons avec vous."
+  ],
+  [
+   "n",
+   "3. N’écrivez QUE dans les cellules sur fond jaune. Les autres servent de référence ; si vous les modifiez, nous perdons le lien avec le code."
+  ],
+  [
+   "n",
+   "4. Dans « CORRECTION PROPOSÉE », écrivez la phrase entière déjà corrigée, pas seulement le mot qui change."
+  ],
+  [
+   "n",
+   "5. Si une ligne ne vous concerne pas ou que vous ne savez pas la juger, laissez-la vide. Nous préférons un blanc à une supposition."
+  ],
+  [
+   "h2",
+   "Règles techniques — importantes"
+  ],
+  [
+   "b",
+   "Les textes entre accolades — {level}, {n}, {current}, {total}, {time} — sont des emplacements que l’application remplit toute seule. Recopiez-les à l’identique dans votre correction : ne les traduisez pas et ne les supprimez pas."
+  ],
+  [
+   "b",
+   "&nbsp; est une espace insécable. Conservez-la partout où elle apparaît."
+  ],
+  [
+   "b",
+   "Les emoji (🐿️ 🐞 💡 ⚡ 🌎 🇫🇷), les guillemets français « » et les espaces insécables devant les deux-points, points-virgules, points d’interrogation et points d’exclamation sont volontaires : conservez-les dans vos corrections."
+  ],
+  [
+   "b",
+   "Dans l’onglet Aide et À propos, vous verrez des marques de mise en forme : *gras*, _italique_ et {{clé|texte du lien}}. Conservez-les telles quelles ; ne changez que le texte qui se lit."
+  ],
+  [
+   "h2",
+   "Exemple d’une ligne correctement remplie"
+  ],
+  [
+   "h2",
+   "Ce qui compte le plus"
+  ],
+  [
+   "b",
+   "L’onglet 1-Variantes-régionales est le plus risqué : l’application y affirme qu’en France on dit un terme et qu’au Québec on en dit un autre. Une attribution fausse est une erreur visible qui abîme la crédibilité. Sachez toutefois ce que vous regardez : le registre français de la carte est une AMORCE de deux concepts seulement, « car » et « girlfriend » — pas un répertoire construit. Vous relisez une amorce, et la vraie question est ce qu’il faut y ajouter (voir la fiche de décision correspondante)."
+  ],
+  [
+   "b",
+   "Dans cet onglet, ce sont les lignes RÉFÉRENCE qui vous appartiennent : elles portent les termes de FRANCE, et cette voie en est l’autorité — le registre des voies donne à fr-fr le périmètre « reference ». Ce sont les seules lignes que vous ayez à juger. Les lignes PAR DÉFAUT et RÉGIONAL portent les termes du QUÉBEC : fond gris, italique, marquées « indicatif » dans la colonne « Variété responsable », elles relèvent de la voie fr-ca et tout verdict que vous y posez est rangé au dépouillement dans la section hors périmètre. Elles sont affichées parce que la carte montre les deux moitiés ensemble et que, sans le contraste, la vôtre est difficile à juger. Si quelque chose vous saute aux yeux, dites-le — nous le prenons comme indication, pas comme verdict."
+  ],
+  [
+   "b",
+   "L’onglet 2-Décisions rassemble des choix que nous avons faits volontairement et sur lesquels nous avons besoin de votre avis explicite. Peu de lignes, et elles valent cher : vos réponses tranchent d’avance des dizaines de lignes dans les autres onglets."
+  ],
+  [
+   "b",
+   "Ce que nous savons déjà, pour que vous n’ayez pas à nous le signaler. (1) Les 10 lignes de l’onglet 4-Questions-sécurité ont une cellule française vide : lib/securityQuestions.js ne contient aucun français et son résolveur est codé en dur sur l’espagnol. C’est un correctif de code, pas un trou de traduction. (2) Les 184 lignes de l’onglet 8-Nouveautés sont vides elles aussi : l’historique des versions n’a pas encore été écrit en français, et cette traduction est en dernière priorité. Ces deux onglets ne demandent pas votre attention ; ils sont dans le fichier pour que vous en voyiez l’ampleur."
+  ],
+  [
+   "h2",
+   "Pour finir"
+  ],
+  [
+   "p",
+   "Renseignez votre nom et la date dans l’onglet SYNTHÈSE, puis renvoyez ce même fichier .xlsx. Inutile d’en changer le format ou de rédiger un rapport à part : nous lisons les colonnes directement."
+  ]
+ ],
+ "example": {
+  "headers": [
+   "Français actuel",
+   "VERDICT",
+   "CORRECTION PROPOSÉE",
+   "NOTE / MOTIF"
+  ],
+  "row": [
+   "Prêt à passer à {level} ?",
+   "CORRIGER",
+   "Envie de passer à {level} ?",
+   "L’adjectif « Prêt » s’accorde au masculin alors que la phrase s’adresse à n’importe qui. La reformulation est épicène, garde l’espace insécable devant le point d’interrogation et recopie {level} à l’identique. Même traitement partout où un participe ou un adjectif présume du genre."
+  ]
+ },
+ "notes": {
+  "homeGreeting": "La chaîne vaut « Bienvenue ». L’écran d’accueil y accole le prénom puis un point d’exclamation, sans espace insécable — ce signe est dans le code de la page, pas dans la chaîne, vous ne pouvez donc pas le corriger ici. Notre question porte sur le mot : « Bienvenue » suffit-il comme salutation d’accueil, ou attendez-vous une formule plus chaleureuse ?",
+  "childhood_street": "La cellule française est VIDE, et c’est normal : lib/securityQuestions.js ne contient aucun français, et son résolveur est codé en dur sur l’espagnol. C’est un correctif de code, pas un trou de traduction, et les dix lignes de cet onglet sont dans le même cas : rien à relire. Si vous voulez nous faire gagner un tour, dites-nous quelle formulation française de « What street did you live on as a child? » évite un accord de genre.",
+  "setRecNoteNone": "La phrase se termine par « les configurer prend une minute et te permet de le réinitialiser toi-même ». « toi-même » est épicène, l’accord n’est donc plus un problème. Reste la longueur : la phrase change de sujet en cours de route. Voyez-vous une version plus courte qui garde l’avertissement ?",
+  "LEVEL_DESCRIPTIONS.expert": "Formulation déjà épicène : « Tu es à l'aise — les manches privilégient les nuances, les expressions idiomatiques et les détails délicats. » Reste le sens : « à l'aise » rend-il bien l’anglais « You're comfortable » pour un niveau avancé, et « détails délicats » est-il le meilleur rendu de « tricky details » ?",
+  "notSureTakeQuiz": "« Pas sûr ? » s’accorde au masculin. Une reformulation épicène (par exemple « Un doute ? ») conviendrait-elle, en gardant la suite « Faire le test de niveau » ?",
+  "setGpTogCaudio": "L’anglais dit « Rolling out per track », où « track » désigne un COURS de langue. Le français le rend par « Déployé langue par langue ; apparaît là où l'audio des options existe. » Est-ce compris tel quel, ou faut-il dire « cours par cours » ?",
+  "setGpTogTense": "Le libellé commence par « Roues d'appoint pour les temps verbaux », traduction de « training-wheels » : le ton joueur est volontaire. Deux questions : l’image fonctionne-t-elle en France, et la fin de la phrase, « une fois arrivé à un niveau avancé », s’accorde au masculin — une reformulation épicène ?",
+  "authAgreeMid": "Ce fragment vaut « et la ». Il est assemblé à l’exécution avec « J'accepte les », « Conditions d'utilisation » et « Politique de confidentialité ». Vérifiez que la phrase entière se lit bien et que « et la » s’accorde avec ce qui suit.",
+  "authAgreePre": "Fragment assemblé — voir authAgreeMid. Il vaut « J'accepte les » et il est immédiatement suivi du lien « Conditions d'utilisation ». La correction doit tenir compte de l’espace final, qui est significative.",
+  "baTitle": "« Demande à être bêta-testeur » : l’anglicisme a déjà été francisé, mais « bêta-testeur » s’accorde au masculin. Une tournure épicène est-elle possible (par exemple « Demande à rejoindre la bêta ») sans perdre le sens ? Le même texte sert de lien sur l’écran de connexion (authBetaLink) : votre correction vaudra pour les deux.",
+  "authBetaLink": "Même texte que baTitle, « Demande à être bêta-testeur », mais affiché ici comme lien juste après « Pas encore d'invitation ? ». Vérifiez que l’enchaînement des deux fragments se lit bien.",
+  "baDevTablet": "« Tablette (Android ou iPad) » : l’anglicisme « Tablet » a déjà été francisé. Il reste un choix de forme : la parenthèse est-elle la plus lisible dans une liste de cases à cocher, ou préférez-vous « Tablette Android ou iPad » ?",
+  "baDevDesktop": "« Navigateur sur ordinateur portable ou de bureau (Windows ou Mac) » : formes de France, pas les tournures québécoises. Confirmez, et dites-nous si l’ordre « portable ou de bureau » vous paraît naturel.",
+  "baAppAnki": "« cartes mémoire » pour « flashcards ». Est-ce la forme la plus naturelle en France ? (Au Québec on dirait plutôt « fiches » ; nous gardons délibérément la forme métropolitaine.)",
+  "readyToAdvance": "« Prêt à passer à {level} ? » : « Prêt » s’accorde au masculin, et {level} est remplacé à l’exécution par le nom d’un niveau. Vérifiez que votre reformulation épicène reste grammaticale avec tous les niveaux, et recopiez {level} à l’identique.",
+  "setCountryNote": "La typographie est déjà conforme : guillemets français et espaces insécables dans « Français (Canada) ». C’est l’exemple lui-même qui interroge : il est canadien alors que cette voie est celle de la France. Un exemple métropolitain serait-il plus parlant, ou le cas canadien illustre-t-il mieux le mécanisme ?"
+ },
+ "decisions": [
+  [
+   "Variété et registre (déjà tranché)",
+   "Tout le français de l’application est du français de France, jamais du français québécois. Le registre est DÉJÀ TRANCHÉ : SquirreLingo tutoie ses utilisateurs — « tu », informel, partout, jamais « vous ». Arbitrage du propriétaire du produit, 29 juillet 2026. La question est CLOSE : ne rouvrez pas « tu » contre « vous ». Ce que nous vous demandons, c’est de signaler les tournures au « tu » qui sonnent maladroites et d’en proposer de meilleures, toujours au « tu ». Seule exception, ailleurs que dans l’interface : une phrase d’exercice dont le sujet est un véritable pluriel de deuxième personne emploie « vous » — c’est du nombre grammatical, pas du registre.",
+   "« Mot de passe oublié ? » · « Tu as déjà un compte ? Connecte-toi » · « Définis un nouveau mot de passe »"
+  ],
+  [
+   "Formulations épicènes",
+   "L’application s’adresse directement à la personne qui l’utilise, donc nous évitons les formes « (e) », le point médian et les accords qui présument du genre. Deux cas ont déjà été repris : l’accueil dit maintenant « Bienvenue » et le niveau expert « Tu es à l'aise ». Cinq accords au masculin subsistent, listés à côté. Nous cherchons des reformulations neutres, pas une convention d’écriture inclusive.",
+   "« Pas sûr ? » (notSureTakeQuiz) · « Prêt à passer à {level} ? » (readyToAdvance) · « tu seras connecté tout de suite » (baAcctIntro) · « Un indice que toi seul comprends » (baPhHint) · « une fois arrivé à un niveau avancé » (setGpTogTense)"
+  ],
+  [
+   "Anglicismes conservés",
+   "Nous laissons en anglais les termes techniques déjà courants en France, ainsi que les noms de marques. À l’inverse, certains ont été francisés : l’anglais « Apply to beta test » est rendu par « Demande à être bêta-testeur », et « flashcards » par « cartes mémoire ». Dites-nous si l’un des anglicismes conservés détonne, ou si l’un des termes francisés devrait au contraire revenir à l’anglais.",
+   "« e-mail » · « Chromebook » · « bug » · « chrono » · « combo » · « XP »"
+  ],
+  [
+   "Lexique de France",
+   "Nous choisissons délibérément la forme de France plutôt que la forme québécoise. Un point à confirmer en particulier : l’écran de configuration s’appelle « Réglages » partout — cinq fois dans lib/playStrings.js, treize fois dans le français de lib/helpAboutContent.js — et « Paramètres » n’apparaît nulle part. Si vous préférez « Paramètres », dites-le ici une seule fois : il faudra changer les deux fichiers d’un coup. Vérifiez par ailleurs qu’aucun québécisme ne s’est glissé dans l’interface.",
+   "« Réglages » · « e-mail » · « ordinateur portable » · « cartes mémoire » · « icône » · « appli »"
+  ],
+  [
+   "« Verbes » pour la catégorie héritée verbo",
+   "Deux clés de catégorie coexistent dans lib/playStrings.js : gram, rendue par « Grammaire », et verbo, la clé héritée des cours espagnols, rendue par « Verbes ». L’anglais dit « Grammar » pour les deux. Sur le cours de français, la catégorie affichée à l’écran est donc « Verbes » alors qu’elle ne contient que de la conjugaison. Est-ce le bon nom, ou faut-il « Conjugaison » ? Votre réponse vaut aussi pour l’italien et le portugais, qui partagent la clé.",
+   "CATEGORY_NAMES.verbo → « Verbes » · CATEGORY_NAMES.gram → « Grammaire » (lib/playStrings.js)"
+  ],
+  [
+   "« Roues d'appoint » — un nom, trois formulations",
+   "Les pastilles qui nomment le temps verbal attendu sont appelées « training-wheels » en anglais ; nous avons gardé l’image, « Roues d'appoint », et le ton joueur est volontaire. Mais la même fonction porte trois noms différents selon l’écran, et tous les trois sont en production aujourd’hui. Deux questions : l’image fonctionne-t-elle en France, et quel nom unique faut-il retenir pour les trois surfaces ?",
+   "« Roues d'appoint pour les temps verbaux » (setGpTogTense) · « indications de temps verbal » (setGpSummary) · « indices de temps » (page d’aide)"
+  ],
+  [
+   "Guillemets, apostrophe et tiret cadratin",
+   "Style maison : guillemets français « ainsi » plutôt que les guillemets droits, apostrophe typographique ’ et tiret cadratin — pour les incises. Les guillemets et le tiret sont bien appliqués ; l’apostrophe ne l’est PAS. Les 403 chaînes françaises de lib/playStrings.js emploient 94 apostrophes droites et aucune typographique, tandis que le français de lib/helpAboutContent.js en emploie 191 typographiques et aucune droite. Faut-il tout basculer sur ’, et est-ce visible pour un lecteur français ?",
+   "« Ce nom d'utilisateur est déjà pris » (droite) contre « Trouver l’aide et le menu » (typographique)"
+  ],
+  [
+   "Glossaire du produit",
+   "Noms fixes qui reviennent dans toute l’application. Si vous en changez un, il faut le changer partout : dites-le une seule fois ici plutôt que ligne par ligne dans les autres onglets.",
+   "Quiz Rapide · Leçons · Gym de grammaire · Banque de mots · mode Alphabet · Réglages · CECR · test de niveau · série · combo · Mode révision · « Attention » · TDAH"
+  ],
+  [
+   "Les termes de FRANCE — vos lignes (risque élevé)",
+   "Sur l’onglet 1-Variantes-régionales, les lignes RÉFÉRENCE portent les termes de France. C’est la moitié dont cette voie est l’autorité, et la seule que vous ayez à juger. Elle ne contient aujourd’hui que deux concepts : c’est une amorce, pas un répertoire. La vraie question est donc ce qu’il faut y mettre. Le dossier de cette voie recense huit termes où le français de France et le québécois divergent — bug/bogue, e-mail/courriel, appli/application, chrono/minuteur, Achats/Magasinage, cartes mémoire/fiches, soutien scolaire/tutorat, et Se déconnecter, neutre. L’application n’a qu’UNE colonne française : il nous faut une seule réponse acceptable des deux côtés. Lesquels valent la peine d’entrer dans la carte ?",
+   "« voiture » (concept car) · « copine » (concept girlfriend) — les deux seules lignes RÉFÉRENCE du paquet"
+  ],
+  [
+   "Les termes du QUÉBEC (hors de votre périmètre)",
+   "Les lignes PAR DÉFAUT et RÉGIONAL portent les termes du Québec. Elles relèvent de la voie fr-ca, qui n’a pas encore de relecteur. Elles sont affichées en gris et en italique, marquées « indicatif » dans la colonne « Variété responsable », et tout verdict que vous y posez est rangé au dépouillement dans la section hors périmètre : indicatif, jamais contraignant. Elles sont là parce que la carte montre les deux moitiés côte à côte et que, sans le contraste, votre moitié est difficile à juger.",
+   "« char » (car) · « blonde » (girlfriend) — étiquette de groupe « Québec »"
+  ],
+  [
+   "Espaces insécables",
+   "Style maison : une espace insécable (U+00A0) devant les deux-points, le point-virgule, le point d’interrogation et le point d’exclamation, et à l’intérieur des guillemets. Sur les 403 chaînes françaises de lib/playStrings.js la règle est déjà tenue partout, et nous aimerions que vous le confirmiez plutôt que de le supposer. Le seul manque connu est ailleurs : il vient d’une phrase assemblée à l’exécution (voir la note sur homeGreeting). Si vous en repérez d’autres du même genre, signalez-les : ils sont invisibles dans un diff.",
+   "« Niveau : » (levelLabel) · « Focus de la manche : » (roundFocus) · « Pas sûr ? » (notSureTakeQuiz)"
+  ],
+  [
+   "Noms de fonctionnalités traduits",
+   "Nous avons traduit les noms de fonctionnalités au lieu de les garder en anglais. Est-ce que cela se lit naturellement pour un utilisateur français, ou faut-il en laisser certains en anglais ?",
+   "« Gym de grammaire » (Grammar Gym) · « Banque de mots » (Word Bank) · « manche » (a round of play) · « CECR » (CEFR) · « série » (streak)"
+  ],
+  [
+   "« Alphabet » comme nom de mode",
+   "Le mode qui enseigne un système d’écriture s’appelle « Alphabet » en français comme en anglais, y compris pour le hangeul, le cyrillique et les caractères chinois, qui ne sont pas des alphabets au sens strict. C’est un calque de l’anglais, assumé pour la simplicité. Faut-il le garder, ou passer à « Écriture », plus exact et tout aussi court ?",
+   "« mode Alphabet » (page d’aide) — proposition de rechange : « Écriture »"
+  ],
+  [
+   "Registre familier du vocabulaire produit",
+   "L’interface emploie des formes abrégées et familières là où l’anglais reste neutre : « appli » pour l’application, « chrono » pour le minuteur, « combo » pour la suite de bonnes réponses. C’est cohérent avec le ton proche et bref que nous visons, et c’est aussi ce qui rend le français moins guindé que l’anglais d’origine. Est-ce le bon niveau de langue pour une application d’apprentissage utilisée par des adultes, ou certaines de ces formes font-elles trop familières ?",
+   "« appli » · « chrono » · « combo » (lib/playStrings.js et lib/helpAboutContent.js)"
+  ],
+  [
+   "Nouveautés : rien à traduire ici",
+   "L’onglet 8-Nouveautés contient les 184 puces de l’historique des versions. Aucune n’a de français : lib/version.js ne porte que l’anglais et l’espagnol, donc la colonne française est vide de bout en bout. La traduction est une étape à part et de dernière priorité. Nous connaissons aussi un défaut de la source anglaise — la note de la v2.13.0 annonce « Four new languages » et n’en énumère que trois — et il sera corrigé côté anglais avant toute traduction. Vous n’avez rien à faire sur cet onglet.",
+   "Onglet 8-Nouveautés — 184 lignes, colonne française vide"
+  ],
+  [
+   "Le contenu des cours n’est pas dans ce paquet",
+   "Ce paquet ne contient aucun échantillon de contenu : il ne porte que sur l’interface. Le français des cours est relu dans les deux autres paquets — 959 questions pour le cours de français, et 13 554 entrées des tables l10n plus 1 548 questions pour le français qui explique d’autres langues. Ce que nous vous demandons ici, c’est de signaler tout motif qui se répète : une tournure, un choix de terme, une règle typographique. Nous l’appliquons ensuite sur tout le corpus, pas seulement sur la ligne où vous l’avez vu.",
+   "Signalez le motif UNE fois dans la note ; nous le propageons à l’ensemble du corpus."
+  ]
+ ],
+ "scopes": {
+  "interface": {
+   "title": "Interface",
+   "subtitle": "Ce que l’application dit à ses utilisateurs",
+   "sheets": [
+    "variants",
+    "decisions",
+    "variantConfig",
+    "security",
+    "ui",
+    "components",
+    "prose",
+    "changelog"
+   ],
+   "readme": [
+    [
+     "h1",
+     "SquirreLingo — Relecture du français ({lane})"
+    ],
+    [
+     "p",
+     "Merci d’avoir accepté cette relecture. Ce fichier contient tout le français que l’application affiche à ses utilisateurs dans la version {version}. Il a été rédigé par une IA et n’a jamais été relu par un locuteur natif ; vos corrections sont reprises telles quelles dans le produit. Ne jugez que le français : les autres langues présentes ici (espagnol, portugais, italien, allemand, japonais, coréen, chinois, anglais) sont la matière enseignée et ont leur propre relecteur natif."
+    ],
+    [
+     "h2",
+     "D’abord : quel français nous voulons"
+    ],
+    [
+     "b",
+     "Variété : français de France. PAS de français québécois. Là où un terme diverge — « bug » contre « bogue », « e-mail » contre « courriel », « appli » contre « application », « chrono » contre « minuteur » — nous voulons la forme de France."
+    ],
+    [
+     "b",
+     "Registre : tutoiement (« tu ») dans toute l’application, jamais de vouvoiement. La question est tranchée — arbitrage du propriétaire du produit le 29 juillet 2026 — et elle n’est pas rouverte ici. Signalez seulement les phrases où le tutoiement sonne forcé, en proposant une meilleure tournure au « tu »."
+    ],
+    [
+     "b",
+     "Genre : l’application s’adresse directement à la personne qui l’utilise, donc nous cherchons des formulations épicènes partout où c’est possible — pas de parenthèse de genre, pas de point médian, et pas d’accord de participe ou d’adjectif qui présume du genre de la personne qui lit."
+    ],
+    [
+     "b",
+     "Ton : proche, bref et encourageant. L’application ne gronde jamais et ne punit jamais."
+    ],
+    [
+     "h2",
+     "Comment remplir le fichier"
+    ],
+    [
+     "n",
+     "1. Traitez un onglet à la fois. L’ordre conseillé figure dans l’onglet SYNTHÈSE."
+    ],
+    [
+     "n",
+     "2. Chaque ligne porte une colonne VERDICT avec une liste déroulante. Choisissez une valeur :"
+    ],
+    [
+     "i",
+     "OK — le français convient tel quel. Rien d’autre à écrire."
+    ],
+    [
+     "i",
+     "CORRIGER — il y a quelque chose à reprendre. Écrivez le texte corrigé en entier dans « CORRECTION PROPOSÉE »."
+    ],
+    [
+     "i",
+     "DOUTE — vous hésitez, ou cela dépend de la région. Expliquez dans « NOTE / MOTIF » et nous tranchons avec vous."
+    ],
+    [
+     "n",
+     "3. N’écrivez QUE dans les cellules sur fond jaune. Les autres servent de référence ; si vous les modifiez, nous perdons le lien avec le code."
+    ],
+    [
+     "n",
+     "4. Dans « CORRECTION PROPOSÉE », écrivez la phrase entière déjà corrigée, pas seulement le mot qui change."
+    ],
+    [
+     "n",
+     "5. Si une ligne ne vous concerne pas ou que vous ne savez pas la juger, laissez-la vide. Nous préférons un blanc à une supposition."
+    ],
+    [
+     "h2",
+     "Règles techniques — importantes"
+    ],
+    [
+     "b",
+     "Les textes entre accolades — {level}, {n}, {current}, {total}, {time} — sont des emplacements que l’application remplit toute seule. Recopiez-les à l’identique dans votre correction : ne les traduisez pas et ne les supprimez pas."
+    ],
+    [
+     "b",
+     "&nbsp; est une espace insécable. Conservez-la partout où elle apparaît."
+    ],
+    [
+     "b",
+     "Les emoji (🐿️ 🐞 💡 ⚡ 🌎 🇫🇷), les guillemets français « » et les espaces insécables devant les deux-points, points-virgules, points d’interrogation et points d’exclamation sont volontaires : conservez-les dans vos corrections."
+    ],
+    [
+     "b",
+     "Dans l’onglet Aide et À propos, vous verrez des marques de mise en forme : *gras*, _italique_ et {{clé|texte du lien}}. Conservez-les telles quelles ; ne changez que le texte qui se lit."
+    ],
+    [
+     "h2",
+     "Exemple d’une ligne correctement remplie"
+    ],
+    [
+     "h2",
+     "Ce qui compte le plus"
+    ],
+    [
+     "b",
+     "L’onglet 1-Variantes-régionales est le plus risqué : l’application y affirme qu’en France on dit un terme et qu’au Québec on en dit un autre. Une attribution fausse est une erreur visible qui abîme la crédibilité. Sachez toutefois ce que vous regardez : le registre français de la carte est une AMORCE de deux concepts seulement, « car » et « girlfriend » — pas un répertoire construit. Vous relisez une amorce, et la vraie question est ce qu’il faut y ajouter (voir la fiche de décision correspondante)."
+    ],
+    [
+     "b",
+     "Dans cet onglet, ce sont les lignes RÉFÉRENCE qui vous appartiennent : elles portent les termes de FRANCE, et cette voie en est l’autorité — le registre des voies donne à fr-fr le périmètre « reference ». Ce sont les seules lignes que vous ayez à juger. Les lignes PAR DÉFAUT et RÉGIONAL portent les termes du QUÉBEC : fond gris, italique, marquées « indicatif » dans la colonne « Variété responsable », elles relèvent de la voie fr-ca et tout verdict que vous y posez est rangé au dépouillement dans la section hors périmètre. Elles sont affichées parce que la carte montre les deux moitiés ensemble et que, sans le contraste, la vôtre est difficile à juger. Si quelque chose vous saute aux yeux, dites-le — nous le prenons comme indication, pas comme verdict."
+    ],
+    [
+     "b",
+     "L’onglet 2-Décisions rassemble des choix que nous avons faits volontairement et sur lesquels nous avons besoin de votre avis explicite. Peu de lignes, et elles valent cher : vos réponses tranchent d’avance des dizaines de lignes dans les autres onglets."
+    ],
+    [
+     "b",
+     "Ce que nous savons déjà, pour que vous n’ayez pas à nous le signaler. (1) Les 10 lignes de l’onglet 4-Questions-sécurité ont une cellule française vide : lib/securityQuestions.js ne contient aucun français et son résolveur est codé en dur sur l’espagnol. C’est un correctif de code, pas un trou de traduction. (2) Les 184 lignes de l’onglet 8-Nouveautés sont vides elles aussi : l’historique des versions n’a pas encore été écrit en français, et cette traduction est en dernière priorité. Ces deux onglets ne demandent pas votre attention ; ils sont dans le fichier pour que vous en voyiez l’ampleur."
+    ],
+    [
+     "h2",
+     "Pour finir"
+    ],
+    [
+     "p",
+     "Renseignez votre nom et la date dans l’onglet SYNTHÈSE, puis renvoyez ce même fichier .xlsx. Inutile d’en changer le format ou de rédiger un rapport à part : nous lisons les colonnes directement."
+    ]
+   ],
+   "decisions": [
+    [
+     "Variété et registre (déjà tranché)",
+     "Tout le français de l’application est du français de France, jamais du français québécois. Le registre est DÉJÀ TRANCHÉ : SquirreLingo tutoie ses utilisateurs — « tu », informel, partout, jamais « vous ». Arbitrage du propriétaire du produit, 29 juillet 2026. La question est CLOSE : ne rouvrez pas « tu » contre « vous ». Ce que nous vous demandons, c’est de signaler les tournures au « tu » qui sonnent maladroites et d’en proposer de meilleures, toujours au « tu ». Seule exception, ailleurs que dans l’interface : une phrase d’exercice dont le sujet est un véritable pluriel de deuxième personne emploie « vous » — c’est du nombre grammatical, pas du registre.",
+     "« Mot de passe oublié ? » · « Tu as déjà un compte ? Connecte-toi » · « Définis un nouveau mot de passe »"
+    ],
+    [
+     "Formulations épicènes",
+     "L’application s’adresse directement à la personne qui l’utilise, donc nous évitons les formes « (e) », le point médian et les accords qui présument du genre. Deux cas ont déjà été repris : l’accueil dit maintenant « Bienvenue » et le niveau expert « Tu es à l'aise ». Cinq accords au masculin subsistent, listés à côté. Nous cherchons des reformulations neutres, pas une convention d’écriture inclusive.",
+     "« Pas sûr ? » (notSureTakeQuiz) · « Prêt à passer à {level} ? » (readyToAdvance) · « tu seras connecté tout de suite » (baAcctIntro) · « Un indice que toi seul comprends » (baPhHint) · « une fois arrivé à un niveau avancé » (setGpTogTense)"
+    ],
+    [
+     "Anglicismes conservés",
+     "Nous laissons en anglais les termes techniques déjà courants en France, ainsi que les noms de marques. À l’inverse, certains ont été francisés : l’anglais « Apply to beta test » est rendu par « Demande à être bêta-testeur », et « flashcards » par « cartes mémoire ». Dites-nous si l’un des anglicismes conservés détonne, ou si l’un des termes francisés devrait au contraire revenir à l’anglais.",
+     "« e-mail » · « Chromebook » · « bug » · « chrono » · « combo » · « XP »"
+    ],
+    [
+     "Lexique de France",
+     "Nous choisissons délibérément la forme de France plutôt que la forme québécoise. Un point à confirmer en particulier : l’écran de configuration s’appelle « Réglages » partout — cinq fois dans lib/playStrings.js, treize fois dans le français de lib/helpAboutContent.js — et « Paramètres » n’apparaît nulle part. Si vous préférez « Paramètres », dites-le ici une seule fois : il faudra changer les deux fichiers d’un coup. Vérifiez par ailleurs qu’aucun québécisme ne s’est glissé dans l’interface.",
+     "« Réglages » · « e-mail » · « ordinateur portable » · « cartes mémoire » · « icône » · « appli »"
+    ],
+    [
+     "« Verbes » pour la catégorie héritée verbo",
+     "Deux clés de catégorie coexistent dans lib/playStrings.js : gram, rendue par « Grammaire », et verbo, la clé héritée des cours espagnols, rendue par « Verbes ». L’anglais dit « Grammar » pour les deux. Sur le cours de français, la catégorie affichée à l’écran est donc « Verbes » alors qu’elle ne contient que de la conjugaison. Est-ce le bon nom, ou faut-il « Conjugaison » ? Votre réponse vaut aussi pour l’italien et le portugais, qui partagent la clé.",
+     "CATEGORY_NAMES.verbo → « Verbes » · CATEGORY_NAMES.gram → « Grammaire » (lib/playStrings.js)"
+    ],
+    [
+     "« Roues d'appoint » — un nom, trois formulations",
+     "Les pastilles qui nomment le temps verbal attendu sont appelées « training-wheels » en anglais ; nous avons gardé l’image, « Roues d'appoint », et le ton joueur est volontaire. Mais la même fonction porte trois noms différents selon l’écran, et tous les trois sont en production aujourd’hui. Deux questions : l’image fonctionne-t-elle en France, et quel nom unique faut-il retenir pour les trois surfaces ?",
+     "« Roues d'appoint pour les temps verbaux » (setGpTogTense) · « indications de temps verbal » (setGpSummary) · « indices de temps » (page d’aide)"
+    ],
+    [
+     "Guillemets, apostrophe et tiret cadratin",
+     "Style maison : guillemets français « ainsi » plutôt que les guillemets droits, apostrophe typographique ’ et tiret cadratin — pour les incises. Les guillemets et le tiret sont bien appliqués ; l’apostrophe ne l’est PAS. Les 403 chaînes françaises de lib/playStrings.js emploient 94 apostrophes droites et aucune typographique, tandis que le français de lib/helpAboutContent.js en emploie 191 typographiques et aucune droite. Faut-il tout basculer sur ’, et est-ce visible pour un lecteur français ?",
+     "« Ce nom d'utilisateur est déjà pris » (droite) contre « Trouver l’aide et le menu » (typographique)"
+    ],
+    [
+     "Glossaire du produit",
+     "Noms fixes qui reviennent dans toute l’application. Si vous en changez un, il faut le changer partout : dites-le une seule fois ici plutôt que ligne par ligne dans les autres onglets.",
+     "Quiz Rapide · Leçons · Gym de grammaire · Banque de mots · mode Alphabet · Réglages · CECR · test de niveau · série · combo · Mode révision · « Attention » · TDAH"
+    ],
+    [
+     "Les termes de FRANCE — vos lignes (risque élevé)",
+     "Sur l’onglet 1-Variantes-régionales, les lignes RÉFÉRENCE portent les termes de France. C’est la moitié dont cette voie est l’autorité, et la seule que vous ayez à juger. Elle ne contient aujourd’hui que deux concepts : c’est une amorce, pas un répertoire. La vraie question est donc ce qu’il faut y mettre. Le dossier de cette voie recense huit termes où le français de France et le québécois divergent — bug/bogue, e-mail/courriel, appli/application, chrono/minuteur, Achats/Magasinage, cartes mémoire/fiches, soutien scolaire/tutorat, et Se déconnecter, neutre. L’application n’a qu’UNE colonne française : il nous faut une seule réponse acceptable des deux côtés. Lesquels valent la peine d’entrer dans la carte ?",
+     "« voiture » (concept car) · « copine » (concept girlfriend) — les deux seules lignes RÉFÉRENCE du paquet"
+    ],
+    [
+     "Les termes du QUÉBEC (hors de votre périmètre)",
+     "Les lignes PAR DÉFAUT et RÉGIONAL portent les termes du Québec. Elles relèvent de la voie fr-ca, qui n’a pas encore de relecteur. Elles sont affichées en gris et en italique, marquées « indicatif » dans la colonne « Variété responsable », et tout verdict que vous y posez est rangé au dépouillement dans la section hors périmètre : indicatif, jamais contraignant. Elles sont là parce que la carte montre les deux moitiés côte à côte et que, sans le contraste, votre moitié est difficile à juger.",
+     "« char » (car) · « blonde » (girlfriend) — étiquette de groupe « Québec »"
+    ],
+    [
+     "Espaces insécables",
+     "Style maison : une espace insécable (U+00A0) devant les deux-points, le point-virgule, le point d’interrogation et le point d’exclamation, et à l’intérieur des guillemets. Sur les 403 chaînes françaises de lib/playStrings.js la règle est déjà tenue partout, et nous aimerions que vous le confirmiez plutôt que de le supposer. Le seul manque connu est ailleurs : il vient d’une phrase assemblée à l’exécution (voir la note sur homeGreeting). Si vous en repérez d’autres du même genre, signalez-les : ils sont invisibles dans un diff.",
+     "« Niveau : » (levelLabel) · « Focus de la manche : » (roundFocus) · « Pas sûr ? » (notSureTakeQuiz)"
+    ],
+    [
+     "Noms de fonctionnalités traduits",
+     "Nous avons traduit les noms de fonctionnalités au lieu de les garder en anglais. Est-ce que cela se lit naturellement pour un utilisateur français, ou faut-il en laisser certains en anglais ?",
+     "« Gym de grammaire » (Grammar Gym) · « Banque de mots » (Word Bank) · « manche » (a round of play) · « CECR » (CEFR) · « série » (streak)"
+    ],
+    [
+     "« Alphabet » comme nom de mode",
+     "Le mode qui enseigne un système d’écriture s’appelle « Alphabet » en français comme en anglais, y compris pour le hangeul, le cyrillique et les caractères chinois, qui ne sont pas des alphabets au sens strict. C’est un calque de l’anglais, assumé pour la simplicité. Faut-il le garder, ou passer à « Écriture », plus exact et tout aussi court ?",
+     "« mode Alphabet » (page d’aide) — proposition de rechange : « Écriture »"
+    ],
+    [
+     "Registre familier du vocabulaire produit",
+     "L’interface emploie des formes abrégées et familières là où l’anglais reste neutre : « appli » pour l’application, « chrono » pour le minuteur, « combo » pour la suite de bonnes réponses. C’est cohérent avec le ton proche et bref que nous visons, et c’est aussi ce qui rend le français moins guindé que l’anglais d’origine. Est-ce le bon niveau de langue pour une application d’apprentissage utilisée par des adultes, ou certaines de ces formes font-elles trop familières ?",
+     "« appli » · « chrono » · « combo » (lib/playStrings.js et lib/helpAboutContent.js)"
+    ],
+    [
+     "Nouveautés : rien à traduire ici",
+     "L’onglet 8-Nouveautés contient les 184 puces de l’historique des versions. Aucune n’a de français : lib/version.js ne porte que l’anglais et l’espagnol, donc la colonne française est vide de bout en bout. La traduction est une étape à part et de dernière priorité. Nous connaissons aussi un défaut de la source anglaise — la note de la v2.13.0 annonce « Four new languages » et n’en énumère que trois — et il sera corrigé côté anglais avant toute traduction. Vous n’avez rien à faire sur cet onglet.",
+     "Onglet 8-Nouveautés — 184 lignes, colonne française vide"
+    ],
+    [
+     "Le contenu des cours n’est pas dans ce paquet",
+     "Ce paquet ne contient aucun échantillon de contenu : il ne porte que sur l’interface. Le français des cours est relu dans les deux autres paquets — 959 questions pour le cours de français, et 13 554 entrées des tables l10n plus 1 548 questions pour le français qui explique d’autres langues. Ce que nous vous demandons ici, c’est de signaler tout motif qui se répète : une tournure, un choix de terme, une règle typographique. Nous l’appliquons ensuite sur tout le corpus, pas seulement sur la ligne où vous l’avez vu.",
+     "Signalez le motif UNE fois dans la note ; nous le propageons à l’ensemble du corpus."
+    ]
+   ],
+   "example": {
+    "headers": [
+     "Français actuel",
+     "VERDICT",
+     "CORRECTION PROPOSÉE",
+     "NOTE / MOTIF"
+    ],
+    "row": [
+     "Prêt à passer à {level} ?",
+     "CORRIGER",
+     "Envie de passer à {level} ?",
+     "L’adjectif « Prêt » s’accorde au masculin alors que la phrase s’adresse à n’importe qui. La reformulation est épicène, garde l’espace insécable devant le point d’interrogation et recopie {level} à l’identique. Même traitement partout où un participe ou un adjectif présume du genre."
+    ]
+   },
+   "sheetNames": {
+    "changelog": "8-Nouveautés"
+   }
+  },
+  "taught": {
+   "title": "Contenu enseigné",
+   "subtitle": "Le français que l’application enseigne à celles et ceux qui l’apprennent",
+   "sheets": [
+    "questions",
+    "fono",
+    "vocab",
+    "decisionsContent"
+   ],
+   "decisions": [
+    [
+     "Ce que nous vous demandons ici",
+     "Ce paquet ne porte pas sur la façon dont l’application se lit. Il porte sur le français qu’elle ENSEIGNE à des anglophones en train de l’apprendre. Une erreur ici ne met pas mal à l’aise : elle enseigne faux.",
+     "data/tracks/frForEn.js — 959 questions et 76 items de prononciation · data/vocab/frWords.js — 588 entrées de Banque de mots"
+    ],
+    [
+     "Les options incorrectes comptent autant que la bonne",
+     "Chaque question a une bonne réponse et trois mauvaises. Si l’une des « mauvaises » est en fait défendable, la question est cassée même si la réponse marquée est bonne. C’est la trouvaille la plus précieuse que vous puissiez faire.",
+     "« 'Fenêtre' signifie... » → window / door / wall / floor (data/tracks/frForEn.js)"
+    ],
+    [
+     "Variété",
+     "Le cours enseigne le français standard de France. À ce jour il ne présente aucune variante québécoise : « courriel » par exemple n’apparaît nulle part. Faut-il enseigner certaines divergences comme contenu, ou laisser la carte des variantes s’en charger ?",
+     "« week-end » · « le dîner » (repas du soir) · « la voiture » — formes de France"
+    ],
+    [
+     "Explications en anglais (problème connu)",
+     "La colonne « Explication en français » affiche de l’anglais sur les 959 questions, parce que data/tracks/frForEn.js ne contient aucune explication française : la piste est destinée à des anglophones et l’extracteur retombe sur l’anglais. Inutile de le marquer ligne par ligne. Dites-nous en revanche si l’anglais affirme quelque chose de FAUX sur le français.",
+     "Colonne « Explication en français » — 959 lignes"
+    ],
+    [
+     "Prononciation : deux colonnes vides (problème connu)",
+     "Les 76 lignes de l’onglet 2-Prononciation ont une colonne « Explication en français » vide et une colonne « Paires minimales » vide : ces champs n’existent pas encore dans le fichier source. Jugez la phrase, sa transcription et les options.",
+     "Onglet 2-Prononciation — 76 lignes"
+    ],
+    [
+     "Niveau CECR",
+     "Chaque question porte un niveau (A1–C2). Si l’un vous semble mal placé, dites-le : cela change à qui la question est montrée.",
+     "Colonne « Niveau »"
+    ],
+    [
+     "Notes pédagogiques de la Banque de mots",
+     "Les 588 notes de la Banque de mots sont en anglais à dessein, puisque le cours s’adresse à des anglophones. Vérifiez que l’information sur le français est juste — genre, prononciation, pluriel irrégulier — pas la langue de la note.",
+     "« le musée » → « Masculine despite the -ée: le musée. » (data/vocab/frWords.js)"
+    ],
+    [
+     "Prononciation écrite",
+     "La prononciation est écrite en transcription lisible pour un anglophone, pas en API. Vérifiez qu’elle se lit bien. Notez au passage que ces phrases ne portent pas l’espace insécable devant le point d’interrogation, contrairement à l’interface : faut-il l’ajouter ici aussi ?",
+     "« Qu'est-ce que tu fais? » → « kes-kuh tu FEH? »"
+    ]
+   ],
+   "readme": [
+    [
+     "h1",
+     "SquirreLingo — Contenu enseigné en français ({lane})"
+    ],
+    [
+     "p",
+     "Ce fichier contient le français que l’application ENSEIGNE : les questions, les réponses, les explications et le vocabulaire du cours de français destiné aux anglophones, dans la version {version}. Il est différent du paquet Interface : ici une erreur ne met pas mal à l’aise, elle enseigne faux. Tout a été rédigé par une IA et n’a jamais été relu ; vos corrections repartent directement dans le produit."
+    ],
+    [
+     "h2",
+     "Ce que nous vous demandons"
+    ],
+    [
+     "b",
+     "La réponse marquée comme correcte est-elle correcte ?"
+    ],
+    [
+     "b",
+     "Une des options incorrectes pourrait-elle être valable elle aussi ? Si oui, la question est cassée même si la bonne réponse est bonne. C’est la trouvaille la plus précieuse que vous puissiez faire."
+    ],
+    [
+     "b",
+     "L’explication en français dit-elle quelque chose de vrai et d’utile, et sonne-t-elle naturelle ?"
+    ],
+    [
+     "b",
+     "Le niveau (A1–C2) est-il bien placé pour cette question ?"
+    ],
+    [
+     "h2",
+     "Variété"
+    ],
+    [
+     "b",
+     "Français standard de France. Le cours n’enseigne aujourd’hui AUCUNE divergence régionale comme contenu : on y trouve « week-end », « le dîner » au sens du repas du soir et « la voiture », jamais leurs équivalents québécois. Dites-nous si certaines divergences mériteraient d’être enseignées explicitement."
+    ],
+    [
+     "b",
+     "Les explications et les notes de la Banque de mots sont en ANGLAIS : la personne qui suit ce cours parle anglais. Vérifiez que l’information est juste, pas qu’elle est traduite. N’« améliorez » pas l’anglais non plus — ce n’est pas votre périmètre."
+    ],
+    [
+     "h2",
+     "Comment remplir le fichier"
+    ],
+    [
+     "n",
+     "1. Traitez un onglet à la fois. L’ordre conseillé figure dans l’onglet SYNTHÈSE."
+    ],
+    [
+     "n",
+     "2. Chaque ligne porte une colonne VERDICT avec une liste déroulante. Choisissez une valeur :"
+    ],
+    [
+     "i",
+     "OK — cela convient tel quel. Rien d’autre à écrire."
+    ],
+    [
+     "i",
+     "CORRIGER — il y a quelque chose à reprendre. Écrivez le texte corrigé en entier dans « CORRECTION PROPOSÉE »."
+    ],
+    [
+     "i",
+     "DOUTE — vous hésitez, ou cela dépend de la région. Expliquez dans « NOTE / MOTIF » et nous tranchons avec vous."
+    ],
+    [
+     "n",
+     "3. N’écrivez QUE dans les cellules sur fond jaune. Les autres servent de référence ; si vous les modifiez, nous perdons le lien avec le code."
+    ],
+    [
+     "n",
+     "4. Si une ligne ne vous concerne pas ou que vous ne savez pas la juger, laissez-la vide. Nous préférons un blanc à une supposition."
+    ],
+    [
+     "h2",
+     "Ce que nous savons déjà"
+    ],
+    [
+     "b",
+     "La colonne « Explication en français » est en anglais sur les 959 questions. data/tracks/frForEn.js ne porte aucune explication française — le cours vise des anglophones — et l’extracteur retombe donc sur l’anglais. Ce n’est pas un oubli à signaler ligne par ligne : jugez l’énoncé, la bonne réponse et les options incorrectes, qui sont bien du français."
+    ],
+    [
+     "b",
+     "Sur l’onglet 2-Prononciation, les 76 lignes ont deux colonnes vides, « Explication en français » et « Paires minimales », pour la même raison : ces champs n’existent pas dans le fichier source. Jugez la phrase et sa transcription, laissez ces deux colonnes de côté."
+    ],
+    [
+     "h2",
+     "Exemple d’une ligne correctement remplie"
+    ],
+    [
+     "h2",
+     "Pour finir"
+    ],
+    [
+     "p",
+     "Renseignez votre nom et la date dans l’onglet SYNTHÈSE, puis renvoyez ce même fichier .xlsx."
+    ]
+   ],
+   "example": {
+    "headers": [
+     "Énoncé",
+     "VERDICT",
+     "CORRECTION PROPOSÉE",
+     "NOTE / MOTIF"
+    ],
+    "row": [
+     "'Fenêtre' signifie...",
+     "CORRIGER",
+     "« Fenêtre » signifie…",
+     "L’énoncé emploie des apostrophes droites et trois points au lieu des guillemets français et des points de suspension. Toute la série des énoncés en « X signifie... » est dans ce cas : signalez-le UNE fois ici, nous l’appliquons à l’ensemble."
+    ]
+   },
+   "sheetNames": {
+    "decisionsContent": "4-Décisions"
+   }
+  },
+  "explanation": {
+   "title": "Explications en français",
+   "subtitle": "Le français qui explique D’AUTRES langues",
+   "sheets": [
+    "questions",
+    "fono",
+    "vocab",
+    "overlay",
+    "decisionsContent"
+   ],
+   "decisions": [
+    [
+     "Ce que nous vous demandons ici",
+     "Ici le français n’est pas ce qui est enseigné : c’est la voix qui EXPLIQUE une autre langue. Ce que vous relisez, c’est si l’explication française est exacte et naturelle.",
+     "data/tracks/enUsForFr.js + enGbForFr.js — 1 548 questions et 156 items de prononciation · échantillon de 400 lignes des tables data/tracks/l10n/*.fr.js"
+    ],
+    [
+     "Nous avons besoin des deux",
+     "Une explication peut être dans un français impeccable et rester fausse sur l’anglais ou l’allemand. Si vous repérez une erreur de contenu, dites-le : elle vaut autant que l’erreur de langue.",
+     "« Boring » se traduit par… → « ennuyeux (qui provoque l’ennui) » contre « ennuyé (qui ressent l’ennui) » (data/tracks/enUsForFr.js)"
+    ],
+    [
+     "Gloses de la Banque de mots : onglet vide",
+     "L’onglet 3-Banque-de-mots est vide pour cette voie, et ce n’est pas une erreur d’extraction : les gloses françaises n’ont pas de fichier à elles, elles vivent à l’intérieur des tables l10n et n’apparaissent donc que dans l’échantillon. Quand vous en croisez une, la question reste la même : est-ce le meilleur mot français pour ce sens, et les options incorrectes sont-elles vraiment incorrectes ?",
+     "« Die Zeit » signifie… → temps / heure / horloge / moment (data/tracks/l10n/deForEn.fr.js)"
+    ],
+    [
+     "Registre",
+     "Tutoiement, comme dans le reste de l’application. La question est tranchée — arbitrage du propriétaire du produit, 29 juillet 2026 — et elle est CLOSE : ne rouvrez pas « tu » contre « vous ». Signalez seulement les tournures au « tu » qui sonnent forcées. Une phrase d’exercice dont le sujet est un véritable pluriel emploie « vous » : c’est du nombre grammatical, pas du registre.",
+     "Comment dit-on « année » en allemand ? (data/tracks/l10n/deForEn.fr.js)"
+    ],
+    [
+     "Échantillon, pas relecture exhaustive",
+     "L’onglet 4-Échantillon-explications contient 400 lignes tirées des 13 554 entrées des dix tables l10n — environ trois pour cent. Nous cherchons les problèmes qui se répètent. Si vous voyez un motif, signalez-le UNE fois et nous le corrigeons sur tout le corpus.",
+     "Onglet 4-Échantillon-explications — 400 lignes sur 13 554"
+    ],
+    [
+     "Langues que vous ne maîtrisez peut-être pas",
+     "Inutile de savoir le japonais ou le russe pour relire le français : la référence en anglais vous dit ce que l’énoncé devrait signifier. N’« améliorez » pas la langue enseignée elle-même, elle a son propre relecteur. Si le contexte ne vous suffit pas, mettez DOUTE et nous prenons le relais.",
+     "Échantillon l10n : deForEn · itForEn · jaForEn · koForEn · ruForEn · zhForEn"
+    ]
+   ],
+   "readme": [
+    [
+     "h1",
+     "SquirreLingo — Explications en français ({lane})"
+    ],
+    [
+     "p",
+     "Dans ce fichier, le français n’est pas ce qui est enseigné : c’est la voix qui EXPLIQUE une autre langue. Il s’agit des cours d’anglais pour francophones, des gloses françaises de la Banque de mots des autres langues, et d’un échantillon de la couche française qui accompagne chaque cours. Version {version}. Tout est rédigé par une IA et jamais relu ; vos corrections repartent directement dans le produit."
+    ],
+    [
+     "h2",
+     "Ce que nous vous demandons"
+    ],
+    [
+     "b",
+     "L’explication en français est-elle exacte à propos de la langue qu’elle décrit ?"
+    ],
+    [
+     "b",
+     "Sonne-t-elle naturelle, ou sent-elle la traduction de l’anglais ?"
+    ],
+    [
+     "b",
+     "Dans les gloses de la Banque de mots : est-ce le meilleur mot français pour ce sens ?"
+    ],
+    [
+     "b",
+     "Une explication peut être dans un français impeccable et dire malgré tout quelque chose de faux sur l’anglais. Si vous voyez une erreur de contenu, dites-le : elle nous sert autant que l’erreur de langue."
+    ],
+    [
+     "h2",
+     "Si vous ne maîtrisez pas la langue du cours"
+    ],
+    [
+     "b",
+     "Inutile de savoir le japonais ou le russe. La colonne de référence en anglais vous dit ce que le mot devrait signifier ; à vous de juger si la glose française le dit bien. N’« améliorez » pas la langue enseignée elle-même : elle a son propre relecteur natif. Si le contexte ne vous suffit pas, mettez DOUTE et nous prenons le relais."
+    ],
+    [
+     "h2",
+     "Comment remplir le fichier"
+    ],
+    [
+     "n",
+     "1. Traitez un onglet à la fois. L’ordre conseillé figure dans l’onglet SYNTHÈSE."
+    ],
+    [
+     "n",
+     "2. Chaque ligne porte une colonne VERDICT avec une liste déroulante. Choisissez une valeur :"
+    ],
+    [
+     "i",
+     "OK — cela convient tel quel. Rien d’autre à écrire."
+    ],
+    [
+     "i",
+     "CORRIGER — il y a quelque chose à reprendre. Écrivez le texte corrigé en entier dans « CORRECTION PROPOSÉE »."
+    ],
+    [
+     "i",
+     "DOUTE — vous hésitez, ou cela dépend de la région. Expliquez dans « NOTE / MOTIF » et nous tranchons avec vous."
+    ],
+    [
+     "n",
+     "3. N’écrivez QUE dans les cellules sur fond jaune. Les autres servent de référence ; si vous les modifiez, nous perdons le lien avec le code."
+    ],
+    [
+     "n",
+     "4. Si une ligne ne vous concerne pas ou que vous ne savez pas la juger, laissez-la vide. Nous préférons un blanc à une supposition."
+    ],
+    [
+     "h2",
+     "Exemple d’une ligne correctement remplie"
+    ],
+    [
+     "h2",
+     "Ce que nous savons déjà, et l’onglet d’échantillon"
+    ],
+    [
+     "b",
+     "Trois choses avant de commencer. (1) L’onglet 3-Banque-de-mots est VIDE : il n’existe pas de fichiers data/vocab/*.fr.js ; les gloses françaises ont été écrites directement dans les tables data/tracks/l10n/*.fr.js, et elles ne sont donc couvertes que par l’échantillon. (2) L’onglet 4-Échantillon-explications contient 400 lignes tirées de 13 554 entrées : il sert à repérer les motifs qui se répètent, pas à tout relire. Si vous voyez un motif, signalez-le UNE fois dans la note et nous le corrigeons sur tout le corpus. (3) Sur l’onglet 2-Prononciation, la colonne « Paires minimales » est vide sur les 156 lignes — ces données n’existent pas encore. Rien de tout cela n’est à nous signaler."
+    ],
+    [
+     "h2",
+     "Pour finir"
+    ],
+    [
+     "p",
+     "Renseignez votre nom et la date dans l’onglet SYNTHÈSE, puis renvoyez ce même fichier .xlsx."
+    ]
+   ],
+   "example": {
+    "headers": [
+     "Énoncé en français",
+     "VERDICT",
+     "CORRECTION PROPOSÉE",
+     "NOTE / MOTIF"
+    ],
+    "row": [
+     "« Die Zeit » signifie…",
+     "CORRIGER",
+     "remplacer l’option « moment » par un intrus sans rapport",
+     "« moment » et « heure » sont eux aussi des traductions défendables de Zeit selon le contexte : deux mauvaises réponses acceptables cassent la question, même si « temps » reste la meilleure. Un intrus franchement faux contraste mieux."
+    ]
+   },
+   "sheetNames": {}
+  }
+ },
+ "dispatchEmail": {
+  "subject": "SquirreLingo — relecture du français (fr-FR) : les trois cahiers et dans quel ordre",
+  "greeting": "Bonjour {name},",
+  "namePlaceholder": "[prénom]",
+  "senderDefault": "Sean",
+  "opening": [
+   "Voici les trois cahiers de relecture de SquirreLingo, générés depuis la version {version} de l’application. Chacun est un fichier .xlsx et contient un onglet LISEZ-MOI avec les consignes complètes : quelle variété de français nous visons, comment remplir les cellules et comment nous le renvoyer. Commencez par là dans chaque fichier — je n’en répète rien ici.",
+   "Ce que je vous explique en revanche, c’est comment les trois s’articulent, parce que cela ne figure dans aucun des fichiers."
+  ],
+  "tableHeaders": [
+   "#",
+   "Cahier",
+   "Ce que vous relisez",
+   "Lignes",
+   "Durée estimée"
+  ],
+  "scopeOrder": [
+   "interface",
+   "taught",
+   "explanation"
+  ],
+  "scopeCopy": {
+   "interface": {
+    "what": "La façon dont l’application se lit en français : menus, réglages, formulaires, pages d’aide",
+    "hours": "2–4 h"
+   },
+   "taught": {
+    "what": "Le français que l’application enseigne à qui l’apprend",
+    "hours": "12–17 h"
+   },
+   "explanation": {
+    "what": "Le français qui explique d’autres langues (anglais, allemand, japonais, russe, chinois…)",
+    "hours": "12–18 h"
+   }
+  },
+  "notBuilt": "(à construire)",
+  "notCounted": "(décompte à refaire)",
+  "weightNote": "Les lignes ne pèsent pas la même chose. Dans le premier cahier, ce sont presque toutes des phrases isolées et vous avancez vite ; dans le deuxième et le troisième, beaucoup de lignes sont une question entière — énoncé, quatre options, l’explication et ses notes — donc le rendement horaire est bien plus faible. Ce sont nos estimations, pas des mesures : si elles s’avèrent très loin du compte, dites-le-nous et nous les corrigerons.",
+  "orderHeading": "L’ordre compte — faites le premier et arrêtez-vous là",
+  "orderIntro": "Faites le cahier d’interface en entier et renvoyez-le-moi avant d’ouvrir les deux autres. Deux raisons :",
+  "orderReasons": [
+   "Il contient un onglet de décisions avec des questions d’arbitrage (registre familier du vocabulaire produit, anglicismes conservés volontairement, choix de terminologie…). Vos réponses y fixent des critères qui reviennent des dizaines de fois dans les deux autres cahiers : y répondre d’abord vous évite de reprendre le même arbitrage ligne après ligne.",
+   "C’est la première fois que quelqu’un utilise ce format. Si quelque chose est mal conçu, nous préférons le découvrir sur le cahier le plus court plutôt qu’après des heures passées sur le plus long."
+  ],
+  "laneNotes": [
+   "Une mise en garde propre au français : sur l’onglet des variantes régionales, ce sont les lignes RÉFÉRENCE — les termes de France — qui vous reviennent ; les lignes du Québec sont grisées et relèvent d’une autre voie. Et ce registre n’est qu’une amorce de deux concepts, pas un répertoire construit : la vraie question est ce qu’il faudrait y ajouter.",
+   "Deux onglets ne demandent aucune attention : les questions de sécurité et les Nouveautés n’ont pas encore de français du tout. Ils sont dans le fichier pour que vous en voyiez l’ampleur, pas pour être relus."
+  ],
+  "closing": [
+   "Ensuite nous enchaînons avec le cahier du contenu enseigné, et nous gardons celui des explications pour la fin. Ce dernier est long : faites-le par lots et renvoyez-le en plusieurs fois si vous préférez, inutile de le terminer entièrement. Cela vaut pour les trois, en réalité — nous préférons recevoir des avancées qu’attendre.",
+   "Rien ne presse. Si une ligne vous laisse perplexe, envoyez-la-moi et nous la regarderons ensemble."
+  ],
+  "signoff": "Merci,\n{sender}"
+ }
+}

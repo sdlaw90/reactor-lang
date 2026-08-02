@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Flame, Zap, Check, X, ChevronRight, ChevronDown, RotateCcw, Trophy, Info } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
@@ -45,7 +45,8 @@ import {
   clearExplanations,
 } from "../../../lib/db";
 
-export default function PlayPage({ params }) {
+export default function PlayPage(props) {
+  const params = use(props.params);
   const router = useRouter();
   const track = getTrack(params.trackId);
 
@@ -86,7 +87,7 @@ export default function PlayPage({ params }) {
   const dismissScriptNotice = () => {
     setScriptNoticeDismissed(true);
     try {
-      localStorage.setItem(`sq-script-notice-${track.id}`, "1");
+      localStorage.setItem(`sq-script-notice-${track?.id}`, "1");
     } catch {}
   };
   const [showPageHelp, setShowPageHelp] = useState(false);
@@ -122,6 +123,9 @@ export default function PlayPage({ params }) {
         router.push("/auth");
         return;
       }
+      // #95: an unknown :trackId leaves `track` null. Hooks can't early-return
+      // above this, so bail here — the "Unknown track" branch renders below.
+      if (!track) return;
       const uid = data.session.user.id;
       setUserId(uid);
       setSession(data.session);
@@ -174,7 +178,7 @@ export default function PlayPage({ params }) {
   // English-native prompt/label variant where one exists, falling back to
   // the original otherwise.
   const viewerNativeLang = session?.user?.user_metadata?.native_lang;
-  const useAltPrompt = viewerNativeLang === "en" && track.nativeLang !== "en";
+  const useAltPrompt = viewerNativeLang === "en" && track?.nativeLang !== "en";
   const displayPrompt = (q) => (useAltPrompt && q.promptEn ? q.promptEn : q.prompt);
   const displayCatLabel = (catId) => categoryDisplayName(uiLang, viewerNativeLang, track, catId);
   const uiLang = uiLangForSkill(progress.skill_level, viewerNativeLang, track);
@@ -183,7 +187,7 @@ export default function PlayPage({ params }) {
   // to resolve explanations/notes into that language, falling back to English
   // when the source string isn't localized yet. sourceRegion drives the future
   // es-LatAm/es-Spain variant split (inert until such content is authored).
-  const sourceLang = viewerNativeLang || track.nativeLang;
+  const sourceLang = viewerNativeLang || track?.nativeLang;
   const sourceRegion = session?.user?.user_metadata?.native_country === "ES" ? "spain" : "latam";
   // U4 dual-version card: the learner's actual country (ISO code) drives which
   // regional term is highlighted as "en tu región". null → falls back to each
@@ -192,11 +196,11 @@ export default function PlayPage({ params }) {
   // #60: the track's target language — surfaced as a second explanation row
   // below Advanced level (see explainRows), so e.g. English speakers learning
   // Spanish keep the Spanish reading as exposure.
-  const explainTargetLang = track.targetLang || null;
+  const explainTargetLang = track?.targetLang || null;
   // v3.1: the per-source localized-surface map for this track (Spanish answer
   // options / trad prompts / subtitles). null for English natives or any track
   // without a side table yet → base English surface (see data/tracks/l10n).
-  const l10nMap = getL10n(track.id, sourceLang);
+  const l10nMap = getL10n(track?.id, sourceLang);
   // Small native-language subtitle under the question (target language stays
   // the primary prompt on top). Follows the same skill-level rule as the rest
   // of the page's chrome: shown while the UI is in the viewer's native
@@ -206,9 +210,9 @@ export default function PlayPage({ params }) {
   // native-language text for a cross-native viewer).
   const displayPromptNative = (q) => {
     if (!q.promptNative) return null;
-    const nativeLang = viewerNativeLang || track.nativeLang;
+    const nativeLang = viewerNativeLang || track?.nativeLang;
     if (uiLang !== nativeLang) return null;
-    const txt = q.promptNative[nativeLang] || q.promptNative[track.nativeLang];
+    const txt = q.promptNative[nativeLang] || q.promptNative[track?.nativeLang];
     // Never show a native subtitle that just hands over the answer. Some vocab
     // items carry the meaning in promptNative (base-content quirk); that must not
     // leak to the learner in any language.
@@ -735,7 +739,7 @@ export default function PlayPage({ params }) {
               )}
             </div>
 
-            <button className="rj" style={styles.primaryBtn} onClick={() => startRound("daily")}>
+            <button className="rj" data-testid="start-round" style={styles.primaryBtn} onClick={() => startRound("daily")}>
               {T("startRound")} <ChevronRight size={20} style={{ verticalAlign: "middle" }} />
             </button>
 
@@ -750,7 +754,7 @@ export default function PlayPage({ params }) {
             )}
 
             {explanationLog.length > 0 && (
-              <button className="rj" style={styles.explainOpenBtn} onClick={() => setScreen("explain")}>
+              <button className="rj" data-testid="view-explanations" style={styles.explainOpenBtn} onClick={() => setScreen("explain")}>
                 {T("viewExplanations", { n: explanationLog.length })}
               </button>
             )}
@@ -851,6 +855,7 @@ export default function PlayPage({ params }) {
                       <button
                         onClick={() => handleAnswer(i)}
                         disabled={!!feedback}
+                        data-testid="answer-option"
                         className="rj"
                         style={{ ...styles.optionBtn, flex: 1, background: bg, borderColor: border, borderWidth, color: textColor }}
                       >
@@ -916,7 +921,7 @@ export default function PlayPage({ params }) {
               )}
 
               {awaitingNext && (
-                <button className="rj" style={styles.nextBtn} onClick={handleNext}>
+                <button className="rj" data-testid="next-question" style={styles.nextBtn} onClick={handleNext}>
                   {T("next")} <ChevronRight size={18} style={{ verticalAlign: "middle" }} />
                 </button>
               )}
@@ -926,7 +931,7 @@ export default function PlayPage({ params }) {
 
         {screen === "result" && (
           <div style={styles.centerCol} className="fadein">
-            <h2 className="rj" style={styles.title}>
+            <h2 className="rj" data-testid="round-complete" style={styles.title}>
               {roundMode === "review" ? T("reviewComplete") : T("roundComplete")}
             </h2>
             <div style={styles.statRow} className="jm">
@@ -938,12 +943,12 @@ export default function PlayPage({ params }) {
                 <StatChip label={T("statDailyStreak")} value={`${progress.streak}d`} color="#FF7B8A" />
               )}
             </div>
-            <button className="rj" style={styles.primaryBtn} onClick={() => startRound("daily")}>
+            <button className="rj" data-testid="start-round" style={styles.primaryBtn} onClick={() => startRound("daily")}>
               <RotateCcw size={18} style={{ verticalAlign: "middle", marginRight: 8 }} />
               {T("anotherRound")}
             </button>
             {explanationLog.length > 0 && (
-              <button className="rj" style={styles.explainOpenBtn} onClick={() => setScreen("explain")}>
+              <button className="rj" data-testid="view-explanations" style={styles.explainOpenBtn} onClick={() => setScreen("explain")}>
                 {T("viewExplanations", { n: explanationLog.length })}
               </button>
             )}
@@ -1117,6 +1122,18 @@ function RegionalVariantCard({ variant, nativeCountry }) {
   const regionLabel = isRef ? variant.referenceLabel : (countryNames[nativeCountry] || variant.regionalGroupLabel);
   const flag = isRef ? ui.refFlag : ui.regFlag;
   const multi = regional.length > 1;
+  // Group the regional terms by their own label so a multi-region record renders one
+  // row per region rather than all of them under the reference group's heading.
+  const regionGroups = (() => {
+    const flags = variant.regionFlags || {};
+    const order = [], byLabel = new Map();
+    for (const v of regional) {
+      const label = v.label || variant.regionalGroupLabel;
+      if (!byLabel.has(label)) { byLabel.set(label, { label, flag: flags[(v.countries || [])[0]] || ui.regFlag, terms: [] }); order.push(label); }
+      byLabel.get(label).terms.push(v);
+    }
+    return order.map((l) => byLabel.get(l));
+  })();
 
   return (
     <div style={styles.dualCard}>
@@ -1143,17 +1160,23 @@ function RegionalVariantCard({ variant, nativeCountry }) {
             </button>
           ) : (
             <>
-              <div style={styles.dualRegionRow}>
-                <span style={styles.dualRegionLabel}>{ui.regFlag} {variant.regionalGroupLabel}</span>
-                <span style={styles.dualChips}>
-                  {regional.map((v) => (
-                    <span key={v.term} style={v.term === mineTerm && !isRef ? styles.dualChipMine : styles.dualChip}>
-                      {v.term}
-                      {v.label ? <span style={styles.dualChipRg}> {v.label}</span> : null}
-                    </span>
-                  ))}
-                </span>
-              </div>
+              {/* One row per region. A record can span more than one — French is the first
+                  source where it does (Québec + Belgique + Suisse) — so a single hardcoded
+                  `regionalGroupLabel` header would file a Belgian's own word under 🇨🇦 Québec.
+                  Groups keep source order; `regionFlags` is optional and falls back to ui.regFlag. */}
+              {regionGroups.map((g) => (
+                <div key={g.label} style={styles.dualRegionRow}>
+                  <span style={styles.dualRegionLabel}>{g.flag} {g.label}</span>
+                  <span style={styles.dualChips}>
+                    {g.terms.map((v) => (
+                      <span key={v.term} style={v.term === mineTerm && !isRef ? styles.dualChipMine : styles.dualChip}>
+                        {v.term}
+                        {v.label ? <span style={styles.dualChipRg}> {v.label}</span> : null}
+                      </span>
+                    ))}
+                  </span>
+                </div>
+              ))}
               <div style={styles.dualRegionRow}>
                 <span style={styles.dualRegionLabel}>{ui.refFlag} {variant.referenceLabel}</span>
                 <span style={styles.dualChips}>

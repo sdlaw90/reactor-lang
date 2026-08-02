@@ -2,38 +2,38 @@
 // Keyed by normalized PROMPT TEXT. AI-authored in the content-depth pass — PENDING native review.
 
 export const THEMES = [
-  { id: "numbers-time", en: "Numbers, dates & time", es: "Números y tiempo", pt: "Números e tempo" },
-  { id: "directions", en: "Directions", es: "Direcciones", pt: "Direções" },
-  { id: "shopping", en: "Shopping", es: "Compras", pt: "Compras" },
-  { id: "restaurant", en: "Restaurant & food", es: "Restaurante", pt: "Restaurante" },
-  { id: "travel", en: "Travel", es: "Viajes", pt: "Viagens" },
-  { id: "medical", en: "Medical & doctor", es: "Salud", pt: "Saúde" },
-  { id: "small-talk", en: "Small talk", es: "Conversación", pt: "Conversa" },
-  { id: "work", en: "Work & office", es: "Trabajo", pt: "Trabalho" },
-  { id: "emotions", en: "Emotions", es: "Emociones", pt: "Emoções" },
+  { id: "numbers-time", en: "Numbers, dates & time", es: "Números y tiempo", pt: "Números e tempo", fr: "Nombres, dates et heures" },
+  { id: "directions", en: "Directions", es: "Direcciones", pt: "Direções", fr: "Directions" },
+  { id: "shopping", en: "Shopping", es: "Compras", pt: "Compras", fr: "Achats" },
+  { id: "restaurant", en: "Restaurant & food", es: "Restaurante", pt: "Restaurante", fr: "Restaurant" },
+  { id: "travel", en: "Travel", es: "Viajes", pt: "Viagens", fr: "Voyages" },
+  { id: "medical", en: "Medical & doctor", es: "Salud", pt: "Saúde", fr: "Santé" },
+  { id: "small-talk", en: "Small talk", es: "Conversación", pt: "Conversa", fr: "Conversation" },
+  { id: "work", en: "Work & office", es: "Trabajo", pt: "Trabalho", fr: "Travail" },
+  { id: "emotions", en: "Emotions", es: "Emociones", pt: "Emoções", fr: "Émotions" },
 ];
 
 const T = {
-  presente: { tense: { en: "Presente", es: "Presente" }, why: { en: "Habitual or current actions.", es: "Acciones habituales o actuales." } },
-  passatoProssimo: { tense: { en: "Passato prossimo", es: "Pretérito perfecto" }, why: { en: "A completed past action (\"have done / did\").", es: "Una acción pasada completada." } },
-  imperfetto: { tense: { en: "Imperfetto", es: "Imperfecto" }, why: { en: "Ongoing, habitual or background past actions.", es: "Acciones pasadas en curso, habituales o de fondo." } },
-  futuro: { tense: { en: "Futuro semplice", es: "Futuro simple" }, why: { en: "What will happen.", es: "Lo que ocurrirá." } },
-  condizionale: { tense: { en: "Condizionale", es: "Condicional" }, why: { en: "What would happen, and polite requests (vorrei).", es: "Lo que ocurriría, y peticiones corteses (vorrei)." } },
-  congPresente: { tense: { en: "Congiuntivo presente", es: "Presente de subjuntivo" }, why: { en: "Triggered by opinion, doubt, wish or emotion (penso che, voglio che, benché).", es: "Lo activan la opinión, la duda, el deseo o la emoción (penso che, voglio che, benché)." } },
-  congImperfetto: { tense: { en: "Congiuntivo imperfetto", es: "Imperfecto de subjuntivo" }, why: { en: "Used in past-subjunctive contexts and the 'se' hypothetical.", es: "Se usa en contextos de subjuntivo pasado y en la hipótesis con 'se'." } },
-  trapassato: { tense: { en: "Trapassato prossimo", es: "Pluscuamperfecto" }, why: { en: "A past action finished before another past moment (\"had done\").", es: "Una acción pasada anterior a otro momento pasado." } },
-  imperativo: { tense: { en: "Imperativo", es: "Imperativo" }, why: { en: "Telling someone to do something.", es: "Decirle a alguien que haga algo." } },
-  infinito: { tense: { en: "Infinito", es: "Infinitivo" }, why: { en: "The unconjugated verb, after another verb or a preposition.", es: "El verbo sin conjugar, tras otro verbo o preposición." } },
+  presente: { tense: { en: "Presente", es: "Presente", fr: "Présent", pt: "Presente" }, why: { en: "Habitual or current actions.", es: "Acciones habituales o actuales.", fr: "Actions habituelles ou actuelles.", pt: "Ações habituais ou atuais." } },
+  passatoProssimo: { tense: { en: "Passato prossimo", es: "Pretérito perfecto", fr: "Passé composé", pt: "Pretérito perfeito" }, why: { en: "A completed past action (\"have done / did\").", es: "Una acción pasada completada.", fr: "Une action passée achevée.", pt: "Uma ação passada concluída." } },
+  imperfetto: { tense: { en: "Imperfetto", es: "Imperfecto", fr: "Imparfait", pt: "Imperfeito" }, why: { en: "Ongoing, habitual or background past actions.", es: "Acciones pasadas en curso, habituales o de fondo.", fr: "Actions passées en cours, habituelles ou de fond.", pt: "Ações passadas em curso, habituais ou de fundo." } },
+  futuro: { tense: { en: "Futuro semplice", es: "Futuro simple", fr: "Futur simple", pt: "Futuro simples" }, why: { en: "What will happen.", es: "Lo que ocurrirá.", fr: "Ce qui arrivera.", pt: "O que vai acontecer." } },
+  condizionale: { tense: { en: "Condizionale", es: "Condicional", fr: "Conditionnel", pt: "Condicional" }, why: { en: "What would happen, and polite requests (vorrei).", es: "Lo que ocurriría, y peticiones corteses (vorrei).", fr: "Ce qui arriverait, et les demandes polies (vorrei).", pt: "O que aconteceria, e pedidos educados (vorrei)." } },
+  congPresente: { tense: { en: "Congiuntivo presente", es: "Presente de subjuntivo", fr: "Subjonctif présent", pt: "Presente do subjuntivo" }, why: { en: "Triggered by opinion, doubt, wish or emotion (penso che, voglio che, benché).", es: "Lo activan la opinión, la duda, el deseo o la emoción (penso che, voglio che, benché).", fr: "Déclenché par l’opinion, le doute, le souhait ou l’émotion (penso che, voglio che, benché).", pt: "Ativado por opinião, dúvida, desejo ou emoção (penso che, voglio che, benché)." } },
+  congImperfetto: { tense: { en: "Congiuntivo imperfetto", es: "Imperfecto de subjuntivo", fr: "Subjonctif imparfait", pt: "Imperfeito do subjuntivo" }, why: { en: "Used in past-subjunctive contexts and the 'se' hypothetical.", es: "Se usa en contextos de subjuntivo pasado y en la hipótesis con 'se'.", fr: "S’emploie dans les contextes de subjonctif passé et l’hypothèse avec « se ».", pt: "Usado em contextos de subjuntivo passado e na hipótese com 'se'." } },
+  trapassato: { tense: { en: "Trapassato prossimo", es: "Pluscuamperfecto", fr: "Plus-que-parfait", pt: "Mais-que-perfeito" }, why: { en: "A past action finished before another past moment (\"had done\").", es: "Una acción pasada anterior a otro momento pasado.", fr: "Une action passée antérieure à un autre moment passé.", pt: "Uma ação passada anterior a outro momento passado." } },
+  imperativo: { tense: { en: "Imperativo", es: "Imperativo", fr: "Impératif", pt: "Imperativo" }, why: { en: "Telling someone to do something.", es: "Decirle a alguien que haga algo.", fr: "Dire à quelqu’un de faire quelque chose.", pt: "Dizer a alguém para fazer algo." } },
+  infinito: { tense: { en: "Infinito", es: "Infinitivo", fr: "Infinitif", pt: "Infinitivo" }, why: { en: "The unconjugated verb, after another verb or a preposition.", es: "El verbo sin conjugar, tras otro verbo o preposición.", fr: "Le verbe non conjugué, après un autre verbe ou une préposition.", pt: "O verbo não conjugado, depois de outro verbo ou de uma preposição." } },
 };
 
 const P = {
-  io: { en: "io (I)", es: "yo" },
-  tu: { en: "tu (you)", es: "tú" },
-  lui: { en: "lui / lei (he/she)", es: "él / ella" },
-  noi: { en: "noi (we)", es: "nosotros" },
-  voi: { en: "voi (you all)", es: "vosotros" },
-  loro: { en: "loro (they)", es: "ellos / ellas" },
-  impersonal: { en: "impersonal", es: "impersonal" },
+  io: { en: "io (I)", es: "yo", fr: "io (je)", pt: "io (eu)" },
+  tu: { en: "tu (you)", es: "tú", fr: "tu (tu)", pt: "tu (você)" },
+  lui: { en: "lui / lei (he/she)", es: "él / ella", fr: "lui / lei (il / elle)", pt: "lui / lei (ele / ela)" },
+  noi: { en: "noi (we)", es: "nosotros", fr: "noi (nous)", pt: "noi (nós)" },
+  voi: { en: "voi (you all)", es: "vosotros", fr: "voi (vous, pluriel)", pt: "voi (vocês)" },
+  loro: { en: "loro (they)", es: "ellos / ellas", fr: "loro (ils / elles)", pt: "loro (eles / elas)" },
+  impersonal: { en: "impersonal", es: "impersonal", fr: "impersonnel", pt: "impessoal" },
 };
 
 const RAW = {

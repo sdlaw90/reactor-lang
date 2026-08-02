@@ -15,6 +15,8 @@ import jaForEn from "./jaForEn";
 import zhForEn from "./zhForEn";
 import koForEn from "./koForEn";
 import enForIt from "./enForIt";
+import enUsForFr from "./enUsForFr";
+import enGbForFr from "./enGbForFr";
 
 export const TRACKS = {
   [esForEn.id]: esForEn,
@@ -34,6 +36,8 @@ export const TRACKS = {
   [zhForEn.id]: zhForEn,
   [koForEn.id]: koForEn,
   [enForIt.id]: enForIt,
+  [enUsForFr.id]: enUsForFr,
+  [enGbForFr.id]: enGbForFr,
 };
 
 const NATIVE_LANG_LABELS = {
@@ -68,9 +72,9 @@ export function listNativeLanguages() {
 // (any non-English target) is offered to a native speaker only when their
 // source language is in this set — so unready sources never see a half-localized
 // experience. This grows by ONE per v3.x minor, matching the release roadmap:
-// v3.0 English · v3.1 Spanish · v3.2 Portuguese · … (see
+// v3.0 English · v3.1 Spanish · v3.2 Portuguese · v3.3 French · … (see
 // claude/squirrelingo_v3.x_to_v4.0.0_deployment_plan.md).
-const RELEASED_SOURCE_LANGS = new Set(["en", "es", "pt"]);
+const RELEASED_SOURCE_LANGS = new Set(["en", "es", "pt", "fr"]);
 
 // Tracks available to learn, given the person's native language.
 //
