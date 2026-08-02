@@ -6,6 +6,7 @@ import PasswordInput from "../../lib/PasswordInput";
 import PasswordStrengthMeter from "../../lib/PasswordStrengthMeter";
 import { t } from "../../lib/playStrings";
 import { useUiLang } from "../../lib/uiLang";
+import { questionLabel } from "../../lib/securityQuestions";
 import LangSwitcher from "../../lib/LangSwitcher";
 
 // Security-question password reset (#79). Email-link reset can't reach
@@ -161,10 +162,10 @@ export default function ForgotPasswordPage() {
             )}
             {questions.map((q) => (
               <label key={q.key} style={styles.qLabel}>
-                <span style={styles.qText}>{q.label}</span>
+                <span style={styles.qText}>{questionLabel(q.key, uiLang)}</span>
                 <input
                   type="text"
-                  aria-label={q.label}
+                  aria-label={questionLabel(q.key, uiLang)}
                   value={answers[q.key] || ""}
                   onChange={(e) => setAnswers((a) => ({ ...a, [q.key]: e.target.value }))}
                   style={styles.input}

@@ -1,8 +1,13 @@
-# 2026-07-29 — Language-table sweep: switcher label + Spanish theme names (3.2.1 fix)
+# 2026-07-29 — Language-table sweep: switcher label + Spanish theme names
 
-_Folds into the **3.2.1** release entry._ Two user-visible localization gaps found by the v3.3
-French Phase 1 gate, both in already-shipped content, both fixed here rather than folded into the
-French milestone. Deliberately kept to the two fixes that need no new native review.
+_Folds into the **3.3.0** release entry._ Two user-visible localization gaps found by the v3.3
+French Phase 1 gate, both in already-shipped content. Deliberately kept to the two fixes that
+need no new native review.
+
+> **Retargeted 2026-08-02 (was 3.2.1).** The standalone 3.2.1 Z was dropped — Sean's call — so
+> both cosmetic localization fixes ride with the French milestone instead. The
+> security-question fix in `2026-08-02-security-question-localization.md` is the same class of
+> bug and ships alongside these.
 
 ## User-facing
 - Fixed: the language switcher on the sign-in and sign-up screens showed a raw language code

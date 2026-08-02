@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 507 tracked files.
+> 508 tracked files.
 
 ```
 .env.local.example
@@ -218,6 +218,7 @@ docs/changelog/unreleased/2026-07-28-marketing-asset-library.md
 docs/changelog/unreleased/2026-07-28-versioning-and-process-docs.md
 docs/changelog/unreleased/2026-07-29-language-table-sweep.md
 docs/changelog/unreleased/2026-08-02-next16-react19-node24-upgrade.md
+docs/changelog/unreleased/2026-08-02-security-question-localization.md
 docs/codebase-reference.md
 docs/language-review/README.md
 docs/language-review/es-latam/STATUS.md
