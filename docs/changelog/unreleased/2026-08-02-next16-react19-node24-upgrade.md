@@ -71,10 +71,30 @@ in `eslint.config.mjs` so `npm run lint` exits clean:
 None are caused by this upgrade; all predate it. Current state: **0 errors, 72 warnings**.
 Cleaning them up is its own task and should not ride with a framework bump.
 
-### CI
-`node-version: 22` → `24` in all five `actions/setup-node` steps across `e2e-tests.yml` and
-`supabase-migrations.yml`. Node 22 entered maintenance in Oct 2025 and loses security support
-30 Apr 2027; Node 24 is the active LTS through 30 Apr 2028.
+### CI — two separate Node versions, don't conflate them
+**1. The app's Node.** `node-version: 22` → `24` in all five `actions/setup-node` steps across
+`e2e-tests.yml` and `supabase-migrations.yml`. Node 22 entered maintenance in Oct 2025 and loses
+security support 30 Apr 2027; Node 24 is the active LTS through 30 Apr 2028.
+
+**2. The actions' own runtime.** The first green run surfaced:
+`Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on
+Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4.`
+That is unrelated to `node-version:` — those actions are themselves JS programs declaring
+`runs.using: node20` in their own `action.yml`, and GitHub is retiring that runtime. Bumped:
+
+| Action | Was | Now | Verified |
+|---|---|---|---|
+| `actions/checkout` (×7) | v4 | **v6** | `runs.using: node24` in `action.yml@v6` |
+| `actions/setup-node` (×5) | v4 | **v6** | `runs.using: node24` in `action.yml@v6` |
+| `actions/upload-artifact` (×2) | v4 | **v7** | `runs.using: node24` in `action.yml@v7` |
+| `supabase/setup-cli` (×3) | v3 | **unchanged** | composite action — no Node runtime of its own; already pins setup-node v6.4.0 internally |
+
+Each target version was confirmed by reading `action.yml` at the tag, not from release notes.
+Usage is limited to basic inputs (`node-version`, `cache`, `name`, `path`, `retention-days`,
+`if-no-files-found`), none of which changed shape across these majors.
+
+> **`.github/workflows/*` cannot be written through the remote-devices bridge** — they're
+> protected files. Both CI edits in this release were handed to Sean as PowerShell one-liners.
 
 ### Verification performed
 - `npm ci` from a wiped `node_modules` against the regenerated lockfile — clean.
@@ -92,7 +112,7 @@ the Next 14 baseline, so this is not a regression, but it means any stale or mis
 URL hard-errors in production. The other six sections handle a null track correctly (200 +
 "Unknown track"). Worth a one-line guard in its own commit.
 
-### Not verified
-The Playwright E2E suite was not run — it needs live Supabase credentials and a real account,
-which the verification container doesn't have. Run `npm run test:e2e` locally, or let the
-CI workflow cover it on push.
+### E2E — RAN AND PASSED
+`e2e-tests.yml` triggers on push to `dev`, so the upgrade got its real run immediately:
+**40 passed, 0 skipped, 0 failed** on Node 24, built against Next 16, on GitHub's runners.
+The credential gate added 2026-07-28 means that 40 is a real count, not a silent skip.
