@@ -19,7 +19,7 @@ import {
   COMBINED_MIN,
 } from "../../../lib/gameEngine";
 import { cefrSetForSkillLevel, masteryBandsForSkillLevel, nextSkillLevel, readyToAdvance, skillLevelLabel, skillLevelDescription, SKILL_LEVELS } from "../../../lib/skillLevels";
-import { getL10n } from "../../../data/tracks/l10n";
+import { loadL10n } from "../../../data/tracks/l10n";
 import { regionalVariantFor } from "../../../data/tracks/l10n/regionalVariants";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
 import ModeToggle from "../../../lib/ModeToggle";
@@ -53,6 +53,11 @@ export default function PlayPage(props) {
   const [userId, setUserId] = useState(null);
   const [session, setSession] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  // v3.4 (#60): the per-source localized-surface map, now fetched as its own
+  // chunk rather than bundled into every page (data/tracks/l10n/index.js).
+  // Loaded alongside progress in the effect below and awaited before `loaded`
+  // flips, so no round can be built off a half-loaded surface.
+  const [l10nMap, setL10nMap] = useState(null);
   const [screen, setScreen] = useState("start"); // start | playing | result | explain | archive
   const [progress, setProgress] = useState({
     xp: 0,
@@ -129,16 +134,19 @@ export default function PlayPage(props) {
       const uid = data.session.user.id;
       setUserId(uid);
       setSession(data.session);
-      const [p, missed, seen, recent] = await Promise.all([
+      const src = data.session.user.user_metadata?.native_lang || track.nativeLang;
+      const [p, missed, seen, recent, l10n] = await Promise.all([
         loadProgress(uid, track.id),
         loadMissedIds(uid, track.id),
         loadSeenAt(uid, track.id),
         fetchRecentExplanations(uid, track.id),
+        loadL10n(track.id, src),
       ]);
       setProgress(p);
       setMissedIds(missed);
       setSeenAt(seen);
       setExplanationLog(recent);
+      setL10nMap(l10n);
       setLoaded(true);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -197,10 +205,10 @@ export default function PlayPage(props) {
   // below Advanced level (see explainRows), so e.g. English speakers learning
   // Spanish keep the Spanish reading as exposure.
   const explainTargetLang = track?.targetLang || null;
-  // v3.1: the per-source localized-surface map for this track (Spanish answer
-  // options / trad prompts / subtitles). null for English natives or any track
-  // without a side table yet → base English surface (see data/tracks/l10n).
-  const l10nMap = getL10n(track?.id, sourceLang);
+  // v3.1: the per-source localized-surface map for this track (native-language
+  // answer options / trad prompts / subtitles / explanations). null for English
+  // natives or any track without a side table yet → base English surface (see
+  // data/tracks/l10n). v3.4: held in state, loaded above with progress.
   // Small native-language subtitle under the question (target language stays
   // the primary prompt on top). Follows the same skill-level rule as the rest
   // of the page's chrome: shown while the UI is in the viewer's native

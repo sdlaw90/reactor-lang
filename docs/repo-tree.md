@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 519 tracked files.
+> 530 tracked files.
 
 ```
 .env.local.example
@@ -221,6 +221,7 @@ docs/changelog/released/v3.3.0/2026-08-02-fr-regional-variants.md
 docs/changelog/released/v3.3.0/2026-08-02-next16-react19-node24-upgrade.md
 docs/changelog/released/v3.3.0/2026-08-02-security-question-localization.md
 docs/changelog/unreleased/.gitkeep
+docs/changelog/unreleased/2026-08-03-l10n-explain-channel.md
 docs/codebase-reference.md
 docs/language-review/README.md
 docs/language-review/es-latam/STATUS.md
@@ -293,8 +294,16 @@ docs/marketing/social/v3.0.0-what-the-app-offers.jpg
 docs/marketing/social/v3.1.0-release-banner.png
 docs/marketing/social/v3.1.0-release-square.png
 docs/marketing/social/v3.2.0-release-square.png
+docs/marketing/social/v3.3.0-release-square.png
+docs/marketing/sources/fonts/baloo-2-latin-500-normal.woff2
+docs/marketing/sources/fonts/baloo-2-latin-600-normal.woff2
+docs/marketing/sources/fonts/baloo-2-latin-700-normal.woff2
+docs/marketing/sources/fonts/baloo-2-latin-800-normal.woff2
+docs/marketing/sources/fonts/nunito-latin-600-normal.woff2
+docs/marketing/sources/fonts/nunito-latin-700-normal.woff2
 docs/marketing/sources/forest-cover.html
 docs/marketing/sources/v3.2.0-release-square.html
+docs/marketing/sources/v3.3.0-release-square.html
 docs/repo-tree.md
 docs/squirrelingo-language-wishlist.md
 docs/squirrelingo_shipped_archive.md
@@ -474,6 +483,8 @@ scripts/sync-tutorial-video.mjs
 scripts/tts-chirp-probe.mjs
 scripts/tts-on-deploy.mjs
 scripts/validate-wrongnotes.mjs
+scripts/verify-l10n-explain.mjs
+scripts/verify-l10n-lazy.mjs
 scripts/voices-list.mjs
 styles/globals.css
 supabase/migrations.zip

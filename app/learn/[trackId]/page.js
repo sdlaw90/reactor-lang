@@ -6,7 +6,7 @@ import { Check, X, ChevronRight, ChevronDown, RotateCcw, Info } from "lucide-rea
 import { supabase } from "../../../lib/supabaseClient";
 import AudioButton from "../../../lib/AudioButton";
 import { getTrack } from "../../../data/tracks";
-import { getL10n } from "../../../data/tracks/l10n";
+import { loadL10n } from "../../../data/tracks/l10n";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import { buildLessonSequence, computeMastery, todayStr, computeStreakUpdate } from "../../../lib/gameEngine";
 import { uiLangForSkill, t, categoryDisplayName } from "../../../lib/playStrings";
@@ -38,6 +38,9 @@ export default function LessonsPage(props) {
   const [session, setSession] = useState(null);
   const [userId, setUserId] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  // v3.4 (#60): per-source localized surface, now fetched as its own chunk and
+  // awaited before `loaded` flips (data/tracks/l10n/index.js).
+  const [l10nMap, setL10nMap] = useState(null);
   const [progress, setProgress] = useState(null);
   const [missedIds, setMissedIds] = useState([]);
   const [seenAt, setSeenAt] = useState({});
@@ -63,14 +66,17 @@ export default function LessonsPage(props) {
       }
       setSession(data.session);
       setUserId(data.session.user.id);
-      const [p, missed, seen] = await Promise.all([
+      const src = data.session.user.user_metadata?.native_lang || track?.nativeLang;
+      const [p, missed, seen, l10n] = await Promise.all([
         loadProgress(data.session.user.id, params.trackId),
         loadMissedIds(data.session.user.id, params.trackId),
         loadSeenAt(data.session.user.id, params.trackId),
+        loadL10n(params.trackId, src),
       ]);
       setProgress(p);
       setMissedIds(missed);
       setSeenAt(seen);
+      setL10nMap(l10n);
       setLoaded(true);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,7 +133,7 @@ export default function LessonsPage(props) {
 
   const startLesson = (catId) => {
     const srcLang = viewerNativeLang || track.nativeLang;
-    const seq = buildLessonSequence(track, catId, srcLang, getL10n(track.id, srcLang));
+    const seq = buildLessonSequence(track, catId, srcLang, l10nMap);
     setSelectedCat(catId);
     setSequence(seq);
     setIndex(0);

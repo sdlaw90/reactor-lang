@@ -8,7 +8,7 @@ import { getTrack } from "../../../data/tracks";
 import { buildPlacementQuiz } from "../../../lib/gameEngine";
 import { loadProgress, saveProgress } from "../../../lib/db";
 import { SKILL_LEVELS, skillLevelLabel } from "../../../lib/skillLevels";
-import { getL10n } from "../../../data/tracks/l10n";
+import { getL10n, loadL10n } from "../../../data/tracks/l10n";
 import { t } from "../../../lib/playStrings";
 import { TRACK_THEMES, animatedBackgroundStyle } from "../../../lib/theme";
 import BackHome from "../../../lib/BackHome";
@@ -98,14 +98,19 @@ export default function PlacementQuizPage(props) {
       const uid = data.session.user.id;
       setUserId(uid);
       setViewerNativeLang(data.session.user.user_metadata?.native_lang || null);
+      // v3.4 (#60): the localized surface is its own chunk now, so fetch it here
+      // — BEFORE the resume branch, not inside the else. Restart-after-resume
+      // reads it synchronously (`restartPlacement`), and that read only has
+      // something to find because this await ran on both paths.
+      const plSrc = data.session.user.user_metadata?.native_lang || track.nativeLang;
+      const l10n = await loadL10n(track.id, plSrc);
       // #U1: if they'd started this test (answered ≥1 question, not finished),
       // offer continue-or-restart instead of silently starting a new quiz.
       const saved = loadSavedPlacement(uid, params.trackId);
       if (saved && saved.qIndex > 0 && saved.qIndex < saved.quiz.length) {
         setResume(saved); // quiz stays null until they choose
       } else {
-        const plSrc = data.session.user.user_metadata?.native_lang || track.nativeLang;
-        setQuiz(buildPlacementQuiz(track, 3, plSrc, getL10n(track.id, plSrc)));
+        setQuiz(buildPlacementQuiz(track, 3, plSrc, l10n));
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -128,6 +133,7 @@ export default function PlacementQuizPage(props) {
     setSelected(null);
     setFeedback(null);
     const plSrc = viewerNativeLang || track.nativeLang;
+    // Cache hit: the mount effect above already awaited loadL10n for this pair.
     setQuiz(buildPlacementQuiz(track, 3, plSrc, getL10n(track.id, plSrc)));
   };
 

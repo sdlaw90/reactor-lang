@@ -2,8 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700&display=swap" rel="stylesheet">
+<!-- Fonts are vendored in sources/fonts/ (Baloo 2 + Nunito, latin, from the
+     @fontsource npm packages) so this file renders identically offline and in any
+     sandbox. It previously pulled Google Fonts, which silently fell back to a wider
+     system face wherever that host was unreachable — and the fallback overflows the
+     layout. Do not reintroduce the remote link. -->
 <style>
+  @font-face{font-family:'Baloo 2';font-style:normal;font-weight:500;font-display:block;src:url('fonts/baloo-2-latin-500-normal.woff2') format('woff2')}
+  @font-face{font-family:'Baloo 2';font-style:normal;font-weight:600;font-display:block;src:url('fonts/baloo-2-latin-600-normal.woff2') format('woff2')}
+  @font-face{font-family:'Baloo 2';font-style:normal;font-weight:700;font-display:block;src:url('fonts/baloo-2-latin-700-normal.woff2') format('woff2')}
+  @font-face{font-family:'Baloo 2';font-style:normal;font-weight:800;font-display:block;src:url('fonts/baloo-2-latin-800-normal.woff2') format('woff2')}
+  @font-face{font-family:'Nunito';font-style:normal;font-weight:600;font-display:block;src:url('fonts/nunito-latin-600-normal.woff2') format('woff2')}
+  @font-face{font-family:'Nunito';font-style:normal;font-weight:700;font-display:block;src:url('fonts/nunito-latin-700-normal.woff2') format('woff2')}
+
   html,body{margin:0;background:#08060f;font-family:'Baloo 2','Trebuchet MS',system-ui,sans-serif;}
   #banner{position:relative;width:1640px;height:856px;overflow:hidden;background:#cfe6db;}
   #stage{position:absolute;inset:0;}
@@ -221,7 +232,7 @@ const SHOW_ALL_FULL=false;   // true = preview every family full-grown (collisio
 // full-grown, collision-free slots. Undeveloped families render as saplings until they graduate,
 // but occupy their FULL-grown footprint so nothing collides when a sapling becomes a tree.
 const FAMS=[
- {fam:"Romance",x:280,y:725,s:1.0,hm:1.12,built:1,leafs:[{ab:"ES",acorn:"full"},{ab:"PT",acorn:"full"},{ab:"FR"},{ab:"IT",acorn:"stub"}]},
+ {fam:"Romance",x:280,y:725,s:1.0,hm:1.12,built:1,leafs:[{ab:"ES",acorn:"full"},{ab:"PT",acorn:"full"},{ab:"FR",acorn:"full"},{ab:"IT",acorn:"stub"}]},
  {fam:"Sinitic",x:1040,y:725,s:1.0,hm:1.0,built:1,leafs:[{ab:"ZH"}]},
  {fam:"Germanic",x:1420,y:727,s:1.0,hm:1.04,built:1,leafs:[{ab:"EN",acorn:"full"},{ab:"DE"}]},
  {fam:"Balto-Slavic",x:150,y:603,s:0.86,hm:1.06,alt:1,built:1,leafs:[{ab:"RU"}]},
