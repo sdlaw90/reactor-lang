@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 530 tracked files.
+> 519 tracked files.
 
 ```
 .env.local.example
@@ -222,6 +222,7 @@ docs/changelog/released/v3.3.0/2026-08-02-next16-react19-node24-upgrade.md
 docs/changelog/released/v3.3.0/2026-08-02-security-question-localization.md
 docs/changelog/unreleased/.gitkeep
 docs/changelog/unreleased/2026-08-03-l10n-explain-channel.md
+docs/changelog/unreleased/2026-08-03-straggler-retirement.md
 docs/codebase-reference.md
 docs/language-review/README.md
 docs/language-review/es-latam/STATUS.md
@@ -251,21 +252,12 @@ docs/language-review/fr-fr/STATUS.md
 docs/language-review/fr-fr/changesets/.gitkeep
 docs/language-review/fr-fr/implemented/.gitkeep
 docs/language-review/fr-fr/submitted/.gitkeep
-docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.2.0.md
-docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.2.0.sources.json
-docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.2.0.xlsx
 docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.3.0.md
 docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.3.0.sources.json
 docs/language-review/fr-fr/template/fr-fr-explanation-review-v3.3.0.xlsx
-docs/language-review/fr-fr/template/fr-fr-interface-review-v3.2.0.md
-docs/language-review/fr-fr/template/fr-fr-interface-review-v3.2.0.sources.json
-docs/language-review/fr-fr/template/fr-fr-interface-review-v3.2.0.xlsx
 docs/language-review/fr-fr/template/fr-fr-interface-review-v3.3.0.md
 docs/language-review/fr-fr/template/fr-fr-interface-review-v3.3.0.sources.json
 docs/language-review/fr-fr/template/fr-fr-interface-review-v3.3.0.xlsx
-docs/language-review/fr-fr/template/fr-fr-taught-review-v3.2.0.md
-docs/language-review/fr-fr/template/fr-fr-taught-review-v3.2.0.sources.json
-docs/language-review/fr-fr/template/fr-fr-taught-review-v3.2.0.xlsx
 docs/language-review/fr-fr/template/fr-fr-taught-review-v3.3.0.md
 docs/language-review/fr-fr/template/fr-fr-taught-review-v3.3.0.sources.json
 docs/language-review/fr-fr/template/fr-fr-taught-review-v3.3.0.xlsx
@@ -415,7 +407,6 @@ lib/StreakMilestoneCelebration.js
 lib/UsernameAvailabilityField.js
 lib/VersionFooter.js
 lib/VersionWatcher.js
-lib/WelcomePopup.js
 lib/adminAuth.js
 lib/audioKey.js
 lib/avatarUpload.js
@@ -449,7 +440,6 @@ lib/trackItemCounts.js
 lib/trackSublabels.js
 lib/uiLang.js
 lib/version.js
-lib/welcomeVersion.js
 next.config.mjs
 package-lock.json
 package.json
@@ -460,7 +450,6 @@ public/icon-512.png
 public/icon-maskable-512.png
 public/splash.png
 public/version.json
-scripts/_fr-parity-harness.mjs
 scripts/deploy.js
 scripts/gen-repo-tree.mjs
 scripts/gen-track-item-counts.mjs
