@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 519 tracked files.
+> 534 tracked files.
 
 ```
 .env.local.example
@@ -221,7 +221,9 @@ docs/changelog/released/v3.3.0/2026-08-02-fr-regional-variants.md
 docs/changelog/released/v3.3.0/2026-08-02-next16-react19-node24-upgrade.md
 docs/changelog/released/v3.3.0/2026-08-02-security-question-localization.md
 docs/changelog/unreleased/.gitkeep
+docs/changelog/unreleased/2026-08-03-italian-ui-layer-and-guided-tour.md
 docs/changelog/unreleased/2026-08-03-l10n-explain-channel.md
+docs/changelog/unreleased/2026-08-03-pt-fr-explanation-backfill.md
 docs/changelog/unreleased/2026-08-03-straggler-retirement.md
 docs/codebase-reference.md
 docs/language-review/README.md
@@ -450,6 +452,7 @@ public/icon-512.png
 public/icon-maskable-512.png
 public/splash.png
 public/version.json
+scripts/audit-i18n-columns.mjs
 scripts/deploy.js
 scripts/gen-repo-tree.mjs
 scripts/gen-track-item-counts.mjs
@@ -462,6 +465,17 @@ scripts/grammar-engines/ko_romaji.py
 scripts/grammar-engines/ko_rules_gen.py
 scripts/grammar-engines/ru_pymorphy3_gen.py
 scripts/grammar-engines/zh_template_gen.py
+scripts/l10n-backfill/LANG-COLUMN-BRIEF.md
+scripts/l10n-backfill/README.md
+scripts/l10n-backfill/TRANSLATE.md
+scripts/l10n-backfill/batch.py
+scripts/l10n-backfill/extract.mjs
+scripts/l10n-backfill/frames.py
+scripts/l10n-backfill/inject.mjs
+scripts/l10n-backfill/lang-column.mjs
+scripts/l10n-backfill/repair.py
+scripts/l10n-backfill/roundtrip.py
+scripts/l10n-backfill/validate.py
 scripts/prune-local-tts.mjs
 scripts/publish-ready.mjs
 scripts/rollup-changelog.mjs
@@ -472,6 +486,7 @@ scripts/sync-tutorial-video.mjs
 scripts/tts-chirp-probe.mjs
 scripts/tts-on-deploy.mjs
 scripts/validate-wrongnotes.mjs
+scripts/verify-l10n-coverage.mjs
 scripts/verify-l10n-explain.mjs
 scripts/verify-l10n-lazy.mjs
 scripts/voices-list.mjs

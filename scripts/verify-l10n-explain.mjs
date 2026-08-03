@@ -81,7 +81,26 @@ const overlay = MUTATE === "no-overlay"
 
 const flat = ge.flattenBank(track.bank, track.tagFor, "fr", overlay);
 const q = flat.find((x) => x.id === targetId);
-const other = flat.find((x) => x.id !== targetId && x.explain && x.explain.en);
+
+// v3.4: check 3 used to pick a real item the side table had not reached. The #60
+// backfill reached all of them, so that probe stopped being able to find one and the
+// check went red on success. The guarantee it was testing is still load-bearing —
+// every later source lands incrementally — so it is now probed SYNTHETICALLY: take a
+// second real item, strip `explain` from its overlay entry, and assert the pair.
+// Asserting BOTH halves is the point: with the entry present it must resolve fr, with
+// it stripped it must resolve en. A check that only asserts the fallback would pass
+// vacuously the day the overlay stops being applied at all.
+const otherId = Object.keys(baseMap).find((k) => {
+  if (k === targetId) return false;
+  const [cat, i] = splitId(k);
+  const qq = track.bank[cat]?.[i];
+  return qq && qq[3] && qq[3].en && baseMap[k] && baseMap[k].explain != null;
+});
+if (!otherId) { console.log("BLOCKER: no second side-table item carrying an explain — the probe is wrong"); process.exit(1); }
+const stripped = { ...overlay, [otherId]: { ...overlay[otherId] } };
+delete stripped[otherId].explain;
+const other = ge.flattenBank(track.bank, track.tagFor, "fr", stripped).find((x) => x.id === otherId);
+const otherKept = flat.find((x) => x.id === otherId);
 
 // 1. the overlay reaches the card, tagged as the source language
 const r1 = resolveExplainText(q.explain, "fr");
@@ -90,9 +109,14 @@ check("overlay applied", r1?.lang === "fr" && r1.text === FR_EXPLAIN, JSON.strin
 // 2. the base English is STILL in the map — merge, not replace
 check("base en preserved on the overlaid item", q.explain?.en != null && q.explain.en === baseExplain.en, JSON.stringify(Object.keys(q.explain || {})));
 
-// 3. an item the side table did NOT reach falls back to English, not blank
+// 3. an item the side table did NOT reach falls back to English, not blank — and the
+//    same item WITH its side-table explain resolves fr, so the probe cannot pass by
+//    the overlay silently doing nothing.
 const r3 = resolveExplainText(other.explain, "fr");
-check("un-overlaid item falls back to EN", r3?.lang === "en" && !!r3.text, r3 ? r3.lang : "NULL");
+const r3b = resolveExplainText(otherKept.explain, "fr");
+check("un-overlaid item falls back to EN (and the overlaid twin does not)",
+  r3?.lang === "en" && !!r3.text && r3b?.lang === "fr" && !!r3b.text,
+  `stripped=${r3 ? r3.lang : "NULL"} kept=${r3b ? r3b.lang : "NULL"}`);
 
 // 4. wrongNote comes through as a MAP. Strict on purpose: a null wrongNote must
 //    FAIL here rather than pass by short-circuit.
