@@ -47,7 +47,7 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 
 | File | What it does |
 |---|---|
-| `layout.js` | ★ Root layout. Imports global CSS and mounts the 6 always-on client widgets: `VersionWatcher`, `RequireUsernameGate`, `RequireLegalGate`, `WelcomePopup`, `GlobalErrorLogger`, `NavDepthTracker` (#92). |
+| `layout.js` | ★ Root layout. Imports global CSS and mounts the 6 always-on client widgets: `NavDepthTracker` (#92), `VersionWatcher`, `RequireUsernameGate`, `RequireLegalGate`, `GuideOverlay`, `GlobalErrorLogger`. |
 | `page.js` | ★ Home / track picker. Handles the loading/signed-out/signed-in states; groups tracks by language family with "Your languages" pinned. |
 | `error.js` | Route-level error boundary — branded crash screen with a reload/home escape and a short `SQ-XXXXXX` code logged to `error_logs`. |
 | `global-error.js` | Last-resort boundary for crashes in the root layout itself; renders its own `<html>/<body>` and depends on nothing (CSS/fonts may not have loaded). |
@@ -215,7 +215,7 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 | `VersionWatcher.js` | Polls `version.json` + the CI `release-ready` marker every 60s / on focus; shows "update available" only when both agree. |
 | `RequireUsernameGate.js` | Forces a username before use (excludes auth/onboarding/legal routes). |
 | `RequireLegalGate.js` | Forces ToS/PP acceptance when `LEGAL_VERSION` changes. |
-| `WelcomePopup.js` | Versioned first-run welcome (`WELCOME_VERSION`). |
+| `GuideOverlay.js` | Versioned first-run intro tour (`GUIDE_VERSION`), runs the `GuideTour` carousel. Replaced `WelcomePopup` in v3.2 — one first-run experience, not two stacked overlays. Localized per #72. |
 | `GlobalErrorLogger.js` | Logs errors that never hit a boundary (event handlers, unhandled rejections). Session cap 5 + dedupe. |
 | `NavDepthTracker.js` | ★ Mounted nav-depth tracker (#92): watches route changes and maintains the in-app back/home depth state via `navDepth.js`. |
 
@@ -259,7 +259,7 @@ Every folder with a `page.js` is a route. `[trackId]` folders are dynamic.
 | `community.js` | `FACEBOOK_GROUP_URL` (single source; private during beta). |
 | `navDepth.js` | Nav-depth state helper (#92): tracks how deep the user is in the route stack so `BackHome`/`NavDepthTracker` can choose back-vs-home. |
 | `legalVersions.js` | `LEGAL_VERSION` (bump to force re-acceptance). |
-| `welcomeVersion.js` | `WELCOME_VERSION` (bump to re-show the welcome). |
+| `guideVersion.js` | `GUIDE_VERSION` (bump to re-show the intro tour). |
 | `version.js` | ★ `CURRENT_VERSION` + full `CHANGELOG`. Single source of truth; ledger-chat-owned. Also `INTERNAL_CHANGELOG` + `isNonProdEnv()` / `internalNotesByVersion()` for non-prod-only internal notes (#91). |
 
 ---

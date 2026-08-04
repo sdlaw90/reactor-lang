@@ -36,6 +36,30 @@ const UI = {
     divider: "o recórrelo paso a paso",
     done: "Listo",
   },
+  pt: {
+    heading: "Como usar o SquirreLingo",
+    subPre: "O tour rápido. Quer todos os detalhes? Veja a ",
+    subLink: "página de Ajuda completa",
+    subPost: ".",
+    divider: "ou percorra passo a passo",
+    done: "Pronto",
+  },
+  fr: {
+    heading: "Comment utiliser SquirreLingo",
+    subPre: "La visite rapide. Tu veux tous les détails ? Va voir la ",
+    subLink: "page d’Aide complète",
+    subPost: ".",
+    divider: "ou parcours-la étape par étape",
+    done: "Terminé",
+  },
+  it: {
+    heading: "Come usare SquirreLingo",
+    subPre: "Il tour veloce. Vuoi tutti i dettagli? Vai alla ",
+    subLink: "pagina di Aiuto completa",
+    subPost: ".",
+    divider: "oppure percorrilo passo dopo passo",
+    done: "Fatto",
+  },
 };
 
 // Paint immediately with the bootstrap language, then upgrade once the session

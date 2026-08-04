@@ -11,15 +11,15 @@
 // content splice that shifts indices does not orphan a tag. AI-authored.
 
 export const THEMES = [
-  {"id":"numbers-time","en":"Numbers, dates & time","zh":"数字与时间","pt":"Números e tempo","fr":"Nombres, dates et heures","es":"Números y tiempo"},
-  {"id":"directions","en":"Directions","zh":"方向","pt":"Direções","fr":"Directions","es":"Direcciones"},
-  {"id":"shopping","en":"Shopping","zh":"购物","pt":"Compras","fr":"Achats","es":"Compras"},
-  {"id":"restaurant","en":"Restaurant & food","zh":"餐厅","pt":"Restaurante","fr":"Restaurant","es":"Restaurante"},
-  {"id":"travel","en":"Travel","zh":"旅行","pt":"Viagens","fr":"Voyages","es":"Viajes"},
-  {"id":"medical","en":"Medical & doctor","zh":"健康","pt":"Saúde","fr":"Santé","es":"Salud"},
-  {"id":"small-talk","en":"Small talk","zh":"闲聊","pt":"Conversa","fr":"Conversation","es":"Conversación"},
-  {"id":"work","en":"Work & office","zh":"工作","pt":"Trabalho","fr":"Travail","es":"Trabajo"},
-  {"id":"emotions","en":"Emotions","zh":"情绪","pt":"Emoções","fr":"Émotions","es":"Emociones"},
+  {"id":"numbers-time","en":"Numbers, dates & time","zh":"数字与时间","pt":"Números e tempo","fr":"Nombres, dates et heures","es":"Números y tiempo","it":"Numeri e tempo"},
+  {"id":"directions","en":"Directions","zh":"方向","pt":"Direções","fr":"Directions","es":"Direcciones","it":"Indicazioni"},
+  {"id":"shopping","en":"Shopping","zh":"购物","pt":"Compras","fr":"Achats","es":"Compras","it":"Acquisti"},
+  {"id":"restaurant","en":"Restaurant & food","zh":"餐厅","pt":"Restaurante","fr":"Restaurant","es":"Restaurante","it":"Ristorante"},
+  {"id":"travel","en":"Travel","zh":"旅行","pt":"Viagens","fr":"Voyages","es":"Viajes","it":"Viaggi"},
+  {"id":"medical","en":"Medical & doctor","zh":"健康","pt":"Saúde","fr":"Santé","es":"Salud","it":"Salute"},
+  {"id":"small-talk","en":"Small talk","zh":"闲聊","pt":"Conversa","fr":"Conversation","es":"Conversación","it":"Conversazione"},
+  {"id":"work","en":"Work & office","zh":"工作","pt":"Trabalho","fr":"Travail","es":"Trabajo","it":"Lavoro"},
+  {"id":"emotions","en":"Emotions","zh":"情绪","pt":"Emoções","fr":"Émotions","es":"Emociones","it":"Emozioni"},
 ];
 
 // key (prompt text) -> { themes?: [id] }

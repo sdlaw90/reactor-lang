@@ -617,7 +617,15 @@ const LANGS = {
     regionalGroupLabel: "Svizzera",
     ui: { title: "Si dice anche", inYourRegion: "nella tua regione", variantes: "varianti regionali", hide: "nascondi", refPhrase: "In Italia", regGroupPhrase: "In Svizzera", refFlag: "🇮🇹", regFlag: "🇨🇭" },
     countryNames: { IT: "Italia", CH: "Svizzera" },
-    records: [], // TODO(vX.x): populate — see docs/regional-variants + build playbook
+    // DECIDED v3.4 (the Italian source build): records stay EMPTY, deliberately.
+    // Italy↔Switzerland national-level lexical divergence is thin, and Italian's real
+    // variation is dialectal rather than a clean national binary — the card's whole model.
+    // Forcing entries here would fire a "in your region they say…" card on differences a
+    // learner will never meet. The playbook says the same for it/ru/ja/ko. `ui`,
+    // `reference` and `countryNames` are populated so the card renders correctly IF this is
+    // ever revisited, and `indexRegionalTerms` stays OFF (v3.3 rule: reference-only keying
+    // for every source after es/pt, or a homograph fires the card).
+    records: [],
   },
   ru: {
     // Minimal cross-country russophone lexical divergence. Likely sparse/skip.

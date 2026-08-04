@@ -409,10 +409,11 @@ tracker reflects activity from both. Each mode's start screen links to the
 other (`switchToLessons`/`switchToQuickQuiz` in `lib/playStrings.js`).
 
 **About page** (`app/about/page.js`) explains what the app is and how both
-modes work, linked from Help. A one-time **welcome popup**
-(`lib/WelcomePopup.js`, versioned via `lib/welcomeVersion.js` the same way
-`RequireLegalGate` versions ToS acceptance) introduces both modes right after
-onboarding completes, with a link to the full About page.
+modes work, linked from Help. A one-time **intro tour** (`lib/GuideOverlay.js`
+→ `lib/GuideTour.js`, versioned via `lib/guideVersion.js` the same way
+`RequireLegalGate` versions ToS acceptance) walks through both modes right after
+onboarding completes, with a link to the full About page. It replaced the older
+one-shot welcome popup in v3.2.
 
 ## Break-glass password tool (v2.22.1)
 

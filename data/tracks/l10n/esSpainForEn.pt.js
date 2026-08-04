@@ -17,6533 +17,1392 @@
 //     correctIdx 0 preserved); production -> pt gloss in prompt/subtitle.
 // AI-authored 2026-07-26. FLAGGED FOR #41 native (Brazilian Portuguese) review.
 
+// v3.4 (#60) BACKFILL 2026-08-03 — `explain`, `wrongNote` and `distractorNotes`
+// added for this source. Until v3.4 the side tables had no channel for them, so all
+// three surfaces fell back to English on every item reused from another source.
+// Machine-assembled: the target-language spans inside each note are carried through
+// VERBATIM from the Spanish surface and only the framing text is translated, so a
+// verb form or quoted term can never be paraphrased. AI-authored framing —
+// FLAG FOR #41 native review.
 export default {
-  "vocab-0": {
-    "prompt": "¿Cómo se dice 'computador' en español (España)?",
-    "promptNative": "Como se diz 'computador' em espanhol (Espanha)?"
-  },
-  "vocab-1": {
-    "prompt": "¿Cómo se dice 'celular' en español (España)?",
-    "promptNative": "Como se diz 'celular' em espanhol (Espanha)?"
-  },
-  "vocab-2": {
-    "prompt": "¿Cómo se dice 'suco' en español (España)?",
-    "promptNative": "Como se diz 'suco' em espanhol (Espanha)?"
-  },
-  "vocab-3": {
-    "prompt": "¿Cómo se dice 'cachorro' en español?",
-    "promptNative": "Como se diz 'cachorro' em espanhol?"
-  },
-  "vocab-4": {
-    "promptNative": "'La casa' significa...",
-    "options": ["casa","carro","mesa","rua"]
-  },
-  "vocab-5": {
-    "promptNative": "'Comer' significa...",
-    "options": ["comer","comprar","correr","dormir"]
-  },
-  "vocab-6": {
-    "prompt": "¿Cómo se dice 'carro' en español (España)?",
-    "promptNative": "Como se diz 'carro' em espanhol (Espanha)?"
-  },
-  "vocab-7": {
-    "prompt": "¿Cómo se dice 'óculos' (eyewear) en español (España)?",
-    "promptNative": "Como se diz 'óculos' em espanhol (Espanha)?"
-  },
-  "vocab-8": {
-    "prompt": "¿Cómo se dice 'batatas' en español (España)?",
-    "promptNative": "Como se diz 'batatas' em espanhol (Espanha)?"
-  },
-  "vocab-9": {
-    "prompt": "¿Cómo se dice 'pêssego' en español (España)?",
-    "promptNative": "Como se diz 'pêssego' em espanhol (Espanha)?"
-  },
-  "vocab-10": {
-    "prompt": "¿Cómo se dice 'dirigir' en español (España)?",
-    "promptNative": "Como se diz 'dirigir' em espanhol (Espanha)?"
-  },
-  "vocab-11": {
-    "promptNative": "'El piso' significa... (Espanha)",
-    "options": ["apartamento","apenas o chão","um passo","um pneu furado"]
-  },
-  "vocab-12": {
-    "promptNative": "'Coger' significa... (Espanha)",
-    "options": ["pegar","cozinhar em fogo baixo","cair","doar"]
-  },
-  "vocab-13": {
-    "promptNative": "'Apetecer' significa... (Espanha)",
-    "options": ["ter vontade de","apenas ser apetitoso","competir","aparecer de repente"]
-  },
-  "vocab-14": {
-    "promptNative": "'Enfadarse' significa... (Espanha)",
-    "options": ["ficar bravo","ficar entediado","sumir aos poucos","cansar-se"]
-  },
-  "vocab-15": {
-    "promptNative": "'Currar' significa... (colloquial, Spain)",
-    "options": ["trampar","curar carne","resolver pendências","estudar muito"]
-  },
-  "vocab-16": {
-    "promptNative": "'Molar' significa... (colloquial, Spain)",
-    "options": ["cair bem / ser querido","ranger os dentes","incomodar","modelar barro"]
-  },
-  "vocab-17": {
-    "promptNative": "'Quedar (con alguien)' significa... (Espanha)",
-    "options": ["combinar de se encontrar","ficar em casa","dever dinheiro","ficar em silêncio"]
-  },
-  "vocab-18": {
-    "promptNative": "'Hacer puente' significa... (Espanha)",
-    "options": ["emendar o feriado","construir uma ponte","pular o café da manhã","mudar de emprego"]
-  },
-  "vocab-19": {
-    "promptNative": "'Estar liado' significa... (colloquial, Spain)",
-    "options": ["estar atolado de trabalho","estar amarrado com corda","estar de briga","estar perdido"]
-  },
-  "vocab-20": {
-    "promptNative": "'La sobremesa' significa...",
-    "options": ["a prosa demorada à mesa após a refeição","a toalha de mesa","sobremesa","uma soneca à tarde"]
-  },
-  "vocab-21": {
-    "promptNative": "'Friolero' significa... (Espanha)",
-    "options": ["alguém friorento","um técnico de freezer","um prato frio","um mês de inverno"]
-  },
-  "vocab-22": {
-    "prompt": "¿Cómo se dice 'gato' en español?",
-    "promptNative": "Como se diz 'gato' em espanhol?"
-  },
-  "vocab-23": {
-    "prompt": "¿Cómo se dice 'água' en español?",
-    "promptNative": "Como se diz 'água' em espanhol?"
-  },
-  "vocab-24": {
-    "prompt": "¿Cómo se dice 'pão' en español?",
-    "promptNative": "Como se diz 'pão' em espanhol?"
-  },
-  "vocab-25": {
-    "promptNative": "'Beber' significa...",
-    "options": ["beber","comer","dormir","correr"]
-  },
-  "vocab-26": {
-    "prompt": "¿Cómo se dice 'a mãe' en español?",
-    "promptNative": "Como se diz 'a mãe' em espanhol?"
-  },
-  "vocab-27": {
-    "prompt": "¿Cómo se dice 'o pai' en español?",
-    "promptNative": "Como se diz 'o pai' em espanhol?"
-  },
-  "vocab-28": {
-    "promptNative": "'El día' significa...",
-    "options": ["o dia","a noite","a semana","o ano"]
-  },
-  "vocab-29": {
-    "promptNative": "'Grande' significa...",
-    "options": ["grande","pequeno","comprido","novo"]
-  },
-  "vocab-30": {
-    "promptNative": "'Pequeño' significa...",
-    "options": ["pequeno","grande","rápido","alto"]
-  },
-  "vocab-31": {
-    "prompt": "¿Cómo se dice 'vermelho' en español?",
-    "promptNative": "Como se diz 'vermelho' em espanhol?"
-  },
-  "vocab-32": {
-    "prompt": "¿Cómo se dice 'a mão' en español?",
-    "promptNative": "Como se diz 'a mão' em espanhol?"
-  },
-  "vocab-33": {
-    "promptNative": "'La cabeza' significa...",
-    "options": ["a cabeça","a mão","o pé","a perna"]
-  },
-  "vocab-34": {
-    "prompt": "¿Cómo se dice 'a rua' en español?",
-    "promptNative": "Como se diz 'a rua' em espanhol?"
-  },
-  "vocab-35": {
-    "promptNative": "'Hablar' significa...",
-    "options": ["falar","escutar","ler","comer"]
-  },
-  "vocab-36": {
-    "prompt": "¿Cómo se dice 'o amigo' en español?",
-    "promptNative": "Como se diz 'o amigo' em espanhol?"
-  },
-  "vocab-37": {
-    "promptNative": "'La leche' significa...",
-    "options": ["leite","água","vinho","suco"]
-  },
-  "vocab-38": {
-    "prompt": "¿Cómo se dice 'o livro' en español?",
-    "promptNative": "Como se diz 'o livro' em espanhol?"
-  },
-  "vocab-39": {
-    "promptNative": "'Blanco' significa...",
-    "options": ["branco","preto","azul","verde"]
-  },
-  "vocab-40": {
-    "prompt": "¿Cómo se dice 'a noite' en español?",
-    "promptNative": "Como se diz 'a noite' em espanhol?"
-  },
-  "vocab-41": {
-    "prompt": "¿Cómo se dice 'cinco' en español?",
-    "promptNative": "Como se diz 'cinco' em espanhol?"
-  },
-  "vocab-42": {
-    "promptNative": "'Vale' significa... (Espanha)",
-    "options": ["tudo bem","tchau","por favor","claro que não"]
-  },
-  "vocab-43": {
-    "prompt": "¿Cómo se dice 'vagem' en español (España)?",
-    "promptNative": "Como se diz 'vagem' em espanhol (Espanha)?"
-  },
-  "vocab-44": {
-    "prompt": "¿Cómo se dice 'a piscina' en español (España)?",
-    "promptNative": "Como se diz 'a piscina' em espanhol (Espanha)?"
-  },
-  "vocab-45": {
-    "promptNative": "'El billete' significa... (Espanha)",
-    "options": ["nota (cédula)","carteira","moeda","recibo"]
-  },
-  "vocab-46": {
-    "promptNative": "'El aparcamiento' significa... (Espanha)",
-    "options": ["o estacionamento","o apartamento","a calçada","a garagem"]
-  },
-  "vocab-47": {
-    "promptNative": "'Aparcar' significa... (Espanha)",
-    "options": ["estacionar","parar rapidinho","dar ré","sair dirigindo"]
-  },
-  "vocab-48": {
-    "promptNative": "'El mando' significa... (Espanha)",
-    "options": ["o controle remoto","o botão","o gerente","a maçaneta"]
-  },
-  "vocab-49": {
-    "prompt": "¿Cómo se dice 'óculos de sol' en español (España)?",
-    "promptNative": "Como se diz 'óculos de sol' em espanhol (Espanha)?"
-  },
-  "vocab-50": {
-    "promptNative": "'Las lentillas' significa... (Espanha)",
-    "options": ["lentes de contato","óculos de sol","óculos de leitura","óculos de proteção"]
-  },
-  "vocab-51": {
-    "prompt": "¿Cómo se dice 'o morango' en español?",
-    "promptNative": "Como se diz 'o morango' em espanhol?"
-  },
-  "vocab-52": {
-    "promptNative": "'El albaricoque' significa... (Espanha)",
-    "options": ["damasco","pêssego","ameixa","figo"]
-  },
-  "vocab-53": {
-    "prompt": "¿Cómo se dice 'o ônibus' en español (España)?",
-    "promptNative": "Como se diz 'o ônibus' em espanhol (Espanha)?"
-  },
-  "vocab-54": {
-    "promptNative": "'El tío / la tía' significa... (colloquial, Spain)",
-    "options": ["cara / tio","o chefe","a criança","o desconhecido"]
-  },
-  "vocab-55": {
-    "promptNative": "'Guay' significa... (colloquial, Spain)",
-    "options": ["legal","chato","caro","feio"]
-  },
-  "vocab-56": {
-    "prompt": "¿Cómo se dice 'a jaqueta' en español?",
-    "promptNative": "Como se diz 'a jaqueta' em espanhol?"
-  },
-  "vocab-57": {
-    "promptNative": "'El carné de conducir' significa... (Espanha)",
-    "options": ["a carteira de motorista","a carteira de identidade","o passaporte","a placa"]
-  },
-  "vocab-58": {
-    "prompt": "¿Cómo se dice 'tomar café da manhã' en español?",
-    "promptNative": "Como se diz 'tomar café da manhã' em espanhol?"
-  },
-  "vocab-59": {
-    "promptNative": "'Merendar' significa...",
-    "options": ["fazer um lanche da tarde","tomar café da manhã","jantar","pular uma refeição"]
-  },
-  "vocab-60": {
-    "promptNative": "'Hace frío' significa...",
-    "options": ["está frio","está calor","está ensolarado","está ventando"]
-  },
-  "vocab-61": {
-    "promptNative": "'La nevera' significa... (Espanha)",
-    "options": ["a geladeira","o forno","apenas o freezer","o fogão"]
-  },
-  "vocab-62": {
-    "promptNative": "'Una caña' significa... (Espanha)",
-    "options": ["um chope pequeno","uma cana-de-açúcar","uma vara de pescar","um canudo"]
-  },
-  "vocab-63": {
-    "promptNative": "'Un botellín' significa... (Espanha)",
-    "options": ["uma garrafinha de cerveja","uma garrafa grande de vinho","um copo de dose","um refrigerante"]
-  },
-  "vocab-64": {
-    "promptNative": "'El paro' significa... (Espanha)",
-    "options": ["desemprego","uma pausa curta","um par","uma parede"]
-  },
-  "vocab-65": {
-    "promptNative": "'Flipar' significa... (colloquial, Spain)",
-    "options": ["ficar pasmo","voar","reprovar numa prova","relaxar"]
-  },
-  "vocab-66": {
-    "promptNative": "'Majo / maja' significa... (colloquial, Spain)",
-    "options": ["simpático","rico","engraçado","idoso"]
-  },
-  "vocab-67": {
-    "promptNative": "'El curro' significa... (colloquial, Spain)",
-    "options": ["trabalho","um curso","uma esquina","um favor"]
-  },
-  "vocab-68": {
-    "promptNative": "'El grifo' significa... (Espanha)",
-    "options": ["a torneira","o ralo","a pia","o cano"]
-  },
-  "vocab-69": {
-    "promptNative": "'Fregar los platos' significa... (Espanha)",
-    "options": ["lavar a louça","secar a louça","tirar a mesa","cozinhar o jantar"]
-  },
-  "vocab-70": {
-    "promptNative": "'La acera' significa...",
-    "options": ["a calçada","a estrada","a faixa","o cruzamento"]
-  },
-  "vocab-71": {
-    "promptNative": "'El casco antiguo' significa...",
-    "options": ["o centro histórico","os arredores da cidade","o bairro novo","a prefeitura"]
-  },
-  "vocab-72": {
-    "promptNative": "'Echar de menos' significa... (Espanha)",
-    "options": ["sentir saudade","jogar fora","menosprezar","ficar sem"]
-  },
-  "vocab-73": {
-    "promptNative": "'Estar de bajón' significa... (colloquial, Spain)",
-    "options": ["sentir-se para baixo","estar de dieta","estar duro","estar com pressa"]
-  },
-  "vocab-74": {
-    "promptNative": "'El botiquín' significa...",
-    "options": ["o kit de primeiros socorros","a farmácia","a receita médica","a sala de espera"]
-  },
-  "vocab-75": {
-    "promptNative": "'La receta' significa...",
-    "options": ["a receita","a farmácia","o sintoma","o check-up"]
-  },
-  "vocab-76": {
-    "promptNative": "'Tener buena pinta' significa...",
-    "options": ["parecer apetitoso","estar bem pintado","ter sorte","estar bem vestido"]
-  },
-  "vocab-77": {
-    "promptNative": "'Ligar' significa... (colloquial, Spain)",
-    "options": ["paquerar","amarrar","chegar atrasado","mentir"]
-  },
-  "vocab-78": {
-    "promptNative": "'El atasco' significa...",
-    "options": ["o engarrafamento","a vaga de estacionamento","a rotatória","a cabine de pedágio"]
-  },
-  "vocab-79": {
-    "promptNative": "'La rotonda' significa...",
-    "options": ["a rotatória","o semáforo","o cruzamento","o viaduto"]
-  },
-  "vocab-80": {
-    "promptNative": "'Un chaval' significa... (colloquial, Spain)",
-    "options": ["um garoto","um velho","um chefe","um estrangeiro"]
-  },
-  "vocab-81": {
-    "promptNative": "'Un pinchazo' significa...",
-    "options": ["um pneu furado","um tanque cheio","um estepe","um pedágio"]
-  },
-  "vocab-82": {
-    "promptNative": "'Estar constipado' significa... (Espanha)",
-    "options": ["estar resfriado","estar com prisão de ventre","estar exausto","estar queimado de sol"]
-  },
-  "vocab-83": {
-    "promptNative": "'Pretender' significa...",
-    "options": ["pretender","fingir","exigir","adiar"]
-  },
-  "vocab-84": {
-    "promptNative": "'El compromiso' significa...",
-    "options": ["compromisso","um meio-termo","uma comparação","um lembrete de compromisso"]
-  },
-  "vocab-85": {
-    "promptNative": "'Cutre' significa... (colloquial, Spain)",
-    "options": ["cafona","caro e elegante","novinho em folha","apimentado"]
-  },
-  "vocab-86": {
-    "promptNative": "'Mogollón' significa... (colloquial, Spain)",
-    "options": ["um monte","um pouquinho","quase nada","por acaso"]
-  },
-  "vocab-87": {
-    "promptNative": "'Chungo' significa... (colloquial, Spain)",
-    "options": ["duvidoso","delicioso","hilário","novinho em folha"]
-  },
-  "vocab-88": {
-    "promptNative": "'Agobiarse' significa... (Espanha)",
-    "options": ["ficar sobrecarregado","ficar entediado","animar-se","pegar no sono"]
-  },
-  "vocab-89": {
-    "promptNative": "'La chapuza' significa... (Espanha)",
-    "options": ["um trabalho malfeito","uma grande pechincha","uma soneca rápida","um contrato formal"]
-  },
-  "vocab-90": {
-    "promptNative": "'El guiri' significa... (colloquial, Spain)",
-    "options": ["um turista estrangeiro (ocidental)","um guia turístico","uma mochila","uma lembrança"]
-  },
-  "vocab-91": {
-    "promptNative": "'El friki' significa... (colloquial, Spain)",
-    "options": ["um nerd","um chef","um desconhecido","um caçador de pechinchas"]
-  },
-  "vocab-92": {
-    "promptNative": "'Soso' significa...",
-    "options": ["sem graça","salgado","apimentado","queimado"]
-  },
-  "vocab-93": {
-    "promptNative": "'Sensible' significa...",
-    "options": ["sensível","sensato","invisível","responsável"]
-  },
-  "vocab-94": {
-    "promptNative": "'Pillar' significa... (colloquial, Spain)",
-    "options": ["pegar","descascar","perder","sussurrar"]
-  },
-  "vocab-95": {
-    "promptNative": "'Pasar de algo / alguien' significa... (colloquial, Spain)",
-    "options": ["não dar bola","passar numa prova","passar por um lugar","entregar algo"]
-  },
-  "vocab-96": {
-    "promptNative": "'Dar palo' significa... (colloquial, Spain)",
-    "options": ["ficar sem jeito","bater com um pau","emprestar dinheiro","indicar o caminho"]
-  },
-  "vocab-97": {
-    "promptNative": "'Tener morro' significa... (colloquial, Spain)",
-    "options": ["ter cara de pau","estar com o nariz escorrendo","ser tímido","estar duro"]
-  },
-  "vocab-98": {
-    "promptNative": "'Cundir' significa... (Espanha)",
-    "options": ["render bastante","afundar","vencer","derramar"]
-  },
-  "vocab-99": {
-    "promptNative": "'Apañárselas' significa... (Espanha)",
-    "options": ["se virar","arrumar um quarto","pedir desculpas","se inscrever"]
-  },
-  "vocab-100": {
-    "promptNative": "'Estar empanado' significa... (colloquial, Spain)",
-    "options": ["estar aéreo","estar cheio (satisfeito)","estar furioso","estar tomando sol"]
-  },
-  "vocab-101": {
-    "promptNative": "'Fardar' significa... (colloquial, Spain)",
-    "options": ["se exibir","economizar dinheiro","estar atrasado","sussurrar"]
-  },
-  "vocab-102": {
-    "promptNative": "'Ser un cotilla' significa... (Espanha)",
-    "options": ["ser fofoqueiro","ser muito organizado","ser um corredor veloz","ter sono pesado"]
-  },
-  "vocab-103": {
-    "promptNative": "'Las rebajas' significa... (Espanha)",
-    "options": ["as liquidações (sazonais)","as sobras","os reembolsos","os recibos"]
-  },
-  "vocab-104": {
-    "promptNative": "'Escaquearse' significa... (colloquial, Spain)",
-    "options": ["matar serviço","esconder-se debaixo da mesa","ficar sem dinheiro","perder a vez"]
-  },
-  "vocab-105": {
-    "promptNative": "'El enchufe' significa... (colloquial, Spain)",
-    "options": ["apadrinhamento (panelinha)","apenas uma tomada elétrica","um aperto de mão firme","uma entrevista de emprego"]
-  },
-  "vocab-106": {
-    "promptNative": "'El botellón' significa... (Espanha)",
-    "options": ["um encontro ao ar livre para beber em grupo","apenas uma garrafa grande de vinho","uma balada","o reembolso do vasilhame"]
-  },
-  "vocab-107": {
-    "promptNative": "'La caña' significa... (Espanha)",
-    "options": ["um chope pequeno","uma garrafa de vinho","um canudo","um café com leite"]
-  },
-  "vocab-108": {
-    "promptNative": "'El madrugón' significa... (Espanha)",
-    "options": ["um despertar muito cedo","uma preguiça na cama até tarde","uma soneca ao meio-dia","uma noitada"]
-  },
-  "vocab-109": {
-    "promptNative": "'Camelar' significa... (colloquial, Spain)",
-    "options": ["conquistar com conversa","andar devagar","acampar ao ar livre","mudar de ideia"]
-  },
-  "vocab-110": {
-    "promptNative": "'Chapurrear' significa...",
-    "options": ["arranhar o idioma","falar perfeitamente","traduzir profissionalmente","resmungar dormindo"]
-  },
-  "vocab-111": {
-    "promptNative": "'La vergüenza ajena' significa... (Espanha)",
-    "options": ["vergonha alheia","vergonha pública","uma pessoa tímida","um segredo compartilhado"]
-  },
-  "vocab-112": {
-    "promptNative": "'La morriña' significa... (Espanha)",
-    "options": ["saudade","uma leve dor de cabeça","neblina matinal","uma pequena dívida"]
-  },
-  "vocab-113": {
-    "promptNative": "'El postureo' significa... (colloquial, Spain)",
-    "options": ["posar para as aparências","boa postura","um trabalho de ensaio fotográfico","uma exposição de arte"]
-  },
-  "vocab-114": {
-    "promptNative": "'Tener mala leche' significa... (colloquial, Spain)",
-    "options": ["ter má índole","ser intolerante à lactose","ter azar no jogo de cartas","ser muito generoso"]
-  },
-  "vocab-115": {
-    "promptNative": "'Ser un tiquismiquis' significa... (Espanha)",
-    "options": ["ser cheio de frescura","falar muito rápido","ser gastador","ser notívago"]
-  },
-  "vocab-116": {
-    "promptNative": "'El aguafiestas' significa...",
-    "options": ["um estraga-prazeres","um salva-vidas","um encanador","um sommelier"]
-  },
-  "vocab-117": {
-    "promptNative": "'Estar ensimismado' significa...",
-    "options": ["perdido em pensamentos","muito envergonhado","exausto","completamente perdido"]
-  },
-  "vocab-118": {
-    "promptNative": "'El desparpajo' significa... (Espanha)",
-    "options": ["desenvoltura","total falta de jeito","silêncio total","um quarto bagunçado"]
-  },
-  "vocab-119": {
-    "promptNative": "'Entrañable' significa...",
-    "options": ["cativante","insuportável","interno (órgãos)","muito caro"]
-  },
-  "vocab-120": {
-    "promptNative": "'Achantarse' significa... (Espanha)",
-    "options": ["amarelar","sentar-se","cantar junto","gabar-se"]
-  },
-  "vocab-121": {
-    "promptNative": "'Ser un sinvergüenza' significa...",
-    "options": ["ser um sem-vergonha","ser extremamente tímido","estar sem um tostão","ser trabalhador"]
-  },
-  "vocab-122": {
-    "promptNative": "'Trasnochar' significa...",
-    "options": ["virar a noite acordado","mudar de casa à noite","trabalhar no turno da noite fixo","dormir até tarde"]
-  },
-  "vocab-123": {
-    "promptNative": "'La cuesta de enero' significa... (Espanha)",
-    "options": ["o aperto financeiro do início do ano","uma estrada de montanha em janeiro","uma resolução de Ano Novo","uma liquidação de inverno"]
-  },
-  "vocab-124": {
-    "promptNative": "'Dar la brasa' significa... (colloquial, Spain)",
-    "options": ["ficar enchendo","grelhar comida","aquecer alguém","dar um presente"]
-  },
-  "vocab-125": {
-    "promptNative": "'El chiringuito' significa... (Espanha)",
-    "options": ["um quiosque de praia / (fig.) um esquema duvidoso","um hotel de luxo","um shopping","uma estação de trem"]
-  },
-  "vocab-126": {
-    "promptNative": "'Añorar' significa...",
-    "options": ["ansiar por","somar números","envelhecer","anunciar"]
-  },
-  "verbo-0": {
-    "promptNative": "Vocês _____ (tener = ter) razão. (vosotros)"
-  },
-  "verbo-1": {
-    "promptNative": "Vocês _____ (querer = querer) vir à festa? (vosotros)"
-  },
-  "verbo-2": {
-    "promptNative": "Vocês (f.) _____ (ir = ir) à festa hoje à noite. (vosotras)"
-  },
-  "verbo-3": {
-    "promptNative": "Eu _____ (ser = ser) de Madrid."
-  },
-  "verbo-4": {
-    "promptNative": "Ela _____ (tener = ter) dois irmãos."
-  },
-  "verbo-5": {
-    "promptNative": "Ontem eu _____ (comer = comer) paella com a minha família."
-  },
-  "verbo-6": {
-    "promptNative": "Vocês _____ (hablar = falar) muito rápido. (vosotros)"
-  },
-  "verbo-7": {
-    "promptNative": "Hoje de manhã eu _____ (desayunar = tomar café da manhã) churros com chocolate."
-  },
-  "verbo-8": {
-    "promptNative": "_____ (venir = vir) aqui agora mesmo. (vosotros command)"
-  },
-  "verbo-9": {
-    "promptNative": "Não _____ (hablar = falar) tão alto, por favor. (vosotros)"
-  },
-  "verbo-10": {
-    "promptNative": "Vocês _____ (gustar = gostar) de tortilla espanhola? (vosotros)"
-  },
-  "verbo-11": {
-    "promptNative": "Quando vocês _____ (terminar = terminar), me avisem. (vosotros)"
-  },
-  "verbo-12": {
-    "promptNative": "Espero que _____ (ir = ir) tudo bem para vocês na prova."
-  },
-  "verbo-13": {
-    "promptNative": "Se vocês _____ (estar = estar) livres no sábado, venham jantar. (vosotros)"
-  },
-  "verbo-14": {
-    "promptNative": "Tomara que vocês _____ (hacer = fazer) o feriadão com a gente. (vosotros)"
-  },
-  "verbo-15": {
-    "promptNative": "Se eu _____ (saber = saber) antes, teria avisado vocês."
-  },
-  "verbo-16": {
-    "promptNative": "_____ (haber) vocês chegado antes, teriam visto o jogo. ('Se vocês tivessem chegado...')"
-  },
-  "verbo-17": {
-    "promptNative": "Aconteça o que _____ (pasar = passar) acontecer, vocês fiquem calmos."
-  },
-  "verbo-18": {
-    "promptNative": "Vocês _____ (hablar = falar) espanhol muito bem. (vosotros)"
-  },
-  "verbo-19": {
-    "promptNative": "Vocês _____ (comer = comer) rápido demais. (vosotras)"
-  },
-  "verbo-20": {
-    "promptNative": "Vocês _____ (vivir = morar) em Madrid, né? (vosotros)"
-  },
-  "verbo-21": {
-    "promptNative": "Vocês _____ (ser = ser) muito simpáticos. (vosotros)"
-  },
-  "verbo-22": {
-    "promptNative": "Vocês _____ (estar = estar) muito bonitas hoje. (vosotras)"
-  },
-  "verbo-23": {
-    "promptNative": "Vocês _____ (tener = ter) muita sorte. (vosotros)"
-  },
-  "verbo-24": {
-    "promptNative": "Vocês _____ (querer = querer) café ou chá? (vosotros)"
-  },
-  "verbo-25": {
-    "promptNative": "Vocês _____ (hacer = fazer) muito barulho. (vosotros)"
-  },
-  "verbo-26": {
-    "promptNative": "Vocês _____ (poder = poder) vir no sábado? (vosotras)"
-  },
-  "verbo-27": {
-    "promptNative": "Vocês _____ (venir = vir) ao parque todos os dias. (vosotros)"
-  },
-  "verbo-28": {
-    "promptNative": "Eu _____ (trabajar = trabalhar) em um escritório."
-  },
-  "verbo-29": {
-    "promptNative": "Você _____ (beber = beber) muita água. (tú)"
-  },
-  "verbo-30": {
-    "promptNative": "Ele _____ (vivir = morar) perto daqui."
-  },
-  "verbo-31": {
-    "promptNative": "Nós _____ (estudiar = estudar) inglês no ensino médio."
-  },
-  "verbo-32": {
-    "promptNative": "Eles _____ (ser = ser) meus primos."
-  },
-  "verbo-33": {
-    "promptNative": "Eu _____ (ir = ir) para o trabalho de metrô."
-  },
-  "verbo-34": {
-    "promptNative": "Você _____ (tener = ter) olhos azuis. (tú)"
-  },
-  "verbo-35": {
-    "promptNative": "Nós _____ (hacer = fazer) as compras aos sábados."
-  },
-  "verbo-36": {
-    "promptNative": "Ela _____ (querer = querer) um copo de suco."
-  },
-  "verbo-37": {
-    "promptNative": "Eu _____ (estar = estar) muito cansado hoje."
-  },
-  "verbo-38": {
-    "promptNative": "Vocês _____ (beber = beber) suco de laranja. (vosotros)"
-  },
-  "verbo-39": {
-    "promptNative": "Vocês _____ (estudiar = estudar) muito para a prova. (vosotras)"
-  },
-  "verbo-40": {
-    "promptNative": "Você _____ (poder = poder) fazer isso sozinho. (tú)"
-  },
-  "verbo-41": {
-    "promptNative": "Nós _____ (ir = ir) à praia no verão."
-  },
-  "verbo-42": {
-    "promptNative": "Ontem vocês _____ (hablar = falar) com o professor. (vosotros)"
-  },
-  "verbo-43": {
-    "promptNative": "Ontem à noite vocês _____ (comer = comer) em um restaurante. (vosotras)"
-  },
-  "verbo-44": {
-    "promptNative": "No ano passado vocês _____ (vivir = morar) em Sevilha. (vosotros)"
-  },
-  "verbo-45": {
-    "promptNative": "Ontem vocês _____ (ir = ir) ao cinema, né? (vosotros)"
-  },
-  "verbo-46": {
-    "promptNative": "Na semana passada vocês _____ (tener = ter) uma prova. (vosotros)"
-  },
-  "verbo-47": {
-    "promptNative": "Quando vocês eram pequenos, vocês _____ (jugar = jogar) na rua. (vosotros)"
-  },
-  "verbo-48": {
-    "promptNative": "Quando vocês eram pequenas, vocês _____ (ir = ir) à escola a pé. (vosotras)"
-  },
-  "verbo-49": {
-    "promptNative": "Antigamente, vocês _____ (comer = comer) mais carne. (vosotros)"
-  },
-  "verbo-50": {
-    "promptNative": "_____ (hablar = falar) mais devagar, por favor. (vosotros command)"
-  },
-  "verbo-51": {
-    "promptNative": "_____ (comer = comer) tudo, está esfriando. (vosotros command)"
-  },
-  "verbo-52": {
-    "promptNative": "_____ (escuchar = escutar) com atenção. (vosotros command)"
-  },
-  "verbo-53": {
-    "promptNative": "Amanhã vocês vão _____ (ir = ir) visitar o museu. (vosotros)"
-  },
-  "verbo-54": {
-    "promptNative": "Ontem eu _____ (comprar = comprar) um celular novo."
-  },
-  "verbo-55": {
-    "promptNative": "Ontem à noite ela _____ (hacer = fazer) o jantar."
-  },
-  "verbo-56": {
-    "promptNative": "No sábado nós _____ (ir = ir) para a montanha."
-  },
-  "verbo-57": {
-    "promptNative": "Você _____ (tener = ter) muita sorte ontem. (tú)"
-  },
-  "verbo-58": {
-    "promptNative": "Quando eu era menina, eu _____ (vivir = morar) em um vilarejo."
-  },
-  "verbo-59": {
-    "promptNative": "Antigamente, nós _____ (jugar = jogar) futebol todas as tardes."
-  },
-  "verbo-60": {
-    "promptNative": "Quando criança, você _____ (ser = ser) muito levado. (tú)"
-  },
-  "verbo-61": {
-    "promptNative": "Amanhã eu vou _____ (ir = ir) estudar na biblioteca."
-  },
-  "verbo-62": {
-    "promptNative": "Neste fim de semana nós vamos _____ (ir = ir) fazer um passeio de um dia."
-  },
-  "verbo-63": {
-    "promptNative": "_____ (esperar = esperar) aqui um momento. (vosotros command)"
-  },
-  "verbo-64": {
-    "promptNative": "_____ (mirar = olhar) para isto, é incrível. (vosotros command)"
-  },
-  "verbo-65": {
-    "promptNative": "Eles _____ (ir = ir) à festa na sexta-feira passada."
-  },
-  "verbo-66": {
-    "promptNative": "Vocês já _____ (terminar = terminar) a lição de casa. (vosotros)"
-  },
-  "verbo-67": {
-    "promptNative": "Hoje de manhã vocês _____ (desayunar = tomar café da manhã) bem cedo. (vosotros)"
-  },
-  "verbo-68": {
-    "promptNative": "Hoje vocês _____ (ver = ver) um ótimo filme. (vosotras)"
-  },
-  "verbo-69": {
-    "promptNative": "Esta semana vocês _____ (hacer = fazer) muito exercício. (vosotros)"
-  },
-  "verbo-70": {
-    "promptNative": "Hoje de manhã eu _____ (tomar = tomar) café com torradas."
-  },
-  "verbo-71": {
-    "promptNative": "Hoje nós _____ (ir = ir) ao médico."
-  },
-  "verbo-72": {
-    "promptNative": "Hoje à tarde ela _____ (volver = voltar) do trabalho bem cedo."
-  },
-  "verbo-73": {
-    "promptNative": "Este ano eu _____ (viajar = viajar) para três países."
-  },
-  "verbo-74": {
-    "promptNative": "Vocês _____ (poner = pôr) a mesa muito bem hoje. (vosotros)"
-  },
-  "verbo-75": {
-    "promptNative": "Vocês já _____ (escribir = escrever) a carta? (vosotros)"
-  },
-  "verbo-76": {
-    "promptNative": "Vocês ainda não _____ (llegar = chegar) a um acordo. (vosotros)"
-  },
-  "verbo-77": {
-    "promptNative": "Não _____ (gritar = gritar) tanto, por favor. (vosotros negative command)"
-  },
-  "verbo-78": {
-    "promptNative": "Não _____ (tocar = tocar) em nada no museu. (vosotros negative command)"
-  },
-  "verbo-79": {
-    "promptNative": "_____ (sentarse = sentar-se), por favor. (vosotros command)"
-  },
-  "verbo-80": {
-    "promptNative": "Este mês nós _____ (comprar = comprar) um carro novo."
-  },
-  "verbo-81": {
-    "promptNative": "Hoje você _____ (romper = quebrar) o celular de novo. (tú)"
-  },
-  "verbo-82": {
-    "promptNative": "Hoje de manhã eles _____ (decir = dizer) a verdade."
-  },
-  "verbo-83": {
-    "promptNative": "Você já _____ (estar = estar) na Galícia alguma vez? (tú)"
-  },
-  "verbo-84": {
-    "promptNative": "Neste verão eu _____ (leer = ler) cinco livros."
-  },
-  "verbo-85": {
-    "promptNative": "Hoje vocês _____ (abrir = abrir) a loja tarde. (vosotros)"
-  },
-  "verbo-86": {
-    "promptNative": "Vocês nunca _____ (venir = vir) nos visitar. (vosotros)"
-  },
-  "verbo-87": {
-    "promptNative": "Hoje de manhã nós _____ (levantarse = levantar-se) supertarde."
-  },
-  "verbo-88": {
-    "promptNative": "_____ (callarse = calar-se) por um momento, por favor. (vosotros command)"
-  },
-  "verbo-89": {
-    "promptNative": "Este ano vocês _____ (aprender = aprender) muito espanhol. (vosotras)"
-  },
-  "verbo-90": {
-    "promptNative": "Eu quero que vocês _____ (venir = vir) à minha casa no domingo. (vosotros)"
-  },
-  "verbo-91": {
-    "promptNative": "Espero que vocês _____ (traer = trazer) o notebook amanhã. (vosotros)"
-  },
-  "verbo-92": {
-    "promptNative": "É importante que vocês _____ (hablar = falar) com o chefe hoje. (vosotros)"
-  },
-  "verbo-93": {
-    "promptNative": "Para que vocês _____ (llegar = chegar) na hora, saiam agora. (vosotros)"
-  },
-  "verbo-94": {
-    "promptNative": "Eu não acho que vocês _____ (tener = ter razão) sobre isso. (vosotros)"
-  },
-  "verbo-95": {
-    "promptNative": "Espero que vocês _____ (poder = poder) ficar mais um pouco. (vosotros)"
-  },
-  "verbo-96": {
-    "promptNative": "Quando vocês _____ (salir = sair) do trabalho, me liguem. (vosotros)"
-  },
-  "verbo-97": {
-    "promptNative": "É importante que você _____ (conducir = dirigir) com cuidado nesta neblina. (tú)"
-  },
-  "verbo-98": {
-    "promptNative": "Eu não acho que ela _____ (saber = saber) a resposta ainda. (ella)"
-  },
-  "verbo-99": {
-    "promptNative": "Para que eu _____ (entender = entender) o problema, me explique devagar. (yo)"
-  },
-  "verbo-100": {
-    "promptNative": "Espero que nós _____ (conseguir = conseguir) os ingressos para o show. (nosotros)"
-  },
-  "verbo-101": {
-    "promptNative": "Eu prefiro que vocês _____ (elegir = escolher) o restaurante desta vez. (vosotros)"
-  },
-  "verbo-102": {
-    "promptNative": "É melhor que vocês _____ (coger = pegar) o metrô; tem um engarrafamento. (vosotros)"
-  },
-  "verbo-103": {
-    "promptNative": "Assim que vocês _____ (llegar = chegar) à estação, me mandem mensagem. (vosotros)"
-  },
-  "verbo-104": {
-    "promptNative": "Não _____ (hacer = fazer) tanto barulho; a criança está dormindo. (vosotros)"
-  },
-  "verbo-105": {
-    "promptNative": "Não _____ (preocuparse = se preocupar); vai dar tudo certo. (vosotros)"
-  },
-  "verbo-106": {
-    "promptNative": "Não _____ (decir = dizer) nada para a sua mãe ainda. (vosotros)"
-  },
-  "verbo-107": {
-    "promptNative": "Não _____ (poner = pôr) os pés no sofá. (vosotros)"
-  },
-  "verbo-108": {
-    "promptNative": "Não _____ (tocar = tocar) em nada enquanto o professor não estiver aqui. (vosotros)"
-  },
-  "verbo-109": {
-    "promptNative": "Antes de vocês _____ (marcharse = ir embora), paguem a conta. (vosotros)"
-  },
-  "verbo-110": {
-    "promptNative": "É uma pena que vocês não _____ (querer = querer) vir ao jantar. (vosotros)"
-  },
-  "verbo-111": {
-    "promptNative": "Se vocês _____ (tener = ter) mais tempo, viajariam mais. (vosotros)"
-  },
-  "verbo-112": {
-    "promptNative": "Se vocês _____ (venir = vir) comigo, eu mostraria o vilarejo para vocês. (vosotros)"
-  },
-  "verbo-113": {
-    "promptNative": "Se você _____ (querer = querer), poderíamos ir ao cinema hoje à noite. (tú)"
-  },
-  "verbo-114": {
-    "promptNative": "Se eu _____ (ser = ser) você, não diria nada. (yo)"
-  },
-  "verbo-115": {
-    "promptNative": "Se vocês estudassem mais, vocês _____ (aprobar = passar) sem problemas. (vosotros)"
-  },
-  "verbo-116": {
-    "promptNative": "Se nós ganhássemos na loteria, nós _____ (comprar = comprar) um apartamento em Madrid. (nosotros)"
-  },
-  "verbo-117": {
-    "promptNative": "Se chovesse amanhã, eu não _____ (salir = sair) de casa. (yo)"
-  },
-  "verbo-118": {
-    "promptNative": "Se vocês tivessem mais paciência, vocês _____ (conseguir = conseguir) melhores resultados. (vosotros)"
-  },
-  "verbo-119": {
-    "promptNative": "Ela falou como se _____ (conocer = conhecer) o segredo. (ella)"
-  },
-  "verbo-120": {
-    "promptNative": "Eles me trataram como se eu não _____ (existir = existir). (yo)"
-  },
-  "verbo-121": {
-    "promptNative": "Eu queria que vocês _____ (estar = estar) aqui comigo agora. (vosotros)"
-  },
-  "verbo-122": {
-    "promptNative": "Eu gostaria que vocês me _____ (escuchar = escutar) com atenção. (vosotros)"
-  },
-  "verbo-123": {
-    "promptNative": "Eles pediram que vocês _____ (traer = trazer) os documentos assinados. (vosotros)"
-  },
-  "verbo-124": {
-    "promptNative": "Quando vocês voltarem, nós já _____ (recoger = arrumar) a casa toda. (nosotros)"
-  },
-  "verbo-125": {
-    "promptNative": "Eu suponho que vocês provavelmente já _____ (ver = ver) as notícias, né? (vosotros)"
-  },
-  "verbo-126": {
-    "promptNative": "É possível que eles já _____ (irse = ir embora) quando chegarmos. (ellos)"
-  },
-  "verbo-127": {
-    "promptNative": "É uma pena que vocês não _____ (poder = poder) vir ao casamento. (vosotros)"
-  },
-  "verbo-128": {
-    "promptNative": "_____ (pasar = passar) o que acontecer, mantenha a calma."
-  },
-  "verbo-129": {
-    "promptNative": "_____ (ser = ser) como for, nós vamos terminar isto hoje."
-  },
-  "verbo-130": {
-    "promptNative": "Custe o que _____ (costar = custar), eu vou conseguir aquele emprego."
-  },
-  "verbo-131": {
-    "promptNative": "Por mais que vocês _____ (correr = correr), não vão chegar na hora. (vosotros)"
-  },
-  "verbo-132": {
-    "promptNative": "Se vocês _____ (saber = saber) a verdade, teriam agido de outra forma. (vosotros)"
-  },
-  "verbo-133": {
-    "promptNative": "Se vocês tivessem me contado antes, eu _____ (ayudar = ajudar) vocês. (yo)"
-  },
-  "verbo-134": {
-    "promptNative": "Se vocês tivessem chegado na hora, vocês _____ (ver = ver) o começo do filme. (vosotros)"
-  },
-  "verbo-135": {
-    "promptNative": "Se eles _____ (venir = vir), a festa teria sido muito melhor. (ellos)"
-  },
-  "verbo-136": {
-    "promptNative": "Eu queria que vocês tivessem me _____ (contar = contar) antes de assinar o contrato. (vosotros)"
-  },
-  "verbo-137": {
-    "promptNative": "Se vocês soubessem, não _____ (venir = vir) até aqui. (vosotros)"
-  },
-  "verbo-138": {
-    "promptNative": "Se eu estivesse lá, eu _____ (avisar = avisar) vocês na hora. (yo)"
-  },
-  "verbo-139": {
-    "promptNative": "Digam o que _____ (decir = dizer), eu sei a verdade. (ellos)"
-  },
-  "verbo-140": {
-    "promptNative": "Façam o que _____ (hacer = fazer), avisem a gente primeiro. (vosotros)"
-  },
-  "verbo-141": {
-    "promptNative": "Nunca _____ (rendirse = desistir), aconteça o que acontecer. (vosotros)"
-  },
-  "verbo-142": {
-    "promptNative": "Se eu _____ (tener = ter) mais dinheiro, compraria aquele carro."
-  },
-  "verbo-143": {
-    "promptNative": "Se vocês tivessem nos avisado, nós não _____ (cometer = cometer) aquele erro. (nosotros)"
-  },
-  "verbo-144": {
-    "promptNative": "Vocês olham para isso como se nunca _____ (ver = ver) o mar. (vosotros)"
-  },
-  "verbo-145": {
-    "promptNative": "Mesmo que vocês tivessem me pedido, eu não _____ (hacer = fazer) isso. (yo)"
-  },
-  "verbo-146": {
-    "promptNative": "Se não fosse por vocês, eu não _____ (conseguir = conseguir) isso. (yo)"
-  },
-  "verbo-147": {
-    "promptNative": "Como se vocês _____ (ser = ser) milionários, com tanto que gastam. (vosotros)"
-  },
-  "verbo-148": {
-    "promptNative": "Por mais que vocês _____ (negar = negar), a verdade viria à tona. (vosotros)"
-  },
-  "verbo-149": {
-    "promptNative": "Seja quem _____ (ser = ser), que espere lá fora. (él)"
-  },
-  "verbo-150": {
-    "promptNative": "Estou surpreso que vocês já _____ (volver = voltar) das férias. (vosotros)"
-  },
-  "verbo-151": {
-    "promptNative": "Me surpreende que vocês não _____ (darse cuenta = perceber) antes. (vosotros)"
-  },
-  "verbo-152": {
-    "promptNative": "Eu _____ (hablar = falar). (pres)"
-  },
-  "verbo-153": {
-    "promptNative": "Nós _____ (hablar = falar). (pres)"
-  },
-  "verbo-154": {
-    "promptNative": "Eu _____ (trabajar = trabalhar). (pres)"
-  },
-  "verbo-155": {
-    "promptNative": "Nós _____ (trabajar = trabalhar). (pres)"
-  },
-  "verbo-156": {
-    "promptNative": "Eu _____ (estudiar = estudar). (pres)"
-  },
-  "verbo-157": {
-    "promptNative": "Nós _____ (estudiar = estudar). (pres)"
-  },
-  "verbo-158": {
-    "promptNative": "Eu _____ (comprar = comprar). (pres)"
-  },
-  "verbo-159": {
-    "promptNative": "Nós _____ (comprar = comprar). (pres)"
-  },
-  "verbo-160": {
-    "promptNative": "Eu _____ (cocinar = cozinhar). (pres)"
-  },
-  "verbo-161": {
-    "promptNative": "Nós _____ (cocinar = cozinhar). (pres)"
-  },
-  "verbo-162": {
-    "promptNative": "Eu _____ (cantar = cantar). (pres)"
-  },
-  "verbo-163": {
-    "promptNative": "Nós _____ (cantar = cantar). (pres)"
-  },
-  "verbo-164": {
-    "promptNative": "Eu _____ (bailar = dançar). (pres)"
-  },
-  "verbo-165": {
-    "promptNative": "Nós _____ (bailar = dançar). (pres)"
-  },
-  "verbo-166": {
-    "promptNative": "Eu _____ (tomar = tomar). (pres)"
-  },
-  "verbo-167": {
-    "promptNative": "Nós _____ (tomar = tomar). (pres)"
-  },
-  "verbo-168": {
-    "promptNative": "Eu _____ (llegar = chegar). (pres)"
-  },
-  "verbo-169": {
-    "promptNative": "Nós _____ (llegar = chegar). (pres)"
-  },
-  "verbo-170": {
-    "promptNative": "Eu _____ (escuchar = escutar). (pres)"
-  },
-  "verbo-171": {
-    "promptNative": "Nós _____ (escuchar = escutar). (pres)"
-  },
-  "verbo-172": {
-    "promptNative": "Eu _____ (mirar = olhar). (pres)"
-  },
-  "verbo-173": {
-    "promptNative": "Nós _____ (mirar = olhar). (pres)"
-  },
-  "verbo-174": {
-    "promptNative": "Eu _____ (esperar = esperar). (pres)"
-  },
-  "verbo-175": {
-    "promptNative": "Nós _____ (esperar = esperar). (pres)"
-  },
-  "verbo-176": {
-    "promptNative": "Eu _____ (aparcar = estacionar (Espanha)). (pres)"
-  },
-  "verbo-177": {
-    "promptNative": "Nós _____ (aparcar = estacionar (Espanha)). (pres)"
-  },
-  "verbo-178": {
-    "promptNative": "Eu _____ (firmar = assinar). (pres)"
-  },
-  "verbo-179": {
-    "promptNative": "Nós _____ (firmar = assinar). (pres)"
-  },
-  "verbo-180": {
-    "promptNative": "Eu _____ (comer = comer). (pres)"
-  },
-  "verbo-181": {
-    "promptNative": "Nós _____ (comer = comer). (pres)"
-  },
-  "verbo-182": {
-    "promptNative": "Eu _____ (beber = beber). (pres)"
-  },
-  "verbo-183": {
-    "promptNative": "Nós _____ (beber = beber). (pres)"
-  },
-  "verbo-184": {
-    "promptNative": "Eu _____ (correr = correr). (pres)"
-  },
-  "verbo-185": {
-    "promptNative": "Nós _____ (correr = correr). (pres)"
-  },
-  "verbo-186": {
-    "promptNative": "Eu _____ (leer = ler). (pres)"
-  },
-  "verbo-187": {
-    "promptNative": "Nós _____ (leer = ler). (pres)"
-  },
-  "verbo-188": {
-    "promptNative": "Eu _____ (aprender = aprender). (pres)"
-  },
-  "verbo-189": {
-    "promptNative": "Nós _____ (aprender = aprender). (pres)"
-  },
-  "verbo-190": {
-    "promptNative": "Eu _____ (comprender = compreender). (pres)"
-  },
-  "verbo-191": {
-    "promptNative": "Nós _____ (comprender = compreender). (pres)"
-  },
-  "verbo-192": {
-    "promptNative": "Eu _____ (coger = pegar (Espanha)). (pres)"
-  },
-  "verbo-193": {
-    "promptNative": "Nós _____ (coger = pegar (Espanha)). (pres)"
-  },
-  "verbo-194": {
-    "promptNative": "Eu _____ (vender = vender). (pres)"
-  },
-  "verbo-195": {
-    "promptNative": "Nós _____ (vender = vender). (pres)"
-  },
-  "verbo-196": {
-    "promptNative": "Eu _____ (vivir = morar). (pres)"
-  },
-  "verbo-197": {
-    "promptNative": "Nós _____ (vivir = morar). (pres)"
-  },
-  "verbo-198": {
-    "promptNative": "Eu _____ (escribir = escrever). (pres)"
-  },
-  "verbo-199": {
-    "promptNative": "Nós _____ (escribir = escrever). (pres)"
-  },
-  "verbo-200": {
-    "promptNative": "Eu _____ (abrir = abrir). (pres)"
-  },
-  "verbo-201": {
-    "promptNative": "Nós _____ (abrir = abrir). (pres)"
-  },
-  "verbo-202": {
-    "promptNative": "Eu _____ (recibir = receber). (pres)"
-  },
-  "verbo-203": {
-    "promptNative": "Nós _____ (recibir = receber). (pres)"
-  },
-  "verbo-204": {
-    "promptNative": "Eu _____ (subir = subir). (pres)"
-  },
-  "verbo-205": {
-    "promptNative": "Nós _____ (subir = subir). (pres)"
-  },
-  "verbo-206": {
-    "promptNative": "Eu _____ (decidir = decidir). (pres)"
-  },
-  "verbo-207": {
-    "promptNative": "Ontem eu _____ (hablar = falar). (pret)"
-  },
-  "verbo-208": {
-    "promptNative": "Antigamente você (tú) _____ (hablar = falar). (impf)"
-  },
-  "verbo-209": {
-    "promptNative": "Ontem vocês (vosotros) _____ (trabajar = trabalhar). (pret)"
-  },
-  "verbo-210": {
-    "promptNative": "Ontem você (tú) _____ (estudiar = estudar). (pret)"
-  },
-  "verbo-211": {
-    "promptNative": "Antigamente vocês (vosotros) _____ (estudiar = estudar). (impf)"
-  },
-  "verbo-212": {
-    "promptNative": "Ontem eles _____ (comprar = comprar). (pret)"
-  },
-  "verbo-213": {
-    "promptNative": "Ontem ele/ela _____ (cocinar = cozinhar). (pret)"
-  },
-  "verbo-214": {
-    "promptNative": "Antigamente eles _____ (cocinar = cozinhar). (impf)"
-  },
-  "verbo-215": {
-    "promptNative": "Antigamente eu _____ (cantar = cantar). (impf)"
-  },
-  "verbo-216": {
-    "promptNative": "Ontem nós _____ (bailar = dançar). (pret)"
-  },
-  "verbo-217": {
-    "promptNative": "Ontem eu _____ (tomar = tomar). (pret)"
-  },
-  "verbo-218": {
-    "promptNative": "Antigamente você (tú) _____ (tomar = tomar). (impf)"
-  },
-  "verbo-219": {
-    "promptNative": "Ontem vocês (vosotros) _____ (llegar = chegar). (pret)"
-  },
-  "verbo-220": {
-    "promptNative": "Ontem você (tú) _____ (escuchar = escutar). (pret)"
-  },
-  "verbo-221": {
-    "promptNative": "Antigamente vocês (vosotros) _____ (escuchar = escutar). (impf)"
-  },
-  "verbo-222": {
-    "promptNative": "Ontem eles _____ (mirar = olhar). (pret)"
-  },
-  "verbo-223": {
-    "promptNative": "Ontem ele/ela _____ (esperar = esperar). (pret)"
-  },
-  "verbo-224": {
-    "promptNative": "Antigamente eles _____ (esperar = esperar). (impf)"
-  },
-  "verbo-225": {
-    "promptNative": "Antigamente eu _____ (aparcar = estacionar (Espanha)). (impf)"
-  },
-  "verbo-226": {
-    "promptNative": "Ontem nós _____ (firmar = assinar). (pret)"
-  },
-  "verbo-227": {
-    "promptNative": "Ontem eu _____ (comer = comer). (pret)"
-  },
-  "verbo-228": {
-    "promptNative": "Antigamente você (tú) _____ (comer = comer). (impf)"
-  },
-  "verbo-229": {
-    "promptNative": "Ontem vocês (vosotros) _____ (beber = beber). (pret)"
-  },
-  "verbo-230": {
-    "promptNative": "Ontem você (tú) _____ (correr = correr). (pret)"
-  },
-  "verbo-231": {
-    "promptNative": "Antigamente vocês (vosotros) _____ (correr = correr). (impf)"
-  },
-  "verbo-232": {
-    "promptNative": "Ontem eles _____ (leer = ler). (pret)"
-  },
-  "verbo-233": {
-    "promptNative": "Ontem ele/ela _____ (aprender = aprender). (pret)"
-  },
-  "verbo-234": {
-    "promptNative": "Antigamente eles _____ (aprender = aprender). (impf)"
-  },
-  "verbo-235": {
-    "promptNative": "Antigamente eu _____ (comprender = compreender). (impf)"
-  },
-  "verbo-236": {
-    "promptNative": "Ontem nós _____ (coger = pegar (Espanha)). (pret)"
-  },
-  "verbo-237": {
-    "promptNative": "Ontem eu _____ (vender = vender). (pret)"
-  },
-  "verbo-238": {
-    "promptNative": "Antigamente você (tú) _____ (vender = vender). (impf)"
-  },
-  "verbo-239": {
-    "promptNative": "Ontem vocês (vosotros) _____ (vivir = morar). (pret)"
-  },
-  "verbo-240": {
-    "promptNative": "Ontem você (tú) _____ (escribir = escrever). (pret)"
-  },
-  "verbo-241": {
-    "promptNative": "Antigamente vocês (vosotros) _____ (escribir = escrever). (impf)"
-  },
-  "verbo-242": {
-    "promptNative": "Ontem eles _____ (abrir = abrir). (pret)"
-  },
-  "verbo-243": {
-    "promptNative": "Ontem ele/ela _____ (recibir = receber). (pret)"
-  },
-  "verbo-244": {
-    "promptNative": "Antigamente eles _____ (recibir = receber). (impf)"
-  },
-  "verbo-245": {
-    "promptNative": "Antigamente eu _____ (subir = subir). (impf)"
-  },
-  "verbo-246": {
-    "promptNative": "Ontem nós _____ (decidir = decidir). (pret)"
-  },
-  "verbo-247": {
-    "promptNative": "Eu _____ (pensar = pensar). (pres)"
-  },
-  "verbo-248": {
-    "promptNative": "Antigamente você (tú) _____ (pensar = pensar). (impf)"
-  },
-  "verbo-249": {
-    "promptNative": "Vocês (vosotros) _____ (poder = poder). (pres)"
-  },
-  "verbo-250": {
-    "promptNative": "Você (tú) _____ (querer = querer). (pres)"
-  },
-  "verbo-251": {
-    "promptNative": "Antigamente vocês (vosotros) _____ (querer = querer). (impf)"
-  },
-  "verbo-252": {
-    "promptNative": "Eles _____ (volver = voltar). (pres)"
-  },
-  "verbo-253": {
-    "promptNative": "Ele/ela _____ (dormir = dormir). (pres)"
-  },
-  "verbo-254": {
-    "promptNative": "Antigamente eles _____ (dormir = dormir). (impf)"
-  },
-  "verbo-255": {
-    "promptNative": "Antigamente eu _____ (pedir = pedir). (impf)"
-  },
-  "verbo-256": {
-    "promptNative": "Nós _____ (entender = entender). (pres)"
-  },
-  "verbo-257": {
-    "promptNative": "Eu _____ (jugar = jogar). (pres)"
-  },
-  "verbo-258": {
-    "promptNative": "Antigamente você (tú) _____ (jugar = jogar). (impf)"
-  },
-  "verbo-259": {
-    "promptNative": "Vocês (vosotros) _____ (empezar = começar). (pres)"
-  },
-  "verbo-260": {
-    "promptNative": "Você (tú) _____ (cerrar = fechar). (pres)"
-  },
-  "verbo-261": {
-    "promptNative": "Antigamente vocês (vosotros) _____ (cerrar = fechar). (impf)"
-  },
-  "verbo-262": {
-    "promptNative": "Eles _____ (ser = ser). (pres)"
-  },
-  "verbo-263": {
-    "promptNative": "Ele/ela _____ (estar = estar). (pres)"
-  },
-  "verbo-264": {
-    "promptNative": "Antigamente eles _____ (estar = estar). (impf)"
-  },
-  "verbo-265": {
-    "promptNative": "Antigamente eu _____ (ir = ir). (impf)"
-  },
-  "verbo-266": {
-    "promptNative": "Nós _____ (tener = ter). (pres)"
-  },
-  "verbo-267": {
-    "promptNative": "Eu _____ (hacer = fazer). (pres)"
-  },
-  "verbo-268": {
-    "promptNative": "Antigamente você (tú) _____ (hacer = fazer). (impf)"
-  },
-  "verbo-269": {
-    "promptNative": "Vocês (vosotros) _____ (decir = dizer). (pres)"
-  },
-  "verbo-270": {
-    "promptNative": "Você (tú) _____ (venir = vir). (pres)"
-  },
-  "verbo-271": {
-    "promptNative": "Antigamente vocês (vosotros) _____ (venir = vir). (impf)"
-  },
-  "verbo-272": {
-    "promptNative": "Eles _____ (poner = pôr). (pres)"
-  },
-  "verbo-273": {
-    "promptNative": "Ele/ela _____ (salir = sair). (pres)"
-  },
-  "verbo-274": {
-    "promptNative": "Antigamente eles _____ (salir = sair). (impf)"
-  },
-  "verbo-275": {
-    "promptNative": "Antigamente eu _____ (dar = dar). (impf)"
-  },
-  "verbo-276": {
-    "promptNative": "Nós _____ (ver = ver). (pres)"
-  },
-  "verbo-277": {
-    "promptNative": "Hoje eu _____ (hablar = falar). (perf)"
-  },
-  "verbo-278": {
-    "promptNative": "_____ (hablar = falar) más despacio. (vosotros command)"
-  },
-  "verbo-279": {
-    "promptNative": "Amanhã eles _____ (trabajar = trabalhar). (fut)"
-  },
-  "verbo-280": {
-    "promptNative": "Amanhã nós _____ (estudiar = estudar). (fut)"
-  },
-  "verbo-281": {
-    "promptNative": "Amanhã eu _____ (comprar = comprar). (fut)"
-  },
-  "verbo-282": {
-    "promptNative": "Hoje vocês (vosotros) _____ (cocinar = cozinhar). (perf)"
-  },
-  "verbo-283": {
-    "promptNative": "Hoje ele/ela _____ (cantar = cantar). (perf)"
-  },
-  "verbo-284": {
-    "promptNative": "Hoje eu _____ (bailar = dançar). (perf)"
-  },
-  "verbo-285": {
-    "promptNative": "_____ (bailar = dançar) con nosotros. (vosotros command)"
-  },
-  "verbo-286": {
-    "promptNative": "Amanhã eles _____ (tomar = tomar). (fut)"
-  },
-  "verbo-287": {
-    "promptNative": "Amanhã nós _____ (llegar = chegar). (fut)"
-  },
-  "verbo-288": {
-    "promptNative": "Amanhã eu _____ (escuchar = escutar). (fut)"
-  },
-  "verbo-289": {
-    "promptNative": "Hoje vocês (vosotros) _____ (mirar = olhar). (perf)"
-  },
-  "verbo-290": {
-    "promptNative": "Hoje ele/ela _____ (esperar = esperar). (perf)"
-  },
-  "verbo-291": {
-    "promptNative": "Hoje eu _____ (aparcar = estacionar (Espanha)). (perf)"
-  },
-  "verbo-292": {
-    "promptNative": "_____ (aparcar = estacionar (Espanha)) el coche ahí. (vosotros command)"
-  },
-  "verbo-293": {
-    "promptNative": "Amanhã eles _____ (firmar = assinar). (fut)"
-  },
-  "verbo-294": {
-    "promptNative": "Amanhã nós _____ (comer = comer). (fut)"
-  },
-  "verbo-295": {
-    "promptNative": "Amanhã eu _____ (beber = beber). (fut)"
-  },
-  "verbo-296": {
-    "promptNative": "Hoje vocês (vosotros) _____ (correr = correr). (perf)"
-  },
-  "verbo-297": {
-    "promptNative": "Hoje ele/ela _____ (leer = ler). (perf)"
-  },
-  "verbo-298": {
-    "promptNative": "Hoje eu _____ (aprender = aprender). (perf)"
-  },
-  "verbo-299": {
-    "promptNative": "_____ (aprender = aprender) de los errores. (vosotros command)"
-  },
-  "verbo-300": {
-    "promptNative": "Amanhã eles _____ (comprender = compreender). (fut)"
-  },
-  "verbo-301": {
-    "promptNative": "Amanhã nós _____ (coger = pegar (Espanha)). (fut)"
-  },
-  "verbo-302": {
-    "promptNative": "Amanhã eu _____ (vender = vender). (fut)"
-  },
-  "verbo-303": {
-    "promptNative": "Hoje vocês (vosotros) _____ (vivir = morar). (perf)"
-  },
-  "verbo-304": {
-    "promptNative": "Hoje ele/ela _____ (escribir = escrever). (perf)"
-  },
-  "verbo-305": {
-    "promptNative": "Hoje eu _____ (abrir = abrir). (perf)"
-  },
-  "verbo-306": {
-    "promptNative": "_____ (abrir = abrir) la ventana. (vosotros command)"
-  },
-  "verbo-307": {
-    "promptNative": "Amanhã eles _____ (recibir = receber). (fut)"
-  },
-  "verbo-308": {
-    "promptNative": "Amanhã nós _____ (subir = subir). (fut)"
-  },
-  "verbo-309": {
-    "promptNative": "Amanhã eu _____ (decidir = decidir). (fut)"
-  },
-  "verbo-310": {
-    "promptNative": "Ontem vocês (vosotros) _____ (pensar = pensar). (pret)"
-  },
-  "verbo-311": {
-    "promptNative": "Amanhã eles _____ (pensar = pensar). (fut)"
-  },
-  "verbo-312": {
-    "promptNative": "Hoje ele/ela _____ (poder = poder). (perf)"
-  },
-  "verbo-313": {
-    "promptNative": "Ontem nós _____ (querer = querer). (pret)"
-  },
-  "verbo-314": {
-    "promptNative": "Amanhã vocês (vosotros) _____ (querer = querer). (fut)"
-  },
-  "verbo-315": {
-    "promptNative": "Hoje vocês (vosotros) _____ (volver = voltar). (perf)"
-  },
-  "verbo-316": {
-    "promptNative": "Ontem ele/ela _____ (dormir = dormir). (pret)"
-  },
-  "verbo-317": {
-    "promptNative": "Amanhã nós _____ (dormir = dormir). (fut)"
-  },
-  "verbo-318": {
-    "promptNative": "Hoje eu _____ (pedir = pedir). (perf)"
-  },
-  "verbo-319": {
-    "promptNative": "_____ (pedir = pedir) la cuenta. (vosotros command)"
-  },
-  "verbo-320": {
-    "promptNative": "Hoje vocês (vosotros) _____ (entender = entender). (perf)"
-  },
-  "verbo-321": {
-    "promptNative": "Ontem ele/ela _____ (jugar = jogar). (pret)"
-  },
-  "verbo-322": {
-    "promptNative": "Amanhã nós _____ (jugar = jogar). (fut)"
-  },
-  "verbo-323": {
-    "promptNative": "Hoje eu _____ (empezar = começar). (perf)"
-  },
-  "verbo-324": {
-    "promptNative": "_____ (empezar = começar) ya. (vosotros command)"
-  },
-  "verbo-325": {
-    "promptNative": "Hoje vocês (vosotros) _____ (cerrar = fechar). (perf)"
-  },
-  "verbo-326": {
-    "promptNative": "Ontem ele/ela _____ (ser = ser). (pret)"
-  },
-  "verbo-327": {
-    "promptNative": "Amanhã nós _____ (ser = ser). (fut)"
-  },
-  "verbo-328": {
-    "promptNative": "Hoje eu _____ (estar = estar). (perf)"
-  },
-  "verbo-329": {
-    "promptNative": "_____ (estar = estar) atentos. (vosotros command)"
-  },
-  "verbo-330": {
-    "promptNative": "Hoje eles _____ (ir = ir). (perf)"
-  },
-  "verbo-331": {
-    "promptNative": "Ontem nós _____ (tener = ter). (pret)"
-  },
-  "verbo-332": {
-    "promptNative": "Amanhã vocês (vosotros) _____ (tener = ter). (fut)"
-  },
-  "verbo-333": {
-    "promptNative": "Hoje você (tú) _____ (hacer = fazer). (perf)"
-  },
-  "verbo-334": {
-    "promptNative": "_____ (hacer = fazer) los deberes. (usted command)"
-  },
-  "verbo-335": {
-    "promptNative": "Hoje eles _____ (decir = dizer). (perf)"
-  },
-  "verbo-336": {
-    "promptNative": "Ontem nós _____ (venir = vir). (pret)"
-  },
-  "verbo-337": {
-    "promptNative": "Amanhã vocês (vosotros) _____ (venir = vir). (fut)"
-  },
-  "verbo-338": {
-    "promptNative": "Hoje você (tú) _____ (poner = pôr). (perf)"
-  },
-  "verbo-339": {
-    "promptNative": "_____ (poner = pôr) la mesa. (usted command)"
-  },
-  "verbo-340": {
-    "promptNative": "Hoje eles _____ (salir = sair). (perf)"
-  },
-  "verbo-341": {
-    "promptNative": "Ontem nós _____ (dar = dar). (pret)"
-  },
-  "verbo-342": {
-    "promptNative": "Amanhã vocês (vosotros) _____ (dar = dar). (fut)"
-  },
-  "verbo-343": {
-    "promptNative": "Hoje você (tú) _____ (ver = ver). (perf)"
-  },
-  "verbo-344": {
-    "promptNative": "_____ (ver = ver) el partido. (usted command)"
-  },
-  "verbo-345": {
-    "promptNative": "Hoje eles _____ (saber = saber). (perf)"
-  },
-  "verbo-346": {
-    "promptNative": "Hoje eu _____ (conocer = conhecer (pessoas)). (perf)"
-  },
-  "verbo-347": {
-    "promptNative": "_____ (conocer = conhecer (pessoas)) a mis padres. (vosotros command)"
-  },
-  "verbo-348": {
-    "promptNative": "Hoje vocês (vosotros) _____ (conducir = dirigir (Espanha)). (perf)"
-  },
-  "verbo-349": {
-    "promptNative": "Ontem ele/ela _____ (traer = trazer). (pret)"
-  },
-  "verbo-350": {
-    "promptNative": "Amanhã nós _____ (traer = trazer). (fut)"
-  },
-  "verbo-351": {
-    "promptNative": "Hoje eu _____ (oír = ouvir). (perf)"
-  },
-  "verbo-352": {
-    "promptNative": "Com mais tempo, eu _____ (hablar = falar). (cond)"
-  },
-  "verbo-353": {
-    "promptNative": "Espero que vocês (vosotros) _____ (hablar = falar). (subjPres)"
-  },
-  "verbo-354": {
-    "promptNative": "Com mais tempo, eles _____ (trabajar = trabalhar). (cond)"
-  },
-  "verbo-355": {
-    "promptNative": "Não _____ (trabajar = trabalhar) en equipo. (usted command)"
-  },
-  "verbo-356": {
-    "promptNative": "Espero que nós _____ (estudiar = estudar). (subjPres)"
-  },
-  "verbo-357": {
-    "promptNative": "Com mais tempo, vocês (vosotros) _____ (comprar = comprar). (cond)"
-  },
-  "verbo-358": {
-    "promptNative": "Não _____ (comprar = comprar) el pan. (vosotros command)"
-  },
-  "verbo-359": {
-    "promptNative": "Espero que ele/ela _____ (cocinar = cozinhar). (subjPres)"
-  },
-  "verbo-360": {
-    "promptNative": "Com mais tempo, nós _____ (cantar = cantar). (cond)"
-  },
-  "verbo-361": {
-    "promptNative": "Não _____ (cantar = cantar) en voz alta. (tú command)"
-  },
-  "verbo-362": {
-    "promptNative": "Espero que você (tú) _____ (bailar = dançar). (subjPres)"
-  },
-  "verbo-363": {
-    "promptNative": "Com mais tempo, você (tú) _____ (tomar = tomar). (cond)"
-  },
-  "verbo-364": {
-    "promptNative": "Espero que eles _____ (tomar = tomar). (subjPres)"
-  },
-  "verbo-365": {
-    "promptNative": "Espero que eu _____ (llegar = chegar). (subjPres)"
-  },
-  "verbo-366": {
-    "promptNative": "Com mais tempo, eu _____ (escuchar = escutar). (cond)"
-  },
-  "verbo-367": {
-    "promptNative": "Espero que vocês (vosotros) _____ (escuchar = escutar). (subjPres)"
-  },
-  "verbo-368": {
-    "promptNative": "Com mais tempo, eles _____ (mirar = olhar). (cond)"
-  },
-  "verbo-369": {
-    "promptNative": "Não _____ (mirar = olhar) a la pizarra. (usted command)"
-  },
-  "verbo-370": {
-    "promptNative": "Espero que nós _____ (esperar = esperar). (subjPres)"
-  },
-  "verbo-371": {
-    "promptNative": "Com mais tempo, vocês (vosotros) _____ (aparcar = estacionar (Espanha)). (cond)"
-  },
-  "verbo-372": {
-    "promptNative": "Não _____ (aparcar = estacionar (Espanha)) el coche ahí. (vosotros command)"
-  },
-  "verbo-373": {
-    "promptNative": "Espero que ele/ela _____ (firmar = assinar). (subjPres)"
-  },
-  "verbo-374": {
-    "promptNative": "Com mais tempo, nós _____ (comer = comer). (cond)"
-  },
-  "verbo-375": {
-    "promptNative": "Não _____ (comer = comer) más verdura. (tú command)"
-  },
-  "verbo-376": {
-    "promptNative": "Espero que você (tú) _____ (beber = beber). (subjPres)"
-  },
-  "verbo-377": {
-    "promptNative": "Com mais tempo, você (tú) _____ (correr = correr). (cond)"
-  },
-  "verbo-378": {
-    "promptNative": "Espero que eles _____ (correr = correr). (subjPres)"
-  },
-  "verbo-379": {
-    "promptNative": "Espero que eu _____ (leer = ler). (subjPres)"
-  },
-  "verbo-380": {
-    "promptNative": "Com mais tempo, eu _____ (aprender = aprender). (cond)"
-  },
-  "verbo-381": {
-    "promptNative": "Espero que vocês (vosotros) _____ (aprender = aprender). (subjPres)"
-  },
-  "verbo-382": {
-    "promptNative": "Com mais tempo, eles _____ (comprender = compreender). (cond)"
-  },
-  "verbo-383": {
-    "promptNative": "Não _____ (comprender = compreender) la idea. (usted command)"
-  },
-  "verbo-384": {
-    "promptNative": "Espero que nós _____ (coger = pegar (Espanha)). (subjPres)"
-  },
-  "verbo-385": {
-    "promptNative": "Com mais tempo, vocês (vosotros) _____ (vender = vender). (cond)"
-  },
-  "verbo-386": {
-    "promptNative": "Não _____ (vender = vender) el piso. (vosotros command)"
-  },
-  "verbo-387": {
-    "promptNative": "Espero que ele/ela _____ (vivir = morar). (subjPres)"
-  },
-  "verbo-388": {
-    "promptNative": "Com mais tempo, nós _____ (escribir = escrever). (cond)"
-  },
-  "verbo-389": {
-    "promptNative": "Não _____ (escribir = escrever) un correo. (tú command)"
-  },
-  "verbo-390": {
-    "promptNative": "Espero que você (tú) _____ (abrir = abrir). (subjPres)"
-  },
-  "verbo-391": {
-    "promptNative": "Com mais tempo, você (tú) _____ (recibir = receber). (cond)"
-  },
-  "verbo-392": {
-    "promptNative": "Espero que eles _____ (recibir = receber). (subjPres)"
-  },
-  "verbo-393": {
-    "promptNative": "Espero que eu _____ (subir = subir). (subjPres)"
-  },
-  "verbo-394": {
-    "promptNative": "Com mais tempo, eu _____ (decidir = decidir). (cond)"
-  },
-  "verbo-395": {
-    "promptNative": "Espero que vocês (vosotros) _____ (decidir = decidir). (subjPres)"
-  },
-  "verbo-396": {
-    "promptNative": "Com mais tempo, eles _____ (pensar = pensar). (cond)"
-  },
-  "verbo-397": {
-    "promptNative": "Com mais tempo, eu _____ (querer = querer). (cond)"
-  },
-  "verbo-398": {
-    "promptNative": "Com mais tempo, eles _____ (volver = voltar). (cond)"
-  },
-  "verbo-399": {
-    "promptNative": "Não _____ (dormir = dormir) ocho horas. (tú command)"
-  },
-  "verbo-400": {
-    "promptNative": "Não _____ (pedir = pedir) la cuenta. (vosotros command)"
-  },
-  "verbo-401": {
-    "promptNative": "Não _____ (entender = entender) el problema. (usted command)"
-  },
-  "verbo-402": {
-    "promptNative": "Com mais tempo, eu _____ (empezar = começar). (cond)"
-  },
-  "verbo-403": {
-    "promptNative": "Com mais tempo, você (tú) _____ (cerrar = fechar). (cond)"
-  },
-  "verbo-404": {
-    "promptNative": "Com mais tempo, nós _____ (ser = ser). (cond)"
-  },
-  "verbo-405": {
-    "promptNative": "Com mais tempo, vocês (vosotros) _____ (estar = estar). (cond)"
-  },
-  "verbo-406": {
-    "promptNative": "Com mais tempo, eles _____ (ir = ir). (cond)"
-  },
-  "verbo-407": {
-    "promptNative": "Não _____ (tener = ter) cuidado. (tú command)"
-  },
-  "verbo-408": {
-    "promptNative": "Não _____ (hacer = fazer) los deberes. (vosotros command)"
-  },
-  "verbo-409": {
-    "promptNative": "Não _____ (decir = dizer) la verdad. (usted command)"
-  },
-  "verbo-410": {
-    "promptNative": "Com mais tempo, eu _____ (poner = pôr). (cond)"
-  },
-  "verbo-411": {
-    "promptNative": "Com mais tempo, você (tú) _____ (salir = sair). (cond)"
-  },
-  "verbo-412": {
-    "promptNative": "Com mais tempo, nós _____ (dar = dar). (cond)"
-  },
-  "verbo-413": {
-    "promptNative": "Com mais tempo, vocês (vosotros) _____ (ver = ver). (cond)"
-  },
-  "verbo-414": {
-    "promptNative": "Com mais tempo, eles _____ (saber = saber). (cond)"
-  },
-  "verbo-415": {
-    "promptNative": "Com mais tempo, eu _____ (conducir = dirigir (Espanha)). (cond)"
-  },
-  "verbo-416": {
-    "promptNative": "Com mais tempo, você (tú) _____ (traer = trazer). (cond)"
-  },
-  "verbo-417": {
-    "promptNative": "Tomara que eu _____ (hablar = falar). (subjImpf)"
-  },
-  "verbo-418": {
-    "promptNative": "Tomara que eu _____ (trabajar = trabalhar). (subjImpf)"
-  },
-  "verbo-419": {
-    "promptNative": "Tomara que eu _____ (estudiar = estudar). (subjImpf)"
-  },
-  "verbo-420": {
-    "promptNative": "Tomara que eu _____ (comprar = comprar). (subjImpf)"
-  },
-  "verbo-421": {
-    "promptNative": "Tomara que eu _____ (cocinar = cozinhar). (subjImpf)"
-  },
-  "verbo-422": {
-    "promptNative": "Tomara que eu _____ (cantar = cantar). (subjImpf)"
-  },
-  "verbo-423": {
-    "promptNative": "Tomara que eu _____ (bailar = dançar). (subjImpf)"
-  },
-  "verbo-424": {
-    "promptNative": "Tomara que eu _____ (tomar = tomar). (subjImpf)"
-  },
-  "verbo-425": {
-    "promptNative": "Tomara que eu _____ (llegar = chegar). (subjImpf)"
-  },
-  "verbo-426": {
-    "promptNative": "Tomara que eu _____ (escuchar = escutar). (subjImpf)"
-  },
-  "verbo-427": {
-    "promptNative": "Tomara que eu _____ (mirar = olhar). (subjImpf)"
-  },
-  "verbo-428": {
-    "promptNative": "Tomara que eu _____ (esperar = esperar). (subjImpf)"
-  },
-  "verbo-429": {
-    "promptNative": "Tomara que eu _____ (aparcar = estacionar (Espanha)). (subjImpf)"
-  },
-  "verbo-430": {
-    "promptNative": "Tomara que eu _____ (firmar = assinar). (subjImpf)"
-  },
-  "verbo-431": {
-    "promptNative": "Tomara que eu _____ (comer = comer). (subjImpf)"
-  },
-  "verbo-432": {
-    "promptNative": "Tomara que eu _____ (beber = beber). (subjImpf)"
-  },
-  "verbo-433": {
-    "promptNative": "Tomara que eu _____ (correr = correr). (subjImpf)"
-  },
-  "verbo-434": {
-    "promptNative": "Tomara que eu _____ (leer = ler). (subjImpf)"
-  },
-  "verbo-435": {
-    "promptNative": "Tomara que eu _____ (aprender = aprender). (subjImpf)"
-  },
-  "verbo-436": {
-    "promptNative": "Tomara que eu _____ (comprender = compreender). (subjImpf)"
-  },
-  "verbo-437": {
-    "promptNative": "Tomara que eu _____ (coger = pegar (Espanha)). (subjImpf)"
-  },
-  "verbo-438": {
-    "promptNative": "Tomara que eu _____ (vender = vender). (subjImpf)"
-  },
-  "verbo-439": {
-    "promptNative": "Tomara que eu _____ (vivir = morar). (subjImpf)"
-  },
-  "verbo-440": {
-    "promptNative": "Tomara que eu _____ (escribir = escrever). (subjImpf)"
-  },
-  "verbo-441": {
-    "promptNative": "Tomara que eu _____ (abrir = abrir). (subjImpf)"
-  },
-  "verbo-442": {
-    "promptNative": "Tomara que eu _____ (recibir = receber). (subjImpf)"
-  },
-  "verbo-443": {
-    "promptNative": "Tomara que eu _____ (subir = subir). (subjImpf)"
-  },
-  "verbo-444": {
-    "promptNative": "Tomara que eu _____ (decidir = decidir). (subjImpf)"
-  },
-  "verbo-445": {
-    "promptNative": "Espero que eu _____ (pensar = pensar). (subjPres)"
-  },
-  "verbo-446": {
-    "promptNative": "Espero que eles _____ (pensar = pensar). (subjPres)"
-  },
-  "verbo-447": {
-    "promptNative": "Espero que vocês (vosotros) _____ (poder = poder). (subjPres)"
-  },
-  "verbo-448": {
-    "promptNative": "Espero que nós _____ (querer = querer). (subjPres)"
-  },
-  "verbo-449": {
-    "promptNative": "Espero que ele/ela _____ (volver = voltar). (subjPres)"
-  },
-  "verbo-450": {
-    "promptNative": "Espero que você (tú) _____ (dormir = dormir). (subjPres)"
-  },
-  "verbo-451": {
-    "promptNative": "Espero que eu _____ (pedir = pedir). (subjPres)"
-  },
-  "verbo-452": {
-    "promptNative": "Espero que eles _____ (pedir = pedir). (subjPres)"
-  },
-  "verbo-453": {
-    "promptNative": "Espero que vocês (vosotros) _____ (entender = entender). (subjPres)"
-  },
-  "verbo-454": {
-    "promptNative": "Espero que nós _____ (jugar = jogar). (subjPres)"
-  },
-  "verbo-455": {
-    "promptNative": "Espero que ele/ela _____ (empezar = começar). (subjPres)"
-  },
-  "verbo-456": {
-    "promptNative": "Espero que você (tú) _____ (cerrar = fechar). (subjPres)"
-  },
-  "verbo-457": {
-    "promptNative": "Espero que eu _____ (ser = ser). (subjPres)"
-  },
-  "verbo-458": {
-    "promptNative": "Espero que eles _____ (ser = ser). (subjPres)"
-  },
-  "verbo-459": {
-    "promptNative": "Espero que vocês (vosotros) _____ (estar = estar). (subjPres)"
-  },
-  "verbo-460": {
-    "promptNative": "Espero que nós _____ (ir = ir). (subjPres)"
-  },
-  "verbo-461": {
-    "promptNative": "Espero que ele/ela _____ (tener = ter). (subjPres)"
-  },
-  "verbo-462": {
-    "promptNative": "Espero que você (tú) _____ (hacer = fazer). (subjPres)"
-  },
-  "verbo-463": {
-    "promptNative": "Espero que eu _____ (decir = dizer). (subjPres)"
-  },
-  "verbo-464": {
-    "promptNative": "Espero que eles _____ (decir = dizer). (subjPres)"
-  },
-  "verbo-465": {
-    "promptNative": "Espero que vocês (vosotros) _____ (venir = vir). (subjPres)"
-  },
-  "verbo-466": {
-    "promptNative": "Espero que nós _____ (poner = pôr). (subjPres)"
-  },
-  "verbo-467": {
-    "promptNative": "Espero que ele/ela _____ (salir = sair). (subjPres)"
-  },
-  "verbo-468": {
-    "promptNative": "Espero que você (tú) _____ (dar = dar). (subjPres)"
-  },
-  "verbo-469": {
-    "promptNative": "Espero que eu _____ (ver = ver). (subjPres)"
-  },
-  "verbo-470": {
-    "promptNative": "Espero que eles _____ (ver = ver). (subjPres)"
-  },
-  "verbo-471": {
-    "promptNative": "Espero que vocês (vosotros) _____ (saber = saber). (subjPres)"
-  },
-  "verbo-472": {
-    "promptNative": "Tomara que eu _____ (pensar = pensar). (subjImpf)"
-  },
-  "verbo-473": {
-    "promptNative": "Tomara que nós _____ (pensar = pensar). (subjImpf)"
-  },
-  "verbo-474": {
-    "promptNative": "Tomara que eles _____ (pensar = pensar). (subjImpf)"
-  },
-  "verbo-475": {
-    "promptNative": "Tomara que você (tú) _____ (poder = poder). (subjImpf)"
-  },
-  "verbo-476": {
-    "promptNative": "Tomara que vocês (vosotros) _____ (poder = poder). (subjImpf)"
-  },
-  "verbo-477": {
-    "promptNative": "Tomara que eu _____ (querer = querer). (subjImpf)"
-  },
-  "verbo-478": {
-    "promptNative": "Tomara que nós _____ (querer = querer). (subjImpf)"
-  },
-  "verbo-479": {
-    "promptNative": "Tomara que eles _____ (querer = querer). (subjImpf)"
-  },
-  "verbo-480": {
-    "promptNative": "Tomara que você (tú) _____ (volver = voltar). (subjImpf)"
-  },
-  "verbo-481": {
-    "promptNative": "Tomara que vocês (vosotros) _____ (volver = voltar). (subjImpf)"
-  },
-  "verbo-482": {
-    "promptNative": "Tomara que eu _____ (dormir = dormir). (subjImpf)"
-  },
-  "verbo-483": {
-    "promptNative": "Tomara que nós _____ (dormir = dormir). (subjImpf)"
-  },
-  "verbo-484": {
-    "promptNative": "Tomara que eles _____ (dormir = dormir). (subjImpf)"
-  },
-  "verbo-485": {
-    "promptNative": "Tomara que você (tú) _____ (pedir = pedir). (subjImpf)"
-  },
-  "verbo-486": {
-    "promptNative": "Tomara que vocês (vosotros) _____ (pedir = pedir). (subjImpf)"
-  },
-  "verbo-487": {
-    "promptNative": "Tomara que eu _____ (entender = entender). (subjImpf)"
-  },
-  "verbo-488": {
-    "promptNative": "Tomara que nós _____ (entender = entender). (subjImpf)"
-  },
-  "verbo-489": {
-    "promptNative": "Tomara que eles _____ (entender = entender). (subjImpf)"
-  },
-  "verbo-490": {
-    "promptNative": "Tomara que você (tú) _____ (jugar = jogar). (subjImpf)"
-  },
-  "verbo-491": {
-    "promptNative": "Tomara que vocês (vosotros) _____ (jugar = jogar). (subjImpf)"
-  },
-  "verbo-492": {
-    "promptNative": "Tomara que eu _____ (empezar = começar). (subjImpf)"
-  },
-  "verbo-493": {
-    "promptNative": "Tomara que nós _____ (empezar = começar). (subjImpf)"
-  },
-  "verbo-494": {
-    "promptNative": "Tomara que eles _____ (empezar = começar). (subjImpf)"
-  },
-  "verbo-495": {
-    "promptNative": "Tomara que você (tú) _____ (cerrar = fechar). (subjImpf)"
-  },
-  "verbo-496": {
-    "promptNative": "Tomara que vocês (vosotros) _____ (cerrar = fechar). (subjImpf)"
-  },
-  "verbo-497": {
-    "promptNative": "Tomara que eu _____ (ser = ser). (subjImpf)"
-  },
-  "verbo-498": {
-    "promptNative": "Tomara que nós _____ (ser = ser). (subjImpf)"
-  },
-  "verbo-499": {
-    "promptNative": "Tomara que eles _____ (ser = ser). (subjImpf)"
-  },
-  "verbo-500": {
-    "promptNative": "Tomara que você (tú) _____ (estar = estar). (subjImpf)"
-  },
-  "verbo-501": {
-    "promptNative": "Tomara que vocês (vosotros) _____ (estar = estar). (subjImpf)"
-  },
-  "verbo-502": {
-    "promptNative": "Tomara que eu _____ (ir = ir). (subjImpf)"
-  },
-  "verbo-503": {
-    "promptNative": "Tomara que nós _____ (ir = ir). (subjImpf)"
-  },
-  "verbo-504": {
-    "promptNative": "Tomara que eles _____ (ir = ir). (subjImpf)"
-  },
-  "verbo-505": {
-    "promptNative": "Tomara que você (tú) _____ (tener = ter). (subjImpf)"
-  },
-  "verbo-506": {
-    "promptNative": "Tomara que vocês (vosotros) _____ (tener = ter). (subjImpf)"
-  },
-  "verbo-507": {
-    "promptNative": "Tomara que eu _____ (hacer = fazer). (subjImpf)"
-  },
-  "verbo-508": {
-    "promptNative": "Tomara que nós _____ (hacer = fazer). (subjImpf)"
-  },
-  "verbo-509": {
-    "promptNative": "Tomara que eles _____ (hacer = fazer). (subjImpf)"
-  },
-  "verbo-510": {
-    "promptNative": "Tomara que você (tú) _____ (decir = dizer). (subjImpf)"
-  },
-  "verbo-511": {
-    "promptNative": "Tomara que vocês (vosotros) _____ (decir = dizer). (subjImpf)"
-  },
-  "verbo-512": {
-    "promptNative": "Tomara que eu _____ (venir = vir). (subjImpf)"
-  },
-  "verbo-513": {
-    "promptNative": "Tomara que nós _____ (venir = vir). (subjImpf)"
-  },
-  "verbo-514": {
-    "promptNative": "Tomara que eles _____ (venir = vir). (subjImpf)"
-  },
-  "verbo-515": {
-    "promptNative": "Tomara que você (tú) _____ (poner = pôr). (subjImpf)"
-  },
-  "verbo-516": {
-    "promptNative": "Tomara que vocês (vosotros) _____ (poner = pôr). (subjImpf)"
-  },
-  "trad-0": {
-    "prompt": "Traduzir: 'Beleza, parece bom.'",
-    "promptNative": "Beleza, parece bom."
-  },
-  "trad-1": {
-    "prompt": "Traduzir: 'Cara, olha isso.'",
-    "promptNative": "Cara, olha isso."
-  },
-  "trad-2": {
-    "prompt": "Traduzir: 'Muito obrigado.'",
-    "promptNative": "Muito obrigado."
-  },
-  "trad-3": {
-    "prompt": "Traduzir: 'Até mais.'",
-    "promptNative": "Até mais."
-  },
-  "trad-4": {
-    "prompt": "Traduzir: 'Que legal!' (coloquial, Espanha)",
-    "promptNative": "Que legal! (coloquial, Espanha)"
-  },
-  "trad-5": {
-    "prompt": "Traduzir: 'Estou a fim de um café.' (Espanha)",
-    "promptNative": "Estou a fim de um café. (Espanha)"
-  },
-  "trad-6": {
-    "prompt": "Traduzir: 'A gente se encontra às oito.' (Espanha)",
-    "promptNative": "A gente se encontra às oito. (Espanha)"
-  },
-  "trad-7": {
-    "prompt": "Traduzir: 'Isso é demais!' (coloquial, Espanha)",
-    "promptNative": "Isso é demais! (coloquial, Espanha)"
-  },
-  "trad-8": {
-    "prompt": "Traduzir: 'Estou pouco me lixando.' (coloquial, Espanha)",
-    "promptNative": "Estou pouco me lixando. (coloquial, Espanha)"
-  },
-  "trad-9": {
-    "prompt": "Traduzir: 'O bar está lotado.' (coloquial, Espanha)",
-    "promptNative": "O bar está lotado. (coloquial, Espanha)"
-  },
-  "trad-10": {
-    "prompt": "Traduzir: 'Acordei tarde.' (coloquial, Espanha)",
-    "promptNative": "Acordei tarde. (coloquial, Espanha)"
-  },
-  "trad-11": {
-    "prompt": "Traduzir: 'no meio do nada' (Espanha)",
-    "promptNative": "no meio do nada (Espanha)"
-  },
-  "trad-12": {
-    "prompt": "Traduzir: 'Como se já não tivéssemos problemas suficientes!' (Espanha)",
-    "promptNative": "Como se já não tivéssemos problemas suficientes! (Espanha)"
-  },
-  "trad-13": {
-    "prompt": "Traduzir: 'As coisas teriam acabado de um jeito bem diferente.' (Espanha)",
-    "promptNative": "As coisas teriam acabado de um jeito bem diferente. (Espanha)"
-  },
-  "trad-14": {
-    "prompt": "Traduzir: 'Oi, tudo bem?'",
-    "promptNative": "Oi, tudo bem?"
-  },
-  "trad-15": {
-    "prompt": "Traduzir: 'Bom dia.'",
-    "promptNative": "Bom dia."
-  },
-  "trad-16": {
-    "prompt": "Traduzir: 'Boa noite.'",
-    "promptNative": "Boa noite."
-  },
-  "trad-17": {
-    "prompt": "Traduzir: 'Por favor.'",
-    "promptNative": "Por favor."
-  },
-  "trad-18": {
-    "prompt": "Traduzir: 'De nada.'",
-    "promptNative": "De nada."
-  },
-  "trad-19": {
-    "prompt": "Traduzir: 'Com licença.' (para passar por alguém)",
-    "promptNative": "Com licença. (para passar por alguém)"
-  },
-  "trad-20": {
-    "prompt": "Traduzir: 'Sim, claro.'",
-    "promptNative": "Sim, claro."
-  },
-  "trad-21": {
-    "prompt": "Traduzir: 'Não entendo.'",
-    "promptNative": "Não entendo."
-  },
-  "trad-22": {
-    "prompt": "Traduzir: 'Como você se chama?'",
-    "promptNative": "Como você se chama?"
-  },
-  "trad-23": {
-    "prompt": "Traduzir: 'Meu nome é Ana.'",
-    "promptNative": "Meu nome é Ana."
-  },
-  "trad-24": {
-    "prompt": "Traduzir: 'Onde fica o banheiro?'",
-    "promptNative": "Onde fica o banheiro?"
-  },
-  "trad-25": {
-    "prompt": "Traduzir: 'Quanto custa?'",
-    "promptNative": "Quanto custa?"
-  },
-  "trad-26": {
-    "prompt": "Traduzir: 'A conta, por favor.'",
-    "promptNative": "A conta, por favor."
-  },
-  "trad-27": {
-    "prompt": "Traduzir: 'Um café, por favor.'",
-    "promptNative": "Um café, por favor."
-  },
-  "trad-28": {
-    "prompt": "Traduzir: 'Beleza.' (coloquial, Espanha)",
-    "promptNative": "Beleza. (coloquial, Espanha)"
-  },
-  "trad-29": {
-    "prompt": "Traduzir: 'Até amanhã.'",
-    "promptNative": "Até amanhã."
-  },
-  "trad-30": {
-    "prompt": "Traduzir: 'Tchau.'",
-    "promptNative": "Tchau."
-  },
-  "trad-31": {
-    "prompt": "Traduzir: 'Estou bem, obrigado.'",
-    "promptNative": "Estou bem, obrigado."
-  },
-  "trad-32": {
-    "prompt": "Traduzir: 'Você fala inglês?'",
-    "promptNative": "Você fala inglês?"
-  },
-  "trad-33": {
-    "prompt": "Traduzir: 'Você pode me ajudar?'",
-    "promptNative": "Você pode me ajudar?"
-  },
-  "trad-34": {
-    "prompt": "Traduzir: 'Onde fica a estação de trem?'",
-    "promptNative": "Onde fica a estação de trem?"
-  },
-  "trad-35": {
-    "prompt": "Traduzir: 'Como eu chego ao centro da cidade?'",
-    "promptNative": "Como eu chego ao centro da cidade?"
-  },
-  "trad-36": {
-    "prompt": "Traduzir: 'Estou procurando uma farmácia.'",
-    "promptNative": "Estou procurando uma farmácia."
-  },
-  "trad-37": {
-    "prompt": "Traduzir: 'Posso pagar com cartão?'",
-    "promptNative": "Posso pagar com cartão?"
-  },
-  "trad-38": {
-    "prompt": "Traduzir: 'Que horas abre?'",
-    "promptNative": "Que horas abre?"
-  },
-  "trad-39": {
-    "prompt": "Traduzir: 'Vou querer o prato feito.' (Espanha)",
-    "promptNative": "Vou querer o prato feito. (Espanha)"
-  },
-  "trad-40": {
-    "prompt": "Traduzir: 'Você pode me trazer o cardápio?' (Espanha)",
-    "promptNative": "Você pode me trazer o cardápio? (Espanha)"
-  },
-  "trad-41": {
-    "prompt": "Traduzir: 'Um chope pequeno, por favor.' (Espanha)",
-    "promptNative": "Um chope pequeno, por favor. (Espanha)"
-  },
-  "trad-42": {
-    "prompt": "Traduzir: 'Vire à direita.'",
-    "promptNative": "Vire à direita."
-  },
-  "trad-43": {
-    "prompt": "Traduzir: 'É à esquerda.'",
-    "promptNative": "É à esquerda."
-  },
-  "trad-44": {
-    "prompt": "Traduzir: 'Como estão as coisas?'",
-    "promptNative": "Como estão as coisas?"
-  },
-  "trad-45": {
-    "prompt": "Traduzir: 'Só estou olhando, obrigado.'",
-    "promptNative": "Só estou olhando, obrigado."
-  },
-  "trad-46": {
-    "prompt": "Traduzir: 'Você pode me dar uma sacola?'",
-    "promptNative": "Você pode me dar uma sacola?"
-  },
-  "trad-47": {
-    "prompt": "Traduzir: 'O que você recomenda?'",
-    "promptNative": "O que você recomenda?"
-  },
-  "trad-48": {
-    "prompt": "Traduzir: 'Você tem uma mesa para dois?'",
-    "promptNative": "Você tem uma mesa para dois?"
-  },
-  "trad-49": {
-    "prompt": "Traduzir: 'É caro demais.'",
-    "promptNative": "É caro demais."
-  },
-  "trad-50": {
-    "prompt": "Traduzir: 'Tenho que pegar o ônibus.' (Espanha)",
-    "promptNative": "Tenho que pegar o ônibus. (Espanha)"
-  },
-  "trad-51": {
-    "prompt": "Traduzir: 'Falou, até mais!' (coloquial, Espanha)",
-    "promptNative": "Falou, até mais! (coloquial, Espanha)"
-  },
-  "trad-52": {
-    "prompt": "Traduzir: 'Show!' (coloquial, Espanha)",
-    "promptNative": "Show! (coloquial, Espanha)"
-  },
-  "trad-53": {
-    "prompt": "Traduzir: 'Isso é muito maneiro.' (coloquial, Espanha)",
-    "promptNative": "Isso é muito maneiro. (coloquial, Espanha)"
-  },
-  "trad-54": {
-    "prompt": "Traduzir: 'A gente combinou de se encontrar no bar.' (Espanha)",
-    "promptNative": "A gente combinou de se encontrar no bar. (Espanha)"
-  },
-  "trad-55": {
-    "prompt": "Traduzir: 'Estou a fim de sair hoje à noite.' (Espanha)",
-    "promptNative": "Estou a fim de sair hoje à noite. (Espanha)"
-  },
-  "trad-56": {
-    "prompt": "Traduzir: 'Você pode me buscar um café?' (Espanha)",
-    "promptNative": "Você pode me buscar um café? (Espanha)"
-  },
-  "trad-57": {
-    "prompt": "Traduzir: 'Hoje de manhã tomei café da manhã em casa.' (Espanha)",
-    "promptNative": "Hoje de manhã tomei café da manhã em casa. (Espanha)"
-  },
-  "trad-58": {
-    "prompt": "Traduzir: 'Que saco / que chato.' (coloquial, Espanha)",
-    "promptNative": "Que saco / que chato. (coloquial, Espanha)"
-  },
-  "trad-59": {
-    "prompt": "Traduzir: 'Estou exausto / acabado.' (coloquial, Espanha)",
-    "promptNative": "Estou exausto / acabado. (coloquial, Espanha)"
-  },
-  "trad-60": {
-    "prompt": "Traduzir: 'Fica no meio do nada.' (Espanha)",
-    "promptNative": "Fica no meio do nada. (Espanha)"
-  },
-  "trad-61": {
-    "prompt": "Traduzir: 'Estamos atolados de trabalho.' (coloquial, Espanha)",
-    "promptNative": "Estamos atolados de trabalho. (coloquial, Espanha)"
-  },
-  "trad-62": {
-    "prompt": "Traduzir: 'É o máximo / é incrível!' (coloquial, Espanha)",
-    "promptNative": "É o máximo / é incrível! (coloquial, Espanha)"
-  },
-  "trad-63": {
-    "prompt": "Traduzir: 'Vamos emendar o feriado.' (Espanha)",
-    "promptNative": "Vamos emendar o feriado. (Espanha)"
-  },
-  "trad-64": {
-    "prompt": "Traduzir: 'Meu computador não está funcionando.' (Espanha)",
-    "promptNative": "Meu computador não está funcionando. (Espanha)"
-  },
-  "trad-65": {
-    "prompt": "Traduzir: 'Perdi meu celular.' (Espanha)",
-    "promptNative": "Perdi meu celular. (Espanha)"
-  },
-  "trad-66": {
-    "prompt": "Traduzir: 'Você está a fim de uma cerveja?' (Espanha)",
-    "promptNative": "Você está a fim de uma cerveja? (Espanha)"
-  },
-  "trad-67": {
-    "prompt": "Traduzir: 'Cuidado, mano!' (coloquial, Espanha)",
-    "promptNative": "Cuidado, mano! (coloquial, Espanha)"
-  },
-  "trad-68": {
-    "prompt": "Traduzir: 'Vou lá pegar o carro.' (Espanha)",
-    "promptNative": "Vou lá pegar o carro. (Espanha)"
-  },
-  "trad-69": {
-    "prompt": "Traduzir: 'Que roubo!' (coloquial, Espanha)",
-    "promptNative": "Que roubo! (coloquial, Espanha)"
-  },
-  "trad-70": {
-    "prompt": "Traduzir: 'É moleza.' (coloquial, Espanha)",
-    "promptNative": "É moleza. (coloquial, Espanha)"
-  },
-  "trad-71": {
-    "prompt": "Traduzir: 'Para de encher o saco.' (coloquial, Espanha)",
-    "promptNative": "Para de encher o saco. (coloquial, Espanha)"
-  },
-  "trad-72": {
-    "prompt": "Traduzir: 'Ele não dá uma dentro.' (coloquial, Espanha)",
-    "promptNative": "Ele não dá uma dentro. (coloquial, Espanha)"
-  },
-  "trad-73": {
-    "prompt": "Traduzir: 'Que azar!' (coloquial, Espanha)",
-    "promptNative": "Que azar! (coloquial, Espanha)"
-  },
-  "trad-74": {
-    "prompt": "Traduzir: 'Ele está de mau humor.' (coloquial, Espanha)",
-    "promptNative": "Ele está de mau humor. (coloquial, Espanha)"
-  },
-  "trad-75": {
-    "prompt": "Traduzir: 'Ele é um gênio absoluto / um craque.' (coloquial, Espanha)",
-    "promptNative": "Ele é um gênio absoluto / um craque. (coloquial, Espanha)"
-  },
-  "trad-76": {
-    "prompt": "Traduzir: 'Ela fez o maior escândalo.' (coloquial, Espanha)",
-    "promptNative": "Ela fez o maior escândalo. (coloquial, Espanha)"
-  },
-  "trad-77": {
-    "prompt": "Traduzir: 'Fiquei completamente pasmo.' (coloquial, Espanha)",
-    "promptNative": "Fiquei completamente pasmo. (coloquial, Espanha)"
-  },
-  "trad-78": {
-    "prompt": "Traduzir: 'A gente se empanturrou no jantar.' (coloquial, Espanha)",
-    "promptNative": "A gente se empanturrou no jantar. (coloquial, Espanha)"
-  },
-  "trad-79": {
-    "prompt": "Traduzir: 'Você vai ficar de queixo caído.' (coloquial, Espanha)",
-    "promptNative": "Você vai ficar de queixo caído. (coloquial, Espanha)"
-  },
-  "trad-80": {
-    "prompt": "Traduzir: 'Não estou a fim de lidar com isso.' (coloquial, Espanha)",
-    "promptNative": "Não estou a fim de lidar com isso. (coloquial, Espanha)"
-  },
-  "trad-81": {
-    "prompt": "Traduzir: 'É baratíssimo.' (coloquial, Espanha)",
-    "promptNative": "É baratíssimo. (coloquial, Espanha)"
-  },
-  "trad-82": {
-    "prompt": "Traduzir: 'A gente matou aula.' (coloquial, Espanha)",
-    "promptNative": "A gente matou aula. (coloquial, Espanha)"
-  },
-  "trad-83": {
-    "prompt": "Traduzir: 'Estou de saco cheio disso.' (coloquial, Espanha)",
-    "promptNative": "Estou de saco cheio disso. (coloquial, Espanha)"
-  },
-  "trad-84": {
-    "prompt": "Traduzir: 'Isso é um roubo total.' (coloquial, Espanha)",
-    "promptNative": "Isso é um roubo total. (coloquial, Espanha)"
-  },
-  "trad-85": {
-    "prompt": "Traduzir: 'Eles estão só te zoando.' (coloquial, Espanha)",
-    "promptNative": "Eles estão só te zoando. (coloquial, Espanha)"
-  },
-  "trad-86": {
-    "prompt": "Traduzir: 'Estou totalmente duro.' (coloquial, Espanha)",
-    "promptNative": "Estou totalmente duro. (coloquial, Espanha)"
-  },
-  "trad-87": {
-    "prompt": "Traduzir: 'Vamos, anda logo!' (coloquial, Espanha)",
-    "promptNative": "Vamos, anda logo! (coloquial, Espanha)"
-  },
-  "trad-88": {
-    "prompt": "Traduzir: 'Tarde demais e de menos!' (Espanha)",
-    "promptNative": "Tarde demais e de menos! (Espanha)"
-  },
-  "trad-89": {
-    "prompt": "Traduzir: 'Já que começou, vai até o fim.' (Espanha)",
-    "promptNative": "Já que começou, vai até o fim. (Espanha)"
-  },
-  "trad-90": {
-    "prompt": "Traduzir: 'Agora realmente não é a hora.' (coloquial, Espanha)",
-    "promptNative": "Agora realmente não é a hora. (coloquial, Espanha)"
-  },
-  "trad-91": {
-    "prompt": "Traduzir: 'Melhor o mal conhecido do que o bom por conhecer.' (Espanha)",
-    "promptNative": "Melhor o mal conhecido do que o bom por conhecer. (Espanha)"
-  },
-  "trad-92": {
-    "prompt": "Traduzir: 'Cria fama e deita na cama... e depois te traem.' (Espanha)",
-    "promptNative": "Cria fama e deita na cama... e depois te traem. (Espanha)"
-  },
-  "trad-93": {
-    "prompt": "Traduzir: 'Quem não chora não mama.' (Espanha)",
-    "promptNative": "Quem não chora não mama. (Espanha)"
-  },
-  "trad-94": {
-    "prompt": "Traduzir: 'Ele está totalmente aéreo.' (coloquial, Espanha)",
-    "promptNative": "Ele está totalmente aéreo. (coloquial, Espanha)"
-  },
-  "trad-95": {
-    "prompt": "Traduzir: 'Isso me deixa completamente indiferente.' (coloquial, Espanha)",
-    "promptNative": "Isso me deixa completamente indiferente. (coloquial, Espanha)"
-  },
-  "trad-96": {
-    "prompt": "Traduzir: 'Ela o traiu.' (coloquial, Espanha)",
-    "promptNative": "Ela o traiu. (coloquial, Espanha)"
-  },
-  "trad-97": {
-    "prompt": "Traduzir: 'Não pouparam despesas.' (Espanha)",
-    "promptNative": "Não pouparam despesas. (Espanha)"
-  },
-  "trad-98": {
-    "prompt": "Traduzir: 'Isso já é outra história completamente diferente.' (Espanha)",
-    "promptNative": "Isso já é outra história completamente diferente. (Espanha)"
-  },
-  "trad-99": {
-    "prompt": "Traduzir: 'Ela não tem papas na língua.' (Espanha)",
-    "promptNative": "Ela não tem papas na língua. (Espanha)"
-  },
-  "trad-100": {
-    "prompt": "Traduzir: 'Eu realmente paguei o maior mico.' (coloquial, Espanha)",
-    "promptNative": "Eu realmente paguei o maior mico. (coloquial, Espanha)"
-  },
-  "trad-101": {
-    "prompt": "Traduzir: 'Ela deu um fora nele na lata.' (coloquial, Espanha)",
-    "promptNative": "Ela deu um fora nele na lata. (coloquial, Espanha)"
-  },
-  "trad-102": {
-    "prompt": "Traduzir: 'Ele é completamente pirado.' (coloquial, Espanha)",
-    "promptNative": "Ele é completamente pirado. (coloquial, Espanha)"
-  },
-  "trad-103": {
-    "prompt": "Traduzir: 'Você precisa se ligar e se organizar.' (coloquial, Espanha)",
-    "promptNative": "Você precisa se ligar e se organizar. (coloquial, Espanha)"
-  },
-  "trad-104": {
-    "prompt": "Traduzir: 'Ele está dormindo para curar a bebedeira.' (coloquial, Espanha)",
-    "promptNative": "Ele está dormindo para curar a bebedeira. (coloquial, Espanha)"
-  },
-  "trad-105": {
-    "prompt": "Traduzir: 'Não complique as coisas.' (Espanha)",
-    "promptNative": "Não complique as coisas. (Espanha)"
-  },
-  "trad-106": {
-    "prompt": "Traduzir: 'Certo, seguindo em frente!' (coloquial, Espanha)",
-    "promptNative": "Certo, seguindo em frente! (coloquial, Espanha)"
-  },
-  "trad-107": {
-    "prompt": "Traduzir: 'Para bom entendedor, meia palavra basta.' (Espanha)",
-    "promptNative": "Para bom entendedor, meia palavra basta. (Espanha)"
-  },
-  "trad-108": {
-    "prompt": "Traduzir: 'Quem muito abraça pouco aperta.' (Espanha)",
-    "promptNative": "Quem muito abraça pouco aperta. (Espanha)"
-  },
-  "trad-109": {
-    "prompt": "Traduzir: 'Não é acordando cedo que o sol nasce mais cedo.' (Espanha)",
-    "promptNative": "Não é acordando cedo que o sol nasce mais cedo. (Espanha)"
-  },
-  "trad-110": {
-    "prompt": "Traduzir: 'Em boca fechada não entra mosca.' (Espanha)",
-    "promptNative": "Em boca fechada não entra mosca. (Espanha)"
-  },
-  "trad-111": {
-    "prompt": "Traduzir: 'Diga-me com quem andas e te direi quem és.' (Espanha)",
-    "promptNative": "Diga-me com quem andas e te direi quem és. (Espanha)"
-  },
-  "trad-112": {
-    "prompt": "Traduzir: 'Cavalo dado não se olha os dentes.' (Espanha)",
-    "promptNative": "Cavalo dado não se olha os dentes. (Espanha)"
-  },
-  "trad-113": {
-    "prompt": "Traduzir: 'Mais vale um pássaro na mão do que dois voando.' (Espanha)",
-    "promptNative": "Mais vale um pássaro na mão do que dois voando. (Espanha)"
-  },
-  "trad-114": {
-    "prompt": "Traduzir: 'Quem ri por último ri melhor.' (Espanha)",
-    "promptNative": "Quem ri por último ri melhor. (Espanha)"
-  },
-  "trad-115": {
-    "prompt": "Traduzir: 'Não se pode fazer de porco espinho uma bolsa de seda.' (Espanha)",
-    "promptNative": "Não se pode fazer de porco espinho uma bolsa de seda. (Espanha)"
-  },
-  "trad-116": {
-    "prompt": "Traduzir: 'Nem tudo que reluz é ouro.' (Espanha)",
-    "promptNative": "Nem tudo que reluz é ouro. (Espanha)"
-  },
-  "trad-117": {
-    "prompt": "Traduzir: 'Quem semeia vento colhe tempestade.' (Espanha)",
-    "promptNative": "Quem semeia vento colhe tempestade. (Espanha)"
-  },
-  "trad-118": {
-    "prompt": "Traduzir: 'Em rio revolto, ganho de pescador.' (Espanha)",
-    "promptNative": "Em rio revolto, ganho de pescador. (Espanha)"
-  },
-  "trad-119": {
-    "prompt": "Traduzir: 'Você tocou num ponto sensível.' (Espanha)",
-    "promptNative": "Você tocou num ponto sensível. (Espanha)"
-  },
-  "trad-120": {
-    "prompt": "Traduzir: 'Deixa eu dormir e pensar melhor.' (Espanha)",
-    "promptNative": "Deixa eu dormir e pensar melhor. (Espanha)"
-  },
-  "trad-121": {
-    "prompt": "Traduzir: 'Vou comer alguma coisa para enganar a fome.' (coloquial, Espanha)",
-    "promptNative": "Vou comer alguma coisa para enganar a fome. (coloquial, Espanha)"
-  },
-  "trad-122": {
-    "prompt": "Traduzir: 'Você está viajando totalmente na maionese.' (Espanha)",
-    "promptNative": "Você está viajando totalmente na maionese. (Espanha)"
-  },
-  "trad-123": {
-    "prompt": "Traduzir: 'O plano saiu totalmente pela culatra para ele.' (Espanha)",
-    "promptNative": "O plano saiu totalmente pela culatra para ele. (Espanha)"
-  },
-  "trad-124": {
-    "prompt": "Traduzir: 'Não finja que não me ouviu.' (coloquial, Espanha)",
-    "promptNative": "Não finja que não me ouviu. (coloquial, Espanha)"
-  },
-  "trad-125": {
-    "prompt": "Traduzir: 'Exigiu um esforço hercúleo.' (Espanha)",
-    "promptNative": "Exigiu um esforço hercúleo. (Espanha)"
-  },
-  "trad-126": {
-    "prompt": "Traduzir: 'Ele estava impecável, todo elegante.' (Espanha)",
-    "promptNative": "Ele estava impecável, todo elegante. (Espanha)"
-  },
-  "fvocab-0": {
-    "promptNative": "'El tiempo' significa...",
-    "options": [
-      "tempo; clima",
-      "fogo",
-      "cidade",
-      "pão"
-    ]
-  },
-  "fvocab-1": {
-    "prompt": "¿Cómo se dice 'ano' en español?",
-    "promptNative": "Como se diz 'ano' em espanhol?"
-  },
-  "fvocab-2": {
-    "promptNative": "'El día' significa...",
-    "options": [
-      "dia",
-      "loja",
-      "arroz",
-      "música"
-    ]
-  },
-  "fvocab-3": {
-    "prompt": "¿Cómo se dice 'vez (ocasião)' en español?",
-    "promptNative": "Como se diz 'vez (ocasião)' em espanhol?"
-  },
-  "fvocab-4": {
-    "promptNative": "'La vida' significa...",
-    "options": [
-      "vida",
-      "mês",
-      "água",
-      "homem"
-    ]
-  },
-  "fvocab-5": {
-    "prompt": "¿Cómo se dice 'homem' en español?",
-    "promptNative": "Como se diz 'homem' em espanhol?"
-  },
-  "fvocab-6": {
-    "promptNative": "'La mujer' significa...",
-    "options": [
-      "mulher; esposa",
-      "cadeira",
-      "fogo",
-      "neve"
-    ]
-  },
-  "fvocab-7": {
-    "prompt": "¿Cómo se dice 'criança; menino' en español?",
-    "promptNative": "Como se diz 'criança; menino' em espanhol?"
-  },
-  "fvocab-8": {
-    "promptNative": "'La mano' significa...",
-    "options": [
-      "mão",
-      "frango (como alimento)",
-      "ar",
-      "pássaro"
-    ]
-  },
-  "fvocab-9": {
-    "prompt": "¿Cómo se dice 'olho' en español?",
-    "promptNative": "Como se diz 'olho' em espanhol?"
-  },
-  "fvocab-10": {
-    "promptNative": "'El agua' significa...",
-    "options": [
-      "água",
-      "filha",
-      "gato",
-      "loja"
-    ]
-  },
-  "fvocab-11": {
-    "prompt": "¿Cómo se dice 'mesa' en español?",
-    "promptNative": "Como se diz 'mesa' em espanhol?"
-  },
-  "fvocab-12": {
-    "promptNative": "'La silla' significa...",
-    "options": [
-      "cadeira",
-      "mulher; esposa",
-      "filme",
-      "avião"
-    ]
-  },
-  "fvocab-13": {
-    "prompt": "¿Cómo se dice 'porta' en español?",
-    "promptNative": "Como se diz 'porta' em espanhol?"
-  },
-  "fvocab-14": {
-    "promptNative": "'El libro' significa...",
-    "options": [
-      "livro",
-      "pai",
-      "mundo",
-      "mês"
-    ]
-  },
-  "fvocab-15": {
-    "prompt": "¿Cómo se dice 'escola' en español?",
-    "promptNative": "Como se diz 'escola' em espanhol?"
-  },
-  "fvocab-16": {
-    "promptNative": "'La ciudad' significa...",
-    "options": [
-      "cidade",
-      "hora; hora do dia",
-      "leite",
-      "peixe (como alimento)"
-    ]
-  },
-  "fvocab-17": {
-    "prompt": "¿Cómo se dice 'país (nação)' en español?",
-    "promptNative": "Como se diz 'país (nação)' em espanhol?"
-  },
-  "fvocab-18": {
-    "promptNative": "'El mundo' significa...",
-    "options": [
-      "mundo",
-      "irmã",
-      "loja",
-      "ar"
-    ]
-  },
-  "fvocab-19": {
-    "prompt": "¿Cómo se dice 'noite' en español?",
-    "promptNative": "Como se diz 'noite' em espanhol?"
-  },
-  "fvocab-20": {
-    "promptNative": "'La mañana' significa...",
-    "options": [
-      "manhã",
-      "dia",
-      "fruta",
-      "frango (como alimento)"
-    ]
-  },
-  "fvocab-21": {
-    "prompt": "¿Cómo se dice 'semana' en español?",
-    "promptNative": "Como se diz 'semana' em espanhol?"
-  },
-  "fvocab-22": {
-    "promptNative": "'El mes' significa...",
-    "options": [
-      "mês",
-      "céu; paraíso",
-      "árvore",
-      "lua"
-    ]
-  },
-  "fvocab-23": {
-    "prompt": "¿Cómo se dice 'hora; hora do dia' en español?",
-    "promptNative": "Como se diz 'hora; hora do dia' em espanhol?"
-  },
-  "fvocab-24": {
-    "promptNative": "'El minuto' significa...",
-    "options": [
-      "minuto",
-      "filme",
-      "semana",
-      "mão"
-    ]
-  },
-  "fvocab-25": {
-    "prompt": "¿Cómo se dice 'nome' en español?",
-    "promptNative": "Como se diz 'nome' em espanhol?"
-  },
-  "fvocab-26": {
-    "promptNative": "'La familia' significa...",
-    "options": [
-      "família",
-      "sal",
-      "mesa",
-      "chuva"
-    ]
-  },
-  "fvocab-27": {
-    "prompt": "¿Cómo se dice 'pai' en español?",
-    "promptNative": "Como se diz 'pai' em espanhol?"
-  },
-  "fvocab-28": {
-    "promptNative": "'La madre' significa...",
-    "options": [
-      "mãe",
-      "família",
-      "dia",
-      "ar"
-    ]
-  },
-  "fvocab-29": {
-    "prompt": "¿Cómo se dice 'filho' en español?",
-    "promptNative": "Como se diz 'filho' em espanhol?"
-  },
-  "fvocab-30": {
-    "promptNative": "'La hija' significa...",
-    "options": [
-      "filha",
-      "mãe",
-      "olho",
-      "frango (como alimento)"
-    ]
-  },
-  "fvocab-31": {
-    "prompt": "¿Cómo se dice 'irmão' en español?",
-    "promptNative": "Como se diz 'irmão' em espanhol?"
-  },
-  "fvocab-32": {
-    "promptNative": "'La hermana' significa...",
-    "options": [
-      "irmã",
-      "telefone",
-      "árvore",
-      "sol"
-    ]
-  },
-  "fvocab-33": {
-    "prompt": "¿Cómo se dice 'amigo' en español?",
-    "promptNative": "Como se diz 'amigo' em espanhol?"
-  },
-  "fvocab-34": {
-    "promptNative": "'El gato' significa...",
-    "options": [
-      "gato",
-      "ar",
-      "chuva",
-      "semana"
-    ]
-  },
-  "fvocab-35": {
-    "prompt": "¿Cómo se dice 'pão' en español?",
-    "promptNative": "Como se diz 'pão' em espanhol?"
-  },
-  "fvocab-36": {
-    "promptNative": "'La leche' significa...",
-    "options": [
-      "leite",
-      "chuva",
-      "trem",
-      "árvore"
-    ]
-  },
-  "fvocab-37": {
-    "prompt": "¿Cómo se dice 'café' en español?",
-    "promptNative": "Como se diz 'café' em espanhol?"
-  },
-  "fvocab-38": {
-    "promptNative": "'La fruta' significa...",
-    "options": [
-      "fruta",
-      "gato",
-      "café",
-      "flor"
-    ]
-  },
-  "fvocab-39": {
-    "prompt": "¿Cómo se dice 'carne' en español?",
-    "promptNative": "Como se diz 'carne' em espanhol?"
-  },
-  "fvocab-40": {
-    "promptNative": "'El pescado' significa...",
-    "options": [
-      "peixe (como alimento)",
-      "vaca",
-      "música",
-      "mês"
-    ]
-  },
-  "fvocab-41": {
-    "prompt": "¿Cómo se dice 'ovo' en español?",
-    "promptNative": "Como se diz 'ovo' em espanhol?"
-  },
-  "fvocab-42": {
-    "promptNative": "'El arroz' significa...",
-    "options": [
-      "arroz",
-      "frango (como alimento)",
-      "rua",
-      "mês"
-    ]
-  },
-  "fvocab-43": {
-    "prompt": "¿Cómo se dice 'sopa' en español?",
-    "promptNative": "Como se diz 'sopa' em espanhol?"
-  },
-  "fvocab-44": {
-    "promptNative": "'La sal' significa...",
-    "options": [
-      "sal",
-      "bicicleta",
-      "ovo",
-      "mulher; esposa"
-    ]
-  },
-  "fvocab-45": {
-    "prompt": "¿Cómo se dice 'açúcar' en español?",
-    "promptNative": "Como se diz 'açúcar' em espanhol?"
-  },
-  "fvocab-46": {
-    "promptNative": "'El dinero' significa...",
-    "options": [
-      "dinheiro",
-      "rua",
-      "carne",
-      "irmã"
-    ]
-  },
-  "fvocab-47": {
-    "prompt": "¿Cómo se dice 'loja' en español?",
-    "promptNative": "Como se diz 'loja' em espanhol?"
-  },
-  "fvocab-48": {
-    "promptNative": "'La calle' significa...",
-    "options": [
-      "rua",
-      "sopa",
-      "arroz",
-      "mesa"
-    ]
-  },
-  "fvocab-49": {
-    "prompt": "¿Cómo se dice 'trem' en español?",
-    "promptNative": "Como se diz 'trem' em espanhol?"
-  },
-  "fvocab-50": {
-    "promptNative": "'El avión' significa...",
-    "options": [
-      "avião",
-      "sopa",
-      "flor",
-      "irmão"
-    ]
-  },
-  "fvocab-51": {
-    "prompt": "¿Cómo se dice 'ônibus' en español?",
-    "promptNative": "Como se diz 'ônibus' em espanhol?"
-  },
-  "fvocab-52": {
-    "promptNative": "'La bicicleta' significa...",
-    "options": [
-      "bicicleta",
-      "semana",
-      "vaca",
-      "mulher; esposa"
-    ]
-  },
-  "fvocab-53": {
-    "prompt": "¿Cómo se dice 'telefone' en español?",
-    "promptNative": "Como se diz 'telefone' em espanhol?"
-  },
-  "fvocab-54": {
-    "promptNative": "'La foto' significa...",
-    "options": [
-      "foto",
-      "água",
-      "sopa",
-      "animal"
-    ]
-  },
-  "fvocab-55": {
-    "prompt": "¿Cómo se dice 'música' en español?",
-    "promptNative": "Como se diz 'música' em espanhol?"
-  },
-  "fvocab-56": {
-    "promptNative": "'La película' significa...",
-    "options": [
-      "filme",
-      "ano",
-      "livro",
-      "foto"
-    ]
-  },
-  "fvocab-57": {
-    "prompt": "¿Cómo se dice 'jogo' en español?",
-    "promptNative": "Como se diz 'jogo' em espanhol?"
-  },
-  "fvocab-58": {
-    "promptNative": "'El deporte' significa...",
-    "options": [
-      "esporte",
-      "bicicleta",
-      "porta",
-      "futebol"
-    ]
-  },
-  "fvocab-59": {
-    "prompt": "¿Cómo se dice 'futebol' en español?",
-    "promptNative": "Como se diz 'futebol' em espanhol?"
-  },
-  "fvocab-60": {
-    "promptNative": "'La playa' significa...",
-    "options": [
-      "praia",
-      "cor",
-      "ar",
-      "peixe (como alimento)"
-    ]
-  },
-  "fvocab-61": {
-    "prompt": "¿Cómo se dice 'sol' en español?",
-    "promptNative": "Como se diz 'sol' em espanhol?"
-  },
-  "fvocab-62": {
-    "promptNative": "'La luna' significa...",
-    "options": [
-      "lua",
-      "açúcar",
-      "ano",
-      "homem"
-    ]
-  },
-  "fvocab-63": {
-    "prompt": "¿Cómo se dice 'céu; paraíso' en español?",
-    "promptNative": "Como se diz 'céu; paraíso' em espanhol?"
-  },
-  "fvocab-64": {
-    "promptNative": "'La lluvia' significa...",
-    "options": [
-      "chuva",
-      "cavalo",
-      "café",
-      "hora; hora do dia"
-    ]
-  },
-  "fvocab-65": {
-    "prompt": "¿Cómo se dice 'neve' en español?",
-    "promptNative": "Como se diz 'neve' em espanhol?"
-  },
-  "fvocab-66": {
-    "promptNative": "'El fuego' significa...",
-    "options": [
-      "fogo",
-      "mês",
-      "avião",
-      "tempo; clima"
-    ]
-  },
-  "fvocab-67": {
-    "prompt": "¿Cómo se dice 'ar' en español?",
-    "promptNative": "Como se diz 'ar' em espanhol?"
-  },
-  "fvocab-68": {
-    "promptNative": "'El árbol' significa...",
-    "options": [
-      "árvore",
-      "fogo",
-      "gato",
-      "família"
-    ]
-  },
-  "fvocab-69": {
-    "prompt": "¿Cómo se dice 'flor' en español?",
-    "promptNative": "Como se diz 'flor' em espanhol?"
-  },
-  "fvocab-70": {
-    "promptNative": "'El animal' significa...",
-    "options": [
-      "animal",
-      "mulher; esposa",
-      "telefone",
-      "neve"
-    ]
-  },
-  "fvocab-71": {
-    "prompt": "¿Cómo se dice 'pássaro' en español?",
-    "promptNative": "Como se diz 'pássaro' em espanhol?"
-  },
-  "fvocab-72": {
-    "promptNative": "'El pez' significa...",
-    "options": [
-      "peixe (o animal)",
-      "porta",
-      "vaca",
-      "ano"
-    ]
-  },
-  "fvocab-73": {
-    "prompt": "¿Cómo se dice 'cavalo' en español?",
-    "promptNative": "Como se diz 'cavalo' em espanhol?"
-  },
-  "fvocab-74": {
-    "promptNative": "'La vaca' significa...",
-    "options": [
-      "vaca",
-      "telefone",
-      "rua",
-      "hora; hora do dia"
-    ]
-  },
-  "fvocab-75": {
-    "prompt": "¿Cómo se dice 'frango (como alimento)' en español?",
-    "promptNative": "Como se diz 'frango (como alimento)' em espanhol?"
-  },
-  "fvocab-76": {
-    "promptNative": "'El color' significa...",
-    "options": [
-      "cor",
-      "sal",
-      "árvore",
-      "leite"
-    ]
-  },
-  "fvocab-77": {
-    "prompt": "¿Cómo se dice 'falar' en español?",
-    "promptNative": "Como se diz 'falar' em espanhol?"
-  },
-  "fvocab-78": {
-    "promptNative": "'Vivir' significa...",
-    "options": [
-      "viver",
-      "querer; amar",
-      "escrever",
-      "esperar; ter esperança"
-    ]
-  },
-  "fvocab-79": {
-    "prompt": "¿Cómo se dice 'trabalhar' en español?",
-    "promptNative": "Como se diz 'trabalhar' em espanhol?"
-  },
-  "fvocab-80": {
-    "promptNative": "'Estudiar' significa...",
-    "options": [
-      "estudar",
-      "fazer",
-      "ler",
-      "beber"
-    ]
-  },
-  "fvocab-81": {
-    "prompt": "¿Cómo se dice 'ler' en español?",
-    "promptNative": "Como se diz 'ler' em espanhol?"
-  },
-  "fvocab-82": {
-    "promptNative": "'Escribir' significa...",
-    "options": [
-      "escrever",
-      "vir",
-      "comprar",
-      "estudar"
-    ]
-  },
-  "fvocab-83": {
-    "prompt": "¿Cómo se dice 'escutar' en español?",
-    "promptNative": "Como se diz 'escutar' em espanhol?"
-  },
-  "fvocab-84": {
-    "promptNative": "'Mirar' significa...",
-    "options": [
-      "olhar; assistir",
-      "cozinhar",
-      "dizer; contar",
-      "jogar (um jogo)"
-    ]
-  },
-  "fvocab-85": {
-    "prompt": "¿Cómo se dice 'ver' en español?",
-    "promptNative": "Como se diz 'ver' em espanhol?"
-  },
-  "fvocab-86": {
-    "promptNative": "'Dar' significa...",
-    "options": [
-      "dar",
-      "comprar",
-      "amar",
-      "ler"
-    ]
-  },
-  "fvocab-87": {
-    "prompt": "¿Cómo se dice 'dizer; contar' en español?",
-    "promptNative": "Como se diz 'dizer; contar' em espanhol?"
-  },
-  "fvocab-88": {
-    "promptNative": "'Hacer' significa...",
-    "options": [
-      "fazer",
-      "estudar",
-      "dançar",
-      "precisar"
-    ]
-  },
-  "fvocab-89": {
-    "prompt": "¿Cómo se dice 'ir' en español?",
-    "promptNative": "Como se diz 'ir' em espanhol?"
-  },
-  "fvocab-90": {
-    "promptNative": "'Venir' significa...",
-    "options": [
-      "vir",
-      "entrar",
-      "dizer; contar",
-      "querer; amar"
-    ]
-  },
-  "fvocab-91": {
-    "prompt": "¿Cómo se dice 'sair; partir' en español?",
-    "promptNative": "Como se diz 'sair; partir' em espanhol?"
-  },
-  "fvocab-92": {
-    "promptNative": "'Entrar' significa...",
-    "options": [
-      "entrar",
-      "dançar",
-      "olhar; assistir",
-      "vir"
-    ]
-  },
-  "fvocab-93": {
-    "prompt": "¿Cómo se dice 'abrir' en español?",
-    "promptNative": "Como se diz 'abrir' em espanhol?"
-  },
-  "fvocab-94": {
-    "promptNative": "'Cerrar' significa...",
-    "options": [
-      "fechar",
-      "precisar",
-      "ir",
-      "chamar"
-    ]
-  },
-  "fvocab-95": {
-    "prompt": "¿Cómo se dice 'comprar' en español?",
-    "promptNative": "Como se diz 'comprar' em espanhol?"
-  },
-  "fvocab-96": {
-    "promptNative": "'Pagar' significa...",
-    "options": [
-      "pagar",
-      "cantar",
-      "dançar",
-      "ver"
-    ]
-  },
-  "fvocab-97": {
-    "prompt": "¿Cómo se dice 'ajudar' en español?",
-    "promptNative": "Como se diz 'ajudar' em espanhol?"
-  },
-  "fvocab-98": {
-    "promptNative": "'Llamar' significa...",
-    "options": [
-      "chamar",
-      "escutar",
-      "procurar",
-      "jogar (um jogo)"
-    ]
-  },
-  "fvocab-99": {
-    "prompt": "¿Cómo se dice 'procurar' en español?",
-    "promptNative": "Como se diz 'procurar' em espanhol?"
-  },
-  "fvocab-100": {
-    "promptNative": "'Esperar' significa...",
-    "options": [
-      "esperar; ter esperança",
-      "abrir",
-      "jogar (um jogo)",
-      "cozinhar"
-    ]
-  },
-  "fvocab-101": {
-    "prompt": "¿Cómo se dice 'amar' en español?",
-    "promptNative": "Como se diz 'amar' em espanhol?"
-  },
-  "fvocab-102": {
-    "promptNative": "'Querer' significa...",
-    "options": [
-      "querer; amar",
-      "esperar; ter esperança",
-      "ver",
-      "sair; partir"
-    ]
-  },
-  "fvocab-103": {
-    "prompt": "¿Cómo se dice 'precisar' en español?",
-    "promptNative": "Como se diz 'precisar' em espanhol?"
-  },
-  "fvocab-104": {
-    "promptNative": "'Usar' significa...",
-    "options": [
-      "usar",
-      "fazer",
-      "ver",
-      "sair; partir"
-    ]
-  },
-  "fvocab-105": {
-    "prompt": "¿Cómo se dice 'jogar (um jogo)' en español?",
-    "promptNative": "Como se diz 'jogar (um jogo)' em espanhol?"
-  },
-  "fvocab-106": {
-    "promptNative": "'Caminar' significa...",
-    "options": [
-      "caminhar",
-      "fazer",
-      "procurar",
-      "abrir"
-    ]
-  },
-  "fvocab-107": {
-    "prompt": "¿Cómo se dice 'nadar' en español?",
-    "promptNative": "Como se diz 'nadar' em espanhol?"
-  },
-  "fvocab-108": {
-    "promptNative": "'Bailar' significa...",
-    "options": [
-      "dançar",
-      "chamar",
-      "esperar; ter esperança",
-      "ler"
-    ]
-  },
-  "fvocab-109": {
-    "prompt": "¿Cómo se dice 'cantar' en español?",
-    "promptNative": "Como se diz 'cantar' em espanhol?"
-  },
-  "fvocab-110": {
-    "promptNative": "'Cocinar' significa...",
-    "options": [
-      "cozinhar",
-      "fazer",
-      "olhar; assistir",
-      "cantar"
-    ]
-  },
-  "fvocab-111": {
-    "prompt": "¿Cómo se dice 'beber' en español?",
-    "promptNative": "Como se diz 'beber' em espanhol?"
-  },
-  "fvocab-112": {
-    "promptNative": "'Grande' significa...",
-    "options": [
-      "grande",
-      "bom",
-      "velho",
-      "feliz"
-    ]
-  },
-  "fvocab-113": {
-    "prompt": "¿Cómo se dice 'pequeno' en español?",
-    "promptNative": "Como se diz 'pequeno' em espanhol?"
-  },
-  "fvocab-114": {
-    "promptNative": "'Bueno' significa...",
-    "options": [
-      "bom",
-      "alto",
-      "bonito",
-      "pequeno"
-    ]
-  },
-  "fvocab-115": {
-    "prompt": "¿Cómo se dice 'mau' en español?",
-    "promptNative": "Como se diz 'mau' em espanhol?"
-  },
-  "fvocab-116": {
-    "promptNative": "'Nuevo' significa...",
-    "options": [
-      "novo",
-      "grande",
-      "pobre",
-      "lento"
-    ]
-  },
-  "fvocab-117": {
-    "prompt": "¿Cómo se dice 'velho' en español?",
-    "promptNative": "Como se diz 'velho' em espanhol?"
-  },
-  "fvocab-118": {
-    "promptNative": "'Joven' significa...",
-    "options": [
-      "jovem",
-      "bom",
-      "difícil",
-      "frio"
-    ]
-  },
-  "fvocab-119": {
-    "prompt": "¿Cómo se dice 'alto' en español?",
-    "promptNative": "Como se diz 'alto' em espanhol?"
-  },
-  "fvocab-120": {
-    "promptNative": "'Bajo' significa...",
-    "options": [
-      "baixo (estatura); baixo",
-      "longo",
-      "caro",
-      "fácil"
-    ]
-  },
-  "fvocab-121": {
-    "prompt": "¿Cómo se dice 'longo' en español?",
-    "promptNative": "Como se diz 'longo' em espanhol?"
-  },
-  "fvocab-122": {
-    "promptNative": "'Corto' significa...",
-    "options": [
-      "curto (comprimento)",
-      "sujo",
-      "longo",
-      "fácil"
-    ]
-  },
-  "fvocab-123": {
-    "prompt": "¿Cómo se dice 'feliz' en español?",
-    "promptNative": "Como se diz 'feliz' em espanhol?"
-  },
-  "fvocab-124": {
-    "promptNative": "'Triste' significa...",
-    "options": [
-      "triste",
-      "grande",
-      "caro",
-      "curto (comprimento)"
-    ]
-  },
-  "fvocab-125": {
-    "prompt": "¿Cómo se dice 'fácil' en español?",
-    "promptNative": "Como se diz 'fácil' em espanhol?"
-  },
-  "fvocab-126": {
-    "promptNative": "'Difícil' significa...",
-    "options": [
-      "difícil",
-      "fácil",
-      "baixo (estatura); baixo",
-      "pequeno"
-    ]
-  },
-  "fvocab-127": {
-    "prompt": "¿Cómo se dice 'quente' en español?",
-    "promptNative": "Como se diz 'quente' em espanhol?"
-  },
-  "fvocab-128": {
-    "promptNative": "'Frío' significa...",
-    "options": [
-      "frio",
-      "rico; delicioso",
-      "fácil",
-      "triste"
-    ]
-  },
-  "fvocab-129": {
-    "prompt": "¿Cómo se dice 'rápido' en español?",
-    "promptNative": "Como se diz 'rápido' em espanhol?"
-  },
-  "fvocab-130": {
-    "promptNative": "'Lento' significa...",
-    "options": [
-      "lento",
-      "pobre",
-      "rápido",
-      "pequeno"
-    ]
-  },
-  "fvocab-131": {
-    "prompt": "¿Cómo se dice 'bonito' en español?",
-    "promptNative": "Como se diz 'bonito' em espanhol?"
-  },
-  "fvocab-132": {
-    "promptNative": "'Feo' significa...",
-    "options": [
-      "feio",
-      "rápido",
-      "sujo",
-      "frio"
-    ]
-  },
-  "fvocab-133": {
-    "prompt": "¿Cómo se dice 'limpo' en español?",
-    "promptNative": "Como se diz 'limpo' em espanhol?"
-  },
-  "fvocab-134": {
-    "promptNative": "'Sucio' significa...",
-    "options": [
-      "sujo",
-      "rápido",
-      "difícil",
-      "lento"
-    ]
-  },
-  "fvocab-135": {
-    "prompt": "¿Cómo se dice 'barato' en español?",
-    "promptNative": "Como se diz 'barato' em espanhol?"
-  },
-  "fvocab-136": {
-    "promptNative": "'Caro' significa...",
-    "options": [
-      "caro",
-      "longo",
-      "fácil",
-      "barato"
-    ]
-  },
-  "fvocab-137": {
-    "prompt": "¿Cómo se dice 'rico; delicioso' en español?",
-    "promptNative": "Como se diz 'rico; delicioso' em espanhol?"
-  },
-  "fvocab-138": {
-    "promptNative": "'Pobre' significa...",
-    "options": [
-      "pobre",
-      "rico; delicioso",
-      "triste",
-      "alto"
-    ]
-  },
-  "fvocab-139": {
-    "prompt": "¿Cómo se dice 'bem' en español?",
-    "promptNative": "Como se diz 'bem' em espanhol?"
-  },
-  "fvocab-140": {
-    "promptNative": "'Mal' significa...",
-    "options": [
-      "mal",
-      "perto",
-      "bem",
-      "nunca"
-    ]
-  },
-  "fvocab-141": {
-    "prompt": "¿Cómo se dice 'muito' en español?",
-    "promptNative": "Como se diz 'muito' em espanhol?"
-  },
-  "fvocab-142": {
-    "promptNative": "'Poco' significa...",
-    "options": [
-      "pouco (quantidade)",
-      "hoje",
-      "cedo",
-      "muito"
-    ]
-  },
-  "fvocab-143": {
-    "prompt": "¿Cómo se dice 'sempre' en español?",
-    "promptNative": "Como se diz 'sempre' em espanhol?"
-  },
-  "fvocab-144": {
-    "promptNative": "'Nunca' significa...",
-    "options": [
-      "nunca",
-      "mal",
-      "depois",
-      "hoje"
-    ]
-  },
-  "fvocab-145": {
-    "prompt": "¿Cómo se dice 'hoje' en español?",
-    "promptNative": "Como se diz 'hoje' em espanhol?"
-  },
-  "fvocab-146": {
-    "promptNative": "'Aquí' significa...",
-    "options": [
-      "aqui",
-      "bem",
-      "depois",
-      "muito"
-    ]
-  },
-  "fvocab-147": {
-    "prompt": "¿Cómo se dice 'ali' en español?",
-    "promptNative": "Como se diz 'ali' em espanhol?"
-  },
-  "fvocab-148": {
-    "promptNative": "'Cerca' significa...",
-    "options": [
-      "perto",
-      "aqui",
-      "muito",
-      "sempre"
-    ]
-  },
-  "fvocab-149": {
-    "prompt": "¿Cómo se dice 'longe' en español?",
-    "promptNative": "Como se diz 'longe' em espanhol?"
-  },
-  "fvocab-150": {
-    "promptNative": "'Ahora' significa...",
-    "options": [
-      "agora",
-      "sempre",
-      "nunca",
-      "ali"
-    ]
-  },
-  "fvocab-151": {
-    "prompt": "¿Cómo se dice 'depois' en español?",
-    "promptNative": "Como se diz 'depois' em espanhol?"
-  },
-  "fvocab-152": {
-    "promptNative": "'Antes' significa...",
-    "options": [
-      "antes (no tempo)",
-      "hoje",
-      "mal",
-      "também"
-    ]
-  },
-  "fvocab-153": {
-    "prompt": "¿Cómo se dice 'também' en español?",
-    "promptNative": "Como se diz 'também' em espanhol?"
-  },
-  "fvocab-154": {
-    "promptNative": "'Temprano' significa...",
-    "options": [
-      "cedo",
-      "sempre",
-      "bem",
-      "nunca"
-    ]
-  },
-  "fvocab-155": {
-    "prompt": "¿Cómo se dice 'cabeça' en español?",
-    "promptNative": "Como se diz 'cabeça' em espanhol?"
-  },
-  "fvocab-156": {
-    "promptNative": "'La cara' significa...",
-    "options": [
-      "rosto",
-      "boca",
-      "lima; limão",
-      "hotel"
-    ]
-  },
-  "fvocab-157": {
-    "prompt": "¿Cómo se dice 'boca' en español?",
-    "promptNative": "Como se diz 'boca' em espanhol?"
-  },
-  "fvocab-158": {
-    "promptNative": "'La nariz' significa...",
-    "options": [
-      "nariz",
-      "igreja",
-      "parede (interna)",
-      "quarto"
-    ]
-  },
-  "fvocab-159": {
-    "prompt": "¿Cómo se dice 'orelha (externa)' en español?",
-    "promptNative": "Como se diz 'orelha (externa)' em espanhol?"
-  },
-  "fvocab-160": {
-    "promptNative": "'El diente' significa...",
-    "options": [
-      "dente",
-      "meia",
-      "orelha (externa)",
-      "morango"
-    ]
-  },
-  "fvocab-161": {
-    "prompt": "¿Cómo se dice 'cabelo' en español?",
-    "promptNative": "Como se diz 'cabelo' em espanhol?"
-  },
-  "fvocab-162": {
-    "promptNative": "'La pierna' significa...",
-    "options": [
-      "perna",
-      "nariz",
-      "garrafa",
-      "banana"
-    ]
-  },
-  "fvocab-163": {
-    "prompt": "¿Cómo se dice 'pé' en español?",
-    "promptNative": "Como se diz 'pé' em espanhol?"
-  },
-  "fvocab-164": {
-    "promptNative": "'La espalda' significa...",
-    "options": [
-      "costas (parte do corpo)",
-      "xícara; caneca",
-      "faca",
-      "mapa"
-    ]
-  },
-  "fvocab-165": {
-    "prompt": "¿Cómo se dice 'coração' en español?",
-    "promptNative": "Como se diz 'coração' em espanhol?"
-  },
-  "fvocab-166": {
-    "promptNative": "'El dedo' significa...",
-    "options": [
-      "dedo (da mão ou do pé)",
-      "aeroporto",
-      "sapato",
-      "vestido"
-    ]
-  },
-  "fvocab-167": {
-    "prompt": "¿Cómo se dice 'pescoço' en español?",
-    "promptNative": "Como se diz 'pescoço' em espanhol?"
-  },
-  "fvocab-168": {
-    "promptNative": "'El hombro' significa...",
-    "options": [
-      "ombro",
-      "casaco",
-      "dente",
-      "laranja (fruta)"
-    ]
-  },
-  "fvocab-169": {
-    "prompt": "¿Cómo se dice 'cozinha' en español?",
-    "promptNative": "Como se diz 'cozinha' em espanhol?"
-  },
-  "fvocab-170": {
-    "promptNative": "'El baño' significa...",
-    "options": [
-      "banheiro",
-      "queijo",
-      "guardanapo",
-      "tomate"
-    ]
-  },
-  "fvocab-171": {
-    "prompt": "¿Cómo se dice 'quarto' en español?",
-    "promptNative": "Como se diz 'quarto' em espanhol?"
-  },
-  "fvocab-172": {
-    "promptNative": "'La sala' significa...",
-    "options": [
-      "sala de estar",
-      "orelha (externa)",
-      "meia",
-      "cinto"
-    ]
-  },
-  "fvocab-173": {
-    "prompt": "¿Cómo se dice 'jardim' en español?",
-    "promptNative": "Como se diz 'jardim' em espanhol?"
-  },
-  "fvocab-174": {
-    "promptNative": "'El suelo' significa...",
-    "options": [
-      "chão; solo",
-      "sala de estar",
-      "mala",
-      "sorvete"
-    ]
-  },
-  "fvocab-175": {
-    "prompt": "¿Cómo se dice 'parede (interna)' en español?",
-    "promptNative": "Como se diz 'parede (interna)' em espanhol?"
-  },
-  "fvocab-176": {
-    "promptNative": "'La escalera' significa...",
-    "options": [
-      "escada",
-      "bolso",
-      "casaco",
-      "cabeça"
-    ]
-  },
-  "fvocab-177": {
-    "prompt": "¿Cómo se dice 'cama' en español?",
-    "promptNative": "Como se diz 'cama' em espanhol?"
-  },
-  "fvocab-178": {
-    "promptNative": "'El espejo' significa...",
-    "options": [
-      "espelho",
-      "banco; banco (assento)",
-      "parede (interna)",
-      "escada"
-    ]
-  },
-  "fvocab-179": {
-    "prompt": "¿Cómo se dice 'toalha' en español?",
-    "promptNative": "Como se diz 'toalha' em espanhol?"
-  },
-  "fvocab-180": {
-    "promptNative": "'El jabón' significa...",
-    "options": [
-      "sabonete",
-      "dente",
-      "mala",
-      "nariz"
-    ]
-  },
-  "fvocab-181": {
-    "prompt": "¿Cómo se dice 'faca' en español?",
-    "promptNative": "Como se diz 'faca' em espanhol?"
-  },
-  "fvocab-182": {
-    "promptNative": "'El tenedor' significa...",
-    "options": [
-      "garfo",
-      "bolso",
-      "coração",
-      "dente"
-    ]
-  },
-  "fvocab-183": {
-    "prompt": "¿Cómo se dice 'colher' en español?",
-    "promptNative": "Como se diz 'colher' em espanhol?"
-  },
-  "fvocab-184": {
-    "promptNative": "'El plato' significa...",
-    "options": [
-      "prato",
-      "bolo",
-      "saia",
-      "camisa"
-    ]
-  },
-  "fvocab-185": {
-    "prompt": "¿Cómo se dice 'copo' en español?",
-    "promptNative": "Como se diz 'copo' em espanhol?"
-  },
-  "fvocab-186": {
-    "promptNative": "'La taza' significa...",
-    "options": [
-      "xícara; caneca",
-      "bolo",
-      "óleo (de cozinha)",
-      "legume"
-    ]
-  },
-  "fvocab-187": {
-    "prompt": "¿Cómo se dice 'garrafa' en español?",
-    "promptNative": "Como se diz 'garrafa' em espanhol?"
-  },
-  "fvocab-188": {
-    "promptNative": "'La servilleta' significa...",
-    "options": [
-      "guardanapo",
-      "nariz",
-      "férias",
-      "garrafa"
-    ]
-  },
-  "fvocab-189": {
-    "prompt": "¿Cómo se dice 'aeroporto' en español?",
-    "promptNative": "Como se diz 'aeroporto' em espanhol?"
-  },
-  "fvocab-190": {
-    "promptNative": "'La estación' significa...",
-    "options": [
-      "estação; estação (do ano)",
-      "parque",
-      "cachecol",
-      "banheiro"
-    ]
-  },
-  "fvocab-191": {
-    "prompt": "¿Cómo se dice 'hotel' en español?",
-    "promptNative": "Como se diz 'hotel' em espanhol?"
-  },
-  "fvocab-192": {
-    "promptNative": "'El restaurante' significa...",
-    "options": [
-      "restaurante",
-      "almoço",
-      "guardanapo",
-      "cabelo"
-    ]
-  },
-  "fvocab-193": {
-    "prompt": "¿Cómo se dice 'mercado' en español?",
-    "promptNative": "Como se diz 'mercado' em espanhol?"
-  },
-  "fvocab-194": {
-    "promptNative": "'El banco' significa...",
-    "options": [
-      "banco; banco (assento)",
-      "almoço",
-      "manteiga",
-      "prato"
-    ]
-  },
-  "fvocab-195": {
-    "prompt": "¿Cómo se dice 'hospital' en español?",
-    "promptNative": "Como se diz 'hospital' em espanhol?"
-  },
-  "fvocab-196": {
-    "promptNative": "'La farmacia' significa...",
-    "options": [
-      "farmácia",
-      "pescoço",
-      "sala de estar",
-      "pé"
-    ]
-  },
-  "fvocab-197": {
-    "prompt": "¿Cómo se dice 'igreja' en español?",
-    "promptNative": "Como se diz 'igreja' em espanhol?"
-  },
-  "fvocab-198": {
-    "promptNative": "'El museo' significa...",
-    "options": [
-      "museu",
-      "perna",
-      "garrafa",
-      "manteiga"
-    ]
-  },
-  "fvocab-199": {
-    "prompt": "¿Cómo se dice 'parque' en español?",
-    "promptNative": "Como se diz 'parque' em espanhol?"
-  },
-  "fvocab-200": {
-    "promptNative": "'El puente' significa...",
-    "options": [
-      "ponte",
-      "mercado",
-      "morango",
-      "vestido"
-    ]
-  },
-  "fvocab-201": {
-    "prompt": "¿Cómo se dice 'esquina' en español?",
-    "promptNative": "Como se diz 'esquina' em espanhol?"
-  },
-  "fvocab-202": {
-    "promptNative": "'El mapa' significa...",
-    "options": [
-      "mapa",
-      "manteiga",
-      "luva",
-      "banco; banco (assento)"
-    ]
-  },
-  "fvocab-203": {
-    "prompt": "¿Cómo se dice 'mala' en español?",
-    "promptNative": "Como se diz 'mala' em espanhol?"
-  },
-  "fvocab-204": {
-    "promptNative": "'El pasaporte' significa...",
-    "options": [
-      "passaporte",
-      "cozinha",
-      "mapa",
-      "almoço"
-    ]
-  },
-  "fvocab-205": {
-    "prompt": "¿Cómo se dice 'bilhete' en español?",
-    "promptNative": "Como se diz 'bilhete' em espanhol?"
-  },
-  "fvocab-206": {
-    "promptNative": "'El viaje' significa...",
-    "options": [
-      "viagem",
-      "boca",
-      "óleo (de cozinha)",
-      "sala de estar"
-    ]
-  },
-  "fvocab-207": {
-    "prompt": "¿Cómo se dice 'férias' en español?",
-    "promptNative": "Como se diz 'férias' em espanhol?"
-  },
-  "fvocab-208": {
-    "promptNative": "'El desayuno' significa...",
-    "options": [
-      "café da manhã",
-      "ponte",
-      "vestido",
-      "banco; banco (assento)"
-    ]
-  },
-  "fvocab-209": {
-    "prompt": "¿Cómo se dice 'almoço' en español?",
-    "promptNative": "Como se diz 'almoço' em espanhol?"
-  },
-  "fvocab-210": {
-    "promptNative": "'La cena' significa...",
-    "options": [
-      "jantar",
-      "nariz",
-      "mapa",
-      "estação; estação (do ano)"
-    ]
-  },
-  "fvocab-211": {
-    "prompt": "¿Cómo se dice 'queijo' en español?",
-    "promptNative": "Como se diz 'queijo' em espanhol?"
-  },
-  "fvocab-212": {
-    "promptNative": "'La mantequilla' significa...",
-    "options": [
-      "manteiga",
-      "farmácia",
-      "tomate",
-      "pimenta (tempero)"
-    ]
-  },
-  "fvocab-213": {
-    "prompt": "¿Cómo se dice 'sorvete' en español?",
-    "promptNative": "Como se diz 'sorvete' em espanhol?"
-  },
-  "fvocab-214": {
-    "promptNative": "'La tarta' significa...",
-    "options": [
-      "bolo",
-      "passaporte",
-      "nariz",
-      "laranja (fruta)"
-    ]
-  },
-  "fvocab-215": {
-    "prompt": "¿Cómo se dice 'biscoito' en español?",
-    "promptNative": "Como se diz 'biscoito' em espanhol?"
-  },
-  "fvocab-216": {
-    "promptNative": "'La verdura' significa...",
-    "options": [
-      "legume",
-      "ponte",
-      "faca",
-      "chão; solo"
-    ]
-  },
-  "fvocab-217": {
-    "prompt": "¿Cómo se dice 'cebola' en español?",
-    "promptNative": "Como se diz 'cebola' em espanhol?"
-  },
-  "fvocab-218": {
-    "promptNative": "'El tomate' significa...",
-    "options": [
-      "tomate",
-      "cebola",
-      "saia",
-      "camisa"
-    ]
-  },
-  "fvocab-219": {
-    "prompt": "¿Cómo se dice 'laranja (fruta)' en español?",
-    "promptNative": "Como se diz 'laranja (fruta)' em espanhol?"
-  },
-  "fvocab-220": {
-    "promptNative": "'La manzana' significa...",
-    "options": [
-      "maçã; quarteirão",
-      "manteiga",
-      "parque",
-      "mala"
-    ]
-  },
-  "fvocab-221": {
-    "prompt": "¿Cómo se dice 'banana' en español?",
-    "promptNative": "Como se diz 'banana' em espanhol?"
-  },
-  "fvocab-222": {
-    "promptNative": "'La uva' significa...",
-    "options": [
-      "uva",
-      "toalha",
-      "parede (interna)",
-      "banana"
-    ]
-  },
-  "fvocab-223": {
-    "prompt": "¿Cómo se dice 'morango' en español?",
-    "promptNative": "Como se diz 'morango' em espanhol?"
-  },
-  "fvocab-224": {
-    "promptNative": "'El limón' significa...",
-    "options": [
-      "lima; limão",
-      "boné",
-      "restaurante",
-      "bolso"
-    ]
-  },
-  "fvocab-225": {
-    "prompt": "¿Cómo se dice 'pimenta (tempero)' en español?",
-    "promptNative": "Como se diz 'pimenta (tempero)' em espanhol?"
-  },
-  "fvocab-226": {
-    "promptNative": "'El aceite' significa...",
-    "options": [
-      "óleo (de cozinha)",
-      "faca",
-      "pescoço",
-      "prato"
-    ]
-  },
-  "fvocab-227": {
-    "prompt": "¿Cómo se dice 'camisa' en español?",
-    "promptNative": "Como se diz 'camisa' em espanhol?"
-  },
-  "fvocab-228": {
-    "promptNative": "'El pantalón' significa...",
-    "options": [
-      "calça",
-      "museu",
-      "aeroporto",
-      "guardanapo"
-    ]
-  },
-  "fvocab-229": {
-    "prompt": "¿Cómo se dice 'vestido' en español?",
-    "promptNative": "Como se diz 'vestido' em espanhol?"
-  },
-  "fvocab-230": {
-    "promptNative": "'La falda' significa...",
-    "options": [
-      "saia",
-      "cozinha",
-      "parque",
-      "sala de estar"
-    ]
-  },
-  "fvocab-231": {
-    "prompt": "¿Cómo se dice 'sapato' en español?",
-    "promptNative": "Como se diz 'sapato' em espanhol?"
-  },
-  "fvocab-232": {
-    "promptNative": "'El calcetín' significa...",
-    "options": [
-      "meia",
-      "passaporte",
-      "banco; banco (assento)",
-      "pimenta (tempero)"
-    ]
-  },
-  "fvocab-233": {
-    "prompt": "¿Cómo se dice 'casaco' en español?",
-    "promptNative": "Como se diz 'casaco' em espanhol?"
-  },
-  "fvocab-234": {
-    "promptNative": "'La gorra' significa...",
-    "options": [
-      "boné",
-      "cozinha",
-      "dente",
-      "lima; limão"
-    ]
-  },
-  "fvocab-235": {
-    "prompt": "¿Cómo se dice 'luva' en español?",
-    "promptNative": "Como se diz 'luva' em espanhol?"
-  },
-  "fvocab-236": {
-    "promptNative": "'La bufanda' significa...",
-    "options": [
-      "cachecol",
-      "estação; estação (do ano)",
-      "queijo",
-      "mala"
-    ]
-  },
-  "fvocab-237": {
-    "prompt": "¿Cómo se dice 'cinto' en español?",
-    "promptNative": "Como se diz 'cinto' em espanhol?"
-  },
-  "fvocab-238": {
-    "promptNative": "'El bolsillo' significa...",
-    "options": [
-      "bolso",
-      "ponte",
-      "rosto",
-      "escada"
-    ]
-  },
-  "fvocab-239": {
-    "prompt": "¿Cómo se dice 'voar' en español?",
-    "promptNative": "Como se diz 'voar' em espanhol?"
-  },
-  "fvocab-240": {
-    "promptNative": "'Conocer' significa...",
-    "options": [
-      "conhecer (pessoas/lugares)",
-      "cortar",
-      "descer; baixar (download)",
-      "tocar; tocar (música)"
-    ]
-  },
-  "fvocab-241": {
-    "prompt": "¿Cómo se dice 'pensar' en español?",
-    "promptNative": "Como se diz 'pensar' em espanhol?"
-  },
-  "fvocab-242": {
-    "promptNative": "'Creer' significa...",
-    "options": [
-      "acreditar",
-      "perder; perder (o ônibus)",
-      "cortar",
-      "chover"
-    ]
-  },
-  "fvocab-243": {
-    "prompt": "¿Cómo se dice 'sentir' en español?",
-    "promptNative": "Como se diz 'sentir' em espanhol?"
-  },
-  "fvocab-244": {
-    "promptNative": "'Despertar' significa...",
-    "options": [
-      "acordar (alguém)",
-      "receber",
-      "pensar",
-      "pôr"
-    ]
-  },
-  "fvocab-245": {
-    "prompt": "¿Cómo se dice 'sentar-se' en español?",
-    "promptNative": "Como se diz 'sentar-se' em espanhol?"
-  },
-  "fvocab-246": {
-    "promptNative": "'Poner' significa...",
-    "options": [
-      "pôr",
-      "acreditar",
-      "sentar-se",
-      "voar"
-    ]
-  },
-  "fvocab-247": {
-    "prompt": "¿Cómo se dice 'tirar; remover' en español?",
-    "promptNative": "Como se diz 'tirar; remover' em espanhol?"
-  },
-  "fvocab-248": {
-    "promptNative": "'Llevar' significa...",
-    "options": [
-      "carregar; vestir",
-      "chover",
-      "ensinar; mostrar",
-      "ganhar"
-    ]
-  },
-  "fvocab-249": {
-    "prompt": "¿Cómo se dice 'trazer' en español?",
-    "promptNative": "Como se diz 'trazer' em espanhol?"
-  },
-  "fvocab-250": {
-    "promptNative": "'Enviar' significa...",
-    "options": [
-      "enviar",
-      "chover",
-      "perguntar (fazer uma pergunta)",
-      "tocar; tocar (música)"
-    ]
-  },
-  "fvocab-251": {
-    "prompt": "¿Cómo se dice 'receber' en español?",
-    "promptNative": "Como se diz 'receber' em espanhol?"
-  },
-  "fvocab-252": {
-    "promptNative": "'Preguntar' significa...",
-    "options": [
-      "perguntar (fazer uma pergunta)",
-      "pensar",
-      "acordar (alguém)",
-      "ganhar"
-    ]
-  },
-  "fvocab-253": {
-    "prompt": "¿Cómo se dice 'responder' en español?",
-    "promptNative": "Como se diz 'responder' em espanhol?"
-  },
-  "fvocab-254": {
-    "promptNative": "'Enseñar' significa...",
-    "options": [
-      "ensinar; mostrar",
-      "voar",
-      "empurrar",
-      "sentir"
-    ]
-  },
-  "fvocab-255": {
-    "prompt": "¿Cómo se dice 'aprender' en español?",
-    "promptNative": "Como se diz 'aprender' em espanhol?"
-  },
-  "fvocab-256": {
-    "promptNative": "'Recordar' significa...",
-    "options": [
-      "lembrar",
-      "perguntar (fazer uma pergunta)",
-      "responder",
-      "perder; perder (o ônibus)"
-    ]
-  },
-  "fvocab-257": {
-    "prompt": "¿Cómo se dice 'perder; perder (o ônibus)' en español?",
-    "promptNative": "Como se diz 'perder; perder (o ônibus)' em espanhol?"
-  },
-  "fvocab-258": {
-    "promptNative": "'Ganar' significa...",
-    "options": [
-      "ganhar",
-      "subir; carregar (upload)",
-      "voar",
-      "acreditar"
-    ]
-  },
-  "fvocab-259": {
-    "prompt": "¿Cómo se dice 'limpar' en español?",
-    "promptNative": "Como se diz 'limpar' em espanhol?"
-  },
-  "fvocab-260": {
-    "promptNative": "'Lavar' significa...",
-    "options": [
-      "lavar",
-      "sentar-se",
-      "acordar (alguém)",
-      "sentir"
-    ]
-  },
-  "fvocab-261": {
-    "prompt": "¿Cómo se dice 'cortar' en español?",
-    "promptNative": "Como se diz 'cortar' em espanhol?"
-  },
-  "fvocab-262": {
-    "promptNative": "'Pintar' significa...",
-    "options": [
-      "pintar",
-      "sentar-se",
-      "subir; carregar (upload)",
-      "responder"
-    ]
-  },
-  "fvocab-263": {
-    "prompt": "¿Cómo se dice 'desenhar' en español?",
-    "promptNative": "Como se diz 'desenhar' em espanhol?"
-  },
-  "fvocab-264": {
-    "promptNative": "'Tocar' significa...",
-    "options": [
-      "tocar; tocar (música)",
-      "subir; carregar (upload)",
-      "pensar",
-      "sentir"
-    ]
-  },
-  "fvocab-265": {
-    "prompt": "¿Cómo se dice 'subir; carregar (upload)' en español?",
-    "promptNative": "Como se diz 'subir; carregar (upload)' em espanhol?"
-  },
-  "fvocab-266": {
-    "promptNative": "'Bajar' significa...",
-    "options": [
-      "descer; baixar (download)",
-      "carregar; vestir",
-      "puxar",
-      "acordar (alguém)"
-    ]
-  },
-  "fvocab-267": {
-    "prompt": "¿Cómo se dice 'empurrar' en español?",
-    "promptNative": "Como se diz 'empurrar' em espanhol?"
-  },
-  "fvocab-268": {
-    "promptNative": "'Tirar' significa...",
-    "options": [
-      "puxar",
-      "acreditar",
-      "tirar; remover",
-      "trazer"
-    ]
-  },
-  "fvocab-269": {
-    "prompt": "¿Cómo se dice 'chover' en español?",
-    "promptNative": "Como se diz 'chover' em espanhol?"
-  },
-  "fvocab-270": {
-    "promptNative": "'Contento' significa...",
-    "options": [
-      "contente; satisfeito",
-      "fechado",
-      "seco",
-      "magro (pessoa)"
-    ]
-  },
-  "fvocab-271": {
-    "prompt": "¿Cómo se dice 'cansado' en español?",
-    "promptNative": "Como se diz 'cansado' em espanhol?"
-  },
-  "fvocab-272": {
-    "promptNative": "'Enfermo' significa...",
-    "options": [
-      "doente",
-      "leve (peso)",
-      "seco",
-      "molhado"
-    ]
-  },
-  "fvocab-273": {
-    "prompt": "¿Cómo se dice 'saudável' en español?",
-    "promptNative": "Como se diz 'saudável' em espanhol?"
-  },
-  "fvocab-274": {
-    "promptNative": "'Fuerte' significa...",
-    "options": [
-      "forte",
-      "leve (peso)",
-      "salgado",
-      "pesado; chato (pessoa)"
-    ]
-  },
-  "fvocab-275": {
-    "prompt": "¿Cómo se dice 'fraco' en español?",
-    "promptNative": "Como se diz 'fraco' em espanhol?"
-  },
-  "fvocab-276": {
-    "promptNative": "'Gordo' significa...",
-    "options": [
-      "gordo",
-      "doce",
-      "picante",
-      "estreito"
-    ]
-  },
-  "fvocab-277": {
-    "prompt": "¿Cómo se dice 'magro (pessoa)' en español?",
-    "promptNative": "Como se diz 'magro (pessoa)' em espanhol?"
-  },
-  "fvocab-278": {
-    "promptNative": "'Ancho' significa...",
-    "options": [
-      "largo",
-      "fraco",
-      "leve (peso)",
-      "perigoso"
-    ]
-  },
-  "fvocab-279": {
-    "prompt": "¿Cómo se dice 'estreito' en español?",
-    "promptNative": "Como se diz 'estreito' em espanhol?"
-  },
-  "fvocab-280": {
-    "promptNative": "'Pesado' significa...",
-    "options": [
-      "pesado; chato (pessoa)",
-      "seco",
-      "fechado",
-      "contente; satisfeito"
-    ]
-  },
-  "fvocab-281": {
-    "prompt": "¿Cómo se dice 'leve (peso)' en español?",
-    "promptNative": "Como se diz 'leve (peso)' em espanhol?"
-  },
-  "fvocab-282": {
-    "promptNative": "'Lleno' significa...",
-    "options": [
-      "cheio",
-      "aberto",
-      "gordo",
-      "seguro; certo"
-    ]
-  },
-  "fvocab-283": {
-    "prompt": "¿Cómo se dice 'vazio' en español?",
-    "promptNative": "Como se diz 'vazio' em espanhol?"
-  },
-  "fvocab-284": {
-    "promptNative": "'Abierto' significa...",
-    "options": [
-      "aberto",
-      "seco",
-      "picante",
-      "forte"
-    ]
-  },
-  "fvocab-285": {
-    "prompt": "¿Cómo se dice 'fechado' en español?",
-    "promptNative": "Como se diz 'fechado' em espanhol?"
-  },
-  "fvocab-286": {
-    "promptNative": "'Seco' significa...",
-    "options": [
-      "seco",
-      "magro (pessoa)",
-      "picante",
-      "contente; satisfeito"
-    ]
-  },
-  "fvocab-287": {
-    "prompt": "¿Cómo se dice 'molhado' en español?",
-    "promptNative": "Como se diz 'molhado' em espanhol?"
-  },
-  "fvocab-288": {
-    "promptNative": "'Dulce' significa...",
-    "options": [
-      "doce",
-      "escuro",
-      "gordo",
-      "pesado; chato (pessoa)"
-    ]
-  },
-  "fvocab-289": {
-    "prompt": "¿Cómo se dice 'amargo' en español?",
-    "promptNative": "Como se diz 'amargo' em espanhol?"
-  },
-  "fvocab-290": {
-    "promptNative": "'Salado' significa...",
-    "options": [
-      "salgado",
-      "seco",
-      "largo",
-      "estreito"
-    ]
-  },
-  "fvocab-291": {
-    "prompt": "¿Cómo se dice 'picante' en español?",
-    "promptNative": "Como se diz 'picante' em espanhol?"
-  },
-  "fvocab-292": {
-    "promptNative": "'Oscuro' significa...",
-    "options": [
-      "escuro",
-      "leve (peso)",
-      "aberto",
-      "salgado"
-    ]
-  },
-  "fvocab-293": {
-    "prompt": "¿Cómo se dice 'claro (cor); claro' en español?",
-    "promptNative": "Como se diz 'claro (cor); claro' em espanhol?"
-  },
-  "fvocab-294": {
-    "promptNative": "'Peligroso' significa...",
-    "options": [
-      "perigoso",
-      "contente; satisfeito",
-      "gordo",
-      "doente"
-    ]
-  },
-  "fvocab-295": {
-    "prompt": "¿Cómo se dice 'seguro; certo' en español?",
-    "promptNative": "Como se diz 'seguro; certo' em espanhol?"
-  },
-  "fvocab-296": {
-    "promptNative": "'Todavía' significa...",
-    "options": [
-      "ainda",
-      "somente",
-      "demais",
-      "quase"
-    ]
-  },
-  "fvocab-297": {
-    "prompt": "¿Cómo se dice 'já; agora' en español?",
-    "promptNative": "Como se diz 'já; agora' em espanhol?"
-  },
-  "fvocab-298": {
-    "promptNative": "'Casi' significa...",
-    "options": [
-      "quase",
-      "somente",
-      "talvez",
-      "ainda"
-    ]
-  },
-  "fvocab-299": {
-    "prompt": "¿Cómo se dice 'bastante; suficiente' en español?",
-    "promptNative": "Como se diz 'bastante; suficiente' em espanhol?"
-  },
-  "fvocab-300": {
-    "promptNative": "'Demasiado' significa...",
-    "options": [
-      "demais",
-      "talvez",
-      "devagar",
-      "bastante; suficiente"
-    ]
-  },
-  "fvocab-301": {
-    "prompt": "¿Cómo se dice 'juntos' en español?",
-    "promptNative": "Como se diz 'juntos' em espanhol?"
-  },
-  "fvocab-302": {
-    "promptNative": "'Solamente' significa...",
-    "options": [
-      "somente",
-      "juntos",
-      "já; agora",
-      "devagar"
-    ]
-  },
-  "fvocab-303": {
-    "prompt": "¿Cómo se dice 'talvez' en español?",
-    "promptNative": "Como se diz 'talvez' em espanhol?"
-  },
-  "fvocab-304": {
-    "promptNative": "'Pronto' significa...",
-    "options": [
-      "logo",
-      "somente",
-      "quase",
-      "devagar"
-    ]
-  },
-  "fvocab-305": {
-    "prompt": "¿Cómo se dice 'devagar' en español?",
-    "promptNative": "Como se diz 'devagar' em espanhol?"
-  },
-  "fvocab-306": {
-    "promptNative": "'El problema' significa...",
-    "options": [
-      "problema",
-      "pergunta",
-      "razão",
-      "sangue"
-    ]
-  },
-  "fvocab-307": {
-    "prompt": "¿Cómo se dice 'pergunta' en español?",
-    "promptNative": "Como se diz 'pergunta' em espanhol?"
-  },
-  "fvocab-308": {
-    "promptNative": "'La respuesta' significa...",
-    "options": [
-      "resposta",
-      "parceiro; casal",
-      "cultura",
-      "governo"
-    ]
-  },
-  "fvocab-309": {
-    "prompt": "¿Cómo se dice 'razão' en español?",
-    "promptNative": "Como se diz 'razão' em espanhol?"
-  },
-  "fvocab-310": {
-    "promptNative": "'La idea' significa...",
-    "options": [
-      "ideia",
-      "emprego",
-      "costume; hábito",
-      "razão"
-    ]
-  },
-  "fvocab-311": {
-    "prompt": "¿Cómo se dice 'exemplo' en español?",
-    "promptNative": "Como se diz 'exemplo' em espanhol?"
-  },
-  "fvocab-312": {
-    "promptNative": "'La historia' significa...",
-    "options": [
-      "história; história (narrativa)",
-      "razão",
-      "problema",
-      "perigo"
-    ]
-  },
-  "fvocab-313": {
-    "prompt": "¿Cómo se dice 'notícia' en español?",
-    "promptNative": "Como se diz 'notícia' em espanhol?"
-  },
-  "fvocab-314": {
-    "promptNative": "'La verdad' significa...",
-    "options": [
-      "verdade",
-      "ideia",
-      "projeto",
-      "idade"
-    ]
-  },
-  "fvocab-315": {
-    "prompt": "¿Cómo se dice 'mentira' en español?",
-    "promptNative": "Como se diz 'mentira' em espanhol?"
-  },
-  "fvocab-316": {
-    "promptNative": "'La ayuda' significa...",
-    "options": [
-      "ajuda",
-      "alegria",
-      "crescimento",
-      "direito (legal); direito (área)"
-    ]
-  },
-  "fvocab-317": {
-    "prompt": "¿Cómo se dice 'emprego' en español?",
-    "promptNative": "Como se diz 'emprego' em espanhol?"
-  },
-  "fvocab-318": {
-    "promptNative": "'El sueldo' significa...",
-    "options": [
-      "salário",
-      "medo",
-      "sorte",
-      "razão"
-    ]
-  },
-  "fvocab-319": {
-    "prompt": "¿Cómo se dice 'reunião' en español?",
-    "promptNative": "Como se diz 'reunião' em espanhol?"
-  },
-  "fvocab-320": {
-    "promptNative": "'La oficina' significa...",
-    "options": [
-      "escritório",
-      "sangue",
-      "verdade",
-      "direito (legal); direito (área)"
-    ]
-  },
-  "fvocab-321": {
-    "prompt": "¿Cómo se dice 'empresa' en español?",
-    "promptNative": "Como se diz 'empresa' em espanhol?"
-  },
-  "fvocab-322": {
-    "promptNative": "'El informe' significa...",
-    "options": [
-      "relatório",
-      "ideia",
-      "nível",
-      "idade"
-    ]
-  },
-  "fvocab-323": {
-    "prompt": "¿Cómo se dice 'projeto' en español?",
-    "promptNative": "Como se diz 'projeto' em espanhol?"
-  },
-  "fvocab-324": {
-    "promptNative": "'La ley' significa...",
-    "options": [
-      "lei",
-      "fúria",
-      "doença",
-      "memória"
-    ]
-  },
-  "fvocab-325": {
-    "prompt": "¿Cómo se dice 'governo' en español?",
-    "promptNative": "Como se diz 'governo' em espanhol?"
-  },
-  "fvocab-326": {
-    "promptNative": "'La guerra' significa...",
-    "options": [
-      "guerra",
-      "paz",
-      "fracasso",
-      "esperança"
-    ]
-  },
-  "fvocab-327": {
-    "prompt": "¿Cómo se dice 'paz' en español?",
-    "promptNative": "Como se diz 'paz' em espanhol?"
-  },
-  "fvocab-328": {
-    "promptNative": "'La salud' significa...",
-    "options": [
-      "saúde",
-      "memória",
-      "surpresa",
-      "pergunta"
-    ]
-  },
-  "fvocab-329": {
-    "prompt": "¿Cómo se dice 'doença' en español?",
-    "promptNative": "Como se diz 'doença' em espanhol?"
-  },
-  "fvocab-330": {
-    "promptNative": "'La medicina' significa...",
-    "options": [
-      "remédio",
-      "lei",
-      "fúria",
-      "idade"
-    ]
-  },
-  "fvocab-331": {
-    "prompt": "¿Cómo se dice 'dor' en español?",
-    "promptNative": "Como se diz 'dor' em espanhol?"
-  },
-  "fvocab-332": {
-    "promptNative": "'La sangre' significa...",
-    "options": [
-      "sangue",
-      "esforço",
-      "história; história (narrativa)",
-      "idade"
-    ]
-  },
-  "fvocab-333": {
-    "prompt": "¿Cómo se dice 'pele' en español?",
-    "promptNative": "Como se diz 'pele' em espanhol?"
-  },
-  "fvocab-334": {
-    "promptNative": "'La edad' significa...",
-    "options": [
-      "idade",
-      "salário",
-      "crescimento",
-      "medo"
-    ]
-  },
-  "fvocab-335": {
-    "prompt": "¿Cómo se dice 'morte' en español?",
-    "promptNative": "Como se diz 'morte' em espanhol?"
-  },
-  "fvocab-336": {
-    "promptNative": "'El nacimiento' significa...",
-    "options": [
-      "nascimento",
-      "morte",
-      "conhecimento",
-      "fracasso"
-    ]
-  },
-  "fvocab-337": {
-    "prompt": "¿Cómo se dice 'casamento' en español?",
-    "promptNative": "Como se diz 'casamento' em espanhol?"
-  },
-  "fvocab-338": {
-    "promptNative": "'La pareja' significa...",
-    "options": [
-      "parceiro; casal",
-      "memória",
-      "conhecimento",
-      "exemplo"
-    ]
-  },
-  "fvocab-339": {
-    "prompt": "¿Cómo se dice 'vizinho' en español?",
-    "promptNative": "Como se diz 'vizinho' em espanhol?"
-  },
-  "fvocab-340": {
-    "promptNative": "'La costumbre' significa...",
-    "options": [
-      "costume; hábito",
-      "salário",
-      "crescimento",
-      "empresa"
-    ]
-  },
-  "fvocab-341": {
-    "prompt": "¿Cómo se dice 'cultura' en español?",
-    "promptNative": "Como se diz 'cultura' em espanhol?"
-  },
-  "fvocab-342": {
-    "promptNative": "'El idioma' significa...",
-    "options": [
-      "idioma",
-      "segurança",
-      "exemplo",
-      "verdade"
-    ]
-  },
-  "fvocab-343": {
-    "prompt": "¿Cómo se dice 'palavra' en español?",
-    "promptNative": "Como se diz 'palavra' em espanhol?"
-  },
-  "fvocab-344": {
-    "promptNative": "'La frase' significa...",
-    "options": [
-      "frase; expressão",
-      "remédio",
-      "parceiro; casal",
-      "doença"
-    ]
-  },
-  "fvocab-345": {
-    "prompt": "¿Cómo se dice 'significado' en español?",
-    "promptNative": "Como se diz 'significado' em espanhol?"
-  },
-  "fvocab-346": {
-    "promptNative": "'El conocimiento' significa...",
-    "options": [
-      "conhecimento",
-      "memória",
-      "resposta",
-      "lei"
-    ]
-  },
-  "fvocab-347": {
-    "prompt": "¿Cómo se dice 'memória' en español?",
-    "promptNative": "Como se diz 'memória' em espanhol?"
-  },
-  "fvocab-348": {
-    "promptNative": "'El sueño' significa...",
-    "options": [
-      "sonho; sono",
-      "parceiro; casal",
-      "sorte",
-      "empresa"
-    ]
-  },
-  "fvocab-349": {
-    "prompt": "¿Cómo se dice 'medo' en español?",
-    "promptNative": "Como se diz 'medo' em espanhol?"
-  },
-  "fvocab-350": {
-    "promptNative": "'La esperanza' significa...",
-    "options": [
-      "esperança",
-      "empresa",
-      "frase; expressão",
-      "exemplo"
-    ]
-  },
-  "fvocab-351": {
-    "prompt": "¿Cómo se dice 'alegria' en español?",
-    "promptNative": "Como se diz 'alegria' em espanhol?"
-  },
-  "fvocab-352": {
-    "promptNative": "'La ira' significa...",
-    "options": [
-      "fúria",
-      "direito (legal); direito (área)",
-      "liberdade",
-      "salário"
-    ]
-  },
-  "fvocab-353": {
-    "prompt": "¿Cómo se dice 'surpresa' en español?",
-    "promptNative": "Como se diz 'surpresa' em espanhol?"
-  },
-  "fvocab-354": {
-    "promptNative": "'La vergüenza' significa...",
-    "options": [
-      "vergonha; constrangimento",
-      "nascimento",
-      "ajuda",
-      "verdade"
-    ]
-  },
-  "fvocab-355": {
-    "prompt": "¿Cómo se dice 'orgulho' en español?",
-    "promptNative": "Como se diz 'orgulho' em espanhol?"
-  },
-  "fvocab-356": {
-    "promptNative": "'La culpa' significa...",
-    "options": [
-      "culpa",
-      "verdade",
-      "empresa",
-      "esforço"
-    ]
-  },
-  "fvocab-357": {
-    "prompt": "¿Cómo se dice 'sorte' en español?",
-    "promptNative": "Como se diz 'sorte' em espanhol?"
-  },
-  "fvocab-358": {
-    "promptNative": "'El peligro' significa...",
-    "options": [
-      "perigo",
-      "morte",
-      "casamento",
-      "alegria"
-    ]
-  },
-  "fvocab-359": {
-    "prompt": "¿Cómo se dice 'segurança' en español?",
-    "promptNative": "Como se diz 'segurança' em espanhol?"
-  },
-  "fvocab-360": {
-    "promptNative": "'La libertad' significa...",
-    "options": [
-      "liberdade",
-      "meta",
-      "fúria",
-      "problema"
-    ]
-  },
-  "fvocab-361": {
-    "prompt": "¿Cómo se dice 'justiça' en español?",
-    "promptNative": "Como se diz 'justiça' em espanhol?"
-  },
-  "fvocab-362": {
-    "promptNative": "'El derecho' significa...",
-    "options": [
-      "direito (legal); direito (área)",
-      "alegria",
-      "esperança",
-      "morte"
-    ]
-  },
-  "fvocab-363": {
-    "prompt": "¿Cómo se dice 'dever' en español?",
-    "promptNative": "Como se diz 'dever' em espanhol?"
-  },
-  "fvocab-364": {
-    "promptNative": "'El fracaso' significa...",
-    "options": [
-      "fracasso",
-      "surpresa",
-      "orgulho",
-      "memória"
-    ]
-  },
-  "fvocab-365": {
-    "prompt": "¿Cómo se dice 'esforço' en español?",
-    "promptNative": "Como se diz 'esforço' em espanhol?"
-  },
-  "fvocab-366": {
-    "promptNative": "'La meta' significa...",
-    "options": [
-      "meta",
-      "justiça",
-      "reunião",
-      "crescimento"
-    ]
-  },
-  "fvocab-367": {
-    "prompt": "¿Cómo se dice 'nível' en español?",
-    "promptNative": "Como se diz 'nível' em espanhol?"
-  },
-  "fvocab-368": {
-    "promptNative": "'El cambio' significa...",
-    "options": [
-      "mudança",
-      "vergonha; constrangimento",
-      "história; história (narrativa)",
-      "morte"
-    ]
-  },
-  "fvocab-369": {
-    "prompt": "¿Cómo se dice 'desenvolvimento' en español?",
-    "promptNative": "Como se diz 'desenvolvimento' em espanhol?"
-  },
-  "fvocab-370": {
-    "promptNative": "'El crecimiento' significa...",
-    "options": [
-      "crescimento",
-      "justiça",
-      "notícia",
-      "segurança"
-    ]
-  },
-  "fvocab-371": {
-    "prompt": "¿Cómo se dice 'aumento' en español?",
-    "promptNative": "Como se diz 'aumento' em espanhol?"
-  },
-  "fvocab-372": {
-    "promptNative": "'Lograr' significa...",
-    "options": [
-      "alcançar; conseguir",
-      "emprestar",
-      "obrigar (alguém a)",
-      "aparecer"
-    ]
-  },
-  "fvocab-373": {
-    "prompt": "¿Cómo se dice 'obter; conseguir' en español?",
-    "promptNative": "Como se diz 'obter; conseguir' em espanhol?"
-  },
-  "fvocab-374": {
-    "promptNative": "'Intentar' significa...",
-    "options": [
-      "tentar",
-      "descrever",
-      "construir",
-      "esconder (algo)"
-    ]
-  },
-  "fvocab-375": {
-    "prompt": "¿Cómo se dice 'evitar' en español?",
-    "promptNative": "Como se diz 'evitar' em espanhol?"
-  },
-  "fvocab-376": {
-    "promptNative": "'Permitir' significa...",
-    "options": [
-      "permitir",
-      "girar; rodar",
-      "duvidar",
-      "prometer"
-    ]
-  },
-  "fvocab-377": {
-    "prompt": "¿Cómo se dice 'proibir' en español?",
-    "promptNative": "Como se diz 'proibir' em espanhol?"
-  },
-  "fvocab-378": {
-    "promptNative": "'Obligar' significa...",
-    "options": [
-      "obrigar (alguém a)",
-      "rejeitar",
-      "sussurrar",
-      "desaparecer"
-    ]
-  },
-  "fvocab-379": {
-    "prompt": "¿Cómo se dice 'decidir' en español?",
-    "promptNative": "Como se diz 'decidir' em espanhol?"
-  },
-  "fvocab-380": {
-    "promptNative": "'Elegir' significa...",
-    "options": [
-      "escolher; eleger",
-      "explicar",
-      "rir",
-      "dobrar; virar (a esquina)"
-    ]
-  },
-  "fvocab-381": {
-    "prompt": "¿Cómo se dice 'duvidar' en español?",
-    "promptNative": "Como se diz 'duvidar' em espanhol?"
-  },
-  "fvocab-382": {
-    "promptNative": "'Confiar' significa...",
-    "options": [
-      "confiar",
-      "agradecer",
-      "alcançar; conseguir",
-      "dobrar; virar (a esquina)"
-    ]
-  },
-  "fvocab-383": {
-    "prompt": "¿Cómo se dice 'prometer' en español?",
-    "promptNative": "Como se diz 'prometer' em espanhol?"
-  },
-  "fvocab-384": {
-    "promptNative": "'Mentir' significa...",
-    "options": [
-      "mentir",
-      "enganar",
-      "convidar; pagar (por alguém)",
-      "acontecer"
-    ]
-  },
-  "fvocab-385": {
-    "prompt": "¿Cómo se dice 'enganar' en español?",
-    "promptNative": "Como se diz 'enganar' em espanhol?"
-  },
-  "fvocab-386": {
-    "promptNative": "'Discutir' significa...",
-    "options": [
-      "discutir",
-      "girar; rodar",
-      "brigar",
-      "obter; conseguir"
-    ]
-  },
-  "fvocab-387": {
-    "prompt": "¿Cómo se dice 'brigar' en español?",
-    "promptNative": "Como se diz 'brigar' em espanhol?"
-  },
-  "fvocab-388": {
-    "promptNative": "'Gritar' significa...",
-    "options": [
-      "gritar",
-      "esconder (algo)",
-      "duvidar",
-      "girar; rodar"
-    ]
-  },
-  "fvocab-389": {
-    "prompt": "¿Cómo se dice 'sussurrar' en español?",
-    "promptNative": "Como se diz 'sussurrar' em espanhol?"
-  },
-  "fvocab-390": {
-    "promptNative": "'Llorar' significa...",
-    "options": [
-      "chorar",
-      "rejeitar",
-      "deixar (para trás); deixar",
-      "dobrar; virar (a esquina)"
-    ]
-  },
-  "fvocab-391": {
-    "prompt": "¿Cómo se dice 'rir' en español?",
-    "promptNative": "Como se diz 'rir' em espanhol?"
-  },
-  "fvocab-392": {
-    "promptNative": "'Sonreír' significa...",
-    "options": [
-      "sorrir",
-      "seguir; continuar",
-      "desculpar-se",
-      "agradecer"
-    ]
-  },
-  "fvocab-393": {
-    "prompt": "¿Cómo se dice 'reclamar' en español?",
-    "promptNative": "Como se diz 'reclamar' em espanhol?"
-  },
-  "fvocab-394": {
-    "promptNative": "'Disculparse' significa...",
-    "options": [
-      "desculpar-se",
-      "criar",
-      "sorrir",
-      "girar; rodar"
-    ]
-  },
-  "fvocab-395": {
-    "prompt": "¿Cómo se dice 'agradecer' en español?",
-    "promptNative": "Como se diz 'agradecer' em espanhol?"
-  },
-  "fvocab-396": {
-    "promptNative": "'Felicitar' significa...",
-    "options": [
-      "parabenizar",
-      "discutir",
-      "gritar",
-      "rejeitar"
-    ]
-  },
-  "fvocab-397": {
-    "prompt": "¿Cómo se dice 'convidar; pagar (por alguém)' en español?",
-    "promptNative": "Como se diz 'convidar; pagar (por alguém)' em espanhol?"
-  },
-  "fvocab-398": {
-    "promptNative": "'Aceptar' significa...",
-    "options": [
-      "aceitar",
-      "deixar (para trás); deixar",
-      "seguir; continuar",
-      "destruir"
-    ]
-  },
-  "fvocab-399": {
-    "prompt": "¿Cómo se dice 'rejeitar' en español?",
-    "promptNative": "Como se diz 'rejeitar' em espanhol?"
-  },
-  "fvocab-400": {
-    "promptNative": "'Ofrecer' significa...",
-    "options": [
-      "oferecer",
-      "desaparecer",
-      "reclamar",
-      "obrigar (alguém a)"
-    ]
-  },
-  "fvocab-401": {
-    "prompt": "¿Cómo se dice 'emprestar' en español?",
-    "promptNative": "Como se diz 'emprestar' em espanhol?"
-  },
-  "fvocab-402": {
-    "promptNative": "'Ahorrar' significa...",
-    "options": [
-      "poupar (dinheiro)",
-      "alcançar; conseguir",
-      "descrever",
-      "duvidar"
-    ]
-  },
-  "fvocab-403": {
-    "prompt": "¿Cómo se dice 'gastar' en español?",
-    "promptNative": "Como se diz 'gastar' em espanhol?"
-  },
-  "fvocab-404": {
-    "promptNative": "'Construir' significa...",
-    "options": [
-      "construir",
-      "desculpar-se",
-      "sussurrar",
-      "aceitar"
-    ]
-  },
-  "fvocab-405": {
-    "prompt": "¿Cómo se dice 'destruir' en español?",
-    "promptNative": "Como se diz 'destruir' em espanhol?"
-  },
-  "fvocab-406": {
-    "promptNative": "'Crear' significa...",
-    "options": [
-      "criar",
-      "alcançar; conseguir",
-      "fugir",
-      "poupar (dinheiro)"
-    ]
-  },
-  "fvocab-407": {
-    "prompt": "¿Cómo se dice 'aparecer' en español?",
-    "promptNative": "Como se diz 'aparecer' em espanhol?"
-  },
-  "fvocab-408": {
-    "promptNative": "'Desaparecer' significa...",
-    "options": [
-      "desaparecer",
-      "alcançar; conseguir",
-      "enganar",
-      "convidar; pagar (por alguém)"
-    ]
-  },
-  "fvocab-409": {
-    "prompt": "¿Cómo se dice 'acontecer' en español?",
-    "promptNative": "Como se diz 'acontecer' em espanhol?"
-  },
-  "fvocab-410": {
-    "promptNative": "'Continuar' significa...",
-    "options": [
-      "continuar",
-      "explicar",
-      "gastar",
-      "poupar (dinheiro)"
-    ]
-  },
-  "fvocab-411": {
-    "prompt": "¿Cómo se dice 'deixar (para trás); deixar' en español?",
-    "promptNative": "Como se diz 'deixar (para trás); deixar' em espanhol?"
-  },
-  "fvocab-412": {
-    "promptNative": "'Soltar' significa...",
-    "options": [
-      "soltar; liberar",
-      "explicar",
-      "desaparecer",
-      "destruir"
-    ]
-  },
-  "fvocab-413": {
-    "prompt": "¿Cómo se dice 'dobrar; virar (a esquina)' en español?",
-    "promptNative": "Como se diz 'dobrar; virar (a esquina)' em espanhol?"
-  },
-  "fvocab-414": {
-    "promptNative": "'Girar' significa...",
-    "options": [
-      "girar; rodar",
-      "descobrir",
-      "descrever",
-      "explicar"
-    ]
-  },
-  "fvocab-415": {
-    "prompt": "¿Cómo se dice 'atravessar' en español?",
-    "promptNative": "Como se diz 'atravessar' em espanhol?"
-  },
-  "fvocab-416": {
-    "promptNative": "'Seguir' significa...",
-    "options": [
-      "seguir; continuar",
-      "parabenizar",
-      "decidir",
-      "soltar; liberar"
-    ]
-  },
-  "fvocab-417": {
-    "prompt": "¿Cómo se dice 'fugir' en español?",
-    "promptNative": "Como se diz 'fugir' em espanhol?"
-  },
-  "fvocab-418": {
-    "promptNative": "'Esconder' significa...",
-    "options": [
-      "esconder (algo)",
-      "rejeitar",
-      "chorar",
-      "duvidar"
-    ]
-  },
-  "fvocab-419": {
-    "prompt": "¿Cómo se dice 'descobrir' en español?",
-    "promptNative": "Como se diz 'descobrir' em espanhol?"
-  },
-  "fvocab-420": {
-    "promptNative": "'Explicar' significa...",
-    "options": [
-      "explicar",
-      "soltar; liberar",
-      "escolher; eleger",
-      "rejeitar"
-    ]
-  },
-  "fvocab-421": {
-    "prompt": "¿Cómo se dice 'descrever' en español?",
-    "promptNative": "Como se diz 'descrever' em espanhol?"
-  },
-  "fvocab-422": {
-    "promptNative": "'Comparar' significa...",
-    "options": [
-      "comparar",
-      "prometer",
-      "continuar",
-      "decidir"
-    ]
-  },
-  "fvocab-423": {
-    "prompt": "¿Cómo se dice 'medir' en español?",
-    "promptNative": "Como se diz 'medir' em espanhol?"
-  },
-  "fvocab-424": {
-    "promptNative": "'Contar' significa...",
-    "options": [
-      "contar; contar (uma história)",
-      "decidir",
-      "confiar",
-      "deixar (para trás); deixar"
-    ]
-  },
-  "fvocab-425": {
-    "prompt": "¿Cómo se dice 'importante' en español?",
-    "promptNative": "Como se diz 'importante' em espanhol?"
-  },
-  "fvocab-426": {
-    "promptNative": "'Necesario' significa...",
-    "options": [
-      "necessário",
-      "importante",
-      "desconfortável; constrangedor",
-      "possível"
-    ]
-  },
-  "fvocab-427": {
-    "prompt": "¿Cómo se dice 'possível' en español?",
-    "promptNative": "Como se diz 'possível' em espanhol?"
-  },
-  "fvocab-428": {
-    "promptNative": "'Imposible' significa...",
-    "options": [
-      "impossível",
-      "possível",
-      "orgulhoso",
-      "mesmo"
-    ]
-  },
-  "fvocab-429": {
-    "prompt": "¿Cómo se dice 'provável' en español?",
-    "promptNative": "Como se diz 'provável' em espanhol?"
-  },
-  "fvocab-430": {
-    "promptNative": "'Común' significa...",
-    "options": [
-      "comum",
-      "provável",
-      "possível",
-      "corajoso"
-    ]
-  },
-  "fvocab-431": {
-    "prompt": "¿Cómo se dice 'estranho; incomum' en español?",
-    "promptNative": "Como se diz 'estranho; incomum' em espanhol?"
-  },
-  "fvocab-432": {
-    "promptNative": "'Propio' significa...",
-    "options": [
-      "próprio",
-      "necessário",
-      "diferente",
-      "ciumento"
-    ]
-  },
-  "fvocab-433": {
-    "prompt": "¿Cómo se dice 'mesmo' en español?",
-    "promptNative": "Como se diz 'mesmo' em espanhol?"
-  },
-  "fvocab-434": {
-    "promptNative": "'Diferente' significa...",
-    "options": [
-      "diferente",
-      "grosseiro",
-      "inútil",
-      "útil"
-    ]
-  },
-  "fvocab-435": {
-    "prompt": "¿Cómo se dice 'parecido' en español?",
-    "promptNative": "Como se diz 'parecido' em espanhol?"
-  },
-  "fvocab-436": {
-    "promptNative": "'Verdadero' significa...",
-    "options": [
-      "verdadeiro; real",
-      "impossível",
-      "orgulhoso",
-      "capaz"
-    ]
-  },
-  "fvocab-437": {
-    "prompt": "¿Cómo se dice 'falso; falsificado' en español?",
-    "promptNative": "Como se diz 'falso; falsificado' em espanhol?"
-  },
-  "fvocab-438": {
-    "promptNative": "'Justo' significa...",
-    "options": [
-      "justo; exato",
-      "confortável",
-      "possível",
-      "capaz"
-    ]
-  },
-  "fvocab-439": {
-    "prompt": "¿Cómo se dice 'capaz' en español?",
-    "promptNative": "Como se diz 'capaz' em espanhol?"
-  },
-  "fvocab-440": {
-    "promptNative": "'Útil' significa...",
-    "options": [
-      "útil",
-      "orgulhoso",
-      "possível",
-      "provável"
-    ]
-  },
-  "fvocab-441": {
-    "prompt": "¿Cómo se dice 'inútil' en español?",
-    "promptNative": "Como se diz 'inútil' em espanhol?"
-  },
-  "fvocab-442": {
-    "promptNative": "'Cómodo' significa...",
-    "options": [
-      "confortável",
-      "verdadeiro; real",
-      "justo; exato",
-      "comum"
-    ]
-  },
-  "fvocab-443": {
-    "prompt": "¿Cómo se dice 'desconfortável; constrangedor' en español?",
-    "promptNative": "Como se diz 'desconfortável; constrangedor' em espanhol?"
-  },
-  "fvocab-444": {
-    "promptNative": "'Grosero' significa...",
-    "options": [
-      "grosseiro",
-      "justo; exato",
-      "confortável",
-      "ciumento"
-    ]
-  },
-  "fvocab-445": {
-    "prompt": "¿Cómo se dice 'orgulhoso' en español?",
-    "promptNative": "Como se diz 'orgulhoso' em espanhol?"
-  },
-  "fvocab-446": {
-    "promptNative": "'Celoso' significa...",
-    "options": [
-      "ciumento",
-      "parecido",
-      "justo; exato",
-      "próprio"
-    ]
-  },
-  "fvocab-447": {
-    "prompt": "¿Cómo se dice 'corajoso' en español?",
-    "promptNative": "Como se diz 'corajoso' em espanhol?"
-  },
-  "fvocab-448": {
-    "promptNative": "'Cobarde' significa...",
-    "options": [
-      "covarde",
-      "corajoso",
-      "orgulhoso",
-      "provável"
-    ]
-  },
-  "fvocab-449": {
-    "prompt": "¿Cómo se dice 'além disso' en español?",
-    "promptNative": "Como se diz 'além disso' em espanhol?"
-  },
-  "fvocab-450": {
-    "promptNative": "'Mientras' significa...",
-    "options": [
-      "enquanto isso; enquanto",
-      "ainda; até mesmo",
-      "além disso",
-      "então; portanto"
-    ]
-  },
-  "fvocab-451": {
-    "prompt": "¿Cómo se dice 'então; portanto' en español?",
-    "promptNative": "Como se diz 'então; portanto' em espanhol?"
-  },
-  "fvocab-452": {
-    "promptNative": "'Luego' significa...",
-    "options": [
-      "depois; então",
-      "ainda; até mesmo",
-      "além disso",
-      "enquanto isso; enquanto"
-    ]
-  },
-  "fvocab-453": {
-    "prompt": "¿Cómo se dice 'mal; dificilmente' en español?",
-    "promptNative": "Como se diz 'mal; dificilmente' em espanhol?"
-  },
-  "fvocab-454": {
-    "promptNative": "'Aún' significa...",
-    "options": [
-      "ainda; até mesmo",
-      "então; portanto",
-      "enquanto isso; enquanto",
-      "além disso"
-    ]
-  },
-  "fvocab-455": {
-    "prompt": "¿Cómo se dice 'inclusive' en español?",
-    "promptNative": "Como se diz 'inclusive' em espanhol?"
-  },
-  "fvocab-456": {
-    "promptNative": "'El desafío' significa...",
-    "options": [
-      "desafio",
-      "amizade",
-      "marca",
-      "orçamento"
-    ]
-  },
-  "fvocab-457": {
-    "prompt": "¿Cómo se dice 'ameaça' en español?",
-    "promptNative": "Como se diz 'ameaça' em espanhol?"
-  },
-  "fvocab-458": {
-    "promptNative": "'La ventaja' significa...",
-    "options": [
-      "vantagem",
-      "imposto",
-      "trâmite burocrático",
-      "desvantagem"
-    ]
-  },
-  "fvocab-459": {
-    "prompt": "¿Cómo se dice 'desvantagem' en español?",
-    "promptNative": "Como se diz 'desvantagem' em espanhol?"
-  },
-  "fvocab-460": {
-    "promptNative": "'El recurso' significa...",
-    "options": [
-      "recurso",
-      "solicitação",
-      "força; fortaleza",
-      "confiança"
-    ]
-  },
-  "fvocab-461": {
-    "prompt": "¿Cómo se dice 'ferramenta' en español?",
-    "promptNative": "Como se diz 'ferramenta' em espanhol?"
-  },
-  "fvocab-462": {
-    "promptNative": "'La medida' significa...",
-    "options": [
-      "medida; medição",
-      "mal-entendido",
-      "personalidade",
-      "concorrência"
-    ]
-  },
-  "fvocab-463": {
-    "prompt": "¿Cómo se dice 'média' en español?",
-    "promptNative": "Como se diz 'média' em espanhol?"
-  },
-  "fvocab-464": {
-    "promptNative": "'El porcentaje' significa...",
-    "options": [
-      "porcentagem",
-      "marca",
-      "perda",
-      "ferramenta"
-    ]
-  },
-  "fvocab-465": {
-    "prompt": "¿Cómo se dice 'imposto' en español?",
-    "promptNative": "Como se diz 'imposto' em espanhol?"
-  },
-  "fvocab-466": {
-    "promptNative": "'La deuda' significa...",
-    "options": [
-      "dívida",
-      "desvantagem",
-      "caráter (temperamento)",
-      "porcentagem"
-    ]
-  },
-  "fvocab-467": {
-    "prompt": "¿Cómo se dice 'orçamento' en español?",
-    "promptNative": "Como se diz 'orçamento' em espanhol?"
-  },
-  "fvocab-468": {
-    "promptNative": "'La ganancia' significa...",
-    "options": [
-      "lucro",
-      "proposta",
-      "publicidade",
-      "amizade"
-    ]
-  },
-  "fvocab-469": {
-    "prompt": "¿Cómo se dice 'perda' en español?",
-    "promptNative": "Como se diz 'perda' em espanhol?"
-  },
-  "fvocab-470": {
-    "promptNative": "'La marca' significa...",
-    "options": [
-      "marca",
-      "imposto",
-      "ameaça",
-      "requisito"
-    ]
-  },
-  "fvocab-471": {
-    "prompt": "¿Cómo se dice 'publicidade' en español?",
-    "promptNative": "Como se diz 'publicidade' em espanhol?"
-  },
-  "fvocab-472": {
-    "promptNative": "'La competencia' significa...",
-    "options": [
-      "concorrência",
-      "proposta",
-      "acordo",
-      "quantidade"
-    ]
-  },
-  "fvocab-473": {
-    "prompt": "¿Cómo se dice 'qualidade' en español?",
-    "promptNative": "Como se diz 'qualidade' em espanhol?"
-  },
-  "fvocab-474": {
-    "promptNative": "'La cantidad' significa...",
-    "options": [
-      "quantidade",
-      "trâmite burocrático",
-      "concorrência",
-      "força; fortaleza"
-    ]
-  },
-  "fvocab-475": {
-    "prompt": "¿Cómo se dice 'comportamento' en español?",
-    "promptNative": "Como se diz 'comportamento' em espanhol?"
-  },
-  "fvocab-476": {
-    "promptNative": "'La actitud' significa...",
-    "options": [
-      "atitude",
-      "amizade",
-      "desvantagem",
-      "vantagem"
-    ]
-  },
-  "fvocab-477": {
-    "prompt": "¿Cómo se dice 'personalidade' en español?",
-    "promptNative": "Como se diz 'personalidade' em espanhol?"
-  },
-  "fvocab-478": {
-    "promptNative": "'El carácter' significa...",
-    "options": [
-      "caráter (temperamento)",
-      "orçamento",
-      "perda",
-      "mal-entendido"
-    ]
-  },
-  "fvocab-479": {
-    "prompt": "¿Cómo se dice 'habilidade' en español?",
-    "promptNative": "Como se diz 'habilidade' em espanhol?"
-  },
-  "fvocab-480": {
-    "promptNative": "'La debilidad' significa...",
-    "options": [
-      "fraqueza",
-      "imposto",
-      "medida; medição",
-      "atitude"
-    ]
-  },
-  "fvocab-481": {
-    "prompt": "¿Cómo se dice 'força; fortaleza' en español?",
-    "promptNative": "Como se diz 'força; fortaleza' em espanhol?"
-  },
-  "fvocab-482": {
-    "promptNative": "'La amistad' significa...",
-    "options": [
-      "amizade",
-      "solicitação",
-      "atitude",
-      "prazo; parcela"
-    ]
-  },
-  "fvocab-483": {
-    "prompt": "¿Cómo se dice 'relação' en español?",
-    "promptNative": "Como se diz 'relação' em espanhol?"
-  },
-  "fvocab-484": {
-    "promptNative": "'El compromiso' significa...",
-    "options": [
-      "compromisso; noivado",
-      "desvantagem",
-      "ameaça",
-      "proposta"
-    ]
-  },
-  "fvocab-485": {
-    "prompt": "¿Cómo se dice 'confiança' en español?",
-    "promptNative": "Como se diz 'confiança' em espanhol?"
-  },
-  "fvocab-486": {
-    "promptNative": "'El malentendido' significa...",
-    "options": [
-      "mal-entendido",
-      "prazo; parcela",
-      "lucro",
-      "dívida"
-    ]
-  },
-  "fvocab-487": {
-    "prompt": "¿Cómo se dice 'acordo' en español?",
-    "promptNative": "Como se diz 'acordo' em espanhol?"
-  },
-  "fvocab-488": {
-    "promptNative": "'El desacuerdo' significa...",
-    "options": [
-      "desacordo",
-      "proposta",
-      "ferramenta",
-      "fraqueza"
-    ]
-  },
-  "fvocab-489": {
-    "prompt": "¿Cómo se dice 'proposta' en español?",
-    "promptNative": "Como se diz 'proposta' em espanhol?"
-  },
-  "fvocab-490": {
-    "promptNative": "'La solicitud' significa...",
-    "options": [
-      "solicitação",
-      "média",
-      "habilidade",
-      "mal-entendido"
-    ]
-  },
-  "fvocab-491": {
-    "prompt": "¿Cómo se dice 'requisito' en español?",
-    "promptNative": "Como se diz 'requisito' em espanhol?"
-  },
-  "fvocab-492": {
-    "promptNative": "'El plazo' significa...",
-    "options": [
-      "prazo; parcela",
-      "perda",
-      "desacordo",
-      "ferramenta"
-    ]
-  },
-  "fvocab-493": {
-    "prompt": "¿Cómo se dice 'trâmite burocrático' en español?",
-    "promptNative": "Como se diz 'trâmite burocrático' em espanhol?"
-  },
-  "fvocab-494": {
-    "promptNative": "'Desarrollar' significa...",
-    "options": [
-      "desenvolver",
-      "exibir-se; gabar-se",
-      "enfrentar; confrontar",
-      "piorar"
-    ]
-  },
-  "fvocab-495": {
-    "prompt": "¿Cómo se dice 'melhorar' en español?",
-    "promptNative": "Como se diz 'melhorar' em espanhol?"
-  },
-  "fvocab-496": {
-    "promptNative": "'Empeorar' significa...",
-    "options": [
-      "piorar",
-      "ampliar; expandir",
-      "enfrentar; confrontar",
-      "substituir; repor"
-    ]
-  },
-  "fvocab-497": {
-    "prompt": "¿Cómo se dice 'aumentar' en español?",
-    "promptNative": "Como se diz 'aumentar' em espanhol?"
-  },
-  "fvocab-498": {
-    "promptNative": "'Disminuir' significa...",
-    "options": [
-      "diminuir",
-      "disfarçar (sentimentos); dissimular",
-      "demitir; despedir-se",
-      "empreender; iniciar (um empreendimento)"
-    ]
-  },
-  "fvocab-499": {
-    "prompt": "¿Cómo se dice 'reduzir' en español?",
-    "promptNative": "Como se diz 'reduzir' em espanhol?"
-  },
-  "fvocab-500": {
-    "promptNative": "'Ampliar' significa...",
-    "options": [
-      "ampliar; expandir",
-      "aumentar",
-      "avisar",
-      "piorar"
-    ]
-  },
-  "fvocab-501": {
-    "prompt": "¿Cómo se dice 'substituir' en español?",
-    "promptNative": "Como se diz 'substituir' em espanhol?"
-  },
-  "fvocab-502": {
-    "promptNative": "'Reemplazar' significa...",
-    "options": [
-      "substituir; repor",
-      "reivindicar; reclamar formalmente",
-      "supor; presumir",
-      "assumir (responsabilidade)"
-    ]
-  },
-  "fvocab-503": {
-    "prompt": "¿Cómo se dice 'atualizar' en español?",
-    "promptNative": "Como se diz 'atualizar' em espanhol?"
-  },
-  "fvocab-504": {
-    "promptNative": "'Averiguar' significa...",
-    "options": [
-      "averiguar; investigar",
-      "supor; presumir",
-      "levantar (uma questão); propor",
-      "exigir"
-    ]
-  },
-  "fvocab-505": {
-    "prompt": "¿Cómo se dice 'verificar; conferir' en español?",
-    "promptNative": "Como se diz 'verificar; conferir' em espanhol?"
-  },
-  "fvocab-506": {
-    "promptNative": "'Suponer' significa...",
-    "options": [
-      "supor; presumir",
-      "disfarçar (sentimentos); dissimular",
-      "aumentar",
-      "substituir"
-    ]
-  },
-  "fvocab-507": {
-    "prompt": "¿Cómo se dice 'levantar (uma questão); propor' en español?",
-    "promptNative": "Como se diz 'levantar (uma questão); propor' em espanhol?"
-  },
-  "fvocab-508": {
-    "promptNative": "'Proponer' significa...",
-    "options": [
-      "propor",
-      "arriscar",
-      "renunciar; desistir",
-      "exigir"
-    ]
-  },
-  "fvocab-509": {
-    "prompt": "¿Cómo se dice 'sugerir' en español?",
-    "promptNative": "Como se diz 'sugerir' em espanhol?"
-  },
-  "fvocab-510": {
-    "promptNative": "'Advertir' significa...",
-    "options": [
-      "avisar",
-      "desenvolver",
-      "substituir; repor",
-      "aposentar-se"
-    ]
-  },
-  "fvocab-511": {
-    "prompt": "¿Cómo se dice 'exigir' en español?",
-    "promptNative": "Como se diz 'exigir' em espanhol?"
-  },
-  "fvocab-512": {
-    "promptNative": "'Reclamar' significa...",
-    "options": [
-      "reivindicar; reclamar formalmente",
-      "supor; presumir",
-      "assumir (responsabilidade)",
-      "apontar; assinalar"
-    ]
-  },
-  "fvocab-513": {
-    "prompt": "¿Cómo se dice 'renunciar; desistir' en español?",
-    "promptNative": "Como se diz 'renunciar; desistir' em espanhol?"
-  },
-  "fvocab-514": {
-    "promptNative": "'Jubilarse' significa...",
-    "options": [
-      "aposentar-se",
-      "substituir; repor",
-      "piorar",
-      "melhorar"
-    ]
-  },
-  "fvocab-515": {
-    "prompt": "¿Cómo se dice 'contratar' en español?",
-    "promptNative": "Como se diz 'contratar' em espanhol?"
-  },
-  "fvocab-516": {
-    "promptNative": "'Despedir' significa...",
-    "options": [
-      "demitir; despedir-se",
-      "abranger; abarcar",
-      "enfrentar; confrontar",
-      "avisar"
-    ]
-  },
-  "fvocab-517": {
-    "prompt": "¿Cómo se dice 'empreender; iniciar (um empreendimento)' en español?",
-    "promptNative": "Como se diz 'empreender; iniciar (um empreendimento)' em espanhol?"
-  },
-  "fvocab-518": {
-    "promptNative": "'Arriesgar' significa...",
-    "options": [
-      "arriscar",
-      "supor; presumir",
-      "sugerir",
-      "atualizar"
-    ]
-  },
-  "fvocab-519": {
-    "prompt": "¿Cómo se dice 'apostar' en español?",
-    "promptNative": "Como se diz 'apostar' em espanhol?"
-  },
-  "fvocab-520": {
-    "promptNative": "'Presumir' significa...",
-    "options": [
-      "exibir-se; gabar-se",
-      "abranger; abarcar",
-      "superar; ultrapassar",
-      "arriscar"
-    ]
-  },
-  "fvocab-521": {
-    "prompt": "¿Cómo se dice 'fingir' en español?",
-    "promptNative": "Como se diz 'fingir' em espanhol?"
-  },
-  "fvocab-522": {
-    "promptNative": "'Disimular' significa...",
-    "options": [
-      "disfarçar (sentimentos); dissimular",
-      "fingir",
-      "verificar; conferir",
-      "propor"
-    ]
-  },
-  "fvocab-523": {
-    "prompt": "¿Cómo se dice 'superar; ultrapassar' en español?",
-    "promptNative": "Como se diz 'superar; ultrapassar' em espanhol?"
-  },
-  "fvocab-524": {
-    "promptNative": "'Enfrentar' significa...",
-    "options": [
-      "enfrentar; confrontar",
-      "ampliar; expandir",
-      "melhorar",
-      "substituir"
-    ]
-  },
-  "fvocab-525": {
-    "prompt": "¿Cómo se dice 'assumir (responsabilidade)' en español?",
-    "promptNative": "Como se diz 'assumir (responsabilidade)' em espanhol?"
-  },
-  "fvocab-526": {
-    "promptNative": "'Carecer' significa...",
-    "options": [
-      "carecer; faltar",
-      "avisar",
-      "sugerir",
-      "empreender; iniciar (um empreendimento)"
-    ]
-  },
-  "fvocab-527": {
-    "prompt": "¿Cómo se dice 'abranger; abarcar' en español?",
-    "promptNative": "Como se diz 'abranger; abarcar' em espanhol?"
-  },
-  "fvocab-528": {
-    "promptNative": "'Destacar' significa...",
-    "options": [
-      "destacar-se; ressaltar",
-      "apontar; assinalar",
-      "empreender; iniciar (um empreendimento)",
-      "demitir; despedir-se"
-    ]
-  },
-  "fvocab-529": {
-    "prompt": "¿Cómo se dice 'apontar; assinalar' en español?",
-    "promptNative": "Como se diz 'apontar; assinalar' em espanhol?"
-  },
-  "fvocab-530": {
-    "promptNative": "'Disponible' significa...",
-    "options": [
-      "disponível",
-      "exaustivo",
-      "eficaz",
-      "abundante"
-    ]
-  },
-  "fvocab-531": {
-    "prompt": "¿Cómo se dice 'gratuito' en español?",
-    "promptNative": "Como se diz 'gratuito' em espanhol?"
-  },
-  "fvocab-532": {
-    "promptNative": "'Rentable' significa...",
-    "options": [
-      "rentável",
-      "exigente",
-      "prévio; anterior",
-      "abundante"
-    ]
-  },
-  "fvocab-533": {
-    "prompt": "¿Cómo se dice 'eficaz' en español?",
-    "promptNative": "Como se diz 'eficaz' em espanhol?"
-  },
-  "fvocab-534": {
-    "promptNative": "'Eficiente' significa...",
-    "options": [
-      "eficiente",
-      "mútuo",
-      "gratuito",
-      "exigente"
-    ]
-  },
-  "fvocab-535": {
-    "prompt": "¿Cómo se dice 'exigente' en español?",
-    "promptNative": "Como se diz 'exigente' em espanhol?"
-  },
-  "fvocab-536": {
-    "promptNative": "'Agotado' significa...",
-    "options": [
-      "exausto; esgotado (vendido)",
-      "eficiente",
-      "exigente",
-      "disponível"
-    ]
-  },
-  "fvocab-537": {
-    "prompt": "¿Cómo se dice 'exaustivo' en español?",
-    "promptNative": "Como se diz 'exaustivo' em espanhol?"
-  },
-  "fvocab-538": {
-    "promptNative": "'Imprevisto' significa...",
-    "options": [
-      "imprevisto",
-      "exigente",
-      "prévio; anterior",
-      "exaustivo"
-    ]
-  },
-  "fvocab-539": {
-    "prompt": "¿Cómo se dice 'cotidiano; diário' en español?",
-    "promptNative": "Como se diz 'cotidiano; diário' em espanhol?"
-  },
-  "fvocab-540": {
-    "promptNative": "'Actual' significa...",
-    "options": [
-      "atual",
-      "exigente",
-      "gratuito",
-      "exausto; esgotado (vendido)"
-    ]
-  },
-  "fvocab-541": {
-    "prompt": "¿Cómo se dice 'prévio; anterior' en español?",
-    "promptNative": "Como se diz 'prévio; anterior' em espanhol?"
-  },
-  "fvocab-542": {
-    "promptNative": "'Escaso' significa...",
-    "options": [
-      "escasso",
-      "rentável",
-      "exausto; esgotado (vendido)",
-      "gratuito"
-    ]
-  },
-  "fvocab-543": {
-    "prompt": "¿Cómo se dice 'abundante' en español?",
-    "promptNative": "Como se diz 'abundante' em espanhol?"
-  },
-  "fvocab-544": {
-    "promptNative": "'Mutuo' significa...",
-    "options": [
-      "mútuo",
-      "exigente",
-      "eficiente",
-      "eficaz"
-    ]
-  },
-  "fvocab-545": {
-    "prompt": "¿Cómo se dice 'nuance; matiz' en español?",
-    "promptNative": "Como se diz 'nuance; matiz' em espanhol?"
-  },
-  "fvocab-546": {
-    "promptNative": "'El rasgo' significa...",
-    "options": [
-      "traço; característica",
-      "achado; descoberta",
-      "ambiente; arredores",
-      "abordagem; formulação"
-    ]
-  },
-  "fvocab-547": {
-    "prompt": "¿Cómo se dice 'ânsia; empenho' en español?",
-    "promptNative": "Como se diz 'ânsia; empenho' em espanhol?"
-  },
-  "fvocab-548": {
-    "promptNative": "'El empeño' significa...",
-    "options": [
-      "determinação; persistência",
-      "indício; sinal",
-      "lacuna; brecha",
-      "saudade"
-    ]
-  },
-  "fvocab-549": {
-    "prompt": "¿Cómo se dice 'desempenho' en español?",
-    "promptNative": "Como se diz 'desempenho' em espanhol?"
-  },
-  "fvocab-550": {
-    "promptNative": "'El logro' significa...",
-    "options": [
-      "conquista",
-      "determinação; persistência",
-      "anseio; desejo profundo",
-      "limiar"
-    ]
-  },
-  "fvocab-551": {
-    "prompt": "¿Cómo se dice 'marco' en español?",
-    "promptNative": "Como se diz 'marco' em espanhol?"
-  },
-  "fvocab-552": {
-    "promptNative": "'El auge' significa...",
-    "options": [
-      "auge; pico",
-      "foco; ângulo",
-      "nuance; matiz",
-      "âmbito; campo (domínio)"
-    ]
-  },
-  "fvocab-553": {
-    "prompt": "¿Cómo se dice 'declínio' en español?",
-    "promptNative": "Como se diz 'declínio' em espanhol?"
-  },
-  "fvocab-554": {
-    "promptNative": "'La brecha' significa...",
-    "options": [
-      "lacuna; brecha",
-      "desempenho",
-      "determinação; persistência",
-      "indício; sinal"
-    ]
-  },
-  "fvocab-555": {
-    "prompt": "¿Cómo se dice 'viés' en español?",
-    "promptNative": "Como se diz 'viés' em espanhol?"
-  },
-  "fvocab-556": {
-    "promptNative": "'La pauta' significa...",
-    "options": [
-      "diretriz; padrão",
-      "saudade",
-      "achado; descoberta",
-      "limiar"
-    ]
-  },
-  "fvocab-557": {
-    "prompt": "¿Cómo se dice 'âmbito; campo (domínio)' en español?",
-    "promptNative": "Como se diz 'âmbito; campo (domínio)' em espanhol?"
-  },
-  "fvocab-558": {
-    "promptNative": "'El entorno' significa...",
-    "options": [
-      "ambiente; arredores",
-      "declínio",
-      "traço; característica",
-      "auge; pico"
-    ]
-  },
-  "fvocab-559": {
-    "prompt": "¿Cómo se dice 'limiar' en español?",
-    "promptNative": "Como se diz 'limiar' em espanhol?"
-  },
-  "fvocab-560": {
-    "promptNative": "'El vínculo' significa...",
-    "options": [
-      "vínculo; laço",
-      "incerteza",
-      "achado; descoberta",
-      "conquista"
-    ]
-  },
-  "fvocab-561": {
-    "prompt": "¿Cómo se dice 'enraizamento' en español?",
-    "promptNative": "Como se diz 'enraizamento' em espanhol?"
-  },
-  "fvocab-562": {
-    "promptNative": "'La añoranza' significa...",
-    "options": [
-      "saudade",
-      "declínio",
-      "anseio; desejo profundo",
-      "desempenho"
-    ]
-  },
-  "fvocab-563": {
-    "prompt": "¿Cómo se dice 'anseio; desejo profundo' en español?",
-    "promptNative": "Como se diz 'anseio; desejo profundo' em espanhol?"
-  },
-  "fvocab-564": {
-    "promptNative": "'La incertidumbre' significa...",
-    "options": [
-      "incerteza",
-      "suspeita",
-      "enraizamento",
-      "anseio; desejo profundo"
-    ]
-  },
-  "fvocab-565": {
-    "prompt": "¿Cómo se dice 'certeza' en español?",
-    "promptNative": "Como se diz 'certeza' em espanhol?"
-  },
-  "fvocab-566": {
-    "promptNative": "'La sospecha' significa...",
-    "options": [
-      "suspeita",
-      "auge; pico",
-      "ânsia; empenho",
-      "abordagem; formulação"
-    ]
-  },
-  "fvocab-567": {
-    "prompt": "¿Cómo se dice 'indício; sinal' en español?",
-    "promptNative": "Como se diz 'indício; sinal' em espanhol?"
-  },
-  "fvocab-568": {
-    "promptNative": "'El hallazgo' significa...",
-    "options": [
-      "achado; descoberta",
-      "âmbito; campo (domínio)",
-      "ânsia; empenho",
-      "nuance; matiz"
-    ]
-  },
-  "fvocab-569": {
-    "prompt": "¿Cómo se dice 'abordagem; formulação' en español?",
-    "promptNative": "Como se diz 'abordagem; formulação' em espanhol?"
-  },
-  "fvocab-570": {
-    "promptNative": "'El enfoque' significa...",
-    "options": [
-      "foco; ângulo",
-      "enraizamento",
-      "saudade",
-      "marco"
-    ]
-  },
-  "fvocab-571": {
-    "prompt": "¿Cómo se dice 'postura; posição (opinião)' en español?",
-    "promptNative": "Como se diz 'postura; posição (opinião)' em espanhol?"
-  },
-  "fvocab-572": {
-    "promptNative": "'Plasmar' significa...",
-    "options": [
-      "dar forma a; retratar (numa obra)",
-      "contornar (um assunto)",
-      "sopesar; ponderar",
-      "fomentar; incentivar"
-    ]
-  },
-  "fvocab-573": {
-    "prompt": "¿Cómo se dice 'esboçar; delinear' en español?",
-    "promptNative": "Como se diz 'esboçar; delinear' em espanhol?"
-  },
-  "fvocab-574": {
-    "promptNative": "'Vislumbrar' significa...",
-    "options": [
-      "vislumbrar; começar a ver",
-      "desmembrar; detalhar",
-      "violar (direitos, regras)",
-      "reunir; coletar (informação/apoio)"
-    ]
-  },
-  "fvocab-575": {
-    "prompt": "¿Cómo se dice 'sopesar; ponderar' en español?",
-    "promptNative": "Como se diz 'sopesar; ponderar' em espanhol?"
-  },
-  "fvocab-576": {
-    "promptNative": "'Desglosar' significa...",
-    "options": [
-      "desmembrar; detalhar",
-      "minar; solapar",
-      "contornar (um assunto)",
-      "amenizar; mitigar"
-    ]
-  },
-  "fvocab-577": {
-    "prompt": "¿Cómo se dice 'reunir; coletar (informação/apoio)' en español?",
-    "promptNative": "Como se diz 'reunir; coletar (informação/apoio)' em espanhol?"
-  },
-  "fvocab-578": {
-    "promptNative": "'Aludir' significa...",
-    "options": [
-      "aludir",
-      "minar; solapar",
-      "esboçar; delinear",
-      "fomentar; incentivar"
-    ]
-  },
-  "fvocab-579": {
-    "prompt": "¿Cómo se dice 'evadir; esquivar' en español?",
-    "promptNative": "Como se diz 'evadir; esquivar' em espanhol?"
-  },
-  "fvocab-580": {
-    "promptNative": "'Soslayar' significa...",
-    "options": [
-      "contornar (um assunto)",
-      "amenizar; mitigar",
-      "vislumbrar; começar a ver",
-      "iniciar (uma conversa, uma amizade)"
-    ]
-  },
-  "fvocab-581": {
-    "prompt": "¿Cómo se dice 'amenizar; mitigar' en español?",
-    "promptNative": "Como se diz 'amenizar; mitigar' em espanhol?"
-  },
-  "fvocab-582": {
-    "promptNative": "'Mermar' significa...",
-    "options": [
-      "diminuir; corroer",
-      "propiciar; favorecer",
-      "vislumbrar; começar a ver",
-      "amenizar; mitigar"
-    ]
-  },
-  "fvocab-583": {
-    "prompt": "¿Cómo se dice 'minar; solapar' en español?",
-    "promptNative": "Como se diz 'minar; solapar' em espanhol?"
-  },
-  "fvocab-584": {
-    "promptNative": "'Propiciar' significa...",
-    "options": [
-      "propiciar; favorecer",
-      "sanar; remediar",
-      "contornar (um assunto)",
-      "iniciar (uma conversa, uma amizade)"
-    ]
-  },
-  "fvocab-585": {
-    "prompt": "¿Cómo se dice 'fomentar; incentivar' en español?",
-    "promptNative": "Como se diz 'fomentar; incentivar' em espanhol?"
-  },
-  "fvocab-586": {
-    "promptNative": "'Entablar' significa...",
-    "options": [
-      "iniciar (uma conversa, uma amizade)",
-      "propiciar; favorecer",
-      "minar; solapar",
-      "evadir; esquivar"
-    ]
-  },
-  "fvocab-587": {
-    "prompt": "¿Cómo se dice 'acatar; cumprir' en español?",
-    "promptNative": "Como se diz 'acatar; cumprir' em espanhol?"
-  },
-  "fvocab-588": {
-    "promptNative": "'Vulnerar' significa...",
-    "options": [
-      "violar (direitos, regras)",
-      "contornar (um assunto)",
-      "acatar; cumprir",
-      "sopesar; ponderar"
-    ]
-  },
-  "fvocab-589": {
-    "prompt": "¿Cómo se dice 'sanar; remediar' en español?",
-    "promptNative": "Como se diz 'sanar; remediar' em espanhol?"
-  },
-  "fvocab-590": {
-    "promptNative": "'Escueto' significa...",
-    "options": [
-      "sucinto; enxuto",
-      "sumário; superficial",
-      "insólito; extraordinário",
-      "idôneo; ideal"
-    ]
-  },
-  "fvocab-591": {
-    "prompt": "¿Cómo se dice 'sumário; superficial' en español?",
-    "promptNative": "Como se diz 'sumário; superficial' em espanhol?"
-  },
-  "fvocab-592": {
-    "promptNative": "'Férreo' significa...",
-    "options": [
-      "férreo; inflexível",
-      "sucinto; enxuto",
-      "vertiginoso",
-      "idôneo; ideal"
-    ]
-  },
-  "fvocab-593": {
-    "prompt": "¿Cómo se dice 'categórico; taxativo' en español?",
-    "promptNative": "Como se diz 'categórico; taxativo' em espanhol?"
-  },
-  "fvocab-594": {
-    "promptNative": "'Contundente' significa...",
-    "options": [
-      "contundente; esmagador",
-      "descomunal; colossal",
-      "sucinto; enxuto",
-      "férreo; inflexível"
-    ]
-  },
-  "fvocab-595": {
-    "prompt": "¿Cómo se dice 'gradual' en español?",
-    "promptNative": "Como se diz 'gradual' em espanhol?"
-  },
-  "fvocab-596": {
-    "promptNative": "'Vertiginoso' significa...",
-    "options": [
-      "vertiginoso",
-      "querido; comovente",
-      "idôneo; ideal",
-      "insólito; extraordinário"
-    ]
-  },
-  "fvocab-597": {
-    "prompt": "¿Cómo se dice 'ínfimo; irrisório' en español?",
-    "promptNative": "Como se diz 'ínfimo; irrisório' em espanhol?"
-  },
-  "fvocab-598": {
-    "promptNative": "'Descomunal' significa...",
-    "options": [
-      "descomunal; colossal",
-      "perene; duradouro",
-      "sucinto; enxuto",
-      "vertiginoso"
-    ]
-  },
-  "fvocab-599": {
-    "prompt": "¿Cómo se dice 'querido; comovente' en español?",
-    "promptNative": "Como se diz 'querido; comovente' em espanhol?"
-  },
-  "fvocab-600": {
-    "promptNative": "'Huraño' significa...",
-    "options": [
-      "arredio; insociável",
-      "insólito; extraordinário",
-      "querido; comovente",
-      "precário"
-    ]
-  },
-  "fvocab-601": {
-    "prompt": "¿Cómo se dice 'afável; cordial' en español?",
-    "promptNative": "Como se diz 'afável; cordial' em espanhol?"
-  },
-  "fvocab-602": {
-    "promptNative": "'Precario' significa...",
-    "options": [
-      "precário",
-      "sucinto; enxuto",
-      "nefasto; desastroso",
-      "arredio; insociável"
-    ]
-  },
-  "fvocab-603": {
-    "prompt": "¿Cómo se dice 'idôneo; ideal' en español?",
-    "promptNative": "Como se diz 'idôneo; ideal' em espanhol?"
-  },
-  "fvocab-604": {
-    "promptNative": "'Nefasto' significa...",
-    "options": [
-      "nefasto; desastroso",
-      "precário",
-      "categórico; taxativo",
-      "sucinto; enxuto"
-    ]
-  },
-  "fvocab-605": {
-    "prompt": "¿Cómo se dice 'insólito; extraordinário' en español?",
-    "promptNative": "Como se diz 'insólito; extraordinário' em espanhol?"
-  },
-  "fvocab-606": {
-    "promptNative": "'Verosímil' significa...",
-    "options": [
-      "verossímil; plausível",
-      "descomunal; colossal",
-      "afável; cordial",
-      "querido; comovente"
-    ]
-  },
-  "fvocab-607": {
-    "prompt": "¿Cómo se dice 'efêmero; passageiro' en español?",
-    "promptNative": "Como se diz 'efêmero; passageiro' em espanhol?"
-  },
-  "fvocab-608": {
-    "promptNative": "'Perenne' significa...",
-    "options": [
-      "perene; duradouro",
-      "efêmero; passageiro",
-      "insólito; extraordinário",
-      "férreo; inflexível"
-    ]
-  }
+  "vocab-0": {"prompt":"¿Cómo se dice 'computador' en español (España)?","promptNative":"Como se diz 'computador' em espanhol (Espanha)?","explain":"Na Espanha, 'computer' é 'el ordenador'. Na América Latina se diz 'la computadora' — mesmo significado, região diferente."},
+  "vocab-1": {"prompt":"¿Cómo se dice 'celular' en español (España)?","promptNative":"Como se diz 'celular' em espanhol (Espanha)?","explain":"A Espanha diz 'el móvil'; a América Latina diz 'el celular'. Ambos significam celular."},
+  "vocab-2": {"prompt":"¿Cómo se dice 'suco' en español (España)?","promptNative":"Como se diz 'suco' em espanhol (Espanha)?","explain":"'El zumo' é a palavra da Espanha para suco. 'El jugo' é o equivalente latino-americano."},
+  "vocab-3": {"prompt":"¿Cómo se dice 'cachorro' en español?","promptNative":"Como se diz 'cachorro' em espanhol?","explain":"'El perro' é cachorro. 'El gato' é gato, 'el pájaro' é pássaro, 'el caballo' é cavalo."},
+  "vocab-4": {"promptNative":"'La casa' significa...","options":["casa","carro","mesa","rua"],"explain":"'La casa' significa casa. Coche é carro (na Espanha), mesa é mesa, calle é rua."},
+  "vocab-5": {"promptNative":"'Comer' significa...","options":["comer","comprar","correr","dormir"],"explain":"'Comer' significa comer. Comprar é comprar, correr é correr, dormir é dormir."},
+  "vocab-6": {"prompt":"¿Cómo se dice 'carro' en español (España)?","promptNative":"Como se diz 'carro' em espanhol (Espanha)?","explain":"'El coche' é a palavra do dia a dia na Espanha; a América Latina diz 'el carro' ou 'el auto'. 'La carroza' é uma carruagem, 'el cochecito' é um carrinho de bebê."},
+  "vocab-7": {"prompt":"¿Cómo se dice 'óculos' (eyewear) en español (España)?","promptNative":"Como se diz 'óculos' em espanhol (Espanha)?","explain":"'Las gafas' é a palavra da Espanha; a América Latina diz 'los lentes' ou 'los anteojos'. 'Los vidrios' são vidraças, 'las copas' são taças de vinho."},
+  "vocab-8": {"prompt":"¿Cómo se dice 'batatas' en español (España)?","promptNative":"Como se diz 'batatas' em espanhol (Espanha)?","explain":"'Las patatas' na Espanha, 'las papas' na América Latina. Cuidado com 'las patas' — essas são patas de animal, a uma letra de distância."},
+  "vocab-9": {"prompt":"¿Cómo se dice 'pêssego' en español (España)?","promptNative":"Como se diz 'pêssego' em espanhol (Espanha)?","explain":"'El melocotón' na Espanha; 'el durazno' em boa parte da América Latina. 'La pera' é uma pera, 'el melón' um melão."},
+  "vocab-10": {"prompt":"¿Cómo se dice 'dirigir' en español (España)?","promptNative":"Como se diz 'dirigir' em espanhol (Espanha)?","explain":"'Conducir' é o verbo habitual na Espanha; a América Latina diz sobretudo 'manejar' — os dois são entendidos em todo lugar. 'Condimentar' é temperar, 'montar' é montar."},
+  "vocab-11": {"promptNative":"'El piso' significa... (Espanha)","options":["apartamento","apenas o chão","um passo","um pneu furado"],"explain":"Na Espanha 'el piso' é a palavra do dia a dia para apartamento ('compartir piso'); a América Latina diz 'el departamento' ou 'el apartamento'. Também significa andar de um prédio em todo lugar."},
+  "vocab-12": {"promptNative":"'Coger' significa... (Espanha)","options":["pegar","cozinhar em fogo baixo","cair","doar"],"explain":"Na Espanha 'coger' é o verbo cotidiano e totalmente neutro para pegar/agarrar — 'coger el autobús', 'coger un resfriado'. ⚠️ Em boa parte da América Latina é uma palavra vulgar — lá use 'tomar' ou 'agarrar'. Conhecer essa diferença evita vergonhas reais nos dois sentidos."},
+  "vocab-13": {"promptNative":"'Apetecer' significa... (Espanha)","options":["ter vontade de","apenas ser apetitoso","competir","aparecer de repente"],"explain":"'Apetecer' funciona como 'gustar': 'me apetece un café'. Muito comum na Espanha; a América Latina prefere 'tener ganas de' ou 'antojarse' ('se me antoja')."},
+  "vocab-14": {"promptNative":"'Enfadarse' significa... (Espanha)","options":["ficar bravo","ficar entediado","sumir aos poucos","cansar-se"],"explain":"'Enfadarse' é o verbo cotidiano da Espanha para ficar bravo; a América Latina diz 'enojarse'. Os dois são entendidos em todo lugar."},
+  "vocab-15": {"promptNative":"'Currar' significa... (colloquial, Spain)","options":["trampar","curar carne","resolver pendências","estudar muito"],"explain":"'Currar' é a gíria cotidiana da Espanha para trabalhar, e 'el curro' é o trabalho — a contraparte peninsular exata dos latino-americanos 'chambear'/'la chamba'."},
+  "vocab-16": {"promptNative":"'Molar' significa... (colloquial, Spain)","options":["cair bem / ser querido","ranger os dentes","incomodar","modelar barro"],"explain":"'Molar' funciona como 'gustar' na gíria da Espanha: 'me mola'. O dente 'molar' também existe, mas o verbo coloquial é o que você vai ouvir o tempo todo."},
+  "vocab-17": {"promptNative":"'Quedar (con alguien)' significa... (Espanha)","options":["combinar de se encontrar","ficar em casa","dever dinheiro","ficar em silêncio"],"explain":"Na Espanha, 'quedar con alguien' significa combinar de se encontrar: 'hemos quedado a las ocho'. O simples 'quedarse' existe em todo lugar — o sentido de marcar encontro é o uso bem espanhol."},
+  "vocab-18": {"promptNative":"'Hacer puente' significa... (Espanha)","options":["emendar o feriado","construir uma ponte","pular o café da manhã","mudar de emprego"],"explain":"Quando um feriado cai perto do fim de semana, os espanhóis 'hacen puente' — tiram o dia útil do meio para 'unir' um fim de semana longo. Uma instituição querida do calendário espanhol."},
+  "vocab-19": {"promptNative":"'Estar liado' significa... (colloquial, Spain)","options":["estar atolado de trabalho","estar amarrado com corda","estar de briga","estar perdido"],"explain":"'Estar liado/a' é o jeito cotidiano na Espanha de dizer que você está atolado de coisas ('esta semana estoy liadísimo'). De 'liar' (enrolar/embrulhar)."},
+  "vocab-20": {"promptNative":"'La sobremesa' significa...","options":["a prosa demorada à mesa após a refeição","a toalha de mesa","sobremesa","uma soneca à tarde"],"explain":"'La sobremesa' é o precioso tempo de conversa à mesa depois da refeição — uma instituição cultural na Espanha sem equivalente de uma só palavra em inglês. A sobremesa é 'el postre'; a soneca é 'la siesta'."},
+  "vocab-21": {"promptNative":"'Friolero' significa... (Espanha)","options":["alguém friorento","um técnico de freezer","um prato frio","um mês de inverno"],"explain":"'Friolero/a' descreve uma pessoa que sente muito frio — 'soy muy friolero'. (Boa parte da América Latina diz 'friolento'.) Uma palavra maravilhosamente específica que o inglês não tem."},
+  "vocab-22": {"prompt":"¿Cómo se dice 'gato' en español?","promptNative":"Como se diz 'gato' em espanhol?","explain":"'El gato' é gato. 'El perro' é cachorro, 'el pájaro' é pássaro, 'el ratón' é rato."},
+  "vocab-23": {"prompt":"¿Cómo se dice 'água' en español?","promptNative":"Como se diz 'água' em espanhol?","explain":"'El agua' é água (feminino, mas leva 'el' no singular). 'La leche' é leite, 'el vino' vinho, 'la cerveza' cerveja."},
+  "vocab-24": {"prompt":"¿Cómo se dice 'pão' en español?","promptNative":"Como se diz 'pão' em espanhol?","explain":"'El pan' é pão. 'El queso' é queijo, 'la carne' carne, 'el huevo' ovo."},
+  "vocab-25": {"promptNative":"'Beber' significa...","options":["beber","comer","dormir","correr"],"explain":"'Beber' significa beber. Comer é comer, dormir é dormir, correr é correr."},
+  "vocab-26": {"prompt":"¿Cómo se dice 'a mãe' en español?","promptNative":"Como se diz 'a mãe' em espanhol?","explain":"'La madre' é mãe. 'El padre' é pai, 'la hija' filha, 'la hermana' irmã."},
+  "vocab-27": {"prompt":"¿Cómo se dice 'o pai' en español?","promptNative":"Como se diz 'o pai' em espanhol?","explain":"'El padre' é pai. 'La madre' é mãe, 'el hijo' filho, 'el hermano' irmão."},
+  "vocab-28": {"promptNative":"'El día' significa...","options":["o dia","a noite","a semana","o ano"],"explain":"'El día' significa dia — atenção, é masculino mesmo terminando em -a. 'La noche' é noite, 'la semana' semana, 'el año' ano."},
+  "vocab-29": {"promptNative":"'Grande' significa...","options":["grande","pequeno","comprido","novo"],"explain":"'Grande' significa grande. Pequeño é pequeno, largo é comprido, nuevo é novo."},
+  "vocab-30": {"promptNative":"'Pequeño' significa...","options":["pequeno","grande","rápido","alto"],"explain":"'Pequeño' significa pequeno. Grande é grande, rápido é rápido, alto é alto."},
+  "vocab-31": {"prompt":"¿Cómo se dice 'vermelho' en español?","promptNative":"Como se diz 'vermelho' em espanhol?","explain":"'Rojo' é vermelho. 'Verde' é verde, 'azul' azul, 'amarillo' amarelo."},
+  "vocab-32": {"prompt":"¿Cómo se dice 'a mão' en español?","promptNative":"Como se diz 'a mão' em espanhol?","explain":"'La mano' é mão (feminina apesar de terminar em -o). 'El pie' pé, 'la cabeza' cabeça, 'el brazo' braço."},
+  "vocab-33": {"promptNative":"'La cabeza' significa...","options":["a cabeça","a mão","o pé","a perna"],"explain":"'La cabeza' significa cabeça. Mano é mão, pie é pé, pierna é perna."},
+  "vocab-34": {"prompt":"¿Cómo se dice 'a rua' en español?","promptNative":"Como se diz 'a rua' em espanhol?","explain":"'La calle' é rua. 'La casa' é casa, 'la tienda' loja, 'la plaza' praça."},
+  "vocab-35": {"promptNative":"'Hablar' significa...","options":["falar","escutar","ler","comer"],"explain":"'Hablar' significa falar. Escuchar é escutar, leer é ler, comer é comer."},
+  "vocab-36": {"prompt":"¿Cómo se dice 'o amigo' en español?","promptNative":"Como se diz 'o amigo' em espanhol?","explain":"'El amigo' é amigo. 'El vecino' vizinho, 'el jefe' chefe, 'el primo' primo."},
+  "vocab-37": {"promptNative":"'La leche' significa...","options":["leite","água","vinho","suco"],"explain":"'La leche' significa leite. Agua é água, vino é vinho, e suco é 'el zumo' na Espanha."},
+  "vocab-38": {"prompt":"¿Cómo se dice 'o livro' en español?","promptNative":"Como se diz 'o livro' em espanhol?","explain":"'El libro' é livro. 'El lápiz' lápis, 'el papel' papel, 'la mesa' mesa."},
+  "vocab-39": {"promptNative":"'Blanco' significa...","options":["branco","preto","azul","verde"],"explain":"'Blanco' significa branco. Negro é preto, azul é azul, verde é verde."},
+  "vocab-40": {"prompt":"¿Cómo se dice 'a noite' en español?","promptNative":"Como se diz 'a noite' em espanhol?","explain":"'La noche' é noite. 'El día' é dia, 'la tarde' tarde, 'la mañana' manhã."},
+  "vocab-41": {"prompt":"¿Cómo se dice 'cinco' en español?","promptNative":"Como se diz 'cinco' em espanhol?","explain":"'Cinco' é cinco. 'Cuatro' é quatro, 'seis' seis, 'siete' sete."},
+  "vocab-42": {"promptNative":"'Vale' significa... (Espanha)","options":["tudo bem","tchau","por favor","claro que não"],"explain":"'Vale' é o 'okay' de uso constante na Espanha. Na América Latina se ouve mais 'está bien', 'okay' ou 'listo'."},
+  "vocab-43": {"prompt":"¿Cómo se dice 'vagem' en español (España)?","promptNative":"Como se diz 'vagem' em espanhol (Espanha)?","explain":"Na Espanha se diz 'las judías verdes'. 'Los ejotes' é do México, 'las vainitas' da área andina/caribenha, 'los porotos verdes' do Cone Sul."},
+  "vocab-44": {"prompt":"¿Cómo se dice 'a piscina' en español (España)?","promptNative":"Como se diz 'a piscina' em espanhol (Espanha)?","explain":"Na Espanha é 'la piscina'. 'La alberca' é do México, 'la pileta' da Argentina/Uruguai, e 'la laguna' é uma lagoa natural."},
+  "vocab-45": {"promptNative":"'El billete' significa... (Espanha)","options":["nota (cédula)","carteira","moeda","recibo"],"explain":"Na Espanha 'el billete' é o de trem/ônibus E também a nota de dinheiro. Na América Latina o de transporte é 'el boleto' ou 'el pasaje'."},
+  "vocab-46": {"promptNative":"'El aparcamiento' significa... (Espanha)","options":["o estacionamento","o apartamento","a calçada","a garagem"],"explain":"A palavra da Espanha é 'el aparcamiento'. Na América Latina é 'el estacionamiento' (ou 'el parqueo/parqueadero')."},
+  "vocab-47": {"promptNative":"'Aparcar' significa... (Espanha)","options":["estacionar","parar rapidinho","dar ré","sair dirigindo"],"explain":"'Aparcar' é o verbo da Espanha para estacionar o carro; na América Latina se diz 'estacionar' ou 'parquear'."},
+  "vocab-48": {"promptNative":"'El mando' significa... (Espanha)","options":["o controle remoto","o botão","o gerente","a maçaneta"],"explain":"Na Espanha 'el mando (a distancia)' é o da televisão; na América Latina se diz 'el control (remoto)'."},
+  "vocab-49": {"prompt":"¿Cómo se dice 'óculos de sol' en español (España)?","promptNative":"Como se diz 'óculos de sol' em espanhol (Espanha)?","explain":"Na Espanha são 'las gafas de sol'. Na América Latina se usa mais 'los lentes (de sol)' ou 'los anteojos'. 'Las lentillas' são lentes de contato, não óculos de sol."},
+  "vocab-50": {"promptNative":"'Las lentillas' significa... (Espanha)","options":["lentes de contato","óculos de sol","óculos de leitura","óculos de proteção"],"explain":"Na Espanha 'las lentillas' são as de contato. Na América Latina se diz normalmente 'los lentes de contacto'."},
+  "vocab-51": {"prompt":"¿Cómo se dice 'o morango' en español?","promptNative":"Como se diz 'o morango' em espanhol?","explain":"'La fresa' é morango (no Cone Sul costuma-se dizer 'la frutilla'). 'La frambuesa' é framboesa, 'la cereza' cereja, 'la mora' amora."},
+  "vocab-52": {"promptNative":"'El albaricoque' significa... (Espanha)","options":["damasco","pêssego","ameixa","figo"],"explain":"Na Espanha é 'el albaricoque'. No México 'el chabacano' e em boa parte da América do Sul 'el damasco'. El melocotón é pêssego, la ciruela ameixa, el higo figo."},
+  "vocab-53": {"prompt":"¿Cómo se dice 'o ônibus' en español (España)?","promptNative":"Como se diz 'o ônibus' em espanhol (Espanha)?","explain":"Na Espanha é 'el autobús' (ou 'el bus'). 'El camión' é ônibus no México (em outros lugares, caminhão de carga), 'la guagua' no Caribe/Canárias, 'el colectivo' na Argentina."},
+  "vocab-54": {"promptNative":"'El tío / la tía' significa... (colloquial, Spain)","options":["cara / tio","o chefe","a criança","o desconhecido"],"explain":"Literalmente tio/tia, mas no coloquial da Espanha 'tío/tía' significa 'guy/dude/mate': '¿qué tal, tío?'. Esse uso é bem espanhol."},
+  "vocab-55": {"promptNative":"'Guay' significa... (colloquial, Spain)","options":["legal","chato","caro","feio"],"explain":"'Guay' é a palavra cotidiana da Espanha para 'cool/great': '¡qué guay!'. Na América Latina se diria 'chévere', 'padre', 'bacán', etc."},
+  "vocab-56": {"prompt":"¿Cómo se dice 'a jaqueta' en español?","promptNative":"Como se diz 'a jaqueta' em espanhol?","explain":"'La chaqueta' é jaqueta. 'La camisa' camisa, 'los pantalones' calça, 'la falda' saia."},
+  "vocab-57": {"promptNative":"'El carné de conducir' significa... (Espanha)","options":["a carteira de motorista","a carteira de identidade","o passaporte","a placa"],"explain":"Na Espanha é 'el carné de conducir'. Na América Latina 'la licencia de conducir/manejar'. Atenção: a Espanha usa 'conducir', não 'manejar'."},
+  "vocab-58": {"prompt":"¿Cómo se dice 'tomar café da manhã' en español?","promptNative":"Como se diz 'tomar café da manhã' em espanhol?","explain":"'Desayunar' é tomar café da manhã. 'Almorzar' almoçar, 'cenar' jantar, 'merendar' fazer o lanche da tarde."},
+  "vocab-59": {"promptNative":"'Merendar' significa...","options":["fazer um lanche da tarde","tomar café da manhã","jantar","pular uma refeição"],"explain":"'Merendar' é fazer o lanche da tarde — todo um costume na Espanha. Desayunar é tomar café da manhã, cenar jantar."},
+  "vocab-60": {"promptNative":"'Hace frío' significa...","options":["está frio","está calor","está ensolarado","está ventando"],"explain":"'Hace frío' significa faz frio. O tempo se expressa com 'hacer': 'hace calor' faz calor, 'hace sol' faz sol, 'hace viento' faz vento."},
+  "vocab-61": {"promptNative":"'La nevera' significa... (Espanha)","options":["a geladeira","o forno","apenas o freezer","o fogão"],"explain":"A palavra cotidiana da Espanha é 'la nevera' (também 'el frigorífico'). Na América Latina 'el refrigerador' ou 'la heladera' (Argentina)."},
+  "vocab-62": {"promptNative":"'Una caña' significa... (Espanha)","options":["um chope pequeno","uma cana-de-açúcar","uma vara de pescar","um canudo"],"explain":"Num bar espanhol 'una caña' é um copo pequeno de chope — todo um pilar da vida social. Seus sentidos literais (cana-de-açúcar, vara de pescar) não valem aqui."},
+  "vocab-63": {"promptNative":"'Un botellín' significa... (Espanha)","options":["uma garrafinha de cerveja","uma garrafa grande de vinho","um copo de dose","um refrigerante"],"explain":"'Un botellín' é uma garrafinha de cerveja (uns 20 cl) — um pedido de bar comum na Espanha, junto com 'una caña'."},
+  "vocab-64": {"promptNative":"'El paro' significa... (Espanha)","options":["desemprego","uma pausa curta","um par","uma parede"],"explain":"Na Espanha 'el paro' significa desemprego: 'estar en el paro'. Na América Latina se diz 'el desempleo'."},
+  "vocab-65": {"promptNative":"'Flipar' significa... (colloquial, Spain)","options":["ficar pasmo","voar","reprovar numa prova","relaxar"],"explain":"'Flipar' é coloquial da Espanha para se impressionar ou ficar pasmo: 'flipé con la peli'. Muito usado entre os jovens."},
+  "vocab-66": {"promptNative":"'Majo / maja' significa... (colloquial, Spain)","options":["simpático","rico","engraçado","idoso"],"explain":"'Majo/maja' é um jeito bem espanhol de dizer que alguém é simpático e agradável: 'es muy maja'. Quase não se usa na América Latina."},
+  "vocab-67": {"promptNative":"'El curro' significa... (colloquial, Spain)","options":["trabalho","um curso","uma esquina","um favor"],"explain":"'El curro' é coloquial da Espanha para trabalho: 'me voy al curro'. O verbo é 'currar'."},
+  "vocab-68": {"promptNative":"'El grifo' significa... (Espanha)","options":["a torneira","o ralo","a pia","o cano"],"explain":"Na Espanha 'el grifo' é de onde sai a água: 'agua del grifo'. Na América Latina se diz 'la llave' ou 'la canilla' (Argentina)."},
+  "vocab-69": {"promptNative":"'Fregar los platos' significa... (Espanha)","options":["lavar a louça","secar a louça","tirar a mesa","cozinhar o jantar"],"explain":"Na Espanha 'fregar los platos' é lavá-los ('el fregadero' é onde se lavam). Na América Latina se diz mais 'lavar los platos'."},
+  "vocab-70": {"promptNative":"'La acera' significa...","options":["a calçada","a estrada","a faixa","o cruzamento"],"explain":"'La acera' é por onde andam os pedestres. Na América Latina também 'la banqueta' (México) ou 'la vereda' (boa parte da América do Sul)."},
+  "vocab-71": {"promptNative":"'El casco antiguo' significa...","options":["o centro histórico","os arredores da cidade","o bairro novo","a prefeitura"],"explain":"'El casco antiguo' é a parte histórica de uma cidade — você vai ver isso sinalizado por toda a Espanha. 'El ayuntamiento' é a prefeitura."},
+  "vocab-72": {"promptNative":"'Echar de menos' significa... (Espanha)","options":["sentir saudade","jogar fora","menosprezar","ficar sem"],"explain":"'Echar de menos' é como se diz na Espanha sentir falta de alguém: 'te echo de menos'. Na América Latina se usa 'extrañar'."},
+  "vocab-73": {"promptNative":"'Estar de bajón' significa... (colloquial, Spain)","options":["sentir-se para baixo","estar de dieta","estar duro","estar com pressa"],"explain":"'Estar de bajón' é coloquial da Espanha para estar para baixo: 'hoy estoy de bajón'. 'Un bajón' é uma queda de ânimo."},
+  "vocab-74": {"promptNative":"'El botiquín' significa...","options":["o kit de primeiros socorros","a farmácia","a receita médica","a sala de espera"],"explain":"'El botiquín' é o kit de primeiros socorros ou o armário de remédios. A farmácia é 'la farmacia', e a receita médica 'la receta'."},
+  "vocab-75": {"promptNative":"'La receta' significa...","options":["a receita","a farmácia","o sintoma","o check-up"],"explain":"'La receta' significa tanto a receita médica quanto a de cozinha — o contexto decide. A farmácia é 'la farmacia'."},
+  "vocab-76": {"promptNative":"'Tener buena pinta' significa...","options":["parecer apetitoso","estar bem pintado","ter sorte","estar bem vestido"],"explain":"'Tener buena pinta' significa ter boa aparência — sobretudo a comida: 'esto tiene buena pinta'. Aqui 'la pinta' é 'aspecto'."},
+  "vocab-77": {"promptNative":"'Ligar' significa... (colloquial, Spain)","options":["paquerar","amarrar","chegar atrasado","mentir"],"explain":"No coloquial da Espanha 'ligar' é paquerar ou conquistar alguém: 'salió a ligar'. Seu sentido literal é unir/amarrar."},
+  "vocab-78": {"promptNative":"'El atasco' significa...","options":["o engarrafamento","a vaga de estacionamento","a rotatória","a cabine de pedágio"],"explain":"'El atasco' é o engarrafamento: 'había mucho atasco'. Na América Latina também 'el trancón' (Colômbia), 'el taco' (Chile), 'el tráfico'."},
+  "vocab-79": {"promptNative":"'La rotonda' significa...","options":["a rotatória","o semáforo","o cruzamento","o viaduto"],"explain":"'La rotonda' é a rotatória. O semáforo é 'el semáforo', e a faixa de pedestres 'el paso de peatones'."},
+  "vocab-80": {"promptNative":"'Un chaval' significa... (colloquial, Spain)","options":["um garoto","um velho","um chefe","um estrangeiro"],"explain":"'Un chaval / una chavala' é coloquial da Espanha para um garoto ou jovem: 'es un chaval majo'. Na América Latina: 'un chico', 'un chavo' (México), 'un pibe' (Argentina)."},
+  "vocab-81": {"promptNative":"'Un pinchazo' significa...","options":["um pneu furado","um tanque cheio","um estepe","um pedágio"],"explain":"'Un pinchazo' é um pneu furado: 'tuvimos un pinchazo'. Também pode ser uma injeção em contexto médico."},
+  "vocab-82": {"promptNative":"'Estar constipado' significa... (Espanha)","options":["estar resfriado","estar com prisão de ventre","estar exausto","estar queimado de sol"],"explain":"Falso amigo clássico — na Espanha 'estar constipado' significa estar resfriado, NÃO com prisão de ventre. Com prisão de ventre se diz 'estar estreñido'."},
+  "vocab-83": {"promptNative":"'Pretender' significa...","options":["pretender","fingir","exigir","adiar"],"explain":"Falso amigo — 'pretender' significa ter a intenção de algo ('pretendo terminarlo hoy'). Fingir é 'fingir' ou 'hacer como si'."},
+  "vocab-84": {"promptNative":"'El compromiso' significa...","options":["compromisso","um meio-termo","uma comparação","um lembrete de compromisso"],"explain":"Falso amigo — 'el compromiso' costuma significar um compromisso ou uma obrigação ('tengo un compromiso'). Um meio-termo é 'un acuerdo' ou 'una solución intermedia'."},
+  "vocab-85": {"promptNative":"'Cutre' significa... (colloquial, Spain)","options":["cafona","caro e elegante","novinho em folha","apimentado"],"explain":"'Cutre' descreve algo caindo aos pedaços, de má qualidade ou com cara de barato ('un bar muy cutre'). Bem da Espanha; passa um ar descuidado e cafona."},
+  "vocab-86": {"promptNative":"'Mogollón' significa... (colloquial, Spain)","options":["um monte","um pouquinho","quase nada","por acaso"],"explain":"'Mogollón' significa um monte ('había mogollón de gente'). Bem característico da Espanha; funciona como substantivo ou intensificador ('me gusta mogollón')."},
+  "vocab-87": {"promptNative":"'Chungo' significa... (colloquial, Spain)","options":["duvidoso","delicioso","hilário","novinho em folha"],"explain":"'Chungo' significa complicado, com cara ruim ou em mau estado ('el tema está chungo', 'me encuentro chungo'). Gíria muito comum na Espanha."},
+  "vocab-88": {"promptNative":"'Agobiarse' significa... (Espanha)","options":["ficar sobrecarregado","ficar entediado","animar-se","pegar no sono"],"explain":"'Agobiarse' significa se sentir sobrecarregado ou estressado ('no te agobies'). O adjetivo 'agobiante' = sufocante; muito usado no dia a dia na Espanha."},
+  "vocab-89": {"promptNative":"'La chapuza' significa... (Espanha)","options":["um trabalho malfeito","uma grande pechincha","uma soneca rápida","um contrato formal"],"explain":"'La chapuza' é um trabalho malfeito ('vaya chapuza'). Quem faz as coisas assim é um 'chapuzas', e algo feito de qualquer jeito é 'chapucero'."},
+  "vocab-90": {"promptNative":"'El guiri' significa... (colloquial, Spain)","options":["um turista estrangeiro (ocidental)","um guia turístico","uma mochila","uma lembrança"],"explain":"'El guiri' é a palavra informal (meio zombeteira, mas não realmente ofensiva) na Espanha para um turista estrangeiro, tipicamente do norte da Europa ou da América do Norte."},
+  "vocab-91": {"promptNative":"'El friki' significa... (colloquial, Spain)","options":["um nerd","um chef","um desconhecido","um caçador de pechinchas"],"explain":"'El friki' (do inglês 'freaky') é a palavra na Espanha para um geek/nerd, muitas vezes por um hobby intenso ('un friki de los videojuegos'). Não é necessariamente um insulto."},
+  "vocab-92": {"promptNative":"'Soso' significa...","options":["sem graça","salgado","apimentado","queimado"],"explain":"'Soso' significa sem graça — comida sem sal ou, por extensão, uma pessoa apagada e sem graça. Seu oposto para a comida é 'salado' ou 'sabroso'."},
+  "vocab-93": {"promptNative":"'Sensible' significa...","options":["sensível","sensato","invisível","responsável"],"explain":"Falso amigo — 'sensible' significa que se emociona ou se afeta com facilidade. Sensato/razoável é 'sensato' ou 'razonable'."},
+  "vocab-94": {"promptNative":"'Pillar' significa... (colloquial, Spain)","options":["pegar","descascar","perder","sussurrar"],"explain":"'Pillar' é um verbo curinga na Espanha: pegar ou surpreender ('me pilló la lluvia'), conseguir ('pilla el pan') ou sacar uma piada ('¿lo pillas?')."},
+  "vocab-95": {"promptNative":"'Pasar de algo / alguien' significa... (colloquial, Spain)","options":["não dar bola","passar numa prova","passar por um lugar","entregar algo"],"explain":"'Pasar de' (algo ou alguém) significa que você não liga ou não está a fim ('paso de política', 'pasa de él'). Uma versão mais forte e vulgar é 'sudar de algo'."},
+  "vocab-96": {"promptNative":"'Dar palo' significa... (colloquial, Spain)","options":["ficar sem jeito","bater com um pau","emprestar dinheiro","indicar o caminho"],"explain":"'Me da palo' expressa preguiça misturada com vergonha de fazer algo ('me da palo llamar'). Combina o 'qué pereza' com o 'me da corte' — bem da Espanha."},
+  "vocab-97": {"promptNative":"'Tener morro' significa... (colloquial, Spain)","options":["ter cara de pau","estar com o nariz escorrendo","ser tímido","estar duro"],"explain":"'Tener morro' (ou 'tener mucha cara') significa ter cara de pau ('¡qué morro tienes!'). 'El morro' literalmente é o focinho ou os lábios."},
+  "vocab-98": {"promptNative":"'Cundir' significa... (Espanha)","options":["render bastante","afundar","vencer","derramar"],"explain":"'Cundir' significa render ou dar conta de muito ('hoy me ha cundido el día', 'este arroz cunde mucho'). Bem da Espanha; expressa aproveitar bem o tempo ou os recursos."},
+  "vocab-99": {"promptNative":"'Apañárselas' significa... (Espanha)","options":["se virar","arrumar um quarto","pedir desculpas","se inscrever"],"explain":"'Apañárselas' significa se virar com o que tem ('ya me las apañaré'). Relacionado: 'estar apañado' (ironicamente = estar encrencado) e 'un apaño' (um arranjo provisório)."},
+  "vocab-100": {"promptNative":"'Estar empanado' significa... (colloquial, Spain)","options":["estar aéreo","estar cheio (satisfeito)","estar furioso","estar tomando sol"],"explain":"'Estar empanado' significa estar distraído, avoado ou sem se dar conta de nada ('perdona, estaba empanado'). Literalmente 'rebozado', como se a mente estivesse empanada."},
+  "vocab-101": {"promptNative":"'Fardar' significa... (colloquial, Spain)","options":["se exibir","economizar dinheiro","estar atrasado","sussurrar"],"explain":"'Fardar' significa se gabar ou ostentar ('farda de coche'). O substantivo 'un fardón' é um exibido. Na América Latina se diria 'presumir' ou 'fanfarronear'."},
+  "vocab-102": {"promptNative":"'Ser un cotilla' significa... (Espanha)","options":["ser fofoqueiro","ser muito organizado","ser um corredor veloz","ter sono pesado"],"explain":"'Un cotilla' é alguém xereta e fofoqueiro; o verbo 'cotillear' é fofocar ('deja de cotillear'). Na América Latina se usa mais 'chismoso' e 'chismear'."},
+  "vocab-103": {"promptNative":"'Las rebajas' significa... (Espanha)","options":["as liquidações (sazonais)","as sobras","os reembolsos","os recibos"],"explain":"'Las rebajas' são os períodos de descontos de temporada ('las rebajas de enero'). Na América Latina se diz mais 'las ofertas' ou 'los descuentos'."},
+  "vocab-104": {"promptNative":"'Escaquearse' significa... (colloquial, Spain)","options":["matar serviço","esconder-se debaixo da mesa","ficar sem dinheiro","perder a vez"],"explain":"'Escaquearse' significa se livrar ou fugir de uma obrigação ('se escaqueó de fregar'). Bem da Espanha; a imagem vem das casas do tabuleiro de xadrez."},
+  "vocab-105": {"promptNative":"'El enchufe' significa... (colloquial, Spain)","options":["apadrinhamento (panelinha)","apenas uma tomada elétrica","um aperto de mão firme","uma entrevista de emprego"],"explain":"Além do sentido literal de 'toma de corriente', 'el enchufe' coloquialmente significa ter contatos que conseguem um cargo ou um favor ('entró por enchufe'). 'Estar enchufado' = ter bons contatos."},
+  "vocab-106": {"promptNative":"'El botellón' significa... (Espanha)","options":["um encontro ao ar livre para beber em grupo","apenas uma garrafa grande de vinho","uma balada","o reembolso do vasilhame"],"explain":"'El botellón' é a prática espanhola de se reunir na rua ou em praças para beber em grupo ('hacer botellón'). Um fenômeno social bem da Espanha."},
+  "vocab-107": {"promptNative":"'La caña' significa... (Espanha)","options":["um chope pequeno","uma garrafa de vinho","um canudo","um café com leite"],"explain":"'Una caña' é um copo pequeno de chope, item básico dos bares da Espanha ('ponme una caña'). À parte, 'dar caña' significa pegar pesado ou dar trabalho."},
+  "vocab-108": {"promptNative":"'El madrugón' significa... (Espanha)","options":["um despertar muito cedo","uma preguiça na cama até tarde","uma soneca ao meio-dia","uma noitada"],"explain":"'El madrugón' é o ato (muitas vezes temido) de acordar bem cedo ('vaya madrugón mañana'). Forma-se de 'madrugar' com o aumentativo -ón."},
+  "vocab-109": {"promptNative":"'Camelar' significa... (colloquial, Spain)","options":["conquistar com conversa","andar devagar","acampar ao ar livre","mudar de ideia"],"explain":"'Camelar' significa engambelar ou convencer com elogios ('lo cameló para que le ayudara'). De origem caló (romani da Espanha), é bem característico de lá."},
+  "vocab-110": {"promptNative":"'Chapurrear' significa...","options":["arranhar o idioma","falar perfeitamente","traduzir profissionalmente","resmungar dormindo"],"explain":"'Chapurrear' significa falar um idioma a duras penas, se virando com o pouco que se sabe ('chapurrea algo de francés'). Útil e um pouco autocrítico para descrever o próprio nível."},
+  "vocab-111": {"promptNative":"'La vergüenza ajena' significa... (Espanha)","options":["vergonha alheia","vergonha pública","uma pessoa tímida","um segredo compartilhado"],"explain":"'La vergüenza ajena' é a vergonha que você sente pelo que outra pessoa faz ('me da vergüenza ajena verlo'). O inglês não tem uma única palavra certeira para isso."},
+  "vocab-112": {"promptNative":"'La morriña' significa... (Espanha)","options":["saudade","uma leve dor de cabeça","neblina matinal","uma pequena dívida"],"explain":"'La morriña' — de origem galega — é uma saudade melancólica da terra ou de casa ('le entró la morriña'). Mais profunda e nostálgica que a simples 'nostalgia'."},
+  "vocab-113": {"promptNative":"'El postureo' significa... (colloquial, Spain)","options":["posar para as aparências","boa postura","um trabalho de ensaio fotográfico","uma exposição de arte"],"explain":"'El postureo' é fazer pose para a plateia — posar, sobretudo nas redes sociais, mais pela imagem do que pelo autêntico ('todo es postureo')."},
+  "vocab-114": {"promptNative":"'Tener mala leche' significa... (colloquial, Spain)","options":["ter má índole","ser intolerante à lactose","ter azar no jogo de cartas","ser muito generoso"],"explain":"'Tener mala leche' significa ter mau gênio ou má intenção ('lo hizo con mala leche'). Dependendo do contexto, 'mala leche' é mau humor ou má-fé — bem da Espanha."},
+  "vocab-115": {"promptNative":"'Ser un tiquismiquis' significa... (Espanha)","options":["ser cheio de frescura","falar muito rápido","ser gastador","ser notívago"],"explain":"'Un tiquismiquis' é uma pessoa cheia de frescura e difícil de agradar, sobretudo com detalhes ou com a comida ('no seas tiquismiquis'). A palavra não muda de forma."},
+  "vocab-116": {"promptNative":"'El aguafiestas' significa...","options":["um estraga-prazeres","um salva-vidas","um encanador","um sommelier"],"explain":"'El/la aguafiestas' (literalmente 'aguar la fiesta') é quem estraga a diversão ('no seas aguafiestas'). É invariável e serve para os dois gêneros."},
+  "vocab-117": {"promptNative":"'Estar ensimismado' significa...","options":["perdido em pensamentos","muito envergonhado","exausto","completamente perdido"],"explain":"'Ensimismado' significa absorto nos próprios pensamentos ('iba ensimismado, ni me vio'). A palavra guarda literalmente 'en-sí-mismo'."},
+  "vocab-118": {"promptNative":"'El desparpajo' significa... (Espanha)","options":["desenvoltura","total falta de jeito","silêncio total","um quarto bagunçado"],"explain":"'El desparpajo' é desenvoltura cheia de confiança — falar ou agir sem se acanhar ('habla con mucho desparpajo'). Costuma ser elogioso, ao contrário de 'descaro', que é negativo."},
+  "vocab-119": {"promptNative":"'Entrañable' significa...","options":["cativante","insuportável","interno (órgãos)","muito caro"],"explain":"'Entrañable' descreve alguém ou algo caloroso, querido e próximo do coração ('un abuelo entrañable', 'un momento entrañable'). Vem de 'las entrañas' (o mais íntimo)."},
+  "vocab-120": {"promptNative":"'Achantarse' significa... (Espanha)","options":["amarelar","sentar-se","cantar junto","gabar-se"],"explain":"'Achantarse' significa se acovardar, calar e ceder diante da pressão ('no te achantes'). Expressa encolher-se em vez de encarar."},
+  "vocab-121": {"promptNative":"'Ser un sinvergüenza' significa...","options":["ser um sem-vergonha","ser extremamente tímido","estar sem um tostão","ser trabalhador"],"explain":"'Un sinvergüenza' (literalmente 'sin vergüenza') é um cara de pau ou safado que age sem escrúpulos ('el muy sinvergüenza no pagó'). Pode ser censura ou quase carinhoso."},
+  "vocab-122": {"promptNative":"'Trasnochar' significa...","options":["virar a noite acordado","mudar de casa à noite","trabalhar no turno da noite fixo","dormir até tarde"],"explain":"'Trasnochar' significa ficar acordado até bem tarde ou a noite toda ('trasnoché estudiando'). Atenção: é ir dormir tarde, não acordar tarde, que seria 'dormir hasta tarde'."},
+  "vocab-123": {"promptNative":"'La cuesta de enero' significa... (Espanha)","options":["o aperto financeiro do início do ano","uma estrada de montanha em janeiro","uma resolução de Ano Novo","uma liquidação de inverno"],"explain":"'La cuesta de enero' é a sensação de aperto financeiro e ladeira acima em janeiro depois dos gastos do Natal ('estamos en plena cuesta de enero'). Um clássico cultural na Espanha."},
+  "vocab-124": {"promptNative":"'Dar la brasa' significa... (colloquial, Spain)","options":["ficar enchendo","grelhar comida","aquecer alguém","dar um presente"],"explain":"'Dar la brasa' significa insistir de forma cansativa e entediar ou encher alguém ('deja de darme la brasa'). Um primo próximo é 'dar la chapa'. Ambas bem da Espanha."},
+  "vocab-125": {"promptNative":"'El chiringuito' significa... (Espanha)","options":["um quiosque de praia / (fig.) um esquema duvidoso","um hotel de luxo","um shopping","uma estação de trem"],"explain":"'El chiringuito' é um barzinho de praia; em sentido figurado, um esquema montado em benefício próprio ('montarse un chiringuito'). Bem evocativo da Espanha."},
+  "vocab-126": {"promptNative":"'Añorar' significa...","options":["ansiar por","somar números","envelhecer","anunciar"],"explain":"'Añorar' significa sentir saudade e anseio por algo ou alguém ('añora su tierra'). O substantivo 'la añoranza' é essa dor da saudade; mais profundo que o cotidiano 'echar de menos'."},
+  "verbo-0": {"promptNative":"Vocês _____ (tener = ter) razão. (vosotros)","explain":"'Vosotros' é a forma informal de 'ustedes' usada só na Espanha — a América Latina usa 'ustedes' até em contextos informais.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tienen":"'tienen' é a forma de ellos/ellas.","tenemos":"'tenemos' é a forma de nosotros.","tienes":"'tienes' é a forma de tú."}},
+  "verbo-1": {"promptNative":"Vocês _____ (querer = querer) vir à festa? (vosotros)","explain":"Vosotros vai com a terminação '-áis/-éis' — uma forma que não existe no espanhol latino-americano.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"quieren":"'quieren' é a forma de ellos/ellas.","queremos":"'queremos' é a forma de nosotros.","quieres":"'quieres' é a forma de tú."}},
+  "verbo-2": {"promptNative":"Vocês (f.) _____ (ir = ir) à festa hoje à noite. (vosotras)","explain":"'Vosotras' usa 'vais'. Reconhecer essa forma é essencial para entender a fala e a mídia da Espanha.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"van":"'van' é a forma de ellos/ellas.","vamos":"'vamos' é a forma de nosotros.","vas":"'vas' é a forma de tú."}},
+  "verbo-3": {"promptNative":"Eu _____ (ser = ser) de Madrid.","explain":"A origem usa 'ser': soy de Madrid.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"estoy":"'estoy' não é a forma que corresponde aqui.","es":"'es' é a forma de él/ella.","sea":"'sea' é a forma de yo no presente do subjuntivo."}},
+  "verbo-4": {"promptNative":"Ela _____ (tener = ter) dois irmãos.","explain":"A terceira pessoa do singular de 'tener' é 'tiene'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tengo":"'tengo' é a forma de yo.","tienes":"'tienes' é a forma de tú.","tenga":"'tenga' é a forma de yo no presente do subjuntivo."}},
+  "verbo-5": {"promptNative":"Ontem eu _____ (comer = comer) paella com a minha família.","explain":"'Ayer' — um marco temporal fechado — usa o pretérito até na Espanha: comí.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"como":"'como' é a forma de yo no presente.","comía":"'comía' é a forma de yo no imperfeito.","he comido":"'he comido' é a forma de yo no pretérito perfeito composto."}},
+  "verbo-6": {"promptNative":"Vocês _____ (hablar = falar) muito rápido. (vosotros)","explain":"Os verbos regulares em -ar usam '-áis' com vosotros: habláis.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hablan":"'hablan' é a forma de ellos/ellas.","hablamos":"'hablamos' é a forma de nosotros.","hablas":"'hablas' é a forma de tú."}},
+  "verbo-7": {"promptNative":"Hoje de manhã eu _____ (desayunar = tomar café da manhã) churros com chocolate.","explain":"A escolha de tempo característica peninsular: para o que aconteceu hoje mesmo ('esta mañana'), a Espanha usa o pretérito perfeito composto — he desayunado. A América Latina diria 'desayuné'; os dois estão certos na sua região, e esta pergunta segue o registro da Espanha.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"desayuné":"'desayuné' é a forma de yo no pretérito.","desayunaba":"'desayunaba' é a forma de yo no imperfeito.","desayunaré":"'desayunaré' é a forma de yo no futuro."}},
+  "verbo-8": {"promptNative":"_____ (venir = vir) aqui agora mesmo. (vosotros command)","explain":"O imperativo afirmativo de vosotros troca o -r final do infinitivo por -d: venir → venid. ('Vengan' é o imperativo de ustedes — o que a América Latina usaria aqui.)","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"Vengan":"'Vengan' é a forma de ellos/ellas no presente do subjuntivo.","Venís":"'Venís' é a forma de vosotros no presente.","Vened":"'Vened' não é a forma que corresponde aqui."}},
+  "verbo-9": {"promptNative":"Não _____ (hablar = falar) tão alto, por favor. (vosotros)","explain":"Os imperativos negativos de vosotros usam o subjuntivo: no habléis. (O afirmativo seria 'hablad'.)","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hablad":"'hablad' é a forma de vosotros no imperativo afirmativo.","habláis":"'habláis' é a forma de vosotros no presente.","hablen":"'hablen' é a forma de ellos/ellas."}},
+  "verbo-10": {"promptNative":"Vocês _____ (gustar = gostar) de tortilla espanhola? (vosotros)","explain":"'Os' é o pronome objeto de vosotros, e 'gustar' concorda com aquilo de que se gosta — 'la tortilla' é singular, então 'os gusta'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"gustan":"'gustan' é a forma de ellos/ellas.","gustáis":"'gustáis' é a forma de vosotros.","gustas":"'gustas' é a forma de tú."}},
+  "verbo-11": {"promptNative":"Quando vocês _____ (terminar = terminar), me avisem. (vosotros)","explain":"'Cuando' apontando para um evento futuro exige subjuntivo — e o presente do subjuntivo de vosotros dos verbos em -ar termina em '-éis': terminéis.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"termináis":"'termináis' é a forma de vosotros no presente.","terminen":"'terminen' é a forma de ellos/ellas.","terminad":"'terminad' é a forma de vosotros no imperativo afirmativo."}},
+  "verbo-12": {"promptNative":"Espero que _____ (ir = ir) tudo bem para vocês na prova.","explain":"'Espero que' exige subjuntivo, e em 'irle bien a alguien' o verbo concorda com o 'ello' impessoal: que os vaya bien — a fórmula padrão para desejar sorte.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"va":"'va' é a forma de él/ella no presente.","irá":"'irá' é a forma de él/ella no futuro.","fuera":"'fuera' é a forma de yo no imperfeito do subjuntivo."}},
+  "verbo-13": {"promptNative":"Se vocês _____ (estar = estar) livres no sábado, venham jantar. (vosotros)","explain":"As condições reais e abertas com 'si' usam o indicativo simples — estáis. (O subjuntivo 'estéis' nunca vem depois de 'si' nesse tipo de frase.)","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"estéis":"'estéis' é a forma de vosotros no presente do subjuntivo.","estuvierais":"'estuvierais' é a forma de vosotros no imperfeito do subjuntivo.","están":"'están' é a forma de ellos/ellas."}},
+  "verbo-14": {"promptNative":"Tomara que vocês _____ (hacer = fazer) o feriadão com a gente. (vosotros)","explain":"'Ojalá' sempre leva subjuntivo, e 'hacer' tem a raiz irregular hag-: hagáis. Ponto extra por 'hacer el puente' — emendar o feriado num fim de semana longo.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hacéis":"'hacéis' é a forma de vosotros no presente.","haréis":"'haréis' é a forma de vosotros no futuro.","hagan":"'hagan' é a forma de ellos/ellas."}},
+  "verbo-15": {"promptNative":"Se eu _____ (saber = saber) antes, teria avisado vocês.","explain":"As condições irreais do passado usam o mais-que-perfeito do subjuntivo: si lo hubiera sabido... os habría avisado.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"sabría":"'sabría' é a forma de yo no condicional.","supe":"'supe' é a forma de yo no pretérito.","sabía":"'sabía' é a forma de yo no imperfeito."}},
+  "verbo-16": {"promptNative":"_____ (haber) vocês chegado antes, teriam visto o jogo. ('Se vocês tivessem chegado...')","explain":"'De + infinitivo' é a alternativa compacta e literária à oração com 'si': de haber llegado antes = si hubierais llegado antes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hubierais":"'hubierais' é a forma de vosotros no imperfeito do subjuntivo.","habíais":"'habíais' é a forma de vosotros no imperfeito.","hayáis":"'hayáis' é a forma de vosotros no presente do subjuntivo."}},
+  "verbo-17": {"promptNative":"Aconteça o que _____ (pasar = passar) acontecer, vocês fiquem calmos.","explain":"'Pase lo que pase' duplica o subjuntivo numa fórmula concessiva fixa — da mesma família que 'sea como sea' e 'cueste lo que cueste'.","wrongNote":"Só uma opção encaixa na gramática desta frase — as outras são a forma incorreta.","distractorNotes":{"pasa":"'pasa' não é a forma que corresponde aqui.","pasará":"'pasará' não é a forma que corresponde aqui.","pasara":"'pasara' não é a forma que corresponde aqui."}},
+  "verbo-18": {"promptNative":"Vocês _____ (hablar = falar) espanhol muito bem. (vosotros)","explain":"Vosotros leva '-áis' no presente: habláis. Na América Latina se usa 'hablan' (ustedes).","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hablan":"'hablan' é a forma de ellos/ellas.","habla":"'habla' é a forma de él/ella.","hablamos":"'hablamos' é a forma de nosotros."}},
+  "verbo-19": {"promptNative":"Vocês _____ (comer = comer) rápido demais. (vosotras)","explain":"Os verbos em '-er' usam '-éis' para vosotros: coméis. 'Comen' seria ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"comen":"'comen' é a forma de ellos/ellas.","come":"'come' é a forma de él/ella.","comemos":"'comemos' é a forma de nosotros."}},
+  "verbo-20": {"promptNative":"Vocês _____ (vivir = morar) em Madrid, né? (vosotros)","explain":"Os verbos em '-ir' usam '-ís' para vosotros: vivís. 'Viven' é a forma de ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"viven":"'viven' é a forma de ellos/ellas.","vive":"'vive' é a forma de él/ella.","vivimos":"'vivimos' é a forma de nosotros."}},
+  "verbo-21": {"promptNative":"Vocês _____ (ser = ser) muito simpáticos. (vosotros)","explain":"'Ser' é irregular: vosotros sois. 'Son' seria ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"son":"'son' é a forma de ellos/ellas.","somos":"'somos' é a forma de nosotros.","es":"'es' é a forma de él/ella."}},
+  "verbo-22": {"promptNative":"Vocês _____ (estar = estar) muito bonitas hoje. (vosotras)","explain":"'Estar' em vosotros é 'estáis' (estado temporário → estar). 'Están' é a forma de ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"están":"'están' é a forma de ellos/ellas.","estamos":"'estamos' é a forma de nosotros.","está":"'está' é a forma de él/ella."}},
+  "verbo-23": {"promptNative":"Vocês _____ (tener = ter) muita sorte. (vosotros)","explain":"'Tener' em vosotros é 'tenéis' (sem mudança de raiz). 'Tienen' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tienen":"'tienen' é a forma de ellos/ellas.","tenemos":"'tenemos' é a forma de nosotros.","tiene":"'tiene' é a forma de él/ella."}},
+  "verbo-24": {"promptNative":"Vocês _____ (querer = querer) café ou chá? (vosotros)","explain":"'Querer' em vosotros mantém a terminação regular: queréis. 'Quieren' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"quieren":"'quieren' é a forma de ellos/ellas.","queremos":"'queremos' é a forma de nosotros.","quiere":"'quiere' é a forma de él/ella."}},
+  "verbo-25": {"promptNative":"Vocês _____ (hacer = fazer) muito barulho. (vosotros)","explain":"'Hacer' em vosotros é 'hacéis'. 'Hacen' seria ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hacen":"'hacen' é a forma de ellos/ellas.","hacemos":"'hacemos' é a forma de nosotros.","hace":"'hace' é a forma de él/ella."}},
+  "verbo-26": {"promptNative":"Vocês _____ (poder = poder) vir no sábado? (vosotras)","explain":"'Poder' em vosotros mantém terminação regular: podéis. 'Pueden' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"pueden":"'pueden' é a forma de ellos/ellas.","podemos":"'podemos' é a forma de nosotros.","puede":"'puede' é a forma de él/ella."}},
+  "verbo-27": {"promptNative":"Vocês _____ (venir = vir) ao parque todos os dias. (vosotros)","explain":"'Venir' em vosotros é 'venís'. 'Vienen' seria ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"vienen":"'vienen' é a forma de ellos/ellas.","venimos":"'venimos' é a forma de nosotros.","viene":"'viene' é a forma de él/ella."}},
+  "verbo-28": {"promptNative":"Eu _____ (trabajar = trabalhar) em um escritório.","explain":"A forma yo dos verbos '-ar' termina em '-o': trabajo.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"trabajas":"'trabajas' é a forma de tú.","trabaja":"'trabaja' é a forma de él/ella.","trabajamos":"'trabajamos' é a forma de nosotros."}},
+  "verbo-29": {"promptNative":"Você _____ (beber = beber) muita água. (tú)","explain":"A forma tú dos verbos '-er' termina em '-es': bebes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"bebo":"'bebo' é a forma de yo.","bebe":"'bebe' é a forma de él/ella.","bebéis":"'bebéis' é a forma de vosotros."}},
+  "verbo-30": {"promptNative":"Ele _____ (vivir = morar) perto daqui.","explain":"A forma él/ella dos verbos '-ir' termina em '-e': vive.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"vives":"'vives' é a forma de tú.","vivo":"'vivo' é a forma de yo.","viven":"'viven' é a forma de ellos/ellas."}},
+  "verbo-31": {"promptNative":"Nós _____ (estudiar = estudar) inglês no ensino médio.","explain":"Nosotros em '-ar' termina em '-amos': estudiamos. Na Espanha, 'instituto' é o ensino médio.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"estudiáis":"'estudiáis' é a forma de vosotros.","estudian":"'estudian' é a forma de ellos/ellas.","estudio":"'estudio' é a forma de yo."}},
+  "verbo-32": {"promptNative":"Eles _____ (ser = ser) meus primos.","explain":"'Ser' na terceira pessoa do plural é 'son'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"somos":"'somos' é a forma de nosotros.","sois":"'sois' é a forma de vosotros.","es":"'es' é a forma de él/ella."}},
+  "verbo-33": {"promptNative":"Eu _____ (ir = ir) para o trabalho de metrô.","explain":"'Ir' é irregular: yo voy.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"vas":"'vas' é a forma de tú.","va":"'va' é a forma de él/ella.","van":"'van' é a forma de ellos/ellas."}},
+  "verbo-34": {"promptNative":"Você _____ (tener = ter) olhos azuis. (tú)","explain":"'Tener' em tú ditonga: tienes (e→ie).","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tengo":"'tengo' é a forma de yo.","tiene":"'tiene' é a forma de él/ella.","tenéis":"'tenéis' é a forma de vosotros."}},
+  "verbo-35": {"promptNative":"Nós _____ (hacer = fazer) as compras aos sábados.","explain":"A forma nosotros é 'hacemos'. 'Hacer la compra' = fazer as compras do mercado (Espanha).","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hacéis":"'hacéis' é a forma de vosotros.","hacen":"'hacen' é a forma de ellos/ellas.","hago":"'hago' é a forma de yo."}},
+  "verbo-36": {"promptNative":"Ela _____ (querer = querer) um copo de suco.","explain":"'Querer' él/ella é 'quiere'. Na Espanha, suco é 'zumo'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"quieres":"'quieres' é a forma de tú.","quiero":"'quiero' é a forma de yo.","quieren":"'quieren' é a forma de ellos/ellas."}},
+  "verbo-37": {"promptNative":"Eu _____ (estar = estar) muito cansado hoje.","explain":"'Estar' em yo é o irregular 'estoy'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"estás":"'estás' é a forma de tú.","está":"'está' é a forma de él/ella.","estamos":"'estamos' é a forma de nosotros."}},
+  "verbo-38": {"promptNative":"Vocês _____ (beber = beber) suco de laranja. (vosotros)","explain":"Vosotros em '-er' termina em '-éis': bebéis. 'Beben' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"beben":"'beben' é a forma de ellos/ellas.","bebemos":"'bebemos' é a forma de nosotros.","bebe":"'bebe' é a forma de él/ella."}},
+  "verbo-39": {"promptNative":"Vocês _____ (estudiar = estudar) muito para a prova. (vosotras)","explain":"Vosotros em '-ar' termina em '-áis': estudiáis. 'Estudian' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"estudian":"'estudian' é a forma de ellos/ellas.","estudiamos":"'estudiamos' é a forma de nosotros.","estudia":"'estudia' é a forma de él/ella."}},
+  "verbo-40": {"promptNative":"Você _____ (poder = poder) fazer isso sozinho. (tú)","explain":"'Poder' em tú ditonga: puedes (o→ue).","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"puedo":"'puedo' é a forma de yo.","puede":"'puede' é a forma de él/ella.","podéis":"'podéis' é a forma de vosotros."}},
+  "verbo-41": {"promptNative":"Nós _____ (ir = ir) à praia no verão.","explain":"'Ir' em nosotros é 'vamos'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"vais":"'vais' é a forma de vosotros.","van":"'van' é a forma de ellos/ellas.","voy":"'voy' é a forma de yo."}},
+  "verbo-42": {"promptNative":"Ontem vocês _____ (hablar = falar) com o professor. (vosotros)","explain":"'Ayer' → pretérito; vosotros usa '-asteis': hablasteis. 'Hablaron' é o pretérito de ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hablaron":"'hablaron' é a forma de ellos/ellas.","hablabais":"'hablabais' é a forma de vosotros no imperfeito.","habláis":"'habláis' é a forma de vosotros no presente."}},
+  "verbo-43": {"promptNative":"Ontem à noite vocês _____ (comer = comer) em um restaurante. (vosotras)","explain":"O pretérito de vosotros em '-er/-ir' é '-isteis': comisteis. 'Comieron' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"comieron":"'comieron' é a forma de ellos/ellas.","comíais":"'comíais' é a forma de vosotros no imperfeito.","coméis":"'coméis' é a forma de vosotros no presente."}},
+  "verbo-44": {"promptNative":"No ano passado vocês _____ (vivir = morar) em Sevilha. (vosotros)","explain":"'El año pasado' → pretérito; vosotros é 'vivisteis'. 'Vivieron' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"vivieron":"'vivieron' é a forma de ellos/ellas.","vivíais":"'vivíais' é a forma de vosotros no imperfeito.","vivís":"'vivís' é a forma de vosotros no presente."}},
+  "verbo-45": {"promptNative":"Ontem vocês _____ (ir = ir) ao cinema, né? (vosotros)","explain":"O pretérito de 'ir' para vosotros é 'fuisteis'. 'Fueron' é ustedes; 'ibais' é imperfeito.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"fueron":"'fueron' é a forma de ellos/ellas.","ibais":"'ibais' é a forma de vosotros no imperfeito.","vais":"'vais' é a forma de vosotros no presente."}},
+  "verbo-46": {"promptNative":"Na semana passada vocês _____ (tener = ter) uma prova. (vosotros)","explain":"'Tener' usa a raiz irregular 'tuv-'; vosotros: tuvisteis. 'Tuvieron' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tuvieron":"'tuvieron' é a forma de ellos/ellas.","teníais":"'teníais' é a forma de vosotros no imperfeito.","tenéis":"'tenéis' é a forma de vosotros no presente."}},
+  "verbo-47": {"promptNative":"Quando vocês eram pequenos, vocês _____ (jugar = jogar) na rua. (vosotros)","explain":"Um hábito da infância → imperfeito; vosotros '-ar' é '-abais': jugabais. 'Jugaban' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"jugasteis":"'jugasteis' é a forma de vosotros no pretérito.","jugáis":"'jugáis' é a forma de vosotros no presente.","jugaban":"'jugaban' é a forma de ellos/ellas."}},
+  "verbo-48": {"promptNative":"Quando vocês eram pequenas, vocês _____ (ir = ir) à escola a pé. (vosotras)","explain":"O imperfeito de 'ir' para vosotros é 'ibais'. 'Iban' é ustedes; 'fuisteis' é pretérito.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"fuisteis":"'fuisteis' é a forma de vosotros no pretérito.","vais":"'vais' é a forma de vosotros no presente.","iban":"'iban' é a forma de ellos/ellas."}},
+  "verbo-49": {"promptNative":"Antigamente, vocês _____ (comer = comer) mais carne. (vosotros)","explain":"'Antes' → imperfeito; vosotros '-er' é '-íais': comíais. 'Comían' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"comisteis":"'comisteis' é a forma de vosotros no pretérito.","coméis":"'coméis' é a forma de vosotros no presente.","comían":"'comían' é a forma de ellos/ellas."}},
+  "verbo-50": {"promptNative":"_____ (hablar = falar) mais devagar, por favor. (vosotros command)","explain":"O imperativo afirmativo de vosotros troca o '-r' por '-d': hablad. 'Hablen' é o imperativo de ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"Hablen":"'Hablen' é a forma de ellos/ellas no presente do subjuntivo.","Habláis":"'Habláis' é a forma de vosotros no presente.","Hablar":"'Hablar' não é a forma que corresponde aqui."}},
+  "verbo-51": {"promptNative":"_____ (comer = comer) tudo, está esfriando. (vosotros command)","explain":"O imperativo afirmativo de vosotros em '-er' é 'comed'. 'Coman' é o imperativo de ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"Coman":"'Coman' é a forma de ellos/ellas no presente do subjuntivo.","Coméis":"'Coméis' é a forma de vosotros no presente.","Comer":"'Comer' não é a forma que corresponde aqui."}},
+  "verbo-52": {"promptNative":"_____ (escuchar = escutar) com atenção. (vosotros command)","explain":"Imperativo afirmativo de vosotros: escuchad. 'Escuchen' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"Escuchen":"'Escuchen' é a forma de ellos/ellas no presente do subjuntivo.","Escucháis":"'Escucháis' é a forma de vosotros no presente.","Escuchar":"'Escuchar' não é a forma que corresponde aqui."}},
+  "verbo-53": {"promptNative":"Amanhã vocês vão _____ (ir = ir) visitar o museu. (vosotros)","explain":"Futuro próximo = 'ir a' + infinitivo; conjuga-se 'ir': vosotros vais. 'Van' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"van":"'van' é a forma de ellos/ellas.","ibais":"'ibais' é a forma de vosotros no imperfeito.","vamos":"'vamos' é a forma de nosotros."}},
+  "verbo-54": {"promptNative":"Ontem eu _____ (comprar = comprar) um celular novo.","explain":"'Ayer' → pretérito; yo '-ar' é '-é': compré. Na Espanha, 'móvil' (América Latina: celular).","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"compro":"'compro' é a forma de yo no presente.","compraba":"'compraba' é a forma de yo no imperfeito.","compraré":"'compraré' é a forma de yo no futuro."}},
+  "verbo-55": {"promptNative":"Ontem à noite ela _____ (hacer = fazer) o jantar.","explain":"'Hacer' é irregular no pretérito: ella hizo (atenção ao 'z'). 'Hació' não existe.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hació":"'hació' não é a forma que corresponde aqui.","hacía":"'hacía' é a forma de yo no imperfeito.","hace":"'hace' é a forma de él/ella no presente."}},
+  "verbo-56": {"promptNative":"No sábado nós _____ (ir = ir) para a montanha.","explain":"Uma viagem concluída → pretérito; 'ir' nosotros é 'fuimos'. 'Íbamos' é imperfeito.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"íbamos":"'íbamos' é a forma de nosotros no imperfeito.","vamos":"'vamos' é a forma de nosotros no presente.","fuisteis":"'fuisteis' é a forma de vosotros."}},
+  "verbo-57": {"promptNative":"Você _____ (tener = ter) muita sorte ontem. (tú)","explain":"O pretérito de 'tener' em tú é 'tuviste'. Atenção: 'tuvistes' é um erro frequente.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tenías":"'tenías' é a forma de tú no imperfeito.","tuvistes":"'tuvistes' não é a forma que corresponde aqui.","tienes":"'tienes' é a forma de tú no presente."}},
+  "verbo-58": {"promptNative":"Quando eu era menina, eu _____ (vivir = morar) em um vilarejo.","explain":"Uma situação passada contínua → imperfeito; yo '-ir' é '-ía': vivía. 'Viví' seria ação concluída.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"viví":"'viví' é a forma de yo no pretérito.","vivo":"'vivo' é a forma de yo no presente.","viviría":"'viviría' é a forma de yo no condicional."}},
+  "verbo-59": {"promptNative":"Antigamente, nós _____ (jugar = jogar) futebol todas as tardes.","explain":"Um hábito passado repetido → imperfeito; nosotros '-ar' é '-ábamos': jugábamos.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"jugamos":"'jugamos' é a forma de nosotros no presente.","jugaban":"'jugaban' é a forma de ellos/ellas.","jugué":"'jugué' é a forma de yo no pretérito."}},
+  "verbo-60": {"promptNative":"Quando criança, você _____ (ser = ser) muito levado. (tú)","explain":"O imperfeito de 'ser' em tú é 'eras' (descrever como alguém era). 'Fuiste' é pretérito.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"fuiste":"'fuiste' é a forma de tú no pretérito.","eres":"'eres' é a forma de tú no presente.","era":"'era' é a forma de yo ou él/ella."}},
+  "verbo-61": {"promptNative":"Amanhã eu vou _____ (ir = ir) estudar na biblioteca.","explain":"Futuro próximo: 'ir a' + infinitivo, conjugando 'ir': yo voy.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"vais":"'vais' é a forma de vosotros.","va":"'va' é a forma de él/ella.","iré":"'iré' é a forma de yo no futuro."}},
+  "verbo-62": {"promptNative":"Neste fim de semana nós vamos _____ (ir = ir) fazer um passeio de um dia.","explain":"Futuro próximo: 'ir a' + infinitivo; nosotros vamos. 'Finde' é coloquial na Espanha para 'fin de semana'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"vais":"'vais' é a forma de vosotros.","van":"'van' é a forma de ellos/ellas.","íbamos":"'íbamos' é a forma de nosotros no imperfeito."}},
+  "verbo-63": {"promptNative":"_____ (esperar = esperar) aqui um momento. (vosotros command)","explain":"Imperativo afirmativo de vosotros: esperad. 'Esperen' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"Esperen":"'Esperen' é a forma de ellos/ellas no presente do subjuntivo.","Esperáis":"'Esperáis' é a forma de vosotros no presente.","Esperar":"'Esperar' não é a forma que corresponde aqui."}},
+  "verbo-64": {"promptNative":"_____ (mirar = olhar) para isto, é incrível. (vosotros command)","explain":"Imperativo afirmativo de vosotros: mirad. 'Miren' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"Miren":"'Miren' é a forma de ellos/ellas no presente do subjuntivo.","Miráis":"'Miráis' é a forma de vosotros no presente.","Mirar":"'Mirar' não é a forma que corresponde aqui."}},
+  "verbo-65": {"promptNative":"Eles _____ (ir = ir) à festa na sexta-feira passada.","explain":"Um evento passado concluído → pretérito; 'ir' ellos é 'fueron'. 'Iban' é imperfeito.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"iban":"'iban' é a forma de ellos/ellas no imperfeito.","van":"'van' é a forma de ellos/ellas no presente.","fuisteis":"'fuisteis' é a forma de vosotros."}},
+  "verbo-66": {"promptNative":"Vocês já _____ (terminar = terminar) a lição de casa. (vosotros)","explain":"Pretérito perfeito composto = haber + particípio; vosotros de haber é 'habéis'. O particípio não concorda ('terminados' é incorreto). 'Han terminado' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"han terminado":"'han terminado' é a forma de ellos/ellas.","habéis terminados":"'habéis terminados' não é a forma que corresponde aqui.","terminasteis":"'terminasteis' é a forma de vosotros no pretérito."}},
+  "verbo-67": {"promptNative":"Hoje de manhã vocês _____ (desayunar = tomar café da manhã) bem cedo. (vosotros)","explain":"Na Espanha, o que aconteceu hoje ('esta mañana') usa o pretérito perfeito composto: habéis desayunado. Na América Latina se usaria 'desayunaron'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"desayunasteis":"'desayunasteis' é a forma de vosotros no pretérito.","han desayunado":"'han desayunado' é a forma de ellos/ellas.","desayunáis":"'desayunáis' é a forma de vosotros no presente."}},
+  "verbo-68": {"promptNative":"Hoje vocês _____ (ver = ver) um ótimo filme. (vosotras)","explain":"'Hoy' + pretérito perfeito composto (Espanha); 'ver' tem particípio irregular 'visto': habéis visto. 'Peli' é coloquial para filme.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"han visto":"'han visto' é a forma de ellos/ellas.","habéis veído":"'habéis veído' não é a forma que corresponde aqui.","visteis":"'visteis' é a forma de vosotros no pretérito."}},
+  "verbo-69": {"promptNative":"Esta semana vocês _____ (hacer = fazer) muito exercício. (vosotros)","explain":"'Esta semana' (ainda em curso) → pretérito perfeito composto; o particípio de 'hacer' é irregular 'hecho': habéis hecho.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"han hecho":"'han hecho' é a forma de ellos/ellas.","habéis hacido":"'habéis hacido' não é a forma que corresponde aqui.","hicisteis":"'hicisteis' é a forma de vosotros no pretérito."}},
+  "verbo-70": {"promptNative":"Hoje de manhã eu _____ (tomar = tomar) café com torradas.","explain":"A Espanha usa o pretérito perfeito composto para o que é de hoje: esta mañana he tomado. A América Latina diria 'tomé'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tomé":"'tomé' é a forma de yo no pretérito.","tomaba":"'tomaba' é a forma de yo no imperfeito.","tomo":"'tomo' é a forma de yo no presente."}},
+  "verbo-71": {"promptNative":"Hoje nós _____ (ir = ir) ao médico.","explain":"'Hoy' → pretérito perfeito composto na Espanha; o particípio de 'ir' é 'ido': hemos ido. A América Latina diria 'fuimos'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"fuimos":"'fuimos' é a forma de nosotros no pretérito.","íbamos":"'íbamos' é a forma de nosotros no imperfeito.","vamos":"'vamos' é a forma de nosotros no presente."}},
+  "verbo-72": {"promptNative":"Hoje à tarde ela _____ (volver = voltar) do trabalho bem cedo.","explain":"'Esta tarde' (hoje) → pretérito perfeito composto; 'volver' tem particípio irregular 'vuelto': ha vuelto.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"volvió":"'volvió' é a forma de él/ella no pretérito.","ha volvido":"'ha volvido' não é a forma que corresponde aqui.","volvía":"'volvía' é a forma de yo no imperfeito."}},
+  "verbo-73": {"promptNative":"Este ano eu _____ (viajar = viajar) para três países.","explain":"'Este año' (período não terminado) → pretérito perfeito composto: he viajado.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"viajé":"'viajé' é a forma de yo no pretérito.","viajaba":"'viajaba' é a forma de yo no imperfeito.","viajo":"'viajo' é a forma de yo no presente."}},
+  "verbo-74": {"promptNative":"Vocês _____ (poner = pôr) a mesa muito bem hoje. (vosotros)","explain":"'Hoy' → pretérito perfeito composto; 'poner' tem particípio irregular 'puesto': habéis puesto.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"han puesto":"'han puesto' é a forma de ellos/ellas.","habéis ponido":"'habéis ponido' não é a forma que corresponde aqui.","pusisteis":"'pusisteis' é a forma de vosotros no pretérito."}},
+  "verbo-75": {"promptNative":"Vocês já _____ (escribir = escrever) a carta? (vosotros)","explain":"'Ya' com resultado presente → pretérito perfeito composto; o particípio de 'escribir' é irregular 'escrito': habéis escrito.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"han escrito":"'han escrito' é a forma de ellos/ellas.","habéis escribido":"'habéis escribido' não é a forma que corresponde aqui.","escribisteis":"'escribisteis' é a forma de vosotros no pretérito."}},
+  "verbo-76": {"promptNative":"Vocês ainda não _____ (llegar = chegar) a um acordo. (vosotros)","explain":"'Todavía no' + pretérito perfeito composto; vosotros de haber é 'habéis': habéis llegado. O particípio não varia.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"han llegado":"'han llegado' é a forma de ellos/ellas.","habéis llegados":"'habéis llegados' não é a forma que corresponde aqui.","llegasteis":"'llegasteis' é a forma de vosotros no pretérito."}},
+  "verbo-77": {"promptNative":"Não _____ (gritar = gritar) tanto, por favor. (vosotros negative command)","explain":"O imperativo negativo de vosotros usa o subjuntivo '-éis': no gritéis. 'Gritad' é o afirmativo, incorreto depois de 'no'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"gritad":"'gritad' é a forma de vosotros no imperativo afirmativo.","gritan":"'gritan' é a forma de ellos/ellas no presente.","gritáis":"'gritáis' é a forma de vosotros no presente."}},
+  "verbo-78": {"promptNative":"Não _____ (tocar = tocar) em nada no museu. (vosotros negative command)","explain":"Imperativo negativo de vosotros; 'tocar' muda c→qu antes de -éis: no toquéis. 'Tocad' é afirmativo; 'toquen' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tocad":"'tocad' é a forma de vosotros no imperativo afirmativo.","toquen":"'toquen' é a forma de ellos/ellas.","tocáis":"'tocáis' é a forma de vosotros no presente."}},
+  "verbo-79": {"promptNative":"_____ (sentarse = sentar-se), por favor. (vosotros command)","explain":"O imperativo afirmativo de vosotros com verbo reflexivo perde o '-d' antes de 'os': sentaos. 'Sentaros' é um erro frequente; 'Siéntense' é ustedes.","wrongNote":"Só uma opção encaixa na gramática desta frase — as outras são a forma incorreta.","distractorNotes":{"Sentaros":"'Sentaros' não é a forma que corresponde aqui.","Siéntense":"'Siéntense' não é a forma que corresponde aqui.","Sentados":"'Sentados' não é a forma que corresponde aqui."}},
+  "verbo-80": {"promptNative":"Este mês nós _____ (comprar = comprar) um carro novo.","explain":"'Este mes' (não terminado) → pretérito perfeito composto: hemos comprado. Na Espanha, 'coche'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"compramos":"'compramos' é a forma de nosotros no presente.","comprábamos":"'comprábamos' é a forma de nosotros no imperfeito.","compraremos":"'compraremos' é a forma de nosotros no futuro."}},
+  "verbo-81": {"promptNative":"Hoje você _____ (romper = quebrar) o celular de novo. (tú)","explain":"'Hoy' → pretérito perfeito composto; 'romper' tem particípio irregular 'roto': has roto.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"has rompido":"'has rompido' não é a forma que corresponde aqui.","rompiste":"'rompiste' é a forma de tú no pretérito.","rompías":"'rompías' é a forma de tú no imperfeito."}},
+  "verbo-82": {"promptNative":"Hoje de manhã eles _____ (decir = dizer) a verdade.","explain":"'Esta mañana' → pretérito perfeito composto na Espanha; 'decir' tem particípio irregular 'dicho': han dicho.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"dijeron":"'dijeron' é a forma de ellos/ellas no pretérito.","han decido":"'han decido' não é a forma que corresponde aqui.","decían":"'decían' é a forma de ellos/ellas no imperfeito."}},
+  "verbo-83": {"promptNative":"Você já _____ (estar = estar) na Galícia alguma vez? (tú)","explain":"'Alguna vez' (experiência de vida) → pretérito perfeito composto: has estado.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"estuviste":"'estuviste' é a forma de tú no pretérito.","estabas":"'estabas' é a forma de tú no imperfeito.","estás":"'estás' é a forma de tú no presente."}},
+  "verbo-84": {"promptNative":"Neste verão eu _____ (leer = ler) cinco livros.","explain":"'Este verano' (período ainda em curso) → pretérito perfeito composto; com acento: he leído.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"leí":"'leí' é a forma de yo no pretérito.","leía":"'leía' é a forma de yo no imperfeito.","leo":"'leo' é a forma de yo no presente."}},
+  "verbo-85": {"promptNative":"Hoje vocês _____ (abrir = abrir) a loja tarde. (vosotros)","explain":"'Hoy' → pretérito perfeito composto; 'abrir' tem particípio irregular 'abierto': habéis abierto.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"han abierto":"'han abierto' é a forma de ellos/ellas.","habéis abrido":"'habéis abrido' não é a forma que corresponde aqui.","abristeis":"'abristeis' é a forma de vosotros no pretérito."}},
+  "verbo-86": {"promptNative":"Vocês nunca _____ (venir = vir) nos visitar. (vosotros)","explain":"Pretérito perfeito composto com 'nunca'; vosotros de haber é 'habéis': habéis venido. O particípio não varia.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"han venido":"'han venido' é a forma de ellos/ellas.","habéis venidos":"'habéis venidos' não é a forma que corresponde aqui.","vinisteis":"'vinisteis' é a forma de vosotros no pretérito."}},
+  "verbo-87": {"promptNative":"Hoje de manhã nós _____ (levantarse = levantar-se) supertarde.","explain":"'Esta mañana' → pretérito perfeito composto; o pronome reflexivo vem antes de haber: nos hemos levantado. 'Se han' é pessoa incorreta.","wrongNote":"Só uma opção encaixa na gramática desta frase — as outras são a forma incorreta.","distractorNotes":{"nos levantamos":"'nos levantamos' não é a forma que corresponde aqui.","nos levantábamos":"'nos levantábamos' não é a forma que corresponde aqui.","se han levantado":"'se han levantado' não é a forma que corresponde aqui."}},
+  "verbo-88": {"promptNative":"_____ (callarse = calar-se) por um momento, por favor. (vosotros command)","explain":"O imperativo afirmativo de vosotros reflexivo perde o '-d' antes de 'os': callaos. 'Callaros' é um erro comum; 'Cállense' é ustedes.","wrongNote":"Só uma opção encaixa na gramática desta frase — as outras são a forma incorreta.","distractorNotes":{"Callaros":"'Callaros' não é a forma que corresponde aqui.","Cállense":"'Cállense' não é a forma que corresponde aqui.","Callados":"'Callados' não é a forma que corresponde aqui."}},
+  "verbo-89": {"promptNative":"Este ano vocês _____ (aprender = aprender) muito espanhol. (vosotras)","explain":"'Este año' (não terminado) → pretérito perfeito composto; vosotros de haber é 'habéis': habéis aprendido. 'Han aprendido' é ustedes.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"han aprendido":"'han aprendido' é a forma de ellos/ellas.","habéis aprendidos":"'habéis aprendidos' não é a forma que corresponde aqui.","aprendisteis":"'aprendisteis' é a forma de vosotros no pretérito."}},
+  "verbo-90": {"promptNative":"Eu quero que vocês _____ (venir = vir) à minha casa no domingo. (vosotros)","explain":"'Querer que' exige subjuntivo; o presente do subjuntivo de vosotros de 'venir' é 'vengáis'. 'Vengan' é a forma de ustedes que a América Latina usaria para um grupo.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"venís":"'venís' é a forma de vosotros no presente.","vengan":"'vengan' é a forma de ellos/ellas.","vengamos":"'vengamos' é a forma de nosotros."}},
+  "verbo-91": {"promptNative":"Espero que vocês _____ (traer = trazer) o notebook amanhã. (vosotros)","explain":"'Esperar que' desencadeia o subjuntivo; 'traigáis' é a forma de vosotros. Na Espanha se diz 'ordenador', não 'computadora'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"traéis":"'traéis' é a forma de vosotros no presente.","traigan":"'traigan' é a forma de ellos/ellas.","traigas":"'traigas' é a forma de tú."}},
+  "verbo-92": {"promptNative":"É importante que vocês _____ (hablar = falar) com o chefe hoje. (vosotros)","explain":"'Es importante que' pede subjuntivo; a forma de vosotros é 'habléis'. O indicativo 'habláis' é a pegadinha.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habláis":"'habláis' é a forma de vosotros no presente.","hablen":"'hablen' é a forma de ellos/ellas.","hablemos":"'hablemos' é a forma de nosotros."}},
+  "verbo-93": {"promptNative":"Para que vocês _____ (llegar = chegar) na hora, saiam agora. (vosotros)","explain":"'Para que' (finalidade) sempre leva subjuntivo; os verbos em '-gar' acrescentam u, dando 'lleguéis'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"llegáis":"'llegáis' é a forma de vosotros no presente.","lleguen":"'lleguen' é a forma de ellos/ellas.","llegue":"'llegue' é a forma de yo ou él/ella."}},
+  "verbo-94": {"promptNative":"Eu não acho que vocês _____ (tener = ter razão) sobre isso. (vosotros)","explain":"'No creer que' expressa dúvida e leva subjuntivo; 'tengáis' é a forma de vosotros.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tenéis":"'tenéis' é a forma de vosotros no presente.","tengan":"'tengan' é a forma de ellos/ellas.","tengamos":"'tengamos' é a forma de nosotros."}},
+  "verbo-95": {"promptNative":"Espero que vocês _____ (poder = poder) ficar mais um pouco. (vosotros)","explain":"'Ojalá' rege subjuntivo; 'podáis' é o presente do subjuntivo de vosotros de 'poder'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"podéis":"'podéis' é a forma de vosotros no presente.","puedan":"'puedan' é a forma de ellos/ellas.","podamos":"'podamos' é a forma de nosotros."}},
+  "verbo-96": {"promptNative":"Quando vocês _____ (salir = sair) do trabalho, me liguem. (vosotros)","explain":"'Cuando' com ação futura leva subjuntivo; a forma de vosotros é 'salgáis'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"salís":"'salís' é a forma de vosotros no presente.","salgan":"'salgan' é a forma de ellos/ellas.","salga":"'salga' é a forma de yo ou él/ella."}},
+  "verbo-97": {"promptNative":"É importante que você _____ (conducir = dirigir) com cuidado nesta neblina. (tú)","explain":"Os verbos em '-ducir' formam o subjuntivo com 'zc': 'conduzcas'. A Espanha diz 'conducir'; a América Latina, 'manejar'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"conduces":"'conduces' é a forma de tú no presente.","conduzca":"'conduzca' é a forma de yo ou él/ella.","conduzcáis":"'conduzcáis' é a forma de vosotros."}},
+  "verbo-98": {"promptNative":"Eu não acho que ela _____ (saber = saber) a resposta ainda. (ella)","explain":"'No creer que' desencadeia o subjuntivo; 'saber' é irregular e dá 'sepa' para él/ella.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"sabe":"'sabe' é a forma de él/ella no presente.","sepas":"'sepas' é a forma de tú.","sepan":"'sepan' é a forma de ellos/ellas."}},
+  "verbo-99": {"promptNative":"Para que eu _____ (entender = entender) o problema, me explique devagar. (yo)","explain":"'Para que' leva subjuntivo; 'entender' é e→ie e dá 'entienda' para yo.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"entiendo":"'entiendo' é a forma de yo no presente.","entiendas":"'entiendas' é a forma de tú.","entiendan":"'entiendan' é a forma de ellos/ellas."}},
+  "verbo-100": {"promptNative":"Espero que nós _____ (conseguir = conseguir) os ingressos para o show. (nosotros)","explain":"'Ojalá' exige subjuntivo; 'conseguir' é e→i e perde o u, dando 'consigamos'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"conseguimos":"'conseguimos' é a forma de nosotros no presente.","consigan":"'consigan' é a forma de ellos/ellas.","consiga":"'consiga' é a forma de yo ou él/ella."}},
+  "verbo-101": {"promptNative":"Eu prefiro que vocês _____ (elegir = escolher) o restaurante desta vez. (vosotros)","explain":"'Preferir que' leva subjuntivo; 'elegir' é e→i com g→j, dando 'elijáis'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"elegís":"'elegís' é a forma de vosotros no presente.","elijan":"'elijan' é a forma de ellos/ellas.","elijas":"'elijas' é a forma de tú."}},
+  "verbo-102": {"promptNative":"É melhor que vocês _____ (coger = pegar) o metrô; tem um engarrafamento. (vosotros)","explain":"'Es mejor que' pede subjuntivo; 'coger' muda g→j antes de a, dando 'cojáis'. 'Coger' é cotidiano na Espanha, mas é evitado em boa parte da América Latina.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"cogéis":"'cogéis' é a forma de vosotros no presente.","cojan":"'cojan' é a forma de ellos/ellas.","cojamos":"'cojamos' é a forma de nosotros."}},
+  "verbo-103": {"promptNative":"Assim que vocês _____ (llegar = chegar) à estação, me mandem mensagem. (vosotros)","explain":"'En cuanto' com referência futura leva subjuntivo; a forma de vosotros é 'lleguéis'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"llegáis":"'llegáis' é a forma de vosotros no presente.","lleguen":"'lleguen' é a forma de ellos/ellas.","llegue":"'llegue' é a forma de yo ou él/ella."}},
+  "verbo-104": {"promptNative":"Não _____ (hacer = fazer) tanto barulho; a criança está dormindo. (vosotros)","explain":"O imperativo negativo de vosotros usa o presente do subjuntivo: 'no hagáis'. 'No hagan' é o imperativo de ustedes da América Latina.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hacéis":"'hacéis' é a forma de vosotros no presente.","hagan":"'hagan' é a forma de ellos/ellas.","hagas":"'hagas' é a forma de tú."}},
+  "verbo-105": {"promptNative":"Não _____ (preocuparse = se preocupar); vai dar tudo certo. (vosotros)","explain":"Imperativo negativo de vosotros de um verbo reflexivo: 'no os preocupéis'. O indicativo 'preocupáis' é a pegadinha.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"preocupáis":"'preocupáis' é a forma de vosotros no presente.","preocupen":"'preocupen' é a forma de ellos/ellas.","preocupes":"'preocupes' é a forma de tú."}},
+  "verbo-106": {"promptNative":"Não _____ (decir = dizer) nada para a sua mãe ainda. (vosotros)","explain":"Imperativo negativo de vosotros: 'no digáis'. 'Vuestra' também marca o registro peninsular (frente a 'su' na América Latina).","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"decís":"'decís' é a forma de vosotros no presente.","digan":"'digan' é a forma de ellos/ellas.","digas":"'digas' é a forma de tú."}},
+  "verbo-107": {"promptNative":"Não _____ (poner = pôr) os pés no sofá. (vosotros)","explain":"Imperativo negativo de vosotros: 'no pongáis'. A raiz é irregular ('pong-'), como no subjuntivo.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"ponéis":"'ponéis' é a forma de vosotros no presente.","pongan":"'pongan' é a forma de ellos/ellas.","pongas":"'pongas' é a forma de tú."}},
+  "verbo-108": {"promptNative":"Não _____ (tocar = tocar) em nada enquanto o professor não estiver aqui. (vosotros)","explain":"Imperativo negativo de vosotros; os verbos em '-car' acrescentam qu: 'no toquéis'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tocáis":"'tocáis' é a forma de vosotros no presente.","toquen":"'toquen' é a forma de ellos/ellas.","toques":"'toques' é a forma de tú."}},
+  "verbo-109": {"promptNative":"Antes de vocês _____ (marcharse = ir embora), paguem a conta. (vosotros)","explain":"'Antes de que' sempre leva subjuntivo; a forma de vosotros do reflexivo 'marcharse' é 'marchéis'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"marcháis":"'marcháis' é a forma de vosotros no presente.","marchen":"'marchen' é a forma de ellos/ellas.","marches":"'marches' é a forma de tú."}},
+  "verbo-110": {"promptNative":"É uma pena que vocês não _____ (querer = querer) vir ao jantar. (vosotros)","explain":"Uma reação emocional ('es una pena que') leva subjuntivo; 'querer' dá 'queráis' para vosotros.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"queréis":"'queréis' é a forma de vosotros no presente.","quieran":"'quieran' é a forma de ellos/ellas.","queramos":"'queramos' é a forma de nosotros."}},
+  "verbo-111": {"promptNative":"Se vocês _____ (tener = ter) mais tempo, viajariam mais. (vosotros)","explain":"A oração com 'si' de uma condição irreal no presente usa o imperfeito do subjuntivo: 'tuvierais'; o condicional 'tendríais' fica na oração de resultado.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tendríais":"'tendríais' é a forma de vosotros no condicional.","tuvieran":"'tuvieran' é a forma de ellos/ellas.","teníais":"'teníais' é a forma de vosotros no imperfeito."}},
+  "verbo-112": {"promptNative":"Se vocês _____ (venir = vir) comigo, eu mostraria o vilarejo para vocês. (vosotros)","explain":"A oração com 'si' leva o imperfeito do subjuntivo 'vinierais'; 'vinieran' é a forma de ustedes da América Latina.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"vendríais":"'vendríais' é a forma de vosotros no condicional.","vinieran":"'vinieran' é a forma de ellos/ellas.","veníais":"'veníais' é a forma de vosotros no imperfeito."}},
+  "verbo-113": {"promptNative":"Se você _____ (querer = querer), poderíamos ir ao cinema hoje à noite. (tú)","explain":"A oração com 'si' precisa do imperfeito do subjuntivo 'quisieras'; o condicional 'querrías' é o erro tentador.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"querrías":"'querrías' é a forma de tú no condicional.","quisieran":"'quisieran' é a forma de ellos/ellas.","querías":"'querías' é a forma de tú no imperfeito."}},
+  "verbo-114": {"promptNative":"Se eu _____ (ser = ser) você, não diria nada. (yo)","explain":"A expressão fixa 'si yo fuera tú' usa o imperfeito do subjuntivo 'fuera'; o condicional 'sería' não cabe na oração com 'si'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"sería":"'sería' é a forma de yo no condicional.","fueras":"'fueras' é a forma de tú.","era":"'era' é a forma de yo no imperfeito."}},
+  "verbo-115": {"promptNative":"Se vocês estudassem mais, vocês _____ (aprobar = passar) sem problemas. (vosotros)","explain":"O resultado de uma condição irreal usa o condicional: 'aprobaríais'; o subjuntivo 'aprobarais' só entra na oração com 'si'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"aprobarais":"'aprobarais' é a forma de vosotros no imperfeito do subjuntivo.","aprobarían":"'aprobarían' é a forma de ellos/ellas.","aprobabais":"'aprobabais' é a forma de vosotros no imperfeito."}},
+  "verbo-116": {"promptNative":"Se nós ganhássemos na loteria, nós _____ (comprar = comprar) um apartamento em Madrid. (nosotros)","explain":"A oração de resultado leva o condicional 'compraríamos'. Na Espanha se diz 'piso', na América Latina 'departamento'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"compráramos":"'compráramos' é a forma de nosotros no imperfeito do subjuntivo.","comprarían":"'comprarían' é a forma de ellos/ellas.","comprábamos":"'comprábamos' é a forma de nosotros no imperfeito."}},
+  "verbo-117": {"promptNative":"Se chovesse amanhã, eu não _____ (salir = sair) de casa. (yo)","explain":"O resultado da condição irreal usa o condicional 'saldría'; 'salir' tem a raiz irregular 'saldr-'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"saliera":"'saliera' é a forma de yo no imperfeito do subjuntivo.","saldrían":"'saldrían' é a forma de ellos/ellas.","salía":"'salía' é a forma de yo no imperfeito."}},
+  "verbo-118": {"promptNative":"Se vocês tivessem mais paciência, vocês _____ (conseguir = conseguir) melhores resultados. (vosotros)","explain":"A oração de resultado leva o condicional 'conseguiríais'; o subjuntivo 'consiguierais' só caberia na oração com 'si'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"consiguierais":"'consiguierais' é a forma de vosotros no imperfeito do subjuntivo.","conseguirían":"'conseguirían' é a forma de ellos/ellas.","conseguíais":"'conseguíais' é a forma de vosotros no imperfeito."}},
+  "verbo-119": {"promptNative":"Ela falou como se _____ (conocer = conhecer) o segredo. (ella)","explain":"'Como si' sempre leva o imperfeito do subjuntivo: 'conociera'; o indicativo 'conocía' é incorreto aqui.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"conocía":"'conocía' é a forma de yo no imperfeito.","conoce":"'conoce' é a forma de él/ella no presente.","conocería":"'conocería' é a forma de yo no condicional."}},
+  "verbo-120": {"promptNative":"Eles me trataram como se eu não _____ (existir = existir). (yo)","explain":"'Como si' obriga ao imperfeito do subjuntivo 'existiera'; nem o presente nem o imperfeito do indicativo valem.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"existía":"'existía' é a forma de yo no imperfeito.","existo":"'existo' é a forma de yo no presente.","existiría":"'existiría' é a forma de yo no condicional."}},
+  "verbo-121": {"promptNative":"Eu queria que vocês _____ (estar = estar) aqui comigo agora. (vosotros)","explain":"'Ojalá' mais imperfeito do subjuntivo expressa um desejo pouco provável no presente: 'estuvierais'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"estáis":"'estáis' é a forma de vosotros no presente.","estuvieran":"'estuvieran' é a forma de ellos/ellas.","estaríais":"'estaríais' é a forma de vosotros no condicional."}},
+  "verbo-122": {"promptNative":"Eu gostaria que vocês me _____ (escuchar = escutar) com atenção. (vosotros)","explain":"Um verbo principal no condicional/imperfeito do subjuntivo ('quisiera que') arrasta a subordinada para o imperfeito do subjuntivo: 'escucharais'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"escucháis":"'escucháis' é a forma de vosotros no presente.","escucharan":"'escucharan' é a forma de ellos/ellas.","escucharíais":"'escucharíais' é a forma de vosotros no condicional."}},
+  "verbo-123": {"promptNative":"Eles pediram que vocês _____ (traer = trazer) os documentos assinados. (vosotros)","explain":"Um verbo principal no passado ('pidieron que') exige o imperfeito do subjuntivo; 'traer' dá 'trajerais'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"traíais":"'traíais' é a forma de vosotros no imperfeito.","trajeran":"'trajeran' é a forma de ellos/ellas.","traeríais":"'traeríais' é a forma de vosotros no condicional."}},
+  "verbo-124": {"promptNative":"Quando vocês voltarem, nós já _____ (recoger = arrumar) a casa toda. (nosotros)","explain":"Uma ação terminada antes de um momento futuro usa o futuro composto: 'habremos recogido'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hemos recogido":"'hemos recogido' é a forma de nosotros no pretérito perfeito composto.","habrán recogido":"'habrán recogido' não é a forma que corresponde aqui.","habríamos recogido":"'habríamos recogido' é a forma de nosotros no condicional composto."}},
+  "verbo-125": {"promptNative":"Eu suponho que vocês provavelmente já _____ (ver = ver) as notícias, né? (vosotros)","explain":"O futuro composto pode expressar probabilidade sobre o passado recente: 'habréis visto' (= provavelmente vocês já viram).","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hayáis visto":"'hayáis visto' não é a forma que corresponde aqui.","habrán visto":"'habrán visto' não é a forma que corresponde aqui.","hubierais visto":"'hubierais visto' não é a forma que corresponde aqui."}},
+  "verbo-126": {"promptNative":"É possível que eles já _____ (irse = ir embora) quando chegarmos. (ellos)","explain":"'Es posible que' com ação terminada usa o pretérito perfeito composto do subjuntivo: 'se hayan ido'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"han ido":"'han ido' é a forma de ellos/ellas no pretérito perfeito composto.","habrán ido":"'habrán ido' não é a forma que corresponde aqui.","hubieran ido":"'hubieran ido' não é a forma que corresponde aqui."}},
+  "verbo-127": {"promptNative":"É uma pena que vocês não _____ (poder = poder) vir ao casamento. (vosotros)","explain":"Uma reação emocional a um fato passado terminado usa o pretérito perfeito composto do subjuntivo: 'hayáis podido'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habéis podido":"'habéis podido' é a forma de vosotros no pretérito perfeito composto.","hayan podido":"'hayan podido' não é a forma que corresponde aqui.","pudierais":"'pudierais' é a forma de vosotros no imperfeito do subjuntivo."}},
+  "verbo-128": {"promptNative":"_____ (pasar = passar) o que acontecer, mantenha a calma.","explain":"A fórmula fixa 'pase lo que pase' duplica o subjuntivo; o primeiro verbo é 'Pase'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"Pasa":"'Pasa' não é a forma que corresponde aqui.","Pasará":"'Pasará' não é a forma que corresponde aqui.","Pasaría":"'Pasaría' não é a forma que corresponde aqui."}},
+  "verbo-129": {"promptNative":"_____ (ser = ser) como for, nós vamos terminar isto hoje.","explain":"A expressão 'sea como sea' repete o presente do subjuntivo; o segundo verbo é 'sea'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"es":"'es' é a forma de él/ella no presente.","será":"'será' é a forma de él/ella no futuro.","fuera":"'fuera' é a forma de yo no imperfeito do subjuntivo."}},
+  "verbo-130": {"promptNative":"Custe o que _____ (costar = custar), eu vou conseguir aquele emprego.","explain":"'Cueste lo que cueste' é uma fórmula fixa de subjuntivo duplicado; o segundo verbo é 'cueste'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"cuesta":"'cuesta' é a forma de él/ella no presente.","costará":"'costará' é a forma de él/ella no futuro.","costaría":"'costaría' é a forma de yo no condicional."}},
+  "verbo-131": {"promptNative":"Por mais que vocês _____ (correr = correr), não vão chegar na hora. (vosotros)","explain":"'Por mucho que' com valor hipotético leva subjuntivo: 'corráis'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"corréis":"'corréis' é a forma de vosotros no presente.","corran":"'corran' é a forma de ellos/ellas.","corramos":"'corramos' é a forma de nosotros."}},
+  "verbo-132": {"promptNative":"Se vocês _____ (saber = saber) a verdade, teriam agido de outra forma. (vosotros)","explain":"A oração com 'si' de uma condição irreal no passado usa o mais-que-perfeito do subjuntivo: 'hubierais sabido'; o condicional composto fica no resultado.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habríais sabido":"'habríais sabido' é a forma de vosotros no condicional composto.","hubieran sabido":"'hubieran sabido' não é a forma que corresponde aqui.","habíais sabido":"'habíais sabido' é a forma de vosotros no mais-que-perfeito."}},
+  "verbo-133": {"promptNative":"Se vocês tivessem me contado antes, eu _____ (ayudar = ajudar) vocês. (yo)","explain":"O resultado de uma condição irreal passada usa o condicional composto: 'habría ayudado'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habré ayudado":"'habré ayudado' não é a forma que corresponde aqui.","habrían ayudado":"'habrían ayudado' é a forma de ellos/ellas.","había ayudado":"'había ayudado' é a forma de yo no mais-que-perfeito."}},
+  "verbo-134": {"promptNative":"Se vocês tivessem chegado na hora, vocês _____ (ver = ver) o começo do filme. (vosotros)","explain":"A oração de resultado de uma condição irreal no passado leva o condicional composto 'habríais visto'; o futuro composto 'habréis visto' não consegue expressar o contrafactual. 'Peli' é coloquial peninsular para filme.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habréis visto":"'habréis visto' não é a forma que corresponde aqui.","habrían visto":"'habrían visto' é a forma de ellos/ellas.","habíais visto":"'habíais visto' é a forma de vosotros no mais-que-perfeito."}},
+  "verbo-135": {"promptNative":"Se eles _____ (venir = vir), a festa teria sido muito melhor. (ellos)","explain":"A oração com 'si' leva o mais-que-perfeito do subjuntivo 'hubieran venido'; o condicional composto fica no resultado.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habrían venido":"'habrían venido' é a forma de ellos/ellas no condicional composto.","hubieras venido":"'hubieras venido' não é a forma que corresponde aqui.","habían venido":"'habían venido' é a forma de ellos/ellas no mais-que-perfeito."}},
+  "verbo-136": {"promptNative":"Eu queria que vocês tivessem me _____ (contar = contar) antes de assinar o contrato. (vosotros)","explain":"'Ojalá' expressando arrependimento sobre o passado leva o mais-que-perfeito do subjuntivo: 'hubierais contado'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habríais contado":"'habríais contado' é a forma de vosotros no condicional composto.","hubieran contado":"'hubieran contado' não é a forma que corresponde aqui.","contarais":"'contarais' é a forma de vosotros no imperfeito do subjuntivo."}},
+  "verbo-137": {"promptNative":"Se vocês soubessem, não _____ (venir = vir) até aqui. (vosotros)","explain":"'De + infinitivo' funciona como um 'si' passado; a oração de resultado leva o condicional composto 'habríais venido'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habréis venido":"'habréis venido' não é a forma que corresponde aqui.","habrían venido":"'habrían venido' é a forma de ellos/ellas.","habíais venido":"'habíais venido' é a forma de vosotros no mais-que-perfeito."}},
+  "verbo-138": {"promptNative":"Se eu estivesse lá, eu _____ (avisar = avisar) vocês na hora. (yo)","explain":"O resultado da condição irreal passada usa o condicional composto 'habría avisado', com o pronome 'os'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habré avisado":"'habré avisado' não é a forma que corresponde aqui.","habrían avisado":"'habrían avisado' é a forma de ellos/ellas.","avisaría":"'avisaría' é a forma de yo no condicional."}},
+  "verbo-139": {"promptNative":"Digam o que _____ (decir = dizer), eu sei a verdade. (ellos)","explain":"'Digan lo que digan' é uma fórmula de subjuntivo duplicado; o segundo verbo repete 'digan'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"dicen":"'dicen' é a forma de ellos/ellas no presente.","dirán":"'dirán' é a forma de ellos/ellas no futuro.","dijeran":"'dijeran' é a forma de ellos/ellas no imperfeito do subjuntivo."}},
+  "verbo-140": {"promptNative":"Façam o que _____ (hacer = fazer), avisem a gente primeiro. (vosotros)","explain":"A versão de vosotros da fórmula concessiva: 'hagáis lo que hagáis'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"hacéis":"'hacéis' é a forma de vosotros no presente.","hagan":"'hagan' é a forma de ellos/ellas.","haréis":"'haréis' é a forma de vosotros no futuro."}},
+  "verbo-141": {"promptNative":"Nunca _____ (rendirse = desistir), aconteça o que acontecer. (vosotros)","explain":"Imperativo negativo de vosotros do reflexivo 'rendirse' (e→i): 'no os rindáis', reforçado pela fórmula fixa 'pase lo que pase'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"rendís":"'rendís' é a forma de vosotros no presente.","rindan":"'rindan' é a forma de ellos/ellas.","rindas":"'rindas' é a forma de tú."}},
+  "verbo-142": {"promptNative":"Se eu _____ (tener = ter) mais dinheiro, compraria aquele carro.","explain":"O literário 'de + infinitivo' substitui a oração com 'si'; a lacuna fica no infinitivo: 'tener'. A Espanha diz 'coche'; a América Latina, 'carro/auto'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"tuviera":"'tuviera' é a forma de yo no imperfeito do subjuntivo.","teniendo":"'teniendo' não é a forma que corresponde aqui.","tenido":"'tenido' não é a forma que corresponde aqui."}},
+  "verbo-143": {"promptNative":"Se vocês tivessem nos avisado, nós não _____ (cometer = cometer) aquele erro. (nosotros)","explain":"O resultado da condição irreal passada leva o condicional composto 'habríamos cometido'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habremos cometido":"'habremos cometido' não é a forma que corresponde aqui.","habrían cometido":"'habrían cometido' é a forma de ellos/ellas.","habíamos cometido":"'habíamos cometido' é a forma de nosotros no mais-que-perfeito."}},
+  "verbo-144": {"promptNative":"Vocês olham para isso como se nunca _____ (ver = ver) o mar. (vosotros)","explain":"'Como si' referido a um momento anterior leva o mais-que-perfeito do subjuntivo: 'hubierais visto'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habéis visto":"'habéis visto' é a forma de vosotros no pretérito perfeito composto.","hubieran visto":"'hubieran visto' não é a forma que corresponde aqui.","veíais":"'veíais' é a forma de vosotros no imperfeito."}},
+  "verbo-145": {"promptNative":"Mesmo que vocês tivessem me pedido, eu não _____ (hacer = fazer) isso. (yo)","explain":"Uma concessiva irreal passada ('aunque' + mais-que-perfeito do subjuntivo) leva o condicional composto na oração principal: 'habría hecho'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habré hecho":"'habré hecho' não é a forma que corresponde aqui.","habrían hecho":"'habrían hecho' é a forma de ellos/ellas.","había hecho":"'había hecho' é a forma de yo no mais-que-perfeito."}},
+  "verbo-146": {"promptNative":"Se não fosse por vocês, eu não _____ (conseguir = conseguir) isso. (yo)","explain":"A oração principal dessa condição irreal passada usa o condicional composto 'habría conseguido'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habré conseguido":"'habré conseguido' não é a forma que corresponde aqui.","habrían conseguido":"'habrían conseguido' é a forma de ellos/ellas.","conseguiría":"'conseguiría' é a forma de yo no condicional."}},
+  "verbo-147": {"promptNative":"Como se vocês _____ (ser = ser) milionários, com tanto que gastam. (vosotros)","explain":"'Ni que' é uma concessiva incrédula que leva o imperfeito do subjuntivo: 'fuerais'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"sois":"'sois' é a forma de vosotros no presente.","fueran":"'fueran' é a forma de ellos/ellas.","seríais":"'seríais' é a forma de vosotros no condicional."}},
+  "verbo-148": {"promptNative":"Por mais que vocês _____ (negar = negar), a verdade viria à tona. (vosotros)","explain":"'Por más que' com sentido hipotético leva o imperfeito do subjuntivo: 'negarais'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"negáis":"'negáis' é a forma de vosotros no presente.","negaran":"'negaran' é a forma de ellos/ellas.","negaríais":"'negaríais' é a forma de vosotros no condicional."}},
+  "verbo-149": {"promptNative":"Seja quem _____ (ser = ser), que espere lá fora. (él)","explain":"Os relativos indefinidos como 'quienquiera que' levam o presente do subjuntivo: 'sea'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"es":"'es' é a forma de él/ella no presente.","será":"'será' é a forma de él/ella no futuro.","fuera":"'fuera' é a forma de yo no imperfeito do subjuntivo."}},
+  "verbo-150": {"promptNative":"Estou surpreso que vocês já _____ (volver = voltar) das férias. (vosotros)","explain":"Uma reação emocional a um fato terminado leva o pretérito perfeito composto do subjuntivo: 'hayáis vuelto' (particípio irregular).","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habéis vuelto":"'habéis vuelto' é a forma de vosotros no pretérito perfeito composto.","hayan vuelto":"'hayan vuelto' não é a forma que corresponde aqui.","volvierais":"'volvierais' é a forma de vosotros no imperfeito do subjuntivo."}},
+  "verbo-151": {"promptNative":"Me surpreende que vocês não _____ (darse cuenta = perceber) antes. (vosotros)","explain":"'Me extraña que' com ação terminada leva o pretérito perfeito composto do subjuntivo: 'os hayáis dado cuenta'.","wrongNote":"Só uma opção concorda com o sujeito e com o tempo/modo da frase — as demais são formas incorretas do verbo.","distractorNotes":{"habéis dado":"'habéis dado' é a forma de vosotros no pretérito perfeito composto.","hayan dado":"'hayan dado' não é a forma que corresponde aqui.","habíais dado":"'habíais dado' é a forma de vosotros no mais-que-perfeito."}},
+  "verbo-152": {"promptNative":"Eu _____ (hablar = falar). (pres)","explain":"A forma de yo no presente de 'hablar' é 'hablo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"hablas":"'hablas' é a forma de tú.","habla":"'habla' é a forma de él/ella/usted.","hablamos":"'hablamos' é a forma de nosotros."}},
+  "verbo-153": {"promptNative":"Nós _____ (hablar = falar). (pres)","explain":"A forma de nosotros no presente de 'hablar' é 'hablamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"hablo":"'hablo' é a forma de yo.","hablas":"'hablas' é a forma de tú.","habla":"'habla' é a forma de él/ella/usted."}},
+  "verbo-154": {"promptNative":"Eu _____ (trabajar = trabalhar). (pres)","explain":"A forma de yo no presente de 'trabajar' é 'trabajo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"trabajas":"'trabajas' é a forma de tú.","trabaja":"'trabaja' é a forma de él/ella/usted.","trabajamos":"'trabajamos' é a forma de nosotros."}},
+  "verbo-155": {"promptNative":"Nós _____ (trabajar = trabalhar). (pres)","explain":"A forma de nosotros no presente de 'trabajar' é 'trabajamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"trabajo":"'trabajo' é a forma de yo.","trabajas":"'trabajas' é a forma de tú.","trabaja":"'trabaja' é a forma de él/ella/usted."}},
+  "verbo-156": {"promptNative":"Eu _____ (estudiar = estudar). (pres)","explain":"A forma de yo no presente de 'estudiar' é 'estudio'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"estudias":"'estudias' é a forma de tú.","estudia":"'estudia' é a forma de él/ella/usted.","estudiamos":"'estudiamos' é a forma de nosotros."}},
+  "verbo-157": {"promptNative":"Nós _____ (estudiar = estudar). (pres)","explain":"A forma de nosotros no presente de 'estudiar' é 'estudiamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"estudio":"'estudio' é a forma de yo.","estudias":"'estudias' é a forma de tú.","estudia":"'estudia' é a forma de él/ella/usted."}},
+  "verbo-158": {"promptNative":"Eu _____ (comprar = comprar). (pres)","explain":"A forma de yo no presente de 'comprar' é 'compro'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"compras":"'compras' é a forma de tú.","compra":"'compra' é a forma de él/ella/usted.","compramos":"'compramos' é a forma de nosotros."}},
+  "verbo-159": {"promptNative":"Nós _____ (comprar = comprar). (pres)","explain":"A forma de nosotros no presente de 'comprar' é 'compramos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"compro":"'compro' é a forma de yo.","compras":"'compras' é a forma de tú.","compra":"'compra' é a forma de él/ella/usted."}},
+  "verbo-160": {"promptNative":"Eu _____ (cocinar = cozinhar). (pres)","explain":"A forma de yo no presente de 'cocinar' é 'cocino'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"cocinas":"'cocinas' é a forma de tú.","cocina":"'cocina' é a forma de él/ella/usted.","cocinamos":"'cocinamos' é a forma de nosotros."}},
+  "verbo-161": {"promptNative":"Nós _____ (cocinar = cozinhar). (pres)","explain":"A forma de nosotros no presente de 'cocinar' é 'cocinamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"cocino":"'cocino' é a forma de yo.","cocinas":"'cocinas' é a forma de tú.","cocina":"'cocina' é a forma de él/ella/usted."}},
+  "verbo-162": {"promptNative":"Eu _____ (cantar = cantar). (pres)","explain":"A forma de yo no presente de 'cantar' é 'canto'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"cantas":"'cantas' é a forma de tú.","canta":"'canta' é a forma de él/ella/usted.","cantamos":"'cantamos' é a forma de nosotros."}},
+  "verbo-163": {"promptNative":"Nós _____ (cantar = cantar). (pres)","explain":"A forma de nosotros no presente de 'cantar' é 'cantamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"canto":"'canto' é a forma de yo.","cantas":"'cantas' é a forma de tú.","canta":"'canta' é a forma de él/ella/usted."}},
+  "verbo-164": {"promptNative":"Eu _____ (bailar = dançar). (pres)","explain":"A forma de yo no presente de 'bailar' é 'bailo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"bailas":"'bailas' é a forma de tú.","baila":"'baila' é a forma de él/ella/usted.","bailamos":"'bailamos' é a forma de nosotros."}},
+  "verbo-165": {"promptNative":"Nós _____ (bailar = dançar). (pres)","explain":"A forma de nosotros no presente de 'bailar' é 'bailamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"bailo":"'bailo' é a forma de yo.","bailas":"'bailas' é a forma de tú.","baila":"'baila' é a forma de él/ella/usted."}},
+  "verbo-166": {"promptNative":"Eu _____ (tomar = tomar). (pres)","explain":"A forma de yo no presente de 'tomar' é 'tomo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"tomas":"'tomas' é a forma de tú.","toma":"'toma' é a forma de él/ella/usted.","tomamos":"'tomamos' é a forma de nosotros."}},
+  "verbo-167": {"promptNative":"Nós _____ (tomar = tomar). (pres)","explain":"A forma de nosotros no presente de 'tomar' é 'tomamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"tomo":"'tomo' é a forma de yo.","tomas":"'tomas' é a forma de tú.","toma":"'toma' é a forma de él/ella/usted."}},
+  "verbo-168": {"promptNative":"Eu _____ (llegar = chegar). (pres)","explain":"A forma de yo no presente de 'llegar' é 'llego'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"llegas":"'llegas' é a forma de tú.","llega":"'llega' é a forma de él/ella/usted.","llegamos":"'llegamos' é a forma de nosotros."}},
+  "verbo-169": {"promptNative":"Nós _____ (llegar = chegar). (pres)","explain":"A forma de nosotros no presente de 'llegar' é 'llegamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"llego":"'llego' é a forma de yo.","llegas":"'llegas' é a forma de tú.","llega":"'llega' é a forma de él/ella/usted."}},
+  "verbo-170": {"promptNative":"Eu _____ (escuchar = escutar). (pres)","explain":"A forma de yo no presente de 'escuchar' é 'escucho'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"escuchas":"'escuchas' é a forma de tú.","escucha":"'escucha' é a forma de él/ella/usted.","escuchamos":"'escuchamos' é a forma de nosotros."}},
+  "verbo-171": {"promptNative":"Nós _____ (escuchar = escutar). (pres)","explain":"A forma de nosotros no presente de 'escuchar' é 'escuchamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"escucho":"'escucho' é a forma de yo.","escuchas":"'escuchas' é a forma de tú.","escucha":"'escucha' é a forma de él/ella/usted."}},
+  "verbo-172": {"promptNative":"Eu _____ (mirar = olhar). (pres)","explain":"A forma de yo no presente de 'mirar' é 'miro'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"miras":"'miras' é a forma de tú.","mira":"'mira' é a forma de él/ella/usted.","miramos":"'miramos' é a forma de nosotros."}},
+  "verbo-173": {"promptNative":"Nós _____ (mirar = olhar). (pres)","explain":"A forma de nosotros no presente de 'mirar' é 'miramos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"miro":"'miro' é a forma de yo.","miras":"'miras' é a forma de tú.","mira":"'mira' é a forma de él/ella/usted."}},
+  "verbo-174": {"promptNative":"Eu _____ (esperar = esperar). (pres)","explain":"A forma de yo no presente de 'esperar' é 'espero'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"esperas":"'esperas' é a forma de tú.","espera":"'espera' é a forma de él/ella/usted.","esperamos":"'esperamos' é a forma de nosotros."}},
+  "verbo-175": {"promptNative":"Nós _____ (esperar = esperar). (pres)","explain":"A forma de nosotros no presente de 'esperar' é 'esperamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"espero":"'espero' é a forma de yo.","esperas":"'esperas' é a forma de tú.","espera":"'espera' é a forma de él/ella/usted."}},
+  "verbo-176": {"promptNative":"Eu _____ (aparcar = estacionar (Espanha)). (pres)","explain":"A forma de yo no presente de 'aparcar' é 'aparco'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"aparcas":"'aparcas' é a forma de tú.","aparca":"'aparca' é a forma de él/ella/usted.","aparcamos":"'aparcamos' é a forma de nosotros."}},
+  "verbo-177": {"promptNative":"Nós _____ (aparcar = estacionar (Espanha)). (pres)","explain":"A forma de nosotros no presente de 'aparcar' é 'aparcamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"aparco":"'aparco' é a forma de yo.","aparcas":"'aparcas' é a forma de tú.","aparca":"'aparca' é a forma de él/ella/usted."}},
+  "verbo-178": {"promptNative":"Eu _____ (firmar = assinar). (pres)","explain":"A forma de yo no presente de 'firmar' é 'firmo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"firmas":"'firmas' é a forma de tú.","firma":"'firma' é a forma de él/ella/usted.","firmamos":"'firmamos' é a forma de nosotros."}},
+  "verbo-179": {"promptNative":"Nós _____ (firmar = assinar). (pres)","explain":"A forma de nosotros no presente de 'firmar' é 'firmamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"firmo":"'firmo' é a forma de yo.","firmas":"'firmas' é a forma de tú.","firma":"'firma' é a forma de él/ella/usted."}},
+  "verbo-180": {"promptNative":"Eu _____ (comer = comer). (pres)","explain":"A forma de yo no presente de 'comer' é 'como'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"comes":"'comes' é a forma de tú.","come":"'come' é a forma de él/ella/usted.","comemos":"'comemos' é a forma de nosotros."}},
+  "verbo-181": {"promptNative":"Nós _____ (comer = comer). (pres)","explain":"A forma de nosotros no presente de 'comer' é 'comemos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"como":"'como' é a forma de yo.","comes":"'comes' é a forma de tú.","come":"'come' é a forma de él/ella/usted."}},
+  "verbo-182": {"promptNative":"Eu _____ (beber = beber). (pres)","explain":"A forma de yo no presente de 'beber' é 'bebo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"bebes":"'bebes' é a forma de tú.","bebe":"'bebe' é a forma de él/ella/usted.","bebemos":"'bebemos' é a forma de nosotros."}},
+  "verbo-183": {"promptNative":"Nós _____ (beber = beber). (pres)","explain":"A forma de nosotros no presente de 'beber' é 'bebemos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"bebo":"'bebo' é a forma de yo.","bebes":"'bebes' é a forma de tú.","bebe":"'bebe' é a forma de él/ella/usted."}},
+  "verbo-184": {"promptNative":"Eu _____ (correr = correr). (pres)","explain":"A forma de yo no presente de 'correr' é 'corro'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"corres":"'corres' é a forma de tú.","corre":"'corre' é a forma de él/ella/usted.","corremos":"'corremos' é a forma de nosotros."}},
+  "verbo-185": {"promptNative":"Nós _____ (correr = correr). (pres)","explain":"A forma de nosotros no presente de 'correr' é 'corremos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"corro":"'corro' é a forma de yo.","corres":"'corres' é a forma de tú.","corre":"'corre' é a forma de él/ella/usted."}},
+  "verbo-186": {"promptNative":"Eu _____ (leer = ler). (pres)","explain":"A forma de yo no presente de 'leer' é 'leo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"lees":"'lees' é a forma de tú.","lee":"'lee' é a forma de él/ella/usted.","leemos":"'leemos' é a forma de nosotros."}},
+  "verbo-187": {"promptNative":"Nós _____ (leer = ler). (pres)","explain":"A forma de nosotros no presente de 'leer' é 'leemos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"leo":"'leo' é a forma de yo.","lees":"'lees' é a forma de tú.","lee":"'lee' é a forma de él/ella/usted."}},
+  "verbo-188": {"promptNative":"Eu _____ (aprender = aprender). (pres)","explain":"A forma de yo no presente de 'aprender' é 'aprendo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"aprendes":"'aprendes' é a forma de tú.","aprende":"'aprende' é a forma de él/ella/usted.","aprendemos":"'aprendemos' é a forma de nosotros."}},
+  "verbo-189": {"promptNative":"Nós _____ (aprender = aprender). (pres)","explain":"A forma de nosotros no presente de 'aprender' é 'aprendemos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"aprendo":"'aprendo' é a forma de yo.","aprendes":"'aprendes' é a forma de tú.","aprende":"'aprende' é a forma de él/ella/usted."}},
+  "verbo-190": {"promptNative":"Eu _____ (comprender = compreender). (pres)","explain":"A forma de yo no presente de 'comprender' é 'comprendo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"comprendes":"'comprendes' é a forma de tú.","comprende":"'comprende' é a forma de él/ella/usted.","comprendemos":"'comprendemos' é a forma de nosotros."}},
+  "verbo-191": {"promptNative":"Nós _____ (comprender = compreender). (pres)","explain":"A forma de nosotros no presente de 'comprender' é 'comprendemos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"comprendo":"'comprendo' é a forma de yo.","comprendes":"'comprendes' é a forma de tú.","comprende":"'comprende' é a forma de él/ella/usted."}},
+  "verbo-192": {"promptNative":"Eu _____ (coger = pegar (Espanha)). (pres)","explain":"A forma de yo no presente de 'coger' é 'cojo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"coges":"'coges' é a forma de tú.","coge":"'coge' é a forma de él/ella/usted.","cogemos":"'cogemos' é a forma de nosotros."}},
+  "verbo-193": {"promptNative":"Nós _____ (coger = pegar (Espanha)). (pres)","explain":"A forma de nosotros no presente de 'coger' é 'cogemos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"cojo":"'cojo' é a forma de yo.","coges":"'coges' é a forma de tú.","coge":"'coge' é a forma de él/ella/usted."}},
+  "verbo-194": {"promptNative":"Eu _____ (vender = vender). (pres)","explain":"A forma de yo no presente de 'vender' é 'vendo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"vendes":"'vendes' é a forma de tú.","vende":"'vende' é a forma de él/ella/usted.","vendemos":"'vendemos' é a forma de nosotros."}},
+  "verbo-195": {"promptNative":"Nós _____ (vender = vender). (pres)","explain":"A forma de nosotros no presente de 'vender' é 'vendemos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"vendo":"'vendo' é a forma de yo.","vendes":"'vendes' é a forma de tú.","vende":"'vende' é a forma de él/ella/usted."}},
+  "verbo-196": {"promptNative":"Eu _____ (vivir = morar). (pres)","explain":"A forma de yo no presente de 'vivir' é 'vivo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"vives":"'vives' é a forma de tú.","vive":"'vive' é a forma de él/ella/usted.","vivimos":"'vivimos' é a forma de nosotros."}},
+  "verbo-197": {"promptNative":"Nós _____ (vivir = morar). (pres)","explain":"A forma de nosotros no presente de 'vivir' é 'vivimos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"vivo":"'vivo' é a forma de yo.","vives":"'vives' é a forma de tú.","vive":"'vive' é a forma de él/ella/usted."}},
+  "verbo-198": {"promptNative":"Eu _____ (escribir = escrever). (pres)","explain":"A forma de yo no presente de 'escribir' é 'escribo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"escribes":"'escribes' é a forma de tú.","escribe":"'escribe' é a forma de él/ella/usted.","escribimos":"'escribimos' é a forma de nosotros."}},
+  "verbo-199": {"promptNative":"Nós _____ (escribir = escrever). (pres)","explain":"A forma de nosotros no presente de 'escribir' é 'escribimos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"escribo":"'escribo' é a forma de yo.","escribes":"'escribes' é a forma de tú.","escribe":"'escribe' é a forma de él/ella/usted."}},
+  "verbo-200": {"promptNative":"Eu _____ (abrir = abrir). (pres)","explain":"A forma de yo no presente de 'abrir' é 'abro'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"abres":"'abres' é a forma de tú.","abre":"'abre' é a forma de él/ella/usted.","abrimos":"'abrimos' é a forma de nosotros."}},
+  "verbo-201": {"promptNative":"Nós _____ (abrir = abrir). (pres)","explain":"A forma de nosotros no presente de 'abrir' é 'abrimos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"abro":"'abro' é a forma de yo.","abres":"'abres' é a forma de tú.","abre":"'abre' é a forma de él/ella/usted."}},
+  "verbo-202": {"promptNative":"Eu _____ (recibir = receber). (pres)","explain":"A forma de yo no presente de 'recibir' é 'recibo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"recibes":"'recibes' é a forma de tú.","recibe":"'recibe' é a forma de él/ella/usted.","recibimos":"'recibimos' é a forma de nosotros."}},
+  "verbo-203": {"promptNative":"Nós _____ (recibir = receber). (pres)","explain":"A forma de nosotros no presente de 'recibir' é 'recibimos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"recibo":"'recibo' é a forma de yo.","recibes":"'recibes' é a forma de tú.","recibe":"'recibe' é a forma de él/ella/usted."}},
+  "verbo-204": {"promptNative":"Eu _____ (subir = subir). (pres)","explain":"A forma de yo no presente de 'subir' é 'subo'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"subes":"'subes' é a forma de tú.","sube":"'sube' é a forma de él/ella/usted.","subimos":"'subimos' é a forma de nosotros."}},
+  "verbo-205": {"promptNative":"Nós _____ (subir = subir). (pres)","explain":"A forma de nosotros no presente de 'subir' é 'subimos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"subo":"'subo' é a forma de yo.","subes":"'subes' é a forma de tú.","sube":"'sube' é a forma de él/ella/usted."}},
+  "verbo-206": {"promptNative":"Eu _____ (decidir = decidir). (pres)","explain":"A forma de yo no presente de 'decidir' é 'decido'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"decides":"'decides' é a forma de tú.","decide":"'decide' é a forma de él/ella/usted.","decidimos":"'decidimos' é a forma de nosotros."}},
+  "verbo-207": {"promptNative":"Ontem eu _____ (hablar = falar). (pret)","explain":"A forma de yo no pretérito de 'hablar' é 'hablé'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito.","distractorNotes":{"hablaste":"'hablaste' é a forma de tú.","habló":"'habló' é a forma de él/ella/usted.","hablamos":"'hablamos' é a forma de nosotros."}},
+  "verbo-208": {"promptNative":"Antigamente você (tú) _____ (hablar = falar). (impf)","explain":"A forma de tú no imperfeito de 'hablar' é 'hablabas'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito.","distractorNotes":{"hablaba":"'hablaba' é a forma de yo.","hablábamos":"'hablábamos' é a forma de nosotros.","hablabais":"'hablabais' é a forma de vosotros (Espanha)."}},
+  "verbo-209": {"promptNative":"Ontem vocês (vosotros) _____ (trabajar = trabalhar). (pret)","explain":"A forma de vosotros no pretérito de 'trabajar' é 'trabajasteis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito.","distractorNotes":{"trabajé":"'trabajé' é a forma de yo.","trabajaste":"'trabajaste' é a forma de tú.","trabajó":"'trabajó' é a forma de él/ella/usted."}},
+  "verbo-210": {"promptNative":"Ontem você (tú) _____ (estudiar = estudar). (pret)","explain":"A forma de tú no pretérito de 'estudiar' é 'estudiaste'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao pretérito.","distractorNotes":{"estudié":"'estudié' é a forma de yo.","estudió":"'estudió' é a forma de él/ella/usted.","estudiamos":"'estudiamos' é a forma de nosotros."}},
+  "verbo-211": {"promptNative":"Antigamente vocês (vosotros) _____ (estudiar = estudar). (impf)","explain":"A forma de vosotros no imperfeito de 'estudiar' é 'estudiabais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito.","distractorNotes":{"estudiaba":"'estudiaba' é a forma de yo.","estudiabas":"'estudiabas' é a forma de tú.","estudiábamos":"'estudiábamos' é a forma de nosotros."}},
+  "verbo-212": {"promptNative":"Ontem eles _____ (comprar = comprar). (pret)","explain":"A forma de ellos/ellas no pretérito de 'comprar' é 'compraron'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao pretérito.","distractorNotes":{"compré":"'compré' é a forma de yo.","compraste":"'compraste' é a forma de tú.","compró":"'compró' é a forma de él/ella/usted."}},
+  "verbo-213": {"promptNative":"Ontem ele/ela _____ (cocinar = cozinhar). (pret)","explain":"A forma de él/ella no pretérito de 'cocinar' é 'cocinó'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito.","distractorNotes":{"cociné":"'cociné' é a forma de yo.","cocinaste":"'cocinaste' é a forma de tú.","cocinamos":"'cocinamos' é a forma de nosotros."}},
+  "verbo-214": {"promptNative":"Antigamente eles _____ (cocinar = cozinhar). (impf)","explain":"A forma de ellos/ellas no imperfeito de 'cocinar' é 'cocinaban'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito.","distractorNotes":{"cocinaba":"'cocinaba' é a forma de yo.","cocinabas":"'cocinabas' é a forma de tú.","cocinábamos":"'cocinábamos' é a forma de nosotros."}},
+  "verbo-215": {"promptNative":"Antigamente eu _____ (cantar = cantar). (impf)","explain":"A forma de yo no imperfeito de 'cantar' é 'cantaba'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito.","distractorNotes":{"cantabas":"'cantabas' é a forma de tú.","cantábamos":"'cantábamos' é a forma de nosotros.","cantabais":"'cantabais' é a forma de vosotros (Espanha)."}},
+  "verbo-216": {"promptNative":"Ontem nós _____ (bailar = dançar). (pret)","explain":"A forma de nosotros no pretérito de 'bailar' é 'bailamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao pretérito.","distractorNotes":{"bailé":"'bailé' é a forma de yo.","bailaste":"'bailaste' é a forma de tú.","bailó":"'bailó' é a forma de él/ella/usted."}},
+  "verbo-217": {"promptNative":"Ontem eu _____ (tomar = tomar). (pret)","explain":"A forma de yo no pretérito de 'tomar' é 'tomé'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito.","distractorNotes":{"tomaste":"'tomaste' é a forma de tú.","tomó":"'tomó' é a forma de él/ella/usted.","tomamos":"'tomamos' é a forma de nosotros."}},
+  "verbo-218": {"promptNative":"Antigamente você (tú) _____ (tomar = tomar). (impf)","explain":"A forma de tú no imperfeito de 'tomar' é 'tomabas'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito.","distractorNotes":{"tomaba":"'tomaba' é a forma de yo.","tomábamos":"'tomábamos' é a forma de nosotros.","tomabais":"'tomabais' é a forma de vosotros (Espanha)."}},
+  "verbo-219": {"promptNative":"Ontem vocês (vosotros) _____ (llegar = chegar). (pret)","explain":"A forma de vosotros no pretérito de 'llegar' é 'llegasteis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito.","distractorNotes":{"llegué":"'llegué' é a forma de yo.","llegaste":"'llegaste' é a forma de tú.","llegó":"'llegó' é a forma de él/ella/usted."}},
+  "verbo-220": {"promptNative":"Ontem você (tú) _____ (escuchar = escutar). (pret)","explain":"A forma de tú no pretérito de 'escuchar' é 'escuchaste'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao pretérito.","distractorNotes":{"escuché":"'escuché' é a forma de yo.","escuchó":"'escuchó' é a forma de él/ella/usted.","escuchamos":"'escuchamos' é a forma de nosotros."}},
+  "verbo-221": {"promptNative":"Antigamente vocês (vosotros) _____ (escuchar = escutar). (impf)","explain":"A forma de vosotros no imperfeito de 'escuchar' é 'escuchabais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito.","distractorNotes":{"escuchaba":"'escuchaba' é a forma de yo.","escuchabas":"'escuchabas' é a forma de tú.","escuchábamos":"'escuchábamos' é a forma de nosotros."}},
+  "verbo-222": {"promptNative":"Ontem eles _____ (mirar = olhar). (pret)","explain":"A forma de ellos/ellas no pretérito de 'mirar' é 'miraron'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao pretérito.","distractorNotes":{"miré":"'miré' é a forma de yo.","miraste":"'miraste' é a forma de tú.","miró":"'miró' é a forma de él/ella/usted."}},
+  "verbo-223": {"promptNative":"Ontem ele/ela _____ (esperar = esperar). (pret)","explain":"A forma de él/ella no pretérito de 'esperar' é 'esperó'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito.","distractorNotes":{"esperé":"'esperé' é a forma de yo.","esperaste":"'esperaste' é a forma de tú.","esperamos":"'esperamos' é a forma de nosotros."}},
+  "verbo-224": {"promptNative":"Antigamente eles _____ (esperar = esperar). (impf)","explain":"A forma de ellos/ellas no imperfeito de 'esperar' é 'esperaban'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito.","distractorNotes":{"esperaba":"'esperaba' é a forma de yo.","esperabas":"'esperabas' é a forma de tú.","esperábamos":"'esperábamos' é a forma de nosotros."}},
+  "verbo-225": {"promptNative":"Antigamente eu _____ (aparcar = estacionar (Espanha)). (impf)","explain":"A forma de yo no imperfeito de 'aparcar' é 'aparcaba'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito.","distractorNotes":{"aparcabas":"'aparcabas' é a forma de tú.","aparcábamos":"'aparcábamos' é a forma de nosotros.","aparcabais":"'aparcabais' é a forma de vosotros (Espanha)."}},
+  "verbo-226": {"promptNative":"Ontem nós _____ (firmar = assinar). (pret)","explain":"A forma de nosotros no pretérito de 'firmar' é 'firmamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao pretérito.","distractorNotes":{"firmé":"'firmé' é a forma de yo.","firmaste":"'firmaste' é a forma de tú.","firmó":"'firmó' é a forma de él/ella/usted."}},
+  "verbo-227": {"promptNative":"Ontem eu _____ (comer = comer). (pret)","explain":"A forma de yo no pretérito de 'comer' é 'comí'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito.","distractorNotes":{"comiste":"'comiste' é a forma de tú.","comió":"'comió' é a forma de él/ella/usted.","comimos":"'comimos' é a forma de nosotros."}},
+  "verbo-228": {"promptNative":"Antigamente você (tú) _____ (comer = comer). (impf)","explain":"A forma de tú no imperfeito de 'comer' é 'comías'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito.","distractorNotes":{"comía":"'comía' é a forma de yo.","comíamos":"'comíamos' é a forma de nosotros.","comíais":"'comíais' é a forma de vosotros (Espanha)."}},
+  "verbo-229": {"promptNative":"Ontem vocês (vosotros) _____ (beber = beber). (pret)","explain":"A forma de vosotros no pretérito de 'beber' é 'bebisteis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito.","distractorNotes":{"bebí":"'bebí' é a forma de yo.","bebiste":"'bebiste' é a forma de tú.","bebió":"'bebió' é a forma de él/ella/usted."}},
+  "verbo-230": {"promptNative":"Ontem você (tú) _____ (correr = correr). (pret)","explain":"A forma de tú no pretérito de 'correr' é 'corriste'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao pretérito.","distractorNotes":{"corrí":"'corrí' é a forma de yo.","corrió":"'corrió' é a forma de él/ella/usted.","corrimos":"'corrimos' é a forma de nosotros."}},
+  "verbo-231": {"promptNative":"Antigamente vocês (vosotros) _____ (correr = correr). (impf)","explain":"A forma de vosotros no imperfeito de 'correr' é 'corríais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito.","distractorNotes":{"corría":"'corría' é a forma de yo.","corrías":"'corrías' é a forma de tú.","corríamos":"'corríamos' é a forma de nosotros."}},
+  "verbo-232": {"promptNative":"Ontem eles _____ (leer = ler). (pret)","explain":"A forma de ellos/ellas no pretérito de 'leer' é 'leyeron'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao pretérito.","distractorNotes":{"leí":"'leí' é a forma de yo.","leíste":"'leíste' é a forma de tú.","leyó":"'leyó' é a forma de él/ella/usted."}},
+  "verbo-233": {"promptNative":"Ontem ele/ela _____ (aprender = aprender). (pret)","explain":"A forma de él/ella no pretérito de 'aprender' é 'aprendió'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito.","distractorNotes":{"aprendí":"'aprendí' é a forma de yo.","aprendiste":"'aprendiste' é a forma de tú.","aprendimos":"'aprendimos' é a forma de nosotros."}},
+  "verbo-234": {"promptNative":"Antigamente eles _____ (aprender = aprender). (impf)","explain":"A forma de ellos/ellas no imperfeito de 'aprender' é 'aprendían'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito.","distractorNotes":{"aprendía":"'aprendía' é a forma de yo.","aprendías":"'aprendías' é a forma de tú.","aprendíamos":"'aprendíamos' é a forma de nosotros."}},
+  "verbo-235": {"promptNative":"Antigamente eu _____ (comprender = compreender). (impf)","explain":"A forma de yo no imperfeito de 'comprender' é 'comprendía'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito.","distractorNotes":{"comprendías":"'comprendías' é a forma de tú.","comprendíamos":"'comprendíamos' é a forma de nosotros.","comprendíais":"'comprendíais' é a forma de vosotros (Espanha)."}},
+  "verbo-236": {"promptNative":"Ontem nós _____ (coger = pegar (Espanha)). (pret)","explain":"A forma de nosotros no pretérito de 'coger' é 'cogimos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao pretérito.","distractorNotes":{"cogí":"'cogí' é a forma de yo.","cogiste":"'cogiste' é a forma de tú.","cogió":"'cogió' é a forma de él/ella/usted."}},
+  "verbo-237": {"promptNative":"Ontem eu _____ (vender = vender). (pret)","explain":"A forma de yo no pretérito de 'vender' é 'vendí'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito.","distractorNotes":{"vendiste":"'vendiste' é a forma de tú.","vendió":"'vendió' é a forma de él/ella/usted.","vendimos":"'vendimos' é a forma de nosotros."}},
+  "verbo-238": {"promptNative":"Antigamente você (tú) _____ (vender = vender). (impf)","explain":"A forma de tú no imperfeito de 'vender' é 'vendías'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito.","distractorNotes":{"vendía":"'vendía' é a forma de yo.","vendíamos":"'vendíamos' é a forma de nosotros.","vendíais":"'vendíais' é a forma de vosotros (Espanha)."}},
+  "verbo-239": {"promptNative":"Ontem vocês (vosotros) _____ (vivir = morar). (pret)","explain":"A forma de vosotros no pretérito de 'vivir' é 'vivisteis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito.","distractorNotes":{"viví":"'viví' é a forma de yo.","viviste":"'viviste' é a forma de tú.","vivió":"'vivió' é a forma de él/ella/usted."}},
+  "verbo-240": {"promptNative":"Ontem você (tú) _____ (escribir = escrever). (pret)","explain":"A forma de tú no pretérito de 'escribir' é 'escribiste'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao pretérito.","distractorNotes":{"escribí":"'escribí' é a forma de yo.","escribió":"'escribió' é a forma de él/ella/usted.","escribimos":"'escribimos' é a forma de nosotros."}},
+  "verbo-241": {"promptNative":"Antigamente vocês (vosotros) _____ (escribir = escrever). (impf)","explain":"A forma de vosotros no imperfeito de 'escribir' é 'escribíais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito.","distractorNotes":{"escribía":"'escribía' é a forma de yo.","escribías":"'escribías' é a forma de tú.","escribíamos":"'escribíamos' é a forma de nosotros."}},
+  "verbo-242": {"promptNative":"Ontem eles _____ (abrir = abrir). (pret)","explain":"A forma de ellos/ellas no pretérito de 'abrir' é 'abrieron'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao pretérito.","distractorNotes":{"abrí":"'abrí' é a forma de yo.","abriste":"'abriste' é a forma de tú.","abrió":"'abrió' é a forma de él/ella/usted."}},
+  "verbo-243": {"promptNative":"Ontem ele/ela _____ (recibir = receber). (pret)","explain":"A forma de él/ella no pretérito de 'recibir' é 'recibió'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito.","distractorNotes":{"recibí":"'recibí' é a forma de yo.","recibiste":"'recibiste' é a forma de tú.","recibimos":"'recibimos' é a forma de nosotros."}},
+  "verbo-244": {"promptNative":"Antigamente eles _____ (recibir = receber). (impf)","explain":"A forma de ellos/ellas no imperfeito de 'recibir' é 'recibían'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito.","distractorNotes":{"recibía":"'recibía' é a forma de yo.","recibías":"'recibías' é a forma de tú.","recibíamos":"'recibíamos' é a forma de nosotros."}},
+  "verbo-245": {"promptNative":"Antigamente eu _____ (subir = subir). (impf)","explain":"A forma de yo no imperfeito de 'subir' é 'subía'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito.","distractorNotes":{"subías":"'subías' é a forma de tú.","subíamos":"'subíamos' é a forma de nosotros.","subíais":"'subíais' é a forma de vosotros (Espanha)."}},
+  "verbo-246": {"promptNative":"Ontem nós _____ (decidir = decidir). (pret)","explain":"A forma de nosotros no pretérito de 'decidir' é 'decidimos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao pretérito.","distractorNotes":{"decidí":"'decidí' é a forma de yo.","decidiste":"'decidiste' é a forma de tú.","decidió":"'decidió' é a forma de él/ella/usted."}},
+  "verbo-247": {"promptNative":"Eu _____ (pensar = pensar). (pres)","explain":"A forma de yo no presente de 'pensar' é 'pienso'. Repare na mudança de raiz na sílaba tônica.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"piensas":"'piensas' é a forma de tú.","piensa":"'piensa' é a forma de él/ella/usted.","pensamos":"'pensamos' é a forma de nosotros."}},
+  "verbo-248": {"promptNative":"Antigamente você (tú) _____ (pensar = pensar). (impf)","explain":"A forma de tú no imperfeito de 'pensar' é 'pensabas'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito.","distractorNotes":{"pensaba":"'pensaba' é a forma de yo.","pensábamos":"'pensábamos' é a forma de nosotros.","pensabais":"'pensabais' é a forma de vosotros (Espanha)."}},
+  "verbo-249": {"promptNative":"Vocês (vosotros) _____ (poder = poder). (pres)","explain":"A forma de vosotros no presente de 'poder' é 'podéis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente.","distractorNotes":{"puedo":"'puedo' é a forma de yo.","puedes":"'puedes' é a forma de tú.","puede":"'puede' é a forma de él/ella/usted."}},
+  "verbo-250": {"promptNative":"Você (tú) _____ (querer = querer). (pres)","explain":"A forma de tú no presente de 'querer' é 'quieres'. Repare na mudança de raiz na sílaba tônica.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao presente.","distractorNotes":{"quiero":"'quiero' é a forma de yo.","quiere":"'quiere' é a forma de él/ella/usted.","queremos":"'queremos' é a forma de nosotros."}},
+  "verbo-251": {"promptNative":"Antigamente vocês (vosotros) _____ (querer = querer). (impf)","explain":"A forma de vosotros no imperfeito de 'querer' é 'queríais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito.","distractorNotes":{"quería":"'quería' é a forma de yo.","querías":"'querías' é a forma de tú.","queríamos":"'queríamos' é a forma de nosotros."}},
+  "verbo-252": {"promptNative":"Eles _____ (volver = voltar). (pres)","explain":"A forma de ellos/ellas no presente de 'volver' é 'vuelven'. Repare na mudança de raiz na sílaba tônica.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente.","distractorNotes":{"vuelvo":"'vuelvo' é a forma de yo.","vuelves":"'vuelves' é a forma de tú.","vuelve":"'vuelve' é a forma de él/ella/usted."}},
+  "verbo-253": {"promptNative":"Ele/ela _____ (dormir = dormir). (pres)","explain":"A forma de él/ella no presente de 'dormir' é 'duerme'. Repare na mudança de raiz na sílaba tônica.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao presente.","distractorNotes":{"duermo":"'duermo' é a forma de yo.","duermes":"'duermes' é a forma de tú.","dormimos":"'dormimos' é a forma de nosotros."}},
+  "verbo-254": {"promptNative":"Antigamente eles _____ (dormir = dormir). (impf)","explain":"A forma de ellos/ellas no imperfeito de 'dormir' é 'dormían'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito.","distractorNotes":{"dormía":"'dormía' é a forma de yo.","dormías":"'dormías' é a forma de tú.","dormíamos":"'dormíamos' é a forma de nosotros."}},
+  "verbo-255": {"promptNative":"Antigamente eu _____ (pedir = pedir). (impf)","explain":"A forma de yo no imperfeito de 'pedir' é 'pedía'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito.","distractorNotes":{"pedías":"'pedías' é a forma de tú.","pedíamos":"'pedíamos' é a forma de nosotros.","pedíais":"'pedíais' é a forma de vosotros (Espanha)."}},
+  "verbo-256": {"promptNative":"Nós _____ (entender = entender). (pres)","explain":"A forma de nosotros no presente de 'entender' é 'entendemos'. Repare na mudança de raiz na sílaba tônica.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"entiendo":"'entiendo' é a forma de yo.","entiendes":"'entiendes' é a forma de tú.","entiende":"'entiende' é a forma de él/ella/usted."}},
+  "verbo-257": {"promptNative":"Eu _____ (jugar = jogar). (pres)","explain":"A forma de yo no presente de 'jugar' é 'juego'. Repare na mudança de raiz na sílaba tônica.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"juegas":"'juegas' é a forma de tú.","juega":"'juega' é a forma de él/ella/usted.","jugamos":"'jugamos' é a forma de nosotros."}},
+  "verbo-258": {"promptNative":"Antigamente você (tú) _____ (jugar = jogar). (impf)","explain":"A forma de tú no imperfeito de 'jugar' é 'jugabas'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito.","distractorNotes":{"jugaba":"'jugaba' é a forma de yo.","jugábamos":"'jugábamos' é a forma de nosotros.","jugabais":"'jugabais' é a forma de vosotros (Espanha)."}},
+  "verbo-259": {"promptNative":"Vocês (vosotros) _____ (empezar = começar). (pres)","explain":"A forma de vosotros no presente de 'empezar' é 'empezáis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente.","distractorNotes":{"empiezo":"'empiezo' é a forma de yo.","empiezas":"'empiezas' é a forma de tú.","empieza":"'empieza' é a forma de él/ella/usted."}},
+  "verbo-260": {"promptNative":"Você (tú) _____ (cerrar = fechar). (pres)","explain":"A forma de tú no presente de 'cerrar' é 'cierras'. Repare na mudança de raiz na sílaba tônica.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao presente.","distractorNotes":{"cierro":"'cierro' é a forma de yo.","cierra":"'cierra' é a forma de él/ella/usted.","cerramos":"'cerramos' é a forma de nosotros."}},
+  "verbo-261": {"promptNative":"Antigamente vocês (vosotros) _____ (cerrar = fechar). (impf)","explain":"A forma de vosotros no imperfeito de 'cerrar' é 'cerrabais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito.","distractorNotes":{"cerraba":"'cerraba' é a forma de yo.","cerrabas":"'cerrabas' é a forma de tú.","cerrábamos":"'cerrábamos' é a forma de nosotros."}},
+  "verbo-262": {"promptNative":"Eles _____ (ser = ser). (pres)","explain":"A forma de ellos/ellas no presente de 'ser' é 'son'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente.","distractorNotes":{"soy":"'soy' é a forma de yo.","eres":"'eres' é a forma de tú.","es":"'es' é a forma de él/ella/usted."}},
+  "verbo-263": {"promptNative":"Ele/ela _____ (estar = estar). (pres)","explain":"A forma de él/ella no presente de 'estar' é 'está'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao presente.","distractorNotes":{"estoy":"'estoy' é a forma de yo.","estás":"'estás' é a forma de tú.","estamos":"'estamos' é a forma de nosotros."}},
+  "verbo-264": {"promptNative":"Antigamente eles _____ (estar = estar). (impf)","explain":"A forma de ellos/ellas no imperfeito de 'estar' é 'estaban'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito.","distractorNotes":{"estaba":"'estaba' é a forma de yo.","estabas":"'estabas' é a forma de tú.","estábamos":"'estábamos' é a forma de nosotros."}},
+  "verbo-265": {"promptNative":"Antigamente eu _____ (ir = ir). (impf)","explain":"A forma de yo no imperfeito de 'ir' é 'iba'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito.","distractorNotes":{"ibas":"'ibas' é a forma de tú.","íbamos":"'íbamos' é a forma de nosotros.","ibais":"'ibais' é a forma de vosotros (Espanha)."}},
+  "verbo-266": {"promptNative":"Nós _____ (tener = ter). (pres)","explain":"A forma de nosotros no presente de 'tener' é 'tenemos'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"tengo":"'tengo' é a forma de yo.","tienes":"'tienes' é a forma de tú.","tiene":"'tiene' é a forma de él/ella/usted."}},
+  "verbo-267": {"promptNative":"Eu _____ (hacer = fazer). (pres)","explain":"A forma de yo no presente de 'hacer' é 'hago'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente.","distractorNotes":{"haces":"'haces' é a forma de tú.","hace":"'hace' é a forma de él/ella/usted.","hacemos":"'hacemos' é a forma de nosotros."}},
+  "verbo-268": {"promptNative":"Antigamente você (tú) _____ (hacer = fazer). (impf)","explain":"A forma de tú no imperfeito de 'hacer' é 'hacías'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito.","distractorNotes":{"hacía":"'hacía' é a forma de yo.","hacíamos":"'hacíamos' é a forma de nosotros.","hacíais":"'hacíais' é a forma de vosotros (Espanha)."}},
+  "verbo-269": {"promptNative":"Vocês (vosotros) _____ (decir = dizer). (pres)","explain":"A forma de vosotros no presente de 'decir' é 'decís'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente.","distractorNotes":{"digo":"'digo' é a forma de yo.","dices":"'dices' é a forma de tú.","dice":"'dice' é a forma de él/ella/usted."}},
+  "verbo-270": {"promptNative":"Você (tú) _____ (venir = vir). (pres)","explain":"A forma de tú no presente de 'venir' é 'vienes'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao presente.","distractorNotes":{"vengo":"'vengo' é a forma de yo.","viene":"'viene' é a forma de él/ella/usted.","venimos":"'venimos' é a forma de nosotros."}},
+  "verbo-271": {"promptNative":"Antigamente vocês (vosotros) _____ (venir = vir). (impf)","explain":"A forma de vosotros no imperfeito de 'venir' é 'veníais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito.","distractorNotes":{"venía":"'venía' é a forma de yo.","venías":"'venías' é a forma de tú.","veníamos":"'veníamos' é a forma de nosotros."}},
+  "verbo-272": {"promptNative":"Eles _____ (poner = pôr). (pres)","explain":"A forma de ellos/ellas no presente de 'poner' é 'ponen'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente.","distractorNotes":{"pongo":"'pongo' é a forma de yo.","pones":"'pones' é a forma de tú.","pone":"'pone' é a forma de él/ella/usted."}},
+  "verbo-273": {"promptNative":"Ele/ela _____ (salir = sair). (pres)","explain":"A forma de él/ella no presente de 'salir' é 'sale'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao presente.","distractorNotes":{"salgo":"'salgo' é a forma de yo.","sales":"'sales' é a forma de tú.","salimos":"'salimos' é a forma de nosotros."}},
+  "verbo-274": {"promptNative":"Antigamente eles _____ (salir = sair). (impf)","explain":"A forma de ellos/ellas no imperfeito de 'salir' é 'salían'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito.","distractorNotes":{"salía":"'salía' é a forma de yo.","salías":"'salías' é a forma de tú.","salíamos":"'salíamos' é a forma de nosotros."}},
+  "verbo-275": {"promptNative":"Antigamente eu _____ (dar = dar). (impf)","explain":"A forma de yo no imperfeito de 'dar' é 'daba'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito.","distractorNotes":{"dabas":"'dabas' é a forma de tú.","dábamos":"'dábamos' é a forma de nosotros.","dabais":"'dabais' é a forma de vosotros (Espanha)."}},
+  "verbo-276": {"promptNative":"Nós _____ (ver = ver). (pres)","explain":"A forma de nosotros no presente de 'ver' é 'vemos'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente.","distractorNotes":{"veo":"'veo' é a forma de yo.","ves":"'ves' é a forma de tú.","ve":"'ve' é a forma de él/ella/usted."}},
+  "verbo-277": {"promptNative":"Hoje eu _____ (hablar = falar). (perf)","explain":"A forma de yo no pretérito perfeito composto de 'hablar' é 'he hablado'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito perfeito composto.","distractorNotes":{"has hablado":"'has hablado' é a forma de tú.","ha hablado":"'ha hablado' é a forma de él/ella/usted.","hemos hablado":"'hemos hablado' é a forma de nosotros."}},
+  "verbo-278": {"promptNative":"_____ (hablar = falar) más despacio. (vosotros command)","explain":"A forma de vosotros no imperativo afirmativo de 'hablar' é 'hablad'. O imperativo afirmativo de vosotros dos verbos -ar troca o -r do infinitivo por -d.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"habla":"'habla' é a forma de tú.","hable":"'hable' é o imperativo de usted.","hablemos":"'hablemos' é a forma de nosotros."}},
+  "verbo-279": {"promptNative":"Amanhã eles _____ (trabajar = trabalhar). (fut)","explain":"A forma de ellos/ellas no futuro de 'trabajar' é 'trabajarán'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao futuro.","distractorNotes":{"trabajaré":"'trabajaré' é a forma de yo.","trabajarás":"'trabajarás' é a forma de tú.","trabajará":"'trabajará' é a forma de él/ella/usted."}},
+  "verbo-280": {"promptNative":"Amanhã nós _____ (estudiar = estudar). (fut)","explain":"A forma de nosotros no futuro de 'estudiar' é 'estudiaremos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao futuro.","distractorNotes":{"estudiaré":"'estudiaré' é a forma de yo.","estudiarás":"'estudiarás' é a forma de tú.","estudiará":"'estudiará' é a forma de él/ella/usted."}},
+  "verbo-281": {"promptNative":"Amanhã eu _____ (comprar = comprar). (fut)","explain":"A forma de yo no futuro de 'comprar' é 'compraré'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao futuro.","distractorNotes":{"comprarás":"'comprarás' é a forma de tú.","comprará":"'comprará' é a forma de él/ella/usted.","compraremos":"'compraremos' é a forma de nosotros."}},
+  "verbo-282": {"promptNative":"Hoje vocês (vosotros) _____ (cocinar = cozinhar). (perf)","explain":"A forma de vosotros no pretérito perfeito composto de 'cocinar' é 'habéis cocinado'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito perfeito composto.","distractorNotes":{"he cocinado":"'he cocinado' é a forma de yo.","has cocinado":"'has cocinado' é a forma de tú.","ha cocinado":"'ha cocinado' é a forma de él/ella/usted."}},
+  "verbo-283": {"promptNative":"Hoje ele/ela _____ (cantar = cantar). (perf)","explain":"A forma de él/ella no pretérito perfeito composto de 'cantar' é 'ha cantado'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito perfeito composto.","distractorNotes":{"he cantado":"'he cantado' é a forma de yo.","has cantado":"'has cantado' é a forma de tú.","hemos cantado":"'hemos cantado' é a forma de nosotros."}},
+  "verbo-284": {"promptNative":"Hoje eu _____ (bailar = dançar). (perf)","explain":"A forma de yo no pretérito perfeito composto de 'bailar' é 'he bailado'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito perfeito composto.","distractorNotes":{"has bailado":"'has bailado' é a forma de tú.","ha bailado":"'ha bailado' é a forma de él/ella/usted.","hemos bailado":"'hemos bailado' é a forma de nosotros."}},
+  "verbo-285": {"promptNative":"_____ (bailar = dançar) con nosotros. (vosotros command)","explain":"A forma de vosotros no imperativo afirmativo de 'bailar' é 'bailad'. O imperativo afirmativo de vosotros dos verbos -ar troca o -r do infinitivo por -d.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"baila":"'baila' é a forma de tú.","baile":"'baile' é o imperativo de usted.","bailemos":"'bailemos' é a forma de nosotros."}},
+  "verbo-286": {"promptNative":"Amanhã eles _____ (tomar = tomar). (fut)","explain":"A forma de ellos/ellas no futuro de 'tomar' é 'tomarán'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao futuro.","distractorNotes":{"tomaré":"'tomaré' é a forma de yo.","tomarás":"'tomarás' é a forma de tú.","tomará":"'tomará' é a forma de él/ella/usted."}},
+  "verbo-287": {"promptNative":"Amanhã nós _____ (llegar = chegar). (fut)","explain":"A forma de nosotros no futuro de 'llegar' é 'llegaremos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao futuro.","distractorNotes":{"llegaré":"'llegaré' é a forma de yo.","llegarás":"'llegarás' é a forma de tú.","llegará":"'llegará' é a forma de él/ella/usted."}},
+  "verbo-288": {"promptNative":"Amanhã eu _____ (escuchar = escutar). (fut)","explain":"A forma de yo no futuro de 'escuchar' é 'escucharé'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao futuro.","distractorNotes":{"escucharás":"'escucharás' é a forma de tú.","escuchará":"'escuchará' é a forma de él/ella/usted.","escucharemos":"'escucharemos' é a forma de nosotros."}},
+  "verbo-289": {"promptNative":"Hoje vocês (vosotros) _____ (mirar = olhar). (perf)","explain":"A forma de vosotros no pretérito perfeito composto de 'mirar' é 'habéis mirado'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito perfeito composto.","distractorNotes":{"he mirado":"'he mirado' é a forma de yo.","has mirado":"'has mirado' é a forma de tú.","ha mirado":"'ha mirado' é a forma de él/ella/usted."}},
+  "verbo-290": {"promptNative":"Hoje ele/ela _____ (esperar = esperar). (perf)","explain":"A forma de él/ella no pretérito perfeito composto de 'esperar' é 'ha esperado'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito perfeito composto.","distractorNotes":{"he esperado":"'he esperado' é a forma de yo.","has esperado":"'has esperado' é a forma de tú.","hemos esperado":"'hemos esperado' é a forma de nosotros."}},
+  "verbo-291": {"promptNative":"Hoje eu _____ (aparcar = estacionar (Espanha)). (perf)","explain":"A forma de yo no pretérito perfeito composto de 'aparcar' é 'he aparcado'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito perfeito composto.","distractorNotes":{"has aparcado":"'has aparcado' é a forma de tú.","ha aparcado":"'ha aparcado' é a forma de él/ella/usted.","hemos aparcado":"'hemos aparcado' é a forma de nosotros."}},
+  "verbo-292": {"promptNative":"_____ (aparcar = estacionar (Espanha)) el coche ahí. (vosotros command)","explain":"A forma de vosotros no imperativo afirmativo de 'aparcar' é 'aparcad'. O imperativo afirmativo de vosotros dos verbos -ar troca o -r do infinitivo por -d.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"aparca":"'aparca' é a forma de tú.","aparque":"'aparque' é o imperativo de usted.","aparquemos":"'aparquemos' é a forma de nosotros."}},
+  "verbo-293": {"promptNative":"Amanhã eles _____ (firmar = assinar). (fut)","explain":"A forma de ellos/ellas no futuro de 'firmar' é 'firmarán'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao futuro.","distractorNotes":{"firmaré":"'firmaré' é a forma de yo.","firmarás":"'firmarás' é a forma de tú.","firmará":"'firmará' é a forma de él/ella/usted."}},
+  "verbo-294": {"promptNative":"Amanhã nós _____ (comer = comer). (fut)","explain":"A forma de nosotros no futuro de 'comer' é 'comeremos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao futuro.","distractorNotes":{"comeré":"'comeré' é a forma de yo.","comerás":"'comerás' é a forma de tú.","comerá":"'comerá' é a forma de él/ella/usted."}},
+  "verbo-295": {"promptNative":"Amanhã eu _____ (beber = beber). (fut)","explain":"A forma de yo no futuro de 'beber' é 'beberé'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao futuro.","distractorNotes":{"beberás":"'beberás' é a forma de tú.","beberá":"'beberá' é a forma de él/ella/usted.","beberemos":"'beberemos' é a forma de nosotros."}},
+  "verbo-296": {"promptNative":"Hoje vocês (vosotros) _____ (correr = correr). (perf)","explain":"A forma de vosotros no pretérito perfeito composto de 'correr' é 'habéis corrido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito perfeito composto.","distractorNotes":{"he corrido":"'he corrido' é a forma de yo.","has corrido":"'has corrido' é a forma de tú.","ha corrido":"'ha corrido' é a forma de él/ella/usted."}},
+  "verbo-297": {"promptNative":"Hoje ele/ela _____ (leer = ler). (perf)","explain":"A forma de él/ella no pretérito perfeito composto de 'leer' é 'ha leído'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito perfeito composto.","distractorNotes":{"he leído":"'he leído' é a forma de yo.","has leído":"'has leído' é a forma de tú.","hemos leído":"'hemos leído' é a forma de nosotros."}},
+  "verbo-298": {"promptNative":"Hoje eu _____ (aprender = aprender). (perf)","explain":"A forma de yo no pretérito perfeito composto de 'aprender' é 'he aprendido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito perfeito composto.","distractorNotes":{"has aprendido":"'has aprendido' é a forma de tú.","ha aprendido":"'ha aprendido' é a forma de él/ella/usted.","hemos aprendido":"'hemos aprendido' é a forma de nosotros."}},
+  "verbo-299": {"promptNative":"_____ (aprender = aprender) de los errores. (vosotros command)","explain":"A forma de vosotros no imperativo afirmativo de 'aprender' é 'aprended'. O imperativo afirmativo de vosotros dos verbos -er troca o -r do infinitivo por -d.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"aprende":"'aprende' é a forma de tú.","aprenda":"'aprenda' é o imperativo de usted.","aprendamos":"'aprendamos' é a forma de nosotros."}},
+  "verbo-300": {"promptNative":"Amanhã eles _____ (comprender = compreender). (fut)","explain":"A forma de ellos/ellas no futuro de 'comprender' é 'comprenderán'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao futuro.","distractorNotes":{"comprenderé":"'comprenderé' é a forma de yo.","comprenderás":"'comprenderás' é a forma de tú.","comprenderá":"'comprenderá' é a forma de él/ella/usted."}},
+  "verbo-301": {"promptNative":"Amanhã nós _____ (coger = pegar (Espanha)). (fut)","explain":"A forma de nosotros no futuro de 'coger' é 'cogeremos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao futuro.","distractorNotes":{"cogeré":"'cogeré' é a forma de yo.","cogerás":"'cogerás' é a forma de tú.","cogerá":"'cogerá' é a forma de él/ella/usted."}},
+  "verbo-302": {"promptNative":"Amanhã eu _____ (vender = vender). (fut)","explain":"A forma de yo no futuro de 'vender' é 'venderé'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao futuro.","distractorNotes":{"venderás":"'venderás' é a forma de tú.","venderá":"'venderá' é a forma de él/ella/usted.","venderemos":"'venderemos' é a forma de nosotros."}},
+  "verbo-303": {"promptNative":"Hoje vocês (vosotros) _____ (vivir = morar). (perf)","explain":"A forma de vosotros no pretérito perfeito composto de 'vivir' é 'habéis vivido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito perfeito composto.","distractorNotes":{"he vivido":"'he vivido' é a forma de yo.","has vivido":"'has vivido' é a forma de tú.","ha vivido":"'ha vivido' é a forma de él/ella/usted."}},
+  "verbo-304": {"promptNative":"Hoje ele/ela _____ (escribir = escrever). (perf)","explain":"A forma de él/ella no pretérito perfeito composto de 'escribir' é 'ha escrito'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito perfeito composto.","distractorNotes":{"he escrito":"'he escrito' é a forma de yo.","has escrito":"'has escrito' é a forma de tú.","hemos escrito":"'hemos escrito' é a forma de nosotros."}},
+  "verbo-305": {"promptNative":"Hoje eu _____ (abrir = abrir). (perf)","explain":"A forma de yo no pretérito perfeito composto de 'abrir' é 'he abierto'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito perfeito composto.","distractorNotes":{"has abierto":"'has abierto' é a forma de tú.","ha abierto":"'ha abierto' é a forma de él/ella/usted.","hemos abierto":"'hemos abierto' é a forma de nosotros."}},
+  "verbo-306": {"promptNative":"_____ (abrir = abrir) la ventana. (vosotros command)","explain":"A forma de vosotros no imperativo afirmativo de 'abrir' é 'abrid'. O imperativo afirmativo de vosotros dos verbos -ir troca o -r do infinitivo por -d.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"abre":"'abre' é a forma de tú.","abra":"'abra' é o imperativo de usted.","abramos":"'abramos' é a forma de nosotros."}},
+  "verbo-307": {"promptNative":"Amanhã eles _____ (recibir = receber). (fut)","explain":"A forma de ellos/ellas no futuro de 'recibir' é 'recibirán'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao futuro.","distractorNotes":{"recibiré":"'recibiré' é a forma de yo.","recibirás":"'recibirás' é a forma de tú.","recibirá":"'recibirá' é a forma de él/ella/usted."}},
+  "verbo-308": {"promptNative":"Amanhã nós _____ (subir = subir). (fut)","explain":"A forma de nosotros no futuro de 'subir' é 'subiremos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao futuro.","distractorNotes":{"subiré":"'subiré' é a forma de yo.","subirás":"'subirás' é a forma de tú.","subirá":"'subirá' é a forma de él/ella/usted."}},
+  "verbo-309": {"promptNative":"Amanhã eu _____ (decidir = decidir). (fut)","explain":"A forma de yo no futuro de 'decidir' é 'decidiré'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao futuro.","distractorNotes":{"decidirás":"'decidirás' é a forma de tú.","decidirá":"'decidirá' é a forma de él/ella/usted.","decidiremos":"'decidiremos' é a forma de nosotros."}},
+  "verbo-310": {"promptNative":"Ontem vocês (vosotros) _____ (pensar = pensar). (pret)","explain":"A forma de vosotros no pretérito de 'pensar' é 'pensasteis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito.","distractorNotes":{"pensé":"'pensé' é a forma de yo.","pensaste":"'pensaste' é a forma de tú.","pensó":"'pensó' é a forma de él/ella/usted."}},
+  "verbo-311": {"promptNative":"Amanhã eles _____ (pensar = pensar). (fut)","explain":"A forma de ellos/ellas no futuro de 'pensar' é 'pensarán'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao futuro.","distractorNotes":{"pensaré":"'pensaré' é a forma de yo.","pensarás":"'pensarás' é a forma de tú.","pensará":"'pensará' é a forma de él/ella/usted."}},
+  "verbo-312": {"promptNative":"Hoje ele/ela _____ (poder = poder). (perf)","explain":"A forma de él/ella no pretérito perfeito composto de 'poder' é 'ha podido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito perfeito composto.","distractorNotes":{"he podido":"'he podido' é a forma de yo.","has podido":"'has podido' é a forma de tú.","hemos podido":"'hemos podido' é a forma de nosotros."}},
+  "verbo-313": {"promptNative":"Ontem nós _____ (querer = querer). (pret)","explain":"A forma de nosotros no pretérito de 'querer' é 'quisimos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao pretérito.","distractorNotes":{"quise":"'quise' é a forma de yo.","quisiste":"'quisiste' é a forma de tú.","quiso":"'quiso' é a forma de él/ella/usted."}},
+  "verbo-314": {"promptNative":"Amanhã vocês (vosotros) _____ (querer = querer). (fut)","explain":"A forma de vosotros no futuro de 'querer' é 'querréis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao futuro.","distractorNotes":{"querré":"'querré' é a forma de yo.","querrás":"'querrás' é a forma de tú.","querrá":"'querrá' é a forma de él/ella/usted."}},
+  "verbo-315": {"promptNative":"Hoje vocês (vosotros) _____ (volver = voltar). (perf)","explain":"A forma de vosotros no pretérito perfeito composto de 'volver' é 'habéis vuelto'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito perfeito composto.","distractorNotes":{"he vuelto":"'he vuelto' é a forma de yo.","has vuelto":"'has vuelto' é a forma de tú.","ha vuelto":"'ha vuelto' é a forma de él/ella/usted."}},
+  "verbo-316": {"promptNative":"Ontem ele/ela _____ (dormir = dormir). (pret)","explain":"A forma de él/ella no pretérito de 'dormir' é 'durmió'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito.","distractorNotes":{"dormí":"'dormí' é a forma de yo.","dormiste":"'dormiste' é a forma de tú.","dormimos":"'dormimos' é a forma de nosotros."}},
+  "verbo-317": {"promptNative":"Amanhã nós _____ (dormir = dormir). (fut)","explain":"A forma de nosotros no futuro de 'dormir' é 'dormiremos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao futuro.","distractorNotes":{"dormiré":"'dormiré' é a forma de yo.","dormirás":"'dormirás' é a forma de tú.","dormirá":"'dormirá' é a forma de él/ella/usted."}},
+  "verbo-318": {"promptNative":"Hoje eu _____ (pedir = pedir). (perf)","explain":"A forma de yo no pretérito perfeito composto de 'pedir' é 'he pedido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito perfeito composto.","distractorNotes":{"has pedido":"'has pedido' é a forma de tú.","ha pedido":"'ha pedido' é a forma de él/ella/usted.","hemos pedido":"'hemos pedido' é a forma de nosotros."}},
+  "verbo-319": {"promptNative":"_____ (pedir = pedir) la cuenta. (vosotros command)","explain":"A forma de vosotros no imperativo afirmativo de 'pedir' é 'pedid'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"pide":"'pide' é a forma de tú.","pida":"'pida' é o imperativo de usted.","pidamos":"'pidamos' é a forma de nosotros."}},
+  "verbo-320": {"promptNative":"Hoje vocês (vosotros) _____ (entender = entender). (perf)","explain":"A forma de vosotros no pretérito perfeito composto de 'entender' é 'habéis entendido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito perfeito composto.","distractorNotes":{"he entendido":"'he entendido' é a forma de yo.","has entendido":"'has entendido' é a forma de tú.","ha entendido":"'ha entendido' é a forma de él/ella/usted."}},
+  "verbo-321": {"promptNative":"Ontem ele/ela _____ (jugar = jogar). (pret)","explain":"A forma de él/ella no pretérito de 'jugar' é 'jugó'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito.","distractorNotes":{"jugué":"'jugué' é a forma de yo.","jugaste":"'jugaste' é a forma de tú.","jugamos":"'jugamos' é a forma de nosotros."}},
+  "verbo-322": {"promptNative":"Amanhã nós _____ (jugar = jogar). (fut)","explain":"A forma de nosotros no futuro de 'jugar' é 'jugaremos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao futuro.","distractorNotes":{"jugaré":"'jugaré' é a forma de yo.","jugarás":"'jugarás' é a forma de tú.","jugará":"'jugará' é a forma de él/ella/usted."}},
+  "verbo-323": {"promptNative":"Hoje eu _____ (empezar = começar). (perf)","explain":"A forma de yo no pretérito perfeito composto de 'empezar' é 'he empezado'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito perfeito composto.","distractorNotes":{"has empezado":"'has empezado' é a forma de tú.","ha empezado":"'ha empezado' é a forma de él/ella/usted.","hemos empezado":"'hemos empezado' é a forma de nosotros."}},
+  "verbo-324": {"promptNative":"_____ (empezar = começar) ya. (vosotros command)","explain":"A forma de vosotros no imperativo afirmativo de 'empezar' é 'empezad'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"empieza":"'empieza' é a forma de tú.","empiece":"'empiece' é o imperativo de usted.","empecemos":"'empecemos' é a forma de nosotros."}},
+  "verbo-325": {"promptNative":"Hoje vocês (vosotros) _____ (cerrar = fechar). (perf)","explain":"A forma de vosotros no pretérito perfeito composto de 'cerrar' é 'habéis cerrado'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito perfeito composto.","distractorNotes":{"he cerrado":"'he cerrado' é a forma de yo.","has cerrado":"'has cerrado' é a forma de tú.","ha cerrado":"'ha cerrado' é a forma de él/ella/usted."}},
+  "verbo-326": {"promptNative":"Ontem ele/ela _____ (ser = ser). (pret)","explain":"A forma de él/ella no pretérito de 'ser' é 'fue'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito.","distractorNotes":{"fui":"'fui' é a forma de yo.","fuiste":"'fuiste' é a forma de tú.","fuimos":"'fuimos' é a forma de nosotros."}},
+  "verbo-327": {"promptNative":"Amanhã nós _____ (ser = ser). (fut)","explain":"A forma de nosotros no futuro de 'ser' é 'seremos'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao futuro.","distractorNotes":{"seré":"'seré' é a forma de yo.","serás":"'serás' é a forma de tú.","será":"'será' é a forma de él/ella/usted."}},
+  "verbo-328": {"promptNative":"Hoje eu _____ (estar = estar). (perf)","explain":"A forma de yo no pretérito perfeito composto de 'estar' é 'he estado'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito perfeito composto.","distractorNotes":{"has estado":"'has estado' é a forma de tú.","ha estado":"'ha estado' é a forma de él/ella/usted.","hemos estado":"'hemos estado' é a forma de nosotros."}},
+  "verbo-329": {"promptNative":"_____ (estar = estar) atentos. (vosotros command)","explain":"A forma de vosotros no imperativo afirmativo de 'estar' é 'estad'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"está":"'está' é a forma de tú.","esté":"'esté' é o imperativo de usted.","estemos":"'estemos' é a forma de nosotros."}},
+  "verbo-330": {"promptNative":"Hoje eles _____ (ir = ir). (perf)","explain":"A forma de ellos/ellas no pretérito perfeito composto de 'ir' é 'han ido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao pretérito perfeito composto.","distractorNotes":{"he ido":"'he ido' é a forma de yo.","has ido":"'has ido' é a forma de tú.","ha ido":"'ha ido' é a forma de él/ella/usted."}},
+  "verbo-331": {"promptNative":"Ontem nós _____ (tener = ter). (pret)","explain":"A forma de nosotros no pretérito de 'tener' é 'tuvimos'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao pretérito.","distractorNotes":{"tuve":"'tuve' é a forma de yo.","tuviste":"'tuviste' é a forma de tú.","tuvo":"'tuvo' é a forma de él/ella/usted."}},
+  "verbo-332": {"promptNative":"Amanhã vocês (vosotros) _____ (tener = ter). (fut)","explain":"A forma de vosotros no futuro de 'tener' é 'tendréis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao futuro.","distractorNotes":{"tendré":"'tendré' é a forma de yo.","tendrás":"'tendrás' é a forma de tú.","tendrá":"'tendrá' é a forma de él/ella/usted."}},
+  "verbo-333": {"promptNative":"Hoje você (tú) _____ (hacer = fazer). (perf)","explain":"A forma de tú no pretérito perfeito composto de 'hacer' é 'has hecho'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao pretérito perfeito composto.","distractorNotes":{"he hecho":"'he hecho' é a forma de yo.","ha hecho":"'ha hecho' é a forma de él/ella/usted.","hemos hecho":"'hemos hecho' é a forma de nosotros."}},
+  "verbo-334": {"promptNative":"_____ (hacer = fazer) los deberes. (usted command)","explain":"A forma de usted no imperativo afirmativo de 'hacer' é 'haga'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'usted'.","distractorNotes":{"haz":"'haz' é a forma de tú.","haced":"'haced' é a forma de vosotros (Espanha).","hagamos":"'hagamos' é a forma de nosotros."}},
+  "verbo-335": {"promptNative":"Hoje eles _____ (decir = dizer). (perf)","explain":"A forma de ellos/ellas no pretérito perfeito composto de 'decir' é 'han dicho'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao pretérito perfeito composto.","distractorNotes":{"he dicho":"'he dicho' é a forma de yo.","has dicho":"'has dicho' é a forma de tú.","ha dicho":"'ha dicho' é a forma de él/ella/usted."}},
+  "verbo-336": {"promptNative":"Ontem nós _____ (venir = vir). (pret)","explain":"A forma de nosotros no pretérito de 'venir' é 'vinimos'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao pretérito.","distractorNotes":{"vine":"'vine' é a forma de yo.","viniste":"'viniste' é a forma de tú.","vino":"'vino' é a forma de él/ella/usted."}},
+  "verbo-337": {"promptNative":"Amanhã vocês (vosotros) _____ (venir = vir). (fut)","explain":"A forma de vosotros no futuro de 'venir' é 'vendréis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao futuro.","distractorNotes":{"vendré":"'vendré' é a forma de yo.","vendrás":"'vendrás' é a forma de tú.","vendrá":"'vendrá' é a forma de él/ella/usted."}},
+  "verbo-338": {"promptNative":"Hoje você (tú) _____ (poner = pôr). (perf)","explain":"A forma de tú no pretérito perfeito composto de 'poner' é 'has puesto'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao pretérito perfeito composto.","distractorNotes":{"he puesto":"'he puesto' é a forma de yo.","ha puesto":"'ha puesto' é a forma de él/ella/usted.","hemos puesto":"'hemos puesto' é a forma de nosotros."}},
+  "verbo-339": {"promptNative":"_____ (poner = pôr) la mesa. (usted command)","explain":"A forma de usted no imperativo afirmativo de 'poner' é 'ponga'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'usted'.","distractorNotes":{"pon":"'pon' é a forma de tú.","poned":"'poned' é a forma de vosotros (Espanha).","pongamos":"'pongamos' é a forma de nosotros."}},
+  "verbo-340": {"promptNative":"Hoje eles _____ (salir = sair). (perf)","explain":"A forma de ellos/ellas no pretérito perfeito composto de 'salir' é 'han salido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao pretérito perfeito composto.","distractorNotes":{"he salido":"'he salido' é a forma de yo.","has salido":"'has salido' é a forma de tú.","ha salido":"'ha salido' é a forma de él/ella/usted."}},
+  "verbo-341": {"promptNative":"Ontem nós _____ (dar = dar). (pret)","explain":"A forma de nosotros no pretérito de 'dar' é 'dimos'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao pretérito.","distractorNotes":{"di":"'di' é a forma de yo.","diste":"'diste' é a forma de tú.","dio":"'dio' é a forma de él/ella/usted."}},
+  "verbo-342": {"promptNative":"Amanhã vocês (vosotros) _____ (dar = dar). (fut)","explain":"A forma de vosotros no futuro de 'dar' é 'daréis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao futuro.","distractorNotes":{"daré":"'daré' é a forma de yo.","darás":"'darás' é a forma de tú.","dará":"'dará' é a forma de él/ella/usted."}},
+  "verbo-343": {"promptNative":"Hoje você (tú) _____ (ver = ver). (perf)","explain":"A forma de tú no pretérito perfeito composto de 'ver' é 'has visto'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao pretérito perfeito composto.","distractorNotes":{"he visto":"'he visto' é a forma de yo.","ha visto":"'ha visto' é a forma de él/ella/usted.","hemos visto":"'hemos visto' é a forma de nosotros."}},
+  "verbo-344": {"promptNative":"_____ (ver = ver) el partido. (usted command)","explain":"A forma de usted no imperativo afirmativo de 'ver' é 'vea'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'usted'.","distractorNotes":{"ve":"'ve' é a forma de tú.","ved":"'ved' é a forma de vosotros (Espanha).","veamos":"'veamos' é a forma de nosotros."}},
+  "verbo-345": {"promptNative":"Hoje eles _____ (saber = saber). (perf)","explain":"A forma de ellos/ellas no pretérito perfeito composto de 'saber' é 'han sabido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao pretérito perfeito composto.","distractorNotes":{"he sabido":"'he sabido' é a forma de yo.","has sabido":"'has sabido' é a forma de tú.","ha sabido":"'ha sabido' é a forma de él/ella/usted."}},
+  "verbo-346": {"promptNative":"Hoje eu _____ (conocer = conhecer (pessoas)). (perf)","explain":"A forma de yo no pretérito perfeito composto de 'conocer' é 'he conocido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito perfeito composto.","distractorNotes":{"has conocido":"'has conocido' é a forma de tú.","ha conocido":"'ha conocido' é a forma de él/ella/usted.","hemos conocido":"'hemos conocido' é a forma de nosotros."}},
+  "verbo-347": {"promptNative":"_____ (conocer = conhecer (pessoas)) a mis padres. (vosotros command)","explain":"A forma de vosotros no imperativo afirmativo de 'conocer' é 'conoced'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"conoce":"'conoce' é a forma de tú.","conozca":"'conozca' é o imperativo de usted.","conozcamos":"'conozcamos' é a forma de nosotros."}},
+  "verbo-348": {"promptNative":"Hoje vocês (vosotros) _____ (conducir = dirigir (Espanha)). (perf)","explain":"A forma de vosotros no pretérito perfeito composto de 'conducir' é 'habéis conducido'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao pretérito perfeito composto.","distractorNotes":{"he conducido":"'he conducido' é a forma de yo.","has conducido":"'has conducido' é a forma de tú.","ha conducido":"'ha conducido' é a forma de él/ella/usted."}},
+  "verbo-349": {"promptNative":"Ontem ele/ela _____ (traer = trazer). (pret)","explain":"A forma de él/ella no pretérito de 'traer' é 'trajo'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao pretérito.","distractorNotes":{"traje":"'traje' é a forma de yo.","trajiste":"'trajiste' é a forma de tú.","trajimos":"'trajimos' é a forma de nosotros."}},
+  "verbo-350": {"promptNative":"Amanhã nós _____ (traer = trazer). (fut)","explain":"A forma de nosotros no futuro de 'traer' é 'traeremos'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao futuro.","distractorNotes":{"traeré":"'traeré' é a forma de yo.","traerás":"'traerás' é a forma de tú.","traerá":"'traerá' é a forma de él/ella/usted."}},
+  "verbo-351": {"promptNative":"Hoje eu _____ (oír = ouvir). (perf)","explain":"A forma de yo no pretérito perfeito composto de 'oír' é 'he oído'. Na Espanha o pretérito perfeito composto (he/has/ha… + particípio) é o normal para ações de hoje.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao pretérito perfeito composto.","distractorNotes":{"has oído":"'has oído' é a forma de tú.","ha oído":"'ha oído' é a forma de él/ella/usted.","hemos oído":"'hemos oído' é a forma de nosotros."}},
+  "verbo-352": {"promptNative":"Com mais tempo, eu _____ (hablar = falar). (cond)","explain":"A forma de yo no condicional de 'hablar' é 'hablaría'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao condicional.","distractorNotes":{"hablarías":"'hablarías' é a forma de tú.","hablaríamos":"'hablaríamos' é a forma de nosotros.","hablaríais":"'hablaríais' é a forma de vosotros (Espanha)."}},
+  "verbo-353": {"promptNative":"Espero que vocês (vosotros) _____ (hablar = falar). (subjPres)","explain":"A forma de vosotros no presente do subjuntivo de 'hablar' é 'habléis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente do subjuntivo.","distractorNotes":{"hable":"'hable' é a forma de yo.","hables":"'hables' é a forma de tú.","hablemos":"'hablemos' é a forma de nosotros."}},
+  "verbo-354": {"promptNative":"Com mais tempo, eles _____ (trabajar = trabalhar). (cond)","explain":"A forma de ellos/ellas no condicional de 'trabajar' é 'trabajarían'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao condicional.","distractorNotes":{"trabajaría":"'trabajaría' é a forma de yo.","trabajarías":"'trabajarías' é a forma de tú.","trabajaríamos":"'trabajaríamos' é a forma de nosotros."}},
+  "verbo-355": {"promptNative":"Não _____ (trabajar = trabalhar) en equipo. (usted command)","explain":"A forma de usted no imperativo negativo de 'trabajar' é 'trabaje'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'usted'.","distractorNotes":{"trabajes":"'trabajes' é a forma de tú.","trabajéis":"'trabajéis' é a forma de vosotros (Espanha).","trabajemos":"'trabajemos' é a forma de nosotros."}},
+  "verbo-356": {"promptNative":"Espero que nós _____ (estudiar = estudar). (subjPres)","explain":"A forma de nosotros no presente do subjuntivo de 'estudiar' é 'estudiemos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente do subjuntivo.","distractorNotes":{"estudie":"'estudie' é a forma de yo.","estudies":"'estudies' é a forma de tú.","estudiéis":"'estudiéis' é a forma de vosotros (Espanha)."}},
+  "verbo-357": {"promptNative":"Com mais tempo, vocês (vosotros) _____ (comprar = comprar). (cond)","explain":"A forma de vosotros no condicional de 'comprar' é 'compraríais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao condicional.","distractorNotes":{"compraría":"'compraría' é a forma de yo.","comprarías":"'comprarías' é a forma de tú.","compraríamos":"'compraríamos' é a forma de nosotros."}},
+  "verbo-358": {"promptNative":"Não _____ (comprar = comprar) el pan. (vosotros command)","explain":"A forma de vosotros no imperativo negativo de 'comprar' é 'compréis'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"compres":"'compres' é a forma de tú.","compre":"'compre' é o imperativo de usted.","compremos":"'compremos' é a forma de nosotros."}},
+  "verbo-359": {"promptNative":"Espero que ele/ela _____ (cocinar = cozinhar). (subjPres)","explain":"A forma de él/ella no presente do subjuntivo de 'cocinar' é 'cocine'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao presente do subjuntivo.","distractorNotes":{"cocines":"'cocines' é a forma de tú.","cocinemos":"'cocinemos' é a forma de nosotros.","cocinéis":"'cocinéis' é a forma de vosotros (Espanha)."}},
+  "verbo-360": {"promptNative":"Com mais tempo, nós _____ (cantar = cantar). (cond)","explain":"A forma de nosotros no condicional de 'cantar' é 'cantaríamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao condicional.","distractorNotes":{"cantaría":"'cantaría' é a forma de yo.","cantarías":"'cantarías' é a forma de tú.","cantaríais":"'cantaríais' é a forma de vosotros (Espanha)."}},
+  "verbo-361": {"promptNative":"Não _____ (cantar = cantar) en voz alta. (tú command)","explain":"A forma de tú no imperativo negativo de 'cantar' é 'cantes'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'tú'.","distractorNotes":{"cantéis":"'cantéis' é a forma de vosotros (Espanha).","cante":"'cante' é o imperativo de usted.","cantemos":"'cantemos' é a forma de nosotros."}},
+  "verbo-362": {"promptNative":"Espero que você (tú) _____ (bailar = dançar). (subjPres)","explain":"A forma de tú no presente do subjuntivo de 'bailar' é 'bailes'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao presente do subjuntivo.","distractorNotes":{"baile":"'baile' é a forma de yo.","bailemos":"'bailemos' é a forma de nosotros.","bailéis":"'bailéis' é a forma de vosotros (Espanha)."}},
+  "verbo-363": {"promptNative":"Com mais tempo, você (tú) _____ (tomar = tomar). (cond)","explain":"A forma de tú no condicional de 'tomar' é 'tomarías'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao condicional.","distractorNotes":{"tomaría":"'tomaría' é a forma de yo.","tomaríamos":"'tomaríamos' é a forma de nosotros.","tomaríais":"'tomaríais' é a forma de vosotros (Espanha)."}},
+  "verbo-364": {"promptNative":"Espero que eles _____ (tomar = tomar). (subjPres)","explain":"A forma de ellos/ellas no presente do subjuntivo de 'tomar' é 'tomen'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente do subjuntivo.","distractorNotes":{"tome":"'tome' é a forma de yo.","tomes":"'tomes' é a forma de tú.","tomemos":"'tomemos' é a forma de nosotros."}},
+  "verbo-365": {"promptNative":"Espero que eu _____ (llegar = chegar). (subjPres)","explain":"A forma de yo no presente do subjuntivo de 'llegar' é 'llegue'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente do subjuntivo.","distractorNotes":{"llegues":"'llegues' é a forma de tú.","lleguemos":"'lleguemos' é a forma de nosotros.","lleguéis":"'lleguéis' é a forma de vosotros (Espanha)."}},
+  "verbo-366": {"promptNative":"Com mais tempo, eu _____ (escuchar = escutar). (cond)","explain":"A forma de yo no condicional de 'escuchar' é 'escucharía'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao condicional.","distractorNotes":{"escucharías":"'escucharías' é a forma de tú.","escucharíamos":"'escucharíamos' é a forma de nosotros.","escucharíais":"'escucharíais' é a forma de vosotros (Espanha)."}},
+  "verbo-367": {"promptNative":"Espero que vocês (vosotros) _____ (escuchar = escutar). (subjPres)","explain":"A forma de vosotros no presente do subjuntivo de 'escuchar' é 'escuchéis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente do subjuntivo.","distractorNotes":{"escuche":"'escuche' é a forma de yo.","escuches":"'escuches' é a forma de tú.","escuchemos":"'escuchemos' é a forma de nosotros."}},
+  "verbo-368": {"promptNative":"Com mais tempo, eles _____ (mirar = olhar). (cond)","explain":"A forma de ellos/ellas no condicional de 'mirar' é 'mirarían'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao condicional.","distractorNotes":{"miraría":"'miraría' é a forma de yo.","mirarías":"'mirarías' é a forma de tú.","miraríamos":"'miraríamos' é a forma de nosotros."}},
+  "verbo-369": {"promptNative":"Não _____ (mirar = olhar) a la pizarra. (usted command)","explain":"A forma de usted no imperativo negativo de 'mirar' é 'mire'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'usted'.","distractorNotes":{"mires":"'mires' é a forma de tú.","miréis":"'miréis' é a forma de vosotros (Espanha).","miremos":"'miremos' é a forma de nosotros."}},
+  "verbo-370": {"promptNative":"Espero que nós _____ (esperar = esperar). (subjPres)","explain":"A forma de nosotros no presente do subjuntivo de 'esperar' é 'esperemos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente do subjuntivo.","distractorNotes":{"espere":"'espere' é a forma de yo.","esperes":"'esperes' é a forma de tú.","esperéis":"'esperéis' é a forma de vosotros (Espanha)."}},
+  "verbo-371": {"promptNative":"Com mais tempo, vocês (vosotros) _____ (aparcar = estacionar (Espanha)). (cond)","explain":"A forma de vosotros no condicional de 'aparcar' é 'aparcaríais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao condicional.","distractorNotes":{"aparcaría":"'aparcaría' é a forma de yo.","aparcarías":"'aparcarías' é a forma de tú.","aparcaríamos":"'aparcaríamos' é a forma de nosotros."}},
+  "verbo-372": {"promptNative":"Não _____ (aparcar = estacionar (Espanha)) el coche ahí. (vosotros command)","explain":"A forma de vosotros no imperativo negativo de 'aparcar' é 'aparquéis'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"aparques":"'aparques' é a forma de tú.","aparque":"'aparque' é o imperativo de usted.","aparquemos":"'aparquemos' é a forma de nosotros."}},
+  "verbo-373": {"promptNative":"Espero que ele/ela _____ (firmar = assinar). (subjPres)","explain":"A forma de él/ella no presente do subjuntivo de 'firmar' é 'firme'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao presente do subjuntivo.","distractorNotes":{"firmes":"'firmes' é a forma de tú.","firmemos":"'firmemos' é a forma de nosotros.","firméis":"'firméis' é a forma de vosotros (Espanha)."}},
+  "verbo-374": {"promptNative":"Com mais tempo, nós _____ (comer = comer). (cond)","explain":"A forma de nosotros no condicional de 'comer' é 'comeríamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao condicional.","distractorNotes":{"comería":"'comería' é a forma de yo.","comerías":"'comerías' é a forma de tú.","comeríais":"'comeríais' é a forma de vosotros (Espanha)."}},
+  "verbo-375": {"promptNative":"Não _____ (comer = comer) más verdura. (tú command)","explain":"A forma de tú no imperativo negativo de 'comer' é 'comas'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'tú'.","distractorNotes":{"comáis":"'comáis' é a forma de vosotros (Espanha).","coma":"'coma' é o imperativo de usted.","comamos":"'comamos' é a forma de nosotros."}},
+  "verbo-376": {"promptNative":"Espero que você (tú) _____ (beber = beber). (subjPres)","explain":"A forma de tú no presente do subjuntivo de 'beber' é 'bebas'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao presente do subjuntivo.","distractorNotes":{"beba":"'beba' é a forma de yo.","bebamos":"'bebamos' é a forma de nosotros.","bebáis":"'bebáis' é a forma de vosotros (Espanha)."}},
+  "verbo-377": {"promptNative":"Com mais tempo, você (tú) _____ (correr = correr). (cond)","explain":"A forma de tú no condicional de 'correr' é 'correrías'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao condicional.","distractorNotes":{"correría":"'correría' é a forma de yo.","correríamos":"'correríamos' é a forma de nosotros.","correríais":"'correríais' é a forma de vosotros (Espanha)."}},
+  "verbo-378": {"promptNative":"Espero que eles _____ (correr = correr). (subjPres)","explain":"A forma de ellos/ellas no presente do subjuntivo de 'correr' é 'corran'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente do subjuntivo.","distractorNotes":{"corra":"'corra' é a forma de yo.","corras":"'corras' é a forma de tú.","corramos":"'corramos' é a forma de nosotros."}},
+  "verbo-379": {"promptNative":"Espero que eu _____ (leer = ler). (subjPres)","explain":"A forma de yo no presente do subjuntivo de 'leer' é 'lea'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente do subjuntivo.","distractorNotes":{"leas":"'leas' é a forma de tú.","leamos":"'leamos' é a forma de nosotros.","leáis":"'leáis' é a forma de vosotros (Espanha)."}},
+  "verbo-380": {"promptNative":"Com mais tempo, eu _____ (aprender = aprender). (cond)","explain":"A forma de yo no condicional de 'aprender' é 'aprendería'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao condicional.","distractorNotes":{"aprenderías":"'aprenderías' é a forma de tú.","aprenderíamos":"'aprenderíamos' é a forma de nosotros.","aprenderíais":"'aprenderíais' é a forma de vosotros (Espanha)."}},
+  "verbo-381": {"promptNative":"Espero que vocês (vosotros) _____ (aprender = aprender). (subjPres)","explain":"A forma de vosotros no presente do subjuntivo de 'aprender' é 'aprendáis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente do subjuntivo.","distractorNotes":{"aprenda":"'aprenda' é a forma de yo.","aprendas":"'aprendas' é a forma de tú.","aprendamos":"'aprendamos' é a forma de nosotros."}},
+  "verbo-382": {"promptNative":"Com mais tempo, eles _____ (comprender = compreender). (cond)","explain":"A forma de ellos/ellas no condicional de 'comprender' é 'comprenderían'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao condicional.","distractorNotes":{"comprendería":"'comprendería' é a forma de yo.","comprenderías":"'comprenderías' é a forma de tú.","comprenderíamos":"'comprenderíamos' é a forma de nosotros."}},
+  "verbo-383": {"promptNative":"Não _____ (comprender = compreender) la idea. (usted command)","explain":"A forma de usted no imperativo negativo de 'comprender' é 'comprenda'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'usted'.","distractorNotes":{"comprendas":"'comprendas' é a forma de tú.","comprendáis":"'comprendáis' é a forma de vosotros (Espanha).","comprendamos":"'comprendamos' é a forma de nosotros."}},
+  "verbo-384": {"promptNative":"Espero que nós _____ (coger = pegar (Espanha)). (subjPres)","explain":"A forma de nosotros no presente do subjuntivo de 'coger' é 'cojamos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente do subjuntivo.","distractorNotes":{"coja":"'coja' é a forma de yo.","cojas":"'cojas' é a forma de tú.","cojáis":"'cojáis' é a forma de vosotros (Espanha)."}},
+  "verbo-385": {"promptNative":"Com mais tempo, vocês (vosotros) _____ (vender = vender). (cond)","explain":"A forma de vosotros no condicional de 'vender' é 'venderíais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao condicional.","distractorNotes":{"vendería":"'vendería' é a forma de yo.","venderías":"'venderías' é a forma de tú.","venderíamos":"'venderíamos' é a forma de nosotros."}},
+  "verbo-386": {"promptNative":"Não _____ (vender = vender) el piso. (vosotros command)","explain":"A forma de vosotros no imperativo negativo de 'vender' é 'vendáis'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"vendas":"'vendas' é a forma de tú.","venda":"'venda' é o imperativo de usted.","vendamos":"'vendamos' é a forma de nosotros."}},
+  "verbo-387": {"promptNative":"Espero que ele/ela _____ (vivir = morar). (subjPres)","explain":"A forma de él/ella no presente do subjuntivo de 'vivir' é 'viva'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao presente do subjuntivo.","distractorNotes":{"vivas":"'vivas' é a forma de tú.","vivamos":"'vivamos' é a forma de nosotros.","viváis":"'viváis' é a forma de vosotros (Espanha)."}},
+  "verbo-388": {"promptNative":"Com mais tempo, nós _____ (escribir = escrever). (cond)","explain":"A forma de nosotros no condicional de 'escribir' é 'escribiríamos'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao condicional.","distractorNotes":{"escribiría":"'escribiría' é a forma de yo.","escribirías":"'escribirías' é a forma de tú.","escribiríais":"'escribiríais' é a forma de vosotros (Espanha)."}},
+  "verbo-389": {"promptNative":"Não _____ (escribir = escrever) un correo. (tú command)","explain":"A forma de tú no imperativo negativo de 'escribir' é 'escribas'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'tú'.","distractorNotes":{"escribáis":"'escribáis' é a forma de vosotros (Espanha).","escriba":"'escriba' é o imperativo de usted.","escribamos":"'escribamos' é a forma de nosotros."}},
+  "verbo-390": {"promptNative":"Espero que você (tú) _____ (abrir = abrir). (subjPres)","explain":"A forma de tú no presente do subjuntivo de 'abrir' é 'abras'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao presente do subjuntivo.","distractorNotes":{"abra":"'abra' é a forma de yo.","abramos":"'abramos' é a forma de nosotros.","abráis":"'abráis' é a forma de vosotros (Espanha)."}},
+  "verbo-391": {"promptNative":"Com mais tempo, você (tú) _____ (recibir = receber). (cond)","explain":"A forma de tú no condicional de 'recibir' é 'recibirías'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao condicional.","distractorNotes":{"recibiría":"'recibiría' é a forma de yo.","recibiríamos":"'recibiríamos' é a forma de nosotros.","recibiríais":"'recibiríais' é a forma de vosotros (Espanha)."}},
+  "verbo-392": {"promptNative":"Espero que eles _____ (recibir = receber). (subjPres)","explain":"A forma de ellos/ellas no presente do subjuntivo de 'recibir' é 'reciban'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente do subjuntivo.","distractorNotes":{"reciba":"'reciba' é a forma de yo.","recibas":"'recibas' é a forma de tú.","recibamos":"'recibamos' é a forma de nosotros."}},
+  "verbo-393": {"promptNative":"Espero que eu _____ (subir = subir). (subjPres)","explain":"A forma de yo no presente do subjuntivo de 'subir' é 'suba'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente do subjuntivo.","distractorNotes":{"subas":"'subas' é a forma de tú.","subamos":"'subamos' é a forma de nosotros.","subáis":"'subáis' é a forma de vosotros (Espanha)."}},
+  "verbo-394": {"promptNative":"Com mais tempo, eu _____ (decidir = decidir). (cond)","explain":"A forma de yo no condicional de 'decidir' é 'decidiría'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao condicional.","distractorNotes":{"decidirías":"'decidirías' é a forma de tú.","decidiríamos":"'decidiríamos' é a forma de nosotros.","decidiríais":"'decidiríais' é a forma de vosotros (Espanha)."}},
+  "verbo-395": {"promptNative":"Espero que vocês (vosotros) _____ (decidir = decidir). (subjPres)","explain":"A forma de vosotros no presente do subjuntivo de 'decidir' é 'decidáis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente do subjuntivo.","distractorNotes":{"decida":"'decida' é a forma de yo.","decidas":"'decidas' é a forma de tú.","decidamos":"'decidamos' é a forma de nosotros."}},
+  "verbo-396": {"promptNative":"Com mais tempo, eles _____ (pensar = pensar). (cond)","explain":"A forma de ellos/ellas no condicional de 'pensar' é 'pensarían'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao condicional.","distractorNotes":{"pensaría":"'pensaría' é a forma de yo.","pensarías":"'pensarías' é a forma de tú.","pensaríamos":"'pensaríamos' é a forma de nosotros."}},
+  "verbo-397": {"promptNative":"Com mais tempo, eu _____ (querer = querer). (cond)","explain":"A forma de yo no condicional de 'querer' é 'querría'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao condicional.","distractorNotes":{"querrías":"'querrías' é a forma de tú.","querríamos":"'querríamos' é a forma de nosotros.","querríais":"'querríais' é a forma de vosotros (Espanha)."}},
+  "verbo-398": {"promptNative":"Com mais tempo, eles _____ (volver = voltar). (cond)","explain":"A forma de ellos/ellas no condicional de 'volver' é 'volverían'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao condicional.","distractorNotes":{"volvería":"'volvería' é a forma de yo.","volverías":"'volverías' é a forma de tú.","volveríamos":"'volveríamos' é a forma de nosotros."}},
+  "verbo-399": {"promptNative":"Não _____ (dormir = dormir) ocho horas. (tú command)","explain":"A forma de tú no imperativo negativo de 'dormir' é 'duermas'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'tú'.","distractorNotes":{"durmáis":"'durmáis' é a forma de vosotros (Espanha).","duerma":"'duerma' é o imperativo de usted.","durmamos":"'durmamos' é a forma de nosotros."}},
+  "verbo-400": {"promptNative":"Não _____ (pedir = pedir) la cuenta. (vosotros command)","explain":"A forma de vosotros no imperativo negativo de 'pedir' é 'pidáis'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"pidas":"'pidas' é a forma de tú.","pida":"'pida' é o imperativo de usted.","pidamos":"'pidamos' é a forma de nosotros."}},
+  "verbo-401": {"promptNative":"Não _____ (entender = entender) el problema. (usted command)","explain":"A forma de usted no imperativo negativo de 'entender' é 'entienda'.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'usted'.","distractorNotes":{"entiendas":"'entiendas' é a forma de tú.","entendáis":"'entendáis' é a forma de vosotros (Espanha).","entendamos":"'entendamos' é a forma de nosotros."}},
+  "verbo-402": {"promptNative":"Com mais tempo, eu _____ (empezar = começar). (cond)","explain":"A forma de yo no condicional de 'empezar' é 'empezaría'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao condicional.","distractorNotes":{"empezarías":"'empezarías' é a forma de tú.","empezaríamos":"'empezaríamos' é a forma de nosotros.","empezaríais":"'empezaríais' é a forma de vosotros (Espanha)."}},
+  "verbo-403": {"promptNative":"Com mais tempo, você (tú) _____ (cerrar = fechar). (cond)","explain":"A forma de tú no condicional de 'cerrar' é 'cerrarías'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao condicional.","distractorNotes":{"cerraría":"'cerraría' é a forma de yo.","cerraríamos":"'cerraríamos' é a forma de nosotros.","cerraríais":"'cerraríais' é a forma de vosotros (Espanha)."}},
+  "verbo-404": {"promptNative":"Com mais tempo, nós _____ (ser = ser). (cond)","explain":"A forma de nosotros no condicional de 'ser' é 'seríamos'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao condicional.","distractorNotes":{"sería":"'sería' é a forma de yo.","serías":"'serías' é a forma de tú.","seríais":"'seríais' é a forma de vosotros (Espanha)."}},
+  "verbo-405": {"promptNative":"Com mais tempo, vocês (vosotros) _____ (estar = estar). (cond)","explain":"A forma de vosotros no condicional de 'estar' é 'estaríais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao condicional.","distractorNotes":{"estaría":"'estaría' é a forma de yo.","estarías":"'estarías' é a forma de tú.","estaríamos":"'estaríamos' é a forma de nosotros."}},
+  "verbo-406": {"promptNative":"Com mais tempo, eles _____ (ir = ir). (cond)","explain":"A forma de ellos/ellas no condicional de 'ir' é 'irían'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao condicional.","distractorNotes":{"iría":"'iría' é a forma de yo.","irías":"'irías' é a forma de tú.","iríamos":"'iríamos' é a forma de nosotros."}},
+  "verbo-407": {"promptNative":"Não _____ (tener = ter) cuidado. (tú command)","explain":"A forma de tú no imperativo negativo de 'tener' é 'tengas'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'tú'.","distractorNotes":{"tengáis":"'tengáis' é a forma de vosotros (Espanha).","tenga":"'tenga' é o imperativo de usted.","tengamos":"'tengamos' é a forma de nosotros."}},
+  "verbo-408": {"promptNative":"Não _____ (hacer = fazer) los deberes. (vosotros command)","explain":"A forma de vosotros no imperativo negativo de 'hacer' é 'hagáis'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'vosotros'.","distractorNotes":{"hagas":"'hagas' é a forma de tú.","haga":"'haga' é o imperativo de usted.","hagamos":"'hagamos' é a forma de nosotros."}},
+  "verbo-409": {"promptNative":"Não _____ (decir = dizer) la verdad. (usted command)","explain":"A forma de usted no imperativo negativo de 'decir' é 'diga'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"As outras opções são o mesmo verbo em outras pessoas do imperativo — ajuste o imperativo a 'usted'.","distractorNotes":{"digas":"'digas' é a forma de tú.","digáis":"'digáis' é a forma de vosotros (Espanha).","digamos":"'digamos' é a forma de nosotros."}},
+  "verbo-410": {"promptNative":"Com mais tempo, eu _____ (poner = pôr). (cond)","explain":"A forma de yo no condicional de 'poner' é 'pondría'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao condicional.","distractorNotes":{"pondrías":"'pondrías' é a forma de tú.","pondríamos":"'pondríamos' é a forma de nosotros.","pondríais":"'pondríais' é a forma de vosotros (Espanha)."}},
+  "verbo-411": {"promptNative":"Com mais tempo, você (tú) _____ (salir = sair). (cond)","explain":"A forma de tú no condicional de 'salir' é 'saldrías'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao condicional.","distractorNotes":{"saldría":"'saldría' é a forma de yo.","saldríamos":"'saldríamos' é a forma de nosotros.","saldríais":"'saldríais' é a forma de vosotros (Espanha)."}},
+  "verbo-412": {"promptNative":"Com mais tempo, nós _____ (dar = dar). (cond)","explain":"A forma de nosotros no condicional de 'dar' é 'daríamos'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao condicional.","distractorNotes":{"daría":"'daría' é a forma de yo.","darías":"'darías' é a forma de tú.","daríais":"'daríais' é a forma de vosotros (Espanha)."}},
+  "verbo-413": {"promptNative":"Com mais tempo, vocês (vosotros) _____ (ver = ver). (cond)","explain":"A forma de vosotros no condicional de 'ver' é 'veríais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao condicional.","distractorNotes":{"vería":"'vería' é a forma de yo.","verías":"'verías' é a forma de tú.","veríamos":"'veríamos' é a forma de nosotros."}},
+  "verbo-414": {"promptNative":"Com mais tempo, eles _____ (saber = saber). (cond)","explain":"A forma de ellos/ellas no condicional de 'saber' é 'sabrían'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao condicional.","distractorNotes":{"sabría":"'sabría' é a forma de yo.","sabrías":"'sabrías' é a forma de tú.","sabríamos":"'sabríamos' é a forma de nosotros."}},
+  "verbo-415": {"promptNative":"Com mais tempo, eu _____ (conducir = dirigir (Espanha)). (cond)","explain":"A forma de yo no condicional de 'conducir' é 'conduciría'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao condicional.","distractorNotes":{"conducirías":"'conducirías' é a forma de tú.","conduciríamos":"'conduciríamos' é a forma de nosotros.","conduciríais":"'conduciríais' é a forma de vosotros (Espanha)."}},
+  "verbo-416": {"promptNative":"Com mais tempo, você (tú) _____ (traer = trazer). (cond)","explain":"A forma de tú no condicional de 'traer' é 'traerías'. É uma forma irregular — é preciso memorizá-la.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao condicional.","distractorNotes":{"traería":"'traería' é a forma de yo.","traeríamos":"'traeríamos' é a forma de nosotros.","traeríais":"'traeríais' é a forma de vosotros (Espanha)."}},
+  "verbo-417": {"promptNative":"Tomara que eu _____ (hablar = falar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'hablar' é 'hablara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"hablaras":"'hablaras' é a forma de tú.","habláramos":"'habláramos' é a forma de nosotros.","hablarais":"'hablarais' é a forma de vosotros (Espanha)."}},
+  "verbo-418": {"promptNative":"Tomara que eu _____ (trabajar = trabalhar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'trabajar' é 'trabajara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"trabajaras":"'trabajaras' é a forma de tú.","trabajáramos":"'trabajáramos' é a forma de nosotros.","trabajarais":"'trabajarais' é a forma de vosotros (Espanha)."}},
+  "verbo-419": {"promptNative":"Tomara que eu _____ (estudiar = estudar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'estudiar' é 'estudiara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"estudiaras":"'estudiaras' é a forma de tú.","estudiáramos":"'estudiáramos' é a forma de nosotros.","estudiarais":"'estudiarais' é a forma de vosotros (Espanha)."}},
+  "verbo-420": {"promptNative":"Tomara que eu _____ (comprar = comprar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'comprar' é 'comprara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"compraras":"'compraras' é a forma de tú.","compráramos":"'compráramos' é a forma de nosotros.","comprarais":"'comprarais' é a forma de vosotros (Espanha)."}},
+  "verbo-421": {"promptNative":"Tomara que eu _____ (cocinar = cozinhar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'cocinar' é 'cocinara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"cocinaras":"'cocinaras' é a forma de tú.","cocináramos":"'cocináramos' é a forma de nosotros.","cocinarais":"'cocinarais' é a forma de vosotros (Espanha)."}},
+  "verbo-422": {"promptNative":"Tomara que eu _____ (cantar = cantar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'cantar' é 'cantara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"cantaras":"'cantaras' é a forma de tú.","cantáramos":"'cantáramos' é a forma de nosotros.","cantarais":"'cantarais' é a forma de vosotros (Espanha)."}},
+  "verbo-423": {"promptNative":"Tomara que eu _____ (bailar = dançar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'bailar' é 'bailara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"bailaras":"'bailaras' é a forma de tú.","bailáramos":"'bailáramos' é a forma de nosotros.","bailarais":"'bailarais' é a forma de vosotros (Espanha)."}},
+  "verbo-424": {"promptNative":"Tomara que eu _____ (tomar = tomar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'tomar' é 'tomara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"tomaras":"'tomaras' é a forma de tú.","tomáramos":"'tomáramos' é a forma de nosotros.","tomarais":"'tomarais' é a forma de vosotros (Espanha)."}},
+  "verbo-425": {"promptNative":"Tomara que eu _____ (llegar = chegar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'llegar' é 'llegara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"llegaras":"'llegaras' é a forma de tú.","llegáramos":"'llegáramos' é a forma de nosotros.","llegarais":"'llegarais' é a forma de vosotros (Espanha)."}},
+  "verbo-426": {"promptNative":"Tomara que eu _____ (escuchar = escutar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'escuchar' é 'escuchara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"escucharas":"'escucharas' é a forma de tú.","escucháramos":"'escucháramos' é a forma de nosotros.","escucharais":"'escucharais' é a forma de vosotros (Espanha)."}},
+  "verbo-427": {"promptNative":"Tomara que eu _____ (mirar = olhar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'mirar' é 'mirara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"miraras":"'miraras' é a forma de tú.","miráramos":"'miráramos' é a forma de nosotros.","mirarais":"'mirarais' é a forma de vosotros (Espanha)."}},
+  "verbo-428": {"promptNative":"Tomara que eu _____ (esperar = esperar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'esperar' é 'esperara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"esperaras":"'esperaras' é a forma de tú.","esperáramos":"'esperáramos' é a forma de nosotros.","esperarais":"'esperarais' é a forma de vosotros (Espanha)."}},
+  "verbo-429": {"promptNative":"Tomara que eu _____ (aparcar = estacionar (Espanha)). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'aparcar' é 'aparcara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"aparcaras":"'aparcaras' é a forma de tú.","aparcáramos":"'aparcáramos' é a forma de nosotros.","aparcarais":"'aparcarais' é a forma de vosotros (Espanha)."}},
+  "verbo-430": {"promptNative":"Tomara que eu _____ (firmar = assinar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'firmar' é 'firmara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"firmaras":"'firmaras' é a forma de tú.","firmáramos":"'firmáramos' é a forma de nosotros.","firmarais":"'firmarais' é a forma de vosotros (Espanha)."}},
+  "verbo-431": {"promptNative":"Tomara que eu _____ (comer = comer). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'comer' é 'comiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"comieras":"'comieras' é a forma de tú.","comiéramos":"'comiéramos' é a forma de nosotros.","comierais":"'comierais' é a forma de vosotros (Espanha)."}},
+  "verbo-432": {"promptNative":"Tomara que eu _____ (beber = beber). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'beber' é 'bebiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"bebieras":"'bebieras' é a forma de tú.","bebiéramos":"'bebiéramos' é a forma de nosotros.","bebierais":"'bebierais' é a forma de vosotros (Espanha)."}},
+  "verbo-433": {"promptNative":"Tomara que eu _____ (correr = correr). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'correr' é 'corriera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"corrieras":"'corrieras' é a forma de tú.","corriéramos":"'corriéramos' é a forma de nosotros.","corrierais":"'corrierais' é a forma de vosotros (Espanha)."}},
+  "verbo-434": {"promptNative":"Tomara que eu _____ (leer = ler). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'leer' é 'leyera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"leyeras":"'leyeras' é a forma de tú.","leyéramos":"'leyéramos' é a forma de nosotros.","leyerais":"'leyerais' é a forma de vosotros (Espanha)."}},
+  "verbo-435": {"promptNative":"Tomara que eu _____ (aprender = aprender). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'aprender' é 'aprendiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"aprendieras":"'aprendieras' é a forma de tú.","aprendiéramos":"'aprendiéramos' é a forma de nosotros.","aprendierais":"'aprendierais' é a forma de vosotros (Espanha)."}},
+  "verbo-436": {"promptNative":"Tomara que eu _____ (comprender = compreender). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'comprender' é 'comprendiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"comprendieras":"'comprendieras' é a forma de tú.","comprendiéramos":"'comprendiéramos' é a forma de nosotros.","comprendierais":"'comprendierais' é a forma de vosotros (Espanha)."}},
+  "verbo-437": {"promptNative":"Tomara que eu _____ (coger = pegar (Espanha)). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'coger' é 'cogiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"cogieras":"'cogieras' é a forma de tú.","cogiéramos":"'cogiéramos' é a forma de nosotros.","cogierais":"'cogierais' é a forma de vosotros (Espanha)."}},
+  "verbo-438": {"promptNative":"Tomara que eu _____ (vender = vender). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'vender' é 'vendiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"vendieras":"'vendieras' é a forma de tú.","vendiéramos":"'vendiéramos' é a forma de nosotros.","vendierais":"'vendierais' é a forma de vosotros (Espanha)."}},
+  "verbo-439": {"promptNative":"Tomara que eu _____ (vivir = morar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'vivir' é 'viviera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"vivieras":"'vivieras' é a forma de tú.","viviéramos":"'viviéramos' é a forma de nosotros.","vivierais":"'vivierais' é a forma de vosotros (Espanha)."}},
+  "verbo-440": {"promptNative":"Tomara que eu _____ (escribir = escrever). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'escribir' é 'escribiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"escribieras":"'escribieras' é a forma de tú.","escribiéramos":"'escribiéramos' é a forma de nosotros.","escribierais":"'escribierais' é a forma de vosotros (Espanha)."}},
+  "verbo-441": {"promptNative":"Tomara que eu _____ (abrir = abrir). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'abrir' é 'abriera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"abrieras":"'abrieras' é a forma de tú.","abriéramos":"'abriéramos' é a forma de nosotros.","abrierais":"'abrierais' é a forma de vosotros (Espanha)."}},
+  "verbo-442": {"promptNative":"Tomara que eu _____ (recibir = receber). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'recibir' é 'recibiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"recibieras":"'recibieras' é a forma de tú.","recibiéramos":"'recibiéramos' é a forma de nosotros.","recibierais":"'recibierais' é a forma de vosotros (Espanha)."}},
+  "verbo-443": {"promptNative":"Tomara que eu _____ (subir = subir). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'subir' é 'subiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"subieras":"'subieras' é a forma de tú.","subiéramos":"'subiéramos' é a forma de nosotros.","subierais":"'subierais' é a forma de vosotros (Espanha)."}},
+  "verbo-444": {"promptNative":"Tomara que eu _____ (decidir = decidir). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'decidir' é 'decidiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"decidieras":"'decidieras' é a forma de tú.","decidiéramos":"'decidiéramos' é a forma de nosotros.","decidierais":"'decidierais' é a forma de vosotros (Espanha)."}},
+  "verbo-445": {"promptNative":"Espero que eu _____ (pensar = pensar). (subjPres)","explain":"A forma de yo no presente do subjuntivo de 'pensar' é 'piense'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente do subjuntivo.","distractorNotes":{"pienses":"'pienses' é a forma de tú.","pensemos":"'pensemos' é a forma de nosotros.","penséis":"'penséis' é a forma de vosotros (Espanha)."}},
+  "verbo-446": {"promptNative":"Espero que eles _____ (pensar = pensar). (subjPres)","explain":"A forma de ellos/ellas no presente do subjuntivo de 'pensar' é 'piensen'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente do subjuntivo.","distractorNotes":{"piense":"'piense' é a forma de yo.","pienses":"'pienses' é a forma de tú.","pensemos":"'pensemos' é a forma de nosotros."}},
+  "verbo-447": {"promptNative":"Espero que vocês (vosotros) _____ (poder = poder). (subjPres)","explain":"A forma de vosotros no presente do subjuntivo de 'poder' é 'podáis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente do subjuntivo.","distractorNotes":{"pueda":"'pueda' é a forma de yo.","puedas":"'puedas' é a forma de tú.","podamos":"'podamos' é a forma de nosotros."}},
+  "verbo-448": {"promptNative":"Espero que nós _____ (querer = querer). (subjPres)","explain":"A forma de nosotros no presente do subjuntivo de 'querer' é 'queramos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente do subjuntivo.","distractorNotes":{"quiera":"'quiera' é a forma de yo.","quieras":"'quieras' é a forma de tú.","queráis":"'queráis' é a forma de vosotros (Espanha)."}},
+  "verbo-449": {"promptNative":"Espero que ele/ela _____ (volver = voltar). (subjPres)","explain":"A forma de él/ella no presente do subjuntivo de 'volver' é 'vuelva'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao presente do subjuntivo.","distractorNotes":{"vuelvas":"'vuelvas' é a forma de tú.","volvamos":"'volvamos' é a forma de nosotros.","volváis":"'volváis' é a forma de vosotros (Espanha)."}},
+  "verbo-450": {"promptNative":"Espero que você (tú) _____ (dormir = dormir). (subjPres)","explain":"A forma de tú no presente do subjuntivo de 'dormir' é 'duermas'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao presente do subjuntivo.","distractorNotes":{"duerma":"'duerma' é a forma de yo.","durmamos":"'durmamos' é a forma de nosotros.","durmáis":"'durmáis' é a forma de vosotros (Espanha)."}},
+  "verbo-451": {"promptNative":"Espero que eu _____ (pedir = pedir). (subjPres)","explain":"A forma de yo no presente do subjuntivo de 'pedir' é 'pida'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente do subjuntivo.","distractorNotes":{"pidas":"'pidas' é a forma de tú.","pidamos":"'pidamos' é a forma de nosotros.","pidáis":"'pidáis' é a forma de vosotros (Espanha)."}},
+  "verbo-452": {"promptNative":"Espero que eles _____ (pedir = pedir). (subjPres)","explain":"A forma de ellos/ellas no presente do subjuntivo de 'pedir' é 'pidan'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente do subjuntivo.","distractorNotes":{"pida":"'pida' é a forma de yo.","pidas":"'pidas' é a forma de tú.","pidamos":"'pidamos' é a forma de nosotros."}},
+  "verbo-453": {"promptNative":"Espero que vocês (vosotros) _____ (entender = entender). (subjPres)","explain":"A forma de vosotros no presente do subjuntivo de 'entender' é 'entendáis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente do subjuntivo.","distractorNotes":{"entienda":"'entienda' é a forma de yo.","entiendas":"'entiendas' é a forma de tú.","entendamos":"'entendamos' é a forma de nosotros."}},
+  "verbo-454": {"promptNative":"Espero que nós _____ (jugar = jogar). (subjPres)","explain":"A forma de nosotros no presente do subjuntivo de 'jugar' é 'juguemos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente do subjuntivo.","distractorNotes":{"juegue":"'juegue' é a forma de yo.","juegues":"'juegues' é a forma de tú.","juguéis":"'juguéis' é a forma de vosotros (Espanha)."}},
+  "verbo-455": {"promptNative":"Espero que ele/ela _____ (empezar = começar). (subjPres)","explain":"A forma de él/ella no presente do subjuntivo de 'empezar' é 'empiece'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao presente do subjuntivo.","distractorNotes":{"empieces":"'empieces' é a forma de tú.","empecemos":"'empecemos' é a forma de nosotros.","empecéis":"'empecéis' é a forma de vosotros (Espanha)."}},
+  "verbo-456": {"promptNative":"Espero que você (tú) _____ (cerrar = fechar). (subjPres)","explain":"A forma de tú no presente do subjuntivo de 'cerrar' é 'cierres'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao presente do subjuntivo.","distractorNotes":{"cierre":"'cierre' é a forma de yo.","cerremos":"'cerremos' é a forma de nosotros.","cerréis":"'cerréis' é a forma de vosotros (Espanha)."}},
+  "verbo-457": {"promptNative":"Espero que eu _____ (ser = ser). (subjPres)","explain":"A forma de yo no presente do subjuntivo de 'ser' é 'sea'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente do subjuntivo.","distractorNotes":{"seas":"'seas' é a forma de tú.","seamos":"'seamos' é a forma de nosotros.","seáis":"'seáis' é a forma de vosotros (Espanha)."}},
+  "verbo-458": {"promptNative":"Espero que eles _____ (ser = ser). (subjPres)","explain":"A forma de ellos/ellas no presente do subjuntivo de 'ser' é 'sean'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente do subjuntivo.","distractorNotes":{"sea":"'sea' é a forma de yo.","seas":"'seas' é a forma de tú.","seamos":"'seamos' é a forma de nosotros."}},
+  "verbo-459": {"promptNative":"Espero que vocês (vosotros) _____ (estar = estar). (subjPres)","explain":"A forma de vosotros no presente do subjuntivo de 'estar' é 'estéis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente do subjuntivo.","distractorNotes":{"esté":"'esté' é a forma de yo.","estés":"'estés' é a forma de tú.","estemos":"'estemos' é a forma de nosotros."}},
+  "verbo-460": {"promptNative":"Espero que nós _____ (ir = ir). (subjPres)","explain":"A forma de nosotros no presente do subjuntivo de 'ir' é 'vayamos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente do subjuntivo.","distractorNotes":{"vaya":"'vaya' é a forma de yo.","vayas":"'vayas' é a forma de tú.","vayáis":"'vayáis' é a forma de vosotros (Espanha)."}},
+  "verbo-461": {"promptNative":"Espero que ele/ela _____ (tener = ter). (subjPres)","explain":"A forma de él/ella no presente do subjuntivo de 'tener' é 'tenga'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao presente do subjuntivo.","distractorNotes":{"tengas":"'tengas' é a forma de tú.","tengamos":"'tengamos' é a forma de nosotros.","tengáis":"'tengáis' é a forma de vosotros (Espanha)."}},
+  "verbo-462": {"promptNative":"Espero que você (tú) _____ (hacer = fazer). (subjPres)","explain":"A forma de tú no presente do subjuntivo de 'hacer' é 'hagas'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao presente do subjuntivo.","distractorNotes":{"haga":"'haga' é a forma de yo.","hagamos":"'hagamos' é a forma de nosotros.","hagáis":"'hagáis' é a forma de vosotros (Espanha)."}},
+  "verbo-463": {"promptNative":"Espero que eu _____ (decir = dizer). (subjPres)","explain":"A forma de yo no presente do subjuntivo de 'decir' é 'diga'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente do subjuntivo.","distractorNotes":{"digas":"'digas' é a forma de tú.","digamos":"'digamos' é a forma de nosotros.","digáis":"'digáis' é a forma de vosotros (Espanha)."}},
+  "verbo-464": {"promptNative":"Espero que eles _____ (decir = dizer). (subjPres)","explain":"A forma de ellos/ellas no presente do subjuntivo de 'decir' é 'digan'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente do subjuntivo.","distractorNotes":{"diga":"'diga' é a forma de yo.","digas":"'digas' é a forma de tú.","digamos":"'digamos' é a forma de nosotros."}},
+  "verbo-465": {"promptNative":"Espero que vocês (vosotros) _____ (venir = vir). (subjPres)","explain":"A forma de vosotros no presente do subjuntivo de 'venir' é 'vengáis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente do subjuntivo.","distractorNotes":{"venga":"'venga' é a forma de yo.","vengas":"'vengas' é a forma de tú.","vengamos":"'vengamos' é a forma de nosotros."}},
+  "verbo-466": {"promptNative":"Espero que nós _____ (poner = pôr). (subjPres)","explain":"A forma de nosotros no presente do subjuntivo de 'poner' é 'pongamos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao presente do subjuntivo.","distractorNotes":{"ponga":"'ponga' é a forma de yo.","pongas":"'pongas' é a forma de tú.","pongáis":"'pongáis' é a forma de vosotros (Espanha)."}},
+  "verbo-467": {"promptNative":"Espero que ele/ela _____ (salir = sair). (subjPres)","explain":"A forma de él/ella no presente do subjuntivo de 'salir' é 'salga'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (él) E ao presente do subjuntivo.","distractorNotes":{"salgas":"'salgas' é a forma de tú.","salgamos":"'salgamos' é a forma de nosotros.","salgáis":"'salgáis' é a forma de vosotros (Espanha)."}},
+  "verbo-468": {"promptNative":"Espero que você (tú) _____ (dar = dar). (subjPres)","explain":"A forma de tú no presente do subjuntivo de 'dar' é 'des'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao presente do subjuntivo.","distractorNotes":{"dé":"'dé' é a forma de yo.","demos":"'demos' é a forma de nosotros.","deis":"'deis' é a forma de vosotros (Espanha)."}},
+  "verbo-469": {"promptNative":"Espero que eu _____ (ver = ver). (subjPres)","explain":"A forma de yo no presente do subjuntivo de 'ver' é 'vea'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao presente do subjuntivo.","distractorNotes":{"veas":"'veas' é a forma de tú.","veamos":"'veamos' é a forma de nosotros.","veáis":"'veáis' é a forma de vosotros (Espanha)."}},
+  "verbo-470": {"promptNative":"Espero que eles _____ (ver = ver). (subjPres)","explain":"A forma de ellos/ellas no presente do subjuntivo de 'ver' é 'vean'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao presente do subjuntivo.","distractorNotes":{"vea":"'vea' é a forma de yo.","veas":"'veas' é a forma de tú.","veamos":"'veamos' é a forma de nosotros."}},
+  "verbo-471": {"promptNative":"Espero que vocês (vosotros) _____ (saber = saber). (subjPres)","explain":"A forma de vosotros no presente do subjuntivo de 'saber' é 'sepáis'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao presente do subjuntivo.","distractorNotes":{"sepa":"'sepa' é a forma de yo.","sepas":"'sepas' é a forma de tú.","sepamos":"'sepamos' é a forma de nosotros."}},
+  "verbo-472": {"promptNative":"Tomara que eu _____ (pensar = pensar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'pensar' é 'pensara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"pensaras":"'pensaras' é a forma de tú.","pensáramos":"'pensáramos' é a forma de nosotros.","pensarais":"'pensarais' é a forma de vosotros (Espanha)."}},
+  "verbo-473": {"promptNative":"Tomara que nós _____ (pensar = pensar). (subjImpf)","explain":"A forma de nosotros no imperfeito do subjuntivo de 'pensar' é 'pensáramos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"pensara":"'pensara' é a forma de yo.","pensaras":"'pensaras' é a forma de tú.","pensarais":"'pensarais' é a forma de vosotros (Espanha)."}},
+  "verbo-474": {"promptNative":"Tomara que eles _____ (pensar = pensar). (subjImpf)","explain":"A forma de ellos/ellas no imperfeito do subjuntivo de 'pensar' é 'pensaran'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito do subjuntivo.","distractorNotes":{"pensara":"'pensara' é a forma de yo.","pensaras":"'pensaras' é a forma de tú.","pensáramos":"'pensáramos' é a forma de nosotros."}},
+  "verbo-475": {"promptNative":"Tomara que você (tú) _____ (poder = poder). (subjImpf)","explain":"A forma de tú no imperfeito do subjuntivo de 'poder' é 'pudieras'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito do subjuntivo.","distractorNotes":{"pudiera":"'pudiera' é a forma de yo.","pudiéramos":"'pudiéramos' é a forma de nosotros.","pudierais":"'pudierais' é a forma de vosotros (Espanha)."}},
+  "verbo-476": {"promptNative":"Tomara que vocês (vosotros) _____ (poder = poder). (subjImpf)","explain":"A forma de vosotros no imperfeito do subjuntivo de 'poder' é 'pudierais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"pudiera":"'pudiera' é a forma de yo.","pudieras":"'pudieras' é a forma de tú.","pudiéramos":"'pudiéramos' é a forma de nosotros."}},
+  "verbo-477": {"promptNative":"Tomara que eu _____ (querer = querer). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'querer' é 'quisiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"quisieras":"'quisieras' é a forma de tú.","quisiéramos":"'quisiéramos' é a forma de nosotros.","quisierais":"'quisierais' é a forma de vosotros (Espanha)."}},
+  "verbo-478": {"promptNative":"Tomara que nós _____ (querer = querer). (subjImpf)","explain":"A forma de nosotros no imperfeito do subjuntivo de 'querer' é 'quisiéramos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"quisiera":"'quisiera' é a forma de yo.","quisieras":"'quisieras' é a forma de tú.","quisierais":"'quisierais' é a forma de vosotros (Espanha)."}},
+  "verbo-479": {"promptNative":"Tomara que eles _____ (querer = querer). (subjImpf)","explain":"A forma de ellos/ellas no imperfeito do subjuntivo de 'querer' é 'quisieran'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito do subjuntivo.","distractorNotes":{"quisiera":"'quisiera' é a forma de yo.","quisieras":"'quisieras' é a forma de tú.","quisiéramos":"'quisiéramos' é a forma de nosotros."}},
+  "verbo-480": {"promptNative":"Tomara que você (tú) _____ (volver = voltar). (subjImpf)","explain":"A forma de tú no imperfeito do subjuntivo de 'volver' é 'volvieras'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito do subjuntivo.","distractorNotes":{"volviera":"'volviera' é a forma de yo.","volviéramos":"'volviéramos' é a forma de nosotros.","volvierais":"'volvierais' é a forma de vosotros (Espanha)."}},
+  "verbo-481": {"promptNative":"Tomara que vocês (vosotros) _____ (volver = voltar). (subjImpf)","explain":"A forma de vosotros no imperfeito do subjuntivo de 'volver' é 'volvierais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"volviera":"'volviera' é a forma de yo.","volvieras":"'volvieras' é a forma de tú.","volviéramos":"'volviéramos' é a forma de nosotros."}},
+  "verbo-482": {"promptNative":"Tomara que eu _____ (dormir = dormir). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'dormir' é 'durmiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"durmieras":"'durmieras' é a forma de tú.","durmiéramos":"'durmiéramos' é a forma de nosotros.","durmierais":"'durmierais' é a forma de vosotros (Espanha)."}},
+  "verbo-483": {"promptNative":"Tomara que nós _____ (dormir = dormir). (subjImpf)","explain":"A forma de nosotros no imperfeito do subjuntivo de 'dormir' é 'durmiéramos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"durmiera":"'durmiera' é a forma de yo.","durmieras":"'durmieras' é a forma de tú.","durmierais":"'durmierais' é a forma de vosotros (Espanha)."}},
+  "verbo-484": {"promptNative":"Tomara que eles _____ (dormir = dormir). (subjImpf)","explain":"A forma de ellos/ellas no imperfeito do subjuntivo de 'dormir' é 'durmieran'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito do subjuntivo.","distractorNotes":{"durmiera":"'durmiera' é a forma de yo.","durmieras":"'durmieras' é a forma de tú.","durmiéramos":"'durmiéramos' é a forma de nosotros."}},
+  "verbo-485": {"promptNative":"Tomara que você (tú) _____ (pedir = pedir). (subjImpf)","explain":"A forma de tú no imperfeito do subjuntivo de 'pedir' é 'pidieras'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito do subjuntivo.","distractorNotes":{"pidiera":"'pidiera' é a forma de yo.","pidiéramos":"'pidiéramos' é a forma de nosotros.","pidierais":"'pidierais' é a forma de vosotros (Espanha)."}},
+  "verbo-486": {"promptNative":"Tomara que vocês (vosotros) _____ (pedir = pedir). (subjImpf)","explain":"A forma de vosotros no imperfeito do subjuntivo de 'pedir' é 'pidierais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"pidiera":"'pidiera' é a forma de yo.","pidieras":"'pidieras' é a forma de tú.","pidiéramos":"'pidiéramos' é a forma de nosotros."}},
+  "verbo-487": {"promptNative":"Tomara que eu _____ (entender = entender). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'entender' é 'entendiera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"entendieras":"'entendieras' é a forma de tú.","entendiéramos":"'entendiéramos' é a forma de nosotros.","entendierais":"'entendierais' é a forma de vosotros (Espanha)."}},
+  "verbo-488": {"promptNative":"Tomara que nós _____ (entender = entender). (subjImpf)","explain":"A forma de nosotros no imperfeito do subjuntivo de 'entender' é 'entendiéramos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"entendiera":"'entendiera' é a forma de yo.","entendieras":"'entendieras' é a forma de tú.","entendierais":"'entendierais' é a forma de vosotros (Espanha)."}},
+  "verbo-489": {"promptNative":"Tomara que eles _____ (entender = entender). (subjImpf)","explain":"A forma de ellos/ellas no imperfeito do subjuntivo de 'entender' é 'entendieran'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito do subjuntivo.","distractorNotes":{"entendiera":"'entendiera' é a forma de yo.","entendieras":"'entendieras' é a forma de tú.","entendiéramos":"'entendiéramos' é a forma de nosotros."}},
+  "verbo-490": {"promptNative":"Tomara que você (tú) _____ (jugar = jogar). (subjImpf)","explain":"A forma de tú no imperfeito do subjuntivo de 'jugar' é 'jugaras'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito do subjuntivo.","distractorNotes":{"jugara":"'jugara' é a forma de yo.","jugáramos":"'jugáramos' é a forma de nosotros.","jugarais":"'jugarais' é a forma de vosotros (Espanha)."}},
+  "verbo-491": {"promptNative":"Tomara que vocês (vosotros) _____ (jugar = jogar). (subjImpf)","explain":"A forma de vosotros no imperfeito do subjuntivo de 'jugar' é 'jugarais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"jugara":"'jugara' é a forma de yo.","jugaras":"'jugaras' é a forma de tú.","jugáramos":"'jugáramos' é a forma de nosotros."}},
+  "verbo-492": {"promptNative":"Tomara que eu _____ (empezar = começar). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'empezar' é 'empezara'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"empezaras":"'empezaras' é a forma de tú.","empezáramos":"'empezáramos' é a forma de nosotros.","empezarais":"'empezarais' é a forma de vosotros (Espanha)."}},
+  "verbo-493": {"promptNative":"Tomara que nós _____ (empezar = começar). (subjImpf)","explain":"A forma de nosotros no imperfeito do subjuntivo de 'empezar' é 'empezáramos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"empezara":"'empezara' é a forma de yo.","empezaras":"'empezaras' é a forma de tú.","empezarais":"'empezarais' é a forma de vosotros (Espanha)."}},
+  "verbo-494": {"promptNative":"Tomara que eles _____ (empezar = começar). (subjImpf)","explain":"A forma de ellos/ellas no imperfeito do subjuntivo de 'empezar' é 'empezaran'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito do subjuntivo.","distractorNotes":{"empezara":"'empezara' é a forma de yo.","empezaras":"'empezaras' é a forma de tú.","empezáramos":"'empezáramos' é a forma de nosotros."}},
+  "verbo-495": {"promptNative":"Tomara que você (tú) _____ (cerrar = fechar). (subjImpf)","explain":"A forma de tú no imperfeito do subjuntivo de 'cerrar' é 'cerraras'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito do subjuntivo.","distractorNotes":{"cerrara":"'cerrara' é a forma de yo.","cerráramos":"'cerráramos' é a forma de nosotros.","cerrarais":"'cerrarais' é a forma de vosotros (Espanha)."}},
+  "verbo-496": {"promptNative":"Tomara que vocês (vosotros) _____ (cerrar = fechar). (subjImpf)","explain":"A forma de vosotros no imperfeito do subjuntivo de 'cerrar' é 'cerrarais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"cerrara":"'cerrara' é a forma de yo.","cerraras":"'cerraras' é a forma de tú.","cerráramos":"'cerráramos' é a forma de nosotros."}},
+  "verbo-497": {"promptNative":"Tomara que eu _____ (ser = ser). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'ser' é 'fuera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"fueras":"'fueras' é a forma de tú.","fuéramos":"'fuéramos' é a forma de nosotros.","fuerais":"'fuerais' é a forma de vosotros (Espanha)."}},
+  "verbo-498": {"promptNative":"Tomara que nós _____ (ser = ser). (subjImpf)","explain":"A forma de nosotros no imperfeito do subjuntivo de 'ser' é 'fuéramos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"fuera":"'fuera' é a forma de yo.","fueras":"'fueras' é a forma de tú.","fuerais":"'fuerais' é a forma de vosotros (Espanha)."}},
+  "verbo-499": {"promptNative":"Tomara que eles _____ (ser = ser). (subjImpf)","explain":"A forma de ellos/ellas no imperfeito do subjuntivo de 'ser' é 'fueran'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito do subjuntivo.","distractorNotes":{"fuera":"'fuera' é a forma de yo.","fueras":"'fueras' é a forma de tú.","fuéramos":"'fuéramos' é a forma de nosotros."}},
+  "verbo-500": {"promptNative":"Tomara que você (tú) _____ (estar = estar). (subjImpf)","explain":"A forma de tú no imperfeito do subjuntivo de 'estar' é 'estuvieras'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito do subjuntivo.","distractorNotes":{"estuviera":"'estuviera' é a forma de yo.","estuviéramos":"'estuviéramos' é a forma de nosotros.","estuvierais":"'estuvierais' é a forma de vosotros (Espanha)."}},
+  "verbo-501": {"promptNative":"Tomara que vocês (vosotros) _____ (estar = estar). (subjImpf)","explain":"A forma de vosotros no imperfeito do subjuntivo de 'estar' é 'estuvierais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"estuviera":"'estuviera' é a forma de yo.","estuvieras":"'estuvieras' é a forma de tú.","estuviéramos":"'estuviéramos' é a forma de nosotros."}},
+  "verbo-502": {"promptNative":"Tomara que eu _____ (ir = ir). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'ir' é 'fuera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"fueras":"'fueras' é a forma de tú.","fuéramos":"'fuéramos' é a forma de nosotros.","fuerais":"'fuerais' é a forma de vosotros (Espanha)."}},
+  "verbo-503": {"promptNative":"Tomara que nós _____ (ir = ir). (subjImpf)","explain":"A forma de nosotros no imperfeito do subjuntivo de 'ir' é 'fuéramos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"fuera":"'fuera' é a forma de yo.","fueras":"'fueras' é a forma de tú.","fuerais":"'fuerais' é a forma de vosotros (Espanha)."}},
+  "verbo-504": {"promptNative":"Tomara que eles _____ (ir = ir). (subjImpf)","explain":"A forma de ellos/ellas no imperfeito do subjuntivo de 'ir' é 'fueran'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito do subjuntivo.","distractorNotes":{"fuera":"'fuera' é a forma de yo.","fueras":"'fueras' é a forma de tú.","fuéramos":"'fuéramos' é a forma de nosotros."}},
+  "verbo-505": {"promptNative":"Tomara que você (tú) _____ (tener = ter). (subjImpf)","explain":"A forma de tú no imperfeito do subjuntivo de 'tener' é 'tuvieras'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito do subjuntivo.","distractorNotes":{"tuviera":"'tuviera' é a forma de yo.","tuviéramos":"'tuviéramos' é a forma de nosotros.","tuvierais":"'tuvierais' é a forma de vosotros (Espanha)."}},
+  "verbo-506": {"promptNative":"Tomara que vocês (vosotros) _____ (tener = ter). (subjImpf)","explain":"A forma de vosotros no imperfeito do subjuntivo de 'tener' é 'tuvierais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"tuviera":"'tuviera' é a forma de yo.","tuvieras":"'tuvieras' é a forma de tú.","tuviéramos":"'tuviéramos' é a forma de nosotros."}},
+  "verbo-507": {"promptNative":"Tomara que eu _____ (hacer = fazer). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'hacer' é 'hiciera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"hicieras":"'hicieras' é a forma de tú.","hiciéramos":"'hiciéramos' é a forma de nosotros.","hicierais":"'hicierais' é a forma de vosotros (Espanha)."}},
+  "verbo-508": {"promptNative":"Tomara que nós _____ (hacer = fazer). (subjImpf)","explain":"A forma de nosotros no imperfeito do subjuntivo de 'hacer' é 'hiciéramos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"hiciera":"'hiciera' é a forma de yo.","hicieras":"'hicieras' é a forma de tú.","hicierais":"'hicierais' é a forma de vosotros (Espanha)."}},
+  "verbo-509": {"promptNative":"Tomara que eles _____ (hacer = fazer). (subjImpf)","explain":"A forma de ellos/ellas no imperfeito do subjuntivo de 'hacer' é 'hicieran'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito do subjuntivo.","distractorNotes":{"hiciera":"'hiciera' é a forma de yo.","hicieras":"'hicieras' é a forma de tú.","hiciéramos":"'hiciéramos' é a forma de nosotros."}},
+  "verbo-510": {"promptNative":"Tomara que você (tú) _____ (decir = dizer). (subjImpf)","explain":"A forma de tú no imperfeito do subjuntivo de 'decir' é 'dijeras'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito do subjuntivo.","distractorNotes":{"dijera":"'dijera' é a forma de yo.","dijéramos":"'dijéramos' é a forma de nosotros.","dijerais":"'dijerais' é a forma de vosotros (Espanha)."}},
+  "verbo-511": {"promptNative":"Tomara que vocês (vosotros) _____ (decir = dizer). (subjImpf)","explain":"A forma de vosotros no imperfeito do subjuntivo de 'decir' é 'dijerais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"dijera":"'dijera' é a forma de yo.","dijeras":"'dijeras' é a forma de tú.","dijéramos":"'dijéramos' é a forma de nosotros."}},
+  "verbo-512": {"promptNative":"Tomara que eu _____ (venir = vir). (subjImpf)","explain":"A forma de yo no imperfeito do subjuntivo de 'venir' é 'viniera'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (yo) E ao imperfeito do subjuntivo.","distractorNotes":{"vinieras":"'vinieras' é a forma de tú.","viniéramos":"'viniéramos' é a forma de nosotros.","vinierais":"'vinierais' é a forma de vosotros (Espanha)."}},
+  "verbo-513": {"promptNative":"Tomara que nós _____ (venir = vir). (subjImpf)","explain":"A forma de nosotros no imperfeito do subjuntivo de 'venir' é 'viniéramos'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (nosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"viniera":"'viniera' é a forma de yo.","vinieras":"'vinieras' é a forma de tú.","vinierais":"'vinierais' é a forma de vosotros (Espanha)."}},
+  "verbo-514": {"promptNative":"Tomara que eles _____ (venir = vir). (subjImpf)","explain":"A forma de ellos/ellas no imperfeito do subjuntivo de 'venir' é 'vinieran'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (ellos) E ao imperfeito do subjuntivo.","distractorNotes":{"viniera":"'viniera' é a forma de yo.","vinieras":"'vinieras' é a forma de tú.","viniéramos":"'viniéramos' é a forma de nosotros."}},
+  "verbo-515": {"promptNative":"Tomara que você (tú) _____ (poner = pôr). (subjImpf)","explain":"A forma de tú no imperfeito do subjuntivo de 'poner' é 'pusieras'. O subjuntivo é exigido aqui pela expressão de desejo que vem antes.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (tú) E ao imperfeito do subjuntivo.","distractorNotes":{"pusiera":"'pusiera' é a forma de yo.","pusiéramos":"'pusiéramos' é a forma de nosotros.","pusierais":"'pusierais' é a forma de vosotros (Espanha)."}},
+  "verbo-516": {"promptNative":"Tomara que vocês (vosotros) _____ (poner = pôr). (subjImpf)","explain":"A forma de vosotros no imperfeito do subjuntivo de 'poner' é 'pusierais'. 'Vosotros' é o 'ustedes' informal da Espanha; a América Latina usa 'ustedes'.","wrongNote":"Os distratores são o MESMO verbo em outras pessoas/tempos. Ajuste a terminação ao sujeito (vosotros) E ao imperfeito do subjuntivo.","distractorNotes":{"pusiera":"'pusiera' é a forma de yo.","pusieras":"'pusieras' é a forma de tú.","pusiéramos":"'pusiéramos' é a forma de nosotros."}},
+  "trad-0": {"prompt":"Traduzir: 'Beleza, parece bom.'","promptNative":"Beleza, parece bom.","explain":"'Vale' é a palavra muito comum na Espanha para dizer 'okay' — pouco usada assim na América Latina."},
+  "trad-1": {"prompt":"Traduzir: 'Cara, olha isso.'","promptNative":"Cara, olha isso.","explain":"'Tío/tía' é gíria da Espanha para 'dude/mate' entre amigos — aqui não significa literalmente 'uncle/aunt'."},
+  "trad-2": {"prompt":"Traduzir: 'Muito obrigado.'","promptNative":"Muito obrigado.","explain":"'Muchas gracias' — 'gracias' é feminino plural, então leva 'muchas', nunca 'mucho' nem 'muy'."},
+  "trad-3": {"prompt":"Traduzir: 'Até mais.'","promptNative":"Até mais.","explain":"'Hasta luego' é a despedida cotidiana padrão — na Espanha muitas vezes se comprime num rápido \"ta-luego\"."},
+  "trad-4": {"prompt":"Traduzir: 'Que legal!' (coloquial, Espanha)","promptNative":"Que legal! (coloquial, Espanha)","explain":"'¡Qué guay!' é a exclamação clássica da Espanha para 'cool!' — a contraparte peninsular dos latino-americanos chévere/chido/bacán. 'Qué frío' é a pegadinha literal: só significa que está frio."},
+  "trad-5": {"prompt":"Traduzir: 'Estou a fim de um café.' (Espanha)","promptNative":"Estou a fim de um café. (Espanha)","explain":"'Apetecer' funciona como 'gustar' — o café é o que agrada: me apetece un café. A América Latina diria antes 'tengo ganas de un café' ou 'se me antoja un café'."},
+  "trad-6": {"prompt":"Traduzir: 'A gente se encontra às oito.' (Espanha)","promptNative":"A gente se encontra às oito. (Espanha)","explain":"'Quedar' no seu sentido bem espanhol: 'hemos quedado a las ocho' = combinamos de nos encontrar às oito. 'Nos quedamos a las ocho' significaria que FICAMOS — uma pegadinha de significado de verdade."},
+  "trad-7": {"prompt":"Traduzir: 'Isso é demais!' (coloquial, Espanha)","promptNative":"Isso é demais! (coloquial, Espanha)","explain":"'Ser la leche' é gíria querida da Espanha para algo incrível — '¡este sitio es la leche!'. Aviso: com um tom ruim também pode significar que algo é revoltante; o contexto e o tom decidem."},
+  "trad-8": {"prompt":"Traduzir: 'Estou pouco me lixando.' (coloquial, Espanha)","promptNative":"Estou pouco me lixando. (coloquial, Espanha)","explain":"A Espanha mede a indiferença em hortaliças: 'me importa un pimiento' — 'un comino' e 'un bledo' também funcionam."},
+  "trad-9": {"prompt":"Traduzir: 'O bar está lotado.' (coloquial, Espanha)","promptNative":"O bar está lotado. (coloquial, Espanha)","explain":"'Estar a tope' é gíria cotidiana da Espanha para lotado/no máximo — também serve para a energia ('¡a tope!' = a todo vapor)."},
+  "trad-10": {"prompt":"Traduzir: 'Acordei tarde.' (coloquial, Espanha)","promptNative":"Acordei tarde. (coloquial, Espanha)","explain":"A maravilhosa expressão espanhola: 'se me han pegado las sábanas'. Repare que usa a mesma gramática do 'se' acidental que 'se me olvidaron las llaves', mais o pretérito perfeito composto peninsular."},
+  "trad-11": {"prompt":"Traduzir: 'no meio do nada' (Espanha)","promptNative":"no meio do nada (Espanha)","explain":"'En el quinto pino' é a expressão da Espanha para um lugar remotíssimo — a América Latina tem as suas versões, como 'en casa del demonio' no México ou o compartilhado 'donde el diablo perdió el poncho'."},
+  "trad-12": {"prompt":"Traduzir: 'Como se já não tivéssemos problemas suficientes!' (Espanha)","promptNative":"Como se já não tivéssemos problemas suficientes! (Espanha)","explain":"'Éramos pocos y parió la abuela' é o ditado gloriosamente absurdo da Espanha para quando uma situação ruim se enche de ainda mais problemas."},
+  "trad-13": {"prompt":"Traduzir: 'As coisas teriam acabado de um jeito bem diferente.' (Espanha)","promptNative":"As coisas teriam acabado de um jeito bem diferente. (Espanha)","explain":"'Otro gallo cantaría' é o ditado para como as coisas teriam sido diferentes se ao menos... ('Si me hubieras hecho caso, otro gallo cantaría.')"},
+  "trad-14": {"prompt":"Traduzir: 'Oi, tudo bem?'","promptNative":"Oi, tudo bem?","explain":"'¿Qué tal?' é o cumprimento cotidiano; os distratores usam mal 'ser' ou não fazem sentido."},
+  "trad-15": {"prompt":"Traduzir: 'Bom dia.'","promptNative":"Bom dia.","explain":"Na Espanha se diz 'buenos días' (plural); 'buen día' se ouve em partes da América Latina e 'buena mañana' é um decalque."},
+  "trad-16": {"prompt":"Traduzir: 'Boa noite.'","promptNative":"Boa noite.","explain":"'Buenas noches' é fixa e no plural; as formas no singular ou com gênero errado são incorretas."},
+  "trad-17": {"prompt":"Traduzir: 'Por favor.'","promptNative":"Por favor.","explain":"'Por favor' é a expressão fixa; 'favora' não existe e 'para/con' são preposições erradas."},
+  "trad-18": {"prompt":"Traduzir: 'De nada.'","promptNative":"De nada.","explain":"'De nada' é a resposta padrão; 'eres bienvenido' é um decalque de 'welcome' e 'por nada' é mais latino-americano."},
+  "trad-19": {"prompt":"Traduzir: 'Com licença.' (para passar por alguém)","promptNative":"Com licença. (para passar por alguém)","explain":"'Perdón' (ou 'perdona/perdone') é o natural; 'excúsame' é um decalque de 'excuse me' que não se usa assim na Espanha."},
+  "trad-20": {"prompt":"Traduzir: 'Sim, claro.'","promptNative":"Sim, claro.","explain":"'Sí, claro' é a expressão fixa; 'clara' a feminiza indevidamente e as outras são redundantes."},
+  "trad-21": {"prompt":"Traduzir: 'Não entendo.'","promptNative":"Não entendo.","explain":"'No entiendo' é a forma conjugada e natural; o infinitivo e as versões redundantes estão erradas."},
+  "trad-22": {"prompt":"Traduzir: 'Como você se chama?'","promptNative":"Como você se chama?","explain":"O espanhol usa o reflexivo 'llamarse': '¿cómo te llamas?'. '¿Qué es tu nombre?' é um decalque do inglês."},
+  "trad-23": {"prompt":"Traduzir: 'Meu nome é Ana.'","promptNative":"Meu nome é Ana.","explain":"'Me llamo Ana' é o natural; as outras traduzem 'is named' de forma literal."},
+  "trad-24": {"prompt":"Traduzir: 'Onde fica o banheiro?'","promptNative":"Onde fica o banheiro?","explain":"A localização usa 'estar': '¿dónde está el baño?'; 'ser' e 'adónde' estão errados aqui."},
+  "trad-25": {"prompt":"Traduzir: 'Quanto custa?'","promptNative":"Quanto custa?","explain":"'¿Cuánto es?' (ou '¿cuánto cuesta?') pergunta o preço; '¿cuánto cuestas?' se dirige à pessoa por engano e 'cómo mucho' é um decalque."},
+  "trad-26": {"prompt":"Traduzir: 'A conta, por favor.'","promptNative":"A conta, por favor.","explain":"A conta do restaurante é 'la cuenta'; 'el billete' é ingresso ou cédula e 'factura' é uma nota fiscal."},
+  "trad-27": {"prompt":"Traduzir: 'Um café, por favor.'","promptNative":"Um café, por favor.","explain":"'Un café' — 'uno' se reduz a 'un' diante de substantivo masculino, e o substantivo fica no singular."},
+  "trad-28": {"prompt":"Traduzir: 'Beleza.' (coloquial, Espanha)","promptNative":"Beleza. (coloquial, Espanha)","explain":"'Vale' é a palavra por excelência na Espanha para 'okay'; na América Latina se usa 'dale' ou 'está bien'."},
+  "trad-29": {"prompt":"Traduzir: 'Até amanhã.'","promptNative":"Até amanhã.","explain":"'Hasta mañana' é a despedida fixa; acrescentar artigo ou preposição ('la mañana', 'a mañana') a quebra."},
+  "trad-30": {"prompt":"Traduzir: 'Tchau.'","promptNative":"Tchau.","explain":"'Adiós' é a despedida padrão; 'adiósito' é um diminutivo latino-americano e as outras não são despedidas fixas na Espanha."},
+  "trad-31": {"prompt":"Traduzir: 'Estou bem, obrigado.'","promptNative":"Estou bem, obrigado.","explain":"Um estado usa 'estar': 'estoy bien'. 'Soy bien' usa mal 'ser' e 'estoy bueno' significa atraente ou saboroso."},
+  "trad-32": {"prompt":"Traduzir: 'Você fala inglês?'","promptNative":"Você fala inglês?","explain":"'¿Hablas inglés?' usa corretamente a forma tú; 'tú habla' não concorda e 'eres hablando' é um decalque agramatical."},
+  "trad-33": {"prompt":"Traduzir: 'Você pode me ajudar?'","promptNative":"Você pode me ajudar?","explain":"A Espanha usa tú: '¿puedes ayudarme?'; '¿podés?' é o voseo argentino e 'ayudar yo' quebra o pronome."},
+  "trad-34": {"prompt":"Traduzir: 'Onde fica a estação de trem?'","promptNative":"Onde fica a estação de trem?","explain":"A localização leva 'estar'; 'tren estación' inverte a ordem ao estilo do inglês, o que o espanhol não permite."},
+  "trad-35": {"prompt":"Traduzir: 'Como eu chego ao centro da cidade?'","promptNative":"Como eu chego ao centro da cidade?","explain":"'Llegar a' é o verbo; 'conseguir' significa obter e 'voy el centro' omite o 'a' obrigatório."},
+  "trad-36": {"prompt":"Traduzir: 'Estou procurando uma farmácia.'","promptNative":"Estou procurando uma farmácia.","explain":"'Buscar' já significa 'look for', por isso não leva 'por'; 'busco por' é um decalque do inglês."},
+  "trad-37": {"prompt":"Traduzir: 'Posso pagar com cartão?'","promptNative":"Posso pagar com cartão?","explain":"'Pagar con tarjeta' é a expressão fixa; 'carta' é um falso cognato (carta/cardápio), não um cartão de pagamento."},
+  "trad-38": {"prompt":"Traduzir: 'Que horas abre?'","promptNative":"Que horas abre?","explain":"'¿A qué hora...?' é a forma fixa; tirar o 'a' ou colocar 'cuál/cuándo' está errado."},
+  "trad-39": {"prompt":"Traduzir: 'Vou querer o prato feito.' (Espanha)","promptNative":"Vou querer o prato feito. (Espanha)","explain":"Na Espanha o almoço de preço fixo é 'el menú del día'; 'la carta' é a lista à la carte, uma confusão comum."},
+  "trad-40": {"prompt":"Traduzir: 'Você pode me trazer o cardápio?' (Espanha)","promptNative":"Você pode me trazer o cardápio? (Espanha)","explain":"Na Espanha a lista de pratos é 'la carta'; 'el menú' é o de preço fixo e 'llevar' é levar, não trazer."},
+  "trad-41": {"prompt":"Traduzir: 'Um chope pequeno, por favor.' (Espanha)","promptNative":"Um chope pequeno, por favor. (Espanha)","explain":"Um chope pequeno na Espanha é 'una caña'; 'chica' e 'birra' soam latino-americanos aqui."},
+  "trad-42": {"prompt":"Traduzir: 'Vire à direita.'","promptNative":"Vire à direita.","explain":"A Espanha diz 'girar a la derecha'; 'voltear' e 'dar vuelta' para virar são latino-americanos."},
+  "trad-43": {"prompt":"Traduzir: 'É à esquerda.'","promptNative":"É à esquerda.","explain":"A localização usa 'estar a la izquierda'; 'es' usa mal 'ser' e 'izquierda mano' decalca a ordem do inglês."},
+  "trad-44": {"prompt":"Traduzir: 'Como estão as coisas?'","promptNative":"Como estão as coisas?","explain":"'¿Cómo va todo?' é o natural; o gerúndio e os desencontros de número fazem as outras soarem mal."},
+  "trad-45": {"prompt":"Traduzir: 'Só estou olhando, obrigado.'","promptNative":"Só estou olhando, obrigado.","explain":"Dar uma olhada numa loja é 'estoy mirando'; 'ver' perde o sentido e as reformulações soam estranhas."},
+  "trad-46": {"prompt":"Traduzir: 'Você pode me dar uma sacola?'","promptNative":"Você pode me dar uma sacola?","explain":"Uma sacola de compras é 'una bolsa'; 'bolso' é bolsa de mão, 'funda' é um estojo e 'regalar' é dar de presente."},
+  "trad-47": {"prompt":"Traduzir: 'O que você recomenda?'","promptNative":"O que você recomenda?","explain":"A Espanha usa tú: '¿qué me recomiendas?'; '¿recomendás?' é voseo e 'a mí' no lugar de 'me' é agramatical."},
+  "trad-48": {"prompt":"Traduzir: 'Você tem uma mesa para dois?'","promptNative":"Você tem uma mesa para dois?","explain":"'Mesa para dos' usa 'para' (destinada a); 'por' e 'de dos' mudam ou embaçam o sentido."},
+  "trad-49": {"prompt":"Traduzir: 'É caro demais.'","promptNative":"É caro demais.","explain":"'Demasiado' significa 'too (much)'; 'también' significa 'also', uma pegadinha clássica com o 'too' do inglês."},
+  "trad-50": {"prompt":"Traduzir: 'Tenho que pegar o ônibus.' (Espanha)","promptNative":"Tenho que pegar o ônibus. (Espanha)","explain":"Na Espanha se 'coge el autobús'; 'agarrar/tomar' são latino-americanos e 'camión' é ônibus só no México (na Espanha é um veículo de carga)."},
+  "trad-51": {"prompt":"Traduzir: 'Falou, até mais!' (coloquial, Espanha)","promptNative":"Falou, até mais! (coloquial, Espanha)","explain":"'¡Hasta luego!' é a despedida casual padrão na Espanha; 'hasta el rato' é latino-americano e 'nos miramos' usa o verbo errado."},
+  "trad-52": {"prompt":"Traduzir: 'Show!' (coloquial, Espanha)","promptNative":"Show! (coloquial, Espanha)","explain":"'¡Qué guay!' é a palavra espanhola para genial; 'chido/padre' (México) e 'chévere' (Caribe/Andes) são latino-americanos."},
+  "trad-53": {"prompt":"Traduzir: 'Isso é muito maneiro.' (coloquial, Espanha)","promptNative":"Isso é muito maneiro. (coloquial, Espanha)","explain":"'Molar' é o verbo espanhol por excelência para algo genial: 'mola mucho'. 'Muy' não antecede um verbo, então 'mola muy' está errado."},
+  "trad-54": {"prompt":"Traduzir: 'A gente combinou de se encontrar no bar.' (Espanha)","promptNative":"A gente combinou de se encontrar no bar. (Espanha)","explain":"Na Espanha 'quedar' é combinar um encontro, com pretérito perfeito composto para um plano recente; 'nos quedamos' significa 'we stayed'."},
+  "trad-55": {"prompt":"Traduzir: 'Estou a fim de sair hoje à noite.' (Espanha)","promptNative":"Estou a fim de sair hoje à noite. (Espanha)","explain":"A Espanha usa 'apetecer' (como gustar): 'me apetece'. 'Antojarse' é latino-americano e 'me apetezco' o conjuga errado."},
+  "trad-56": {"prompt":"Traduzir: 'Você pode me buscar um café?' (Espanha)","promptNative":"Você pode me buscar um café? (Espanha)","explain":"Num bar espanhol se pede com '¿me pones...?'; 'servir' soa rígido e 'colocar/echar' não servem para pedir."},
+  "trad-57": {"prompt":"Traduzir: 'Hoje de manhã tomei café da manhã em casa.' (Espanha)","promptNative":"Hoje de manhã tomei café da manhã em casa. (Espanha)","explain":"A Espanha usa o pretérito perfeito composto para o que é de hoje: 'esta mañana he desayunado'; a América Latina usaria o indefinido 'desayuné'."},
+  "trad-58": {"prompt":"Traduzir: 'Que saco / que chato.' (coloquial, Espanha)","promptNative":"Que saco / que chato. (coloquial, Espanha)","explain":"Na Espanha um tédio pesado é 'un rollo': 'vaya rollo'. 'Aburrición' não é padrão e 'jalada' é gíria latino-americana."},
+  "trad-59": {"prompt":"Traduzir: 'Estou exausto / acabado.' (coloquial, Espanha)","promptNative":"Estou exausto / acabado. (coloquial, Espanha)","explain":"'Estar hecho polvo' é a expressão espanhola para exausto; 'hecho pomada' é argentino e 'bien... nomás' é fraseado latino-americano."},
+  "trad-60": {"prompt":"Traduzir: 'Fica no meio do nada.' (Espanha)","promptNative":"Fica no meio do nada. (Espanha)","explain":"A Espanha diz 'en el quinto pino' para um lugar remoto; 'en la mitad de la nada' é um decalque e 'queda' para localizar é latino-americano."},
+  "trad-61": {"prompt":"Traduzir: 'Estamos atolados de trabalho.' (coloquial, Espanha)","promptNative":"Estamos atolados de trabalho. (coloquial, Espanha)","explain":"'Estar a tope' é gíria espanhola para no máximo; 'a full' é argentino e 'a tapa' não é uma expressão."},
+  "trad-62": {"prompt":"Traduzir: 'É o máximo / é incrível!' (coloquial, Espanha)","promptNative":"É o máximo / é incrível! (coloquial, Espanha)","explain":"'Ser la leche' é um jeito bem espanhol de dizer que algo é incrível; as variantes com leche não são a expressão fixa."},
+  "trad-63": {"prompt":"Traduzir: 'Vamos emendar o feriado.' (Espanha)","promptNative":"Vamos emendar o feriado. (Espanha)","explain":"'Hacer puente' é emendar um feriado com o fim de semana, expressão fixa na Espanha; as versões literais não funcionam."},
+  "trad-64": {"prompt":"Traduzir: 'Meu computador não está funcionando.' (Espanha)","promptNative":"Meu computador não está funcionando. (Espanha)","explain":"A Espanha diz 'ordenador'; a América Latina, 'computadora/computador'. As máquinas 'funcionan', não 'trabajan'."},
+  "trad-65": {"prompt":"Traduzir: 'Perdi meu celular.' (Espanha)","promptNative":"Perdi meu celular. (Espanha)","explain":"A Espanha usa 'móvil' (masculino) com pretérito perfeito composto; a América Latina diz 'celular' e usaria o indefinido 'perdí'."},
+  "trad-66": {"prompt":"Traduzir: 'Você está a fim de uma cerveja?' (Espanha)","promptNative":"Você está a fim de uma cerveja? (Espanha)","explain":"A Espanha combina 'apetecer' com 'caña' (um chope pequeno); 'chela', 'provocar' e 'birra' são latino-americanos aqui."},
+  "trad-67": {"prompt":"Traduzir: 'Cuidado, mano!' (coloquial, Espanha)","promptNative":"Cuidado, mano! (coloquial, Espanha)","explain":"'Tío' é a palavra espanhola para parceiro/cara; 'güey' (México), 'che' (Argentina) e 'pana' (Caribe/Andes) são latino-americanos."},
+  "trad-68": {"prompt":"Traduzir: 'Vou lá pegar o carro.' (Espanha)","promptNative":"Vou lá pegar o carro. (Espanha)","explain":"A Espanha diz 'ir a por' (ir buscar) e 'coche'; a América Latina omite o 'a' ('ir por') e diz 'carro'."},
+  "trad-69": {"prompt":"Traduzir: 'Que roubo!' (coloquial, Espanha)","promptNative":"Que roubo! (coloquial, Espanha)","explain":"Na Espanha um golpe é 'un timo': 'vaya timo'. 'Transa' é gíria mexicana e as outras deformam a expressão."},
+  "trad-70": {"prompt":"Traduzir: 'É moleza.' (coloquial, Espanha)","promptNative":"É moleza. (coloquial, Espanha)","explain":"'Estar chupado' é gíria espanhola para algo facílimo; 'es papita' é latino-americano e as outras são redundantes."},
+  "trad-71": {"prompt":"Traduzir: 'Para de encher o saco.' (coloquial, Espanha)","promptNative":"Para de encher o saco. (coloquial, Espanha)","explain":"'Dar la lata' é a expressão da Espanha para incomodar ou importunar. 'Estar fregando' é latino-americano, não peninsular."},
+  "trad-72": {"prompt":"Traduzir: 'Ele não dá uma dentro.' (coloquial, Espanha)","promptNative":"Ele não dá uma dentro. (coloquial, Espanha)","explain":"'No dar (ni) palo al agua' é a expressão fixa da Espanha para não trabalhar nada, ser um preguiçoso."},
+  "trad-73": {"prompt":"Traduzir: 'Que azar!' (coloquial, Espanha)","promptNative":"Que azar! (coloquial, Espanha)","explain":"'Tener mala pata' / '¡qué mala pata!' é a expressão cotidiana da Espanha para o azar; 'pierna' e 'pie' não funcionam aqui."},
+  "trad-74": {"prompt":"Traduzir: 'Ele está de mau humor.' (coloquial, Espanha)","promptNative":"Ele está de mau humor. (coloquial, Espanha)","explain":"'Estar de mala leche' é muito comum na Espanha para o mau humor do momento. Atenção: 'tener mala leche' muda para ser uma pessoa de índole ruim."},
+  "trad-75": {"prompt":"Traduzir: 'Ele é um gênio absoluto / um craque.' (coloquial, Espanha)","promptNative":"Ele é um gênio absoluto / um craque. (coloquial, Espanha)","explain":"A Espanha usa 'crack' (invariável) para alguém excelente em algo. 'Capo' é o equivalente latino-americano (sobretudo argentino), uma boa pegadinha."},
+  "trad-76": {"prompt":"Traduzir: 'Ela fez o maior escândalo.' (coloquial, Espanha)","promptNative":"Ela fez o maior escândalo. (coloquial, Espanha)","explain":"'Montar un pollo' é a expressão da Espanha para armar um barraco. O verbo é 'montar', não 'armar' (que é a opção latino-americana)."},
+  "trad-77": {"prompt":"Traduzir: 'Fiquei completamente pasmo.' (coloquial, Espanha)","promptNative":"Fiquei completamente pasmo. (coloquial, Espanha)","explain":"'Quedarse a cuadros' é a expressão da Espanha para ficar pasmo. A preposição 'a' e o plural 'cuadros' são fixos."},
+  "trad-78": {"prompt":"Traduzir: 'A gente se empanturrou no jantar.' (coloquial, Espanha)","promptNative":"A gente se empanturrou no jantar. (coloquial, Espanha)","explain":"'Ponerse las botas' é a expressão da Espanha para comer muitíssimo, ou fazer algo em excesso."},
+  "trad-79": {"prompt":"Traduzir: 'Você vai ficar de queixo caído.' (coloquial, Espanha)","promptNative":"Você vai ficar de queixo caído. (coloquial, Espanha)","explain":"'Flipar en colores' é gíria bem da Espanha para alucinar ou ficar impressionado. 'Flipar' é bem peninsular; 'en colores' é o intensificador fixo."},
+  "trad-80": {"prompt":"Traduzir: 'Não estou a fim de lidar com isso.' (coloquial, Espanha)","promptNative":"Não estou a fim de lidar com isso. (coloquial, Espanha)","explain":"'Pasar de algo' é muito comum na Espanha para não se interessar nem se importar com algo — um sentido que não tem na América Latina."},
+  "trad-81": {"prompt":"Traduzir: 'É baratíssimo.' (coloquial, Espanha)","promptNative":"É baratíssimo. (coloquial, Espanha)","explain":"'Estar tirado de precio' é o jeito da Espanha de dizer baratíssimo. 'Botado' é a versão latino-americana de 'tirado' — uma pegadinha regional."},
+  "trad-82": {"prompt":"Traduzir: 'A gente matou aula.' (coloquial, Espanha)","promptNative":"A gente matou aula. (coloquial, Espanha)","explain":"'Hacer novillos' é a expressão clássica da Espanha para matar aula ('hacer pellas' também). 'Volarse la clase' e 'pintar venado' são variantes latino-americanas."},
+  "trad-83": {"prompt":"Traduzir: 'Estou de saco cheio disso.' (coloquial, Espanha)","promptNative":"Estou de saco cheio disso. (coloquial, Espanha)","explain":"'Estar hasta las narices' é uma expressão da Espanha para estar de saco cheio. O plural 'narices' é fixo — 'la nariz' é incorreto."},
+  "trad-84": {"prompt":"Traduzir: 'Isso é um roubo total.' (coloquial, Espanha)","promptNative":"Isso é um roubo total. (coloquial, Espanha)","explain":"'Un timo' é um golpe ou um roubo na Espanha ('me han timado' = me passaram a perna). Os distratores são quase homófonos com significados diferentes."},
+  "trad-85": {"prompt":"Traduzir: 'Eles estão só te zoando.' (coloquial, Espanha)","promptNative":"Eles estão só te zoando. (coloquial, Espanha)","explain":"'Cachondearse DE alguien' é gíria da Espanha para zoar alguém — a preposição é 'de', não 'con'. 'Tomar el cabello' estraga a expressão real 'tomar el pelo'."},
+  "trad-86": {"prompt":"Traduzir: 'Estou totalmente duro.' (coloquial, Espanha)","promptNative":"Estou totalmente duro. (coloquial, Espanha)","explain":"'Estar sin blanca' (a 'blanca' era uma moeda antiga) é a expressão da Espanha para estar sem dinheiro. 'Sin plata' / 'sin un peso' são latino-americanas; 'estar en blanco' é dar branco."},
+  "trad-87": {"prompt":"Traduzir: 'Vamos, anda logo!' (coloquial, Espanha)","promptNative":"Vamos, anda logo! (coloquial, Espanha)","explain":"'¡Espabila!' é bem da Espanha, junto com '¡date prisa!'. '¡Apúrate!' é o imperativo latino-americano — na Espanha quase não se usa 'apurarse' para se apressar."},
+  "trad-88": {"prompt":"Traduzir: 'Tarde demais e de menos!' (Espanha)","promptNative":"Tarde demais e de menos! (Espanha)","explain":"'A buenas horas, mangas verdes' é um ditado da Espanha (as 'mangas verdes' eram uma milícia que chegava tarde) que significa que a ajuda ou a notícia chegou tarde demais."},
+  "trad-89": {"prompt":"Traduzir: 'Já que começou, vai até o fim.' (Espanha)","promptNative":"Já que começou, vai até o fim. (Espanha)","explain":"'De perdidos, al río' é a expressão da Espanha para se jogar de vez quando já não há volta. O plural 'perdidos' e 'al río' são fixos."},
+  "trad-90": {"prompt":"Traduzir: 'Agora realmente não é a hora.' (coloquial, Espanha)","promptNative":"Agora realmente não é a hora. (coloquial, Espanha)","explain":"'No está el horno para bollos' é a expressão da Espanha para dizer que não é boa hora para algo. 'Tortas' é uma troca latino-americana."},
+  "trad-91": {"prompt":"Traduzir: 'Melhor o mal conhecido do que o bom por conhecer.' (Espanha)","promptNative":"Melhor o mal conhecido do que o bom por conhecer. (Espanha)","explain":"O ditado da Espanha é 'más vale malo conocido que bueno por conocer'. A ordem e 'por conocer' são fixos."},
+  "trad-92": {"prompt":"Traduzir: 'Cria fama e deita na cama... e depois te traem.' (Espanha)","promptNative":"Cria fama e deita na cama... e depois te traem. (Espanha)","explain":"'Cría cuervos y te sacarán los ojos' é um ditado conhecido na Espanha: a ingratidão de quem recebeu ajuda. A ave é 'cuervos' e o verbo, 'sacar'."},
+  "trad-93": {"prompt":"Traduzir: 'Quem não chora não mama.' (Espanha)","promptNative":"Quem não chora não mama. (Espanha)","explain":"O equivalente é 'el que no llora, no mama' — é preciso reclamar para conseguir o que se quer. O verbo-chave é 'mamar'."},
+  "trad-94": {"prompt":"Traduzir: 'Ele está totalmente aéreo.' (coloquial, Espanha)","promptNative":"Ele está totalmente aéreo. (coloquial, Espanha)","explain":"'Estar en Babia' (Babia é uma região de León) é a expressão da Espanha para estar distraído ou no mundo da lua. Os distratores são topônimos parecidos."},
+  "trad-95": {"prompt":"Traduzir: 'Isso me deixa completamente indiferente.' (coloquial, Espanha)","promptNative":"Isso me deixa completamente indiferente. (coloquial, Espanha)","explain":"'Traer al fresco' é uma expressão da Espanha para a total indiferença — 'me la trae al fresco' = para mim tanto faz. O verbo é 'traer' e o substantivo, 'fresco'."},
+  "trad-96": {"prompt":"Traduzir: 'Ela o traiu.' (coloquial, Espanha)","promptNative":"Ela o traiu. (coloquial, Espanha)","explain":"'Poner los cuernos a alguien' é a expressão padrão para a infidelidade. O plural 'cuernos' e o verbo 'poner' são fixos."},
+  "trad-97": {"prompt":"Traduzir: 'Não pouparam despesas.' (Espanha)","promptNative":"Não pouparam despesas. (Espanha)","explain":"'Tirar la casa por la ventana' significa gastar sem limite. A casa sai por 'la ventana', não por outra abertura; 'botar' é o verbo latino-americano e não forma essa expressão na Espanha."},
+  "trad-98": {"prompt":"Traduzir: 'Isso já é outra história completamente diferente.' (Espanha)","promptNative":"Isso já é outra história completamente diferente. (Espanha)","explain":"'Ser harina de otro costal' significa que é um assunto completamente diferente. A palavra é 'harina' e o recipiente, 'costal'."},
+  "trad-99": {"prompt":"Traduzir: 'Ela não tem papas na língua.' (Espanha)","promptNative":"Ela não tem papas na língua. (Espanha)","explain":"'No tener pelos en la lengua' é a expressão fixa para falar sem rodeios. O plural 'pelos' e 'la lengua' são fixos."},
+  "trad-100": {"prompt":"Traduzir: 'Eu realmente paguei o maior mico.' (coloquial, Espanha)","promptNative":"Eu realmente paguei o maior mico. (coloquial, Espanha)","explain":"'Meter la pata' é a expressão fixa para cometer uma gafe. O verbo é 'meter' e o substantivo, 'pata' — 'pie' e 'pierna' não valem."},
+  "trad-101": {"prompt":"Traduzir: 'Ela deu um fora nele na lata.' (coloquial, Espanha)","promptNative":"Ela deu um fora nele na lata. (coloquial, Espanha)","explain":"'Dar calabazas a alguien' significa dar um fora em alguém ou reprová-lo. O plural 'calabazas' e o verbo 'dar' são fixos."},
+  "trad-102": {"prompt":"Traduzir: 'Ele é completamente pirado.' (coloquial, Espanha)","promptNative":"Ele é completamente pirado. (coloquial, Espanha)","explain":"'Estar como una cabra' é a expressão da Espanha para estar louco. 'Una cabra' é fixo — o animal é a cabra, não a vaca nem a ovelha."},
+  "trad-103": {"prompt":"Traduzir: 'Você precisa se ligar e se organizar.' (coloquial, Espanha)","promptNative":"Você precisa se ligar e se organizar. (coloquial, Espanha)","explain":"'Ponerse las pilas' significa acordar para a vida ou levar a sério. É reflexivo ('ponte') e o plural 'pilas' é fixo."},
+  "trad-104": {"prompt":"Traduzir: 'Ele está dormindo para curar a bebedeira.' (coloquial, Espanha)","promptNative":"Ele está dormindo para curar a bebedeira. (coloquial, Espanha)","explain":"'Dormir la mona' é a expressão da Espanha para dormir para curar a bebedeira. 'La mona' (bebedeira) é fixo — 'el mono' é a síndrome de abstinência, outra coisa."},
+  "trad-105": {"prompt":"Traduzir: 'Não complique as coisas.' (Espanha)","promptNative":"Não complique as coisas. (Espanha)","explain":"'Buscarle tres pies al gato' significa complicar algo sem necessidade. No uso padrão é 'tres', e o animal é 'gato'."},
+  "trad-106": {"prompt":"Traduzir: 'Certo, seguindo em frente!' (coloquial, Espanha)","promptNative":"Certo, seguindo em frente! (coloquial, Espanha)","explain":"'A otra cosa, mariposa' é um bordão rimado da Espanha para mudar de assunto e seguir em frente. A rima 'cosa/mariposa' é o que o sustenta."},
+  "trad-107": {"prompt":"Traduzir: 'Para bom entendedor, meia palavra basta.' (Espanha)","promptNative":"Para bom entendedor, meia palavra basta. (Espanha)","explain":"O ditado completo é 'a buen entendedor, pocas palabras bastan' — a quem é perspicaz basta explicar pouco. 'Entendedor' e 'pocas' são as palavras-chave."},
+  "trad-108": {"prompt":"Traduzir: 'Quem muito abraça pouco aperta.' (Espanha)","promptNative":"Quem muito abraça pouco aperta. (Espanha)","explain":"'Quien mucho abarca, poco aprieta' — quem tenta demais não consegue firmar nada. A ordem importa: 'abarca' e depois 'aprieta'."},
+  "trad-109": {"prompt":"Traduzir: 'Não é acordando cedo que o sol nasce mais cedo.' (Espanha)","promptNative":"Não é acordando cedo que o sol nasce mais cedo. (Espanha)","explain":"'No por mucho madrugar amanece más temprano' — se apressar não acelera as coisas. Atenção a 'amanece', não 'anochece', e a 'temprano'."},
+  "trad-110": {"prompt":"Traduzir: 'Em boca fechada não entra mosca.' (Espanha)","promptNative":"Em boca fechada não entra mosca. (Espanha)","explain":"'En boca cerrada no entran moscas' aconselha discrição — ficar calado evita problemas. 'Cerrada', 'no entran' e a preposição 'en' são fixos."},
+  "trad-111": {"prompt":"Traduzir: 'Diga-me com quem andas e te direi quem és.' (Espanha)","promptNative":"Diga-me com quem andas e te direi quem és. (Espanha)","explain":"'Cada oveja con su pareja' — cada um com os seus semelhantes. A rima 'oveja/pareja' é a chave, então nem o animal nem 'pareja' podem mudar."},
+  "trad-112": {"prompt":"Traduzir: 'Cavalo dado não se olha os dentes.' (Espanha)","promptNative":"Cavalo dado não se olha os dentes. (Espanha)","explain":"Na Espanha o ditado é 'a caballo regalado no le mires el diente' — não examine um presente. É 'regalado' e 'el diente'; 'colmillo' é uma troca latino-americana."},
+  "trad-113": {"prompt":"Traduzir: 'Mais vale um pássaro na mão do que dois voando.' (Espanha)","promptNative":"Mais vale um pássaro na mão do que dois voando. (Espanha)","explain":"O ditado espanhol conta CEM voando, não dois: 'más vale pájaro en mano que ciento volando'. A versão 'dos volando' é um decalque do inglês."},
+  "trad-114": {"prompt":"Traduzir: 'Quem ri por último ri melhor.' (Espanha)","promptNative":"Quem ri por último ri melhor. (Espanha)","explain":"'El que ríe último, ríe mejor' — o que conta é o resultado final. 'Último' e 'mejor' são necessários; 'primero' inverte o sentido."},
+  "trad-115": {"prompt":"Traduzir: 'Não se pode fazer de porco espinho uma bolsa de seda.' (Espanha)","promptNative":"Não se pode fazer de porco espinho uma bolsa de seda. (Espanha)","explain":"'Aunque la mona se vista de seda, mona se queda' — as aparências não mudam a natureza. A 'mona' feminina, a 'seda' e 'se queda' são fixos."},
+  "trad-116": {"prompt":"Traduzir: 'Nem tudo que reluz é ouro.' (Espanha)","promptNative":"Nem tudo que reluz é ouro. (Espanha)","explain":"'No es oro todo lo que reluce' — o brilho exterior pode enganar. O metal é 'oro' e o verbo, 'relucir'; os distratores trocam o metal ou o verbo."},
+  "trad-117": {"prompt":"Traduzir: 'Quem semeia vento colhe tempestade.' (Espanha)","promptNative":"Quem semeia vento colhe tempestade. (Espanha)","explain":"'Quien siembra vientos, recoge tempestades' — as más ações trazem consequências piores. A ordem e a palavra 'tempestades' são fixas."},
+  "trad-118": {"prompt":"Traduzir: 'Em rio revolto, ganho de pescador.' (Espanha)","promptNative":"Em rio revolto, ganho de pescador. (Espanha)","explain":"'A río revuelto, ganancia de pescadores' — alguns se beneficiam do caos. É um 'río' 'revuelto'; 'ganancia' é o ganho, então 'pérdida' inverte tudo."},
+  "trad-119": {"prompt":"Traduzir: 'Você tocou num ponto sensível.' (Espanha)","promptNative":"Você tocou num ponto sensível. (Espanha)","explain":"'Poner el dedo en la llaga' significa acertar bem no ponto dolorido. É 'el dedo' e 'la llaga' — os distratores estragam um ou outro."},
+  "trad-120": {"prompt":"Traduzir: 'Deixa eu dormir e pensar melhor.' (Espanha)","promptNative":"Deixa eu dormir e pensar melhor. (Espanha)","explain":"'Consultar algo con la almohada' é a expressão para pensar no assunto durante a noite. O verbo é 'consultar' e o substantivo, 'almohada'."},
+  "trad-121": {"prompt":"Traduzir: 'Vou comer alguma coisa para enganar a fome.' (coloquial, Espanha)","promptNative":"Vou comer alguma coisa para enganar a fome. (coloquial, Espanha)","explain":"'Matar el gusanillo' é uma expressão da Espanha para beliscar algo e enganar a fome. O diminutivo 'gusanillo' e o verbo 'matar' são fixos."},
+  "trad-122": {"prompt":"Traduzir: 'Você está viajando totalmente na maionese.' (Espanha)","promptNative":"Você está viajando totalmente na maionese. (Espanha)","explain":"'Irse por los cerros de Úbeda' significa fugir do assunto ou divagar. O topônimo 'Úbeda' e 'cerros' são fixos nessa expressão espanhola."},
+  "trad-123": {"prompt":"Traduzir: 'O plano saiu totalmente pela culatra para ele.' (Espanha)","promptNative":"O plano saiu totalmente pela culatra para ele. (Espanha)","explain":"'Salir el tiro por la culata' significa que um plano sai pela culatra. É 'el tiro' por 'la culata' — os distratores trocam uma parte."},
+  "trad-124": {"prompt":"Traduzir: 'Não finja que não me ouviu.' (coloquial, Espanha)","promptNative":"Não finja que não me ouviu. (coloquial, Espanha)","explain":"'Hacerse el sueco' significa fingir que não entendeu ou que não é com você. A nacionalidade 'sueco' é fixa — as demais não se usam assim."},
+  "trad-125": {"prompt":"Traduzir: 'Exigiu um esforço hercúleo.' (Espanha)","promptNative":"Exigiu um esforço hercúleo. (Espanha)","explain":"'Costar Dios y ayuda' significa que algo custou um esforço enorme. A combinação fixa é 'Dios y ayuda' — os distratores trocam um dos dois substantivos."},
+  "trad-126": {"prompt":"Traduzir: 'Ele estava impecável, todo elegante.' (Espanha)","promptNative":"Ele estava impecável, todo elegante. (Espanha)","explain":"'Ir de punta en blanco' significa andar impecavelmente vestido e elegante. A forma fixa é 'punta en blanco' — 'punto' ou trocar a cor a quebra."},
+  "fvocab-0": {"promptNative":"'El tiempo' significa...","options":["tempo; clima","fogo","cidade","pão"],"explain":"'El tiempo' significa tempo; clima."},
+  "fvocab-1": {"prompt":"¿Cómo se dice 'ano' en español?","promptNative":"Como se diz 'ano' em espanhol?","explain":"'year' se diz 'el año'."},
+  "fvocab-2": {"promptNative":"'El día' significa...","options":["dia","loja","arroz","música"],"explain":"'El día' significa dia."},
+  "fvocab-3": {"prompt":"¿Cómo se dice 'vez (ocasião)' en español?","promptNative":"Como se diz 'vez (ocasião)' em espanhol?","explain":"'time (occasion)' se diz 'la vez'."},
+  "fvocab-4": {"promptNative":"'La vida' significa...","options":["vida","mês","água","homem"],"explain":"'La vida' significa vida."},
+  "fvocab-5": {"prompt":"¿Cómo se dice 'homem' en español?","promptNative":"Como se diz 'homem' em espanhol?","explain":"'man' se diz 'el hombre'."},
+  "fvocab-6": {"promptNative":"'La mujer' significa...","options":["mulher; esposa","cadeira","fogo","neve"],"explain":"'La mujer' significa mulher; esposa."},
+  "fvocab-7": {"prompt":"¿Cómo se dice 'criança; menino' en español?","promptNative":"Como se diz 'criança; menino' em espanhol?","explain":"'child; boy' se diz 'el niño'."},
+  "fvocab-8": {"promptNative":"'La mano' significa...","options":["mão","frango (como alimento)","ar","pássaro"],"explain":"'La mano' significa mão."},
+  "fvocab-9": {"prompt":"¿Cómo se dice 'olho' en español?","promptNative":"Como se diz 'olho' em espanhol?","explain":"'eye' se diz 'el ojo'."},
+  "fvocab-10": {"promptNative":"'El agua' significa...","options":["água","filha","gato","loja"],"explain":"'El agua' significa água."},
+  "fvocab-11": {"prompt":"¿Cómo se dice 'mesa' en español?","promptNative":"Como se diz 'mesa' em espanhol?","explain":"'table' se diz 'la mesa'."},
+  "fvocab-12": {"promptNative":"'La silla' significa...","options":["cadeira","mulher; esposa","filme","avião"],"explain":"'La silla' significa cadeira."},
+  "fvocab-13": {"prompt":"¿Cómo se dice 'porta' en español?","promptNative":"Como se diz 'porta' em espanhol?","explain":"'door' se diz 'la puerta'."},
+  "fvocab-14": {"promptNative":"'El libro' significa...","options":["livro","pai","mundo","mês"],"explain":"'El libro' significa livro."},
+  "fvocab-15": {"prompt":"¿Cómo se dice 'escola' en español?","promptNative":"Como se diz 'escola' em espanhol?","explain":"'school' se diz 'la escuela'."},
+  "fvocab-16": {"promptNative":"'La ciudad' significa...","options":["cidade","hora; hora do dia","leite","peixe (como alimento)"],"explain":"'La ciudad' significa cidade."},
+  "fvocab-17": {"prompt":"¿Cómo se dice 'país (nação)' en español?","promptNative":"Como se diz 'país (nação)' em espanhol?","explain":"'country (nation)' se diz 'el país'."},
+  "fvocab-18": {"promptNative":"'El mundo' significa...","options":["mundo","irmã","loja","ar"],"explain":"'El mundo' significa mundo."},
+  "fvocab-19": {"prompt":"¿Cómo se dice 'noite' en español?","promptNative":"Como se diz 'noite' em espanhol?","explain":"'night' se diz 'la noche'."},
+  "fvocab-20": {"promptNative":"'La mañana' significa...","options":["manhã","dia","fruta","frango (como alimento)"],"explain":"'La mañana' significa manhã."},
+  "fvocab-21": {"prompt":"¿Cómo se dice 'semana' en español?","promptNative":"Como se diz 'semana' em espanhol?","explain":"'week' se diz 'la semana'."},
+  "fvocab-22": {"promptNative":"'El mes' significa...","options":["mês","céu; paraíso","árvore","lua"],"explain":"'El mes' significa mês."},
+  "fvocab-23": {"prompt":"¿Cómo se dice 'hora; hora do dia' en español?","promptNative":"Como se diz 'hora; hora do dia' em espanhol?","explain":"'hour; time of day' se diz 'la hora'."},
+  "fvocab-24": {"promptNative":"'El minuto' significa...","options":["minuto","filme","semana","mão"],"explain":"'El minuto' significa minuto."},
+  "fvocab-25": {"prompt":"¿Cómo se dice 'nome' en español?","promptNative":"Como se diz 'nome' em espanhol?","explain":"'name' se diz 'el nombre'."},
+  "fvocab-26": {"promptNative":"'La familia' significa...","options":["família","sal","mesa","chuva"],"explain":"'La familia' significa família."},
+  "fvocab-27": {"prompt":"¿Cómo se dice 'pai' en español?","promptNative":"Como se diz 'pai' em espanhol?","explain":"'father' se diz 'el padre'."},
+  "fvocab-28": {"promptNative":"'La madre' significa...","options":["mãe","família","dia","ar"],"explain":"'La madre' significa mãe."},
+  "fvocab-29": {"prompt":"¿Cómo se dice 'filho' en español?","promptNative":"Como se diz 'filho' em espanhol?","explain":"'son' se diz 'el hijo'."},
+  "fvocab-30": {"promptNative":"'La hija' significa...","options":["filha","mãe","olho","frango (como alimento)"],"explain":"'La hija' significa filha."},
+  "fvocab-31": {"prompt":"¿Cómo se dice 'irmão' en español?","promptNative":"Como se diz 'irmão' em espanhol?","explain":"'brother' se diz 'el hermano'."},
+  "fvocab-32": {"promptNative":"'La hermana' significa...","options":["irmã","telefone","árvore","sol"],"explain":"'La hermana' significa irmã."},
+  "fvocab-33": {"prompt":"¿Cómo se dice 'amigo' en español?","promptNative":"Como se diz 'amigo' em espanhol?","explain":"'friend' se diz 'el amigo'."},
+  "fvocab-34": {"promptNative":"'El gato' significa...","options":["gato","ar","chuva","semana"],"explain":"'El gato' significa gato."},
+  "fvocab-35": {"prompt":"¿Cómo se dice 'pão' en español?","promptNative":"Como se diz 'pão' em espanhol?","explain":"'bread' se diz 'el pan'."},
+  "fvocab-36": {"promptNative":"'La leche' significa...","options":["leite","chuva","trem","árvore"],"explain":"'La leche' significa leite."},
+  "fvocab-37": {"prompt":"¿Cómo se dice 'café' en español?","promptNative":"Como se diz 'café' em espanhol?","explain":"'coffee' se diz 'el café'."},
+  "fvocab-38": {"promptNative":"'La fruta' significa...","options":["fruta","gato","café","flor"],"explain":"'La fruta' significa fruta."},
+  "fvocab-39": {"prompt":"¿Cómo se dice 'carne' en español?","promptNative":"Como se diz 'carne' em espanhol?","explain":"'meat' se diz 'la carne'."},
+  "fvocab-40": {"promptNative":"'El pescado' significa...","options":["peixe (como alimento)","vaca","música","mês"],"explain":"'El pescado' significa peixe (como alimento)."},
+  "fvocab-41": {"prompt":"¿Cómo se dice 'ovo' en español?","promptNative":"Como se diz 'ovo' em espanhol?","explain":"'egg' se diz 'el huevo'."},
+  "fvocab-42": {"promptNative":"'El arroz' significa...","options":["arroz","frango (como alimento)","rua","mês"],"explain":"'El arroz' significa arroz."},
+  "fvocab-43": {"prompt":"¿Cómo se dice 'sopa' en español?","promptNative":"Como se diz 'sopa' em espanhol?","explain":"'soup' se diz 'la sopa'."},
+  "fvocab-44": {"promptNative":"'La sal' significa...","options":["sal","bicicleta","ovo","mulher; esposa"],"explain":"'La sal' significa sal."},
+  "fvocab-45": {"prompt":"¿Cómo se dice 'açúcar' en español?","promptNative":"Como se diz 'açúcar' em espanhol?","explain":"'sugar' se diz 'el azúcar'."},
+  "fvocab-46": {"promptNative":"'El dinero' significa...","options":["dinheiro","rua","carne","irmã"],"explain":"'El dinero' significa dinheiro."},
+  "fvocab-47": {"prompt":"¿Cómo se dice 'loja' en español?","promptNative":"Como se diz 'loja' em espanhol?","explain":"'store; shop' se diz 'la tienda'."},
+  "fvocab-48": {"promptNative":"'La calle' significa...","options":["rua","sopa","arroz","mesa"],"explain":"'La calle' significa rua."},
+  "fvocab-49": {"prompt":"¿Cómo se dice 'trem' en español?","promptNative":"Como se diz 'trem' em espanhol?","explain":"'train' se diz 'el tren'."},
+  "fvocab-50": {"promptNative":"'El avión' significa...","options":["avião","sopa","flor","irmão"],"explain":"'El avión' significa avião."},
+  "fvocab-51": {"prompt":"¿Cómo se dice 'ônibus' en español?","promptNative":"Como se diz 'ônibus' em espanhol?","explain":"'bus' se diz 'el autobús'."},
+  "fvocab-52": {"promptNative":"'La bicicleta' significa...","options":["bicicleta","semana","vaca","mulher; esposa"],"explain":"'La bicicleta' significa bicicleta."},
+  "fvocab-53": {"prompt":"¿Cómo se dice 'telefone' en español?","promptNative":"Como se diz 'telefone' em espanhol?","explain":"'telephone' se diz 'el teléfono'."},
+  "fvocab-54": {"promptNative":"'La foto' significa...","options":["foto","água","sopa","animal"],"explain":"'La foto' significa foto."},
+  "fvocab-55": {"prompt":"¿Cómo se dice 'música' en español?","promptNative":"Como se diz 'música' em espanhol?","explain":"'music' se diz 'la música'."},
+  "fvocab-56": {"promptNative":"'La película' significa...","options":["filme","ano","livro","foto"],"explain":"'La película' significa filme."},
+  "fvocab-57": {"prompt":"¿Cómo se dice 'jogo' en español?","promptNative":"Como se diz 'jogo' em espanhol?","explain":"'game' se diz 'el juego'."},
+  "fvocab-58": {"promptNative":"'El deporte' significa...","options":["esporte","bicicleta","porta","futebol"],"explain":"'El deporte' significa esporte."},
+  "fvocab-59": {"prompt":"¿Cómo se dice 'futebol' en español?","promptNative":"Como se diz 'futebol' em espanhol?","explain":"'soccer' se diz 'el fútbol'."},
+  "fvocab-60": {"promptNative":"'La playa' significa...","options":["praia","cor","ar","peixe (como alimento)"],"explain":"'La playa' significa praia."},
+  "fvocab-61": {"prompt":"¿Cómo se dice 'sol' en español?","promptNative":"Como se diz 'sol' em espanhol?","explain":"'sun' se diz 'el sol'."},
+  "fvocab-62": {"promptNative":"'La luna' significa...","options":["lua","açúcar","ano","homem"],"explain":"'La luna' significa lua."},
+  "fvocab-63": {"prompt":"¿Cómo se dice 'céu; paraíso' en español?","promptNative":"Como se diz 'céu; paraíso' em espanhol?","explain":"'sky; heaven' se diz 'el cielo'."},
+  "fvocab-64": {"promptNative":"'La lluvia' significa...","options":["chuva","cavalo","café","hora; hora do dia"],"explain":"'La lluvia' significa chuva."},
+  "fvocab-65": {"prompt":"¿Cómo se dice 'neve' en español?","promptNative":"Como se diz 'neve' em espanhol?","explain":"'snow' se diz 'la nieve'."},
+  "fvocab-66": {"promptNative":"'El fuego' significa...","options":["fogo","mês","avião","tempo; clima"],"explain":"'El fuego' significa fogo."},
+  "fvocab-67": {"prompt":"¿Cómo se dice 'ar' en español?","promptNative":"Como se diz 'ar' em espanhol?","explain":"'air' se diz 'el aire'."},
+  "fvocab-68": {"promptNative":"'El árbol' significa...","options":["árvore","fogo","gato","família"],"explain":"'El árbol' significa árvore."},
+  "fvocab-69": {"prompt":"¿Cómo se dice 'flor' en español?","promptNative":"Como se diz 'flor' em espanhol?","explain":"'flower' se diz 'la flor'."},
+  "fvocab-70": {"promptNative":"'El animal' significa...","options":["animal","mulher; esposa","telefone","neve"],"explain":"'El animal' significa animal."},
+  "fvocab-71": {"prompt":"¿Cómo se dice 'pássaro' en español?","promptNative":"Como se diz 'pássaro' em espanhol?","explain":"'bird' se diz 'el pájaro'."},
+  "fvocab-72": {"promptNative":"'El pez' significa...","options":["peixe (o animal)","porta","vaca","ano"],"explain":"'El pez' significa peixe (o animal)."},
+  "fvocab-73": {"prompt":"¿Cómo se dice 'cavalo' en español?","promptNative":"Como se diz 'cavalo' em espanhol?","explain":"'horse' se diz 'el caballo'."},
+  "fvocab-74": {"promptNative":"'La vaca' significa...","options":["vaca","telefone","rua","hora; hora do dia"],"explain":"'La vaca' significa vaca."},
+  "fvocab-75": {"prompt":"¿Cómo se dice 'frango (como alimento)' en español?","promptNative":"Como se diz 'frango (como alimento)' em espanhol?","explain":"'chicken (as food)' se diz 'el pollo'."},
+  "fvocab-76": {"promptNative":"'El color' significa...","options":["cor","sal","árvore","leite"],"explain":"'El color' significa cor."},
+  "fvocab-77": {"prompt":"¿Cómo se dice 'falar' en español?","promptNative":"Como se diz 'falar' em espanhol?","explain":"'to speak' se diz 'hablar'."},
+  "fvocab-78": {"promptNative":"'Vivir' significa...","options":["viver","querer; amar","escrever","esperar; ter esperança"],"explain":"'Vivir' significa viver."},
+  "fvocab-79": {"prompt":"¿Cómo se dice 'trabalhar' en español?","promptNative":"Como se diz 'trabalhar' em espanhol?","explain":"'to work' se diz 'trabajar'."},
+  "fvocab-80": {"promptNative":"'Estudiar' significa...","options":["estudar","fazer","ler","beber"],"explain":"'Estudiar' significa estudar."},
+  "fvocab-81": {"prompt":"¿Cómo se dice 'ler' en español?","promptNative":"Como se diz 'ler' em espanhol?","explain":"'to read' se diz 'leer'."},
+  "fvocab-82": {"promptNative":"'Escribir' significa...","options":["escrever","vir","comprar","estudar"],"explain":"'Escribir' significa escrever."},
+  "fvocab-83": {"prompt":"¿Cómo se dice 'escutar' en español?","promptNative":"Como se diz 'escutar' em espanhol?","explain":"'to listen' se diz 'escuchar'."},
+  "fvocab-84": {"promptNative":"'Mirar' significa...","options":["olhar; assistir","cozinhar","dizer; contar","jogar (um jogo)"],"explain":"'Mirar' significa olhar; assistir."},
+  "fvocab-85": {"prompt":"¿Cómo se dice 'ver' en español?","promptNative":"Como se diz 'ver' em espanhol?","explain":"'to see' se diz 'ver'."},
+  "fvocab-86": {"promptNative":"'Dar' significa...","options":["dar","comprar","amar","ler"],"explain":"'Dar' significa dar."},
+  "fvocab-87": {"prompt":"¿Cómo se dice 'dizer; contar' en español?","promptNative":"Como se diz 'dizer; contar' em espanhol?","explain":"'to say; to tell' se diz 'decir'."},
+  "fvocab-88": {"promptNative":"'Hacer' significa...","options":["fazer","estudar","dançar","precisar"],"explain":"'Hacer' significa fazer."},
+  "fvocab-89": {"prompt":"¿Cómo se dice 'ir' en español?","promptNative":"Como se diz 'ir' em espanhol?","explain":"'to go' se diz 'ir'."},
+  "fvocab-90": {"promptNative":"'Venir' significa...","options":["vir","entrar","dizer; contar","querer; amar"],"explain":"'Venir' significa vir."},
+  "fvocab-91": {"prompt":"¿Cómo se dice 'sair; partir' en español?","promptNative":"Como se diz 'sair; partir' em espanhol?","explain":"'to go out; to leave' se diz 'salir'."},
+  "fvocab-92": {"promptNative":"'Entrar' significa...","options":["entrar","dançar","olhar; assistir","vir"],"explain":"'Entrar' significa entrar."},
+  "fvocab-93": {"prompt":"¿Cómo se dice 'abrir' en español?","promptNative":"Como se diz 'abrir' em espanhol?","explain":"'to open' se diz 'abrir'."},
+  "fvocab-94": {"promptNative":"'Cerrar' significa...","options":["fechar","precisar","ir","chamar"],"explain":"'Cerrar' significa fechar."},
+  "fvocab-95": {"prompt":"¿Cómo se dice 'comprar' en español?","promptNative":"Como se diz 'comprar' em espanhol?","explain":"'to buy' se diz 'comprar'."},
+  "fvocab-96": {"promptNative":"'Pagar' significa...","options":["pagar","cantar","dançar","ver"],"explain":"'Pagar' significa pagar."},
+  "fvocab-97": {"prompt":"¿Cómo se dice 'ajudar' en español?","promptNative":"Como se diz 'ajudar' em espanhol?","explain":"'to help' se diz 'ayudar'."},
+  "fvocab-98": {"promptNative":"'Llamar' significa...","options":["chamar","escutar","procurar","jogar (um jogo)"],"explain":"'Llamar' significa chamar."},
+  "fvocab-99": {"prompt":"¿Cómo se dice 'procurar' en español?","promptNative":"Como se diz 'procurar' em espanhol?","explain":"'to look for' se diz 'buscar'."},
+  "fvocab-100": {"promptNative":"'Esperar' significa...","options":["esperar; ter esperança","abrir","jogar (um jogo)","cozinhar"],"explain":"'Esperar' significa esperar."},
+  "fvocab-101": {"prompt":"¿Cómo se dice 'amar' en español?","promptNative":"Como se diz 'amar' em espanhol?","explain":"'to love' se diz 'amar'."},
+  "fvocab-102": {"promptNative":"'Querer' significa...","options":["querer; amar","esperar; ter esperança","ver","sair; partir"],"explain":"'Querer' significa querer; amar."},
+  "fvocab-103": {"prompt":"¿Cómo se dice 'precisar' en español?","promptNative":"Como se diz 'precisar' em espanhol?","explain":"'to need' se diz 'necesitar'."},
+  "fvocab-104": {"promptNative":"'Usar' significa...","options":["usar","fazer","ver","sair; partir"],"explain":"'Usar' significa usar."},
+  "fvocab-105": {"prompt":"¿Cómo se dice 'jogar (um jogo)' en español?","promptNative":"Como se diz 'jogar (um jogo)' em espanhol?","explain":"'to play (a game)' se diz 'jugar'."},
+  "fvocab-106": {"promptNative":"'Caminar' significa...","options":["caminhar","fazer","procurar","abrir"],"explain":"'Caminar' significa caminhar."},
+  "fvocab-107": {"prompt":"¿Cómo se dice 'nadar' en español?","promptNative":"Como se diz 'nadar' em espanhol?","explain":"'to swim' se diz 'nadar'."},
+  "fvocab-108": {"promptNative":"'Bailar' significa...","options":["dançar","chamar","esperar; ter esperança","ler"],"explain":"'Bailar' significa dançar."},
+  "fvocab-109": {"prompt":"¿Cómo se dice 'cantar' en español?","promptNative":"Como se diz 'cantar' em espanhol?","explain":"'to sing' se diz 'cantar'."},
+  "fvocab-110": {"promptNative":"'Cocinar' significa...","options":["cozinhar","fazer","olhar; assistir","cantar"],"explain":"'Cocinar' significa cozinhar."},
+  "fvocab-111": {"prompt":"¿Cómo se dice 'beber' en español?","promptNative":"Como se diz 'beber' em espanhol?","explain":"'to drink' se diz 'beber'."},
+  "fvocab-112": {"promptNative":"'Grande' significa...","options":["grande","bom","velho","feliz"],"explain":"'Grande' significa grande."},
+  "fvocab-113": {"prompt":"¿Cómo se dice 'pequeno' en español?","promptNative":"Como se diz 'pequeno' em espanhol?","explain":"'small' se diz 'pequeño'."},
+  "fvocab-114": {"promptNative":"'Bueno' significa...","options":["bom","alto","bonito","pequeno"],"explain":"'Bueno' significa bom."},
+  "fvocab-115": {"prompt":"¿Cómo se dice 'mau' en español?","promptNative":"Como se diz 'mau' em espanhol?","explain":"'bad' se diz 'malo'."},
+  "fvocab-116": {"promptNative":"'Nuevo' significa...","options":["novo","grande","pobre","lento"],"explain":"'Nuevo' significa novo."},
+  "fvocab-117": {"prompt":"¿Cómo se dice 'velho' en español?","promptNative":"Como se diz 'velho' em espanhol?","explain":"'old' se diz 'viejo'."},
+  "fvocab-118": {"promptNative":"'Joven' significa...","options":["jovem","bom","difícil","frio"],"explain":"'Joven' significa jovem."},
+  "fvocab-119": {"prompt":"¿Cómo se dice 'alto' en español?","promptNative":"Como se diz 'alto' em espanhol?","explain":"'tall; high' se diz 'alto'."},
+  "fvocab-120": {"promptNative":"'Bajo' significa...","options":["baixo (estatura); baixo","longo","caro","fácil"],"explain":"'Bajo' significa baixo (estatura); baixo."},
+  "fvocab-121": {"prompt":"¿Cómo se dice 'longo' en español?","promptNative":"Como se diz 'longo' em espanhol?","explain":"'long' se diz 'largo'."},
+  "fvocab-122": {"promptNative":"'Corto' significa...","options":["curto (comprimento)","sujo","longo","fácil"],"explain":"'Corto' significa curto (comprimento)."},
+  "fvocab-123": {"prompt":"¿Cómo se dice 'feliz' en español?","promptNative":"Como se diz 'feliz' em espanhol?","explain":"'happy' se diz 'feliz'."},
+  "fvocab-124": {"promptNative":"'Triste' significa...","options":["triste","grande","caro","curto (comprimento)"],"explain":"'Triste' significa triste."},
+  "fvocab-125": {"prompt":"¿Cómo se dice 'fácil' en español?","promptNative":"Como se diz 'fácil' em espanhol?","explain":"'easy' se diz 'fácil'."},
+  "fvocab-126": {"promptNative":"'Difícil' significa...","options":["difícil","fácil","baixo (estatura); baixo","pequeno"],"explain":"'Difícil' significa difícil."},
+  "fvocab-127": {"prompt":"¿Cómo se dice 'quente' en español?","promptNative":"Como se diz 'quente' em espanhol?","explain":"'hot' se diz 'caliente'."},
+  "fvocab-128": {"promptNative":"'Frío' significa...","options":["frio","rico; delicioso","fácil","triste"],"explain":"'Frío' significa frio."},
+  "fvocab-129": {"prompt":"¿Cómo se dice 'rápido' en español?","promptNative":"Como se diz 'rápido' em espanhol?","explain":"'fast' se diz 'rápido'."},
+  "fvocab-130": {"promptNative":"'Lento' significa...","options":["lento","pobre","rápido","pequeno"],"explain":"'Lento' significa lento."},
+  "fvocab-131": {"prompt":"¿Cómo se dice 'bonito' en español?","promptNative":"Como se diz 'bonito' em espanhol?","explain":"'pretty' se diz 'bonito'."},
+  "fvocab-132": {"promptNative":"'Feo' significa...","options":["feio","rápido","sujo","frio"],"explain":"'Feo' significa feio."},
+  "fvocab-133": {"prompt":"¿Cómo se dice 'limpo' en español?","promptNative":"Como se diz 'limpo' em espanhol?","explain":"'clean' se diz 'limpio'."},
+  "fvocab-134": {"promptNative":"'Sucio' significa...","options":["sujo","rápido","difícil","lento"],"explain":"'Sucio' significa sujo."},
+  "fvocab-135": {"prompt":"¿Cómo se dice 'barato' en español?","promptNative":"Como se diz 'barato' em espanhol?","explain":"'cheap' se diz 'barato'."},
+  "fvocab-136": {"promptNative":"'Caro' significa...","options":["caro","longo","fácil","barato"],"explain":"'Caro' significa caro."},
+  "fvocab-137": {"prompt":"¿Cómo se dice 'rico; delicioso' en español?","promptNative":"Como se diz 'rico; delicioso' em espanhol?","explain":"'rich; delicious' se diz 'rico'."},
+  "fvocab-138": {"promptNative":"'Pobre' significa...","options":["pobre","rico; delicioso","triste","alto"],"explain":"'Pobre' significa pobre."},
+  "fvocab-139": {"prompt":"¿Cómo se dice 'bem' en español?","promptNative":"Como se diz 'bem' em espanhol?","explain":"'well' se diz 'bien'."},
+  "fvocab-140": {"promptNative":"'Mal' significa...","options":["mal","perto","bem","nunca"],"explain":"'Mal' significa mal."},
+  "fvocab-141": {"prompt":"¿Cómo se dice 'muito' en español?","promptNative":"Como se diz 'muito' em espanhol?","explain":"'a lot' se diz 'mucho'."},
+  "fvocab-142": {"promptNative":"'Poco' significa...","options":["pouco (quantidade)","hoje","cedo","muito"],"explain":"'Poco' significa pouco (quantidade)."},
+  "fvocab-143": {"prompt":"¿Cómo se dice 'sempre' en español?","promptNative":"Como se diz 'sempre' em espanhol?","explain":"'always' se diz 'siempre'."},
+  "fvocab-144": {"promptNative":"'Nunca' significa...","options":["nunca","mal","depois","hoje"],"explain":"'Nunca' significa nunca."},
+  "fvocab-145": {"prompt":"¿Cómo se dice 'hoje' en español?","promptNative":"Como se diz 'hoje' em espanhol?","explain":"'today' se diz 'hoy'."},
+  "fvocab-146": {"promptNative":"'Aquí' significa...","options":["aqui","bem","depois","muito"],"explain":"'Aquí' significa aqui."},
+  "fvocab-147": {"prompt":"¿Cómo se dice 'ali' en español?","promptNative":"Como se diz 'ali' em espanhol?","explain":"'there' se diz 'allí'."},
+  "fvocab-148": {"promptNative":"'Cerca' significa...","options":["perto","aqui","muito","sempre"],"explain":"'Cerca' significa perto."},
+  "fvocab-149": {"prompt":"¿Cómo se dice 'longe' en español?","promptNative":"Como se diz 'longe' em espanhol?","explain":"'far away' se diz 'lejos'."},
+  "fvocab-150": {"promptNative":"'Ahora' significa...","options":["agora","sempre","nunca","ali"],"explain":"'Ahora' significa agora."},
+  "fvocab-151": {"prompt":"¿Cómo se dice 'depois' en español?","promptNative":"Como se diz 'depois' em espanhol?","explain":"'afterwards' se diz 'después'."},
+  "fvocab-152": {"promptNative":"'Antes' significa...","options":["antes (no tempo)","hoje","mal","também"],"explain":"'Antes' significa antes (no tempo)."},
+  "fvocab-153": {"prompt":"¿Cómo se dice 'também' en español?","promptNative":"Como se diz 'também' em espanhol?","explain":"'also' se diz 'también'."},
+  "fvocab-154": {"promptNative":"'Temprano' significa...","options":["cedo","sempre","bem","nunca"],"explain":"'Temprano' significa cedo."},
+  "fvocab-155": {"prompt":"¿Cómo se dice 'cabeça' en español?","promptNative":"Como se diz 'cabeça' em espanhol?","explain":"'head' se diz 'la cabeza'."},
+  "fvocab-156": {"promptNative":"'La cara' significa...","options":["rosto","boca","lima; limão","hotel"],"explain":"'La cara' significa rosto."},
+  "fvocab-157": {"prompt":"¿Cómo se dice 'boca' en español?","promptNative":"Como se diz 'boca' em espanhol?","explain":"'mouth' se diz 'la boca'."},
+  "fvocab-158": {"promptNative":"'La nariz' significa...","options":["nariz","igreja","parede (interna)","quarto"],"explain":"'La nariz' significa nariz."},
+  "fvocab-159": {"prompt":"¿Cómo se dice 'orelha (externa)' en español?","promptNative":"Como se diz 'orelha (externa)' em espanhol?","explain":"'ear (outer)' se diz 'la oreja'."},
+  "fvocab-160": {"promptNative":"'El diente' significa...","options":["dente","meia","orelha (externa)","morango"],"explain":"'El diente' significa dente."},
+  "fvocab-161": {"prompt":"¿Cómo se dice 'cabelo' en español?","promptNative":"Como se diz 'cabelo' em espanhol?","explain":"'hair' se diz 'el pelo'."},
+  "fvocab-162": {"promptNative":"'La pierna' significa...","options":["perna","nariz","garrafa","banana"],"explain":"'La pierna' significa perna."},
+  "fvocab-163": {"prompt":"¿Cómo se dice 'pé' en español?","promptNative":"Como se diz 'pé' em espanhol?","explain":"'foot' se diz 'el pie'."},
+  "fvocab-164": {"promptNative":"'La espalda' significa...","options":["costas (parte do corpo)","xícara; caneca","faca","mapa"],"explain":"'La espalda' significa costas."},
+  "fvocab-165": {"prompt":"¿Cómo se dice 'coração' en español?","promptNative":"Como se diz 'coração' em espanhol?","explain":"'heart' se diz 'el corazón'."},
+  "fvocab-166": {"promptNative":"'El dedo' significa...","options":["dedo (da mão ou do pé)","aeroporto","sapato","vestido"],"explain":"'El dedo' significa dedo; dedo do pé."},
+  "fvocab-167": {"prompt":"¿Cómo se dice 'pescoço' en español?","promptNative":"Como se diz 'pescoço' em espanhol?","explain":"'neck' se diz 'el cuello'."},
+  "fvocab-168": {"promptNative":"'El hombro' significa...","options":["ombro","casaco","dente","laranja (fruta)"],"explain":"'El hombro' significa ombro."},
+  "fvocab-169": {"prompt":"¿Cómo se dice 'cozinha' en español?","promptNative":"Como se diz 'cozinha' em espanhol?","explain":"'kitchen' se diz 'la cocina'."},
+  "fvocab-170": {"promptNative":"'El baño' significa...","options":["banheiro","queijo","guardanapo","tomate"],"explain":"'El baño' significa banheiro."},
+  "fvocab-171": {"prompt":"¿Cómo se dice 'quarto' en español?","promptNative":"Como se diz 'quarto' em espanhol?","explain":"'bedroom' se diz 'el dormitorio'."},
+  "fvocab-172": {"promptNative":"'La sala' significa...","options":["sala de estar","orelha (externa)","meia","cinto"],"explain":"'La sala' significa sala de estar."},
+  "fvocab-173": {"prompt":"¿Cómo se dice 'jardim' en español?","promptNative":"Como se diz 'jardim' em espanhol?","explain":"'garden' se diz 'el jardín'."},
+  "fvocab-174": {"promptNative":"'El suelo' significa...","options":["chão; solo","sala de estar","mala","sorvete"],"explain":"'El suelo' significa chão."},
+  "fvocab-175": {"prompt":"¿Cómo se dice 'parede (interna)' en español?","promptNative":"Como se diz 'parede (interna)' em espanhol?","explain":"'wall (interior)' se diz 'la pared'."},
+  "fvocab-176": {"promptNative":"'La escalera' significa...","options":["escada","bolso","casaco","cabeça"],"explain":"'La escalera' significa escada."},
+  "fvocab-177": {"prompt":"¿Cómo se dice 'cama' en español?","promptNative":"Como se diz 'cama' em espanhol?","explain":"'bed' se diz 'la cama'."},
+  "fvocab-178": {"promptNative":"'El espejo' significa...","options":["espelho","banco; banco (assento)","parede (interna)","escada"],"explain":"'El espejo' significa espelho."},
+  "fvocab-179": {"prompt":"¿Cómo se dice 'toalha' en español?","promptNative":"Como se diz 'toalha' em espanhol?","explain":"'towel' se diz 'la toalla'."},
+  "fvocab-180": {"promptNative":"'El jabón' significa...","options":["sabonete","dente","mala","nariz"],"explain":"'El jabón' significa sabão."},
+  "fvocab-181": {"prompt":"¿Cómo se dice 'faca' en español?","promptNative":"Como se diz 'faca' em espanhol?","explain":"'knife' se diz 'el cuchillo'."},
+  "fvocab-182": {"promptNative":"'El tenedor' significa...","options":["garfo","bolso","coração","dente"],"explain":"'El tenedor' significa garfo."},
+  "fvocab-183": {"prompt":"¿Cómo se dice 'colher' en español?","promptNative":"Como se diz 'colher' em espanhol?","explain":"'spoon' se diz 'la cuchara'."},
+  "fvocab-184": {"promptNative":"'El plato' significa...","options":["prato","bolo","saia","camisa"],"explain":"'El plato' significa prato."},
+  "fvocab-185": {"prompt":"¿Cómo se dice 'copo' en español?","promptNative":"Como se diz 'copo' em espanhol?","explain":"'drinking glass' se diz 'el vaso'."},
+  "fvocab-186": {"promptNative":"'La taza' significa...","options":["xícara; caneca","bolo","óleo (de cozinha)","legume"],"explain":"'La taza' significa xícara; caneca."},
+  "fvocab-187": {"prompt":"¿Cómo se dice 'garrafa' en español?","promptNative":"Como se diz 'garrafa' em espanhol?","explain":"'bottle' se diz 'la botella'."},
+  "fvocab-188": {"promptNative":"'La servilleta' significa...","options":["guardanapo","nariz","férias","garrafa"],"explain":"'La servilleta' significa guardanapo."},
+  "fvocab-189": {"prompt":"¿Cómo se dice 'aeroporto' en español?","promptNative":"Como se diz 'aeroporto' em espanhol?","explain":"'airport' se diz 'el aeropuerto'."},
+  "fvocab-190": {"promptNative":"'La estación' significa...","options":["estação; estação (do ano)","parque","cachecol","banheiro"],"explain":"'La estación' significa estação."},
+  "fvocab-191": {"prompt":"¿Cómo se dice 'hotel' en español?","promptNative":"Como se diz 'hotel' em espanhol?","explain":"'hotel' se diz 'el hotel'."},
+  "fvocab-192": {"promptNative":"'El restaurante' significa...","options":["restaurante","almoço","guardanapo","cabelo"],"explain":"'El restaurante' significa restaurante."},
+  "fvocab-193": {"prompt":"¿Cómo se dice 'mercado' en español?","promptNative":"Como se diz 'mercado' em espanhol?","explain":"'market' se diz 'el mercado'."},
+  "fvocab-194": {"promptNative":"'El banco' significa...","options":["banco; banco (assento)","almoço","manteiga","prato"],"explain":"'El banco' significa banco."},
+  "fvocab-195": {"prompt":"¿Cómo se dice 'hospital' en español?","promptNative":"Como se diz 'hospital' em espanhol?","explain":"'hospital' se diz 'el hospital'."},
+  "fvocab-196": {"promptNative":"'La farmacia' significa...","options":["farmácia","pescoço","sala de estar","pé"],"explain":"'La farmacia' significa farmácia."},
+  "fvocab-197": {"prompt":"¿Cómo se dice 'igreja' en español?","promptNative":"Como se diz 'igreja' em espanhol?","explain":"'church' se diz 'la iglesia'."},
+  "fvocab-198": {"promptNative":"'El museo' significa...","options":["museu","perna","garrafa","manteiga"],"explain":"'El museo' significa museu."},
+  "fvocab-199": {"prompt":"¿Cómo se dice 'parque' en español?","promptNative":"Como se diz 'parque' em espanhol?","explain":"'park' se diz 'el parque'."},
+  "fvocab-200": {"promptNative":"'El puente' significa...","options":["ponte","mercado","morango","vestido"],"explain":"'El puente' significa ponte."},
+  "fvocab-201": {"prompt":"¿Cómo se dice 'esquina' en español?","promptNative":"Como se diz 'esquina' em espanhol?","explain":"'street corner' se diz 'la esquina'."},
+  "fvocab-202": {"promptNative":"'El mapa' significa...","options":["mapa","manteiga","luva","banco; banco (assento)"],"explain":"'El mapa' significa mapa."},
+  "fvocab-203": {"prompt":"¿Cómo se dice 'mala' en español?","promptNative":"Como se diz 'mala' em espanhol?","explain":"'suitcase' se diz 'la maleta'."},
+  "fvocab-204": {"promptNative":"'El pasaporte' significa...","options":["passaporte","cozinha","mapa","almoço"],"explain":"'El pasaporte' significa passaporte."},
+  "fvocab-205": {"prompt":"¿Cómo se dice 'bilhete' en español?","promptNative":"Como se diz 'bilhete' em espanhol?","explain":"'ticket' se diz 'el billete'."},
+  "fvocab-206": {"promptNative":"'El viaje' significa...","options":["viagem","boca","óleo (de cozinha)","sala de estar"],"explain":"'El viaje' significa viagem."},
+  "fvocab-207": {"prompt":"¿Cómo se dice 'férias' en español?","promptNative":"Como se diz 'férias' em espanhol?","explain":"'vacation' se diz 'las vacaciones'."},
+  "fvocab-208": {"promptNative":"'El desayuno' significa...","options":["café da manhã","ponte","vestido","banco; banco (assento)"],"explain":"'El desayuno' significa café da manhã."},
+  "fvocab-209": {"prompt":"¿Cómo se dice 'almoço' en español?","promptNative":"Como se diz 'almoço' em espanhol?","explain":"'lunch' se diz 'el almuerzo'."},
+  "fvocab-210": {"promptNative":"'La cena' significa...","options":["jantar","nariz","mapa","estação; estação (do ano)"],"explain":"'La cena' significa jantar."},
+  "fvocab-211": {"prompt":"¿Cómo se dice 'queijo' en español?","promptNative":"Como se diz 'queijo' em espanhol?","explain":"'cheese' se diz 'el queso'."},
+  "fvocab-212": {"promptNative":"'La mantequilla' significa...","options":["manteiga","farmácia","tomate","pimenta (tempero)"],"explain":"'La mantequilla' significa manteiga."},
+  "fvocab-213": {"prompt":"¿Cómo se dice 'sorvete' en español?","promptNative":"Como se diz 'sorvete' em espanhol?","explain":"'ice cream' se diz 'el helado'."},
+  "fvocab-214": {"promptNative":"'La tarta' significa...","options":["bolo","passaporte","nariz","laranja (fruta)"],"explain":"'La tarta' significa bolo."},
+  "fvocab-215": {"prompt":"¿Cómo se dice 'biscoito' en español?","promptNative":"Como se diz 'biscoito' em espanhol?","explain":"'cookie' se diz 'la galleta'."},
+  "fvocab-216": {"promptNative":"'La verdura' significa...","options":["legume","ponte","faca","chão; solo"],"explain":"'La verdura' significa verdura."},
+  "fvocab-217": {"prompt":"¿Cómo se dice 'cebola' en español?","promptNative":"Como se diz 'cebola' em espanhol?","explain":"'onion' se diz 'la cebolla'."},
+  "fvocab-218": {"promptNative":"'El tomate' significa...","options":["tomate","cebola","saia","camisa"],"explain":"'El tomate' significa tomate."},
+  "fvocab-219": {"prompt":"¿Cómo se dice 'laranja (fruta)' en español?","promptNative":"Como se diz 'laranja (fruta)' em espanhol?","explain":"'orange (fruit)' se diz 'la naranja'."},
+  "fvocab-220": {"promptNative":"'La manzana' significa...","options":["maçã; quarteirão","manteiga","parque","mala"],"explain":"'La manzana' significa maçã; quarteirão."},
+  "fvocab-221": {"prompt":"¿Cómo se dice 'banana' en español?","promptNative":"Como se diz 'banana' em espanhol?","explain":"'banana' se diz 'el plátano'."},
+  "fvocab-222": {"promptNative":"'La uva' significa...","options":["uva","toalha","parede (interna)","banana"],"explain":"'La uva' significa uva."},
+  "fvocab-223": {"prompt":"¿Cómo se dice 'morango' en español?","promptNative":"Como se diz 'morango' em espanhol?","explain":"'strawberry' se diz 'la fresa'."},
+  "fvocab-224": {"promptNative":"'El limón' significa...","options":["lima; limão","boné","restaurante","bolso"],"explain":"'El limón' significa limão."},
+  "fvocab-225": {"prompt":"¿Cómo se dice 'pimenta (tempero)' en español?","promptNative":"Como se diz 'pimenta (tempero)' em espanhol?","explain":"'pepper (spice)' se diz 'la pimienta'."},
+  "fvocab-226": {"promptNative":"'El aceite' significa...","options":["óleo (de cozinha)","faca","pescoço","prato"],"explain":"'El aceite' significa óleo (de cozinha)."},
+  "fvocab-227": {"prompt":"¿Cómo se dice 'camisa' en español?","promptNative":"Como se diz 'camisa' em espanhol?","explain":"'shirt' se diz 'la camisa'."},
+  "fvocab-228": {"promptNative":"'El pantalón' significa...","options":["calça","museu","aeroporto","guardanapo"],"explain":"'El pantalón' significa calça."},
+  "fvocab-229": {"prompt":"¿Cómo se dice 'vestido' en español?","promptNative":"Como se diz 'vestido' em espanhol?","explain":"'dress' se diz 'el vestido'."},
+  "fvocab-230": {"promptNative":"'La falda' significa...","options":["saia","cozinha","parque","sala de estar"],"explain":"'La falda' significa saia."},
+  "fvocab-231": {"prompt":"¿Cómo se dice 'sapato' en español?","promptNative":"Como se diz 'sapato' em espanhol?","explain":"'shoe' se diz 'el zapato'."},
+  "fvocab-232": {"promptNative":"'El calcetín' significa...","options":["meia","passaporte","banco; banco (assento)","pimenta (tempero)"],"explain":"'El calcetín' significa meia."},
+  "fvocab-233": {"prompt":"¿Cómo se dice 'casaco' en español?","promptNative":"Como se diz 'casaco' em espanhol?","explain":"'coat' se diz 'el abrigo'."},
+  "fvocab-234": {"promptNative":"'La gorra' significa...","options":["boné","cozinha","dente","lima; limão"],"explain":"'La gorra' significa boné."},
+  "fvocab-235": {"prompt":"¿Cómo se dice 'luva' en español?","promptNative":"Como se diz 'luva' em espanhol?","explain":"'glove' se diz 'el guante'."},
+  "fvocab-236": {"promptNative":"'La bufanda' significa...","options":["cachecol","estação; estação (do ano)","queijo","mala"],"explain":"'La bufanda' significa cachecol."},
+  "fvocab-237": {"prompt":"¿Cómo se dice 'cinto' en español?","promptNative":"Como se diz 'cinto' em espanhol?","explain":"'belt' se diz 'el cinturón'."},
+  "fvocab-238": {"promptNative":"'El bolsillo' significa...","options":["bolso","ponte","rosto","escada"],"explain":"'El bolsillo' significa bolso."},
+  "fvocab-239": {"prompt":"¿Cómo se dice 'voar' en español?","promptNative":"Como se diz 'voar' em espanhol?","explain":"'to fly' se diz 'volar'."},
+  "fvocab-240": {"promptNative":"'Conocer' significa...","options":["conhecer (pessoas/lugares)","cortar","descer; baixar (download)","tocar; tocar (música)"],"explain":"'Conocer' significa conhecer (pessoas/lugares)."},
+  "fvocab-241": {"prompt":"¿Cómo se dice 'pensar' en español?","promptNative":"Como se diz 'pensar' em espanhol?","explain":"'to think' se diz 'pensar'."},
+  "fvocab-242": {"promptNative":"'Creer' significa...","options":["acreditar","perder; perder (o ônibus)","cortar","chover"],"explain":"'Creer' significa acreditar."},
+  "fvocab-243": {"prompt":"¿Cómo se dice 'sentir' en español?","promptNative":"Como se diz 'sentir' em espanhol?","explain":"'to feel' se diz 'sentir'."},
+  "fvocab-244": {"promptNative":"'Despertar' significa...","options":["acordar (alguém)","receber","pensar","pôr"],"explain":"'Despertar' significa acordar (alguém)."},
+  "fvocab-245": {"prompt":"¿Cómo se dice 'sentar-se' en español?","promptNative":"Como se diz 'sentar-se' em espanhol?","explain":"'to sit down' se diz 'sentarse'."},
+  "fvocab-246": {"promptNative":"'Poner' significa...","options":["pôr","acreditar","sentar-se","voar"],"explain":"'Poner' significa pôr."},
+  "fvocab-247": {"prompt":"¿Cómo se dice 'tirar; remover' en español?","promptNative":"Como se diz 'tirar; remover' em espanhol?","explain":"'to remove; to take off' se diz 'quitar'."},
+  "fvocab-248": {"promptNative":"'Llevar' significa...","options":["carregar; vestir","chover","ensinar; mostrar","ganhar"],"explain":"'Llevar' significa levar; vestir."},
+  "fvocab-249": {"prompt":"¿Cómo se dice 'trazer' en español?","promptNative":"Como se diz 'trazer' em espanhol?","explain":"'to bring' se diz 'traer'."},
+  "fvocab-250": {"promptNative":"'Enviar' significa...","options":["enviar","chover","perguntar (fazer uma pergunta)","tocar; tocar (música)"],"explain":"'Enviar' significa enviar."},
+  "fvocab-251": {"prompt":"¿Cómo se dice 'receber' en español?","promptNative":"Como se diz 'receber' em espanhol?","explain":"'to receive' se diz 'recibir'."},
+  "fvocab-252": {"promptNative":"'Preguntar' significa...","options":["perguntar (fazer uma pergunta)","pensar","acordar (alguém)","ganhar"],"explain":"'Preguntar' significa perguntar."},
+  "fvocab-253": {"prompt":"¿Cómo se dice 'responder' en español?","promptNative":"Como se diz 'responder' em espanhol?","explain":"'to answer' se diz 'responder'."},
+  "fvocab-254": {"promptNative":"'Enseñar' significa...","options":["ensinar; mostrar","voar","empurrar","sentir"],"explain":"'Enseñar' significa ensinar; mostrar."},
+  "fvocab-255": {"prompt":"¿Cómo se dice 'aprender' en español?","promptNative":"Como se diz 'aprender' em espanhol?","explain":"'to learn' se diz 'aprender'."},
+  "fvocab-256": {"promptNative":"'Recordar' significa...","options":["lembrar","perguntar (fazer uma pergunta)","responder","perder; perder (o ônibus)"],"explain":"'Recordar' significa lembrar."},
+  "fvocab-257": {"prompt":"¿Cómo se dice 'perder; perder (o ônibus)' en español?","promptNative":"Como se diz 'perder; perder (o ônibus)' em espanhol?","explain":"'to lose; to miss (a bus)' se diz 'perder'."},
+  "fvocab-258": {"promptNative":"'Ganar' significa...","options":["ganhar","subir; carregar (upload)","voar","acreditar"],"explain":"'Ganar' significa vencer; ganhar."},
+  "fvocab-259": {"prompt":"¿Cómo se dice 'limpar' en español?","promptNative":"Como se diz 'limpar' em espanhol?","explain":"'to clean' se diz 'limpiar'."},
+  "fvocab-260": {"promptNative":"'Lavar' significa...","options":["lavar","sentar-se","acordar (alguém)","sentir"],"explain":"'Lavar' significa lavar."},
+  "fvocab-261": {"prompt":"¿Cómo se dice 'cortar' en español?","promptNative":"Como se diz 'cortar' em espanhol?","explain":"'to cut' se diz 'cortar'."},
+  "fvocab-262": {"promptNative":"'Pintar' significa...","options":["pintar","sentar-se","subir; carregar (upload)","responder"],"explain":"'Pintar' significa pintar."},
+  "fvocab-263": {"prompt":"¿Cómo se dice 'desenhar' en español?","promptNative":"Como se diz 'desenhar' em espanhol?","explain":"'to draw' se diz 'dibujar'."},
+  "fvocab-264": {"promptNative":"'Tocar' significa...","options":["tocar; tocar (música)","subir; carregar (upload)","pensar","sentir"],"explain":"'Tocar' significa tocar (encostar); tocar (música)."},
+  "fvocab-265": {"prompt":"¿Cómo se dice 'subir; carregar (upload)' en español?","promptNative":"Como se diz 'subir; carregar (upload)' em espanhol?","explain":"'to go up; to upload' se diz 'subir'."},
+  "fvocab-266": {"promptNative":"'Bajar' significa...","options":["descer; baixar (download)","carregar; vestir","puxar","acordar (alguém)"],"explain":"'Bajar' significa descer; baixar."},
+  "fvocab-267": {"prompt":"¿Cómo se dice 'empurrar' en español?","promptNative":"Como se diz 'empurrar' em espanhol?","explain":"'to push' se diz 'empujar'."},
+  "fvocab-268": {"promptNative":"'Tirar' significa...","options":["puxar","acreditar","tirar; remover","trazer"],"explain":"'Tirar' significa puxar."},
+  "fvocab-269": {"prompt":"¿Cómo se dice 'chover' en español?","promptNative":"Como se diz 'chover' em espanhol?","explain":"'to rain' se diz 'llover'."},
+  "fvocab-270": {"promptNative":"'Contento' significa...","options":["contente; satisfeito","fechado","seco","magro (pessoa)"],"explain":"'Contento' significa contente."},
+  "fvocab-271": {"prompt":"¿Cómo se dice 'cansado' en español?","promptNative":"Como se diz 'cansado' em espanhol?","explain":"'tired' se diz 'cansado'."},
+  "fvocab-272": {"promptNative":"'Enfermo' significa...","options":["doente","leve (peso)","seco","molhado"],"explain":"'Enfermo' significa doente."},
+  "fvocab-273": {"prompt":"¿Cómo se dice 'saudável' en español?","promptNative":"Como se diz 'saudável' em espanhol?","explain":"'healthy' se diz 'sano'."},
+  "fvocab-274": {"promptNative":"'Fuerte' significa...","options":["forte","leve (peso)","salgado","pesado; chato (pessoa)"],"explain":"'Fuerte' significa forte."},
+  "fvocab-275": {"prompt":"¿Cómo se dice 'fraco' en español?","promptNative":"Como se diz 'fraco' em espanhol?","explain":"'weak' se diz 'débil'."},
+  "fvocab-276": {"promptNative":"'Gordo' significa...","options":["gordo","doce","picante","estreito"],"explain":"'Gordo' significa gordo."},
+  "fvocab-277": {"prompt":"¿Cómo se dice 'magro (pessoa)' en español?","promptNative":"Como se diz 'magro (pessoa)' em espanhol?","explain":"'thin (person)' se diz 'delgado'."},
+  "fvocab-278": {"promptNative":"'Ancho' significa...","options":["largo","fraco","leve (peso)","perigoso"],"explain":"'Ancho' significa largo."},
+  "fvocab-279": {"prompt":"¿Cómo se dice 'estreito' en español?","promptNative":"Como se diz 'estreito' em espanhol?","explain":"'narrow' se diz 'estrecho'."},
+  "fvocab-280": {"promptNative":"'Pesado' significa...","options":["pesado; chato (pessoa)","seco","fechado","contente; satisfeito"],"explain":"'Pesado' significa pesado; chato (pessoa)."},
+  "fvocab-281": {"prompt":"¿Cómo se dice 'leve (peso)' en español?","promptNative":"Como se diz 'leve (peso)' em espanhol?","explain":"'light (weight)' se diz 'ligero'."},
+  "fvocab-282": {"promptNative":"'Lleno' significa...","options":["cheio","aberto","gordo","seguro; certo"],"explain":"'Lleno' significa cheio."},
+  "fvocab-283": {"prompt":"¿Cómo se dice 'vazio' en español?","promptNative":"Como se diz 'vazio' em espanhol?","explain":"'empty' se diz 'vacío'."},
+  "fvocab-284": {"promptNative":"'Abierto' significa...","options":["aberto","seco","picante","forte"],"explain":"'Abierto' significa aberto."},
+  "fvocab-285": {"prompt":"¿Cómo se dice 'fechado' en español?","promptNative":"Como se diz 'fechado' em espanhol?","explain":"'closed' se diz 'cerrado'."},
+  "fvocab-286": {"promptNative":"'Seco' significa...","options":["seco","magro (pessoa)","picante","contente; satisfeito"],"explain":"'Seco' significa seco."},
+  "fvocab-287": {"prompt":"¿Cómo se dice 'molhado' en español?","promptNative":"Como se diz 'molhado' em espanhol?","explain":"'wet' se diz 'mojado'."},
+  "fvocab-288": {"promptNative":"'Dulce' significa...","options":["doce","escuro","gordo","pesado; chato (pessoa)"],"explain":"'Dulce' significa doce."},
+  "fvocab-289": {"prompt":"¿Cómo se dice 'amargo' en español?","promptNative":"Como se diz 'amargo' em espanhol?","explain":"'bitter' se diz 'amargo'."},
+  "fvocab-290": {"promptNative":"'Salado' significa...","options":["salgado","seco","largo","estreito"],"explain":"'Salado' significa salgado."},
+  "fvocab-291": {"prompt":"¿Cómo se dice 'picante' en español?","promptNative":"Como se diz 'picante' em espanhol?","explain":"'spicy' se diz 'picante'."},
+  "fvocab-292": {"promptNative":"'Oscuro' significa...","options":["escuro","leve (peso)","aberto","salgado"],"explain":"'Oscuro' significa escuro."},
+  "fvocab-293": {"prompt":"¿Cómo se dice 'claro (cor); claro' en español?","promptNative":"Como se diz 'claro (cor); claro' em espanhol?","explain":"'light (color); clear' se diz 'claro'."},
+  "fvocab-294": {"promptNative":"'Peligroso' significa...","options":["perigoso","contente; satisfeito","gordo","doente"],"explain":"'Peligroso' significa perigoso."},
+  "fvocab-295": {"prompt":"¿Cómo se dice 'seguro; certo' en español?","promptNative":"Como se diz 'seguro; certo' em espanhol?","explain":"'safe; sure' se diz 'seguro'."},
+  "fvocab-296": {"promptNative":"'Todavía' significa...","options":["ainda","somente","demais","quase"],"explain":"'Todavía' significa ainda."},
+  "fvocab-297": {"prompt":"¿Cómo se dice 'já; agora' en español?","promptNative":"Como se diz 'já; agora' em espanhol?","explain":"'already; now' se diz 'ya'."},
+  "fvocab-298": {"promptNative":"'Casi' significa...","options":["quase","somente","talvez","ainda"],"explain":"'Casi' significa quase."},
+  "fvocab-299": {"prompt":"¿Cómo se dice 'bastante; suficiente' en español?","promptNative":"Como se diz 'bastante; suficiente' em espanhol?","explain":"'quite; enough' se diz 'bastante'."},
+  "fvocab-300": {"promptNative":"'Demasiado' significa...","options":["demais","talvez","devagar","bastante; suficiente"],"explain":"'Demasiado' significa demais."},
+  "fvocab-301": {"prompt":"¿Cómo se dice 'juntos' en español?","promptNative":"Como se diz 'juntos' em espanhol?","explain":"'together' se diz 'juntos'."},
+  "fvocab-302": {"promptNative":"'Solamente' significa...","options":["somente","juntos","já; agora","devagar"],"explain":"'Solamente' significa somente."},
+  "fvocab-303": {"prompt":"¿Cómo se dice 'talvez' en español?","promptNative":"Como se diz 'talvez' em espanhol?","explain":"'maybe' se diz 'quizás'."},
+  "fvocab-304": {"promptNative":"'Pronto' significa...","options":["logo","somente","quase","devagar"],"explain":"'Pronto' significa logo."},
+  "fvocab-305": {"prompt":"¿Cómo se dice 'devagar' en español?","promptNative":"Como se diz 'devagar' em espanhol?","explain":"'slowly' se diz 'despacio'."},
+  "fvocab-306": {"promptNative":"'El problema' significa...","options":["problema","pergunta","razão","sangue"],"explain":"'El problema' significa problema."},
+  "fvocab-307": {"prompt":"¿Cómo se dice 'pergunta' en español?","promptNative":"Como se diz 'pergunta' em espanhol?","explain":"'question' se diz 'la pregunta'."},
+  "fvocab-308": {"promptNative":"'La respuesta' significa...","options":["resposta","parceiro; casal","cultura","governo"],"explain":"'La respuesta' significa resposta."},
+  "fvocab-309": {"prompt":"¿Cómo se dice 'razão' en español?","promptNative":"Como se diz 'razão' em espanhol?","explain":"'reason' se diz 'la razón'."},
+  "fvocab-310": {"promptNative":"'La idea' significa...","options":["ideia","emprego","costume; hábito","razão"],"explain":"'La idea' significa ideia."},
+  "fvocab-311": {"prompt":"¿Cómo se dice 'exemplo' en español?","promptNative":"Como se diz 'exemplo' em espanhol?","explain":"'example' se diz 'el ejemplo'."},
+  "fvocab-312": {"promptNative":"'La historia' significa...","options":["história; história (narrativa)","razão","problema","perigo"],"explain":"'La historia' significa história."},
+  "fvocab-313": {"prompt":"¿Cómo se dice 'notícia' en español?","promptNative":"Como se diz 'notícia' em espanhol?","explain":"'news item' se diz 'la noticia'."},
+  "fvocab-314": {"promptNative":"'La verdad' significa...","options":["verdade","ideia","projeto","idade"],"explain":"'La verdad' significa verdade."},
+  "fvocab-315": {"prompt":"¿Cómo se dice 'mentira' en español?","promptNative":"Como se diz 'mentira' em espanhol?","explain":"'lie (untruth)' se diz 'la mentira'."},
+  "fvocab-316": {"promptNative":"'La ayuda' significa...","options":["ajuda","alegria","crescimento","direito (legal); direito (área)"],"explain":"'La ayuda' significa ajuda."},
+  "fvocab-317": {"prompt":"¿Cómo se dice 'emprego' en español?","promptNative":"Como se diz 'emprego' em espanhol?","explain":"'employment; job' se diz 'el empleo'."},
+  "fvocab-318": {"promptNative":"'El sueldo' significa...","options":["salário","medo","sorte","razão"],"explain":"'El sueldo' significa salário."},
+  "fvocab-319": {"prompt":"¿Cómo se dice 'reunião' en español?","promptNative":"Como se diz 'reunião' em espanhol?","explain":"'meeting' se diz 'la reunión'."},
+  "fvocab-320": {"promptNative":"'La oficina' significa...","options":["escritório","sangue","verdade","direito (legal); direito (área)"],"explain":"'La oficina' significa escritório."},
+  "fvocab-321": {"prompt":"¿Cómo se dice 'empresa' en español?","promptNative":"Como se diz 'empresa' em espanhol?","explain":"'company (business)' se diz 'la empresa'."},
+  "fvocab-322": {"promptNative":"'El informe' significa...","options":["relatório","ideia","nível","idade"],"explain":"'El informe' significa relatório."},
+  "fvocab-323": {"prompt":"¿Cómo se dice 'projeto' en español?","promptNative":"Como se diz 'projeto' em espanhol?","explain":"'project' se diz 'el proyecto'."},
+  "fvocab-324": {"promptNative":"'La ley' significa...","options":["lei","fúria","doença","memória"],"explain":"'La ley' significa lei."},
+  "fvocab-325": {"prompt":"¿Cómo se dice 'governo' en español?","promptNative":"Como se diz 'governo' em espanhol?","explain":"'government' se diz 'el gobierno'."},
+  "fvocab-326": {"promptNative":"'La guerra' significa...","options":["guerra","paz","fracasso","esperança"],"explain":"'La guerra' significa guerra."},
+  "fvocab-327": {"prompt":"¿Cómo se dice 'paz' en español?","promptNative":"Como se diz 'paz' em espanhol?","explain":"'peace' se diz 'la paz'."},
+  "fvocab-328": {"promptNative":"'La salud' significa...","options":["saúde","memória","surpresa","pergunta"],"explain":"'La salud' significa saúde."},
+  "fvocab-329": {"prompt":"¿Cómo se dice 'doença' en español?","promptNative":"Como se diz 'doença' em espanhol?","explain":"'illness' se diz 'la enfermedad'."},
+  "fvocab-330": {"promptNative":"'La medicina' significa...","options":["remédio","lei","fúria","idade"],"explain":"'La medicina' significa medicina."},
+  "fvocab-331": {"prompt":"¿Cómo se dice 'dor' en español?","promptNative":"Como se diz 'dor' em espanhol?","explain":"'pain' se diz 'el dolor'."},
+  "fvocab-332": {"promptNative":"'La sangre' significa...","options":["sangue","esforço","história; história (narrativa)","idade"],"explain":"'La sangre' significa sangue."},
+  "fvocab-333": {"prompt":"¿Cómo se dice 'pele' en español?","promptNative":"Como se diz 'pele' em espanhol?","explain":"'skin' se diz 'la piel'."},
+  "fvocab-334": {"promptNative":"'La edad' significa...","options":["idade","salário","crescimento","medo"],"explain":"'La edad' significa idade."},
+  "fvocab-335": {"prompt":"¿Cómo se dice 'morte' en español?","promptNative":"Como se diz 'morte' em espanhol?","explain":"'death' se diz 'la muerte'."},
+  "fvocab-336": {"promptNative":"'El nacimiento' significa...","options":["nascimento","morte","conhecimento","fracasso"],"explain":"'El nacimiento' significa nascimento."},
+  "fvocab-337": {"prompt":"¿Cómo se dice 'casamento' en español?","promptNative":"Como se diz 'casamento' em espanhol?","explain":"'wedding' se diz 'la boda'."},
+  "fvocab-338": {"promptNative":"'La pareja' significa...","options":["parceiro; casal","memória","conhecimento","exemplo"],"explain":"'La pareja' significa parceiro; casal."},
+  "fvocab-339": {"prompt":"¿Cómo se dice 'vizinho' en español?","promptNative":"Como se diz 'vizinho' em espanhol?","explain":"'neighbor' se diz 'el vecino'."},
+  "fvocab-340": {"promptNative":"'La costumbre' significa...","options":["costume; hábito","salário","crescimento","empresa"],"explain":"'La costumbre' significa costume; hábito."},
+  "fvocab-341": {"prompt":"¿Cómo se dice 'cultura' en español?","promptNative":"Como se diz 'cultura' em espanhol?","explain":"'culture' se diz 'la cultura'."},
+  "fvocab-342": {"promptNative":"'El idioma' significa...","options":["idioma","segurança","exemplo","verdade"],"explain":"'El idioma' significa idioma."},
+  "fvocab-343": {"prompt":"¿Cómo se dice 'palavra' en español?","promptNative":"Como se diz 'palavra' em espanhol?","explain":"'word' se diz 'la palabra'."},
+  "fvocab-344": {"promptNative":"'La frase' significa...","options":["frase; expressão","remédio","parceiro; casal","doença"],"explain":"'La frase' significa frase."},
+  "fvocab-345": {"prompt":"¿Cómo se dice 'significado' en español?","promptNative":"Como se diz 'significado' em espanhol?","explain":"'meaning' se diz 'el significado'."},
+  "fvocab-346": {"promptNative":"'El conocimiento' significa...","options":["conhecimento","memória","resposta","lei"],"explain":"'El conocimiento' significa conhecimento."},
+  "fvocab-347": {"prompt":"¿Cómo se dice 'memória' en español?","promptNative":"Como se diz 'memória' em espanhol?","explain":"'memory' se diz 'la memoria'."},
+  "fvocab-348": {"promptNative":"'El sueño' significa...","options":["sonho; sono","parceiro; casal","sorte","empresa"],"explain":"'El sueño' significa sonho; sono."},
+  "fvocab-349": {"prompt":"¿Cómo se dice 'medo' en español?","promptNative":"Como se diz 'medo' em espanhol?","explain":"'fear' se diz 'el miedo'."},
+  "fvocab-350": {"promptNative":"'La esperanza' significa...","options":["esperança","empresa","frase; expressão","exemplo"],"explain":"'La esperanza' significa esperança."},
+  "fvocab-351": {"prompt":"¿Cómo se dice 'alegria' en español?","promptNative":"Como se diz 'alegria' em espanhol?","explain":"'joy' se diz 'la alegría'."},
+  "fvocab-352": {"promptNative":"'La ira' significa...","options":["fúria","direito (legal); direito (área)","liberdade","salário"],"explain":"'La ira' significa ira."},
+  "fvocab-353": {"prompt":"¿Cómo se dice 'surpresa' en español?","promptNative":"Como se diz 'surpresa' em espanhol?","explain":"'surprise' se diz 'la sorpresa'."},
+  "fvocab-354": {"promptNative":"'La vergüenza' significa...","options":["vergonha; constrangimento","nascimento","ajuda","verdade"],"explain":"'La vergüenza' significa vergonha."},
+  "fvocab-355": {"prompt":"¿Cómo se dice 'orgulho' en español?","promptNative":"Como se diz 'orgulho' em espanhol?","explain":"'pride' se diz 'el orgullo'."},
+  "fvocab-356": {"promptNative":"'La culpa' significa...","options":["culpa","verdade","empresa","esforço"],"explain":"'La culpa' significa culpa."},
+  "fvocab-357": {"prompt":"¿Cómo se dice 'sorte' en español?","promptNative":"Como se diz 'sorte' em espanhol?","explain":"'luck' se diz 'la suerte'."},
+  "fvocab-358": {"promptNative":"'El peligro' significa...","options":["perigo","morte","casamento","alegria"],"explain":"'El peligro' significa perigo."},
+  "fvocab-359": {"prompt":"¿Cómo se dice 'segurança' en español?","promptNative":"Como se diz 'segurança' em espanhol?","explain":"'safety; security' se diz 'la seguridad'."},
+  "fvocab-360": {"promptNative":"'La libertad' significa...","options":["liberdade","meta","fúria","problema"],"explain":"'La libertad' significa liberdade."},
+  "fvocab-361": {"prompt":"¿Cómo se dice 'justiça' en español?","promptNative":"Como se diz 'justiça' em espanhol?","explain":"'justice' se diz 'la justicia'."},
+  "fvocab-362": {"promptNative":"'El derecho' significa...","options":["direito (legal); direito (área)","alegria","esperança","morte"],"explain":"'El derecho' significa direito."},
+  "fvocab-363": {"prompt":"¿Cómo se dice 'dever' en español?","promptNative":"Como se diz 'dever' em espanhol?","explain":"'duty' se diz 'el deber'."},
+  "fvocab-364": {"promptNative":"'El fracaso' significa...","options":["fracasso","surpresa","orgulho","memória"],"explain":"'El fracaso' significa fracasso."},
+  "fvocab-365": {"prompt":"¿Cómo se dice 'esforço' en español?","promptNative":"Como se diz 'esforço' em espanhol?","explain":"'effort' se diz 'el esfuerzo'."},
+  "fvocab-366": {"promptNative":"'La meta' significa...","options":["meta","justiça","reunião","crescimento"],"explain":"'La meta' significa meta."},
+  "fvocab-367": {"prompt":"¿Cómo se dice 'nível' en español?","promptNative":"Como se diz 'nível' em espanhol?","explain":"'level' se diz 'el nivel'."},
+  "fvocab-368": {"promptNative":"'El cambio' significa...","options":["mudança","vergonha; constrangimento","história; história (narrativa)","morte"],"explain":"'El cambio' significa mudança."},
+  "fvocab-369": {"prompt":"¿Cómo se dice 'desenvolvimento' en español?","promptNative":"Como se diz 'desenvolvimento' em espanhol?","explain":"'development' se diz 'el desarrollo'."},
+  "fvocab-370": {"promptNative":"'El crecimiento' significa...","options":["crescimento","justiça","notícia","segurança"],"explain":"'El crecimiento' significa crescimento."},
+  "fvocab-371": {"prompt":"¿Cómo se dice 'aumento' en español?","promptNative":"Como se diz 'aumento' em espanhol?","explain":"'increase' se diz 'el aumento'."},
+  "fvocab-372": {"promptNative":"'Lograr' significa...","options":["alcançar; conseguir","emprestar","obrigar (alguém a)","aparecer"],"explain":"'Lograr' significa alcançar; conseguir."},
+  "fvocab-373": {"prompt":"¿Cómo se dice 'obter; conseguir' en español?","promptNative":"Como se diz 'obter; conseguir' em espanhol?","explain":"'to obtain; to get hold of' se diz 'conseguir'."},
+  "fvocab-374": {"promptNative":"'Intentar' significa...","options":["tentar","descrever","construir","esconder (algo)"],"explain":"'Intentar' significa tentar."},
+  "fvocab-375": {"prompt":"¿Cómo se dice 'evitar' en español?","promptNative":"Como se diz 'evitar' em espanhol?","explain":"'to avoid' se diz 'evitar'."},
+  "fvocab-376": {"promptNative":"'Permitir' significa...","options":["permitir","girar; rodar","duvidar","prometer"],"explain":"'Permitir' significa permitir."},
+  "fvocab-377": {"prompt":"¿Cómo se dice 'proibir' en español?","promptNative":"Como se diz 'proibir' em espanhol?","explain":"'to forbid' se diz 'prohibir'."},
+  "fvocab-378": {"promptNative":"'Obligar' significa...","options":["obrigar (alguém a)","rejeitar","sussurrar","desaparecer"],"explain":"'Obligar' significa obrigar."},
+  "fvocab-379": {"prompt":"¿Cómo se dice 'decidir' en español?","promptNative":"Como se diz 'decidir' em espanhol?","explain":"'to decide' se diz 'decidir'."},
+  "fvocab-380": {"promptNative":"'Elegir' significa...","options":["escolher; eleger","explicar","rir","dobrar; virar (a esquina)"],"explain":"'Elegir' significa escolher; eleger."},
+  "fvocab-381": {"prompt":"¿Cómo se dice 'duvidar' en español?","promptNative":"Como se diz 'duvidar' em espanhol?","explain":"'to doubt' se diz 'dudar'."},
+  "fvocab-382": {"promptNative":"'Confiar' significa...","options":["confiar","agradecer","alcançar; conseguir","dobrar; virar (a esquina)"],"explain":"'Confiar' significa confiar."},
+  "fvocab-383": {"prompt":"¿Cómo se dice 'prometer' en español?","promptNative":"Como se diz 'prometer' em espanhol?","explain":"'to promise' se diz 'prometer'."},
+  "fvocab-384": {"promptNative":"'Mentir' significa...","options":["mentir","enganar","convidar; pagar (por alguém)","acontecer"],"explain":"'Mentir' significa mentir."},
+  "fvocab-385": {"prompt":"¿Cómo se dice 'enganar' en español?","promptNative":"Como se diz 'enganar' em espanhol?","explain":"'to deceive' se diz 'engañar'."},
+  "fvocab-386": {"promptNative":"'Discutir' significa...","options":["discutir","girar; rodar","brigar","obter; conseguir"],"explain":"'Discutir' significa discutir."},
+  "fvocab-387": {"prompt":"¿Cómo se dice 'brigar' en español?","promptNative":"Como se diz 'brigar' em espanhol?","explain":"'to fight' se diz 'pelear'."},
+  "fvocab-388": {"promptNative":"'Gritar' significa...","options":["gritar","esconder (algo)","duvidar","girar; rodar"],"explain":"'Gritar' significa gritar."},
+  "fvocab-389": {"prompt":"¿Cómo se dice 'sussurrar' en español?","promptNative":"Como se diz 'sussurrar' em espanhol?","explain":"'to whisper' se diz 'susurrar'."},
+  "fvocab-390": {"promptNative":"'Llorar' significa...","options":["chorar","rejeitar","deixar (para trás); deixar","dobrar; virar (a esquina)"],"explain":"'Llorar' significa chorar."},
+  "fvocab-391": {"prompt":"¿Cómo se dice 'rir' en español?","promptNative":"Como se diz 'rir' em espanhol?","explain":"'to laugh' se diz 'reír'."},
+  "fvocab-392": {"promptNative":"'Sonreír' significa...","options":["sorrir","seguir; continuar","desculpar-se","agradecer"],"explain":"'Sonreír' significa sorrir."},
+  "fvocab-393": {"prompt":"¿Cómo se dice 'reclamar' en español?","promptNative":"Como se diz 'reclamar' em espanhol?","explain":"'to complain' se diz 'quejarse'."},
+  "fvocab-394": {"promptNative":"'Disculparse' significa...","options":["desculpar-se","criar","sorrir","girar; rodar"],"explain":"'Disculparse' significa pedir desculpas."},
+  "fvocab-395": {"prompt":"¿Cómo se dice 'agradecer' en español?","promptNative":"Como se diz 'agradecer' em espanhol?","explain":"'to thank' se diz 'agradecer'."},
+  "fvocab-396": {"promptNative":"'Felicitar' significa...","options":["parabenizar","discutir","gritar","rejeitar"],"explain":"'Felicitar' significa parabenizar."},
+  "fvocab-397": {"prompt":"¿Cómo se dice 'convidar; pagar (por alguém)' en español?","promptNative":"Como se diz 'convidar; pagar (por alguém)' em espanhol?","explain":"'to invite; to treat (pay for)' se diz 'invitar'."},
+  "fvocab-398": {"promptNative":"'Aceptar' significa...","options":["aceitar","deixar (para trás); deixar","seguir; continuar","destruir"],"explain":"'Aceptar' significa aceitar."},
+  "fvocab-399": {"prompt":"¿Cómo se dice 'rejeitar' en español?","promptNative":"Como se diz 'rejeitar' em espanhol?","explain":"'to reject' se diz 'rechazar'."},
+  "fvocab-400": {"promptNative":"'Ofrecer' significa...","options":["oferecer","desaparecer","reclamar","obrigar (alguém a)"],"explain":"'Ofrecer' significa oferecer."},
+  "fvocab-401": {"prompt":"¿Cómo se dice 'emprestar' en español?","promptNative":"Como se diz 'emprestar' em espanhol?","explain":"'to lend' se diz 'prestar'."},
+  "fvocab-402": {"promptNative":"'Ahorrar' significa...","options":["poupar (dinheiro)","alcançar; conseguir","descrever","duvidar"],"explain":"'Ahorrar' significa economizar (dinheiro)."},
+  "fvocab-403": {"prompt":"¿Cómo se dice 'gastar' en español?","promptNative":"Como se diz 'gastar' em espanhol?","explain":"'to spend' se diz 'gastar'."},
+  "fvocab-404": {"promptNative":"'Construir' significa...","options":["construir","desculpar-se","sussurrar","aceitar"],"explain":"'Construir' significa construir."},
+  "fvocab-405": {"prompt":"¿Cómo se dice 'destruir' en español?","promptNative":"Como se diz 'destruir' em espanhol?","explain":"'to destroy' se diz 'destruir'."},
+  "fvocab-406": {"promptNative":"'Crear' significa...","options":["criar","alcançar; conseguir","fugir","poupar (dinheiro)"],"explain":"'Crear' significa criar."},
+  "fvocab-407": {"prompt":"¿Cómo se dice 'aparecer' en español?","promptNative":"Como se diz 'aparecer' em espanhol?","explain":"'to appear' se diz 'aparecer'."},
+  "fvocab-408": {"promptNative":"'Desaparecer' significa...","options":["desaparecer","alcançar; conseguir","enganar","convidar; pagar (por alguém)"],"explain":"'Desaparecer' significa desaparecer."},
+  "fvocab-409": {"prompt":"¿Cómo se dice 'acontecer' en español?","promptNative":"Como se diz 'acontecer' em espanhol?","explain":"'to happen' se diz 'suceder'."},
+  "fvocab-410": {"promptNative":"'Continuar' significa...","options":["continuar","explicar","gastar","poupar (dinheiro)"],"explain":"'Continuar' significa continuar."},
+  "fvocab-411": {"prompt":"¿Cómo se dice 'deixar (para trás); deixar' en español?","promptNative":"Como se diz 'deixar (para trás); deixar' em espanhol?","explain":"'to leave (behind); to let' se diz 'dejar'."},
+  "fvocab-412": {"promptNative":"'Soltar' significa...","options":["soltar; liberar","explicar","desaparecer","destruir"],"explain":"'Soltar' significa soltar."},
+  "fvocab-413": {"prompt":"¿Cómo se dice 'dobrar; virar (a esquina)' en español?","promptNative":"Como se diz 'dobrar; virar (a esquina)' em espanhol?","explain":"'to fold; to turn (a corner)' se diz 'doblar'."},
+  "fvocab-414": {"promptNative":"'Girar' significa...","options":["girar; rodar","descobrir","descrever","explicar"],"explain":"'Girar' significa girar."},
+  "fvocab-415": {"prompt":"¿Cómo se dice 'atravessar' en español?","promptNative":"Como se diz 'atravessar' em espanhol?","explain":"'to cross' se diz 'cruzar'."},
+  "fvocab-416": {"promptNative":"'Seguir' significa...","options":["seguir; continuar","parabenizar","decidir","soltar; liberar"],"explain":"'Seguir' significa seguir; continuar."},
+  "fvocab-417": {"prompt":"¿Cómo se dice 'fugir' en español?","promptNative":"Como se diz 'fugir' em espanhol?","explain":"'to flee' se diz 'huir'."},
+  "fvocab-418": {"promptNative":"'Esconder' significa...","options":["esconder (algo)","rejeitar","chorar","duvidar"],"explain":"'Esconder' significa esconder (algo)."},
+  "fvocab-419": {"prompt":"¿Cómo se dice 'descobrir' en español?","promptNative":"Como se diz 'descobrir' em espanhol?","explain":"'to discover' se diz 'descubrir'."},
+  "fvocab-420": {"promptNative":"'Explicar' significa...","options":["explicar","soltar; liberar","escolher; eleger","rejeitar"],"explain":"'Explicar' significa explicar."},
+  "fvocab-421": {"prompt":"¿Cómo se dice 'descrever' en español?","promptNative":"Como se diz 'descrever' em espanhol?","explain":"'to describe' se diz 'describir'."},
+  "fvocab-422": {"promptNative":"'Comparar' significa...","options":["comparar","prometer","continuar","decidir"],"explain":"'Comparar' significa comparar."},
+  "fvocab-423": {"prompt":"¿Cómo se dice 'medir' en español?","promptNative":"Como se diz 'medir' em espanhol?","explain":"'to measure' se diz 'medir'."},
+  "fvocab-424": {"promptNative":"'Contar' significa...","options":["contar; contar (uma história)","decidir","confiar","deixar (para trás); deixar"],"explain":"'Contar' significa contar."},
+  "fvocab-425": {"prompt":"¿Cómo se dice 'importante' en español?","promptNative":"Como se diz 'importante' em espanhol?","explain":"'important' se diz 'importante'."},
+  "fvocab-426": {"promptNative":"'Necesario' significa...","options":["necessário","importante","desconfortável; constrangedor","possível"],"explain":"'Necesario' significa necessário."},
+  "fvocab-427": {"prompt":"¿Cómo se dice 'possível' en español?","promptNative":"Como se diz 'possível' em espanhol?","explain":"'possible' se diz 'posible'."},
+  "fvocab-428": {"promptNative":"'Imposible' significa...","options":["impossível","possível","orgulhoso","mesmo"],"explain":"'Imposible' significa impossível."},
+  "fvocab-429": {"prompt":"¿Cómo se dice 'provável' en español?","promptNative":"Como se diz 'provável' em espanhol?","explain":"'likely' se diz 'probable'."},
+  "fvocab-430": {"promptNative":"'Común' significa...","options":["comum","provável","possível","corajoso"],"explain":"'Común' significa comum."},
+  "fvocab-431": {"prompt":"¿Cómo se dice 'estranho; incomum' en español?","promptNative":"Como se diz 'estranho; incomum' em espanhol?","explain":"'odd; unusual' se diz 'raro'."},
+  "fvocab-432": {"promptNative":"'Propio' significa...","options":["próprio","necessário","diferente","ciumento"],"explain":"'Propio' significa próprio."},
+  "fvocab-433": {"prompt":"¿Cómo se dice 'mesmo' en español?","promptNative":"Como se diz 'mesmo' em espanhol?","explain":"'same' se diz 'mismo'."},
+  "fvocab-434": {"promptNative":"'Diferente' significa...","options":["diferente","grosseiro","inútil","útil"],"explain":"'Diferente' significa diferente."},
+  "fvocab-435": {"prompt":"¿Cómo se dice 'parecido' en español?","promptNative":"Como se diz 'parecido' em espanhol?","explain":"'similar' se diz 'parecido'."},
+  "fvocab-436": {"promptNative":"'Verdadero' significa...","options":["verdadeiro; real","impossível","orgulhoso","capaz"],"explain":"'Verdadero' significa verdadeiro."},
+  "fvocab-437": {"prompt":"¿Cómo se dice 'falso; falsificado' en español?","promptNative":"Como se diz 'falso; falsificado' em espanhol?","explain":"'false; fake' se diz 'falso'."},
+  "fvocab-438": {"promptNative":"'Justo' significa...","options":["justo; exato","confortável","possível","capaz"],"explain":"'Justo' significa justo."},
+  "fvocab-439": {"prompt":"¿Cómo se dice 'capaz' en español?","promptNative":"Como se diz 'capaz' em espanhol?","explain":"'capable' se diz 'capaz'."},
+  "fvocab-440": {"promptNative":"'Útil' significa...","options":["útil","orgulhoso","possível","provável"],"explain":"'Útil' significa útil."},
+  "fvocab-441": {"prompt":"¿Cómo se dice 'inútil' en español?","promptNative":"Como se diz 'inútil' em espanhol?","explain":"'useless' se diz 'inútil'."},
+  "fvocab-442": {"promptNative":"'Cómodo' significa...","options":["confortável","verdadeiro; real","justo; exato","comum"],"explain":"'Cómodo' significa confortável."},
+  "fvocab-443": {"prompt":"¿Cómo se dice 'desconfortável; constrangedor' en español?","promptNative":"Como se diz 'desconfortável; constrangedor' em espanhol?","explain":"'uncomfortable; awkward' se diz 'incómodo'."},
+  "fvocab-444": {"promptNative":"'Grosero' significa...","options":["grosseiro","justo; exato","confortável","ciumento"],"explain":"'Grosero' significa grosseiro."},
+  "fvocab-445": {"prompt":"¿Cómo se dice 'orgulhoso' en español?","promptNative":"Como se diz 'orgulhoso' em espanhol?","explain":"'proud' se diz 'orgulloso'."},
+  "fvocab-446": {"promptNative":"'Celoso' significa...","options":["ciumento","parecido","justo; exato","próprio"],"explain":"'Celoso' significa ciumento."},
+  "fvocab-447": {"prompt":"¿Cómo se dice 'corajoso' en español?","promptNative":"Como se diz 'corajoso' em espanhol?","explain":"'brave' se diz 'valiente'."},
+  "fvocab-448": {"promptNative":"'Cobarde' significa...","options":["covarde","corajoso","orgulhoso","provável"],"explain":"'Cobarde' significa covarde."},
+  "fvocab-449": {"prompt":"¿Cómo se dice 'além disso' en español?","promptNative":"Como se diz 'além disso' em espanhol?","explain":"'besides; in addition' se diz 'además'."},
+  "fvocab-450": {"promptNative":"'Mientras' significa...","options":["enquanto isso; enquanto","ainda; até mesmo","além disso","então; portanto"],"explain":"'Mientras' significa enquanto."},
+  "fvocab-451": {"prompt":"¿Cómo se dice 'então; portanto' en español?","promptNative":"Como se diz 'então; portanto' em espanhol?","explain":"'then; so' se diz 'entonces'."},
+  "fvocab-452": {"promptNative":"'Luego' significa...","options":["depois; então","ainda; até mesmo","além disso","enquanto isso; enquanto"],"explain":"'Luego' significa depois; então."},
+  "fvocab-453": {"prompt":"¿Cómo se dice 'mal; dificilmente' en español?","promptNative":"Como se diz 'mal; dificilmente' em espanhol?","explain":"'barely; hardly' se diz 'apenas'."},
+  "fvocab-454": {"promptNative":"'Aún' significa...","options":["ainda; até mesmo","então; portanto","enquanto isso; enquanto","além disso"],"explain":"'Aún' significa ainda."},
+  "fvocab-455": {"prompt":"¿Cómo se dice 'inclusive' en español?","promptNative":"Como se diz 'inclusive' em espanhol?","explain":"'even (including)' se diz 'incluso'."},
+  "fvocab-456": {"promptNative":"'El desafío' significa...","options":["desafio","amizade","marca","orçamento"],"explain":"'El desafío' significa desafio."},
+  "fvocab-457": {"prompt":"¿Cómo se dice 'ameaça' en español?","promptNative":"Como se diz 'ameaça' em espanhol?","explain":"'threat' se diz 'la amenaza'."},
+  "fvocab-458": {"promptNative":"'La ventaja' significa...","options":["vantagem","imposto","trâmite burocrático","desvantagem"],"explain":"'La ventaja' significa vantagem."},
+  "fvocab-459": {"prompt":"¿Cómo se dice 'desvantagem' en español?","promptNative":"Como se diz 'desvantagem' em espanhol?","explain":"'disadvantage' se diz 'la desventaja'."},
+  "fvocab-460": {"promptNative":"'El recurso' significa...","options":["recurso","solicitação","força; fortaleza","confiança"],"explain":"'El recurso' significa recurso."},
+  "fvocab-461": {"prompt":"¿Cómo se dice 'ferramenta' en español?","promptNative":"Como se diz 'ferramenta' em espanhol?","explain":"'tool' se diz 'la herramienta'."},
+  "fvocab-462": {"promptNative":"'La medida' significa...","options":["medida; medição","mal-entendido","personalidade","concorrência"],"explain":"'La medida' significa medida."},
+  "fvocab-463": {"prompt":"¿Cómo se dice 'média' en español?","promptNative":"Como se diz 'média' em espanhol?","explain":"'average' se diz 'el promedio'."},
+  "fvocab-464": {"promptNative":"'El porcentaje' significa...","options":["porcentagem","marca","perda","ferramenta"],"explain":"'El porcentaje' significa porcentagem."},
+  "fvocab-465": {"prompt":"¿Cómo se dice 'imposto' en español?","promptNative":"Como se diz 'imposto' em espanhol?","explain":"'tax' se diz 'el impuesto'."},
+  "fvocab-466": {"promptNative":"'La deuda' significa...","options":["dívida","desvantagem","caráter (temperamento)","porcentagem"],"explain":"'La deuda' significa dívida."},
+  "fvocab-467": {"prompt":"¿Cómo se dice 'orçamento' en español?","promptNative":"Como se diz 'orçamento' em espanhol?","explain":"'budget' se diz 'el presupuesto'."},
+  "fvocab-468": {"promptNative":"'La ganancia' significa...","options":["lucro","proposta","publicidade","amizade"],"explain":"'La ganancia' significa lucro."},
+  "fvocab-469": {"prompt":"¿Cómo se dice 'perda' en español?","promptNative":"Como se diz 'perda' em espanhol?","explain":"'loss' se diz 'la pérdida'."},
+  "fvocab-470": {"promptNative":"'La marca' significa...","options":["marca","imposto","ameaça","requisito"],"explain":"'La marca' significa marca."},
+  "fvocab-471": {"prompt":"¿Cómo se dice 'publicidade' en español?","promptNative":"Como se diz 'publicidade' em espanhol?","explain":"'advertising' se diz 'la publicidad'."},
+  "fvocab-472": {"promptNative":"'La competencia' significa...","options":["concorrência","proposta","acordo","quantidade"],"explain":"'La competencia' significa competição."},
+  "fvocab-473": {"prompt":"¿Cómo se dice 'qualidade' en español?","promptNative":"Como se diz 'qualidade' em espanhol?","explain":"'quality' se diz 'la calidad'."},
+  "fvocab-474": {"promptNative":"'La cantidad' significa...","options":["quantidade","trâmite burocrático","concorrência","força; fortaleza"],"explain":"'La cantidad' significa quantidade."},
+  "fvocab-475": {"prompt":"¿Cómo se dice 'comportamento' en español?","promptNative":"Como se diz 'comportamento' em espanhol?","explain":"'behavior' se diz 'el comportamiento'."},
+  "fvocab-476": {"promptNative":"'La actitud' significa...","options":["atitude","amizade","desvantagem","vantagem"],"explain":"'La actitud' significa atitude."},
+  "fvocab-477": {"prompt":"¿Cómo se dice 'personalidade' en español?","promptNative":"Como se diz 'personalidade' em espanhol?","explain":"'personality' se diz 'la personalidad'."},
+  "fvocab-478": {"promptNative":"'El carácter' significa...","options":["caráter (temperamento)","orçamento","perda","mal-entendido"],"explain":"'El carácter' significa caráter (temperamento)."},
+  "fvocab-479": {"prompt":"¿Cómo se dice 'habilidade' en español?","promptNative":"Como se diz 'habilidade' em espanhol?","explain":"'skill' se diz 'la habilidad'."},
+  "fvocab-480": {"promptNative":"'La debilidad' significa...","options":["fraqueza","imposto","medida; medição","atitude"],"explain":"'La debilidad' significa fraqueza."},
+  "fvocab-481": {"prompt":"¿Cómo se dice 'força; fortaleza' en español?","promptNative":"Como se diz 'força; fortaleza' em espanhol?","explain":"'strength; fortress' se diz 'la fortaleza'."},
+  "fvocab-482": {"promptNative":"'La amistad' significa...","options":["amizade","solicitação","atitude","prazo; parcela"],"explain":"'La amistad' significa amizade."},
+  "fvocab-483": {"prompt":"¿Cómo se dice 'relação' en español?","promptNative":"Como se diz 'relação' em espanhol?","explain":"'relationship' se diz 'la relación'."},
+  "fvocab-484": {"promptNative":"'El compromiso' significa...","options":["compromisso; noivado","desvantagem","ameaça","proposta"],"explain":"'El compromiso' significa compromisso; noivado."},
+  "fvocab-485": {"prompt":"¿Cómo se dice 'confiança' en español?","promptNative":"Como se diz 'confiança' em espanhol?","explain":"'trust; confidence' se diz 'la confianza'."},
+  "fvocab-486": {"promptNative":"'El malentendido' significa...","options":["mal-entendido","prazo; parcela","lucro","dívida"],"explain":"'El malentendido' significa mal-entendido."},
+  "fvocab-487": {"prompt":"¿Cómo se dice 'acordo' en español?","promptNative":"Como se diz 'acordo' em espanhol?","explain":"'agreement' se diz 'el acuerdo'."},
+  "fvocab-488": {"promptNative":"'El desacuerdo' significa...","options":["desacordo","proposta","ferramenta","fraqueza"],"explain":"'El desacuerdo' significa desacordo."},
+  "fvocab-489": {"prompt":"¿Cómo se dice 'proposta' en español?","promptNative":"Como se diz 'proposta' em espanhol?","explain":"'proposal' se diz 'la propuesta'."},
+  "fvocab-490": {"promptNative":"'La solicitud' significa...","options":["solicitação","média","habilidade","mal-entendido"],"explain":"'La solicitud' significa solicitação (formulário/pedido)."},
+  "fvocab-491": {"prompt":"¿Cómo se dice 'requisito' en español?","promptNative":"Como se diz 'requisito' em espanhol?","explain":"'requirement' se diz 'el requisito'."},
+  "fvocab-492": {"promptNative":"'El plazo' significa...","options":["prazo; parcela","perda","desacordo","ferramenta"],"explain":"'El plazo' significa prazo; parcela."},
+  "fvocab-493": {"prompt":"¿Cómo se dice 'trâmite burocrático' en español?","promptNative":"Como se diz 'trâmite burocrático' em espanhol?","explain":"'bureaucratic procedure' se diz 'el trámite'."},
+  "fvocab-494": {"promptNative":"'Desarrollar' significa...","options":["desenvolver","exibir-se; gabar-se","enfrentar; confrontar","piorar"],"explain":"'Desarrollar' significa desenvolver."},
+  "fvocab-495": {"prompt":"¿Cómo se dice 'melhorar' en español?","promptNative":"Como se diz 'melhorar' em espanhol?","explain":"'to improve' se diz 'mejorar'."},
+  "fvocab-496": {"promptNative":"'Empeorar' significa...","options":["piorar","ampliar; expandir","enfrentar; confrontar","substituir; repor"],"explain":"'Empeorar' significa piorar."},
+  "fvocab-497": {"prompt":"¿Cómo se dice 'aumentar' en español?","promptNative":"Como se diz 'aumentar' em espanhol?","explain":"'to increase' se diz 'aumentar'."},
+  "fvocab-498": {"promptNative":"'Disminuir' significa...","options":["diminuir","disfarçar (sentimentos); dissimular","demitir; despedir-se","empreender; iniciar (um empreendimento)"],"explain":"'Disminuir' significa diminuir."},
+  "fvocab-499": {"prompt":"¿Cómo se dice 'reduzir' en español?","promptNative":"Como se diz 'reduzir' em espanhol?","explain":"'to reduce' se diz 'reducir'."},
+  "fvocab-500": {"promptNative":"'Ampliar' significa...","options":["ampliar; expandir","aumentar","avisar","piorar"],"explain":"'Ampliar' significa ampliar."},
+  "fvocab-501": {"prompt":"¿Cómo se dice 'substituir' en español?","promptNative":"Como se diz 'substituir' em espanhol?","explain":"'to substitute' se diz 'sustituir'."},
+  "fvocab-502": {"promptNative":"'Reemplazar' significa...","options":["substituir; repor","reivindicar; reclamar formalmente","supor; presumir","assumir (responsabilidade)"],"explain":"'Reemplazar' significa substituir."},
+  "fvocab-503": {"prompt":"¿Cómo se dice 'atualizar' en español?","promptNative":"Como se diz 'atualizar' em espanhol?","explain":"'to update' se diz 'actualizar'."},
+  "fvocab-504": {"promptNative":"'Averiguar' significa...","options":["averiguar; investigar","supor; presumir","levantar (uma questão); propor","exigir"],"explain":"'Averiguar' significa averiguar; descobrir."},
+  "fvocab-505": {"prompt":"¿Cómo se dice 'verificar; conferir' en español?","promptNative":"Como se diz 'verificar; conferir' em espanhol?","explain":"'to verify; to check' se diz 'comprobar'."},
+  "fvocab-506": {"promptNative":"'Suponer' significa...","options":["supor; presumir","disfarçar (sentimentos); dissimular","aumentar","substituir"],"explain":"'Suponer' significa supor."},
+  "fvocab-507": {"prompt":"¿Cómo se dice 'levantar (uma questão); propor' en español?","promptNative":"Como se diz 'levantar (uma questão); propor' em espanhol?","explain":"'to raise (an issue); to pose' se diz 'plantear'."},
+  "fvocab-508": {"promptNative":"'Proponer' significa...","options":["propor","arriscar","renunciar; desistir","exigir"],"explain":"'Proponer' significa propor."},
+  "fvocab-509": {"prompt":"¿Cómo se dice 'sugerir' en español?","promptNative":"Como se diz 'sugerir' em espanhol?","explain":"'to suggest' se diz 'sugerir'."},
+  "fvocab-510": {"promptNative":"'Advertir' significa...","options":["avisar","desenvolver","substituir; repor","aposentar-se"],"explain":"'Advertir' significa advertir."},
+  "fvocab-511": {"prompt":"¿Cómo se dice 'exigir' en español?","promptNative":"Como se diz 'exigir' em espanhol?","explain":"'to demand' se diz 'exigir'."},
+  "fvocab-512": {"promptNative":"'Reclamar' significa...","options":["reivindicar; reclamar formalmente","supor; presumir","assumir (responsabilidade)","apontar; assinalar"],"explain":"'Reclamar' significa reclamar."},
+  "fvocab-513": {"prompt":"¿Cómo se dice 'renunciar; desistir' en español?","promptNative":"Como se diz 'renunciar; desistir' em espanhol?","explain":"'to resign; to give up' se diz 'renunciar'."},
+  "fvocab-514": {"promptNative":"'Jubilarse' significa...","options":["aposentar-se","substituir; repor","piorar","melhorar"],"explain":"'Jubilarse' significa aposentar-se."},
+  "fvocab-515": {"prompt":"¿Cómo se dice 'contratar' en español?","promptNative":"Como se diz 'contratar' em espanhol?","explain":"'to hire' se diz 'contratar'."},
+  "fvocab-516": {"promptNative":"'Despedir' significa...","options":["demitir; despedir-se","abranger; abarcar","enfrentar; confrontar","avisar"],"explain":"'Despedir' significa demitir; despedir."},
+  "fvocab-517": {"prompt":"¿Cómo se dice 'empreender; iniciar (um empreendimento)' en español?","promptNative":"Como se diz 'empreender; iniciar (um empreendimento)' em espanhol?","explain":"'to undertake; to start (a venture)' se diz 'emprender'."},
+  "fvocab-518": {"promptNative":"'Arriesgar' significa...","options":["arriscar","supor; presumir","sugerir","atualizar"],"explain":"'Arriesgar' significa arriscar."},
+  "fvocab-519": {"prompt":"¿Cómo se dice 'apostar' en español?","promptNative":"Como se diz 'apostar' em espanhol?","explain":"'to bet' se diz 'apostar'."},
+  "fvocab-520": {"promptNative":"'Presumir' significa...","options":["exibir-se; gabar-se","abranger; abarcar","superar; ultrapassar","arriscar"],"explain":"'Presumir' significa se exibir; gabar-se."},
+  "fvocab-521": {"prompt":"¿Cómo se dice 'fingir' en español?","promptNative":"Como se diz 'fingir' em espanhol?","explain":"'to pretend' se diz 'fingir'."},
+  "fvocab-522": {"promptNative":"'Disimular' significa...","options":["disfarçar (sentimentos); dissimular","fingir","verificar; conferir","propor"],"explain":"'Disimular' significa disfarçar."},
+  "fvocab-523": {"prompt":"¿Cómo se dice 'superar; ultrapassar' en español?","promptNative":"Como se diz 'superar; ultrapassar' em espanhol?","explain":"'to overcome; to surpass' se diz 'superar'."},
+  "fvocab-524": {"promptNative":"'Enfrentar' significa...","options":["enfrentar; confrontar","ampliar; expandir","melhorar","substituir"],"explain":"'Enfrentar' significa enfrentar."},
+  "fvocab-525": {"prompt":"¿Cómo se dice 'assumir (responsabilidade)' en español?","promptNative":"Como se diz 'assumir (responsabilidade)' em espanhol?","explain":"'to take on (responsibility)' se diz 'asumir'."},
+  "fvocab-526": {"promptNative":"'Carecer' significa...","options":["carecer; faltar","avisar","sugerir","empreender; iniciar (um empreendimento)"],"explain":"'Carecer' significa carecer de."},
+  "fvocab-527": {"prompt":"¿Cómo se dice 'abranger; abarcar' en español?","promptNative":"Como se diz 'abranger; abarcar' em espanhol?","explain":"'to cover; to span' se diz 'abarcar'."},
+  "fvocab-528": {"promptNative":"'Destacar' significa...","options":["destacar-se; ressaltar","apontar; assinalar","empreender; iniciar (um empreendimento)","demitir; despedir-se"],"explain":"'Destacar' significa destacar-se; destacar."},
+  "fvocab-529": {"prompt":"¿Cómo se dice 'apontar; assinalar' en español?","promptNative":"Como se diz 'apontar; assinalar' em espanhol?","explain":"'to point out' se diz 'señalar'."},
+  "fvocab-530": {"promptNative":"'Disponible' significa...","options":["disponível","exaustivo","eficaz","abundante"],"explain":"'Disponible' significa disponível."},
+  "fvocab-531": {"prompt":"¿Cómo se dice 'gratuito' en español?","promptNative":"Como se diz 'gratuito' em espanhol?","explain":"'free of charge' se diz 'gratuito'."},
+  "fvocab-532": {"promptNative":"'Rentable' significa...","options":["rentável","exigente","prévio; anterior","abundante"],"explain":"'Rentable' significa rentável."},
+  "fvocab-533": {"prompt":"¿Cómo se dice 'eficaz' en español?","promptNative":"Como se diz 'eficaz' em espanhol?","explain":"'effective' se diz 'eficaz'."},
+  "fvocab-534": {"promptNative":"'Eficiente' significa...","options":["eficiente","mútuo","gratuito","exigente"],"explain":"'Eficiente' significa eficiente."},
+  "fvocab-535": {"prompt":"¿Cómo se dice 'exigente' en español?","promptNative":"Como se diz 'exigente' em espanhol?","explain":"'demanding' se diz 'exigente'."},
+  "fvocab-536": {"promptNative":"'Agotado' significa...","options":["exausto; esgotado (vendido)","eficiente","exigente","disponível"],"explain":"'Agotado' significa esgotado."},
+  "fvocab-537": {"prompt":"¿Cómo se dice 'exaustivo' en español?","promptNative":"Como se diz 'exaustivo' em espanhol?","explain":"'exhausting' se diz 'agotador'."},
+  "fvocab-538": {"promptNative":"'Imprevisto' significa...","options":["imprevisto","exigente","prévio; anterior","exaustivo"],"explain":"'Imprevisto' significa imprevisto."},
+  "fvocab-539": {"prompt":"¿Cómo se dice 'cotidiano; diário' en español?","promptNative":"Como se diz 'cotidiano; diário' em espanhol?","explain":"'everyday; daily' se diz 'cotidiano'."},
+  "fvocab-540": {"promptNative":"'Actual' significa...","options":["atual","exigente","gratuito","exausto; esgotado (vendido)"],"explain":"'Actual' significa atual."},
+  "fvocab-541": {"prompt":"¿Cómo se dice 'prévio; anterior' en español?","promptNative":"Como se diz 'prévio; anterior' em espanhol?","explain":"'prior; previous' se diz 'previo'."},
+  "fvocab-542": {"promptNative":"'Escaso' significa...","options":["escasso","rentável","exausto; esgotado (vendido)","gratuito"],"explain":"'Escaso' significa escasso."},
+  "fvocab-543": {"prompt":"¿Cómo se dice 'abundante' en español?","promptNative":"Como se diz 'abundante' em espanhol?","explain":"'abundant' se diz 'abundante'."},
+  "fvocab-544": {"promptNative":"'Mutuo' significa...","options":["mútuo","exigente","eficiente","eficaz"],"explain":"'Mutuo' significa mútuo."},
+  "fvocab-545": {"prompt":"¿Cómo se dice 'nuance; matiz' en español?","promptNative":"Como se diz 'nuance; matiz' em espanhol?","explain":"'nuance; shade' se diz 'el matiz'."},
+  "fvocab-546": {"promptNative":"'El rasgo' significa...","options":["traço; característica","achado; descoberta","ambiente; arredores","abordagem; formulação"],"explain":"'El rasgo' significa traço; característica."},
+  "fvocab-547": {"prompt":"¿Cómo se dice 'ânsia; empenho' en español?","promptNative":"Como se diz 'ânsia; empenho' em espanhol?","explain":"'eagerness; drive' se diz 'el afán'."},
+  "fvocab-548": {"promptNative":"'El empeño' significa...","options":["determinação; persistência","indício; sinal","lacuna; brecha","saudade"],"explain":"'El empeño' significa empenho; persistência."},
+  "fvocab-549": {"prompt":"¿Cómo se dice 'desempenho' en español?","promptNative":"Como se diz 'desempenho' em espanhol?","explain":"'performance (at a task)' se diz 'el desempeño'."},
+  "fvocab-550": {"promptNative":"'El logro' significa...","options":["conquista","determinação; persistência","anseio; desejo profundo","limiar"],"explain":"'El logro' significa conquista."},
+  "fvocab-551": {"prompt":"¿Cómo se dice 'marco' en español?","promptNative":"Como se diz 'marco' em espanhol?","explain":"'milestone; landmark' se diz 'el hito'."},
+  "fvocab-552": {"promptNative":"'El auge' significa...","options":["auge; pico","foco; ângulo","nuance; matiz","âmbito; campo (domínio)"],"explain":"'El auge' significa auge; pico."},
+  "fvocab-553": {"prompt":"¿Cómo se dice 'declínio' en español?","promptNative":"Como se diz 'declínio' em espanhol?","explain":"'decline' se diz 'el declive'."},
+  "fvocab-554": {"promptNative":"'La brecha' significa...","options":["lacuna; brecha","desempenho","determinação; persistência","indício; sinal"],"explain":"'La brecha' significa lacuna; brecha."},
+  "fvocab-555": {"prompt":"¿Cómo se dice 'viés' en español?","promptNative":"Como se diz 'viés' em espanhol?","explain":"'bias' se diz 'el sesgo'."},
+  "fvocab-556": {"promptNative":"'La pauta' significa...","options":["diretriz; padrão","saudade","achado; descoberta","limiar"],"explain":"'La pauta' significa diretriz; padrão."},
+  "fvocab-557": {"prompt":"¿Cómo se dice 'âmbito; campo (domínio)' en español?","promptNative":"Como se diz 'âmbito; campo (domínio)' em espanhol?","explain":"'sphere; field (domain)' se diz 'el ámbito'."},
+  "fvocab-558": {"promptNative":"'El entorno' significa...","options":["ambiente; arredores","declínio","traço; característica","auge; pico"],"explain":"'El entorno' significa ambiente; entorno."},
+  "fvocab-559": {"prompt":"¿Cómo se dice 'limiar' en español?","promptNative":"Como se diz 'limiar' em espanhol?","explain":"'threshold' se diz 'el umbral'."},
+  "fvocab-560": {"promptNative":"'El vínculo' significa...","options":["vínculo; laço","incerteza","achado; descoberta","conquista"],"explain":"'El vínculo' significa vínculo."},
+  "fvocab-561": {"prompt":"¿Cómo se dice 'enraizamento' en español?","promptNative":"Como se diz 'enraizamento' em espanhol?","explain":"'rootedness' se diz 'el arraigo'."},
+  "fvocab-562": {"promptNative":"'La añoranza' significa...","options":["saudade","declínio","anseio; desejo profundo","desempenho"],"explain":"'La añoranza' significa saudade."},
+  "fvocab-563": {"prompt":"¿Cómo se dice 'anseio; desejo profundo' en español?","promptNative":"Como se diz 'anseio; desejo profundo' em espanhol?","explain":"'yearning; deep desire' se diz 'el anhelo'."},
+  "fvocab-564": {"promptNative":"'La incertidumbre' significa...","options":["incerteza","suspeita","enraizamento","anseio; desejo profundo"],"explain":"'La incertidumbre' significa incerteza."},
+  "fvocab-565": {"prompt":"¿Cómo se dice 'certeza' en español?","promptNative":"Como se diz 'certeza' em espanhol?","explain":"'certainty' se diz 'la certeza'."},
+  "fvocab-566": {"promptNative":"'La sospecha' significa...","options":["suspeita","auge; pico","ânsia; empenho","abordagem; formulação"],"explain":"'La sospecha' significa suspeita."},
+  "fvocab-567": {"prompt":"¿Cómo se dice 'indício; sinal' en español?","promptNative":"Como se diz 'indício; sinal' em espanhol?","explain":"'clue; indication' se diz 'el indicio'."},
+  "fvocab-568": {"promptNative":"'El hallazgo' significa...","options":["achado; descoberta","âmbito; campo (domínio)","ânsia; empenho","nuance; matiz"],"explain":"'El hallazgo' significa achado; descoberta."},
+  "fvocab-569": {"prompt":"¿Cómo se dice 'abordagem; formulação' en español?","promptNative":"Como se diz 'abordagem; formulação' em espanhol?","explain":"'framing; approach (to a problem)' se diz 'el planteamiento'."},
+  "fvocab-570": {"promptNative":"'El enfoque' significa...","options":["foco; ângulo","enraizamento","saudade","marco"],"explain":"'El enfoque' significa enfoque; ângulo."},
+  "fvocab-571": {"prompt":"¿Cómo se dice 'postura; posição (opinião)' en español?","promptNative":"Como se diz 'postura; posição (opinião)' em espanhol?","explain":"'stance; position (opinion)' se diz 'la postura'."},
+  "fvocab-572": {"promptNative":"'Plasmar' significa...","options":["dar forma a; retratar (numa obra)","contornar (um assunto)","sopesar; ponderar","fomentar; incentivar"],"explain":"'Plasmar' significa dar forma a; plasmar."},
+  "fvocab-573": {"prompt":"¿Cómo se dice 'esboçar; delinear' en español?","promptNative":"Como se diz 'esboçar; delinear' em espanhol?","explain":"'to sketch out; to outline' se diz 'esbozar'."},
+  "fvocab-574": {"promptNative":"'Vislumbrar' significa...","options":["vislumbrar; começar a ver","desmembrar; detalhar","violar (direitos, regras)","reunir; coletar (informação/apoio)"],"explain":"'Vislumbrar' significa vislumbrar."},
+  "fvocab-575": {"prompt":"¿Cómo se dice 'sopesar; ponderar' en español?","promptNative":"Como se diz 'sopesar; ponderar' em espanhol?","explain":"'to weigh up (options)' se diz 'sopesar'."},
+  "fvocab-576": {"promptNative":"'Desglosar' significa...","options":["desmembrar; detalhar","minar; solapar","contornar (um assunto)","amenizar; mitigar"],"explain":"'Desglosar' significa detalhar (em partes)."},
+  "fvocab-577": {"prompt":"¿Cómo se dice 'reunir; coletar (informação/apoio)' en español?","promptNative":"Como se diz 'reunir; coletar (informação/apoio)' em espanhol?","explain":"'to gather (information/support)' se diz 'recabar'."},
+  "fvocab-578": {"promptNative":"'Aludir' significa...","options":["aludir","minar; solapar","esboçar; delinear","fomentar; incentivar"],"explain":"'Aludir' significa aludir a."},
+  "fvocab-579": {"prompt":"¿Cómo se dice 'evadir; esquivar' en español?","promptNative":"Como se diz 'evadir; esquivar' em espanhol?","explain":"'to evade; to dodge' se diz 'eludir'."},
+  "fvocab-580": {"promptNative":"'Soslayar' significa...","options":["contornar (um assunto)","amenizar; mitigar","vislumbrar; começar a ver","iniciar (uma conversa, uma amizade)"],"explain":"'Soslayar' significa contornar (um assunto)."},
+  "fvocab-581": {"prompt":"¿Cómo se dice 'amenizar; mitigar' en español?","promptNative":"Como se diz 'amenizar; mitigar' em espanhol?","explain":"'to alleviate; to mitigate' se diz 'paliar'."},
+  "fvocab-582": {"promptNative":"'Mermar' significa...","options":["diminuir; corroer","propiciar; favorecer","vislumbrar; começar a ver","amenizar; mitigar"],"explain":"'Mermar' significa diminuir; corroer."},
+  "fvocab-583": {"prompt":"¿Cómo se dice 'minar; solapar' en español?","promptNative":"Como se diz 'minar; solapar' em espanhol?","explain":"'to undermine' se diz 'socavar'."},
+  "fvocab-584": {"promptNative":"'Propiciar' significa...","options":["propiciar; favorecer","sanar; remediar","contornar (um assunto)","iniciar (uma conversa, uma amizade)"],"explain":"'Propiciar' significa propiciar."},
+  "fvocab-585": {"prompt":"¿Cómo se dice 'fomentar; incentivar' en español?","promptNative":"Como se diz 'fomentar; incentivar' em espanhol?","explain":"'to promote; to encourage (growth)' se diz 'fomentar'."},
+  "fvocab-586": {"promptNative":"'Entablar' significa...","options":["iniciar (uma conversa, uma amizade)","propiciar; favorecer","minar; solapar","evadir; esquivar"],"explain":"'Entablar' significa travar (uma conversa, uma amizade)."},
+  "fvocab-587": {"prompt":"¿Cómo se dice 'acatar; cumprir' en español?","promptNative":"Como se diz 'acatar; cumprir' em espanhol?","explain":"'to abide by; to comply with' se diz 'acatar'."},
+  "fvocab-588": {"promptNative":"'Vulnerar' significa...","options":["violar (direitos, regras)","contornar (um assunto)","acatar; cumprir","sopesar; ponderar"],"explain":"'Vulnerar' significa violar (direitos, regras)."},
+  "fvocab-589": {"prompt":"¿Cómo se dice 'sanar; remediar' en español?","promptNative":"Como se diz 'sanar; remediar' em espanhol?","explain":"'to rectify; to remedy' se diz 'subsanar'."},
+  "fvocab-590": {"promptNative":"'Escueto' significa...","options":["sucinto; enxuto","sumário; superficial","insólito; extraordinário","idôneo; ideal"],"explain":"'Escueto' significa sucinto; enxuto."},
+  "fvocab-591": {"prompt":"¿Cómo se dice 'sumário; superficial' en español?","promptNative":"Como se diz 'sumário; superficial' em espanhol?","explain":"'cursory; superficial' se diz 'somero'."},
+  "fvocab-592": {"promptNative":"'Férreo' significa...","options":["férreo; inflexível","sucinto; enxuto","vertiginoso","idôneo; ideal"],"explain":"'Férreo' significa férreo; inflexível."},
+  "fvocab-593": {"prompt":"¿Cómo se dice 'categórico; taxativo' en español?","promptNative":"Como se diz 'categórico; taxativo' em espanhol?","explain":"'categorical; blunt (statement)' se diz 'tajante'."},
+  "fvocab-594": {"promptNative":"'Contundente' significa...","options":["contundente; esmagador","descomunal; colossal","sucinto; enxuto","férreo; inflexível"],"explain":"'Contundente' significa contundente."},
+  "fvocab-595": {"prompt":"¿Cómo se dice 'gradual' en español?","promptNative":"Como se diz 'gradual' em espanhol?","explain":"'gradual' se diz 'paulatino'."},
+  "fvocab-596": {"promptNative":"'Vertiginoso' significa...","options":["vertiginoso","querido; comovente","idôneo; ideal","insólito; extraordinário"],"explain":"'Vertiginoso' significa vertiginoso."},
+  "fvocab-597": {"prompt":"¿Cómo se dice 'ínfimo; irrisório' en español?","promptNative":"Como se diz 'ínfimo; irrisório' em espanhol?","explain":"'negligible; tiny (amount)' se diz 'ínfimo'."},
+  "fvocab-598": {"promptNative":"'Descomunal' significa...","options":["descomunal; colossal","perene; duradouro","sucinto; enxuto","vertiginoso"],"explain":"'Descomunal' significa enorme; colossal."},
+  "fvocab-599": {"prompt":"¿Cómo se dice 'querido; comovente' en español?","promptNative":"Como se diz 'querido; comovente' em espanhol?","explain":"'dear; heartwarming' se diz 'entrañable'."},
+  "fvocab-600": {"promptNative":"'Huraño' significa...","options":["arredio; insociável","insólito; extraordinário","querido; comovente","precário"],"explain":"'Huraño' significa arredio; insociável."},
+  "fvocab-601": {"prompt":"¿Cómo se dice 'afável; cordial' en español?","promptNative":"Como se diz 'afável; cordial' em espanhol?","explain":"'affable; warm-mannered' se diz 'afable'."},
+  "fvocab-602": {"promptNative":"'Precario' significa...","options":["precário","sucinto; enxuto","nefasto; desastroso","arredio; insociável"],"explain":"'Precario' significa precário."},
+  "fvocab-603": {"prompt":"¿Cómo se dice 'idôneo; ideal' en español?","promptNative":"Como se diz 'idôneo; ideal' em espanhol?","explain":"'ideally suited' se diz 'idóneo'."},
+  "fvocab-604": {"promptNative":"'Nefasto' significa...","options":["nefasto; desastroso","precário","categórico; taxativo","sucinto; enxuto"],"explain":"'Nefasto' significa nefasto; desastroso."},
+  "fvocab-605": {"prompt":"¿Cómo se dice 'insólito; extraordinário' en español?","promptNative":"Como se diz 'insólito; extraordinário' em espanhol?","explain":"'unheard-of; extraordinary' se diz 'insólito'."},
+  "fvocab-606": {"promptNative":"'Verosímil' significa...","options":["verossímil; plausível","descomunal; colossal","afável; cordial","querido; comovente"],"explain":"'Verosímil' significa plausível; verossímil."},
+  "fvocab-607": {"prompt":"¿Cómo se dice 'efêmero; passageiro' en español?","promptNative":"Como se diz 'efêmero; passageiro' em espanhol?","explain":"'fleeting; ephemeral' se diz 'efímero'."},
+  "fvocab-608": {"promptNative":"'Perenne' significa...","options":["perene; duradouro","efêmero; passageiro","insólito; extraordinário","férreo; inflexível"],"explain":"'Perenne' significa perene; duradouro."},
 };

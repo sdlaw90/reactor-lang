@@ -2,7252 +2,1376 @@
 // AI-authored; flagged for native Portuguese review. Keys are "<cat>-<index>" (0-indexed, array order).
 // Only vocab/gram/trad processed; fono/fvocab handled elsewhere. Omitted fields fall back to English.
 
+// v3.4 (#60) BACKFILL 2026-08-03 — `explain`, `wrongNote` and `distractorNotes`
+// added for this source. Until v3.4 the side tables had no channel for them, so all
+// three surfaces fell back to English on every item reused from another source.
+// Machine-assembled: the target-language spans inside each note are carried through
+// VERBATIM from the Spanish surface and only the framing text is translated, so a
+// verb form or quoted term can never be paraphrased. AI-authored framing —
+// FLAG FOR #41 native review.
 export default {
-  "vocab-0": {
-    "promptNative": "'안녕하세요 (annyeonghaseyo)' significa...",
-    "options": [
-      "olá (formal)",
-      "adeus",
-      "obrigado",
-      "por favor"
-    ]
-  },
-  "vocab-1": {
-    "promptNative": "'감사합니다 (gamsahamnida)' significa...",
-    "options": [
-      "obrigado (formal)",
-      "por favor",
-      "desculpa",
-      "de nada"
-    ]
-  },
-  "vocab-2": {
-    "promptNative": "'친구 (chingu)' significa...",
-    "options": [
-      "amigo",
-      "inimigo",
-      "vizinho",
-      "colega de trabalho"
-    ]
-  },
-  "vocab-3": {
-    "promptNative": "'물 (mul)' significa...",
-    "options": [
-      "água",
-      "fogo",
-      "chá",
-      "arroz"
-    ]
-  },
-  "vocab-4": {
-    "promptNative": "'네 (ne)' significa...",
-    "options": [
-      "sim",
-      "não",
-      "talvez",
-      "por favor"
-    ]
-  },
-  "vocab-5": {
-    "promptNative": "'창문 (changmun)' significa...",
-    "options": [
-      "janela",
-      "porta",
-      "parede",
-      "chão"
-    ]
-  },
-  "vocab-6": {
-    "promptNative": "'가족 (gajok)' significa...",
-    "options": [
-      "família",
-      "grupo de amigos",
-      "vizinhança",
-      "equipe"
-    ]
-  },
-  "vocab-7": {
-    "promptNative": "'일 (il)' significa...",
-    "options": [
-      "trabalho/emprego",
-      "férias",
-      "reunião",
-      "salário"
-    ]
-  },
-  "vocab-8": {
-    "promptNative": "'밥 (bap)' significa...",
-    "options": [
-      "arroz cozido / uma refeição (ambos)",
-      "só arroz cru",
-      "pão",
-      "sopa"
-    ]
-  },
-  "vocab-9": {
-    "promptNative": "'사랑 (sarang)' significa...",
-    "options": [
-      "amor",
-      "amizade",
-      "gentileza",
-      "sorte"
-    ]
-  },
-  "vocab-10": {
-    "promptNative": "'답답하다 (dapdaphada)' significa...",
-    "options": [
-      "sentir-se frustrado/sufocado",
-      "sentir-se empolgado",
-      "sentir-se sonolento",
-      "sentir-se faminto"
-    ]
-  },
-  "vocab-11": {
-    "promptNative": "'화이팅 (hwaiting)' significa...",
-    "options": [
-      "\"você consegue!/força!\"",
-      "\"adeus\"",
-      "\"parabéns\"",
-      "\"desculpa\""
-    ]
-  },
-  "vocab-12": {
-    "promptNative": "'눈 (nun)' significa...",
-    "options": [
-      "olho OU neve (duas palavras distintas, mesmo som)",
-      "só olho",
-      "só neve",
-      "orelha"
-    ]
-  },
-  "vocab-13": {
-    "promptNative": "'선생님 (seonsaengnim)' significa...",
-    "options": [
-      "professor (respeitoso)",
-      "estudante",
-      "colega de classe",
-      "diretor"
-    ]
-  },
-  "vocab-14": {
-    "promptNative": "'정 (jeong)' significa...",
-    "options": [
-      "vínculo/afeto profundo forjado com o tempo",
-      "um compromisso marcado",
-      "limpeza",
-      "silêncio"
-    ]
-  },
-  "vocab-15": {
-    "promptNative": "'눈치 (nunchi)' significa...",
-    "options": [
-      "consciência social/saber ler o ambiente",
-      "visão",
-      "curiosidade",
-      "timidez"
-    ]
-  },
-  "vocab-16": {
-    "promptNative": "'배 (bae)' significa...",
-    "options": [
-      "estômago, barco OU pera (três palavras distintas!)",
-      "só estômago",
-      "só barco",
-      "só pera"
-    ]
-  },
-  "vocab-17": {
-    "promptNative": "'대박 (daebak)' significa...",
-    "options": [
-      "\"que demais!/jackpot!/sucesso absoluto\"",
-      "\"desastre\"",
-      "\"talvez\"",
-      "\"adeus\""
-    ]
-  },
-  "vocab-18": {
-    "promptNative": "'시원하다 (siwonhada)' significa...",
-    "options": [
-      "refrescante — até para sopa QUENTE (mesma palavra)",
-      "só \"frio\"",
-      "só \"morno\"",
-      "só \"picante\""
-    ]
-  },
-  "vocab-19": {
-    "promptNative": "'억울하다 (eogulhada)' significa...",
-    "options": [
-      "sentir-se lesado/tratado injustamente",
-      "sentir-se orgulhoso",
-      "sentir-se entediado",
-      "sentir-se agradecido"
-    ]
-  },
-  "vocab-20": {
-    "promptNative": "'체면 (chemyeon)' significa...",
-    "options": [
-      "prestígio/dignidade social (que se mantém ou se perde)",
-      "uma máscara física",
-      "uma expressão facial",
-      "maquiagem"
-    ]
-  },
-  "vocab-21": {
-    "promptNative": "'시치미 (sichimi)' significa...",
-    "options": [
-      "inocência fingida (em '시치미를 떼다')",
-      "um tempero forte",
-      "uma pequena mentira sobre a idade",
-      "um tipo de chapéu"
-    ]
-  },
-  "vocab-22": {
-    "promptNative": "'답정너 (dapjeongneo)' significa...",
-    "options": [
-      "\"a resposta já está decidida, você só precisa dizê-la\" (gíria)",
-      "uma resposta incorreta",
-      "um app de quiz",
-      "uma recusa educada"
-    ]
-  },
-  "vocab-23": {
-    "promptNative": "'한 (han)' significa...",
-    "options": [
-      "mágoa/rancor profundo e arraigado",
-      "só um sobrenome coreano",
-      "o número um",
-      "uma estação"
-    ]
-  },
-  "vocab-24": {
-    "promptNative": "'흥 (heung)' significa...",
-    "options": [
-      "alegria/entusiasmo/júbilo espontâneo",
-      "tédio",
-      "raiva",
-      "esgotamento"
-    ]
-  },
-  "vocab-25": {
-    "promptNative": "'학교 (hakgyo)' significa...",
-    "options": [
-      "escola",
-      "hospital",
-      "biblioteca",
-      "escritório"
-    ]
-  },
-  "vocab-26": {
-    "promptNative": "'사람 (saram)' significa...",
-    "options": [
-      "pessoa / gente",
-      "animal",
-      "amigo",
-      "criança"
-    ]
-  },
-  "vocab-27": {
-    "promptNative": "'책 (chaek)' significa...",
-    "options": [
-      "livro",
-      "escrivaninha",
-      "caneta",
-      "papel"
-    ]
-  },
-  "vocab-28": {
-    "promptNative": "'집 (jip)' significa...",
-    "options": [
-      "casa / lar",
-      "escola",
-      "loja",
-      "quarto"
-    ]
-  },
-  "vocab-29": {
-    "promptNative": "'커피 (keopi)' significa...",
-    "options": [
-      "café",
-      "chá",
-      "suco",
-      "leite"
-    ]
-  },
-  "vocab-30": {
-    "promptNative": "'시간 (sigan)' significa...",
-    "options": [
-      "tempo / hora",
-      "dia",
-      "semana",
-      "lugar"
-    ]
-  },
-  "vocab-31": {
-    "promptNative": "'사과 (sagwa)' significa...",
-    "options": [
-      "maçã OU um pedido de desculpas (mesma palavra)",
-      "só maçã",
-      "só banana",
-      "só laranja"
-    ]
-  },
-  "vocab-32": {
-    "promptNative": "'오늘 (oneul)' significa...",
-    "options": [
-      "hoje",
-      "amanhã",
-      "ontem",
-      "agora"
-    ]
-  },
-  "vocab-33": {
-    "promptNative": "'이름 (ireum)' significa...",
-    "options": [
-      "nome",
-      "idade",
-      "endereço",
-      "rosto"
-    ]
-  },
-  "vocab-34": {
-    "promptNative": "'학생 (haksaeng)' significa...",
-    "options": [
-      "estudante",
-      "professor",
-      "médico",
-      "trabalhador"
-    ]
-  },
-  "vocab-35": {
-    "promptNative": "'병원 (byeongwon)' significa...",
-    "options": [
-      "hospital / clínica",
-      "farmácia",
-      "escola",
-      "banco"
-    ]
-  },
-  "vocab-36": {
-    "promptNative": "'날씨 (nalssi)' significa...",
-    "options": [
-      "clima",
-      "estação",
-      "céu",
-      "temperatura"
-    ]
-  },
-  "vocab-37": {
-    "promptNative": "'시장 (sijang)' significa...",
-    "options": [
-      "um mercado",
-      "supermercado",
-      "shopping",
-      "restaurante"
-    ]
-  },
-  "vocab-38": {
-    "promptNative": "'지하철 (jihacheol)' significa...",
-    "options": [
-      "metrô / subterrâneo",
-      "ônibus",
-      "estação de trem",
-      "táxi"
-    ]
-  },
-  "vocab-39": {
-    "promptNative": "'음식 (eumsik)' significa...",
-    "options": [
-      "comida (alimento)",
-      "uma bebida",
-      "um restaurante",
-      "uma refeição"
-    ]
-  },
-  "vocab-40": {
-    "promptNative": "'바다 (bada)' significa...",
-    "options": [
-      "mar / oceano",
-      "rio",
-      "lago",
-      "montanha"
-    ]
-  },
-  "vocab-41": {
-    "promptNative": "'가게 (gage)' significa...",
-    "options": [
-      "uma loja / pequeno negócio",
-      "um mercado",
-      "uma fábrica",
-      "um depósito"
-    ]
-  },
-  "vocab-42": {
-    "promptNative": "'편지 (pyeonji)' significa...",
-    "options": [
-      "uma carta escrita",
-      "um e-mail",
-      "um pacote",
-      "um cartão-postal"
-    ]
-  },
-  "vocab-43": {
-    "promptNative": "'우산 (usan)' significa...",
-    "options": [
-      "guarda-chuva",
-      "capa de chuva",
-      "chapéu",
-      "botas"
-    ]
-  },
-  "vocab-44": {
-    "promptNative": "'아깝다 (akkapda)' significa...",
-    "options": [
-      "ser um desperdício / bom demais para desperdiçar",
-      "ser caro",
-      "estar sujo",
-      "ser pesado"
-    ]
-  },
-  "vocab-45": {
-    "promptNative": "'서운하다 (seounhada)' significa...",
-    "options": [
-      "sentir-se calada/discretamente magoado / decepcionado",
-      "sentir-se furioso",
-      "sentir-se orgulhoso",
-      "sentir-se aliviado"
-    ]
-  },
-  "vocab-46": {
-    "promptNative": "'심심하다 (simsimhada)' significa...",
-    "options": [
-      "estar entediado (sem nada para fazer)",
-      "estar ocupado",
-      "estar cansado",
-      "estar bravo"
-    ]
-  },
-  "vocab-47": {
-    "promptNative": "'꾸준하다 (kkujunhada)' significa...",
-    "options": [
-      "ser constante e perseverante",
-      "ser preguiçoso",
-      "ser repentino",
-      "ser descuidado"
-    ]
-  },
-  "vocab-48": {
-    "promptNative": "'반갑다 (bangapda)' significa...",
-    "options": [
-      "ficar feliz em conhecer / ver alguém",
-      "estar constrangido",
-      "estar surpreso",
-      "estar nervoso"
-    ]
-  },
-  "vocab-49": {
-    "promptNative": "'아쉽다 (aswipda)' significa...",
-    "options": [
-      "sentir pesar nostálgico / desejar mais",
-      "sentir nojo",
-      "sentir medo",
-      "sentir tédio"
-    ]
-  },
-  "vocab-50": {
-    "promptNative": "'애교 (aegyo)' significa...",
-    "options": [
-      "charme / comportamento fofo e manhoso",
-      "má educação",
-      "timidez",
-      "teimosia"
-    ]
-  },
-  "vocab-51": {
-    "promptNative": "'갑질 (gapjil)' significa...",
-    "options": [
-      "abuso de poder sobre um subordinado",
-      "trabalho duro",
-      "generosidade",
-      "trabalho em equipe"
-    ]
-  },
-  "vocab-52": {
-    "promptNative": "'회식 (hoesik)' significa...",
-    "options": [
-      "um jantar da empresa / da equipe",
-      "uma reunião de negócios",
-      "uma pausa para o almoço",
-      "um feriado"
-    ]
-  },
-  "vocab-53": {
-    "promptNative": "'꼰대 (kkondae)' significa...",
-    "options": [
-      "um mais velho ou chefe condescendente e sermoneador",
-      "um amigo próximo de infância",
-      "um anfitrião generoso",
-      "uma criança pequena"
-    ]
-  },
-  "vocab-54": {
-    "promptNative": "'챙기다 (chaenggida)' significa...",
-    "options": [
-      "cuidar de / atender / recolher",
-      "jogar no lixo",
-      "esquecer",
-      "vender"
-    ]
-  },
-  "vocab-55": {
-    "promptNative": "'뒤끝 (dwikkeut)' significa...",
-    "options": [
-      "ressentimento persistente que resta após um conflito já encerrado",
-      "a entrada principal",
-      "um ganho repentino",
-      "um começo antecipado"
-    ]
-  },
-  "vocab-56": {
-    "promptNative": "'뿌듯하다 (ppudeushada)' significa...",
-    "options": [
-      "sentir um orgulho silencioso e crescente e plenitude",
-      "sentir vergonha",
-      "sentir medo",
-      "sentir tédio"
-    ]
-  },
-  "vocab-57": {
-    "promptNative": "'우리 (uri)' significa...",
-    "options": [
-      "'nós/nosso' — usado até onde o inglês diria 'meu'",
-      "'eles'",
-      "'ninguém'",
-      "'eu sozinho'"
-    ]
-  },
-  "vocab-58": {
-    "promptNative": "'효 (hyo)' significa...",
-    "options": [
-      "piedade filial — devoção aos pais e mais velhos",
-      "ambição pessoal",
-      "amor romântico",
-      "sorte financeira"
-    ]
-  },
-  "vocab-59": {
-    "promptNative": "'애틋하다 (aeteuthada)' significa...",
-    "options": [
-      "terno e comovente, com um anseio agridoce",
-      "barulhento e alegre",
-      "frio e distante",
-      "estrito e exigente"
-    ]
-  },
-  "vocab-60": {
-    "promptNative": "'든든하다 (deundeunhada)' significa...",
-    "options": [
-      "tranquilo e seguro graças a algo confiável",
-      "ansioso e trêmulo",
-      "irritado e amargurado",
-      "sonolento e apático"
-    ]
-  },
-  "vocab-61": {
-    "promptNative": "'오지랖 (ojirap)' significa...",
-    "options": [
-      "intrometimento xereta nos assuntos dos outros",
-      "timidez extrema",
-      "grande riqueza",
-      "beleza física"
-    ]
-  },
-  "vocab-62": {
-    "promptNative": "'정성 (jeongseong)' significa...",
-    "options": [
-      "cuidado sincero e dedicado posto em fazer algo",
-      "pura velocidade física",
-      "fria indiferença",
-      "esperteza rápida"
-    ]
-  },
-  "vocab-63": {
-    "promptNative": "'삐지다 (ppijida)' significa...",
-    "options": [
-      "amuar-se / fazer beicinho por um pequeno desaforo",
-      "comemorar ruidosamente",
-      "cair num sono profundo",
-      "correr rápido"
-    ]
-  },
-  "vocab-64": {
-    "promptNative": "'멋 (meot)' significa...",
-    "options": [
-      "um senso de estilo, graça e alma tipicamente coreano",
-      "pura feiura",
-      "força física bruta",
-      "silêncio total"
-    ]
-  },
-  "vocab-65": {
-    "promptNative": "'여백 (yeobaek)' significa...",
-    "options": [
-      "o valor estético do espaço vazio / negativo",
-      "um mercado lotado",
-      "um barulho alto",
-      "um recipiente completamente cheio"
-    ]
-  },
-  "vocab-66": {
-    "promptNative": "'은근하다 (eungeunhada)' significa...",
-    "options": [
-      "sutil, silenciosamente persistente; discreto",
-      "barulhento e evidente",
-      "instantâneo e violento",
-      "completamente ausente"
-    ]
-  },
-  "vocab-67": {
-    "promptNative": "'선비 (seonbi)' significa...",
-    "options": [
-      "um ideal de erudito-cavalheiro confucionista (também, na gíria: um puritano/careta)",
-      "um guerreiro feroz",
-      "um comerciante rico",
-      "um jovem fazendeiro"
-    ]
-  },
-  "vocab-68": {
-    "promptNative": "'애환 (aehwan)' significa...",
-    "options": [
-      "as tristezas e alegrias misturadas da vida cotidiana",
-      "pura fúria",
-      "dívida financeira",
-      "um pedido de desculpas formal"
-    ]
-  },
-  "vocab-69": {
-    "promptNative": "'시나브로 (sinabeuro)' significa...",
-    "options": [
-      "aos poucos, imperceptivelmente, sem que a gente note",
-      "tudo de uma vez",
-      "nunca, de forma alguma",
-      "muito ruidosamente"
-    ]
-  },
-  "vocab-70": {
-    "promptNative": "'살갑다 (salgapda)' significa...",
-    "options": [
-      "caloroso, afetuoso e fácil de lidar",
-      "áspero e espinhoso",
-      "silencioso e frio",
-      "ganancioso e egoísta"
-    ]
-  },
-  "vocab-71": {
-    "promptNative": "'무상하다 (musanghada)' significa...",
-    "options": [
-      "fugaz e impermanente (transitoriedade budista)",
-      "sólido e eterno",
-      "alegre e despreocupado",
-      "barulhento e agitado"
-    ]
-  },
-  "vocab-72": {
-    "promptNative": "'손 (son)' significa...",
-    "options": [
-      "mão",
-      "pé",
-      "orelha",
-      "joelho"
-    ]
-  },
-  "vocab-73": {
-    "promptNative": "'발 (bal)' significa...",
-    "options": [
-      "pé",
-      "mão",
-      "nariz",
-      "costas"
-    ]
-  },
-  "vocab-74": {
-    "promptNative": "'문 (mun)' significa...",
-    "options": [
-      "porta",
-      "parede",
-      "teto",
-      "chão"
-    ]
-  },
-  "vocab-75": {
-    "promptNative": "'옷 (ot)' significa...",
-    "options": [
-      "roupa",
-      "sapatos",
-      "comida",
-      "dinheiro"
-    ]
-  },
-  "vocab-76": {
-    "promptNative": "'신발 (sinbal)' significa...",
-    "options": [
-      "sapatos",
-      "meias",
-      "chapéu",
-      "luvas"
-    ]
-  },
-  "vocab-77": {
-    "promptNative": "'우유 (uyu)' significa...",
-    "options": [
-      "leite",
-      "suco",
-      "água",
-      "chá"
-    ]
-  },
-  "vocab-78": {
-    "promptNative": "'빵 (ppang)' significa...",
-    "options": [
-      "pão",
-      "arroz",
-      "macarrão",
-      "queijo"
-    ]
-  },
-  "vocab-79": {
-    "promptNative": "'개 (gae)' significa...",
-    "options": [
-      "cachorro",
-      "gato",
-      "pássaro",
-      "peixe"
-    ]
-  },
-  "vocab-80": {
-    "promptNative": "'고양이 (goyangi)' significa...",
-    "options": [
-      "gato",
-      "cachorro",
-      "coelho",
-      "rato"
-    ]
-  },
-  "vocab-81": {
-    "promptNative": "'나무 (namu)' significa...",
-    "options": [
-      "árvore",
-      "flor",
-      "grama",
-      "pedra"
-    ]
-  },
-  "vocab-82": {
-    "promptNative": "'자다 (jada)' significa...",
-    "options": [
-      "dormir",
-      "comer",
-      "correr",
-      "ler"
-    ]
-  },
-  "vocab-83": {
-    "promptNative": "'크다 (keuda)' significa...",
-    "options": [
-      "ser grande",
-      "ser pequeno",
-      "ser rápido",
-      "ser frio"
-    ]
-  },
-  "vocab-84": {
-    "promptNative": "'얼굴 (eolgul)' significa...",
-    "options": [
-      "rosto",
-      "mão",
-      "perna",
-      "coração"
-    ]
-  },
-  "vocab-85": {
-    "promptNative": "'머리 (meori)' significa...",
-    "options": [
-      "cabeça ou cabelo",
-      "pé",
-      "estômago",
-      "ombro"
-    ]
-  },
-  "vocab-86": {
-    "promptNative": "'바지 (baji)' significa...",
-    "options": [
-      "calça",
-      "camisa",
-      "saia",
-      "jaqueta"
-    ]
-  },
-  "vocab-87": {
-    "promptNative": "'모자 (moja)' significa...",
-    "options": [
-      "chapéu",
-      "cachecol",
-      "cinto",
-      "luva"
-    ]
-  },
-  "vocab-88": {
-    "promptNative": "'부엌 (bueok)' significa...",
-    "options": [
-      "cozinha",
-      "banheiro",
-      "quarto",
-      "garagem"
-    ]
-  },
-  "vocab-89": {
-    "promptNative": "'방 (bang)' significa...",
-    "options": [
-      "quarto",
-      "porta",
-      "janela",
-      "parede"
-    ]
-  },
-  "vocab-90": {
-    "promptNative": "'공원 (gongwon)' significa...",
-    "options": [
-      "parque",
-      "escola",
-      "mercado",
-      "estação"
-    ]
-  },
-  "vocab-91": {
-    "promptNative": "'은행 (eunhaeng)' significa...",
-    "options": [
-      "banco",
-      "hospital",
-      "biblioteca",
-      "hotel"
-    ]
-  },
-  "vocab-92": {
-    "promptNative": "'하늘 (haneul)' significa...",
-    "options": [
-      "céu",
-      "mar",
-      "montanha",
-      "campo"
-    ]
-  },
-  "vocab-93": {
-    "promptNative": "'바람 (baram)' significa...",
-    "options": [
-      "vento",
-      "chuva",
-      "neve",
-      "nuvem"
-    ]
-  },
-  "vocab-94": {
-    "promptNative": "'아침 (achim)' significa...",
-    "options": [
-      "amanhã",
-      "entardecer",
-      "noite",
-      "meio-dia"
-    ]
-  },
-  "vocab-95": {
-    "promptNative": "'저녁 (jeonyeok)' significa...",
-    "options": [
-      "entardecer",
-      "amanhã",
-      "tarde",
-      "meia-noite"
-    ]
-  },
-  "vocab-96": {
-    "promptNative": "'걷다 (geotda)' significa...",
-    "options": [
-      "caminhar",
-      "nadar",
-      "voar",
-      "pular"
-    ]
-  },
-  "vocab-97": {
-    "promptNative": "'웃다 (utda)' significa...",
-    "options": [
-      "rir ou sorrir",
-      "chorar",
-      "gritar",
-      "sussurrar"
-    ]
-  },
-  "vocab-98": {
-    "promptNative": "'손가락 (songarak)' significa...",
-    "options": [
-      "dedo",
-      "dedo do pé",
-      "pulso",
-      "cotovelo"
-    ]
-  },
-  "vocab-99": {
-    "promptNative": "'어깨 (eokkae)' significa...",
-    "options": [
-      "ombro",
-      "joelho",
-      "quadril",
-      "cotovelo"
-    ]
-  },
-  "vocab-100": {
-    "promptNative": "'지갑 (jigap)' significa...",
-    "options": [
-      "carteira",
-      "mochila",
-      "guarda-chuva",
-      "mala"
-    ]
-  },
-  "vocab-101": {
-    "promptNative": "'냉장고 (naengjanggo)' significa...",
-    "options": [
-      "geladeira",
-      "micro-ondas",
-      "forno",
-      "lava-louças"
-    ]
-  },
-  "vocab-102": {
-    "promptNative": "'세탁기 (setakgi)' significa...",
-    "options": [
-      "máquina de lavar",
-      "aspirador de pó",
-      "ar-condicionado",
-      "ventilador elétrico"
-    ]
-  },
-  "vocab-103": {
-    "promptNative": "'공항 (gonghang)' significa...",
-    "options": [
-      "aeroporto",
-      "estação de trem",
-      "porto",
-      "rodoviária"
-    ]
-  },
-  "vocab-104": {
-    "promptNative": "'횡단보도 (hoengdanbodo)' significa...",
-    "options": [
-      "faixa de pedestres",
-      "calçada",
-      "rodovia",
-      "passarela"
-    ]
-  },
-  "vocab-105": {
-    "promptNative": "'구름 (gureum)' significa...",
-    "options": [
-      "nuvem",
-      "neblina",
-      "trovão",
-      "arco-íris"
-    ]
-  },
-  "vocab-106": {
-    "promptNative": "'계절 (gyejeol)' significa...",
-    "options": [
-      "estação (do ano)",
-      "o tempo",
-      "o clima",
-      "feriado"
-    ]
-  },
-  "vocab-107": {
-    "promptNative": "'열쇠 (yeolsoe)' significa...",
-    "options": [
-      "chave",
-      "fechadura",
-      "porta",
-      "maçaneta"
-    ]
-  },
-  "vocab-108": {
-    "promptNative": "'빌리다 (billida)' significa...",
-    "options": [
-      "pegar emprestado",
-      "vender",
-      "jogar no lixo",
-      "guardar"
-    ]
-  },
-  "vocab-109": {
-    "promptNative": "'고치다 (gochida)' significa...",
-    "options": [
-      "consertar",
-      "quebrar",
-      "comprar",
-      "perder"
-    ]
-  },
-  "vocab-110": {
-    "promptNative": "'어지럽다 (eojireopda)' significa...",
-    "options": [
-      "estar tonto",
-      "estar com sono",
-      "estar com fome",
-      "estar com sede"
-    ]
-  },
-  "vocab-111": {
-    "promptNative": "'무겁다 (mugeopda)' significa...",
-    "options": [
-      "ser pesado",
-      "ser leve",
-      "ser suave",
-      "ser afiado"
-    ]
-  },
-  "vocab-112": {
-    "promptNative": "'눈썹 (nunsseop)' significa...",
-    "options": [
-      "sobrancelha",
-      "cílio",
-      "pálpebra",
-      "bochecha"
-    ]
-  },
-  "vocab-113": {
-    "promptNative": "'발목 (balmok)' significa...",
-    "options": [
-      "tornozelo",
-      "pulso",
-      "joelho",
-      "calcanhar"
-    ]
-  },
-  "vocab-114": {
-    "promptNative": "'소매 (somae)' significa...",
-    "options": [
-      "manga",
-      "gola (de uma roupa)",
-      "bolso",
-      "botão"
-    ]
-  },
-  "vocab-115": {
-    "promptNative": "'서랍 (seorap)' significa...",
-    "options": [
-      "gaveta",
-      "prateleira",
-      "armário",
-      "gabinete"
-    ]
-  },
-  "vocab-116": {
-    "promptNative": "'천장 (cheonjang)' significa...",
-    "options": [
-      "teto (interno)",
-      "chão",
-      "parede interna",
-      "telhado externo"
-    ]
-  },
-  "vocab-117": {
-    "promptNative": "'예약 (yeyak)' significa...",
-    "options": [
-      "reserva",
-      "pagamento",
-      "recibo",
-      "reembolso"
-    ]
-  },
-  "vocab-118": {
-    "promptNative": "'환율 (hwannyul)' significa...",
-    "options": [
-      "taxa de câmbio",
-      "taxa de juros",
-      "imposto",
-      "gorjeta"
-    ]
-  },
-  "vocab-119": {
-    "promptNative": "'습도 (seupdo)' significa...",
-    "options": [
-      "umidade",
-      "temperatura",
-      "altitude",
-      "pressão atmosférica"
-    ]
-  },
-  "vocab-120": {
-    "promptNative": "'참다 (chamda)' significa...",
-    "options": [
-      "suportar",
-      "aproveitar",
-      "esquecer",
-      "explicar"
-    ]
-  },
-  "vocab-121": {
-    "promptNative": "'미루다 (miruda)' significa...",
-    "options": [
-      "adiar",
-      "terminar",
-      "começar",
-      "cancelar"
-    ]
-  },
-  "vocab-122": {
-    "promptNative": "'눈부시다 (nunbusida)' significa...",
-    "options": [
-      "ser deslumbrante",
-      "ser sombrio",
-      "ser embaçado",
-      "ser desbotado"
-    ]
-  },
-  "vocab-123": {
-    "promptNative": "'뭉클하다 (mungkeulhada)' significa...",
-    "options": [
-      "estar profundamente comovido",
-      "estar furioso",
-      "estar entediado",
-      "estar com ciúme"
-    ]
-  },
-  "vocab-124": {
-    "promptNative": "'설레다 (seolleda)' significa...",
-    "options": [
-      "palpitar de expectativa",
-      "sentir sonolência",
-      "sentir culpa",
-      "sentir ressentimento"
-    ]
-  },
-  "vocab-125": {
-    "promptNative": "'아늑하다 (aneukhada)' significa...",
-    "options": [
-      "ser aconchegante",
-      "ser espaçoso",
-      "ser barulhento",
-      "ser estéril"
-    ]
-  },
-  "vocab-126": {
-    "promptNative": "'벅차다 (beokchada)' significa...",
-    "options": [
-      "ser avassalador",
-      "ser trivial",
-      "ser arrumado",
-      "ser azedo"
-    ]
-  },
-  "vocab-127": {
-    "promptNative": "'어물쩍 (eomuljjeok)' significa...",
-    "options": [
-      "evasivamente",
-      "instantaneamente",
-      "ruidosamente",
-      "com esmero"
-    ]
-  },
-  "vocab-128": {
-    "promptNative": "'은은하다 (euneunhada)' significa...",
-    "options": [
-      "ser sutilmente tênue",
-      "ser cegantemente brilhante",
-      "ser penetrante (cheiro)",
-      "ser ensurdecedor"
-    ]
-  },
-  "vocab-129": {
-    "promptNative": "'애먹다 (aemeokda)' significa...",
-    "options": [
-      "passar aperto / ter dificuldades",
-      "relaxar com facilidade",
-      "obter um lucro",
-      "adormecer"
-    ]
-  },
-  "vocab-130": {
-    "promptNative": "'새치기 (saechigi)' significa...",
-    "options": [
-      "furar a fila",
-      "esperar com paciência",
-      "reservar um assento",
-      "segurar a porta"
-    ]
-  },
-  "vocab-131": {
-    "promptNative": "'손사래 (sonsarae)' significa...",
-    "options": [
-      "um gesto desdenhoso de recusa com a mão",
-      "um aceno amistoso com a mão",
-      "um punho cerrado",
-      "um gesto de apontar"
-    ]
-  },
-  "vocab-132": {
-    "promptNative": "'진상 (jinsang)' significa...",
-    "options": [
-      "um cliente insuportável e problemático",
-      "um cliente habitual e fiel",
-      "um anfitrião generoso",
-      "um recém-chegado tímido"
-    ]
-  },
-  "vocab-133": {
-    "promptNative": "'넉살 (neoksal)' significa...",
-    "options": [
-      "sociabilidade descarada e sem-vergonha",
-      "timidez paralisante",
-      "elegância serena",
-      "fria indiferença"
-    ]
-  },
-  "gram-0": {
-    "promptNative": "Eu sou estudante. (Qual palavra completa a frase?)"
-  },
-  "gram-1": {
-    "promptNative": "O que é isto? (Qual palavra para algo perto de quem fala?)"
-  },
-  "gram-2": {
-    "promptNative": "Como uma maçã. (A ordem das palavras está correta?)",
-    "options": [
-      "✓ correto — ordem Sujeito-Objeto-Verbo",
-      "ordem das palavras incorreta",
-      "uso incorreto de partícula",
-      "falta uma palavra"
-    ]
-  },
-  "gram-3": {
-    "promptNative": "Eu sou estudante. (Qual partícula marca o tema?)"
-  },
-  "gram-4": {
-    "promptNative": "(Eu) como uma maçã. (Qual partícula marca o objeto?)"
-  },
-  "gram-5": {
-    "promptNative": "Vou à escola. (Qual partícula marca o destino?)"
-  },
-  "gram-6": {
-    "promptNative": "Ontem (eu) comi arroz. (Qual terminação verbal encaixa?)"
-  },
-  "gram-7": {
-    "promptNative": "Este é o livro do meu amigo. (Qual partícula mostra posse?)"
-  },
-  "gram-8": {
-    "promptNative": "O tempo está bom. (Qual partícula marca o sujeito?)"
-  },
-  "gram-9": {
-    "promptNative": "(É) bonito. (Falta um verbo copulativo?)",
-    "options": [
-      "✓ correto — os adjetivos se conjugam diretamente, não é preciso um 'ser' à parte",
-      "falta um verbo copulativo",
-      "tempo verbal incorreto",
-      "frase incompleta"
-    ]
-  },
-  "gram-10": {
-    "promptNative": "A quem 'gayo' pode se referir?",
-    "options": [
-      "✓ correto para eu/você/ele/ela/nós/eles vão (mesma forma)",
-      "só \"eu vou\"",
-      "só \"eles vão\"",
-      "só \"nós vamos\""
-    ]
-  },
-  "gram-11": {
-    "promptNative": "(Eu) não vou. (Qual palavra faz a negação?)"
-  },
-  "gram-12": {
-    "promptNative": "Como está doendo, não consigo caminhar. (Qual palavra significa 'não poder'?)"
-  },
-  "gram-13": {
-    "promptNative": "Duas maçãs, por favor. (Qual palavra classificadora encaixa?)"
-  },
-  "gram-14": {
-    "promptNative": "Quero beber água. (Qual terminação significa 'querer'?)"
-  },
-  "gram-15": {
-    "promptNative": "Que forma de 'comer' é 'deuseyo'?",
-    "options": [
-      "formal/honorífica",
-      "casual/informal",
-      "tempo passado",
-      "negativa"
-    ]
-  },
-  "gram-16": {
-    "promptNative": "Uma pergunta e uma afirmação podem parecer iguais?",
-    "options": [
-      "✓ correto — a entonação ascendente sozinha pode marcar uma pergunta na fala casual",
-      "são sempre idênticas",
-      "a pergunta sempre precisa de outra partícula",
-      "isso é gramaticalmente impossível"
-    ]
-  },
-  "gram-17": {
-    "promptNative": "Em que '갑니다' difere de '가요'?",
-    "options": [
-      "formal/deferente (하십시오체)",
-      "casual",
-      "tempo passado",
-      "interrogativa"
-    ]
-  },
-  "gram-18": {
-    "promptNative": "'Está frio.' (Qual é a forma formal correta de 춥다?)"
-  },
-  "gram-19": {
-    "promptNative": "Dizer '밥 먹었어?' a um amigo próximo, que tipo de fala é?",
-    "options": [
-      "반말 — fala casual (omite-se 요)",
-      "존댓말 — fala formal",
-      "um erro gramatical",
-      "escrita formal"
-    ]
-  },
-  "gram-20": {
-    "promptNative": "O avô está comendo. (Qual partícula de sujeito honorífica?)"
-  },
-  "gram-21": {
-    "promptNative": "Qual é o verbo honorífico para '(um mais velho) dorme'?"
-  },
-  "gram-22": {
-    "promptNative": "Qual é a verdadeira diferença entre 'eun/neun' e 'i/ga'?",
-    "options": [
-      "은/는 marca o tema (conhecido/contraste); 이/가 marca o sujeito / informação nova",
-      "são livremente intercambiáveis",
-      "은/는 é formal, 이/가 é casual",
-      "이/가 só se usa em perguntas"
-    ]
-  },
-  "gram-23": {
-    "promptNative": "Por que esta frase parece ter dois sujeitos?",
-    "options": [
-      "um sujeito duplo: 는 fixa o tema, 가 marca o sujeito interno",
-      "um erro gramatical",
-      "duas frases separadas mal unidas",
-      "코 é o objeto aqui"
-    ]
-  },
-  "gram-24": {
-    "promptNative": "O professor é coreano. (Qual partícula de tema após consoante?)"
-  },
-  "gram-25": {
-    "promptNative": "Eu sou médico. (Qual cópula formal após vogal?)"
-  },
-  "gram-26": {
-    "promptNative": "(Eu) bebo água. (Qual partícula de objeto após consoante?)"
-  },
-  "gram-27": {
-    "promptNative": "Eu também sou estudante. (Qual partícula significa 'também'?)"
-  },
-  "gram-28": {
-    "promptNative": "Só bebo água. (Qual partícula significa 'só'?)"
-  },
-  "gram-29": {
-    "promptNative": "O professor é gentil. (Qual partícula de sujeito após consoante?)"
-  },
-  "gram-30": {
-    "promptNative": "(Eu) dei um presente a um amigo. (Qual partícula marca quem recebe?)"
-  },
-  "gram-31": {
-    "promptNative": "(Eu) como com hashi. (Qual partícula de 'por meio de' após terminação em ㄱ?)"
-  },
-  "gram-32": {
-    "promptNative": "(Eu) comprei pão e leite. (Qual partícula 'e' após consoante?)"
-  },
-  "gram-33": {
-    "promptNative": "(Eu) trabalho desde as 9. (Qual partícula significa 'desde' um horário?)"
-  },
-  "gram-34": {
-    "promptNative": "(Eu) irei à escola amanhã. (Qual é a forma de futuro?)"
-  },
-  "gram-35": {
-    "promptNative": "Eu não bebo café. (Qual sílaba completa a negação longa?)"
-  },
-  "gram-36": {
-    "promptNative": "Qual sistema numérico conta a hora ao dizer as horas?",
-    "options": [
-      "coreanos nativos (하나, 둘, 셋...)",
-      "sino-coreanos (일, 이, 삼...)",
-      "qualquer um, indistintamente",
-      "empréstimos do inglês"
-    ]
-  },
-  "gram-37": {
-    "promptNative": "Eu faço primeiro. (Qual infixo marca intenção/futuro?)"
-  },
-  "gram-38": {
-    "promptNative": "O professor lê o jornal. (Qual terminação de presente honorífica?)"
-  },
-  "gram-39": {
-    "promptNative": "Como estou com fome, eu como. (Qual terminação significa 'porque'?)"
-  },
-  "gram-40": {
-    "promptNative": "O que a terminação '-jiman' significa?",
-    "options": [
-      "\"mas/embora\" (contraste)",
-      "\"porque\" (razão)",
-      "\"e depois\" (sequência)",
-      "\"se\" (condição)"
-    ]
-  },
-  "gram-41": {
-    "promptNative": "O que '-aseo/eoseo' expressa aqui?",
-    "options": [
-      "causa ou sequência imediata (\"então / e depois\")",
-      "contraste puro (\"mas\")",
-      "uma ordem",
-      "o tempo futuro"
-    ]
-  },
-  "gram-42": {
-    "promptNative": "O que a terminação '-neunde' faz principalmente?",
-    "options": [
-      "estabelece contexto ou contraste suave para o que vem a seguir",
-      "marca o objeto direto",
-      "põe o verbo no passado",
-      "transforma a frase em uma ordem"
-    ]
-  },
-  "gram-43": {
-    "promptNative": "'Eu sou estudante' na forma escrita simples. (Qual terminação copulativa?)"
-  },
-  "gram-44": {
-    "promptNative": "Como você está cansado, durma cedo. (Qual 'porque' pode preceder uma ordem?)"
-  },
-  "gram-45": {
-    "promptNative": "Vou à loja agora, quer que eu compre algo para você? (Qual terminação faz o oferecimento?)"
-  },
-  "gram-46": {
-    "promptNative": "Parece que está chovendo. (Qual palavra completa 'parece que'?)"
-  },
-  "gram-47": {
-    "promptNative": "Meu amigo disse que virá amanhã. (Qual citativo relata uma afirmação?)"
-  },
-  "gram-48": {
-    "promptNative": "O professor mandou os alunos limparem. (Qual terminação forma o causativo?)"
-  },
-  "gram-49": {
-    "promptNative": "O filme que vi ontem foi divertido. (Qual forma modificadora de passado encaixa?)"
-  },
-  "gram-50": {
-    "promptNative": "Gosto de nadar. (Qual terminação nominaliza o verbo aqui?)"
-  },
-  "gram-51": {
-    "promptNative": "Dei um presente à avó. (Qual partícula honorífica 'a' encaixa?)"
-  },
-  "gram-52": {
-    "promptNative": "Vou servir café ao chefe. (Qual forma humilde de 'dar' encaixa?)"
-  },
-  "gram-53": {
-    "promptNative": "Vou me encontrar com o professor amanhã. (Qual verbo humilde para 'encontrar-se' encaixa?)"
-  },
-  "gram-54": {
-    "promptNative": "Meu amigo propôs ver um filme juntos. (Qual citativo relata uma proposta?)"
-  },
-  "gram-55": {
-    "promptNative": "A porta foi aberta pelo vento. (Qual forma passiva encaixa?)"
-  },
-  "gram-56": {
-    "promptNative": "A mãe alimentou o bebê. (Qual forma causativa encaixa?)"
-  },
-  "gram-57": {
-    "promptNative": "Posso perguntar o seu nome? (Qual é o substantivo honorífico para 'nome'?)"
-  },
-  "gram-58": {
-    "promptNative": "Quanto mais você estuda coreano, mais divertido é. (Qual terminação significa 'quanto mais…'?)"
-  },
-  "gram-59": {
-    "promptNative": "Que nuance -더니 / -더라 acrescentam?",
-    "options": [
-      "um relato RETROSPECTIVO de algo que o falante presenciou pessoalmente no passado — e -더니 liga essa situação presenciada a um resultado/contraste consequente",
-      "tempo futuro simples",
-      "uma construção passiva",
-      "um pedido educado"
-    ]
-  },
-  "gram-60": {
-    "promptNative": "As pessoas estão com guarda-chuva; deve estar chovendo. (Qual terminação marca inferência por evidência?)"
-  },
-  "gram-61": {
-    "promptNative": "O que distingue '해 버렸어요' de '해 뒀어요'?",
-    "options": [
-      "-아/어 버리다 = fez por completo / terminou de vez (muitas vezes alívio ou pena de que acabou); -아/어 두다 = fez com antecedência e deixou o resultado pronto para usar depois",
-      "significam exatamente o mesmo",
-      "버리다 é passado, 두다 é futuro",
-      "버리다 é honorífico, 두다 é casual"
-    ]
-  },
-  "gram-62": {
-    "promptNative": "Bebo café. (partícula de objeto)"
-  },
-  "gram-63": {
-    "promptNative": "Vou à escola. (partícula de destino)"
-  },
-  "gram-64": {
-    "promptNative": "Estudo na biblioteca. (partícula de lugar de ação)"
-  },
-  "gram-65": {
-    "promptNative": "Dei um presente a um amigo. (partícula de receptor)"
-  },
-  "gram-66": {
-    "promptNative": "Vou de ônibus. (partícula de meio)"
-  },
-  "gram-67": {
-    "promptNative": "Não sou estudante. (partícula com 아니다)"
-  },
-  "gram-68": {
-    "promptNative": "Meu irmão mais novo também vai à universidade. ('também')"
-  },
-  "gram-69": {
-    "promptNative": "Só água, por favor. ('só')"
-  },
-  "gram-70": {
-    "promptNative": "Trabalho das 9 às 6. ('de … a')"
-  },
-  "gram-71": {
-    "promptNative": "Amanhã vai chover. (futuro)"
-  },
-  "gram-72": {
-    "promptNative": "Quero aprender coreano. (desiderativo)"
-  },
-  "gram-73": {
-    "promptNative": "Faço a tarefa e (depois) brinco. (sequencial -고)"
-  },
-  "gram-74": {
-    "promptNative": "Meu estômago doía, então fui ao hospital. (razão -아/어서)"
-  },
-  "gram-75": {
-    "promptNative": "Se eu tiver tempo, podemos nos ver. (condicional -(으)면)"
-  },
-  "gram-76": {
-    "promptNative": "Está chovendo, mas não tenho guarda-chuva. (-는데)"
-  },
-  "gram-77": {
-    "promptNative": "Eu estava cansado, então dormi cedo. (razão -(으)니까)"
-  },
-  "gram-78": {
-    "promptNative": "É pequeno, mas forte. ('mas')"
-  },
-  "gram-79": {
-    "promptNative": "Por favor, não tire fotos aqui. (proibição)"
-  },
-  "gram-80": {
-    "promptNative": "Por favor, sente-se aqui. (ordem educada)"
-  },
-  "gram-81": {
-    "promptNative": "O avô está dormindo. (honorífico de sujeito)"
-  },
-  "gram-82": {
-    "promptNative": "Perguntei ao professor. (humilde 'perguntar')"
-  },
-  "gram-83": {
-    "promptNative": "Já estive na Coreia. (experiência)"
-  },
-  "gram-84": {
-    "promptNative": "Estou comendo agora. (progressivo -고 있다)"
-  },
-  "gram-85": {
-    "promptNative": "Você já experimentou comer essa comida? ('experimentar fazer')"
-  },
-  "gram-86": {
-    "promptNative": "Por favor, abra a porta (para mim). ('fazer um favor')"
-  },
-  "gram-87": {
-    "promptNative": "Faço exercício todos os dias. (partícula de objeto com substantivo-하다)"
-  },
-  "gram-88": {
-    "promptNative": "Estudei muito para me sair bem na prova. (propósito -(으)려고)"
-  },
-  "gram-89": {
-    "promptNative": "Vou ao restaurante para comer. (propósito -(으)러)"
-  },
-  "gram-90": {
-    "promptNative": "Acabei ficando bom em coreano. (-게 되다)"
-  },
-  "gram-91": {
-    "promptNative": "Tenho que comer verduras. (obrigação)"
-  },
-  "gram-92": {
-    "promptNative": "Você não pode entrar aqui. (proibição)"
-  },
-  "gram-93": {
-    "promptNative": "A janela está (no estado de estar) aberta. (-아/어 있다)"
-  },
-  "gram-94": {
-    "promptNative": "Parece que está chovendo. (suposição -는 것 같다)"
-  },
-  "gram-95": {
-    "promptNative": "Gosto de maçãs, mas não gosto de bananas. (contrastivo 은/는)"
-  },
-  "gram-96": {
-    "promptNative": "Fui junto com um amigo. ('com')"
-  },
-  "gram-97": {
-    "promptNative": "Este conjunto é mais bonito que aquele. ('que')"
-  },
-  "gram-98": {
-    "promptNative": "Sei cozinhar comida coreana. (habilidade -(으)ㄹ 수 있다)"
-  },
-  "gram-99": {
-    "promptNative": "Comeu? — Sim, comi. (반말 casual)"
-  },
-  "gram-100": {
-    "promptNative": "A reunião começa às 3. (partícula de tempo)"
-  },
-  "gram-101": {
-    "promptNative": "Gosto de ler livros. (nominalizador -는 것)"
-  },
-  "gram-102": {
-    "promptNative": "Aprender coreano é difícil. (nominalizador -기)"
-  },
-  "gram-103": {
-    "promptNative": "O filme que vi ontem foi divertido. (oração relativa no passado)"
-  },
-  "gram-104": {
-    "promptNative": "A pessoa que vem agora é meu amigo. (oração relativa no presente)"
-  },
-  "gram-105": {
-    "promptNative": "Tenho muito o que fazer amanhã. (oração relativa no futuro)"
-  },
-  "gram-106": {
-    "promptNative": "Mesmo que chova, eu vou. (-아/어도)"
-  },
-  "gram-107": {
-    "promptNative": "Toma café ou chá. ('ou', substantivos)"
-  },
-  "gram-108": {
-    "promptNative": "Nos fins de semana leio ou vejo filmes. ('ou', verbos)"
-  },
-  "gram-109": {
-    "promptNative": "Vamos juntos? (-(으)ㄹ까요?)"
-  },
-  "gram-110": {
-    "promptNative": "Vamos juntos! (-(으)ㅂ시다)"
-  },
-  "gram-111": {
-    "promptNative": "A paisagem é realmente linda! (exclamativo -네요)"
-  },
-  "gram-112": {
-    "promptNative": "Eu te disse ontem, lembra! (-잖아요)"
-  },
-  "gram-113": {
-    "promptNative": "A mãe fez a criança comer. (causativo -게 하다)"
-  },
-  "gram-114": {
-    "promptNative": "O tempo vai ficando frio aos poucos. (-아/어지다)"
-  },
-  "gram-115": {
-    "promptNative": "É tão alto quanto meu irmão mais velho. ('tão quanto')"
-  },
-  "gram-116": {
-    "promptNative": "Está dormindo como um bebê. ('como')"
-  },
-  "gram-117": {
-    "promptNative": "Só tem um pouco de tempo. (밖에 … 없다)"
-  },
-  "gram-118": {
-    "promptNative": "Faço trilha todo fim de semana. ('cada')"
-  },
-  "gram-119": {
-    "promptNative": "Quando chego em casa, lavo as mãos. (-(으)ㄹ 때)"
-  },
-  "gram-120": {
-    "promptNative": "Antes de comer, lave as mãos. (-기 전에)"
-  },
-  "gram-121": {
-    "promptNative": "Depois de fazer a tarefa, brinquei. (-(으)ㄴ 후에)"
-  },
-  "gram-122": {
-    "promptNative": "Enquanto eu cozinho, por favor limpe. (-는 동안)"
-  },
-  "gram-123": {
-    "promptNative": "Assim que cheguei em casa, adormeci. (-자마자)"
-  },
-  "gram-124": {
-    "promptNative": "Dei um presente à avó. (humilde 'dar')"
-  },
-  "gram-125": {
-    "promptNative": "Faz três anos que vim para a Coreia. (-(으)ㄴ 지)"
-  },
-  "gram-126": {
-    "promptNative": "Quem dera eu tivesse muito dinheiro. (-았/었으면 좋겠다)"
-  },
-  "gram-127": {
-    "promptNative": "Depois de terminar de comer, vou lavar a louça. (-고 나서)"
-  },
-  "gram-128": {
-    "promptNative": "Decidi estudar no exterior no ano que vem. (-기로 하다)"
-  },
-  "gram-129": {
-    "promptNative": "Ouço música enquanto estudo. (-(으)면서)"
-  },
-  "gram-130": {
-    "promptNative": "Se quiser passar na prova, estude muito. (-(으)려면)"
-  },
-  "gram-131": {
-    "promptNative": "É um lugar aonde eu costumava ir muito quando criança. (retrospectivo -던)"
-  },
-  "gram-132": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-133": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-134": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-135": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-136": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-137": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-138": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-139": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-140": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-141": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-142": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-143": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-144": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-145": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-146": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-147": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-148": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-149": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-150": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-151": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-152": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-153": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-154": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-155": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-156": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-157": {
-    "promptNative": "Toda manhã eu ___. (presente formal)"
-  },
-  "gram-158": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-159": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-160": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-161": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-162": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-163": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-164": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-165": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-166": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-167": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-168": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-169": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-170": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-171": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-172": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-173": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-174": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-175": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-176": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-177": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-178": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-179": {
-    "promptNative": "Ontem eu ___. (passado formal)"
-  },
-  "gram-180": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-181": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-182": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-183": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-184": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-185": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-186": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-187": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-188": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-189": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-190": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-191": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-192": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-193": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-194": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-195": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-196": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-197": {
-    "promptNative": "Eu ___ e (depois) escovo os dentes. (-고 'e')"
-  },
-  "gram-198": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-199": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-200": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-201": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-202": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-203": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-204": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-205": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-206": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-207": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-208": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-209": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-210": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-211": {
-    "promptNative": "Somos amigos, então fale de forma casual — eu ___. (반말)"
-  },
-  "gram-212": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-213": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-214": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-215": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-216": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-217": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-218": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-219": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-220": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-221": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-222": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-223": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-224": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-225": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-226": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-227": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-228": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-229": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-230": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-231": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-232": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-233": {
-    "promptNative": "Amanhã eu ___. (futuro)"
-  },
-  "gram-234": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-235": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-236": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-237": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-238": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-239": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-240": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-241": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-242": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-243": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-244": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-245": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-246": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-247": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-248": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-249": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-250": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-251": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-252": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-253": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-254": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-255": {
-    "promptNative": "Se (você) ___ muito, seu estômago dói. (-(으)면 'se')"
-  },
-  "gram-256": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-257": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-258": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-259": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-260": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-261": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-262": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-263": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-264": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-265": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-266": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-267": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-268": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-269": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-270": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-271": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-272": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-273": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-274": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-275": {
-    "promptNative": "Eu ___ educadamente na reunião. (presente formal)"
-  },
-  "gram-276": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-277": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-278": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-279": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-280": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-281": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-282": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-283": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-284": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-285": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-286": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-287": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-288": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-289": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-290": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-291": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-292": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-293": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-294": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-295": {
-    "promptNative": "Professor, por favor ___. (pedido honorífico -(으)세요)"
-  },
-  "gram-296": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-297": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-298": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-299": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-300": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-301": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-302": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-303": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-304": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-305": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-306": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-307": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-308": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-309": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-310": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-311": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-312": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-313": {
-    "promptNative": "Vamos, ___ todos! (propositivo formal)"
-  },
-  "gram-314": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-315": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-316": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-317": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-318": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-319": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-320": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-321": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-322": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-323": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-324": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-325": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-326": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-327": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-328": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-329": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-330": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-331": {
-    "promptNative": "Segundo o relatório, na semana passada eu ___. (passado formal)"
-  },
-  "gram-332": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-333": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-334": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-335": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-336": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-337": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-338": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-339": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-340": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-341": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-342": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-343": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-344": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-345": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-346": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-347": {
-    "promptNative": "Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)"
-  },
-  "gram-348": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-349": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-350": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-351": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-352": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-353": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-354": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-355": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-356": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-357": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-358": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-359": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-360": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-361": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-362": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-363": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-364": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-365": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-366": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-367": {
-    "promptNative": "Eu prometo. Com certeza ___. (intenção formal -겠습니다)"
-  },
-  "gram-368": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-369": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-370": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-371": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-372": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-373": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-374": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-375": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-376": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-377": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-378": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-379": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-380": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-381": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-382": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-383": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-384": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-385": {
-    "promptNative": "Com licença, o que o senhor ___? (pergunta formal -습니까?)"
-  },
-  "gram-386": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-387": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-388": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-389": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-390": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-391": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-392": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-393": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-394": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-395": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-396": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-397": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-398": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-399": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-400": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-401": {
-    "promptNative": "O presidente ___ ontem? (pergunta formal no passado)"
-  },
-  "gram-402": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-403": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-404": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-405": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-406": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-407": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-408": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-409": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-410": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-411": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-412": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-413": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-414": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-415": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-416": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-417": {
-    "promptNative": "Este filme é realmente ___. (adjetivo, presente formal)"
-  },
-  "gram-418": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-419": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-420": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-421": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-422": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-423": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-424": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-425": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-426": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-427": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-428": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-429": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-430": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-431": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-432": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-433": {
-    "promptNative": "Ontem o tempo estava ___. (adjetivo, passado formal)"
-  },
-  "gram-434": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-435": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-436": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-437": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-438": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-439": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-440": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-441": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-442": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-443": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-444": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-445": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-446": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-447": {
-    "promptNative": "A qualidade deste produto é ___. (adjetivo, formal)"
-  },
-  "gram-448": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-449": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-450": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-451": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-452": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-453": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-454": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-455": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-456": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-457": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-458": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-459": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-460": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-461": {
-    "promptNative": "Esta casa é ___ e limpa. (adjetivo + -고)"
-  },
-  "gram-462": {
-    "promptNative": "___ é estudante. (partícula de tema 은/는)"
-  },
-  "gram-463": {
-    "promptNative": "___ é estudante. (partícula de tema 은/는)"
-  },
-  "gram-464": {
-    "promptNative": "___ é estudante. (partícula de tema 은/는)"
-  },
-  "gram-465": {
-    "promptNative": "___ é estudante. (partícula de tema 은/는)"
-  },
-  "gram-466": {
-    "promptNative": "___ é estudante. (partícula de tema 은/는)"
-  },
-  "gram-467": {
-    "promptNative": "___ é estudante. (partícula de tema 은/는)"
-  },
-  "gram-468": {
-    "promptNative": "___ é estudante. (partícula de tema 은/는)"
-  },
-  "gram-469": {
-    "promptNative": "___ é estudante. (partícula de tema 은/는)"
-  },
-  "gram-470": {
-    "promptNative": "___ é bom. (partícula de sujeito 이/가)"
-  },
-  "gram-471": {
-    "promptNative": "___ é bom. (partícula de sujeito 이/가)"
-  },
-  "gram-472": {
-    "promptNative": "___ é bom. (partícula de sujeito 이/가)"
-  },
-  "gram-473": {
-    "promptNative": "___ é bom. (partícula de sujeito 이/가)"
-  },
-  "gram-474": {
-    "promptNative": "___ é bom. (partícula de sujeito 이/가)"
-  },
-  "gram-475": {
-    "promptNative": "___ é bom. (partícula de sujeito 이/가)"
-  },
-  "gram-476": {
-    "promptNative": "___ é bom. (partícula de sujeito 이/가)"
-  },
-  "gram-477": {
-    "promptNative": "___ é bom. (partícula de sujeito 이/가)"
-  },
-  "gram-478": {
-    "promptNative": "Eu compro ___. (partícula de objeto 을/를)"
-  },
-  "gram-479": {
-    "promptNative": "Eu compro ___. (partícula de objeto 을/를)"
-  },
-  "gram-480": {
-    "promptNative": "Eu compro ___. (partícula de objeto 을/를)"
-  },
-  "gram-481": {
-    "promptNative": "Eu compro ___. (partícula de objeto 을/를)"
-  },
-  "gram-482": {
-    "promptNative": "Eu compro ___. (partícula de objeto 을/를)"
-  },
-  "gram-483": {
-    "promptNative": "Eu compro ___. (partícula de objeto 을/를)"
-  },
-  "gram-484": {
-    "promptNative": "Eu compro ___. (partícula de objeto 을/를)"
-  },
-  "gram-485": {
-    "promptNative": "Eu compro ___. (partícula de objeto 을/를)"
-  },
-  "gram-486": {
-    "promptNative": "Eu gosto de ___ e meu amigo. (과/와 'e')"
-  },
-  "gram-487": {
-    "promptNative": "Eu gosto de ___ e meu amigo. (과/와 'e')"
-  },
-  "gram-488": {
-    "promptNative": "Eu gosto de ___ e meu amigo. (과/와 'e')"
-  },
-  "gram-489": {
-    "promptNative": "Eu gosto de ___ e meu amigo. (과/와 'e')"
-  },
-  "gram-490": {
-    "promptNative": "Eu gosto de ___ e meu amigo. (과/와 'e')"
-  },
-  "gram-491": {
-    "promptNative": "Eu gosto de ___ e meu amigo. (과/와 'e')"
-  },
-  "gram-492": {
-    "promptNative": "Eu gosto de ___ e meu amigo. (과/와 'e')"
-  },
-  "gram-493": {
-    "promptNative": "Eu gosto de ___ e meu amigo. (과/와 'e')"
-  },
-  "trad-0": {
-    "promptNative": "Diz-se antes de comer, para agradecer pela comida.",
-    "prompt": "Traduzir: 'Vou aproveitar esta refeição.' (frase fixa, dita antes de comer)"
-  },
-  "trad-1": {
-    "promptNative": "Diz-se depois de comer.",
-    "prompt": "Traduzir: 'Obrigado pela comida.' (frase fixa, dita depois de comer)"
-  },
-  "trad-2": {
-    "promptNative": "Tem muitos contatos.",
-    "prompt": "Traduzir: 'Conhece muita gente / é muito bem relacionado.'"
-  },
-  "trad-3": {
-    "promptNative": "Tem padrões muito altos.",
-    "prompt": "Traduzir: 'É muito exigente / tem padrões muito altos.'"
-  },
-  "trad-4": {
-    "promptNative": "É algo impossível de alcançar.",
-    "prompt": "Traduzir: 'Isso é uma tarefa impossível.'"
-  },
-  "trad-5": {
-    "promptNative": "Aparece justamente a pessoa de quem você falava.",
-    "prompt": "Traduzir: 'Falando no diabo.' (aparece a pessoa de quem você falava)"
-  },
-  "trad-6": {
-    "promptNative": "Uma boa palavra vale muito.",
-    "prompt": "Traduzir: 'As palavras certas podem fazer maravilhas.'"
-  },
-  "trad-7": {
-    "promptNative": "Serve com mão generosa.",
-    "prompt": "Traduzir: 'É muito generosa (com a comida / as porções).'"
-  },
-  "trad-8": {
-    "promptNative": "Não crie expectativas antes da hora.",
-    "prompt": "Traduzir: 'Não cante vitória antes da hora.'"
-  },
-  "trad-9": {
-    "promptNative": "Não passei na prova.",
-    "prompt": "Traduzir: 'Reprovei na prova.'"
-  },
-  "trad-10": {
-    "promptNative": "Está cego pelo amor.",
-    "prompt": "Traduzir: 'O amor o deixa cego.'"
-  },
-  "trad-11": {
-    "promptNative": "O começo é metade do trabalho.",
-    "prompt": "Traduzir: 'Começar bem é já ter metade feito.'"
-  },
-  "trad-12": {
-    "promptNative": "Algo inalcançável.",
-    "prompt": "Traduzir: 'Está fora do meu alcance / é como pedir a lua.'"
-  },
-  "trad-13": {
-    "promptNative": "Depois do amargo vem o doce.",
-    "prompt": "Traduzir: 'Depois do sofrimento vem a recompensa.' (expressão de quatro caracteres)"
-  },
-  "trad-14": {
-    "promptNative": "Nunca se sabe como a sorte vai mudar.",
-    "prompt": "Traduzir: 'Há males que vêm para bem.'"
-  },
-  "trad-15": {
-    "promptNative": "Cada um interpreta a regra como quer.",
-    "prompt": "Traduzir: 'Uma regra pode ser torcida para dizer o que te convém.'"
-  },
-  "trad-16": {
-    "promptNative": "Ter uma visão muito limitada do mundo.",
-    "prompt": "Traduzir: 'A rã do poço não conhece o mar.' (visão estreita do mundo)"
-  },
-  "trad-17": {
-    "promptNative": "Escapa-nos o que temos mais perto.",
-    "prompt": "Traduzir: 'Às vezes não vemos o que está bem debaixo do nariz.'"
-  },
-  "trad-18": {
-    "promptNative": "Diz-se a alguém que acabou de terminar o trabalho.",
-    "prompt": "Traduzir: 'Obrigado pelo seu esforço / bom trabalho.' (frase fixa, dita a quem termina o trabalho)"
-  },
-  "trad-19": {
-    "promptNative": "Diz-se ao conhecer alguém pela primeira vez.",
-    "prompt": "Traduzir: 'Prazer em conhecê-lo.' (frase fixa, dita num primeiro encontro)"
-  },
-  "trad-20": {
-    "promptNative": "Diz-se ao começar uma relação ou parceria.",
-    "prompt": "Traduzir: 'Espero que nos demos bem / conto com você.' (frase fixa)"
-  },
-  "trad-21": {
-    "promptNative": "Faz muito tempo que não nos vemos.",
-    "prompt": "Traduzir: 'Quanto tempo sem te ver.'"
-  },
-  "trad-22": {
-    "promptNative": "Uma expressão de incentivo.",
-    "prompt": "Traduzir: 'Você consegue! / Força!' (palavra de incentivo)"
-  },
-  "trad-23": {
-    "promptNative": "Resposta humilde a um 'obrigado'.",
-    "prompt": "Traduzir: 'Não há de quê.' (resposta modesta a um agradecimento)"
-  },
-  "trad-24": {
-    "promptNative": "Qualquer um pode cometer um erro.",
-    "prompt": "Traduzir: 'Até os especialistas erram.'"
-  },
-  "trad-25": {
-    "promptNative": "Sentir inveja da sorte alheia.",
-    "prompt": "Traduzir: 'Que inveja (da sorte do outro).'"
-  },
-  "trad-26": {
-    "promptNative": "Não deixa escapar um segredo.",
-    "prompt": "Traduzir: 'Sabe guardar um segredo / é muito reservado.'"
-  },
-  "trad-27": {
-    "promptNative": "Muitas coisas pequenas somam muito.",
-    "prompt": "Traduzir: 'De grão em grão a galinha enche o papo.'"
-  },
-  "trad-28": {
-    "promptNative": "Os velhos hábitos são difíceis de mudar.",
-    "prompt": "Traduzir: 'Pau que nasce torto, morre torto.'"
-  },
-  "trad-29": {
-    "promptNative": "Bom trato gera bom trato.",
-    "prompt": "Traduzir: 'Se você fala com gentileza, com gentileza vão te responder.'"
-  },
-  "trad-30": {
-    "promptNative": "Cuidado, alguém pode estar escutando.",
-    "prompt": "Traduzir: 'As paredes têm ouvidos.'"
-  },
-  "trad-31": {
-    "promptNative": "Remediar quando já é tarde.",
-    "prompt": "Traduzir: 'Depois da casa arrombada, trancas na porta.'"
-  },
-  "trad-32": {
-    "promptNative": "De estômago vazio não se aproveita nada.",
-    "prompt": "Traduzir: 'Primeiro o principal: comer antes de passear.' (primeiro encher o estômago)"
-  },
-  "trad-33": {
-    "promptNative": "Os semelhantes se juntam.",
-    "prompt": "Traduzir: 'Os iguais se atraem / farinha do mesmo saco.'"
-  },
-  "trad-34": {
-    "promptNative": "Esquece de onde veio.",
-    "prompt": "Traduzir: 'Esqueceu suas origens humildes.'"
-  },
-  "trad-35": {
-    "promptNative": "Conseguir duas coisas de uma vez.",
-    "prompt": "Traduzir: 'Matar dois coelhos com uma cajadada só.' (expressão de quatro caracteres)"
-  },
-  "trad-36": {
-    "promptNative": "Prevenir é melhor que remediar.",
-    "prompt": "Traduzir: 'Estar preparado evita problemas.' (expressão de quatro caracteres)"
-  },
-  "trad-37": {
-    "promptNative": "A gente colhe o que planta.",
-    "prompt": "Traduzir: 'Você colhe o que planta.' (expressão de quatro caracteres)"
-  },
-  "trad-38": {
-    "promptNative": "A inexperiência torna a pessoa temerária.",
-    "prompt": "Traduzir: 'O novato atrevido não teme nada.' (filhote de cachorro não teme tigres)"
-  },
-  "trad-39": {
-    "promptNative": "Coragem é o que não lhe falta.",
-    "prompt": "Traduzir: 'É muito audacioso / tem muita coragem.'"
-  },
-  "trad-40": {
-    "promptNative": "É muito fácil.",
-    "prompt": "Traduzir: 'É moleza / facílimo.'"
-  },
-  "trad-41": {
-    "promptNative": "É muito influenciável.",
-    "prompt": "Traduzir: 'Se deixa levar facilmente / acredita em tudo que dizem.'"
-  },
-  "trad-42": {
-    "promptNative": "Paguei muito mais do que valia.",
-    "prompt": "Traduzir: 'Me passaram a perna / me cobraram a mais.'"
-  },
-  "trad-43": {
-    "promptNative": "Sabe guardar um segredo.",
-    "prompt": "Traduzir: 'É muito discreta / sabe guardar segredos.'"
-  },
-  "trad-44": {
-    "promptNative": "Ajudou com toda a vontade.",
-    "prompt": "Traduzir: 'Se dedicou de corpo e alma a ajudar / meteu a mão na massa de coração.'"
-  },
-  "trad-45": {
-    "promptNative": "O prazo está prestes a vencer.",
-    "prompt": "Traduzir: 'Agora sim é urgente / o prazo está em cima.'"
-  },
-  "trad-46": {
-    "promptNative": "Coordenam-se com perfeição.",
-    "prompt": "Traduzir: 'Os dois trabalham em perfeita sintonia.'"
-  },
-  "trad-47": {
-    "promptNative": "Não tem vergonha de nada.",
-    "prompt": "Traduzir: 'É um cara de pau / um descarado.'"
-  },
-  "trad-48": {
-    "promptNative": "Mais vale ver do que ouvir.",
-    "prompt": "Traduzir: 'Ver uma vez vale mais que ouvir cem vezes.'"
-  },
-  "trad-49": {
-    "promptNative": "A determinação se apagou logo.",
-    "prompt": "Traduzir: 'A determinação dele durou três dias.' (expressão de quatro caracteres)"
-  },
-  "trad-50": {
-    "promptNative": "Não há boato sem um fundo de verdade.",
-    "prompt": "Traduzir: 'Onde há fumaça, há fogo.'"
-  },
-  "trad-51": {
-    "promptNative": "A origem humilde não impede de chegar longe.",
-    "prompt": "Traduzir: 'De berço humilde pode sair uma grande figura.'"
-  },
-  "trad-52": {
-    "promptNative": "O pequeno, somado, torna-se grande.",
-    "prompt": "Traduzir: 'Muitos poucos fazem um muito.'"
-  },
-  "trad-53": {
-    "promptNative": "Os grandes demoram a brilhar.",
-    "prompt": "Traduzir: 'O grande talento amadurece tarde.' (expressão de quatro caracteres)"
-  },
-  "trad-54": {
-    "promptNative": "O detalhe final que completa tudo.",
-    "prompt": "Traduzir: 'o toque final que dá vida a toda a obra' (expressão de quatro caracteres)"
-  },
-  "trad-55": {
-    "promptNative": "Encurralado por todos os lados.",
-    "prompt": "Traduzir: 'estar cercado de inimigos sem saída' (expressão de quatro caracteres)"
-  },
-  "trad-56": {
-    "promptNative": "Compreender-se sem precisar falar.",
-    "prompt": "Traduzir: 'um entendimento de coração para coração, sem palavras' (expressão de quatro caracteres)"
-  },
-  "trad-57": {
-    "promptNative": "Um truque que aparenta mudança sem mudar nada.",
-    "prompt": "Traduzir: 'enganar alguém com uma mudança superficial que não muda nada' (expressão de quatro caracteres)"
-  },
-  "trad-58": {
-    "promptNative": "Usar alguém e depois descartá-lo.",
-    "prompt": "Traduzir: 'descartar alguém assim que deixa de ser útil' (expressão de quatro caracteres)"
-  },
-  "trad-59": {
-    "promptNative": "Diz-se a quem fica enquanto a gente vai embora.",
-    "prompt": "Traduzir: 'Tchau / fique bem.' (frase fixa, dita a quem fica)"
-  },
-  "trad-60": {
-    "promptNative": "Diz-se a quem vai embora enquanto a gente fica.",
-    "prompt": "Traduzir: 'Tchau / boa viagem.' (frase fixa, dita a quem vai embora)"
-  },
-  "trad-61": {
-    "promptNative": "Diz-se ao atender o telefone.",
-    "prompt": "Traduzir: 'Alô?' (frase fixa, ao atender o telefone)"
-  },
-  "trad-62": {
-    "promptNative": "Saudação de um comerciante ao cliente.",
-    "prompt": "Traduzir: 'Bem-vindo!' (frase fixa, dita por um comerciante ao receber um cliente)"
-  },
-  "trad-63": {
-    "promptNative": "Para chamar a atenção ou pedir passagem.",
-    "prompt": "Traduzir: 'Com licença / desculpe.' (frase fixa, para chamar a atenção ou passar)"
-  },
-  "trad-64": {
-    "promptNative": "Um pedido de desculpas formal.",
-    "prompt": "Traduzir: 'Sinto muito.' (pedido de desculpas formal)"
-  },
-  "trad-65": {
-    "promptNative": "Uma felicitação.",
-    "prompt": "Traduzir: 'Parabéns!'"
-  },
-  "trad-66": {
-    "promptNative": "Desejo de sorte para o ano novo.",
-    "prompt": "Traduzir: 'Feliz Ano Novo!' (frase fixa, lit. receba muita sorte no ano novo)"
-  },
-  "trad-67": {
-    "promptNative": "Pedir que esperem um instante.",
-    "prompt": "Traduzir: 'Um momento, por favor.'"
-  },
-  "trad-68": {
-    "promptNative": "Diz-se a quem está prestes a comer.",
-    "prompt": "Traduzir: 'Bom apetite / aproveite a refeição.' (frase fixa, dita A quem vai comer)"
-  },
-  "trad-69": {
-    "promptNative": "Não ter nem um minuto livre.",
-    "prompt": "Traduzir: 'Estou tão ocupado que não consigo nem respirar.'"
-  },
-  "trad-70": {
-    "promptNative": "Fingiu não ver algo de propósito.",
-    "prompt": "Traduzir: 'Fez vista grossa / deixou passar.'"
-  },
-  "trad-71": {
-    "promptNative": "Percebe tudo na hora.",
-    "prompt": "Traduzir: 'Percebe o clima rápido / é muito perceptivo.'"
-  },
-  "trad-72": {
-    "promptNative": "Deixa escapar tudo o que sabe.",
-    "prompt": "Traduzir: 'É um linguarudo / não sabe guardar segredo.'"
-  },
-  "trad-73": {
-    "promptNative": "Come pouco e é exigente com a comida.",
-    "prompt": "Traduzir: 'Come mal / come pouco e é cheio de frescura.'"
-  },
-  "trad-74": {
-    "promptNative": "Falta mais ajuda.",
-    "prompt": "Traduzir: 'Faltam mãos / precisamos de mais gente.'"
-  },
-  "trad-75": {
-    "promptNative": "Cortou de vez com algo sujo.",
-    "prompt": "Traduzir: 'Lavou as mãos daquele assunto sujo para sempre.'"
-  },
-  "trad-76": {
-    "promptNative": "Pensar juntos para achar a solução.",
-    "prompt": "Traduzir: 'Juntamos as cabeças para resolver.'"
-  },
-  "trad-77": {
-    "promptNative": "Pensa muito para chegar a uma boa ideia.",
-    "prompt": "Traduzir: 'Quebra a cabeça atrás de uma ideia esperta.'"
-  },
-  "trad-78": {
-    "promptNative": "O rosto dele me parece familiar.",
-    "prompt": "Traduzir: 'O rosto dele me é familiar.'"
-  },
-  "trad-79": {
-    "promptNative": "Ficar vermelho de vergonha.",
-    "prompt": "Traduzir: 'Estou morrendo de vergonha.'"
-  },
-  "trad-80": {
-    "promptNative": "Sentir uma emoção que toca o coração.",
-    "prompt": "Traduzir: 'Fiquei profundamente comovido.'"
-  },
-  "trad-81": {
-    "promptNative": "Um susto repentino.",
-    "prompt": "Traduzir: 'Meu coração gelou / levei um baita susto.'"
-  },
-  "trad-82": {
-    "promptNative": "Sentir alívio depois de uma preocupação.",
-    "prompt": "Traduzir: 'Que alívio — pude respirar tranquilo de novo.'"
-  },
-  "trad-83": {
-    "promptNative": "Carregar uma grande responsabilidade.",
-    "prompt": "Traduzir: 'Sinto o peso da responsabilidade sobre mim.'"
-  },
-  "trad-84": {
-    "promptNative": "Age com ares de superioridade.",
-    "prompt": "Traduzir: 'É metida / anda de nariz empinado.'"
-  },
-  "trad-85": {
-    "promptNative": "Fizeram ele perder a arrogância.",
-    "prompt": "Traduzir: 'Baixaram a bola dele / tiraram a arrogância dele.'"
-  },
-  "trad-86": {
-    "promptNative": "Não presta atenção no que dizem.",
-    "prompt": "Traduzir: 'Entra por um ouvido e sai pelo outro.'"
-  },
-  "trad-87": {
-    "promptNative": "O que a gente diz pode acabar se realizando.",
-    "prompt": "Traduzir: 'Cuidado com o que diz — as palavras podem se tornar realidade.'"
-  },
-  "trad-88": {
-    "promptNative": "A notícia corre muito rápido.",
-    "prompt": "Traduzir: 'Notícia ruim voa / boato vai longe.'"
-  },
-  "trad-89": {
-    "promptNative": "Uma desgraça inesperada.",
-    "prompt": "Traduzir: 'Um raio caído do céu / um desastre repentino.'"
-  },
-  "trad-90": {
-    "promptNative": "A situação piora cada vez mais.",
-    "prompt": "Traduzir: 'De mal a pior / sair da frigideira para cair no fogo.'"
-  },
-  "trad-91": {
-    "promptNative": "As desgraças se acumulam.",
-    "prompt": "Traduzir: 'Para completar / uma desgraça atrás da outra.' (expressão de quatro caracteres)"
-  },
-  "trad-92": {
-    "promptNative": "Algo bom que fica ainda melhor.",
-    "prompt": "Traduzir: 'A cereja do bolo / o bom feito ainda melhor.' (expressão de quatro caracteres)"
-  },
-  "trad-93": {
-    "promptNative": "Quanto mais, melhor.",
-    "prompt": "Traduzir: 'Quanto mais, melhor.' (expressão de quatro caracteres)"
-  },
-  "trad-94": {
-    "promptNative": "O excesso é tão ruim quanto a falta.",
-    "prompt": "Traduzir: 'O excesso é tão ruim quanto a falta.' (expressão de quatro caracteres)"
-  },
-  "trad-95": {
-    "promptNative": "Quase com toda a certeza.",
-    "prompt": "Traduzir: 'Nove em cada dez vezes / o mais provável.' (expressão de quatro caracteres)"
-  },
-  "trad-96": {
-    "promptNative": "Discutir por diferenças mínimas.",
-    "prompt": "Traduzir: 'Uma briga mesquinha entre iguais por diferenças insignificantes.'"
-  },
-  "trad-97": {
-    "promptNative": "Querer o resultado antes da hora.",
-    "prompt": "Traduzir: 'Exigir o resultado pronto cedo demais / impaciente sem remédio.'"
-  },
-  "trad-98": {
-    "promptNative": "Dar o golpe e depois o consolo.",
-    "prompt": "Traduzir: 'Machucar alguém e depois se oferecer para ajudar.'"
-  },
-  "trad-99": {
-    "promptNative": "Quem menos sabe é quem mais se gaba.",
-    "prompt": "Traduzir: 'Barril vazio é o que faz mais barulho.'"
-  },
-  "trad-100": {
-    "promptNative": "Gente demais estraga o trabalho.",
-    "prompt": "Traduzir: 'Cozinheiro demais estraga o caldo.'"
-  },
-  "trad-101": {
-    "promptNative": "Aproveitar o momento oportuno.",
-    "prompt": "Traduzir: 'Malhe o ferro enquanto está quente.'"
-  },
-  "trad-102": {
-    "promptNative": "Entre vários, o trabalho rende mais.",
-    "prompt": "Traduzir: 'Muitas mãos aliviam o trabalho.'"
-  },
-  "trad-103": {
-    "promptNative": "O que é dos outros sempre parece melhor.",
-    "prompt": "Traduzir: 'A galinha do vizinho sempre põe ovos maiores.'"
-  },
-  "trad-104": {
-    "promptNative": "Já tenho problemas demais meus.",
-    "prompt": "Traduzir: 'Tenho problemas demais para ajudar você agora.'"
-  },
-  "trad-105": {
-    "promptNative": "Contentar-se com um substituto.",
-    "prompt": "Traduzir: 'Um substituto improvisado — quem não tem cão caça com gato.'"
-  },
-  "trad-106": {
-    "promptNative": "A traição veio de quem menos esperava.",
-    "prompt": "Traduzir: 'Traído pela pessoa em quem você confiava.'"
-  },
-  "trad-107": {
-    "promptNative": "Elogios com intenção de enganar.",
-    "prompt": "Traduzir: 'Palavras doces e melosas para enganar.' (expressão de quatro caracteres)"
-  },
-  "trad-108": {
-    "promptNative": "Elogiar a si mesmo.",
-    "prompt": "Traduzir: 'Se autoelogiar / se gabar.' (expressão de quatro caracteres)"
-  },
-  "trad-109": {
-    "promptNative": "Alguém habilidoso em tudo.",
-    "prompt": "Traduzir: 'Um faz-tudo / bom para tudo.' (expressão de quatro caracteres)"
-  },
-  "trad-110": {
-    "promptNative": "Considerar o ponto de vista do outro.",
-    "prompt": "Traduzir: 'Coloque-se no lugar do outro.' (expressão de quatro caracteres)"
-  },
-  "trad-111": {
-    "promptNative": "Outro se beneficia da briga alheia.",
-    "prompt": "Traduzir: 'Um terceiro leva vantagem enquanto dois brigam.' (expressão de quatro caracteres)"
-  },
-  "trad-112": {
-    "promptNative": "Os fracos pagam pelas brigas dos poderosos.",
-    "prompt": "Traduzir: 'Quando os elefantes brigam, quem sofre é o capim.'"
-  },
-  "trad-113": {
-    "promptNative": "É impossível conhecer alguém por completo.",
-    "prompt": "Traduzir: 'Dá para medir a água funda, mas nunca o coração de uma pessoa.'"
-  },
-  "trad-114": {
-    "promptNative": "Agir com cautela e verificar tudo.",
-    "prompt": "Traduzir: 'Antes de atravessar, teste até a ponte de pedra.'"
-  },
-  "trad-115": {
-    "promptNative": "As faltas pequenas viram grandes.",
-    "prompt": "Traduzir: 'Quem rouba uma agulha acaba roubando um boi.'"
-  },
-  "trad-116": {
-    "promptNative": "Os de cima devem dar o exemplo.",
-    "prompt": "Traduzir: 'Se a água de cima é limpa, a de baixo também será.'"
-  },
-  "trad-117": {
-    "promptNative": "Sempre há quem te supere.",
-    "prompt": "Traduzir: 'Por melhor que você seja, sempre há alguém melhor.'"
-  },
-  "trad-118": {
-    "promptNative": "Um baita susto te deixa precavido.",
-    "prompt": "Traduzir: 'Gato escaldado tem medo de água fria.'"
-  },
-  "trad-119": {
-    "promptNative": "O aluno vai mais longe que o mestre.",
-    "prompt": "Traduzir: 'O discípulo supera o mestre.' (expressão de quatro caracteres)"
-  },
-  "trad-120": {
-    "promptNative": "O culpado acusa o inocente.",
-    "prompt": "Traduzir: 'O culpado se vira contra a vítima / o sujo falando do mal lavado.' (expressão de quatro caracteres)"
-  },
-  "trad-121": {
-    "promptNative": "Um argumento sem pé nem cabeça.",
-    "prompt": "Traduzir: 'Uma afirmação totalmente ilógica e sem sentido.' (expressão de quatro caracteres)"
-  },
-  "trad-122": {
-    "promptNative": "Aparenta uma coisa e pensa outra.",
-    "prompt": "Traduzir: 'De duas caras — o trato aparente difere da verdadeira intenção.' (expressão de quatro caracteres)"
-  },
-  "trad-123": {
-    "promptNative": "Abusar com poder emprestado.",
-    "prompt": "Traduzir: 'Aproveitar-se da autoridade de um superior para se impor.' (expressão de quatro caracteres)"
-  },
-  "trad-124": {
-    "promptNative": "Exagerar algo insignificante.",
-    "prompt": "Traduzir: 'Fazer tempestade em copo d'água — puro exagero.' (expressão de quatro caracteres)"
-  },
-  "trad-125": {
-    "promptNative": "Não fazer ideia do que está acontecendo.",
-    "prompt": "Traduzir: 'Completamente às cegas — perdido numa névoa densa.' (expressão de quatro caracteres)"
-  },
-  "trad-126": {
-    "promptNative": "Entre a cruz e a espada.",
-    "prompt": "Traduzir: 'Preso num dilema — faça o que fizer, você sai perdendo.' (expressão de quatro caracteres)"
-  },
-  "fvocab-0": {
-    "promptNative": "'저 (jeo)' significa...",
-    "options": [
-      "eu/mim (formal)",
-      "aí (perto de você)",
-      "aqui",
-      "não"
-    ]
-  },
-  "fvocab-1": {
-    "prompt": "'eu/mim (informal)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'eu/mim (informal)' em coreano?"
-  },
-  "fvocab-2": {
-    "promptNative": "'너 (neo)' significa...",
-    "options": [
-      "você (informal)",
-      "não",
-      "aqui",
-      "por que"
-    ]
-  },
-  "fvocab-3": {
-    "prompt": "'nós/nosso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'nós/nosso' em coreano?"
-  },
-  "fvocab-4": {
-    "promptNative": "'이거 (igeo)' significa...",
-    "options": [
-      "isto (coisa)",
-      "quando",
-      "o que",
-      "eu/mim (formal)"
-    ]
-  },
-  "fvocab-5": {
-    "prompt": "'isso (perto de você)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'isso (perto de você)' em coreano?"
-  },
-  "fvocab-6": {
-    "promptNative": "'저거 (jeogeo)' significa...",
-    "options": [
-      "aquilo (lá)",
-      "o que",
-      "lá",
-      "quem"
-    ]
-  },
-  "fvocab-7": {
-    "prompt": "'aqui', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'aqui' em coreano?"
-  },
-  "fvocab-8": {
-    "promptNative": "'거기 (geogi)' significa...",
-    "options": [
-      "aí (perto de você)",
-      "você (informal)",
-      "onde",
-      "sim (formal)"
-    ]
-  },
-  "fvocab-9": {
-    "prompt": "'lá', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'lá' em coreano?"
-  },
-  "fvocab-10": {
-    "promptNative": "'뭐 (mwo)' significa...",
-    "options": [
-      "o que",
-      "quem",
-      "você (informal)",
-      "aquilo (lá)"
-    ]
-  },
-  "fvocab-11": {
-    "prompt": "'quem', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'quem' em coreano?"
-  },
-  "fvocab-12": {
-    "promptNative": "'어디 (eodi)' significa...",
-    "options": [
-      "onde",
-      "eu/mim (informal)",
-      "isso (perto de você)",
-      "o que"
-    ]
-  },
-  "fvocab-13": {
-    "prompt": "'quando', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'quando' em coreano?"
-  },
-  "fvocab-14": {
-    "promptNative": "'왜 (wae)' significa...",
-    "options": [
-      "por que",
-      "não",
-      "quantos/qual (número)",
-      "isso (perto de você)"
-    ]
-  },
-  "fvocab-15": {
-    "prompt": "'como', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'como' em coreano?"
-  },
-  "fvocab-16": {
-    "promptNative": "'몇 (myeot)' significa...",
-    "options": [
-      "quantos/qual (número)",
-      "não",
-      "aqui",
-      "o que"
-    ]
-  },
-  "fvocab-17": {
-    "prompt": "'não', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'não' em coreano?"
-  },
-  "fvocab-18": {
-    "promptNative": "'예 (ye)' significa...",
-    "options": [
-      "sim (formal)",
-      "isso (perto de você)",
-      "eu/mim (informal)",
-      "quando"
-    ]
-  },
-  "fvocab-19": {
-    "prompt": "'pessoa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'pessoa' em coreano?"
-  },
-  "fvocab-20": {
-    "promptNative": "'집 (jip)' significa...",
-    "options": [
-      "casa/lar",
-      "chá; carro (duas palavras, mesmo som)",
-      "livro",
-      "nome"
-    ]
-  },
-  "fvocab-21": {
-    "prompt": "'estudante', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estudante' em coreano?"
-  },
-  "fvocab-22": {
-    "promptNative": "'책 (chaek)' significa...",
-    "options": [
-      "livro",
-      "carne",
-      "pão",
-      "chá; carro (duas palavras, mesmo som)"
-    ]
-  },
-  "fvocab-23": {
-    "prompt": "'café', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'café' em coreano?"
-  },
-  "fvocab-24": {
-    "promptNative": "'차 (cha)' significa...",
-    "options": [
-      "chá; carro (duas palavras, mesmo som)",
-      "leite",
-      "cachorro",
-      "estudante"
-    ]
-  },
-  "fvocab-25": {
-    "prompt": "'leite', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'leite' em coreano?"
-  },
-  "fvocab-26": {
-    "promptNative": "'빵 (ppang)' significa...",
-    "options": [
-      "pão",
-      "amanhã",
-      "livro",
-      "cachorro"
-    ]
-  },
-  "fvocab-27": {
-    "prompt": "'carne', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'carne' em coreano?"
-  },
-  "fvocab-28": {
-    "promptNative": "'과일 (gwail)' significa...",
-    "options": [
-      "fruta",
-      "chá; carro (duas palavras, mesmo som)",
-      "casa/lar",
-      "mão"
-    ]
-  },
-  "fvocab-29": {
-    "prompt": "'tempo/hora', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'tempo/hora' em coreano?"
-  },
-  "fvocab-30": {
-    "promptNative": "'오늘 (oneul)' significa...",
-    "options": [
-      "hoje",
-      "pessoa",
-      "tempo/hora",
-      "chá; carro (duas palavras, mesmo som)"
-    ]
-  },
-  "fvocab-31": {
-    "prompt": "'amanhã', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'amanhã' em coreano?"
-  },
-  "fvocab-32": {
-    "promptNative": "'어제 (eoje)' significa...",
-    "options": [
-      "ontem",
-      "hoje",
-      "dinheiro",
-      "cabeça/cabelo"
-    ]
-  },
-  "fvocab-33": {
-    "prompt": "'agora', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'agora' em coreano?"
-  },
-  "fvocab-34": {
-    "promptNative": "'이름 (ireum)' significa...",
-    "options": [
-      "nome",
-      "café",
-      "fruta",
-      "hoje"
-    ]
-  },
-  "fvocab-35": {
-    "prompt": "'gato', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'gato' em coreano?"
-  },
-  "fvocab-36": {
-    "promptNative": "'개 (gae)' significa...",
-    "options": [
-      "cachorro",
-      "estudante",
-      "fruta",
-      "pão"
-    ]
-  },
-  "fvocab-37": {
-    "prompt": "'mão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'mão' em coreano?"
-  },
-  "fvocab-38": {
-    "promptNative": "'발 (bal)' significa...",
-    "options": [
-      "pé",
-      "fruta",
-      "tempo/hora",
-      "pão"
-    ]
-  },
-  "fvocab-39": {
-    "prompt": "'cabeça/cabelo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'cabeça/cabelo' em coreano?"
-  },
-  "fvocab-40": {
-    "promptNative": "'입 (ip)' significa...",
-    "options": [
-      "boca",
-      "café",
-      "gato",
-      "nome"
-    ]
-  },
-  "fvocab-41": {
-    "prompt": "'dinheiro', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'dinheiro' em coreano?"
-  },
-  "fvocab-42": {
-    "promptNative": "'하다 (hada)' significa...",
-    "options": [
-      "fazer",
-      "escutar/ouvir",
-      "falar/dizer",
-      "vir"
-    ]
-  },
-  "fvocab-43": {
-    "prompt": "'ir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ir' em coreano?"
-  },
-  "fvocab-44": {
-    "promptNative": "'오다 (oda)' significa...",
-    "options": [
-      "vir",
-      "falar/dizer",
-      "dormir",
-      "beber"
-    ]
-  },
-  "fvocab-45": {
-    "prompt": "'comer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'comer' em coreano?"
-  },
-  "fvocab-46": {
-    "promptNative": "'마시다 (masida)' significa...",
-    "options": [
-      "beber",
-      "falar/dizer",
-      "comer",
-      "fazer"
-    ]
-  },
-  "fvocab-47": {
-    "prompt": "'ver/olhar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ver/olhar' em coreano?"
-  },
-  "fvocab-48": {
-    "promptNative": "'듣다 (deutda)' significa...",
-    "options": [
-      "escutar/ouvir",
-      "ler",
-      "vir",
-      "saber"
-    ]
-  },
-  "fvocab-49": {
-    "prompt": "'falar/dizer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'falar/dizer' em coreano?"
-  },
-  "fvocab-50": {
-    "promptNative": "'읽다 (ikda)' significa...",
-    "options": [
-      "ler",
-      "comprar",
-      "fazer",
-      "vir"
-    ]
-  },
-  "fvocab-51": {
-    "prompt": "'escrever; usar (mesma palavra)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'escrever; usar (mesma palavra)' em coreano?"
-  },
-  "fvocab-52": {
-    "promptNative": "'사다 (sada)' significa...",
-    "options": [
-      "comprar",
-      "ver/olhar",
-      "dar",
-      "escrever; usar (mesma palavra)"
-    ]
-  },
-  "fvocab-53": {
-    "prompt": "'dormir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'dormir' em coreano?"
-  },
-  "fvocab-54": {
-    "promptNative": "'주다 (juda)' significa...",
-    "options": [
-      "dar",
-      "vir",
-      "ver/olhar",
-      "fazer"
-    ]
-  },
-  "fvocab-55": {
-    "prompt": "'saber', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'saber' em coreano?"
-  },
-  "fvocab-56": {
-    "promptNative": "'크다 (keuda)' significa...",
-    "options": [
-      "ser grande",
-      "estar delicioso",
-      "ser muito/muitos",
-      "ser caro"
-    ]
-  },
-  "fvocab-57": {
-    "prompt": "'ser pequeno', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser pequeno' em coreano?"
-  },
-  "fvocab-58": {
-    "promptNative": "'많다 (manta)' significa...",
-    "options": [
-      "ser muito/muitos",
-      "ser bom",
-      "ser pequeno",
-      "ser caro"
-    ]
-  },
-  "fvocab-59": {
-    "prompt": "'ser bom', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser bom' em coreano?"
-  },
-  "fvocab-60": {
-    "promptNative": "'나쁘다 (nappeuda)' significa...",
-    "options": [
-      "ser ruim",
-      "ser caro",
-      "estar delicioso",
-      "ser bom"
-    ]
-  },
-  "fvocab-61": {
-    "prompt": "'ser caro', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser caro' em coreano?"
-  },
-  "fvocab-62": {
-    "promptNative": "'맛있다 (masitda)' significa...",
-    "options": [
-      "estar delicioso",
-      "ser caro",
-      "ser bom",
-      "ser muito/muitos"
-    ]
-  },
-  "fvocab-63": {
-    "prompt": "'bem', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'bem' em coreano?"
-  },
-  "fvocab-64": {
-    "promptNative": "'많이 (mani)' significa...",
-    "options": [
-      "muito",
-      "um pouco",
-      "demais/muito",
-      "bem"
-    ]
-  },
-  "fvocab-65": {
-    "prompt": "'um pouco', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'um pouco' em coreano?"
-  },
-  "fvocab-66": {
-    "promptNative": "'너무 (neomu)' significa...",
-    "options": [
-      "demais/muito",
-      "agora",
-      "um pouco",
-      "bem"
-    ]
-  },
-  "fvocab-67": {
-    "prompt": "'Sr./Sra. (sufixo de nome)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'Sr./Sra. (sufixo de nome)' em coreano?"
-  },
-  "fvocab-68": {
-    "promptNative": "'분 (bun)' significa...",
-    "options": [
-      "pessoa (classificador honorífico)",
-      "três (número sino)",
-      "classificador para pessoas",
-      "um (número nativo)"
-    ]
-  },
-  "fvocab-69": {
-    "prompt": "'classificador para pessoas', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'classificador para pessoas' em coreano?"
-  },
-  "fvocab-70": {
-    "promptNative": "'마리 (mari)' significa...",
-    "options": [
-      "classificador para animais",
-      "um (número nativo)",
-      "pessoa (classificador honorífico)",
-      "três (número sino)"
-    ]
-  },
-  "fvocab-71": {
-    "prompt": "'classificador para idade (anos)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'classificador para idade (anos)' em coreano?"
-  },
-  "fvocab-72": {
-    "promptNative": "'번 (beon)' significa...",
-    "options": [
-      "classificador para vezes/número",
-      "pessoa (classificador honorífico)",
-      "Sr./Sra. (sufixo de nome)",
-      "um (número nativo)"
-    ]
-  },
-  "fvocab-73": {
-    "prompt": "'um (número nativo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'um (número nativo)' em coreano?"
-  },
-  "fvocab-74": {
-    "promptNative": "'둘 (dul)' significa...",
-    "options": [
-      "dois (número nativo)",
-      "três (número nativo)",
-      "classificador para animais",
-      "um (número nativo)"
-    ]
-  },
-  "fvocab-75": {
-    "prompt": "'três (número nativo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'três (número nativo)' em coreano?"
-  },
-  "fvocab-76": {
-    "promptNative": "'이 (i)' significa...",
-    "options": [
-      "dois (número sino)",
-      "pessoa (classificador honorífico)",
-      "classificador para idade (anos)",
-      "Sr./Sra. (sufixo de nome)"
-    ]
-  },
-  "fvocab-77": {
-    "prompt": "'três (número sino)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'três (número sino)' em coreano?"
-  },
-  "fvocab-78": {
-    "promptNative": "'엄마 (eomma)' significa...",
-    "options": [
-      "mãe",
-      "manhã; café da manhã",
-      "criança",
-      "metrô"
-    ]
-  },
-  "fvocab-79": {
-    "prompt": "'pai', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'pai' em coreano?"
-  },
-  "fvocab-80": {
-    "promptNative": "'형 (hyeong)' significa...",
-    "options": [
-      "irmão mais velho (de um homem)",
-      "papel",
-      "caminho/rua",
-      "almoço/meio-dia"
-    ]
-  },
-  "fvocab-81": {
-    "prompt": "'irmão mais velho (de uma mulher)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'irmão mais velho (de uma mulher)' em coreano?"
-  },
-  "fvocab-82": {
-    "promptNative": "'누나 (nuna)' significa...",
-    "options": [
-      "irmã mais velha (de um homem)",
-      "hora certa (classificador de hora)",
-      "país",
-      "restaurante"
-    ]
-  },
-  "fvocab-83": {
-    "prompt": "'irmã mais velha (de uma mulher)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'irmã mais velha (de uma mulher)' em coreano?"
-  },
-  "fvocab-84": {
-    "promptNative": "'동생 (dongsaeng)' significa...",
-    "options": [
-      "irmão mais novo",
-      "país",
-      "chapéu/boné",
-      "sapatos/calçado"
-    ]
-  },
-  "fvocab-85": {
-    "prompt": "'criança', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'criança' em coreano?"
-  },
-  "fvocab-86": {
-    "promptNative": "'여자 (yeoja)' significa...",
-    "options": [
-      "mulher",
-      "mercado; prefeito (mesmo som)",
-      "telefone/ligação",
-      "irmão mais velho (de um homem)"
-    ]
-  },
-  "fvocab-87": {
-    "prompt": "'homem', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'homem' em coreano?"
-  },
-  "fvocab-88": {
-    "promptNative": "'나라 (nara)' significa...",
-    "options": [
-      "país",
-      "porta",
-      "cadeira",
-      "cama"
-    ]
-  },
-  "fvocab-89": {
-    "prompt": "'cidade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'cidade' em coreano?"
-  },
-  "fvocab-90": {
-    "promptNative": "'세상 (sesang)' significa...",
-    "options": [
-      "mundo",
-      "cadeira",
-      "restaurante",
-      "guarda-chuva"
-    ]
-  },
-  "fvocab-91": {
-    "prompt": "'manhã; café da manhã', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'manhã; café da manhã' em coreano?"
-  },
-  "fvocab-92": {
-    "promptNative": "'점심 (jeomsim)' significa...",
-    "options": [
-      "almoço/meio-dia",
-      "mercado; prefeito (mesmo som)",
-      "restaurante",
-      "avião"
-    ]
-  },
-  "fvocab-93": {
-    "prompt": "'fim de tarde/noite; jantar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'fim de tarde/noite; jantar' em coreano?"
-  },
-  "fvocab-94": {
-    "promptNative": "'밤 (bam)' significa...",
-    "options": [
-      "noite; castanha (mesmo som)",
-      "cidade",
-      "mulher",
-      "papel"
-    ]
-  },
-  "fvocab-95": {
-    "prompt": "'semana', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'semana' em coreano?"
-  },
-  "fvocab-96": {
-    "promptNative": "'달 (dal)' significa...",
-    "options": [
-      "mês; lua (mesma palavra)",
-      "fim de tarde/noite; jantar",
-      "prato",
-      "restaurante"
-    ]
-  },
-  "fvocab-97": {
-    "prompt": "'ano (classificador)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ano (classificador)' em coreano?"
-  },
-  "fvocab-98": {
-    "promptNative": "'시 (si)' significa...",
-    "options": [
-      "hora certa (classificador de hora)",
-      "avião",
-      "semana",
-      "mãe"
-    ]
-  },
-  "fvocab-99": {
-    "prompt": "'escola', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'escola' em coreano?"
-  },
-  "fvocab-100": {
-    "promptNative": "'회사 (hoesa)' significa...",
-    "options": [
-      "empresa/escritório",
-      "semana",
-      "mulher",
-      "irmão mais velho (de um homem)"
-    ]
-  },
-  "fvocab-101": {
-    "prompt": "'hospital/clínica', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'hospital/clínica' em coreano?"
-  },
-  "fvocab-102": {
-    "promptNative": "'가게 (gage)' significa...",
-    "options": [
-      "loja",
-      "lápis",
-      "relógio",
-      "óculos"
-    ]
-  },
-  "fvocab-103": {
-    "prompt": "'restaurante', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'restaurante' em coreano?"
-  },
-  "fvocab-104": {
-    "promptNative": "'방 (bang)' significa...",
-    "options": [
-      "quarto/cômodo",
-      "lápis",
-      "carteira",
-      "relógio"
-    ]
-  },
-  "fvocab-105": {
-    "prompt": "'porta', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'porta' em coreano?"
-  },
-  "fvocab-106": {
-    "promptNative": "'길 (gil)' significa...",
-    "options": [
-      "caminho/rua",
-      "trem",
-      "semana",
-      "bolsa/mochila"
-    ]
-  },
-  "fvocab-107": {
-    "prompt": "'ônibus', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ônibus' em coreano?"
-  },
-  "fvocab-108": {
-    "promptNative": "'지하철 (jihacheol)' significa...",
-    "options": [
-      "metrô",
-      "cama",
-      "cadeira",
-      "prato"
-    ]
-  },
-  "fvocab-109": {
-    "prompt": "'trem', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'trem' em coreano?"
-  },
-  "fvocab-110": {
-    "promptNative": "'비행기 (bihaenggi)' significa...",
-    "options": [
-      "avião",
-      "caminho/rua",
-      "irmão mais novo",
-      "manhã; café da manhã"
-    ]
-  },
-  "fvocab-111": {
-    "prompt": "'telefone/ligação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'telefone/ligação' em coreano?"
-  },
-  "fvocab-112": {
-    "promptNative": "'음식 (eumsik)' significa...",
-    "options": [
-      "comida (gastronomia)",
-      "carteira",
-      "pai",
-      "chapéu/boné"
-    ]
-  },
-  "fvocab-113": {
-    "prompt": "'kimchi', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'kimchi' em coreano?"
-  },
-  "fvocab-114": {
-    "promptNative": "'시장 (sijang)' significa...",
-    "options": [
-      "mercado; prefeito (mesmo som)",
-      "chapéu/boné",
-      "ano (classificador)",
-      "manhã; café da manhã"
-    ]
-  },
-  "fvocab-115": {
-    "prompt": "'clima/tempo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'clima/tempo' em coreano?"
-  },
-  "fvocab-116": {
-    "promptNative": "'일하다 (ilhada)' significa...",
-    "options": [
-      "trabalhar",
-      "parar/deter-se",
-      "iniciar/começar",
-      "gostar"
-    ]
-  },
-  "fvocab-117": {
-    "prompt": "'estudar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estudar' em coreano?"
-  },
-  "fvocab-118": {
-    "promptNative": "'좋아하다 (joahada)' significa...",
-    "options": [
-      "gostar",
-      "estudar",
-      "chorar",
-      "não saber"
-    ]
-  },
-  "fvocab-119": {
-    "prompt": "'detestar/odiar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'detestar/odiar' em coreano?"
-  },
-  "fvocab-120": {
-    "promptNative": "'만나다 (mannada)' significa...",
-    "options": [
-      "encontrar-se",
-      "morrer",
-      "gostar",
-      "morar/residir"
-    ]
-  },
-  "fvocab-121": {
-    "prompt": "'esperar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'esperar' em coreano?"
-  },
-  "fvocab-122": {
-    "promptNative": "'시작하다 (sijakhada)' significa...",
-    "options": [
-      "iniciar/começar",
-      "brincar/passar o tempo",
-      "estudar",
-      "parar/deter-se"
-    ]
-  },
-  "fvocab-123": {
-    "prompt": "'terminar/acabar (intransitivo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'terminar/acabar (intransitivo)' em coreano?"
-  },
-  "fvocab-124": {
-    "promptNative": "'살다 (salda)' significa...",
-    "options": [
-      "morar/residir",
-      "parar/deter-se",
-      "receber",
-      "brincar/passar o tempo"
-    ]
-  },
-  "fvocab-125": {
-    "prompt": "'morrer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'morrer' em coreano?"
-  },
-  "fvocab-126": {
-    "promptNative": "'사용하다 (sayonghada)' significa...",
-    "options": [
-      "usar",
-      "terminar/acabar (intransitivo)",
-      "gostar",
-      "morar/residir"
-    ]
-  },
-  "fvocab-127": {
-    "prompt": "'levantar-se/ocorrer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'levantar-se/ocorrer' em coreano?"
-  },
-  "fvocab-128": {
-    "promptNative": "'앉다 (anda)' significa...",
-    "options": [
-      "sentar-se",
-      "levantar-se/ocorrer",
-      "rir/sorrir",
-      "morar/residir"
-    ]
-  },
-  "fvocab-129": {
-    "prompt": "'parar/deter-se', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'parar/deter-se' em coreano?"
-  },
-  "fvocab-130": {
-    "promptNative": "'받다 (batda)' significa...",
-    "options": [
-      "receber",
-      "brincar/passar o tempo",
-      "estudar",
-      "chorar"
-    ]
-  },
-  "fvocab-131": {
-    "prompt": "'não saber', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'não saber' em coreano?"
-  },
-  "fvocab-132": {
-    "promptNative": "'웃다 (utda)' significa...",
-    "options": [
-      "rir/sorrir",
-      "gostar",
-      "esperar",
-      "iniciar/começar"
-    ]
-  },
-  "fvocab-133": {
-    "prompt": "'chorar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'chorar' em coreano?"
-  },
-  "fvocab-134": {
-    "promptNative": "'놀다 (nolda)' significa...",
-    "options": [
-      "brincar/passar o tempo",
-      "esperar",
-      "levantar-se/ocorrer",
-      "não saber"
-    ]
-  },
-  "fvocab-135": {
-    "prompt": "'ser bonito', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser bonito' em coreano?"
-  },
-  "fvocab-136": {
-    "promptNative": "'귀엽다 (gwiyeopda)' significa...",
-    "options": [
-      "ser terno",
-      "ser diferente",
-      "fazer calor (clima)",
-      "ser barato"
-    ]
-  },
-  "fvocab-137": {
-    "prompt": "'ser divertido/interessante', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser divertido/interessante' em coreano?"
-  },
-  "fvocab-138": {
-    "promptNative": "'맛없다 (madeopda)' significa...",
-    "options": [
-      "estar sem graça/ter gosto ruim",
-      "ser diferente",
-      "ser comprido",
-      "ser curto"
-    ]
-  },
-  "fvocab-139": {
-    "prompt": "'ser barato', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser barato' em coreano?"
-  },
-  "fvocab-140": {
-    "promptNative": "'덥다 (deopda)' significa...",
-    "options": [
-      "fazer calor (clima)",
-      "ser lento",
-      "ser barato",
-      "ser baixo"
-    ]
-  },
-  "fvocab-141": {
-    "prompt": "'fazer frio (clima)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'fazer frio (clima)' em coreano?"
-  },
-  "fvocab-142": {
-    "promptNative": "'아프다 (apeuda)' significa...",
-    "options": [
-      "estar doente/doer",
-      "ser alto (coisas)",
-      "ser fácil",
-      "ser terno"
-    ]
-  },
-  "fvocab-143": {
-    "prompt": "'estar ocupado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estar ocupado' em coreano?"
-  },
-  "fvocab-144": {
-    "promptNative": "'쉽다 (swipda)' significa...",
-    "options": [
-      "ser fácil",
-      "estar sem graça/ter gosto ruim",
-      "estar doente/doer",
-      "ser comprido"
-    ]
-  },
-  "fvocab-145": {
-    "prompt": "'ser difícil', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser difícil' em coreano?"
-  },
-  "fvocab-146": {
-    "promptNative": "'같다 (gatda)' significa...",
-    "options": [
-      "ser igual/parecido",
-      "ser baixo",
-      "ser comprido",
-      "ser rápido"
-    ]
-  },
-  "fvocab-147": {
-    "prompt": "'ser diferente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser diferente' em coreano?"
-  },
-  "fvocab-148": {
-    "promptNative": "'빠르다 (ppareuda)' significa...",
-    "options": [
-      "ser rápido",
-      "fazer frio (clima)",
-      "ser alto (coisas)",
-      "estar doente/doer"
-    ]
-  },
-  "fvocab-149": {
-    "prompt": "'ser lento', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser lento' em coreano?"
-  },
-  "fvocab-150": {
-    "promptNative": "'높다 (nopda)' significa...",
-    "options": [
-      "ser alto (coisas)",
-      "ser barato",
-      "ser igual/parecido",
-      "ser rápido"
-    ]
-  },
-  "fvocab-151": {
-    "prompt": "'ser baixo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser baixo' em coreano?"
-  },
-  "fvocab-152": {
-    "promptNative": "'길다 (gilda)' significa...",
-    "options": [
-      "ser comprido",
-      "estar ocupado",
-      "ser diferente",
-      "fazer frio (clima)"
-    ]
-  },
-  "fvocab-153": {
-    "prompt": "'ser curto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser curto' em coreano?"
-  },
-  "fvocab-154": {
-    "promptNative": "'더 (deo)' significa...",
-    "options": [
-      "mais",
-      "ainda",
-      "juntos",
-      "o mais (superlativo)"
-    ]
-  },
-  "fvocab-155": {
-    "prompt": "'o mais (superlativo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'o mais (superlativo)' em coreano?"
-  },
-  "fvocab-156": {
-    "promptNative": "'아직 (ajik)' significa...",
-    "options": [
-      "ainda",
-      "juntos",
-      "rapidamente/rápido",
-      "mais"
-    ]
-  },
-  "fvocab-157": {
-    "prompt": "'já', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'já' em coreano?"
-  },
-  "fvocab-158": {
-    "promptNative": "'빨리 (ppalli)' significa...",
-    "options": [
-      "rapidamente/rápido",
-      "de verdade/realmente",
-      "o mais (superlativo)",
-      "lentamente/devagar"
-    ]
-  },
-  "fvocab-159": {
-    "prompt": "'lentamente/devagar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'lentamente/devagar' em coreano?"
-  },
-  "fvocab-160": {
-    "promptNative": "'함께 (hamkke)' significa...",
-    "options": [
-      "juntos",
-      "tarde",
-      "lentamente/devagar",
-      "rapidamente/rápido"
-    ]
-  },
-  "fvocab-161": {
-    "prompt": "'outra vez/de novo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'outra vez/de novo' em coreano?"
-  },
-  "fvocab-162": {
-    "promptNative": "'정말 (jeongmal)' significa...",
-    "options": [
-      "de verdade/realmente",
-      "tarde",
-      "cedo",
-      "já"
-    ]
-  },
-  "fvocab-163": {
-    "prompt": "'talvez/provavelmente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'talvez/provavelmente' em coreano?"
-  },
-  "fvocab-164": {
-    "promptNative": "'일찍 (iljjik)' significa...",
-    "options": [
-      "cedo",
-      "juntos",
-      "o mais (superlativo)",
-      "já"
-    ]
-  },
-  "fvocab-165": {
-    "prompt": "'tarde', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'tarde' em coreano?"
-  },
-  "fvocab-166": {
-    "promptNative": "'색깔 (saekkkal)' significa...",
-    "options": [
-      "cor",
-      "telefone/ligação",
-      "homem",
-      "quarto/cômodo"
-    ]
-  },
-  "fvocab-167": {
-    "prompt": "'roupa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'roupa' em coreano?"
-  },
-  "fvocab-168": {
-    "promptNative": "'신발 (sinbal)' significa...",
-    "options": [
-      "sapatos/calçado",
-      "cor",
-      "porta",
-      "escola"
-    ]
-  },
-  "fvocab-169": {
-    "prompt": "'bolsa/mochila', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'bolsa/mochila' em coreano?"
-  },
-  "fvocab-170": {
-    "promptNative": "'모자 (moja)' significa...",
-    "options": [
-      "chapéu/boné",
-      "restaurante",
-      "mercado; prefeito (mesmo som)",
-      "avião"
-    ]
-  },
-  "fvocab-171": {
-    "prompt": "'óculos', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'óculos' em coreano?"
-  },
-  "fvocab-172": {
-    "promptNative": "'시계 (sigye)' significa...",
-    "options": [
-      "relógio",
-      "avião",
-      "hospital/clínica",
-      "número/dígito/cifra"
-    ]
-  },
-  "fvocab-173": {
-    "prompt": "'guarda-chuva', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'guarda-chuva' em coreano?"
-  },
-  "fvocab-174": {
-    "promptNative": "'지갑 (jigap)' significa...",
-    "options": [
-      "carteira",
-      "trem",
-      "telefone/ligação",
-      "almoço/meio-dia"
-    ]
-  },
-  "fvocab-175": {
-    "prompt": "'cadeira', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'cadeira' em coreano?"
-  },
-  "fvocab-176": {
-    "promptNative": "'책상 (chaeksang)' significa...",
-    "options": [
-      "escrivaninha",
-      "hospital/clínica",
-      "restaurante",
-      "país"
-    ]
-  },
-  "fvocab-177": {
-    "prompt": "'cama', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'cama' em coreano?"
-  },
-  "fvocab-178": {
-    "promptNative": "'접시 (jeopsi)' significa...",
-    "options": [
-      "prato",
-      "irmão mais velho (de um homem)",
-      "papel",
-      "aula/lição"
-    ]
-  },
-  "fvocab-179": {
-    "prompt": "'xícara/copo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'xícara/copo' em coreano?"
-  },
-  "fvocab-180": {
-    "promptNative": "'수업 (sueop)' significa...",
-    "options": [
-      "aula/lição",
-      "irmão mais velho (de um homem)",
-      "irmão mais novo",
-      "carteira"
-    ]
-  },
-  "fvocab-181": {
-    "prompt": "'papel', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'papel' em coreano?"
-  },
-  "fvocab-182": {
-    "promptNative": "'연필 (yeonpil)' significa...",
-    "options": [
-      "lápis",
-      "prato",
-      "almoço/meio-dia",
-      "número/dígito/cifra"
-    ]
-  },
-  "fvocab-183": {
-    "prompt": "'número/dígito/cifra', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'número/dígito/cifra' em coreano?"
-  },
-  "fvocab-184": {
-    "promptNative": "'문제 (munje)' significa...",
-    "options": [
-      "problema; questão (de prova)",
-      "preocupação",
-      "desenho/quadro",
-      "árvore/madeira"
-    ]
-  },
-  "fvocab-185": {
-    "prompt": "'pensamento/ideia', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'pensamento/ideia' em coreano?"
-  },
-  "fvocab-186": {
-    "promptNative": "'마음 (maeum)' significa...",
-    "options": [
-      "coração/mente (sentimentos)",
-      "resultado",
-      "vento; um desejo/esperança (mesmo som)",
-      "diferença/lacuna"
-    ]
-  },
-  "fvocab-187": {
-    "prompt": "'ânimo/estado de espírito', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ânimo/estado de espírito' em coreano?"
-  },
-  "fvocab-188": {
-    "promptNative": "'느낌 (neukkim)' significa...",
-    "options": [
-      "sensação/impressão",
-      "pássaro/ave",
-      "tarefa",
-      "pensamento/ideia"
-    ]
-  },
-  "fvocab-189": {
-    "prompt": "'razão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'razão' em coreano?"
-  },
-  "fvocab-190": {
-    "promptNative": "'방법 (bangbeop)' significa...",
-    "options": [
-      "método/maneira",
-      "música",
-      "relação",
-      "passatempo"
-    ]
-  },
-  "fvocab-191": {
-    "prompt": "'palavras/fala; cavalo (mesmo som)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'palavras/fala; cavalo (mesmo som)' em coreano?"
-  },
-  "fvocab-192": {
-    "promptNative": "'소리 (sori)' significa...",
-    "options": [
-      "som/ruído",
-      "riso/um sorriso",
-      "personalidade/caráter",
-      "problema; questão (de prova)"
-    ]
-  },
-  "fvocab-193": {
-    "prompt": "'história/conversa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'história/conversa' em coreano?"
-  },
-  "fvocab-194": {
-    "promptNative": "'그림 (geurim)' significa...",
-    "options": [
-      "desenho/quadro",
-      "promessa/compromisso",
-      "palavras/fala; cavalo (mesmo som)",
-      "reunião/conferência"
-    ]
-  },
-  "fvocab-195": {
-    "prompt": "'foto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'foto' em coreano?"
-  },
-  "fvocab-196": {
-    "promptNative": "'노래 (norae)' significa...",
-    "options": [
-      "canção",
-      "música",
-      "celular",
-      "acompanhamento"
-    ]
-  },
-  "fvocab-197": {
-    "prompt": "'filme', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'filme' em coreano?"
-  },
-  "fvocab-198": {
-    "promptNative": "'음악 (eumak)' significa...",
-    "options": [
-      "música",
-      "assento/lugar",
-      "som/ruído",
-      "montanha"
-    ]
-  },
-  "fvocab-199": {
-    "prompt": "'exercício/esporte', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'exercício/esporte' em coreano?"
-  },
-  "fvocab-200": {
-    "promptNative": "'여행 (yeohaeng)' significa...",
-    "options": [
-      "viagem",
-      "erro/equívoco",
-      "problema; questão (de prova)",
-      "riso/um sorriso"
-    ]
-  },
-  "fvocab-201": {
-    "prompt": "'passatempo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'passatempo' em coreano?"
-  },
-  "fvocab-202": {
-    "promptNative": "'계획 (gyehoek)' significa...",
-    "options": [
-      "plano",
-      "erro/equívoco",
-      "proximidade/arredores",
-      "ânimo/estado de espírito"
-    ]
-  },
-  "fvocab-203": {
-    "prompt": "'promessa/compromisso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'promessa/compromisso' em coreano?"
-  },
-  "fvocab-204": {
-    "promptNative": "'선물 (seonmul)' significa...",
-    "options": [
-      "presente",
-      "vento; um desejo/esperança (mesmo som)",
-      "desenho/quadro",
-      "cheiro"
-    ]
-  },
-  "fvocab-205": {
-    "prompt": "'preocupação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'preocupação' em coreano?"
-  },
-  "fvocab-206": {
-    "promptNative": "'경험 (gyeongheom)' significa...",
-    "options": [
-      "experiência",
-      "relação",
-      "riso/um sorriso",
-      "hashi (pauzinhos)"
-    ]
-  },
-  "fvocab-207": {
-    "prompt": "'memória/lembrança', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'memória/lembrança' em coreano?"
-  },
-  "fvocab-208": {
-    "promptNative": "'꿈 (kkum)' significa...",
-    "options": [
-      "sono",
-      "memória/lembrança",
-      "riso/um sorriso",
-      "pássaro/ave"
-    ]
-  },
-  "fvocab-209": {
-    "prompt": "'hábito/costume', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'hábito/costume' em coreano?"
-  },
-  "fvocab-210": {
-    "promptNative": "'성격 (seonggyeok)' significa...",
-    "options": [
-      "personalidade/caráter",
-      "prédio",
-      "rua; distância (mesmo som)",
-      "experiência"
-    ]
-  },
-  "fvocab-211": {
-    "prompt": "'erro/equívoco', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'erro/equívoco' em coreano?"
-  },
-  "fvocab-212": {
-    "promptNative": "'결과 (gyeolgwa)' significa...",
-    "options": [
-      "resultado",
-      "proximidade/arredores",
-      "plano",
-      "verão"
-    ]
-  },
-  "fvocab-213": {
-    "prompt": "'meta/objetivo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'meta/objetivo' em coreano?"
-  },
-  "fvocab-214": {
-    "promptNative": "'차이 (chai)' significa...",
-    "options": [
-      "diferença/lacuna",
-      "classe/tipo",
-      "pássaro/ave",
-      "montanha"
-    ]
-  },
-  "fvocab-215": {
-    "prompt": "'classe/tipo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'classe/tipo' em coreano?"
-  },
-  "fvocab-216": {
-    "promptNative": "'관계 (gwangye)' significa...",
-    "options": [
-      "relação",
-      "celular",
-      "problema; questão (de prova)",
-      "estação (trem/metrô)"
-    ]
-  },
-  "fvocab-217": {
-    "prompt": "'relação; o espaço entre', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'relação; o espaço entre' em coreano?"
-  },
-  "fvocab-218": {
-    "promptNative": "'근처 (geuncheo)' significa...",
-    "options": [
-      "proximidade/arredores",
-      "prédio",
-      "parque",
-      "foto"
-    ]
-  },
-  "fvocab-219": {
-    "prompt": "'rua; distância (mesmo som)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'rua; distância (mesmo som)' em coreano?"
-  },
-  "fvocab-220": {
-    "promptNative": "'자리 (jari)' significa...",
-    "options": [
-      "assento/lugar",
-      "reunião/conferência",
-      "relação; o espaço entre",
-      "meta/objetivo"
-    ]
-  },
-  "fvocab-221": {
-    "prompt": "'aeroporto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'aeroporto' em coreano?"
-  },
-  "fvocab-222": {
-    "promptNative": "'역 (yeok)' significa...",
-    "options": [
-      "estação (trem/metrô)",
-      "resultado",
-      "pássaro/ave",
-      "música"
-    ]
-  },
-  "fvocab-223": {
-    "prompt": "'parque', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'parque' em coreano?"
-  },
-  "fvocab-224": {
-    "promptNative": "'도서관 (doseogwan)' significa...",
-    "options": [
-      "biblioteca",
-      "método/maneira",
-      "pergunta (feita)",
-      "reunião/conferência"
-    ]
-  },
-  "fvocab-225": {
-    "prompt": "'banco (financeiro)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'banco (financeiro)' em coreano?"
-  },
-  "fvocab-226": {
-    "promptNative": "'건물 (geonmul)' significa...",
-    "options": [
-      "prédio",
-      "vento; um desejo/esperança (mesmo som)",
-      "cheiro",
-      "hábito/costume"
-    ]
-  },
-  "fvocab-227": {
-    "prompt": "'computador', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'computador' em coreano?"
-  },
-  "fvocab-228": {
-    "promptNative": "'휴대폰 (hyudaepon)' significa...",
-    "options": [
-      "celular",
-      "passatempo",
-      "ânimo/estado de espírito",
-      "nuvem"
-    ]
-  },
-  "fvocab-229": {
-    "prompt": "'sopa (caldo claro)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'sopa (caldo claro)' em coreano?"
-  },
-  "fvocab-230": {
-    "promptNative": "'반찬 (banchan)' significa...",
-    "options": [
-      "acompanhamento",
-      "sopa (caldo claro)",
-      "celular",
-      "assento/lugar"
-    ]
-  },
-  "fvocab-231": {
-    "prompt": "'hashi (pauzinhos)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'hashi (pauzinhos)' em coreano?"
-  },
-  "fvocab-232": {
-    "promptNative": "'회의 (hoeui)' significa...",
-    "options": [
-      "reunião/conferência",
-      "lágrimas",
-      "hashi (pauzinhos)",
-      "sono"
-    ]
-  },
-  "fvocab-233": {
-    "prompt": "'tarefa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'tarefa' em coreano?"
-  },
-  "fvocab-234": {
-    "promptNative": "'시험 (siheom)' significa...",
-    "options": [
-      "exame/prova",
-      "proximidade/arredores",
-      "rio",
-      "riso/um sorriso"
-    ]
-  },
-  "fvocab-235": {
-    "prompt": "'pergunta (feita)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'pergunta (feita)' em coreano?"
-  },
-  "fvocab-236": {
-    "promptNative": "'생각하다 (saenggakhada)' significa...",
-    "options": [
-      "pensar",
-      "entrar",
-      "ir embora/partir",
-      "levar (tempo); ficar preso/pendurado"
-    ]
-  },
-  "fvocab-237": {
-    "prompt": "'sentir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'sentir' em coreano?"
-  },
-  "fvocab-238": {
-    "promptNative": "'준비하다 (junbihada)' significa...",
-    "options": [
-      "preparar/aprontar-se",
-      "embarcar/subir (em)",
-      "procurar; encontrar",
-      "descer; baixar; (chuva) cair"
-    ]
-  },
-  "fvocab-239": {
-    "prompt": "'decidir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'decidir' em coreano?"
-  },
-  "fvocab-240": {
-    "promptNative": "'설명하다 (seolmyeonghada)' significa...",
-    "options": [
-      "explicar",
-      "abrir",
-      "levar (tempo); ficar preso/pendurado",
-      "aprender"
-    ]
-  },
-  "fvocab-241": {
-    "prompt": "'entender/compreender', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'entender/compreender' em coreano?"
-  },
-  "fvocab-242": {
-    "promptNative": "'기억하다 (gieokhada)' significa...",
-    "options": [
-      "lembrar",
-      "preparar/aprontar-se",
-      "esquecer",
-      "aprender"
-    ]
-  },
-  "fvocab-243": {
-    "prompt": "'esquecer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'esquecer' em coreano?"
-  },
-  "fvocab-244": {
-    "promptNative": "'찾다 (chatda)' significa...",
-    "options": [
-      "procurar; encontrar",
-      "preparar/aprontar-se",
-      "ganhar/vencer",
-      "guardar/proteger/cuidar"
-    ]
-  },
-  "fvocab-245": {
-    "prompt": "'trocar/intercambiar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'trocar/intercambiar' em coreano?"
-  },
-  "fvocab-246": {
-    "promptNative": "'고치다 (gochida)' significa...",
-    "options": [
-      "consertar/reparar; corrigir",
-      "fazer",
-      "entrar",
-      "pedir um favor/solicitar"
-    ]
-  },
-  "fvocab-247": {
-    "prompt": "'fazer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'fazer' em coreano?"
-  },
-  "fvocab-248": {
-    "promptNative": "'열다 (yeolda)' significa...",
-    "options": [
-      "abrir",
-      "guardar/proteger/cuidar",
-      "pedir um favor/solicitar",
-      "esquecer"
-    ]
-  },
-  "fvocab-249": {
-    "prompt": "'fechar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'fechar' em coreano?"
-  },
-  "fvocab-250": {
-    "promptNative": "'켜다 (kyeoda)' significa...",
-    "options": [
-      "acender/ligar",
-      "ajudar",
-      "pensar",
-      "entender/compreender"
-    ]
-  },
-  "fvocab-251": {
-    "prompt": "'apagar; extinguir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'apagar; extinguir' em coreano?"
-  },
-  "fvocab-252": {
-    "promptNative": "'걷다 (geotda)' significa...",
-    "options": [
-      "caminhar",
-      "entrar",
-      "apagar; extinguir",
-      "regressar/voltar"
-    ]
-  },
-  "fvocab-253": {
-    "prompt": "'correr; pular', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'correr; pular' em coreano?"
-  },
-  "fvocab-254": {
-    "promptNative": "'타다 (tada)' significa...",
-    "options": [
-      "embarcar/subir (em)",
-      "aguentar/conter-se",
-      "procurar; encontrar",
-      "consertar/reparar; corrigir"
-    ]
-  },
-  "fvocab-255": {
-    "prompt": "'descer; baixar; (chuva) cair', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'descer; baixar; (chuva) cair' em coreano?"
-  },
-  "fvocab-256": {
-    "promptNative": "'도착하다 (dochakada)' significa...",
-    "options": [
-      "chegar",
-      "descer; baixar; (chuva) cair",
-      "ir embora/partir",
-      "ganhar/vencer"
-    ]
-  },
-  "fvocab-257": {
-    "prompt": "'ir embora/partir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ir embora/partir' em coreano?"
-  },
-  "fvocab-258": {
-    "promptNative": "'돕다 (dopda)' significa...",
-    "options": [
-      "ajudar",
-      "esquecer",
-      "aguentar/conter-se",
-      "ir embora/partir"
-    ]
-  },
-  "fvocab-259": {
-    "prompt": "'ensinar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ensinar' em coreano?"
-  },
-  "fvocab-260": {
-    "promptNative": "'배우다 (baeuda)' significa...",
-    "options": [
-      "aprender",
-      "preparar/aprontar-se",
-      "ajudar",
-      "correr; pular"
-    ]
-  },
-  "fvocab-261": {
-    "prompt": "'pegar emprestado; emprestar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'pegar emprestado; emprestar' em coreano?"
-  },
-  "fvocab-262": {
-    "promptNative": "'부탁하다 (butakada)' significa...",
-    "options": [
-      "pedir um favor/solicitar",
-      "regressar/voltar",
-      "fazer",
-      "fechar"
-    ]
-  },
-  "fvocab-263": {
-    "prompt": "'responder/contestar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'responder/contestar' em coreano?"
-  },
-  "fvocab-264": {
-    "promptNative": "'팔다 (palda)' significa...",
-    "options": [
-      "vender",
-      "entrar",
-      "fazer",
-      "descer; baixar; (chuva) cair"
-    ]
-  },
-  "fvocab-265": {
-    "prompt": "'eleger/escolher', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'eleger/escolher' em coreano?"
-  },
-  "fvocab-266": {
-    "promptNative": "'지키다 (jikida)' significa...",
-    "options": [
-      "guardar/proteger/cuidar",
-      "apagar; extinguir",
-      "sentir",
-      "decidir"
-    ]
-  },
-  "fvocab-267": {
-    "prompt": "'ganhar/vencer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ganhar/vencer' em coreano?"
-  },
-  "fvocab-268": {
-    "promptNative": "'참다 (chamda)' significa...",
-    "options": [
-      "aguentar/conter-se",
-      "lembrar",
-      "descer; baixar; (chuva) cair",
-      "guardar/proteger/cuidar"
-    ]
-  },
-  "fvocab-269": {
-    "prompt": "'entrar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'entrar' em coreano?"
-  },
-  "fvocab-270": {
-    "promptNative": "'돌아오다 (doraoda)' significa...",
-    "options": [
-      "regressar/voltar",
-      "pensar",
-      "entender/compreender",
-      "consertar/reparar; corrigir"
-    ]
-  },
-  "fvocab-271": {
-    "prompt": "'levar (tempo); ficar preso/pendurado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'levar (tempo); ficar preso/pendurado' em coreano?"
-  },
-  "fvocab-272": {
-    "promptNative": "'행복하다 (haengbokhada)' significa...",
-    "options": [
-      "ser feliz",
-      "ser bondoso",
-      "ser inteligente/esperto",
-      "estar cansado"
-    ]
-  },
-  "fvocab-273": {
-    "prompt": "'estar triste', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estar triste' em coreano?"
-  },
-  "fvocab-274": {
-    "promptNative": "'기쁘다 (gippeuda)' significa...",
-    "options": [
-      "estar contente/alegre",
-      "ser difícil/exaustivo",
-      "estar são/saudável",
-      "estar frio ao toque"
-    ]
-  },
-  "fvocab-275": {
-    "prompt": "'dar medo/ter medo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'dar medo/ter medo' em coreano?"
-  },
-  "fvocab-276": {
-    "promptNative": "'피곤하다 (pigonhada)' significa...",
-    "options": [
-      "estar cansado",
-      "ser difícil/exaustivo",
-      "estar são/saudável",
-      "estar quente ao toque"
-    ]
-  },
-  "fvocab-277": {
-    "prompt": "'ser difícil/exaustivo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser difícil/exaustivo' em coreano?"
-  },
-  "fvocab-278": {
-    "promptNative": "'편하다 (pyeonhada)' significa...",
-    "options": [
-      "ser cômodo/conveniente",
-      "ser feliz",
-      "estar sujo",
-      "ser necessário"
-    ]
-  },
-  "fvocab-279": {
-    "prompt": "'ser silencioso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser silencioso' em coreano?"
-  },
-  "fvocab-280": {
-    "promptNative": "'시끄럽다 (sikkeureopda)' significa...",
-    "options": [
-      "ser barulhento",
-      "ser difícil/exaustivo",
-      "ser gentil",
-      "estar contente/alegre"
-    ]
-  },
-  "fvocab-281": {
-    "prompt": "'estar limpo/arrumado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estar limpo/arrumado' em coreano?"
-  },
-  "fvocab-282": {
-    "promptNative": "'더럽다 (deoreopda)' significa...",
-    "options": [
-      "estar sujo",
-      "ser raro/estranho",
-      "ser barulhento",
-      "ser famoso"
-    ]
-  },
-  "fvocab-283": {
-    "prompt": "'ser pesado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser pesado' em coreano?"
-  },
-  "fvocab-284": {
-    "promptNative": "'뜨겁다 (tteugeopda)' significa...",
-    "options": [
-      "estar quente ao toque",
-      "ser caloroso",
-      "estar são/saudável",
-      "ser raro/estranho"
-    ]
-  },
-  "fvocab-285": {
-    "prompt": "'estar frio ao toque', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estar frio ao toque' em coreano?"
-  },
-  "fvocab-286": {
-    "promptNative": "'따뜻하다 (ttatteutada)' significa...",
-    "options": [
-      "ser caloroso",
-      "dar medo/ter medo",
-      "estar quente ao toque",
-      "ser raro/estranho"
-    ]
-  },
-  "fvocab-287": {
-    "prompt": "'estar com fome', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estar com fome' em coreano?"
-  },
-  "fvocab-288": {
-    "promptNative": "'중요하다 (jungyohada)' significa...",
-    "options": [
-      "ser importante",
-      "ser pesado",
-      "ser inteligente/esperto",
-      "ser difícil/exaustivo"
-    ]
-  },
-  "fvocab-289": {
-    "prompt": "'ser necessário', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser necessário' em coreano?"
-  },
-  "fvocab-290": {
-    "promptNative": "'유명하다 (yumyeonghada)' significa...",
-    "options": [
-      "ser famoso",
-      "ser especial",
-      "estar são/saudável",
-      "ser difícil/exaustivo"
-    ]
-  },
-  "fvocab-291": {
-    "prompt": "'ser gentil', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser gentil' em coreano?"
-  },
-  "fvocab-292": {
-    "promptNative": "'착하다 (chakhada)' significa...",
-    "options": [
-      "ser bondoso",
-      "ser especial",
-      "ser silencioso",
-      "ser difícil/exaustivo"
-    ]
-  },
-  "fvocab-293": {
-    "prompt": "'ser inteligente/esperto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser inteligente/esperto' em coreano?"
-  },
-  "fvocab-294": {
-    "promptNative": "'이상하다 (isanghada)' significa...",
-    "options": [
-      "ser raro/estranho",
-      "ser necessário",
-      "dar medo/ter medo",
-      "ser famoso"
-    ]
-  },
-  "fvocab-295": {
-    "prompt": "'ser perigoso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser perigoso' em coreano?"
-  },
-  "fvocab-296": {
-    "promptNative": "'건강하다 (geonganghada)' significa...",
-    "options": [
-      "estar são/saudável",
-      "estar sujo",
-      "estar limpo/arrumado",
-      "ser importante"
-    ]
-  },
-  "fvocab-297": {
-    "prompt": "'ser especial', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser especial' em coreano?"
-  },
-  "fvocab-298": {
-    "promptNative": "'갑자기 (gapjagi)' significa...",
-    "options": [
-      "de repente",
-      "sempre",
-      "diretamente/pessoalmente/em pessoa",
-      "por acaso/talvez"
-    ]
-  },
-  "fvocab-299": {
-    "prompt": "'sempre', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'sempre' em coreano?"
-  },
-  "fvocab-300": {
-    "promptNative": "'자주 (jaju)' significa...",
-    "options": [
-      "com frequência/frequentemente",
-      "(de) jeito nenhum",
-      "como era de esperar/também",
-      "continuamente/seguir"
-    ]
-  },
-  "fvocab-301": {
-    "prompt": "'às vezes/ocasionalmente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'às vezes/ocasionalmente' em coreano?"
-  },
-  "fvocab-302": {
-    "promptNative": "'거의 (geoui)' significa...",
-    "options": [
-      "quase",
-      "de repente",
-      "como era de esperar/também",
-      "claro"
-    ]
-  },
-  "fvocab-303": {
-    "prompt": "'nem tanto/não particularmente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'nem tanto/não particularmente' em coreano?"
-  },
-  "fvocab-304": {
-    "promptNative": "'전혀 (jeonhyeo)' significa...",
-    "options": [
-      "(de) jeito nenhum",
-      "por acaso/talvez",
-      "às vezes/ocasionalmente",
-      "nem tanto/não particularmente"
-    ]
-  },
-  "fvocab-305": {
-    "prompt": "'claro', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'claro' em coreano?"
-  },
-  "fvocab-306": {
-    "promptNative": "'특히 (teukhi)' significa...",
-    "options": [
-      "especialmente/em particular",
-      "primeiro/de antemão",
-      "diretamente/pessoalmente/em pessoa",
-      "muito (mais)"
-    ]
-  },
-  "fvocab-307": {
-    "prompt": "'por acaso/talvez', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'por acaso/talvez' em coreano?"
-  },
-  "fvocab-308": {
-    "promptNative": "'역시 (yeoksi)' significa...",
-    "options": [
-      "como era de esperar/também",
-      "sempre",
-      "nem tanto/não particularmente",
-      "com frequência/frequentemente"
-    ]
-  },
-  "fvocab-309": {
-    "prompt": "'continuamente/seguir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'continuamente/seguir' em coreano?"
-  },
-  "fvocab-310": {
-    "promptNative": "'먼저 (meonjeo)' significa...",
-    "options": [
-      "primeiro/de antemão",
-      "depois/mais tarde",
-      "como era de esperar/também",
-      "sempre"
-    ]
-  },
-  "fvocab-311": {
-    "prompt": "'depois/mais tarde', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'depois/mais tarde' em coreano?"
-  },
-  "fvocab-312": {
-    "promptNative": "'직접 (jikjeop)' significa...",
-    "options": [
-      "diretamente/pessoalmente/em pessoa",
-      "especialmente/em particular",
-      "(de) jeito nenhum",
-      "quase"
-    ]
-  },
-  "fvocab-313": {
-    "prompt": "'muito (mais)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'muito (mais)' em coreano?"
-  },
-  "fvocab-314": {
-    "promptNative": "'여러분 (yeoreobun)' significa...",
-    "options": [
-      "pessoal (para se dirigir ao público)",
-      "que tipo de (+ substantivo)",
-      "classificador para folhas planas",
-      "por causa de/por"
-    ]
-  },
-  "fvocab-315": {
-    "prompt": "'si mesmo; carinho/amor', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'si mesmo; carinho/amor' em coreano?"
-  },
-  "fvocab-316": {
-    "promptNative": "'무슨 (museun)' significa...",
-    "options": [
-      "que tipo de (+ substantivo)",
-      "pessoal (para se dirigir ao público)",
-      "garrafa (classificador); doença (mesmo som)",
-      "por causa de/por"
-    ]
-  },
-  "fvocab-317": {
-    "prompt": "'que tipo de; algum (+ substantivo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'que tipo de; algum (+ substantivo)' em coreano?"
-  },
-  "fvocab-318": {
-    "promptNative": "'잔 (jan)' significa...",
-    "options": [
-      "classificador para xícaras/copos",
-      "que tipo de (+ substantivo)",
-      "pessoal (para se dirigir ao público)",
-      "por causa de/por"
-    ]
-  },
-  "fvocab-319": {
-    "prompt": "'classificador para livros/volumes', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'classificador para livros/volumes' em coreano?"
-  },
-  "fvocab-320": {
-    "promptNative": "'장 (jang)' significa...",
-    "options": [
-      "classificador para folhas planas",
-      "durante/por (um período)",
-      "garrafa (classificador); doença (mesmo som)",
-      "que tipo de; algum (+ substantivo)"
-    ]
-  },
-  "fvocab-321": {
-    "prompt": "'classificador para máquinas/veículos', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'classificador para máquinas/veículos' em coreano?"
-  },
-  "fvocab-322": {
-    "promptNative": "'병 (byeong)' significa...",
-    "options": [
-      "garrafa (classificador); doença (mesmo som)",
-      "durante/por (um período)",
-      "que tipo de; algum (+ substantivo)",
-      "classificador para livros/volumes"
-    ]
-  },
-  "fvocab-323": {
-    "prompt": "'durante/por (um período)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'durante/por (um período)' em coreano?"
-  },
-  "fvocab-324": {
-    "promptNative": "'때문에 (ttaemune)' significa...",
-    "options": [
-      "por causa de/por",
-      "durante/por (um período)",
-      "pessoal (para se dirigir ao público)",
-      "que tipo de (+ substantivo)"
-    ]
-  },
-  "fvocab-325": {
-    "prompt": "'estação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estação' em coreano?"
-  },
-  "fvocab-326": {
-    "promptNative": "'봄 (bom)' significa...",
-    "options": [
-      "primavera",
-      "estação (trem/metrô)",
-      "passatempo",
-      "erro/equívoco"
-    ]
-  },
-  "fvocab-327": {
-    "prompt": "'verão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'verão' em coreano?"
-  },
-  "fvocab-328": {
-    "promptNative": "'가을 (gaeul)' significa...",
-    "options": [
-      "outono",
-      "inverno",
-      "primavera",
-      "computador"
-    ]
-  },
-  "fvocab-329": {
-    "prompt": "'inverno', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'inverno' em coreano?"
-  },
-  "fvocab-330": {
-    "promptNative": "'하늘 (haneul)' significa...",
-    "options": [
-      "céu",
-      "personalidade/caráter",
-      "passatempo",
-      "rio"
-    ]
-  },
-  "fvocab-331": {
-    "prompt": "'mar/oceano', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'mar/oceano' em coreano?"
-  },
-  "fvocab-332": {
-    "promptNative": "'산 (san)' significa...",
-    "options": [
-      "montanha",
-      "computador",
-      "sopa (caldo claro)",
-      "estação"
-    ]
-  },
-  "fvocab-333": {
-    "prompt": "'rio', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'rio' em coreano?"
-  },
-  "fvocab-334": {
-    "promptNative": "'나무 (namu)' significa...",
-    "options": [
-      "árvore/madeira",
-      "verão",
-      "experiência",
-      "rio"
-    ]
-  },
-  "fvocab-335": {
-    "prompt": "'flor', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'flor' em coreano?"
-  },
-  "fvocab-336": {
-    "promptNative": "'새 (sae)' significa...",
-    "options": [
-      "pássaro/ave",
-      "filme",
-      "pensamento/ideia",
-      "história/conversa"
-    ]
-  },
-  "fvocab-337": {
-    "prompt": "'estrela', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estrela' em coreano?"
-  },
-  "fvocab-338": {
-    "promptNative": "'구름 (gureum)' significa...",
-    "options": [
-      "nuvem",
-      "vento; um desejo/esperança (mesmo som)",
-      "música",
-      "pergunta (feita)"
-    ]
-  },
-  "fvocab-339": {
-    "prompt": "'vento; um desejo/esperança (mesmo som)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'vento; um desejo/esperança (mesmo som)' em coreano?"
-  },
-  "fvocab-340": {
-    "promptNative": "'비 (bi)' significa...",
-    "options": [
-      "chuva",
-      "música",
-      "biblioteca",
-      "história/conversa"
-    ]
-  },
-  "fvocab-341": {
-    "prompt": "'voz', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'voz' em coreano?"
-  },
-  "fvocab-342": {
-    "promptNative": "'웃음 (useum)' significa...",
-    "options": [
-      "riso/um sorriso",
-      "pássaro/ave",
-      "tarefa",
-      "prédio"
-    ]
-  },
-  "fvocab-343": {
-    "prompt": "'lágrimas', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'lágrimas' em coreano?"
-  },
-  "fvocab-344": {
-    "promptNative": "'냄새 (naemsae)' significa...",
-    "options": [
-      "cheiro",
-      "mar/oceano",
-      "primavera",
-      "filme"
-    ]
-  },
-  "fvocab-345": {
-    "prompt": "'sociedade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'sociedade' em coreano?"
-  },
-  "fvocab-346": {
-    "promptNative": "'문화 (munhwa)' significa...",
-    "options": [
-      "cultura",
-      "responsabilidade",
-      "colega/companheiro de trabalho",
-      "efeito/eficácia"
-    ]
-  },
-  "fvocab-347": {
-    "prompt": "'história', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'história' em coreano?"
-  },
-  "fvocab-348": {
-    "promptNative": "'경제 (gyeongje)' significa...",
-    "options": [
-      "economia",
-      "preocupação/dilema/deliberação",
-      "propósito/finalidade",
-      "arte"
-    ]
-  },
-  "fvocab-349": {
-    "prompt": "'política', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'política' em coreano?"
-  },
-  "fvocab-350": {
-    "promptNative": "'환경 (hwangyeong)' significa...",
-    "options": [
-      "meio ambiente",
-      "política",
-      "processo/curso",
-      "vizinho"
-    ]
-  },
-  "fvocab-351": {
-    "prompt": "'ciência', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ciência' em coreano?"
-  },
-  "fvocab-352": {
-    "promptNative": "'기술 (gisul)' significa...",
-    "options": [
-      "tecnologia/habilidade",
-      "história",
-      "clima/vibe",
-      "efeito/eficácia"
-    ]
-  },
-  "fvocab-353": {
-    "prompt": "'informação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'informação' em coreano?"
-  },
-  "fvocab-354": {
-    "promptNative": "'교육 (gyoyuk)' significa...",
-    "options": [
-      "educação",
-      "opinião",
-      "coragem/bravura",
-      "esforço"
-    ]
-  },
-  "fvocab-355": {
-    "prompt": "'arte', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'arte' em coreano?"
-  },
-  "fvocab-356": {
-    "promptNative": "'자연 (jayeon)' significa...",
-    "options": [
-      "natureza",
-      "efeito/eficácia",
-      "meio ambiente",
-      "estresse"
-    ]
-  },
-  "fvocab-357": {
-    "prompt": "'mundo/globo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'mundo/globo' em coreano?"
-  },
-  "fvocab-358": {
-    "promptNative": "'정부 (jeongbu)' significa...",
-    "options": [
-      "governo",
-      "nível/padrão",
-      "sociedade",
-      "meio ambiente"
-    ]
-  },
-  "fvocab-359": {
-    "prompt": "'lei', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'lei' em coreano?"
-  },
-  "fvocab-360": {
-    "promptNative": "'규칙 (gyuchik)' significa...",
-    "options": [
-      "regra",
-      "tecnologia/habilidade",
-      "história",
-      "emoção/sentimento"
-    ]
-  },
-  "fvocab-361": {
-    "prompt": "'liberdade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'liberdade' em coreano?"
-  },
-  "fvocab-362": {
-    "promptNative": "'평화 (pyeonghwa)' significa...",
-    "options": [
-      "paz",
-      "meio ambiente",
-      "atitude/postura",
-      "informação"
-    ]
-  },
-  "fvocab-363": {
-    "prompt": "'situação/circunstâncias', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'situação/circunstâncias' em coreano?"
-  },
-  "fvocab-364": {
-    "promptNative": "'의견 (uigyeon)' significa...",
-    "options": [
-      "opinião",
-      "expressão facial",
-      "tecnologia/habilidade",
-      "economia"
-    ]
-  },
-  "fvocab-365": {
-    "prompt": "'propósito/finalidade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'propósito/finalidade' em coreano?"
-  },
-  "fvocab-366": {
-    "promptNative": "'과정 (gwajeong)' significa...",
-    "options": [
-      "processo/curso",
-      "postura; atitude",
-      "sociedade",
-      "esposa"
-    ]
-  },
-  "fvocab-367": {
-    "prompt": "'nível/padrão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'nível/padrão' em coreano?"
-  },
-  "fvocab-368": {
-    "promptNative": "'내용 (naeyong)' significa...",
-    "options": [
-      "conteúdo",
-      "atitude/postura",
-      "coragem/bravura",
-      "charme/atrativo"
-    ]
-  },
-  "fvocab-369": {
-    "prompt": "'capacidade/aptidão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'capacidade/aptidão' em coreano?"
-  },
-  "fvocab-370": {
-    "promptNative": "'노력 (noryeok)' significa...",
-    "options": [
-      "esforço",
-      "atitude/postura",
-      "regra",
-      "propósito/finalidade"
-    ]
-  },
-  "fvocab-371": {
-    "prompt": "'mudança', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'mudança' em coreano?"
-  },
-  "fvocab-372": {
-    "promptNative": "'영향 (yeonghyang)' significa...",
-    "options": [
-      "influência/efeito",
-      "meio ambiente",
-      "mundo/globo",
-      "colega/companheiro de trabalho"
-    ]
-  },
-  "fvocab-373": {
-    "prompt": "'efeito/eficácia', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'efeito/eficácia' em coreano?"
-  },
-  "fvocab-374": {
-    "promptNative": "'감정 (gamjeong)' significa...",
-    "options": [
-      "emoção/sentimento",
-      "arrependimento",
-      "ocupação/trabalho",
-      "as impressões/pensamentos de alguém (sobre uma experiência)"
-    ]
-  },
-  "fvocab-375": {
-    "prompt": "'estresse', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estresse' em coreano?"
-  },
-  "fvocab-376": {
-    "promptNative": "'고민 (gomin)' significa...",
-    "options": [
-      "preocupação/dilema/deliberação",
-      "política",
-      "situação/circunstâncias",
-      "esforço"
-    ]
-  },
-  "fvocab-377": {
-    "prompt": "'arrependimento', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'arrependimento' em coreano?"
-  },
-  "fvocab-378": {
-    "promptNative": "'책임 (chaegim)' significa...",
-    "options": [
-      "responsabilidade",
-      "influência/efeito",
-      "meio ambiente",
-      "liberdade"
-    ]
-  },
-  "fvocab-379": {
-    "prompt": "'coragem/bravura', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'coragem/bravura' em coreano?"
-  },
-  "fvocab-380": {
-    "promptNative": "'직업 (jigeop)' significa...",
-    "options": [
-      "ocupação/trabalho",
-      "liberdade",
-      "política",
-      "vizinho"
-    ]
-  },
-  "fvocab-381": {
-    "prompt": "'colega/companheiro de trabalho', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'colega/companheiro de trabalho' em coreano?"
-  },
-  "fvocab-382": {
-    "promptNative": "'손님 (sonnim)' significa...",
-    "options": [
-      "convidado/cliente",
-      "situação/circunstâncias",
-      "emoção/sentimento",
-      "conteúdo"
-    ]
-  },
-  "fvocab-383": {
-    "prompt": "'vizinho', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'vizinho' em coreano?"
-  },
-  "fvocab-384": {
-    "promptNative": "'남편 (nampyeon)' significa...",
-    "options": [
-      "marido",
-      "vizinho",
-      "convidado/cliente",
-      "propósito/finalidade"
-    ]
-  },
-  "fvocab-385": {
-    "prompt": "'esposa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'esposa' em coreano?"
-  },
-  "fvocab-386": {
-    "promptNative": "'결혼 (gyeolhon)' significa...",
-    "options": [
-      "casamento",
-      "cultura",
-      "nível/padrão",
-      "ciência"
-    ]
-  },
-  "fvocab-387": {
-    "prompt": "'expressar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'expressar' em coreano?"
-  },
-  "fvocab-388": {
-    "promptNative": "'발견하다 (balgyeonhada)' significa...",
-    "options": [
-      "descobrir/encontrar",
-      "surgir/originar-se/passar a ter",
-      "exigir/requerer",
-      "exceder/ultrapassar/cruzar"
-    ]
-  },
-  "fvocab-389": {
-    "prompt": "'mudar (tornar-se diferente)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'mudar (tornar-se diferente)' em coreano?"
-  },
-  "fvocab-390": {
-    "promptNative": "'늘다 (neulda)' significa...",
-    "options": [
-      "aumentar/melhorar",
-      "coletar/reunir (tr.)",
-      "expressar",
-      "exceder/ultrapassar/cruzar"
-    ]
-  },
-  "fvocab-391": {
-    "prompt": "'diminuir/encolher', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'diminuir/encolher' em coreano?"
-  },
-  "fvocab-392": {
-    "promptNative": "'나타나다 (natanada)' significa...",
-    "options": [
-      "aparecer/surgir",
-      "coletar/reunir (tr.)",
-      "exigir/requerer",
-      "jogar fora/abandonar"
-    ]
-  },
-  "fvocab-393": {
-    "prompt": "'surgir/originar-se/passar a ter', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'surgir/originar-se/passar a ter' em coreano?"
-  },
-  "fvocab-394": {
-    "promptNative": "'포기하다 (pogihada)' significa...",
-    "options": [
-      "render-se/desistir",
-      "exigir/requerer",
-      "duvidar/desconfiar",
-      "cair; esgotar-se; reprovar (prova)"
-    ]
-  },
-  "fvocab-395": {
-    "prompt": "'comparecer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'comparecer' em coreano?"
-  },
-  "fvocab-396": {
-    "promptNative": "'반대하다 (bandaehada)' significa...",
-    "options": [
-      "opor-se/objetar",
-      "expressar",
-      "descobrir/encontrar",
-      "recusar/negar-se"
-    ]
-  },
-  "fvocab-397": {
-    "prompt": "'reconhecer/admitir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'reconhecer/admitir' em coreano?"
-  },
-  "fvocab-398": {
-    "promptNative": "'거절하다 (geojeolhada)' significa...",
-    "options": [
-      "recusar/negar-se",
-      "elogiar/lisonjear",
-      "subir/ascender/escalar",
-      "parabenizar"
-    ]
-  },
-  "fvocab-399": {
-    "prompt": "'exigir/requerer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'exigir/requerer' em coreano?"
-  },
-  "fvocab-400": {
-    "promptNative": "'추천하다 (chucheonhada)' significa...",
-    "options": [
-      "recomendar",
-      "reconhecer/admitir",
-      "restar/sobrar",
-      "surgir/originar-se/passar a ter"
-    ]
-  },
-  "fvocab-401": {
-    "prompt": "'apresentar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'apresentar' em coreano?"
-  },
-  "fvocab-402": {
-    "promptNative": "'초대하다 (chodaehada)' significa...",
-    "options": [
-      "convidar",
-      "dividir/compartilhar",
-      "surgir/originar-se/passar a ter",
-      "agarrar/pegar/segurar"
-    ]
-  },
-  "fvocab-403": {
-    "prompt": "'parabenizar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'parabenizar' em coreano?"
-  },
-  "fvocab-404": {
-    "promptNative": "'칭찬하다 (chingchanhada)' significa...",
-    "options": [
-      "elogiar/lisonjear",
-      "diminuir/encolher",
-      "acreditar/confiar",
-      "cair; esgotar-se; reprovar (prova)"
-    ]
-  },
-  "fvocab-405": {
-    "prompt": "'ignorar/menosprezar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ignorar/menosprezar' em coreano?"
-  },
-  "fvocab-406": {
-    "promptNative": "'믿다 (mitda)' significa...",
-    "options": [
-      "acreditar/confiar",
-      "duvidar/desconfiar",
-      "recomendar",
-      "descobrir/encontrar"
-    ]
-  },
-  "fvocab-407": {
-    "prompt": "'duvidar/desconfiar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'duvidar/desconfiar' em coreano?"
-  },
-  "fvocab-408": {
-    "promptNative": "'버리다 (beorida)' significa...",
-    "options": [
-      "jogar fora/abandonar",
-      "exceder/ultrapassar/cruzar",
-      "dividir/compartilhar",
-      "exigir/requerer"
-    ]
-  },
-  "fvocab-409": {
-    "prompt": "'restar/sobrar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'restar/sobrar' em coreano?"
-  },
-  "fvocab-410": {
-    "promptNative": "'모으다 (moeuda)' significa...",
-    "options": [
-      "coletar/reunir (tr.)",
-      "reconhecer/admitir",
-      "parabenizar",
-      "elogiar/lisonjear"
-    ]
-  },
-  "fvocab-411": {
-    "prompt": "'dividir/compartilhar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'dividir/compartilhar' em coreano?"
-  },
-  "fvocab-412": {
-    "promptNative": "'풀다 (pulda)' significa...",
-    "options": [
-      "resolver/desatar/liberar",
-      "aparecer/surgir",
-      "subir/ascender/escalar",
-      "exceder/ultrapassar/cruzar"
-    ]
-  },
-  "fvocab-413": {
-    "prompt": "'agarrar/pegar/segurar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'agarrar/pegar/segurar' em coreano?"
-  },
-  "fvocab-414": {
-    "promptNative": "'넘다 (neomda)' significa...",
-    "options": [
-      "exceder/ultrapassar/cruzar",
-      "render-se/desistir",
-      "agarrar/pegar/segurar",
-      "convidar"
-    ]
-  },
-  "fvocab-415": {
-    "prompt": "'grudar; passar (numa prova)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'grudar; passar (numa prova)' em coreano?"
-  },
-  "fvocab-416": {
-    "promptNative": "'떨어지다 (tteoreojida)' significa...",
-    "options": [
-      "cair; esgotar-se; reprovar (prova)",
-      "subir/ascender/escalar",
-      "acreditar/confiar",
-      "reconhecer/admitir"
-    ]
-  },
-  "fvocab-417": {
-    "prompt": "'subir/ascender/escalar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'subir/ascender/escalar' em coreano?"
-  },
-  "fvocab-418": {
-    "promptNative": "'심각하다 (simgakhada)' significa...",
-    "options": [
-      "ser sério/grave",
-      "estar envergonhado/constrangido",
-      "ser seguro/certo",
-      "ser similar/parecido"
-    ]
-  },
-  "fvocab-419": {
-    "prompt": "'ser complicado/estar movimentado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser complicado/estar movimentado' em coreano?"
-  },
-  "fvocab-420": {
-    "promptNative": "'간단하다 (gandanhada)' significa...",
-    "options": [
-      "ser simples/breve",
-      "ser claro/evidente",
-      "ser excelente/admirável",
-      "ser diverso/variado"
-    ]
-  },
-  "fvocab-421": {
-    "prompt": "'ser preciso/exato', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser preciso/exato' em coreano?"
-  },
-  "fvocab-422": {
-    "promptNative": "'확실하다 (hwaksilhada)' significa...",
-    "options": [
-      "ser seguro/certo",
-      "ser chato/tedioso",
-      "ser sério/grave",
-      "estar familiarizado/acostumado"
-    ]
-  },
-  "fvocab-423": {
-    "prompt": "'ser claro/evidente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser claro/evidente' em coreano?"
-  },
-  "fvocab-424": {
-    "promptNative": "'당연하다 (dangyeonhada)' significa...",
-    "options": [
-      "ser natural/óbvio/algo dado",
-      "estar envergonhado/constrangido",
-      "ser sério/grave",
-      "ser perfeito"
-    ]
-  },
-  "fvocab-425": {
-    "prompt": "'ser suficiente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser suficiente' em coreano?"
-  },
-  "fvocab-426": {
-    "promptNative": "'부족하다 (bujokhada)' significa...",
-    "options": [
-      "ser insuficiente/faltar",
-      "ser simples/breve",
-      "ser chato/tedioso",
-      "ser complicado/estar movimentado"
-    ]
-  },
-  "fvocab-427": {
-    "prompt": "'ser possível', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser possível' em coreano?"
-  },
-  "fvocab-428": {
-    "promptNative": "'완벽하다 (wanbyeokhada)' significa...",
-    "options": [
-      "ser perfeito",
-      "ser excelente/admirável",
-      "ser diverso/variado",
-      "ser chato/tedioso"
-    ]
-  },
-  "fvocab-429": {
-    "prompt": "'ser diverso/variado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser diverso/variado' em coreano?"
-  },
-  "fvocab-430": {
-    "promptNative": "'비슷하다 (biseutada)' significa...",
-    "options": [
-      "ser similar/parecido",
-      "ser simples/breve",
-      "ser diverso/variado",
-      "estar envergonhado/constrangido"
-    ]
-  },
-  "fvocab-431": {
-    "prompt": "'estar familiarizado/acostumado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estar familiarizado/acostumado' em coreano?"
-  },
-  "fvocab-432": {
-    "promptNative": "'훌륭하다 (hullyunghada)' significa...",
-    "options": [
-      "ser excelente/admirável",
-      "ser perfeito",
-      "sentir falta/ter saudade",
-      "ser simples/breve"
-    ]
-  },
-  "fvocab-433": {
-    "prompt": "'ser impressionante/assombroso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser impressionante/assombroso' em coreano?"
-  },
-  "fvocab-434": {
-    "promptNative": "'소중하다 (sojunghada)' significa...",
-    "options": [
-      "ser precioso/querido",
-      "ser tímido/estar constrangido",
-      "ser chato/tedioso",
-      "estar familiarizado/acostumado"
-    ]
-  },
-  "fvocab-435": {
-    "prompt": "'ser chato/tedioso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser chato/tedioso' em coreano?"
-  },
-  "fvocab-436": {
-    "promptNative": "'부럽다 (bureopda)' significa...",
-    "options": [
-      "sentir inveja/ser invejável",
-      "ser similar/parecido",
-      "ser precioso/querido",
-      "ser claro/evidente"
-    ]
-  },
-  "fvocab-437": {
-    "prompt": "'estar envergonhado/constrangido', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estar envergonhado/constrangido' em coreano?"
-  },
-  "fvocab-438": {
-    "promptNative": "'부끄럽다 (bukkeureopda)' significa...",
-    "options": [
-      "ser tímido/estar constrangido",
-      "ser natural/óbvio/algo dado",
-      "ser impressionante/assombroso",
-      "ser complicado/estar movimentado"
-    ]
-  },
-  "fvocab-439": {
-    "prompt": "'ser lamentável/uma pena/nostálgico', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser lamentável/uma pena/nostálgico' em coreano?"
-  },
-  "fvocab-440": {
-    "promptNative": "'그립다 (geuripda)' significa...",
-    "options": [
-      "sentir falta/ter saudade",
-      "ser similar/parecido",
-      "ser chato/tedioso",
-      "ser tímido/estar constrangido"
-    ]
-  },
-  "fvocab-441": {
-    "prompt": "'finalmente/enfim', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'finalmente/enfim' em coreano?"
-  },
-  "fvocab-442": {
-    "promptNative": "'결국 (gyeolguk)' significa...",
-    "options": [
-      "no fim/com o tempo",
-      "de preferência/prefiro",
-      "além disso/ainda por cima",
-      "só/simplesmente/sem motivo"
-    ]
-  },
-  "fvocab-443": {
-    "prompt": "'pelo contrário/ao contrário', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'pelo contrário/ao contrário' em coreano?"
-  },
-  "fvocab-444": {
-    "promptNative": "'차라리 (charari)' significa...",
-    "options": [
-      "de preferência/prefiro",
-      "repetidamente/continuar (fazendo)",
-      "inclusive/a ponto de",
-      "só/simplesmente/sem motivo"
-    ]
-  },
-  "fvocab-445": {
-    "prompt": "'só/simplesmente/sem motivo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'só/simplesmente/sem motivo' em coreano?"
-  },
-  "fvocab-446": {
-    "promptNative": "'굳이 (guji)' significa...",
-    "options": [
-      "desnecessariamente/dando-se ao trabalho",
-      "finalmente/enfim",
-      "só/simplesmente/sem motivo",
-      "de todo jeito/em todo caso"
-    ]
-  },
-  "fvocab-447": {
-    "prompt": "'de todo jeito/em todo caso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'de todo jeito/em todo caso' em coreano?"
-  },
-  "fvocab-448": {
-    "promptNative": "'게다가 (gedaga)' significa...",
-    "options": [
-      "além disso/ainda por cima",
-      "gradualmente/cada vez mais",
-      "só/simplesmente/sem motivo",
-      "corretamente/como se deve"
-    ]
-  },
-  "fvocab-449": {
-    "prompt": "'inclusive/a ponto de', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'inclusive/a ponto de' em coreano?"
-  },
-  "fvocab-450": {
-    "promptNative": "'점점 (jeomjeom)' significa...",
-    "options": [
-      "gradualmente/cada vez mais",
-      "de preferência/prefiro",
-      "no fim/com o tempo",
-      "finalmente/enfim"
-    ]
-  },
-  "fvocab-451": {
-    "prompt": "'repetidamente/continuar (fazendo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'repetidamente/continuar (fazendo)' em coreano?"
-  },
-  "fvocab-452": {
-    "promptNative": "'제대로 (jedaero)' significa...",
-    "options": [
-      "corretamente/como se deve",
-      "finalmente/enfim",
-      "de todo jeito/em todo caso",
-      "pelo contrário/ao contrário"
-    ]
-  },
-  "fvocab-453": {
-    "prompt": "'por si mesmo/por vontade própria', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'por si mesmo/por vontade própria' em coreano?"
-  },
-  "fvocab-454": {
-    "promptNative": "'각각 (gakgak)' significa...",
-    "options": [
-      "cada um/respectivamente",
-      "se/supondo",
-      "porções/rações (classificador)",
-      "vários/diversos (+ substantivo)"
-    ]
-  },
-  "fvocab-455": {
-    "prompt": "'se/supondo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'se/supondo' em coreano?"
-  },
-  "fvocab-456": {
-    "promptNative": "'여러 (yeoreo)' significa...",
-    "options": [
-      "vários/diversos (+ substantivo)",
-      "andar (classificador/substantivo)",
-      "cada um/respectivamente",
-      "se/supondo"
-    ]
-  },
-  "fvocab-457": {
-    "prompt": "'andar (classificador/substantivo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'andar (classificador/substantivo)' em coreano?"
-  },
-  "fvocab-458": {
-    "promptNative": "'인분 (inbun)' significa...",
-    "options": [
-      "porções/rações (classificador)",
-      "andar (classificador/substantivo)",
-      "vários/diversos (+ substantivo)",
-      "se/supondo"
-    ]
-  },
-  "fvocab-459": {
-    "prompt": "'clima/vibe', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'clima/vibe' em coreano?"
-  },
-  "fvocab-460": {
-    "promptNative": "'인상 (insang)' significa...",
-    "options": [
-      "impressão",
-      "lei",
-      "expressão facial",
-      "modos/etiqueta/cortesia"
-    ]
-  },
-  "fvocab-461": {
-    "prompt": "'atitude/postura', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'atitude/postura' em coreano?"
-  },
-  "fvocab-462": {
-    "promptNative": "'매력 (maeryeok)' significa...",
-    "options": [
-      "charme/atrativo",
-      "as impressões/pensamentos de alguém (sobre uma experiência)",
-      "capacidade/aptidão",
-      "educação"
-    ]
-  },
-  "fvocab-463": {
-    "prompt": "'modos/etiqueta/cortesia', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'modos/etiqueta/cortesia' em coreano?"
-  },
-  "fvocab-464": {
-    "promptNative": "'표정 (pyojeong)' significa...",
-    "options": [
-      "expressão facial",
-      "estresse",
-      "influência/efeito",
-      "governo"
-    ]
-  },
-  "fvocab-465": {
-    "prompt": "'gesto/linguagem corporal', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'gesto/linguagem corporal' em coreano?"
-  },
-  "fvocab-466": {
-    "promptNative": "'자세 (jase)' significa...",
-    "options": [
-      "postura; atitude",
-      "charme/atrativo",
-      "informação",
-      "marido"
-    ]
-  },
-  "fvocab-467": {
-    "prompt": "'as impressões/pensamentos de alguém (sobre uma experiência)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'as impressões/pensamentos de alguém (sobre uma experiência)' em coreano?"
-  },
-  "fvocab-468": {
-    "promptNative": "'가치관 (gachigwan)' significa...",
-    "options": [
-      "os valores/sistema de valores de alguém",
-      "confiança",
-      "orgulho/amor-próprio (que pode ser ferido)",
-      "mal-entendido"
-    ]
-  },
-  "fvocab-469": {
-    "prompt": "'cosmovisão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'cosmovisão' em coreano?"
-  },
-  "fvocab-470": {
-    "promptNative": "'관점 (gwanjeom)' significa...",
-    "options": [
-      "ponto de vista/perspectiva",
-      "confiança",
-      "conflito/atrito",
-      "vínculo/laços (entre pessoas)"
-    ]
-  },
-  "fvocab-471": {
-    "prompt": "'preconceito/viés', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'preconceito/viés' em coreano?"
-  },
-  "fvocab-472": {
-    "promptNative": "'갈등 (galdeung)' significa...",
-    "options": [
-      "conflito/atrito",
-      "tensão/nervosismo",
-      "conceito/noção",
-      "compreensão/iluminação"
-    ]
-  },
-  "fvocab-473": {
-    "prompt": "'mal-entendido', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'mal-entendido' em coreano?"
-  },
-  "fvocab-474": {
-    "promptNative": "'소통 (sotong)' significa...",
-    "options": [
-      "comunicação (mútua)",
-      "fator/causa",
-      "consideração/atenção",
-      "autenticidade/sinceridade"
-    ]
-  },
-  "fvocab-475": {
-    "prompt": "'consideração/atenção', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'consideração/atenção' em coreano?"
-  },
-  "fvocab-476": {
-    "promptNative": "'존중 (jonjung)' significa...",
-    "options": [
-      "respeito (por alguém)",
-      "contexto",
-      "sensação de recompensa/de que valeu a pena",
-      "os valores/sistema de valores de alguém"
-    ]
-  },
-  "fvocab-477": {
-    "prompt": "'confiança', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'confiança' em coreano?"
-  },
-  "fvocab-478": {
-    "promptNative": "'경쟁 (gyeongjaeng)' significa...",
-    "options": [
-      "competência",
-      "preconceito/viés",
-      "princípio/regra geral",
-      "essência/verdadeira natureza"
-    ]
-  },
-  "fvocab-479": {
-    "prompt": "'sacrifício', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'sacrifício' em coreano?"
-  },
-  "fvocab-480": {
-    "promptNative": "'열정 (yeoljeong)' significa...",
-    "options": [
-      "paixão/entusiasmo",
-      "sacrifício",
-      "fundamento/base/evidência",
-      "os valores/sistema de valores de alguém"
-    ]
-  },
-  "fvocab-481": {
-    "prompt": "'orgulho/amor-próprio (que pode ser ferido)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'orgulho/amor-próprio (que pode ser ferido)' em coreano?"
-  },
-  "fvocab-482": {
-    "promptNative": "'불안 (buran)' significa...",
-    "options": [
-      "ansiedade/inquietação",
-      "comunicação (mútua)",
-      "cosmovisão",
-      "confiança"
-    ]
-  },
-  "fvocab-483": {
-    "prompt": "'tensão/nervosismo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'tensão/nervosismo' em coreano?"
-  },
-  "fvocab-484": {
-    "promptNative": "'여유 (yeoyu)' significa...",
-    "options": [
-      "folga/serenidade/tranquilidade",
-      "empatia/afinidade",
-      "contradição",
-      "equilíbrio"
-    ]
-  },
-  "fvocab-485": {
-    "prompt": "'equilíbrio', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'equilíbrio' em coreano?"
-  },
-  "fvocab-486": {
-    "promptNative": "'보람 (boram)' significa...",
-    "options": [
-      "sensação de recompensa/de que valeu a pena",
-      "consideração/atenção",
-      "ansiedade/inquietação",
-      "competência"
-    ]
-  },
-  "fvocab-487": {
-    "prompt": "'compreensão/iluminação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'compreensão/iluminação' em coreano?"
-  },
-  "fvocab-488": {
-    "promptNative": "'지혜 (jihye)' significa...",
-    "options": [
-      "sabedoria",
-      "preconceito/viés",
-      "respeito (por alguém)",
-      "princípio/regra geral"
-    ]
-  },
-  "fvocab-489": {
-    "prompt": "'fundamento/base/evidência', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'fundamento/base/evidência' em coreano?"
-  },
-  "fvocab-490": {
-    "promptNative": "'원칙 (wonchik)' significa...",
-    "options": [
-      "princípio/regra geral",
-      "fenômeno",
-      "paixão/entusiasmo",
-      "essência/verdadeira natureza"
-    ]
-  },
-  "fvocab-491": {
-    "prompt": "'núcleo/cerne/ponto-chave', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'núcleo/cerne/ponto-chave' em coreano?"
-  },
-  "fvocab-492": {
-    "promptNative": "'본질 (bonjil)' significa...",
-    "options": [
-      "essência/verdadeira natureza",
-      "folga/serenidade/tranquilidade",
-      "sensação de recompensa/de que valeu a pena",
-      "preconceito/viés"
-    ]
-  },
-  "fvocab-493": {
-    "prompt": "'conceito/noção', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'conceito/noção' em coreano?"
-  },
-  "fvocab-494": {
-    "promptNative": "'현실 (hyeonsil)' significa...",
-    "options": [
-      "realidade",
-      "disposição/inclinação/tendência",
-      "os valores/sistema de valores de alguém",
-      "sabedoria"
-    ]
-  },
-  "fvocab-495": {
-    "prompt": "'contradição', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'contradição' em coreano?"
-  },
-  "fvocab-496": {
-    "promptNative": "'한계 (hangye)' significa...",
-    "options": [
-      "limite/limitação",
-      "folga/serenidade/tranquilidade",
-      "os valores/sistema de valores de alguém",
-      "ponto de vista/perspectiva"
-    ]
-  },
-  "fvocab-497": {
-    "prompt": "'tendência', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'tendência' em coreano?"
-  },
-  "fvocab-498": {
-    "promptNative": "'현상 (hyeonsang)' significa...",
-    "options": [
-      "fenômeno",
-      "orgulho/amor-próprio (que pode ser ferido)",
-      "competência",
-      "consideração/atenção"
-    ]
-  },
-  "fvocab-499": {
-    "prompt": "'fator/causa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'fator/causa' em coreano?"
-  },
-  "fvocab-500": {
-    "promptNative": "'배경 (baegyeong)' significa...",
-    "options": [
-      "antecedentes/pano de fundo/respaldo",
-      "sabedoria",
-      "contexto",
-      "tensão/nervosismo"
-    ]
-  },
-  "fvocab-501": {
-    "prompt": "'contexto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'contexto' em coreano?"
-  },
-  "fvocab-502": {
-    "promptNative": "'깨닫다 (kkaedatda)' significa...",
-    "options": [
-      "dar-se conta/chegar a compreender",
-      "enfrentar/lidar com",
-      "comparar",
-      "incluir/conter"
-    ]
-  },
-  "fvocab-503": {
-    "prompt": "'captar/entender/lidar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'captar/entender/lidar' em coreano?"
-  },
-  "fvocab-504": {
-    "promptNative": "'판단하다 (pandanhada)' significa...",
-    "options": [
-      "julgar/determinar",
-      "analisar",
-      "esconder/ocultar",
-      "suportar/resistir/aguentar"
-    ]
-  },
-  "fvocab-505": {
-    "prompt": "'analisar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'analisar' em coreano?"
-  },
-  "fvocab-506": {
-    "promptNative": "'평가하다 (pyeonggahada)' significa...",
-    "options": [
-      "avaliar/valorizar",
-      "apontar/criticar",
-      "distinguir/diferenciar",
-      "suportar/resistir/aguentar"
-    ]
-  },
-  "fvocab-507": {
-    "prompt": "'comparar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'comparar' em coreano?"
-  },
-  "fvocab-508": {
-    "promptNative": "'구별하다 (gubyeolhada)' significa...",
-    "options": [
-      "distinguir/diferenciar",
-      "superar",
-      "enfrentar/lidar com",
-      "comparar"
-    ]
-  },
-  "fvocab-509": {
-    "prompt": "'enfatizar/reforçar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'enfatizar/reforçar' em coreano?"
-  },
-  "fvocab-510": {
-    "promptNative": "'지적하다 (jijeokhada)' significa...",
-    "options": [
-      "apontar/criticar",
-      "revelar-se/vir à tona",
-      "distinguir/diferenciar",
-      "revelar/esclarecer/declarar (abertamente)"
-    ]
-  },
-  "fvocab-511": {
-    "prompt": "'incluir/conter', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'incluir/conter' em coreano?"
-  },
-  "fvocab-512": {
-    "promptNative": "'극복하다 (geukbokhada)' significa...",
-    "options": [
-      "superar",
-      "manter/conservar",
-      "avaliar/valorizar",
-      "revelar/esclarecer/declarar (abertamente)"
-    ]
-  },
-  "fvocab-513": {
-    "prompt": "'suportar/resistir/aguentar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'suportar/resistir/aguentar' em coreano?"
-  },
-  "fvocab-514": {
-    "promptNative": "'버티다 (beotida)' significa...",
-    "options": [
-      "resistir/aguentar/perseverar",
-      "distinguir/diferenciar",
-      "revelar-se/vir à tona",
-      "resolver/solucionar"
-    ]
-  },
-  "fvocab-515": {
-    "prompt": "'esconder/ocultar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'esconder/ocultar' em coreano?"
-  },
-  "fvocab-516": {
-    "promptNative": "'드러나다 (deureonada)' significa...",
-    "options": [
-      "revelar-se/vir à tona",
-      "superar",
-      "avaliar/valorizar",
-      "esconder/ocultar"
-    ]
-  },
-  "fvocab-517": {
-    "prompt": "'revelar/esclarecer/declarar (abertamente)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'revelar/esclarecer/declarar (abertamente)' em coreano?"
-  },
-  "fvocab-518": {
-    "promptNative": "'무너지다 (muneojida)' significa...",
-    "options": [
-      "colapsar/desabar/desmoronar",
-      "adaptar-se/ajustar-se",
-      "repetir",
-      "suportar/resistir/aguentar"
-    ]
-  },
-  "fvocab-519": {
-    "prompt": "'manter/conservar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'manter/conservar' em coreano?"
-  },
-  "fvocab-520": {
-    "promptNative": "'적응하다 (jeogeunghada)' significa...",
-    "options": [
-      "adaptar-se/ajustar-se",
-      "incluir/conter",
-      "enfatizar/reforçar",
-      "suportar/resistir/aguentar"
-    ]
-  },
-  "fvocab-521": {
-    "prompt": "'enfrentar/lidar com', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'enfrentar/lidar com' em coreano?"
-  },
-  "fvocab-522": {
-    "promptNative": "'해결하다 (haegyeolhada)' significa...",
-    "options": [
-      "resolver/solucionar",
-      "resistir/aguentar/perseverar",
-      "enfatizar/reforçar",
-      "comparar"
-    ]
-  },
-  "fvocab-523": {
-    "prompt": "'repetir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'repetir' em coreano?"
-  },
-  "fvocab-524": {
-    "promptNative": "'뛰어나다 (ttwieonada)' significa...",
-    "options": [
-      "ser notável/destacar-se",
-      "ser frio/racional (sem se deixar levar)",
-      "ser prudente/cuidadoso/reflexivo",
-      "ser válido/razoável/fundamentado"
-    ]
-  },
-  "fvocab-525": {
-    "prompt": "'ser apropriado/adequado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser apropriado/adequado' em coreano?"
-  },
-  "fvocab-526": {
-    "promptNative": "'타당하다 (tadanghada)' significa...",
-    "options": [
-      "ser válido/razoável/fundamentado",
-      "ser amargo/agridoce",
-      "sentir-se magoado/decepcionado (por alguém próximo)",
-      "ser honesto/franco/sincero"
-    ]
-  },
-  "fvocab-527": {
-    "prompt": "'ser claro/definido', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser claro/definido' em coreano?"
-  },
-  "fvocab-528": {
-    "promptNative": "'모호하다 (mohohada)' significa...",
-    "options": [
-      "ser vago/ambíguo",
-      "ser estrito/rigoroso",
-      "sentir-se magoado/decepcionado (por alguém próximo)",
-      "ser prudente/cuidadoso/reflexivo"
-    ]
-  },
-  "fvocab-529": {
-    "prompt": "'ser sutil/delicado/complicado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser sutil/delicado/complicado' em coreano?"
-  },
-  "fvocab-530": {
-    "promptNative": "'엄격하다 (eomgyeokhada)' significa...",
-    "options": [
-      "ser estrito/rigoroso",
-      "ser vago/ambíguo",
-      "ser sereno/tranquilo (sob pressão)",
-      "ser honesto/franco/sincero"
-    ]
-  },
-  "fvocab-531": {
-    "prompt": "'ser frio/racional (sem se deixar levar)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser frio/racional (sem se deixar levar)' em coreano?"
-  },
-  "fvocab-532": {
-    "promptNative": "'침착하다 (chimchakhada)' significa...",
-    "options": [
-      "ser sereno/tranquilo (sob pressão)",
-      "estar orgulhoso/cheio de silenciosa satisfação",
-      "ser apropriado/adequado",
-      "ser estrito/rigoroso"
-    ]
-  },
-  "fvocab-533": {
-    "prompt": "'ser prudente/cuidadoso/reflexivo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser prudente/cuidadoso/reflexivo' em coreano?"
-  },
-  "fvocab-534": {
-    "promptNative": "'솔직하다 (soljikhada)' significa...",
-    "options": [
-      "ser honesto/franco/sincero",
-      "ser válido/razoável/fundamentado",
-      "ser estrito/rigoroso",
-      "ser notável/destacar-se"
-    ]
-  },
-  "fvocab-535": {
-    "prompt": "'ser humilde/modesto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser humilde/modesto' em coreano?"
-  },
-  "fvocab-536": {
-    "promptNative": "'씁쓸하다 (sseupsseulhada)' significa...",
-    "options": [
-      "ser amargo/agridoce",
-      "ser notável/destacar-se",
-      "ser sutil/delicado/complicado",
-      "ser sereno/tranquilo (sob pressão)"
-    ]
-  },
-  "fvocab-537": {
-    "prompt": "'estar orgulhoso/cheio de silenciosa satisfação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'estar orgulhoso/cheio de silenciosa satisfação' em coreano?"
-  },
-  "fvocab-538": {
-    "promptNative": "'서운하다 (seounhada)' significa...",
-    "options": [
-      "sentir-se magoado/decepcionado (por alguém próximo)",
-      "ser frio/racional (sem se deixar levar)",
-      "ser válido/razoável/fundamentado",
-      "ser notável/destacar-se"
-    ]
-  },
-  "fvocab-539": {
-    "prompt": "'ser sincero/aflito/de coração', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser sincero/aflito/de coração' em coreano?"
-  },
-  "fvocab-540": {
-    "promptNative": "'어쩌면 (eojjeomyeon)' significa...",
-    "options": [
-      "talvez/possivelmente (quem sabe)",
-      "como se/tal como",
-      "de fato/efetivamente; (será que) de verdade",
-      "logo agora/por que justamente este"
-    ]
-  },
-  "fvocab-541": {
-    "prompt": "'de fato/efetivamente; (será que) de verdade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'de fato/efetivamente; (será que) de verdade' em coreano?"
-  },
-  "fvocab-542": {
-    "promptNative": "'아무래도 (amuraedo)' significa...",
-    "options": [
-      "em todo caso/ao que parece/provavelmente",
-      "nada menos que",
-      "de fato/efetivamente; (será que) de verdade",
-      "felizmente/por sorte"
-    ]
-  },
-  "fvocab-543": {
-    "prompt": "'logo agora/por que justamente este', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'logo agora/por que justamente este' em coreano?"
-  },
-  "fvocab-544": {
-    "promptNative": "'비록 (birok)' significa...",
-    "options": [
-      "embora/apesar de que",
-      "nada menos que",
-      "talvez/possivelmente (quem sabe)",
-      "felizmente/por sorte"
-    ]
-  },
-  "fvocab-545": {
-    "prompt": "'felizmente/por sorte', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'felizmente/por sorte' em coreano?"
-  },
-  "fvocab-546": {
-    "promptNative": "'무려 (muryeo)' significa...",
-    "options": [
-      "nada menos que",
-      "talvez/possivelmente (quem sabe)",
-      "de fato/efetivamente; (será que) de verdade",
-      "logo agora/por que justamente este"
-    ]
-  },
-  "fvocab-547": {
-    "prompt": "'como se/tal como', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'como se/tal como' em coreano?"
-  },
-  "fvocab-548": {
-    "promptNative": "'도저히 (dojeohi)' significa...",
-    "options": [
-      "(não) de jeito nenhum/de forma alguma",
-      "nada menos que",
-      "de fato/efetivamente; (será que) de verdade",
-      "felizmente/por sorte"
-    ]
-  },
-  "fvocab-549": {
-    "prompt": "'ainda/como sempre/como antes', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ainda/como sempre/como antes' em coreano?"
-  },
-  "fvocab-550": {
-    "promptNative": "'반드시 (bandeusi)' significa...",
-    "options": [
-      "sem falta/com certeza/obrigatoriamente",
-      "(não) de jeito nenhum/de forma alguma",
-      "como se/tal como",
-      "felizmente/por sorte"
-    ]
-  },
-  "fvocab-551": {
-    "prompt": "'constantemente/de forma consistente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'constantemente/de forma consistente' em coreano?"
-  },
-  "fvocab-552": {
-    "promptNative": "'아무리 (amuri)' significa...",
-    "options": [
-      "por mais que/não importa o quanto",
-      "o chamado/o que se chama",
-      "mesmo que/supondo",
-      "quem"
-    ]
-  },
-  "fvocab-553": {
-    "prompt": "'mesmo que/supondo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'mesmo que/supondo' em coreano?"
-  },
-  "fvocab-554": {
-    "promptNative": "'어쩐지 (eojjeonji)' significa...",
-    "options": [
-      "de algum modo/com razão",
-      "o chamado/o que se chama",
-      "mesmo que/supondo",
-      "naturalmente/como deve ser"
-    ]
-  },
-  "fvocab-555": {
-    "prompt": "'o chamado/o que se chama', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'o chamado/o que se chama' em coreano?"
-  },
-  "fvocab-556": {
-    "promptNative": "'취향 (chwihyang)' significa...",
-    "options": [
-      "gosto/preferência",
-      "fundamento/base/evidência",
-      "fenômeno",
-      "competência"
-    ]
-  },
-  "fvocab-557": {
-    "prompt": "'disposição/inclinação/tendência', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'disposição/inclinação/tendência' em coreano?"
-  },
-  "fvocab-558": {
-    "promptNative": "'정성 (jeongseong)' significa...",
-    "options": [
-      "cuidado dedicado/esforço de todo o coração",
-      "fator/causa",
-      "autenticidade/sinceridade",
-      "paixão/entusiasmo"
-    ]
-  },
-  "fvocab-559": {
-    "prompt": "'vínculo/laços (entre pessoas)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'vínculo/laços (entre pessoas)' em coreano?"
-  },
-  "fvocab-560": {
-    "promptNative": "'공감 (gonggam)' significa...",
-    "options": [
-      "empatia/afinidade",
-      "os valores/sistema de valores de alguém",
-      "tendência",
-      "limite/limitação"
-    ]
-  },
-  "fvocab-561": {
-    "prompt": "'autenticidade/sinceridade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'autenticidade/sinceridade' em coreano?"
-  },
-  "fvocab-562": {
-    "promptNative": "'포용력 (poyongnyeok)' significa...",
-    "options": [
-      "capacidade de acolher/aceitar os outros",
-      "vínculo/laços (entre pessoas)",
-      "sabedoria",
-      "antecedentes/pano de fundo/respaldo"
-    ]
-  },
-  "fvocab-563": {
-    "prompt": "'sensibilidade emocional/sentimento', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'sensibilidade emocional/sentimento' em coreano?"
-  },
-  "fvocab-564": {
-    "promptNative": "'여운 (yeoun)' significa...",
-    "options": [
-      "ressonância persistente/gostinho residual (de um momento)",
-      "magnanimidade/tolerância generosa",
-      "autorreflexão/introspecção",
-      "paradoxo"
-    ]
-  },
-  "fvocab-565": {
-    "prompt": "'apego persistente/relutância em largar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'apego persistente/relutância em largar' em coreano?"
-  },
-  "fvocab-566": {
-    "promptNative": "'향수 (hyangsu)' significa...",
-    "options": [
-      "nostalgia/saudade de casa; perfume (mesmo som)",
-      "margem/espaço (para)",
-      "intuição",
-      "firme convicção pessoal"
-    ]
-  },
-  "fvocab-567": {
-    "prompt": "'magnanimidade/tolerância generosa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'magnanimidade/tolerância generosa' em coreano?"
-  },
-  "fvocab-568": {
-    "promptNative": "'절제 (jeolje)' significa...",
-    "options": [
-      "autocontrole/moderação",
-      "margem/espaço (para)",
-      "apego persistente/relutância em largar",
-      "metáfora"
-    ]
-  },
-  "fvocab-569": {
-    "prompt": "'autorreflexão/introspecção', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'autorreflexão/introspecção' em coreano?"
-  },
-  "fvocab-570": {
-    "promptNative": "'안목 (anmok)' significa...",
-    "options": [
-      "bom olho/bom senso",
-      "nostalgia/saudade de casa; perfume (mesmo som)",
-      "um modelo/exemplo a seguir",
-      "apego persistente/relutância em largar"
-    ]
-  },
-  "fvocab-571": {
-    "prompt": "'firme convicção pessoal', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'firme convicção pessoal' em coreano?"
-  },
-  "fvocab-572": {
-    "promptNative": "'신념 (sinnyeom)' significa...",
-    "options": [
-      "crença/convicção",
-      "margem/espaço (para)",
-      "nostalgia/saudade de casa; perfume (mesmo som)",
-      "ponto cego/brecha legal"
-    ]
-  },
-  "fvocab-573": {
-    "prompt": "'identidade (senso de si mesmo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'identidade (senso de si mesmo)' em coreano?"
-  },
-  "fvocab-574": {
-    "promptNative": "'직관 (jikgwan)' significa...",
-    "options": [
-      "intuição",
-      "nuance/matiz de significado",
-      "firme convicção pessoal",
-      "costume/convenção"
-    ]
-  },
-  "fvocab-575": {
-    "prompt": "'paradoxo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'paradoxo' em coreano?"
-  },
-  "fvocab-576": {
-    "promptNative": "'은유 (eunyu)' significa...",
-    "options": [
-      "metáfora",
-      "bom olho/bom senso",
-      "autorreflexão/introspecção",
-      "um modelo/exemplo a seguir"
-    ]
-  },
-  "fvocab-577": {
-    "prompt": "'nuance/matiz de significado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'nuance/matiz de significado' em coreano?"
-  },
-  "fvocab-578": {
-    "promptNative": "'관행 (gwanhaeng)' significa...",
-    "options": [
-      "prática estabelecida/costume (esp. institucional)",
-      "sensibilidade emocional/sentimento",
-      "metáfora",
-      "firme convicção pessoal"
-    ]
-  },
-  "fvocab-579": {
-    "prompt": "'costume/convenção', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'costume/convenção' em coreano?"
-  },
-  "fvocab-580": {
-    "promptNative": "'여지 (yeoji)' significa...",
-    "options": [
-      "margem/espaço (para)",
-      "ressonância persistente/gostinho residual (de um momento)",
-      "magnanimidade/tolerância generosa",
-      "paradoxo"
-    ]
-  },
-  "fvocab-581": {
-    "prompt": "'ponto cego/brecha legal', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ponto cego/brecha legal' em coreano?"
-  },
-  "fvocab-582": {
-    "promptNative": "'귀감 (gwigam)' significa...",
-    "options": [
-      "um modelo/exemplo a seguir",
-      "metáfora",
-      "margem/espaço (para)",
-      "paradoxo"
-    ]
-  },
-  "fvocab-583": {
-    "prompt": "'abarcar/reunir/englobar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'abarcar/reunir/englobar' em coreano?"
-  },
-  "fvocab-584": {
-    "promptNative": "'좌우하다 (jwauhada)' significa...",
-    "options": [
-      "determinar/influenciar/ter domínio sobre",
-      "compreender/considerar/avaliar",
-      "estar enviesado/pender demais para um lado",
-      "abarcar/reunir/englobar"
-    ]
-  },
-  "fvocab-585": {
-    "prompt": "'evocar/suscitar (um sentimento)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'evocar/suscitar (um sentimento)' em coreano?"
-  },
-  "fvocab-586": {
-    "promptNative": "'되새기다 (doesaegida)' significa...",
-    "options": [
-      "ruminar/refletir/matutar",
-      "compreender/considerar/avaliar",
-      "deixar passar/negligenciar",
-      "ajustar-se/concordar/coincidir (com)"
-    ]
-  },
-  "fvocab-587": {
-    "prompt": "'compreender/considerar/avaliar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'compreender/considerar/avaliar' em coreano?"
-  },
-  "fvocab-588": {
-    "promptNative": "'가늠하다 (ganeumhada)' significa...",
-    "options": [
-      "calibrar/avaliar/estimar",
-      "compreender/considerar/avaliar",
-      "abarcar/reunir/englobar",
-      "determinar/influenciar/ter domínio sobre"
-    ]
-  },
-  "fvocab-589": {
-    "prompt": "'deixar passar/negligenciar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'deixar passar/negligenciar' em coreano?"
-  },
-  "fvocab-590": {
-    "promptNative": "'치우치다 (chiuchida)' significa...",
-    "options": [
-      "estar enviesado/pender demais para um lado",
-      "compreender/considerar/avaliar",
-      "originar-se/provir de",
-      "ruminar/refletir/matutar"
-    ]
-  },
-  "fvocab-591": {
-    "prompt": "'provocar/causar (ger. algo ruim)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'provocar/causar (ger. algo ruim)' em coreano?"
-  },
-  "fvocab-592": {
-    "promptNative": "'비롯되다 (birotdoeda)' significa...",
-    "options": [
-      "originar-se/provir de",
-      "calibrar/avaliar/estimar",
-      "estar enviesado/pender demais para um lado",
-      "ajustar-se/concordar/coincidir (com)"
-    ]
-  },
-  "fvocab-593": {
-    "prompt": "'ajustar-se/concordar/coincidir (com)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ajustar-se/concordar/coincidir (com)' em coreano?"
-  },
-  "fvocab-594": {
-    "promptNative": "'마땅하다 (mattanghada)' significa...",
-    "options": [
-      "ser apropriado/devido/o correto",
-      "ser especial/particular (de cuidado, laços)",
-      "ser imenso/profundo (de influência)",
-      "ser inútil/em vão"
-    ]
-  },
-  "fvocab-595": {
-    "prompt": "'ser excepcional/destacar-se', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser excepcional/destacar-se' em coreano?"
-  },
-  "fvocab-596": {
-    "promptNative": "'각별하다 (gakbyeolhada)' significa...",
-    "options": [
-      "ser especial/particular (de cuidado, laços)",
-      "ser inadequado/insuficiente",
-      "ser apropriado/devido/o correto",
-      "ser efêmero/passageiro/vão"
-    ]
-  },
-  "fvocab-597": {
-    "prompt": "'ser imenso/profundo (de influência)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser imenso/profundo (de influência)' em coreano?"
-  },
-  "fvocab-598": {
-    "promptNative": "'부질없다 (bujireopda)' significa...",
-    "options": [
-      "ser inútil/em vão",
-      "ser terno/comovente/nostalgicamente afetuoso",
-      "ser inadequado/insuficiente",
-      "ser excepcional/destacar-se"
-    ]
-  },
-  "fvocab-599": {
-    "prompt": "'ser efêmero/passageiro/vão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser efêmero/passageiro/vão' em coreano?"
-  },
-  "fvocab-600": {
-    "promptNative": "'애틋하다 (aeteutada)' significa...",
-    "options": [
-      "ser terno/comovente/nostalgicamente afetuoso",
-      "ser inadequado/insuficiente",
-      "ser especial/particular (de cuidado, laços)",
-      "ser imenso/profundo (de influência)"
-    ]
-  },
-  "fvocab-601": {
-    "prompt": "'ser inadequado/insuficiente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'ser inadequado/insuficiente' em coreano?"
-  },
-  "fvocab-602": {
-    "promptNative": "'좀처럼 (jomcheoreom)' significa...",
-    "options": [
-      "dificilmente/raramente",
-      "deliberadamente/fingindo",
-      "certamente/sem dúvida/com toda a probabilidade",
-      "no fim/finalmente (as coisas chegaram a)"
-    ]
-  },
-  "fvocab-603": {
-    "prompt": "'nunca/de jeito nenhum', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'nunca/de jeito nenhum' em coreano?"
-  },
-  "fvocab-604": {
-    "promptNative": "'필시 (pilsi)' significa...",
-    "options": [
-      "certamente/sem dúvida/com toda a probabilidade",
-      "bastante/consideravelmente (literário)",
-      "dificilmente/raramente",
-      "deliberadamente/fingindo"
-    ]
-  },
-  "fvocab-605": {
-    "prompt": "'deliberadamente/fingindo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'deliberadamente/fingindo' em coreano?"
-  },
-  "fvocab-606": {
-    "promptNative": "'자못 (jamot)' significa...",
-    "options": [
-      "bastante/consideravelmente (literário)",
-      "nunca/de jeito nenhum",
-      "no fim/finalmente (as coisas chegaram a)",
-      "dificilmente/raramente"
-    ]
-  },
-  "fvocab-607": {
-    "prompt": "'no fim/finalmente (as coisas chegaram a)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)",
-    "promptNative": "Como se diz 'no fim/finalmente (as coisas chegaram a)' em coreano?"
-  },
-  "fvocab-608": {
-    "promptNative": "'응당 (eungdang)' significa...",
-    "options": [
-      "naturalmente/como deve ser",
-      "durante/por (um período)",
-      "classificador para folhas planas",
-      "você (informal)"
-    ]
-  }
+  "vocab-0": {"promptNative":"'안녕하세요 (annyeonghaseyo)' significa...","options":["olá (formal)","adeus","obrigado","por favor"],"explain":"'안녕하세요' é a saudação educada padrão, usável a qualquer hora do dia. Literalmente pergunta se você está em paz (안녕 = paz/bem-estar)."},
+  "vocab-1": {"promptNative":"'감사합니다 (gamsahamnida)' significa...","options":["obrigado (formal)","por favor","desculpa","de nada"],"explain":"'감사합니다' é um agradecimento formal — uma das frases mais essenciais. O casual '고마워요 (gomawoyo)' é seu equivalente do dia a dia."},
+  "vocab-2": {"promptNative":"'친구 (chingu)' significa...","options":["amigo","inimigo","vizinho","colega de trabalho"],"explain":"'친구' significa amigo — mas implica alguém da mesma idade; a estrutura social coreana baseada na idade faz com que normalmente você não chame de 친구 alguém mais velho."},
+  "vocab-3": {"promptNative":"'물 (mul)' significa...","options":["água","fogo","chá","arroz"],"explain":"'물' significa água."},
+  "vocab-4": {"promptNative":"'네 (ne)' significa...","options":["sim","não","talvez","por favor"],"explain":"'네' significa sim — também é usado o tempo todo como um suave \"ajá / te escucho,\" mais do que como o \"sí\" do português. O mais seco '예 (ye)' é seu gêmeo formal."},
+  "vocab-5": {"promptNative":"'창문 (changmun)' significa...","options":["janela","porta","parede","chão"],"explain":"'창문' significa janela."},
+  "vocab-6": {"promptNative":"'가족 (gajok)' significa...","options":["família","grupo de amigos","vizinhança","equipe"],"explain":"'가족' significa família."},
+  "vocab-7": {"promptNative":"'일 (il)' significa...","options":["trabalho/emprego","férias","reunião","salário"],"explain":"'일' significa trabalho — e, curiosidade, o mesmo som (de raízes sino-coreanas) também significa \"uno\" e \"día\" dependendo do contexto."},
+  "vocab-8": {"promptNative":"'밥 (bap)' significa...","options":["arroz cozido / uma refeição (ambos)","só arroz cru","pão","sopa"],"explain":"'밥' significa arroz cozido — mas, por extensão, significa \"una comida\" em geral. \"밥 먹었어요? (¿Has comido?)\" é uma saudação pronta que expressa carinho, não uma pergunta literal sobre arroz."},
+  "vocab-9": {"promptNative":"'사랑 (sarang)' significa...","options":["amor","amizade","gentileza","sorte"],"explain":"'사랑' significa amor. '사랑해요 (saranghaeyo)' — \"te amo\" — é uma das primeiras frases que a maioria dos estudantes quer."},
+  "vocab-10": {"promptNative":"'답답하다 (dapdaphada)' significa...","options":["sentir-se frustrado/sufocado","sentir-se empolgado","sentir-se sonolento","sentir-se faminto"],"explain":"'답답하다' descreve aquela sensação sufocante e frustrante quando algo (ou alguém) não cede ou não faz sentido — uma palavra de sentimento muito usada no dia a dia."},
+  "vocab-11": {"promptNative":"'화이팅 (hwaiting)' significa...","options":["\"você consegue!/força!\"","\"adeus\"","\"parabéns\"","\"desculpa\""],"explain":"Emprestado do inglês \"fighting,\" '화이팅' é um grito de incentivo comum — gritado antes de uma prova ou evento, parecido em espírito com o '加油' do mandarim. Também se escreve '파이팅 (paiting)'."},
+  "vocab-12": {"promptNative":"'눈 (nun)' significa...","options":["olho OU neve (duas palavras distintas, mesmo som)","só olho","só neve","orelha"],"explain":"Um homófono coreano famoso: '눈' pode significar \"ojo\" ou \"nieve\" — duas palavras não relacionadas que soam e até se escrevem de forma idêntica, com o contexto esclarecendo qual delas (embora, na fala cuidada, \"nieve\" seja alongado um pouco)."},
+  "vocab-13": {"promptNative":"'선생님 (seonsaengnim)' significa...","options":["professor (respeitoso)","estudante","colega de classe","diretor"],"explain":"'선생님' significa professor(a), com o sufixo honorífico '님' anexado — usado com respeito como o 'sensei' japonês ou o 'lǎoshī' do mandarim, e estendido a qualquer pessoa a quem você demonstraria esse respeito."},
+  "vocab-14": {"promptNative":"'정 (jeong)' significa...","options":["vínculo/afeto profundo forjado com o tempo","um compromisso marcado","limpeza","silêncio"],"explain":"'정' é o apego emocional que se constrói devagar entre as pessoas (ou por lugares, até objetos) — uma lealdade calorosa e grudenta que cresce com o tempo compartilhado. É considerado um sentimento coreano definidor, sem palavra clara em inglês."},
+  "vocab-15": {"promptNative":"'눈치 (nunchi)' significa...","options":["consciência social/saber ler o ambiente","visão","curiosidade","timidez"],"explain":"'눈치' (literalmente algo perto de \"medida del ojo\") é a habilidade social de ler uma situação e captar sinais não ditos — nenhuma palavra única em inglês dá conta. Quem é lento nisso é '눈치가 없다' (não tem nunchi)."},
+  "vocab-16": {"promptNative":"'배 (bae)' significa...","options":["estômago, barco OU pera (três palavras distintas!)","só estômago","só barco","só pera"],"explain":"Um caso ainda mais famoso que 눈: '배' cobre três palavras não relacionadas — barriga/estômago, barco e pera — todas pronunciadas e escritas igual, distinguidas só pelo contexto."},
+  "vocab-17": {"promptNative":"'대박 (daebak)' significa...","options":["\"que demais!/jackpot!/sucesso absoluto\"","\"desastre\"","\"talvez\"","\"adeus\""],"explain":"'대박' é uma exclamação multiuso — \"¡increíble!\", \"¡jackpot!\", \"¡no puede ser!\" — originalmente um enorme sucesso comercial (um filme de bilheteria é um '대박'). Seu oposto, um fracasso, é '쪽박 (jjokbak)'."},
+  "vocab-18": {"promptNative":"'시원하다 (siwonhada)' significa...","options":["refrescante — até para sopa QUENTE (mesma palavra)","só \"frio\"","só \"morno\"","só \"picante\""],"explain":"'시원하다' significa refrescante/fresco — mas os coreanos também chamam de '시원하다' uma sopa fervendo quando ela cai bem. Também cobre o alívio (um bom estalo nas costas, resolver um problema). O ponto é o contexto, não a temperatura."},
+  "vocab-19": {"promptNative":"'억울하다 (eogulhada)' significa...","options":["sentir-se lesado/tratado injustamente","sentir-se orgulhoso","sentir-se entediado","sentir-se agradecido"],"explain":"'억울하다' é o sentimento específico e agudo de ser culpado injustamente ou tratado de forma injusta — a sensação ardente de que \"esto no es justo y no me lo merecía.\" O inglês precisa de uma frase inteira."},
+  "vocab-20": {"promptNative":"'체면 (chemyeon)' significa...","options":["prestígio/dignidade social (que se mantém ou se perde)","uma máscara física","uma expressão facial","maquiagem"],"explain":"'체면' é o rosto social — a dignidade pública que você mantém e pode \"perder\" ('체면을 잃다') ou \"salvar\" diante dos outros. Como a cultura do 建前/keigo japonês, molda boa parte da cortesia e do jeito indireto do dia a dia."},
+  "vocab-21": {"promptNative":"'시치미 (sichimi)' significa...","options":["inocência fingida (em '시치미를 떼다')","um tempero forte","uma pequena mentira sobre a idade","um tipo de chapéu"],"explain":"'시치미' vive na expressão fixa '시치미(를) 떼다' — se fazer de bobo, fingir ignorância total de algo que você claramente sabe. Originalmente nomeava a etiqueta de um falcão de caça; \"quitar la etiqueta\" significava fingir que a ave não era sua."},
+  "vocab-22": {"promptNative":"'답정너 (dapjeongneo)' significa...","options":["\"a resposta já está decidida, você só precisa dizê-la\" (gíria)","uma resposta incorreta","um app de quiz","uma recusa educada"],"explain":"'답정너' é uma contração de gíria moderna de '답은 정해져 있고 너는 대답만 하면 돼' — \"la respuesta ya está decidida; tú solo tienes que decirla.\" Rotula quem pede sua opinião mas só quer a que já decidiu."},
+  "vocab-23": {"promptNative":"'한 (han)' significa...","options":["mágoa/rancor profundo e arraigado","só um sobrenome coreano","o número um","uma estação"],"explain":"'한' é a famosa \"intraducible\": uma tristeza profunda e acumulada e um ressentimento não resolvido — histórico, coletivo e pessoal ao mesmo tempo — citada com frequência como fio central da arte, da música e da identidade coreanas. Sua contraparte emocional é '흥 (heung)', a alegria espontânea."},
+  "vocab-24": {"promptNative":"'흥 (heung)' significa...","options":["alegria/entusiasmo/júbilo espontâneo","tédio","raiva","esgotamento"],"explain":"'흥' é o borbulhar de alegria e ritmo espontâneos — o impulso de cantar, dançar, se deixar levar. '흥이 나다' é pegar essa faísca. Culturalmente emparelhado como o gêmeo luminoso de '한 (han)': diz-se que um mesmo povo abriga tanto a tristeza profunda quanto o ritmo incontrolável."},
+  "vocab-25": {"promptNative":"'학교 (hakgyo)' significa...","options":["escola","hospital","biblioteca","escritório"],"explain":"'학교' significa escola. É uma das primeiras palavras de lugar que os estudantes aprendem, e se junta a 가다 (ir) na frase muito comum 학교에 가요 (vou para a escola)."},
+  "vocab-26": {"promptNative":"'사람 (saram)' significa...","options":["pessoa / gente","animal","amigo","criança"],"explain":"'사람' significa pessoa ou gente. É um substantivo básico do dia a dia e aparece em incontáveis compostos, como 한국 사람 (uma pessoa coreana)."},
+  "vocab-27": {"promptNative":"'책 (chaek)' significa...","options":["livro","escrivaninha","caneta","papel"],"explain":"'책' significa livro. Combine com o classificador 권 (gwon) para contar volumes: 책 한 권 é um livro."},
+  "vocab-28": {"promptNative":"'집 (jip)' significa...","options":["casa / lar","escola","loja","quarto"],"explain":"'집' significa casa ou lar — abrange tanto o prédio quanto o sentido mais caloroso de \"hogar.\" 집에 가요 (vou para casa) é uma das frases mais usadas na vida diária."},
+  "vocab-29": {"promptNative":"'커피 (keopi)' significa...","options":["café","chá","suco","leite"],"explain":"'커피' significa café — um empréstimo do inglês que reflete a florescente cultura de cafeterias da Coreia. Peça 커피 한 잔 (uma xícara de café)."},
+  "vocab-30": {"promptNative":"'시간 (sigan)' significa...","options":["tempo / hora","dia","semana","lugar"],"explain":"'시간' significa tempo, e também \"hora\" ao contar (한 시간 = uma hora). É uma palavra sino-coreana de uso constante, como em 시간이 없어요 (não tenho tempo)."},
+  "vocab-31": {"promptNative":"'사과 (sagwa)' significa...","options":["maçã OU um pedido de desculpas (mesma palavra)","só maçã","só banana","só laranja"],"explain":"'사과' é um homófono coreano prático: significa tanto \"manzana\" quanto \"una disculpa.\" 사과하다 é \"disculparse,\" então o contexto indica se alguém está oferecendo fruta ou pedindo desculpa."},
+  "vocab-32": {"promptNative":"'오늘 (oneul)' significa...","options":["hoje","amanhã","ontem","agora"],"explain":"'오늘' significa hoje. Forma um conjunto cotidiano claro com 어제 (ontem) e 내일 (amanhã) — três palavras de tempo que vale a pena aprender juntas."},
+  "vocab-33": {"promptNative":"'이름 (ireum)' significa...","options":["nome","idade","endereço","rosto"],"explain":"'이름' significa nome. Uma pergunta comum ao se conhecer alguém é 이름이 뭐예요? (Qual é o seu nome?); a versão honorífica usa 성함 para alguém que você respeita."},
+  "vocab-34": {"promptNative":"'학생 (haksaeng)' significa...","options":["estudante","professor","médico","trabalhador"],"explain":"'학생' significa estudante. Combina as raízes sino-coreanas 학 (estudar) e 생 (pessoa), um padrão que você verá em muitas palavras escolares."},
+  "vocab-35": {"promptNative":"'병원 (byeongwon)' significa...","options":["hospital / clínica","farmácia","escola","banco"],"explain":"'병원' significa hospital ou clínica — literalmente \"casa de enfermedad\" (병 doença + 원 instituição). Uma farmácia, por outro lado, é 약국 (yakguk)."},
+  "vocab-36": {"promptNative":"'날씨 (nalssi)' significa...","options":["clima","estação","céu","temperatura"],"explain":"'날씨' significa clima. É assunto de conversa constante, como em 날씨가 좋아요 (o tempo está bom)."},
+  "vocab-37": {"promptNative":"'시장 (sijang)' significa...","options":["um mercado","supermercado","shopping","restaurante"],"explain":"'시장' significa um mercado, especialmente um tradicional ao ar livre. O mesmo som (de caracteres sino-coreanos diferentes) também significa \"alcalde,\" esclarecido pelo contexto."},
+  "vocab-38": {"promptNative":"'지하철 (jihacheol)' significa...","options":["metrô / subterrâneo","ônibus","estação de trem","táxi"],"explain":"'지하철' significa metrô — literalmente \"hierro/riel subterraneo\" (지하 subterrâneo + 철 ferro). O extenso metrô de Seul torna essa uma palavra de viagem essencial."},
+  "vocab-39": {"promptNative":"'음식 (eumsik)' significa...","options":["comida (alimento)","uma bebida","um restaurante","uma refeição"],"explain":"'음식' significa comida em geral. 한국 음식 é comida coreana, e 음식점 (eumsikjeom) é um lugar que a serve — um restaurante."},
+  "vocab-40": {"promptNative":"'바다 (bada)' significa...","options":["mar / oceano","rio","lago","montanha"],"explain":"'바다' significa mar ou oceano. Seu par natural é 산 (montanha), e os coreanos costumam falar em ir ao 바다 para uma viagem de verão."},
+  "vocab-41": {"promptNative":"'가게 (gage)' significa...","options":["uma loja / pequeno negócio","um mercado","uma fábrica","um depósito"],"explain":"'가게' significa uma loja ou comércio pequeno — de escala de bairro, menor que um 마트 (mart) ou uma loja de departamentos. Uma loja de conveniência é um 편의점 (pyeonuijeom)."},
+  "vocab-42": {"promptNative":"'편지 (pyeonji)' significa...","options":["uma carta escrita","um e-mail","um pacote","um cartão-postal"],"explain":"'편지' significa uma carta escrita. 편지를 쓰다 é \"escribir una carta\"; apesar das mensagens digitais, uma 편지 manuscrita continua sendo um gesto afetuoso na Coreia."},
+  "vocab-43": {"promptNative":"'우산 (usan)' significa...","options":["guarda-chuva","capa de chuva","chapéu","botas"],"explain":"'우산' significa guarda-chuva — literalmente uma \"sombra de lluvia\" (우 chuva + 산 guarda-chuva). Uma sombrinha para o sol é um 양산 (yangsan)."},
+  "vocab-44": {"promptNative":"'아깝다 (akkapda)' significa...","options":["ser um desperdício / bom demais para desperdiçar","ser caro","estar sujo","ser pesado"],"explain":"'아깝다' capta a pontada de algo se desperdiçar ou se perder quando não deveria — jogar fora comida boa, perder uma chance, perder por pouco. O inglês precisa de \"que desperdicio\" ou \"que pena\" para dar conta."},
+  "vocab-45": {"promptNative":"'서운하다 (seounhada)' significa...","options":["sentir-se calada/discretamente magoado / decepcionado","sentir-se furioso","sentir-se orgulhoso","sentir-se aliviado"],"explain":"'서운하다' é a decepção suave e dolorida quando alguém próximo não atende a uma expectativa não dita — não é raiva, só uma mágoa calada. Costuma surgir justamente porque existe 정 (jeong) entre as pessoas."},
+  "vocab-46": {"promptNative":"'심심하다 (simsimhada)' significa...","options":["estar entediado (sem nada para fazer)","estar ocupado","estar cansado","estar bravo"],"explain":"'심심하다' significa entediado no sentido de não ter nada para fazer — um tédio ocioso e inquieto. Difere de 지루하다, que é ficar entediado POR algo tedioso."},
+  "vocab-47": {"promptNative":"'꾸준하다 (kkujunhada)' significa...","options":["ser constante e perseverante","ser preguiçoso","ser repentino","ser descuidado"],"explain":"'꾸준하다' descreve um esforço constante e ininterrupto ao longo do tempo — a consistência calada de quem continua com algo dia após dia. É uma qualidade muito valorizada, próxima de \"diligente y confiable.\""},
+  "vocab-48": {"promptNative":"'반갑다 (bangapda)' significa...","options":["ficar feliz em conhecer / ver alguém","estar constrangido","estar surpreso","estar nervoso"],"explain":"'반갑다' é a alegria calorosa de encontrar ou ver alguém — é o que move a saudação 반갑습니다 (muito prazer). Descreve especificamente o prazer de um encontro, não a felicidade em geral."},
+  "vocab-49": {"promptNative":"'아쉽다 (aswipda)' significa...","options":["sentir pesar nostálgico / desejar mais","sentir nojo","sentir medo","sentir tédio"],"explain":"'아쉽다' é o sentimento agridoce de desejar que algo tivesse sido um pouco mais ou durado um pouco mais — o puxão que você sente ao se despedir ou quando uma viagem acaba. É mais leve que o arrependimento de verdade."},
+  "vocab-50": {"promptNative":"'애교 (aegyo)' significa...","options":["charme / comportamento fofo e manhoso","má educação","timidez","teimosia"],"explain":"'애교' é a exibição terna e faceira de charme — biquinhos brincalhões, voz cantada, manhas carinhosas — usada com parceiros, família ou amigos. É um comportamento social reconhecido, sem equivalente claro em inglês."},
+  "vocab-51": {"promptNative":"'갑질 (gapjil)' significa...","options":["abuso de poder sobre um subordinado","trabalho duro","generosidade","trabalho em equipe"],"explain":"'갑질' é o abuso de poder de quem está na posição mais forte (o 갑) sobre o mais fraco (o 을) — um chefe maltratando a equipe, um cliente abusando de um fornecedor. É um tema importante no debate social coreano."},
+  "vocab-52": {"promptNative":"'회식 (hoesik)' significa...","options":["um jantar da empresa / da equipe","uma reunião de negócios","uma pausa para o almoço","um feriado"],"explain":"'회식' é o jantar de empresa depois do trabalho — uma refeição de equipe semiobrigatória, muitas vezes com bebida, pensada para criar laços. Amado e temido em igual medida, é um traço definidor da cultura de trabalho coreana."},
+  "vocab-53": {"promptNative":"'꼰대 (kkondae)' significa...","options":["um mais velho ou chefe condescendente e sermoneador","um amigo próximo de infância","um anfitrião generoso","uma criança pequena"],"explain":"'꼰대' é a pessoa mais velha e paternalista — um chefe, professor ou parente — que dá sermão a partir de uma autoridade autoproclamada e espera submissão enquanto despreza as ideias dos jovens. Antes gíria escolar e militar, hoje é um rótulo cotidiano afiado; agir assim é '꼰대질.'"},
+  "vocab-54": {"promptNative":"'챙기다 (chaenggida)' significa...","options":["cuidar de / atender / recolher","jogar no lixo","esquecer","vender"],"explain":"'챙기다' é um verbo cotidiano maravilhosamente versátil: arrumar ou pegar suas coisas, mas também cuidar de alguém — garantir que a pessoa coma, lembrar do aniversário dela, dar apoio. '잘 챙겨 먹어' (não deixe de comer direito) é amor cuidador condensado em um único verbo."},
+  "vocab-55": {"promptNative":"'뒤끝 (dwikkeut)' significa...","options":["ressentimento persistente que resta após um conflito já encerrado","a entrada principal","um ganho repentino","um começo antecipado"],"explain":"'뒤끝' (literalmente 'la parte de atrás') é o resíduo de mágoa que alguém carrega depois que uma briga supostamente foi resolvida. A qualidade valorizada é '뒤끝이 없다' — não guardar rancor, esclarecer as coisas e seguir em frente de verdade. Tê-lo, '뒤끝 있다,' é uma crítica real ao caráter."},
+  "vocab-56": {"promptNative":"'뿌듯하다 (ppudeushada)' significa...","options":["sentir um orgulho silencioso e crescente e plenitude","sentir vergonha","sentir medo","sentir tédio"],"explain":"'뿌듯하다' é o brilho caloroso que enche o peito de orgulho e satisfação — ver seu filho vencer, terminar uma tarefa difícil, ver o esforço finalmente render. É interior e sentido, mais do que exibido, e capta uma plenitude específica que o inglês reparte entre 'orgulloso,' 'realizado' e 'gratificado.'"},
+  "vocab-57": {"promptNative":"'우리 (uri)' significa...","options":["'nós/nosso' — usado até onde o inglês diria 'meu'","'eles'","'ninguém'","'eu sozinho'"],"explain":"'우리' significa 'nosotros/nuestro,' mas os coreanos dizem '우리 엄마' (nossa mãe), '우리 나라' (nosso país), até '우리 집' (nossa casa) onde o inglês diria 'mi.' Esse reflexo de pertencimento coletivo acima da posse individual é uma janela pequena e constante para uma visão de mundo do nós-primeiro."},
+  "vocab-58": {"promptNative":"'효 (hyo)' significa...","options":["piedade filial — devoção aos pais e mais velhos","ambição pessoal","amor romântico","sorte financeira"],"explain":"'효' (孝) é a piedade filial — o dever confucionista de devoção, cuidado e respeito aos pais e aos mais velhos, considerado por séculos a raiz de toda virtude. Ainda molda a obrigação familiar, o cuidado e até as festas; um filho devoto é um '효자' (filho) ou '효녀' (filha)."},
+  "vocab-59": {"promptNative":"'애틋하다 (aeteuthada)' significa...","options":["terno e comovente, com um anseio agridoce","barulhento e alegre","frio e distante","estrito e exigente"],"explain":"'애틋하다' descreve um carinho terno e dolorido tingido de saudade — o calor agridoce de um amor guardado à distância, uma lembrança querida, o sentimento de um pai por um filho já adulto. É uma palavra poética e emocionalmente rica que o inglês só consegue aproximar com uma frase inteira."},
+  "vocab-60": {"promptNative":"'든든하다 (deundeunhada)' significa...","options":["tranquilo e seguro graças a algo confiável","ansioso e trêmulo","irritado e amargurado","sonolento e apático"],"explain":"'든든하다' é a sensação sólida e reconfortante de ter o apoio de algo confiável — um amigo leal, uma reserva no banco, ou uma refeição farta que deixa o estômago '든든' e satisfeito. Combina a saciedade física e a segurança emocional em uma única palavra reconfortante."},
+  "vocab-61": {"promptNative":"'오지랖 (ojirap)' significa...","options":["intrometimento xereta nos assuntos dos outros","timidez extrema","grande riqueza","beleza física"],"explain":"'오지랖' vive em '오지랖이 넓다' (literalmente 'tener el faldón de la túnica ancho') — ser um intrometido que se mete nos assuntos de todo mundo, distribuindo conselhos e preocupação não pedidos. Costuma ser uma crítica, embora às vezes seja o excesso de quem simplesmente se importa demais."},
+  "vocab-62": {"promptNative":"'정성 (jeongseong)' significa...","options":["cuidado sincero e dedicado posto em fazer algo","pura velocidade física","fria indiferença","esperteza rápida"],"explain":"'정성' (精誠) é a sinceridade entregue e o cuidado esmerado que se colocam em um ato — uma comida caseira, uma carta à mão, uma cerimônia preparada com capricho. '정성껏' (com todo o 정성 de alguém) enobrece a tarefa mais humilde; a devoção por trás de algo é valorizada tanto quanto a coisa em si."},
+  "vocab-63": {"promptNative":"'삐지다 (ppijida)' significa...","options":["amuar-se / fazer beicinho por um pequeno desaforo","comemorar ruidosamente","cair num sono profundo","correr rápido"],"explain":"'삐지다' (também '삐치다') é ficar emburrado e fazer bico por uma pequena mágoa ou desfeita — ficar calado, seco ou distante até ser paparicado de volta. Implica uma relação próxima em que esse emburramento parece seguro, e 'consolarlo para que se le pase' (달래다) é metade do ritual."},
+  "vocab-64": {"promptNative":"'멋 (meot)' significa...","options":["um senso de estilo, graça e alma tipicamente coreano","pura feiura","força física bruta","silêncio total"],"explain":"'멋' é o ideal coreano intraduzível de estilo com bom gosto, garbo e uma elegância sem esforço — uma qualidade estética e moral ao mesmo tempo, que abrange a graça de uma pessoa, a alma de uma obra e o charme de um gesto. '멋있다/멋지다' ('tener 멋') é a palavra do dia a dia para tudo que é admiravelmente bacana ou bonito."},
+  "vocab-65": {"promptNative":"'여백 (yeobaek)' significa...","options":["o valor estético do espaço vazio / negativo","um mercado lotado","um barulho alto","um recipiente completamente cheio"],"explain":"'여백' é o espaço vazio tratado como significativo — o branco deliberado na pintura a tinta, na poesia ou no design que deixa todo o resto respirar. 'La belleza del 여백' ('여백의 미') é um princípio estético essencial do Leste Asiático: o que se omite dá forma e dignidade ao que está lá."},
+  "vocab-66": {"promptNative":"'은근하다 (eungeunhada)' significa...","options":["sutil, silenciosamente persistente; discreto","barulhento e evidente","instantâneo e violento","completamente ausente"],"explain":"'은근하다' descreve algo discreto mas calmamente persistente — um charme sutil, um calor tênue porém constante, uma teimosia de baixo perfil. O advérbio '은근히' ('은근히 맛있다,' discretamente/surpreendentemente gostoso) está por toda parte na fala, valorizando o indireto e o meio escondido acima do óbvio."},
+  "vocab-67": {"promptNative":"'선비 (seonbi)' significa...","options":["um ideal de erudito-cavalheiro confucionista (também, na gíria: um puritano/careta)","um guerreiro feroz","um comerciante rico","um jovem fazendeiro"],"explain":"'선비' era o erudito-cavalheiro confucionista da era Joseon — instruído, íntegro, indiferente à riqueza, o ideal moral de seu tempo. Na gíria moderna vira zombaria carinhosa: um '선비' é alguém puritanamente correto ou moralista, certinho e engomado demais para o ambiente."},
+  "vocab-68": {"promptNative":"'애환 (aehwan)' significa...","options":["as tristezas e alegrias misturadas da vida cotidiana","pura fúria","dívida financeira","um pedido de desculpas formal"],"explain":"'애환' (哀歡) funde a dor (哀) e a alegria (歡) em uma só palavra para o tecido agridoce da vida comum — as dores-e-alegrias das pessoas simples, de um bairro, de uma época. É um termo literário, um tanto elevado, para toda a textura emocional da experiência vivida."},
+  "vocab-69": {"promptNative":"'시나브로 (sinabeuro)' significa...","options":["aos poucos, imperceptivelmente, sem que a gente note","tudo de uma vez","nunca, de forma alguma","muito ruidosamente"],"explain":"'시나브로' é um advérbio coreano raro e puramente nativo (não sino-coreano) que significa 'poco a poco, sin que uno se dé cuenta' — a neve se assentando, um hábito se formando, as estações mudando. Valorizado pelo som autóctone e pelo ar poético, é uma palavra literária querida na escrita e na canção."},
+  "vocab-70": {"promptNative":"'살갑다 (salgapda)' significa...","options":["caloroso, afetuoso e fácil de lidar","áspero e espinhoso","silencioso e frio","ganancioso e egoísta"],"explain":"'살갑다' descreve uma pessoa calorosa, terna e desarmantemente fácil de ter por perto — atenciosa e afetuosa de um jeito que dissolve a distância sem alarde. É um grande elogio ao trato de alguém, evocando um calor que chega 'hasta la piel' (살)."},
+  "vocab-71": {"promptNative":"'무상하다 (musanghada)' significa...","options":["fugaz e impermanente (transitoriedade budista)","sólido e eterno","alegre e despreocupado","barulhento e agitado"],"explain":"'무상하다' (無常) carrega a noção budista da impermanência — de que tudo é efêmero e nada dura. '인생무상' ('la vida es transitoria') é a expressão fixa que se suspira diante de uma morte súbita ou de uma reviravolta do destino, nomeando uma aceitação melancólica e filosófica da natureza passageira da vida."},
+  "vocab-72": {"promptNative":"'손 (son)' significa...","options":["mão","pé","orelha","joelho"],"explain":"손 significa 'mano'; aparece em muitos compostos como 손가락 (dedo) e 손님 (convidado)."},
+  "vocab-73": {"promptNative":"'발 (bal)' significa...","options":["pé","mão","nariz","costas"],"explain":"발 significa 'pie'; atenção, é diferente de 팔 (braço), que os estudantes costumam confundir."},
+  "vocab-74": {"promptNative":"'문 (mun)' significa...","options":["porta","parede","teto","chão"],"explain":"문 significa 'puerta' ou 'portón'; o composto 대문 se refere ao portão principal de uma casa."},
+  "vocab-75": {"promptNative":"'옷 (ot)' significa...","options":["roupa","sapatos","comida","dinheiro"],"explain":"옷 é a palavra geral para 'ropa'; 옷을 입다 significa 'ponerse la ropa'."},
+  "vocab-76": {"promptNative":"'신발 (sinbal)' significa...","options":["sapatos","meias","chapéu","luvas"],"explain":"신발 significa 'zapatos'; os coreanos os tiram antes de entrar em casa."},
+  "vocab-77": {"promptNative":"'우유 (uyu)' significa...","options":["leite","suco","água","chá"],"explain":"우유 significa 'leche (de vaca)'; os leites vegetais são especificados, p. ex. 두유 para leite de soja."},
+  "vocab-78": {"promptNative":"'빵 (ppang)' significa...","options":["pão","arroz","macarrão","queijo"],"explain":"빵 significa 'pan' e abrange quase toda a panificação; vem do português 'pão' via japonês."},
+  "vocab-79": {"promptNative":"'개 (gae)' significa...","options":["cachorro","gato","pássaro","peixe"],"explain":"개 significa 'perro'; atenção, 개 também é um classificador para objetos, então o contexto importa."},
+  "vocab-80": {"promptNative":"'고양이 (goyangi)' significa...","options":["gato","cachorro","coelho","rato"],"explain":"고양이 significa 'gato'; o miado se escreve 야옹 em coreano."},
+  "vocab-81": {"promptNative":"'나무 (namu)' significa...","options":["árvore","flor","grama","pedra"],"explain":"나무 significa 'árbol' e também 'madera' como material."},
+  "vocab-82": {"promptNative":"'자다 (jada)' significa...","options":["dormir","comer","correr","ler"],"explain":"자다 significa 'dormir'; a forma honorífica 'acostarse' é 주무시다."},
+  "vocab-83": {"promptNative":"'크다 (keuda)' significa...","options":["ser grande","ser pequeno","ser rápido","ser frio"],"explain":"크다 significa 'ser grande'; como verbo também pode significar 'crecer'."},
+  "vocab-84": {"promptNative":"'얼굴 (eolgul)' significa...","options":["rosto","mão","perna","coração"],"explain":"얼굴 significa 'cara'; 얼굴이 두껍다 (cara grossa) significa idiomaticamente 'descarado'."},
+  "vocab-85": {"promptNative":"'머리 (meori)' significa...","options":["cabeça ou cabelo","pé","estômago","ombro"],"explain":"머리 significa 'cabeza' e por extensão 'cabello'; 머리가 좋다 significa 'ser inteligente'."},
+  "vocab-86": {"promptNative":"'바지 (baji)' significa...","options":["calça","camisa","saia","jaqueta"],"explain":"바지 significa 'pantalones'; uma saia é 치마."},
+  "vocab-87": {"promptNative":"'모자 (moja)' significa...","options":["chapéu","cachecol","cinto","luva"],"explain":"모자 significa 'sombrero/gorra'; o homófono 모자(母子) significa 'madre e hijo'."},
+  "vocab-88": {"promptNative":"'부엌 (bueok)' significa...","options":["cozinha","banheiro","quarto","garagem"],"explain":"부엌 significa 'cocina'; o ㅋ final é pronunciado como ㄱ, então soa 'bueok'."},
+  "vocab-89": {"promptNative":"'방 (bang)' significa...","options":["quarto","porta","janela","parede"],"explain":"방 significa 'habitación'; também dá nome a lugares como 노래방 (karaokê) e PC방."},
+  "vocab-90": {"promptNative":"'공원 (gongwon)' significa...","options":["parque","escola","mercado","estação"],"explain":"공원 significa 'parque'; não confunda com 공항 (aeroporto) nem 공장 (fábrica)."},
+  "vocab-91": {"promptNative":"'은행 (eunhaeng)' significa...","options":["banco","hospital","biblioteca","hotel"],"explain":"은행 significa 'banco'; a mesma palavra também significa 'ginkgo (árbol/fruto)'."},
+  "vocab-92": {"promptNative":"'하늘 (haneul)' significa...","options":["céu","mar","montanha","campo"],"explain":"하늘 significa 'cielo' e também 'paraíso'; é um nome próprio popular."},
+  "vocab-93": {"promptNative":"'바람 (baram)' significa...","options":["vento","chuva","neve","nuvem"],"explain":"바람 significa 'viento'; a expressão 바람을 피우다 significa 'tener una aventura amorosa'."},
+  "vocab-94": {"promptNative":"'아침 (achim)' significa...","options":["amanhã","entardecer","noite","meio-dia"],"explain":"아침 significa 'mañana' e também 'desayuno'."},
+  "vocab-95": {"promptNative":"'저녁 (jeonyeok)' significa...","options":["entardecer","amanhã","tarde","meia-noite"],"explain":"저녁 significa 'tarde/noche' e também 'cena'."},
+  "vocab-96": {"promptNative":"'걷다 (geotda)' significa...","options":["caminhar","nadar","voar","pular"],"explain":"걷다 significa 'caminar'; é um verbo irregular e vira 걸어요 na forma educada."},
+  "vocab-97": {"promptNative":"'웃다 (utda)' significa...","options":["rir ou sorrir","chorar","gritar","sussurrar"],"explain":"웃다 abrange tanto 'reír' quanto 'sonreír'; seu oposto é 울다 (chorar)."},
+  "vocab-98": {"promptNative":"'손가락 (songarak)' significa...","options":["dedo","dedo do pé","pulso","cotovelo"],"explain":"손가락 significa 'dedo de la mano' (literalmente 'rama de la mano'); o dedo do pé é 발가락."},
+  "vocab-99": {"promptNative":"'어깨 (eokkae)' significa...","options":["ombro","joelho","quadril","cotovelo"],"explain":"어깨 significa 'hombro'; 어깨가 무겁다 (ombros pesados) significa 'sentirse cargado de responsabilidad'."},
+  "vocab-100": {"promptNative":"'지갑 (jigap)' significa...","options":["carteira","mochila","guarda-chuva","mala"],"explain":"지갑 significa 'cartera' ou 'billetera'; 지갑이 얇다 (carteira fina) significa 'andar corto de dinero'."},
+  "vocab-101": {"promptNative":"'냉장고 (naengjanggo)' significa...","options":["geladeira","micro-ondas","forno","lava-louças"],"explain":"냉장고 significa 'refrigerador'; o congelador é 냉동고."},
+  "vocab-102": {"promptNative":"'세탁기 (setakgi)' significa...","options":["máquina de lavar","aspirador de pó","ar-condicionado","ventilador elétrico"],"explain":"세탁기 significa 'lavadora', de 세탁 (lavagem de roupa) + 기 (máquina)."},
+  "vocab-103": {"promptNative":"'공항 (gonghang)' significa...","options":["aeroporto","estação de trem","porto","rodoviária"],"explain":"공항 significa 'aeropuerto'; o principal centro internacional de Seul é 인천공항."},
+  "vocab-104": {"promptNative":"'횡단보도 (hoengdanbodo)' significa...","options":["faixa de pedestres","calçada","rodovia","passarela"],"explain":"횡단보도 significa 'paso de peatones'; atravessa-se quando está o 초록불 (sinal verde)."},
+  "vocab-105": {"promptNative":"'구름 (gureum)' significa...","options":["nuvem","neblina","trovão","arco-íris"],"explain":"구름 significa 'nube'; um céu nublado se expressa como 구름이 끼다."},
+  "vocab-106": {"promptNative":"'계절 (gyejeol)' significa...","options":["estação (do ano)","o tempo","o clima","feriado"],"explain":"계절 significa 'estación del año'; a Coreia vive claramente as quatro 사계절."},
+  "vocab-107": {"promptNative":"'열쇠 (yeolsoe)' significa...","options":["chave","fechadura","porta","maçaneta"],"explain":"열쇠 significa 'llave'; em sentido figurado também é a 'clave' para resolver algo."},
+  "vocab-108": {"promptNative":"'빌리다 (billida)' significa...","options":["pegar emprestado","vender","jogar no lixo","guardar"],"explain":"빌리다 significa 'pedir prestado' ou 'alquilar'; emprestar a alguém se expressa com 빌려주다."},
+  "vocab-109": {"promptNative":"'고치다 (gochida)' significa...","options":["consertar","quebrar","comprar","perder"],"explain":"고치다 significa 'reparar/arreglar' e também 'corregir' um erro ou hábito."},
+  "vocab-110": {"promptNative":"'어지럽다 (eojireopda)' significa...","options":["estar tonto","estar com sono","estar com fome","estar com sede"],"explain":"어지럽다 significa 'sentirse mareado'; também pode descrever um espaço bagunçado."},
+  "vocab-111": {"promptNative":"'무겁다 (mugeopda)' significa...","options":["ser pesado","ser leve","ser suave","ser afiado"],"explain":"무겁다 significa 'ser pesado'; o oposto, 'ser ligero', é 가볍다."},
+  "vocab-112": {"promptNative":"'눈썹 (nunsseop)' significa...","options":["sobrancelha","cílio","pálpebra","bochecha"],"explain":"눈썹 significa 'ceja'; o cílio é a palavra parecida 속눈썹."},
+  "vocab-113": {"promptNative":"'발목 (balmok)' significa...","options":["tornozelo","pulso","joelho","calcanhar"],"explain":"발목 significa 'tobillo'; 발목을 잡다 (agarrar o tornozelo) significa 'frenar o retener a alguien'."},
+  "vocab-114": {"promptNative":"'소매 (somae)' significa...","options":["manga","gola (de uma roupa)","bolso","botão"],"explain":"소매 significa 'manga'; 소매치기 (agarra-mangas) é a palavra para 'carterista'."},
+  "vocab-115": {"promptNative":"'서랍 (seorap)' significa...","options":["gaveta","prateleira","armário","gabinete"],"explain":"서랍 significa 'cajón'; é uma palavra coreana nativa, não sino-coreana."},
+  "vocab-116": {"promptNative":"'천장 (cheonjang)' significa...","options":["teto (interno)","chão","parede interna","telhado externo"],"explain":"천장 significa 'techo interior'; o telhado externo de um prédio é 지붕."},
+  "vocab-117": {"promptNative":"'예약 (yeyak)' significa...","options":["reserva","pagamento","recibo","reembolso"],"explain":"예약 significa 'reserva'; 예약하다 se usa para restaurantes, passagens e consultas."},
+  "vocab-118": {"promptNative":"'환율 (hwannyul)' significa...","options":["taxa de câmbio","taxa de juros","imposto","gorjeta"],"explain":"환율 significa 'tipo de cambio'; você vai vê-lo anunciado em um 환전소 (casa de câmbio)."},
+  "vocab-119": {"promptNative":"'습도 (seupdo)' significa...","options":["umidade","temperatura","altitude","pressão atmosférica"],"explain":"습도 significa 'humedad'; o 장마 (monção) de verão na Coreia traz uma 습도 muito alta."},
+  "vocab-120": {"promptNative":"'참다 (chamda)' significa...","options":["suportar","aproveitar","esquecer","explicar"],"explain":"참다 significa 'aguantar/contener' um sentimento, impulso ou dor, como segurar o riso."},
+  "vocab-121": {"promptNative":"'미루다 (miruda)' significa...","options":["adiar","terminar","começar","cancelar"],"explain":"미루다 significa 'posponer/aplazar'; capta o sentido cotidiano de procrastinar."},
+  "vocab-122": {"promptNative":"'눈부시다 (nunbusida)' significa...","options":["ser deslumbrante","ser sombrio","ser embaçado","ser desbotado"],"explain":"눈부시다 significa 'deslumbrante/cegadoramente brillante'; é usado em sentido figurado para uma conquista ou beleza 'radiante'."},
+  "vocab-123": {"promptNative":"'뭉클하다 (mungkeulhada)' significa...","options":["estar profundamente comovido","estar furioso","estar entediado","estar com ciúme"],"explain":"뭉클하다 descreve a sensação calorosa de um nó na garganta ao se comover profunda e ternamente."},
+  "vocab-124": {"promptNative":"'설레다 (seolleda)' significa...","options":["palpitar de expectativa","sentir sonolência","sentir culpa","sentir ressentimento"],"explain":"설레다 é a emoção do coração acelerado por uma expectativa gostosa, como antes de um encontro ou de uma viagem."},
+  "vocab-125": {"promptNative":"'아늑하다 (aneukhada)' significa...","options":["ser aconchegante","ser espaçoso","ser barulhento","ser estéril"],"explain":"아늑하다 significa 'acogedor/cómodo', e descreve um espaço quente, abrigado e reconfortante."},
+  "vocab-126": {"promptNative":"'벅차다 (beokchada)' significa...","options":["ser avassalador","ser trivial","ser arrumado","ser azedo"],"explain":"벅차다 significa 'desbordante' — uma emoção plena demais para conter ou uma tarefa grande demais para dar conta."},
+  "vocab-127": {"promptNative":"'어물쩍 (eomuljjeok)' significa...","options":["evasivamente","instantaneamente","ruidosamente","com esmero"],"explain":"어물쩍 é um advérbio para escapar de algo de forma vaga e evasiva para não encarar."},
+  "vocab-128": {"promptNative":"'은은하다 (euneunhada)' significa...","options":["ser sutilmente tênue","ser cegantemente brilhante","ser penetrante (cheiro)","ser ensurdecedor"],"explain":"은은하다 descreve algo tênue e sutil de um jeito refinado e agradável, como uma luz suave ou um aroma delicado."},
+  "vocab-129": {"promptNative":"'애먹다 (aemeokda)' significa...","options":["passar aperto / ter dificuldades","relaxar com facilidade","obter um lucro","adormecer"],"explain":"애먹다, literalmente 'comer esfuerzo', significa batalhar muito ou passar sufoco com algo."},
+  "vocab-130": {"promptNative":"'새치기 (saechigi)' significa...","options":["furar a fila","esperar com paciência","reservar um assento","segurar a porta"],"explain":"새치기 significa 'colarse en la fila', um ato malvisto socialmente de furar a fila."},
+  "vocab-131": {"promptNative":"'손사래 (sonsarae)' significa...","options":["um gesto desdenhoso de recusa com a mão","um aceno amistoso com a mão","um punho cerrado","um gesto de apontar"],"explain":"손사래 é o gesto de balançar a mão de um lado para o outro para recusar ou negar algo com firmeza, usado como 손사래를 치다."},
+  "vocab-132": {"promptNative":"'진상 (jinsang)' significa...","options":["um cliente insuportável e problemático","um cliente habitual e fiel","um anfitrião generoso","um recém-chegado tímido"],"explain":"진상 (gíria) se refere a uma pessoa ou cliente insuportável e irracional que faz escândalo."},
+  "vocab-133": {"promptNative":"'넉살 (neoksal)' significa...","options":["sociabilidade descarada e sem-vergonha","timidez paralisante","elegância serena","fria indiferença"],"explain":"넉살 é o descaro de pele grossa de se mostrar simpático e à vontade em qualquer situação sem vergonha."},
+  "gram-0": {"promptNative":"Eu sou estudante. (Qual palavra completa a frase?)","explain":"'이에요' é a cópula cortês \"soy/es/son,\" usada depois de consoante (학생 termina em ㅇ); depois de vogal se contrai em '예요'. 'X는 …이에요' é o primeiro padrão de frase que se aprende.","wrongNote":"Cópula cortês depois de consoante → 이에요 → 학생이에요."},
+  "gram-1": {"promptNative":"O que é isto? (Qual palavra para algo perto de quem fala?)","explain":"O coreano divide \"esto/eso\" em três conforme a distância: 이거 (perto de mim), 그거 (perto de você), 저거 (longe de ambos) — mais 어느 거 (\"¿cuál?\").","wrongNote":"Perto do falante → 이거 (그거 perto de você, 저거 longe)."},
+  "gram-2": {"promptNative":"Como uma maçã. (A ordem das palavras está correta?)","options":["✓ correto — ordem Sujeito-Objeto-Verbo","ordem das palavras incorreta","uso incorreto de partícula","falta uma palavra"],"explain":"O coreano, como o japonês, é uma língua Sujeito-Objeto-Verbo (SOV) — o verbo vem sempre no final, uma ordem fundamentalmente diferente do Sujeito-Verbo-Objeto do inglês.","wrongNote":"O coreano é Sujeito-Objeto-Verbo — o verbo vem no fim."},
+  "gram-3": {"promptNative":"Eu sou estudante. (Qual partícula marca o tema?)","explain":"'는' marca o tópico da frase (\"en cuanto a mí…\"), preso depois de uma palavra terminada em vogal — uma das partículas gramaticais do coreano que mostram o papel de uma palavra, já que a ordem sozinha não mostra.","wrongNote":"Partícula de tópico depois de vogal → 는 → 저는."},
+  "gram-4": {"promptNative":"(Eu) como uma maçã. (Qual partícula marca o objeto?)","explain":"'를' marca o objeto direto depois de uma palavra terminada em vogal — a coisa que se come. Depois de consoante é '을 (eul)'.","wrongNote":"Objeto direto depois de vogal → 를 → 사과를."},
+  "gram-5": {"promptNative":"Vou à escola. (Qual partícula marca o destino?)","explain":"'에' marca um destino ou um momento no tempo; '에서' marca onde ocorre uma ação ou um ponto de partida. O \"a/en\" cobre as duas, então esse par confunde o tempo todo.","wrongNote":"'에' marca o destino → 학교에 가요."},
+  "gram-6": {"promptNative":"Ontem (eu) comi arroz. (Qual terminação verbal encaixa?)","explain":"'았/었어요' é o passado cortês — 먹어요 (como) vira 먹었어요 (comi). '어제 (eoje)' significa ontem, então o passado é obrigatório. A harmonia vocálica escolhe 았 depois de raízes com ㅏ/ㅗ e 었 nos demais casos.","wrongNote":"'어제' (ontem) → passado cortês 었어요 → 먹었어요."},
+  "gram-7": {"promptNative":"Este é o livro do meu amigo. (Qual partícula mostra posse?)","explain":"'의' liga dois substantivos como o \"de\" do português — 친구의 책 = \"el libro de un amigo,\" 한국의 문화 = \"la cultura de Corea.\" Na fala casual se reduz ou se omite, mas é a partícula possessiva.","wrongNote":"'의' liga dois substantivos (possessivo) → 친구의 책."},
+  "gram-8": {"promptNative":"O tempo está bom. (Qual partícula marca o sujeito?)","explain":"'가' marca o sujeito gramatical depois de uma palavra terminada em vogal — aqui, o tempo é o que está bom. Depois de consoante é '이 (i)'.","wrongNote":"Partícula de sujeito depois de vogal → 가 → 날씨가."},
+  "gram-9": {"promptNative":"(É) bonito. (Falta um verbo copulativo?)","options":["✓ correto — os adjetivos se conjugam diretamente, não é preciso um 'ser' à parte","falta um verbo copulativo","tempo verbal incorreto","frase incompleta"],"explain":"Os adjetivos coreanos (\"verbos descriptivos\") se conjugam sozinhos, sem um verbo \"ser/estar\" à parte — '예쁘다' (ser bonito) se flexiona igual a um verbo de ação.","wrongNote":"Os adjetivos coreanos conjugam diretamente — sem 'ser' à parte → 예뻐요."},
+  "gram-10": {"promptNative":"A quem 'gayo' pode se referir?","options":["✓ correto para eu/você/ele/ela/nós/eles vão (mesma forma)","só \"eu vou\"","só \"eles vão\"","só \"nós vamos\""],"explain":"Como no japonês, os verbos coreanos não se conjugam em pessoa nem em número — '가요' significa \"ir\" não importa quem o faça; o contexto e os marcadores de tópico mostram o sujeito.","wrongNote":"Os verbos não conjugam por pessoa — 가요 = 'ir' para qualquer um."},
+  "gram-11": {"promptNative":"(Eu) não vou. (Qual palavra faz a negação?)","explain":"'안' colocado logo antes do verbo é a negação simples padrão — um \"no (quiero)\" escolhido. (Sua dupla 못 é para a incapacidade — veja a próxima pergunta.)","wrongNote":"Negação simples = 안 antes do verbo → 안 가요."},
+  "gram-12": {"promptNative":"Como está doendo, não consigo caminhar. (Qual palavra significa 'não poder'?)","explain":"'못' antes de um verbo indica incapacidade — \"no puedo,\" em oposição ao \"no quiero\" escolhido de 안. 다쳐서 (porque me machuquei) → 못 걸어요 (não consigo andar). O par 안/못 corresponde a won't/can't do inglês.","wrongNote":"Incapacidade ('no poder') = 못 antes do verbo → 못 걸어요."},
+  "gram-13": {"promptNative":"Duas maçãs, por favor. (Qual palavra classificadora encaixa?)","explain":"O coreano conta com palavras contadoras conforme o objeto — 개 para coisas em geral, 명 para pessoas, 마리 para animais, 병 para garrafas. O número nativo muda de forma antes do contador: 둘 → 두.","wrongNote":"Contador geral de objetos → 개 → 두 개."},
+  "gram-14": {"promptNative":"Quero beber água. (Qual terminação significa 'querer'?)","explain":"Raiz verbal + '고 싶다' expressa \"querer (hacer)\": 마시고 싶어요 = \"quiero beber.\" Para o desejo de OUTRA pessoa, o coreano troca para 고 싶어하다 — você só pode afirmar diretamente os próprios desejos.","wrongNote":"'querer' = raiz + 고 싶다 → 마시고 싶어요."},
+  "gram-15": {"promptNative":"Que forma de 'comer' é 'deuseyo'?","options":["formal/honorífica","casual/informal","tempo passado","negativa"],"explain":"O coreano tem um sistema elaborado de níveis de fala embutido nas terminações verbais — '드세요' é um jeito respeitoso e honorífico de dizer \"comer,\" bem diferente do simples '먹어'.","wrongNote":"드세요 é a forma honorífica/cortês de dizer 'comer'."},
+  "gram-16": {"promptNative":"Uma pergunta e uma afirmação podem parecer iguais?","options":["✓ correto — a entonação ascendente sozinha pode marcar uma pergunta na fala casual","são sempre idênticas","a pergunta sempre precisa de outra partícula","isso é gramaticalmente impossível"],"explain":"No coreano falado casual, uma afirmação e uma pergunta podem ser idênticas por escrito, e só a entonação ascendente distingue \"voy\" de \"¿vas?\" A fala formal marca isso (갑니다 vs. 갑니까).","wrongNote":"Na fala casual, a entonação ascendente sozinha já marca uma pergunta."},
+  "gram-17": {"promptNative":"Em que '갑니다' difere de '가요'?","options":["formal/deferente (하십시오체)","casual","tempo passado","interrogativa"],"explain":"O coreano tem dois registros corteses: o 해요체 terminado em 요 (cortesia do dia a dia) e o 하십시오체 em ㅂ니다/습니다 (formal-deferente), usado em telejornais, apresentações, no exército e no atendimento. Mesmo significado, formalidade diferente — você troca conforme o interlocutor.","wrongNote":"갑니다 é o registro mais formal/deferente que 가요."},
+  "gram-18": {"promptNative":"'Está frio.' (Qual é a forma formal correta de 춥다?)","explain":"'춥다' é um verbo irregular em ㅂ — o ㅂ final vira 우 antes de uma terminação: 춥 + 어요 → 추워요, e não o aparentemente regular 춥어요. Muitos adjetivos-verbo fazem o mesmo: 덥다→더워요, 쉽다→쉬워요, 맵다→매워요.","wrongNote":"춥다 é ㅂ-irregular: ㅂ → 우 → 추워요."},
+  "gram-19": {"promptNative":"Dizer '밥 먹었어?' a um amigo próximo, que tipo de fala é?","options":["반말 — fala casual (omite-se 요)","존댓말 — fala formal","um erro gramatical","escrita formal"],"explain":"Tirar o 요 dá o 반말 (fala casual), usado com amigos próximos, pessoas mais novas ou claramente subordinadas. Usá-lo com a pessoa errada — ou antes de combinar isso — é uma gafe social de verdade, o outro lado do cuidado honorífico coreano.","wrongNote":"Tirar 요 dá 반말 (fala casual)."},
+  "gram-20": {"promptNative":"O avô está comendo. (Qual partícula de sujeito honorífica?)","explain":"'께서' é a substituição HONORÍFICA da partícula de sujeito 이/가, elevando o sujeito — e vem coordenada com o verbo honorífico 드시다 E com o substantivo honorífico 진지 (por 밥). Os honoríficos coreanos mudam partícula, verbo e vocabulário de uma vez.","wrongNote":"Partícula de sujeito honorífica → 께서 → 할아버지께서."},
+  "gram-21": {"promptNative":"Qual é o verbo honorífico para '(um mais velho) dorme'?","explain":"O coreano troca verbos inteiros por honoríficos, como o keigo japonês: 자다 (dormir) → 주무시다, 먹다 (comer) → 드시다/잡수시다, 있다 (estar) → 계시다, 말하다 (falar) → 말씀하시다. Essas formas supletivas se aprendem uma a uma — o infixo regular 시 sozinho não as produz.","wrongNote":"Verbo honorífico de 자다 (dormir) → 주무시다."},
+  "gram-22": {"promptNative":"Qual é a verdadeira diferença entre 'eun/neun' e 'i/ga'?","options":["은/는 marca o tema (conhecido/contraste); 이/가 marca o sujeito / informação nova","são livremente intercambiáveis","은/는 é formal, 이/가 é casual","이/가 só se usa em perguntas"],"explain":"O buraco mais fundo da gramática coreana, gêmeo do は/が japonês: 은/는 sinaliza o TÓPICO — já conhecido, ou contrastado — enquanto 이/가 marca o sujeito gramatical ou introduz informação NOVA (\"es ESTE\"). Existem livros inteiros sobre isso; a versão de uma linha aqui é a regra prática.","wrongNote":"은/는 marca o tópico (conhecido/contraste); 이/가 marca o sujeito/informação nova."},
+  "gram-23": {"promptNative":"Por que esta frase parece ter dois sujeitos?","options":["um sujeito duplo: 는 fixa o tema, 가 marca o sujeito interno","um erro gramatical","duas frases separadas mal unidas","코 é o objeto aqui"],"explain":"O coreano (como o japonês) permite um \"doble sujeto\" de tópico-comentário: 코끼리는 (quanto aos elefantes) 코가 길어요 (os narizes são compridos). 는 fixa o tópico geral; 가 marca o sujeito do comentário. Não há uma estrutura única em inglês — literalmente \"los elefantes, (sus) narices son largas.\"","wrongNote":"Duplo sujeito: 는 fixa o tópico, 가 marca o sujeito interno → 코끼리는 코가 길어요."},
+  "gram-24": {"promptNative":"O professor é coreano. (Qual partícula de tema após consoante?)","explain":"'은' é a partícula de tópico depois de uma palavra terminada em consoante (선생님 termina em ㅁ); depois de vogal vira '는'. Marca do que trata a frase -- \"en cuanto al profesor...\"","wrongNote":"Partícula de tópico depois de consoante → 은 → 선생님은."},
+  "gram-25": {"promptNative":"Eu sou médico. (Qual cópula formal após vogal?)","explain":"'예요' é a cópula cortês \"soy/es/son\" depois de uma palavra terminada em vogal (의사 termina em ㅏ); depois de consoante é a forma completa '이에요'. '이다' é a forma simples de dicionário, não a fala cortês.","wrongNote":"Cópula cortês depois de vogal → 예요 → 의사예요."},
+  "gram-26": {"promptNative":"(Eu) bebo água. (Qual partícula de objeto após consoante?)","explain":"'을' marca o objeto direto depois de uma palavra terminada em consoante (물 termina em ㄹ); depois de vogal é '를'. Aponta a coisa sobre a qual recai a ação.","wrongNote":"Objeto direto depois de consoante → 을 → 물을."},
+  "gram-27": {"promptNative":"Eu também sou estudante. (Qual partícula significa 'também'?)","explain":"'도' significa \"tambien\" e substitui a partícula de tópico/sujeito em vez de se somar a ela: 저도 = \"yo tambien.\" Mantém uma única forma fixa depois de vogais e de consoantes.","wrongNote":"'también' = 도, substitui a partícula de tópico/sujeito → 저도."},
+  "gram-28": {"promptNative":"Só bebo água. (Qual partícula significa 'só'?)","explain":"'만' significa \"solo/unicamente\": 물만 = \"solo agua.\" Como 도, tem uma única forma fixa depois de vogais e de consoantes, e pode substituir a partícula de objeto ou acompanhá-la.","wrongNote":"'solo' = 만 → 물만."},
+  "gram-29": {"promptNative":"O professor é gentil. (Qual partícula de sujeito após consoante?)","explain":"'이' marca o sujeito gramatical depois de uma palavra terminada em consoante (선생님 termina em ㅁ); depois de vogal é '가'. Diferente do tópico 은/는, aponta especificamente quem ou o que faz ou é algo.","wrongNote":"Partícula de sujeito depois de consoante → 이 → 선생님이."},
+  "gram-30": {"promptNative":"(Eu) dei um presente a um amigo. (Qual partícula marca quem recebe?)","explain":"'에게' (gêmeo casual '한테') marca o destinatário animado A QUEM se dá ou se diz algo. O simples '에' é só para lugares e tempos, nunca uma pessoa -- essa é a pegadinha aqui.","wrongNote":"Destinatário (uma pessoa) → 에게 → 친구에게."},
+  "gram-31": {"promptNative":"(Eu) como com hashi. (Qual partícula de 'por meio de' após terminação em ㄱ?)","explain":"'(으)로' marca o meio/instrumento ou a direção. Depois de consoante (젓가락 termina em ㄱ) é '으로'; depois de vogal OU da consoante ㄹ se reduz a '로'. Como 젓가락 termina em ㄱ, exige-se '으로'.","wrongNote":"Meio/instrumento depois de consoante → 으로 → 젓가락으로."},
+  "gram-32": {"promptNative":"(Eu) comprei pão e leite. (Qual partícula 'e' após consoante?)","explain":"'와/과' liga dois substantivos como \"y/con.\" Sua forma muda conforme o batchim ao CONTRÁRIO da maioria das partículas: '과' depois de consoante (빵 termina em ㅇ), '와' depois de vogal. O coloquial '하고' faz o mesmo depois de qualquer uma.","wrongNote":"'y/con' depois de consoante → 과 → 빵과."},
+  "gram-33": {"promptNative":"(Eu) trabalho desde as 9. (Qual partícula significa 'desde' um horário?)","explain":"'부터' marca o ponto de início no tempo (\"desde\"), em par com '까지' (\"hasta\"): 9시부터 5시까지 = \"de 9 a 5.\" Para um ponto de início no ESPAÇO, o coreano usa '에서'.","wrongNote":"Ponto de início no tempo → 부터 → 9시부터."},
+  "gram-34": {"promptNative":"(Eu) irei à escola amanhã. (Qual é a forma de futuro?)","explain":"'-(으)ㄹ 거예요' é o futuro do dia a dia: 가다 -> 갈 거예요 (\"ire\"). '내일 (manana)' obriga a uma leitura de futuro. Os distratores são passado (갔어요), presente simples (가요) e presente progressivo (가고 있어요).","wrongNote":"'내일' (amanhã) → futuro 갈 거예요."},
+  "gram-35": {"promptNative":"Eu não bebo café. (Qual sílaba completa a negação longa?)","explain":"'-지 않다' é a negação \"larga\": raiz verbal + 지 않아요 = \"no ___.\" É intercambiável com pôr '안' antes do verbo (안 마셔요), mas '안' não pode ocupar esta lacuna -- ele vem antes do verbo, não depois da raiz.","wrongNote":"Negação longa = raiz + 지 않다 → 마시지 않아요."},
+  "gram-36": {"promptNative":"Qual sistema numérico conta a hora ao dizer as horas?","options":["coreanos nativos (하나, 둘, 셋...)","sino-coreanos (일, 이, 삼...)","qualquer um, indistintamente","empréstimos do inglês"],"explain":"O coreano tem dois sistemas de números. Os nativos (하나, 둘, 셋...) contam horas, pessoas e objetos pequenos; os sino-coreanos (일, 이, 삼..., do chinês) servem para minutos, dinheiro, datas e números de telefone. Assim, 2:20 é 두 시 (nativo) 이십 분 (sino) -- os dois de uma vez.","wrongNote":"As horas usam números nativos → 두 시 (as 2)."},
+  "gram-37": {"promptNative":"Eu faço primeiro. (Qual infixo marca intenção/futuro?)","explain":"'-겠-' antes da terminação sinaliza a vontade/intenção do falante ou uma suposição confiante: 하겠습니다 = \"lo hare.\" É o mesmo 겠 da expressão fixa 잘 먹겠습니다. Já '었' o tornaria passado.","wrongNote":"Infixo de vontade/intenção → 겠 → 하겠습니다."},
+  "gram-38": {"promptNative":"O professor lê o jornal. (Qual terminação de presente honorífica?)","explain":"O infixo honorífico '-(으)시-' eleva o SUJEITO que você descreve: 읽다 -> 읽 + 으시 + 어요 -> 읽으세요. O simples '읽어요' é gramatical, mas não mostra respeito ao professor. Diferente dos honoríficos supletivos (자다->주무시다), a maioria dos verbos só leva 시.","wrongNote":"O infixo honorífico -(으)시- eleva o sujeito → 읽으세요."},
+  "gram-39": {"promptNative":"Como estou com fome, eu como. (Qual terminação significa 'porque'?)","explain":"'-(으)니까' liga uma razão a um resultado: 배고프니까 = \"porque/ya que tengo hambre.\" É bem natural logo antes de ordens e sugestões. Depois de raiz em vogal como 배고프- é só 니까; depois de consoante, 으니까.","wrongNote":"'porque' (esp. antes de ordens) → 니까 → 배고프니까."},
+  "gram-40": {"promptNative":"O que a terminação '-jiman' significa?","options":["\"mas/embora\" (contraste)","\"porque\" (razão)","\"e depois\" (sequência)","\"se\" (condição)"],"explain":"'-지만' se junta à raiz de um verbo ou adjetivo para significar \"pero/aunque\": 작지만 강해요 = \"es pequeno pero fuerte.\" É o conector de contraste claro e explícito, diferente do '는데', que só prepara o pano de fundo.","wrongNote":"'-지만' significa 'pero/aunque' → 작지만 강해요."},
+  "gram-41": {"promptNative":"O que '-aseo/eoseo' expressa aqui?","options":["causa ou sequência imediata (\"então / e depois\")","contraste puro (\"mas\")","uma ordem","o tempo futuro"],"explain":"'-아서/어서' liga uma causa ou uma sequência estreitamente ligada ao que vem depois: 피곤해서 잤어요 = \"estaba cansado, asi que dormi.\" Como 니까, pode significar \"porque,\" mas 아서 não pode vir antes de uma ordem e amarra os dois eventos mais de perto.","wrongNote":"'-아/어서' liga causa/sequência imediata ('así que') → 피곤해서 잤어요."},
+  "gram-42": {"promptNative":"O que a terminação '-neunde' faz principalmente?","options":["estabelece contexto ou contraste suave para o que vem a seguir","marca o objeto direto","põe o verbo no passado","transforma a frase em uma ordem"],"explain":"'-는데' apresenta uma situação como pano de fundo ou contraste suave, deixando o ouvinte à espera da ideia: 비가 오는데 우산이 없어요 = \"esta lloviendo, y (pero) no tengo paraguas.\" É mais suave e mais aberto que o contraste seco de '지만'.","wrongNote":"'-는데' estabelece contexto ou contraste suave para o que vem em seguida."},
+  "gram-43": {"promptNative":"'Eu sou estudante' na forma escrita simples. (Qual terminação copulativa?)","explain":"'이다' é a cópula declarativa simples/de dicionário (o 한다체), a forma neutra usada na escrita, em diários, manchetes e livros de referência -- sem cortesia com um ouvinte. '이에요' é o cortês falado, '입니다' o formal-cortês, '이야' o casual falado.","wrongNote":"Cópula simples escrita → 이다 → 학생이다."},
+  "gram-44": {"promptNative":"Como você está cansado, durma cedo. (Qual 'porque' pode preceder uma ordem?)","explain":"Tanto -아/어서 quanto -(으)니까 significam \"porque,\" mas só -(으)니까 pode ligar um motivo a um comando (-세요) ou a uma sugestão (-ㅂ시다). -아/어서 não é aceito antes de imperativos nem de propositivos, e tende a uma causa mais objetiva ou sequencial. Como a frase termina no comando 자세요, só funciona 피곤하니까 — 피곤해서 자세요 é agramatical.","wrongNote":"Só -(으)니까 pode dar motivo antes de uma ordem → 피곤하니까."},
+  "gram-45": {"promptNative":"Vou à loja agora, quer que eu compre algo para você? (Qual terminação faz o oferecimento?)","explain":"-는데 (depois de verbos; -(으)ㄴ데 depois de adjetivos) apresenta o pano de fundo ou um leve contraste antes do ponto principal — \"estoy haciendo X, y (por eso/pero)…\". Suaviza uma pergunta ou um oferecimento ao enquadrar primeiro a situação. Os distratores marcam alternativas (거나/든지) ou causa simultânea (느라), e nenhum encaixa num preâmbulo seguido de oferecimento.","wrongNote":"Contexto antes do ponto principal → 는데 → 가는데."},
+  "gram-46": {"promptNative":"Parece que está chovendo. (Qual palavra completa 'parece que'?)","explain":"V/A + -(으)ㄴ/는/(으)ㄹ 것 같다 é o jeito cotidiano de dizer \"parece / da la impresión de / probablemente.\" O modificador carrega o tempo: 온 것 같다 (parece que choveu), 오는 것 같다 (parece que está chovendo), 올 것 같다 (parece que vai chover). Só 같다 completa o molde 것 같다 — 것 있어요/이에요/돼요 não expressam conjetura.","wrongNote":"'parece / da la impresión' = 것 같다 → 오는 것 같아요."},
+  "gram-47": {"promptNative":"Meu amigo disse que virá amanhã. (Qual citativo relata uma afirmação?)","explain":"O discurso indireto em coreano escolhe o citativo conforme o TIPO da frase original: uma AFIRMAÇÃO simples usa -다고 하다 (os verbos levam -ㄴ다고/-는다고: 온다고), uma PERGUNTA usa -냐고, uma SUGESTÃO usa -자고, um COMANDO usa -(으)라고. Como o amigo afirmou (\"vendré\"), exige-se 온다고 했어요.","wrongNote":"Afirmação reportada (verbo) → -ㄴ다고 하다 → 온다고 했어요."},
+  "gram-48": {"promptNative":"O professor mandou os alunos limparem. (Qual terminação forma o causativo?)","explain":"Raiz verbal + -게 하다 é o causativo produtivo: \"hacer / dejar que alguien haga X.\" Funciona com quase qualquer verbo (청소하게 하다 = fazer alguém limpar), diferente dos infixos causativos lexicais 이/히/리/기, que só existem para um conjunto fixo de verbos. Os distratores significam \"y\" (고), \"mientras\" (면서) e \"para\" (려고).","wrongNote":"Causativo 'hacer/dejar hacer' = raiz + 게 하다 → 청소하게 했어요."},
+  "gram-49": {"promptNative":"O filme que vi ontem foi divertido. (Qual forma modificadora de passado encaixa?)","explain":"Quando um verbo modifica o substantivo seguinte (uma oração relativa), sua terminação codifica o tempo: PASSADO -(으)ㄴ (본 = que eu vi), PRESENTE -는 (보는 = que estou vendo), FUTURO/PROSPECTIVO -(으)ㄹ (볼 = que verei). Por causa de 어제 (ontem), o modificador de passado 본 é o único que encaixa. 봤는 não é uma forma modificadora válida.","wrongNote":"Oração relativa no passado em um verbo → -(으)ㄴ → 본 영화."},
+  "gram-50": {"promptNative":"Gosto de nadar. (Qual terminação nominaliza o verbo aqui?)","explain":"Ao acrescentar -기 um verbo vira substantivo (um gerúndio): 수영하다 (nadar) → 수영하기 (a natação), que então leva a partícula de objeto antes de 좋아하다: 수영하기를 좋아해요. -기 nominaliza atividades e é comum com 좋아하다/싫어하다/시작하다; contrasta com -(으)ㅁ (fato mais abstrato/estabelecido) e -는 것 (uma instância concreta).","wrongNote":"Verbo → substantivo com -기 → 수영하기를."},
+  "gram-51": {"promptNative":"Dei um presente à avó. (Qual partícula honorífica 'a' encaixa?)","explain":"께 é o dativo HONORÍFICO, a substituição respeitosa de 에게/한테 (\"a una persona\"), usada quando o destinatário é alguém que se eleva — e combina naturalmente com o verbo humilde 드리다 (dar, com humildade). 에게 é neutro-escrito, 한테 é coloquial, e 에서 marca lugar/origem, não destinatário.","wrongNote":"Dativo honorífico → 께 → 할머니께."},
+  "gram-52": {"promptNative":"Vou servir café ao chefe. (Qual forma humilde de 'dar' encaixa?)","explain":"드리다 é a contraparte humilde (겸양어) de 주다 (dar): o falante rebaixa a própria ação para elevar o destinatário, por isso vem com o dativo honorífico 께. 줄게요 (o simples 주다) é neutro e soa plano demais com um chefe; 받다 significa \"recibir\" (direção errada); 주실게요 põe erradamente o honorífico de sujeito 시 sobre o próprio ato do falante.","wrongNote":"'dar' humilde → 드리다 → 드릴게요."},
+  "gram-53": {"promptNative":"Vou me encontrar com o professor amanhã. (Qual verbo humilde para 'encontrar-se' encaixa?)","explain":"뵙다 / 뵈다 é o verbo humilde para se encontrar com ou ver um superior, substituindo 만나다/보다 para mostrar deferência à pessoa. Com um professor, o simples 만나다 ou 보다 soa casual demais. 뵙겠습니다 traz ainda o -겠습니다 formal-deferente, adequado ao interlocutor honrado.","wrongNote":"'ver/reunirse' humilde com um superior → 뵙다 → 뵙겠습니다."},
+  "gram-54": {"promptNative":"Meu amigo propôs ver um filme juntos. (Qual citativo relata uma proposta?)","explain":"Uma SUGESTÃO reportada (\"vamos a…\") usa o citativo propositivo -자고 하다: 보자고 했어요 = \"(él) propuso que viéramos.\" Os demais reportam outros tipos de frase — -ㄴ다고 uma afirmação (\"dice que ve\"), -냐고 uma pergunta (\"pregunta si veo\"), -(으)라고 um comando (\"me dice que vea\") — então só 보자고 corresponde a \"vamos a.\"","wrongNote":"Sugestão reportada ('vamos a') → 자고 하다 → 보자고 했어요."},
+  "gram-55": {"promptNative":"A porta foi aberta pelo vento. (Qual forma passiva encaixa?)","explain":"열다 (abrir, transitivo) vira o passivo 열리다 por meio do infixo -리-, um dos marcadores passivos 이/히/리/기. Com a porta como sujeito e sem agente nomeado (바람에 = pelo vento), exige-se o passivo 문이 열렸어요. 열었어요 é ativo (\"alguien la abrió\") e pede um sujeito-agente; 여세요/열게요 são um comando e uma promessa.","wrongNote":"Passiva de 열다 = 열리다 → 열렸어요."},
+  "gram-56": {"promptNative":"A mãe alimentou o bebê. (Qual forma causativa encaixa?)","explain":"먹다 (comer) tem o causativo lexical 먹이다 (\"dar de comer / hacer comer\"), formado com o infixo -이- do mesmo grupo 이/히/리/기 que também forma passivos. 먹였어요 = \"(ella) dio de comer.\" 먹었어요 significa que o bebê simplesmente comeu (sem causador); 먹혔어요 não é padrão aqui; 먹어요 é presente simples. O contexto e o sentido (alimentar, não ser comido) resolvem a leitura causativa.","wrongNote":"Causativo de 먹다 = 먹이다 ('dar de comer') → 먹였어요."},
+  "gram-57": {"promptNative":"Posso perguntar o seu nome? (Qual é o substantivo honorífico para 'nome'?)","explain":"O coreano tem substantivos honoríficos para pessoas respeitadas: 성함 (nome, por 이름), 연세 (idade, por 나이), 진지 (refeição, por 밥), 말씀 (palavras, por 말). 이름이 뭐예요 serve entre iguais, mas a um cliente ou a alguém mais velho se diz 성함이 어떻게 되세요. 연세 é o honorífico de IDADE, não de nome; 성별 significa \"género/sexo.\"","wrongNote":"Substantivo honorífico para 'nombre' → 성함."},
+  "gram-58": {"promptNative":"Quanto mais você estuda coreano, mais divertido é. (Qual terminação significa 'quanto mais…'?)","explain":"-(으)ㄹ수록 significa \"cuanto más … más …,\" indicando que o aumento de uma coisa acompanha o de outra. Costuma vir reforçado por um -(으)면 inicial, como aqui: 공부하면 공부할수록 = \"cuanto más (y más) estudias.\" 하니까 é um motivo simples, 하지만 um contraste, 하려고 uma finalidade — nenhum expressa escalada proporcional.","wrongNote":"'cuanto más … más …' = -(으)ㄹ수록 → 공부할수록."},
+  "gram-59": {"promptNative":"Que nuance -더니 / -더라 acrescentam?","options":["um relato RETROSPECTIVO de algo que o falante presenciou pessoalmente no passado — e -더니 liga essa situação presenciada a um resultado/contraste consequente","tempo futuro simples","uma construção passiva","um pedido educado"],"explain":"O morfema -더- é a marca retrospectiva/evidencial do coreano: -더라 relata uma situação passada que o falante observou pessoalmente, muitas vezes como descoberta recente (\"vi que…\"), e -더니 liga esse passado presenciado a um resultado ou contraste presente (\"(vi que) era X, y luego Y\"). Normalmente não se usa para os próprios estados internos rotineiros do falante no padrão simples -더라. Esse tom de testemunho direto é o que o distingue de terminações neutras de tempo ou causa.","wrongNote":"-더- relata uma situação passada presenciada pelo falante."},
+  "gram-60": {"promptNative":"As pessoas estão com guarda-chuva; deve estar chovendo. (Qual terminação marca inferência por evidência?)","explain":"-나 보다 / -(으)ㄴ가 보다 expressa uma conjetura INFERIDA a partir de evidência externa observada — \"debe de ser, a juzgar por lo que veo.\" Os guarda-chuvas são a evidência, então 오나 봐요. Contrasta com -겠- (conjetura ou volição imediata e direta) e com o mais suave -(으)ㄹ 것 같다 (suposição geral). 고 있어요 afirma como fato simples, -잖아요 apela a um saber já compartilhado, e -ㄹ까요 faz uma pergunta — nenhum transmite inferência por evidência.","wrongNote":"Inferência a partir de evidência observada → 나 보다 → 오나 봐요."},
+  "gram-61": {"promptNative":"O que distingue '해 버렸어요' de '해 뒀어요'?","options":["-아/어 버리다 = fez por completo / terminou de vez (muitas vezes alívio ou pena de que acabou); -아/어 두다 = fez com antecedência e deixou o resultado pronto para usar depois","significam exatamente o mesmo","버리다 é passado, 두다 é futuro","버리다 é honorífico, 두다 é casual"],"explain":"Esses verbos auxiliares (aspectuais) matizam a ação principal. -아/어 버리다 marca uma ação concluída e \"liquidada\" com carga emocional — alívio, arrependimento ou finalidade (\"lo hice y ya\"): 다 해 버렸어요 = \"lo terminé del todo.\" -아/어 두다 (quase gêmeo de -아/어 놓다) marca fazer algo com antecedência e deixar o resultado pronto para depois: 다 해 뒀어요 = \"ya lo hice y lo dejé listo.\" Os dois estão no passado aqui; o contraste é de aspecto/atitude, não de tempo nem de cortesia.","wrongNote":"-아/어 버리다 = fazer por completo; -아/어 두다 = fazer com antecedência para depois."},
+  "gram-62": {"promptNative":"Bebo café. (partícula de objeto)","explain":"A partícula de objeto é 을/를: 를 depois de vogal (커피를), 을 depois de consoante (물을). Marca o que recebe a ação.","wrongNote":"Objeto depois de vogal → 를 → 커피를."},
+  "gram-63": {"promptNative":"Vou à escola. (partícula de destino)","explain":"'에' marca destino ou localização/tempo estático: 학교에 가요. Para o lugar de uma ação, use 에서.","wrongNote":"Destino → 에 → 학교에 가요."},
+  "gram-64": {"promptNative":"Estudo na biblioteca. (partícula de lugar de ação)","explain":"'에서' marca ONDE ocorre uma ação: 도서관에서 공부해요. 에 marca destino/existência.","wrongNote":"Onde uma ação acontece → 에서 → 도서관에서."},
+  "gram-65": {"promptNative":"Dei um presente a um amigo. (partícula de receptor)","explain":"'에게' (formal) / '한테' (casual) marca o destinatário de dar: 친구에게 줬어요.","wrongNote":"Destinatário de dar → 에게 → 친구에게."},
+  "gram-66": {"promptNative":"Vou de ônibus. (partícula de meio)","explain":"'(으)로' marca meio/método ou direção: 버스로 가요 ('voy en autobús'). Depois de vogal ou ㄹ é 로; depois das demais consoantes, 으로.","wrongNote":"Meio/método → 로 → 버스로."},
+  "gram-67": {"promptNative":"Não sou estudante. (partícula com 아니다)","explain":"'아니다' ('no ser') leva a partícula de sujeito 이/가 no complemento: 학생이 아니에요. Não a de objeto.","wrongNote":"'아니다' leva a partícula de sujeito no seu complemento → 학생이 아니에요."},
+  "gram-68": {"promptNative":"Meu irmão mais novo também vai à universidade. ('também')","explain":"'도' significa 'también' e SUBSTITUI 은/는 ou 이/가: 동생도 대학교에 다녀요 ('mi hermano/a menor también va a la universidad').","wrongNote":"'también' → 도 → 동생도."},
+  "gram-69": {"promptNative":"Só água, por favor. ('só')","explain":"'만' significa 'solo': 물만 주세요 ('solo agua, por favor'). Também substitui 은/는/이/가/을/를.","wrongNote":"'solo' → 만 → 물만."},
+  "gram-70": {"promptNative":"Trabalho das 9 às 6. ('de … a')","explain":"'부터 … 까지' significa 'desde … hasta' (tempo): 9시부터 6시까지. Para lugares, 에서 … 까지.","wrongNote":"'de … a' (tempo) → 부터 … 까지 → 9시부터 6시까지."},
+  "gram-71": {"promptNative":"Amanhã vai chover. (futuro)","explain":"'-(으)ㄹ 거예요' é o futuro do dia a dia: 올 거예요. '내일 (mañana)' obriga a uma leitura de futuro.","wrongNote":"'내일' → futuro → 올 거예요."},
+  "gram-72": {"promptNative":"Quero aprender coreano. (desiderativo)","explain":"'-고 싶다' expressa o desejo do falante ('querer …'): 배우고 싶어요. Junta-se à raiz verbal.","wrongNote":"'querer' = raiz + 고 싶다 → 배우고 싶어요."},
+  "gram-73": {"promptNative":"Faço a tarefa e (depois) brinco. (sequencial -고)","explain":"'-고' liga ações em sequência ('y luego'): 하고 놀아요. Não implica causa.","wrongNote":"Sequência 'y luego' = 고 → 하고 놀아요."},
+  "gram-74": {"promptNative":"Meu estômago doía, então fui ao hospital. (razão -아/어서)","explain":"'-아/어서' dá uma razão ('porque', causa→resultado): 아파서 병원에 갔어요.","wrongNote":"Causa→resultado 'porque' = 아/어서 → 아파서."},
+  "gram-75": {"promptNative":"Se eu tiver tempo, podemos nos ver. (condicional -(으)면)","explain":"'-(으)면' é o condicional 'si/cuando': 시간이 있으면. Depois de consoante, 으면; depois de vogal, 면.","wrongNote":"Condicional 'si' = -(으)면 → 있으면."},
+  "gram-76": {"promptNative":"Está chovendo, mas não tenho guarda-chuva. (-는데)","explain":"'-는데' estabelece pano de fundo/contraste para o que vem depois: 비가 오는데 우산이 없어요. Conector muito comum.","wrongNote":"Contexto/contraste → 는데 → 오는데."},
+  "gram-77": {"promptNative":"Eu estava cansado, então dormi cedo. (razão -(으)니까)","explain":"'-(으)니까' dá uma razão, preferido antes de ordens/sugestões ou quando a razão é evidente: 피곤하니까 일찍 잤어요.","wrongNote":"'porque' (óbvio/antes de ordens) → 니까 → 피곤하니까."},
+  "gram-78": {"promptNative":"É pequeno, mas forte. ('mas')","explain":"'-지만' significa 'pero/aunque', ligando duas orações em contraste: 작지만 강해요 ('pequeño pero fuerte').","wrongNote":"'pero/aunque' = 지만 → 작지만."},
+  "gram-79": {"promptNative":"Por favor, não tire fotos aqui. (proibição)","explain":"'-지 마세요' é a proibição cortês ('por favor, no …'): 찍지 마세요.","wrongNote":"Proibição cortês = -지 마세요 → 찍지 마세요."},
+  "gram-80": {"promptNative":"Por favor, sente-se aqui. (ordem educada)","explain":"'-(으)세요' é a ordem/pedido cortês E honorífico: 앉으세요 ('siéntese, por favor').","wrongNote":"Ordem/pedido cortês = -(으)세요 → 앉으세요."},
+  "gram-81": {"promptNative":"O avô está dormindo. (honorífico de sujeito)","explain":"Os honoríficos de sujeito usam verbos/partículas especiais: 께서 + 주무시다 (honorífico de 자다) → 주무세요. Eleva-se o avô.","wrongNote":"Sujeito honorífico 께서 + honorífico 주무시다 → 주무세요."},
+  "gram-82": {"promptNative":"Perguntei ao professor. (humilde 'perguntar')","explain":"'여쭤보다' é a forma humilde de 물어보다 ('preguntar'), diante de alguém respeitado: 선생님께 여쭤봤어요. 께 é o honorífico de 에게.","wrongNote":"'preguntar' humilde → 여쭤보다 → 여쭤봤어요."},
+  "gram-83": {"promptNative":"Já estive na Coreia. (experiência)","explain":"'-(으)ㄴ 적이 있다' expressa experiência passada: 간 적이 있어요. O verbo leva o modificador de passado -(으)ㄴ.","wrongNote":"Experiência passada = -(으)ㄴ 적이 있다 → 간 적이 있어요."},
+  "gram-84": {"promptNative":"Estou comendo agora. (progressivo -고 있다)","explain":"'-고 있다' é o progressivo ('estar …-ndo'): 먹고 있어요. Junta-se à raiz verbal.","wrongNote":"Progressivo = -고 있다 → 먹고 있어요."},
+  "gram-85": {"promptNative":"Você já experimentou comer essa comida? ('experimentar fazer')","explain":"'-아/어 보다' significa 'intentar/probar a hacer': 먹어 봤어요? Forma-se com o conector 아/어 + 보다.","wrongNote":"'intentar hacer' = -아/어 보다 → 먹어 봤어요."},
+  "gram-86": {"promptNative":"Por favor, abra a porta (para mim). ('fazer um favor')","explain":"'-아/어 주다' significa fazer algo POR alguém (favor): 열어 주세요. O conector 아/어 + 주다.","wrongNote":"'hacer por alguien' (favor) = -아/어 주다 → 열어 주세요."},
+  "gram-87": {"promptNative":"Faço exercício todos os dias. (partícula de objeto com substantivo-하다)","explain":"Muitos substantivos com 하다 levam 을/를 quando separados: 운동을 해요. (운동해요 sem partícula também vale.)","wrongNote":"O substantivo-하다 leva a partícula de objeto quando se separa → 운동을 해요."},
+  "gram-88": {"promptNative":"Estudei muito para me sair bem na prova. (propósito -(으)려고)","explain":"'-(으)려고' expressa intenção/propósito ('para', mesmo sujeito): 잘 보려고 공부했어요. Contrasta com 러 (propósito de MOVIMENTO).","wrongNote":"Intenção/propósito = -(으)려고 → 잘 보려고."},
+  "gram-89": {"promptNative":"Vou ao restaurante para comer. (propósito -(으)러)","explain":"'-(으)러' dá o propósito de um verbo de MOVIMENTO: 먹으러 가요. Só com 가다/오다/다니다.","wrongNote":"Propósito de um verbo de MOVIMENTO = -(으)러 → 먹으러 가요."},
+  "gram-90": {"promptNative":"Acabei ficando bom em coreano. (-게 되다)","explain":"'-게 되다' expressa uma mudança de estado/circunstância ('llegar a'): 잘하게 됐어요. Tira o protagonismo da vontade.","wrongNote":"Mudança de estado = -게 되다 → 잘하게 됐어요."},
+  "gram-91": {"promptNative":"Tenho que comer verduras. (obrigação)","explain":"'-아/어야 하다/되다' expressa obrigação ('deber/tener que'): 먹어야 해요. O 아/어야 + 하다.","wrongNote":"Obrigação 'deber' = -아/어야 하다 → 먹어야 해요."},
+  "gram-92": {"promptNative":"Você não pode entrar aqui. (proibição)","explain":"'-(으)면 안 되다' expressa proibição ('no se debe'): 들어가면 안 돼요. Literalmente 'si entras, no vale'.","wrongNote":"Proibição = -(으)면 안 되다 → 들어가면 안 돼요."},
+  "gram-93": {"promptNative":"A janela está (no estado de estar) aberta. (-아/어 있다)","explain":"'-아/어 있다' marca um ESTADO RESULTANTE: 문이 열려 있어요. Diferente do progressivo -고 있다.","wrongNote":"Estado resultante = -아/어 있다 → 열려 있어요."},
+  "gram-94": {"promptNative":"Parece que está chovendo. (suposição -는 것 같다)","explain":"'-는 것 같다' expressa uma conjetura no presente ('parece que…'): 오는 것 같아요. Verbos no presente levam -는; passado -(으)ㄴ; futuro -(으)ㄹ.","wrongNote":"A conjectura no presente usa -는 것 같다 → 오는 것 같아요."},
+  "gram-95": {"promptNative":"Gosto de maçãs, mas não gosto de bananas. (contrastivo 은/는)","explain":"'은/는' marca o TÓPICO e serve para contraste: 사과는 좋아요, 바나나는 싫어요. O contraste é justamente o que 은/는 sinaliza.","wrongNote":"A partícula de tópico 은/는 marca contraste → 사과는 …, 바나나는 …."},
+  "gram-96": {"promptNative":"Fui junto com um amigo. ('com')","explain":"'와/과' (e 하고, 랑) significa 'con/y': 친구와 같이. 와 depois de vogal, 과 depois de consoante.","wrongNote":"'con/y' depois de vogal → 와 → 친구와."},
+  "gram-97": {"promptNative":"Este conjunto é mais bonito que aquele. ('que')","explain":"'보다' marca o termo de comparação ('que'): 저 옷보다 더 예뻐요.","wrongNote":"Padrão de comparação ('que') → 보다 → 저 옷보다."},
+  "gram-98": {"promptNative":"Sei cozinhar comida coreana. (habilidade -(으)ㄹ 수 있다)","explain":"'-(으)ㄹ 수 있다' expressa capacidade/possibilidade ('poder'): 만들 수 있어요. Seu negativo é -(으)ㄹ 수 없다.","wrongNote":"Capacidade ('poder') = -(으)ㄹ 수 있다 → 만들 수 있어요."},
+  "gram-99": {"promptNative":"Comeu? — Sim, comi. (반말 casual)","explain":"Entre amigos próximos usa-se o 반말 (fala simples), sem o 요 cortês: 먹었어. Usar 요/습니다 com um amigo próximo soa estranho/rígido.","wrongNote":"Com um amigo próximo use 반말 (tira 요) → 먹었어."},
+  "gram-100": {"promptNative":"A reunião começa às 3. (partícula de tempo)","explain":"'에' também marca um ponto no TEMPO: 3시에 ('a las 3'). (지금, 오늘, 어제 não levam 에.)","wrongNote":"'에' também marca um ponto no tempo → 3시에."},
+  "gram-101": {"promptNative":"Gosto de ler livros. (nominalizador -는 것)","explain":"'-는 것' transforma um verbo em sintagma nominal ('el acto de …'): 읽는 것을 좋아해요. Verbos no presente levam -는.","wrongNote":"Verbo no presente → sintagma nominal com -는 것 → 읽는 것을."},
+  "gram-102": {"promptNative":"Aprender coreano é difícil. (nominalizador -기)","explain":"'-기' também nominaliza, comum com adjetivos de dificuldade: 배우기가 어려워요 ('aprender es difícil'). Mais abstrato que -는 것.","wrongNote":"Nominalizador -기 (esp. com fácil/difícil) → 배우기가."},
+  "gram-103": {"promptNative":"O filme que vi ontem foi divertido. (oração relativa no passado)","explain":"Uma relativa no PASSADO usa -(으)ㄴ no verbo: 어제 본 영화. Presente -는, futuro -(으)ㄹ.","wrongNote":"Oração relativa no passado em um verbo → -(으)ㄴ → 본 영화."},
+  "gram-104": {"promptNative":"A pessoa que vem agora é meu amigo. (oração relativa no presente)","explain":"Uma relativa no PRESENTE usa -는 no verbo: 지금 오는 사람 ('la persona que viene ahora').","wrongNote":"Oração relativa no presente em um verbo → -는 → 오는 사람."},
+  "gram-105": {"promptNative":"Tenho muito o que fazer amanhã. (oração relativa no futuro)","explain":"Uma relativa FUTURA/prospectiva usa -(으)ㄹ: 내일 할 일 ('cosas por hacer mañana').","wrongNote":"Oração relativa futura/prospectiva → -(으)ㄹ → 할 일."},
+  "gram-106": {"promptNative":"Mesmo que chova, eu vou. (-아/어도)","explain":"'-아/어도' significa 'aunque / incluso si': 비가 와도 갈 거예요 ('iré aunque llueva').","wrongNote":"'aunque / aun si' = -아/어도 → 와도."},
+  "gram-107": {"promptNative":"Toma café ou chá. ('ou', substantivos)","explain":"'(이)나' liga substantivos como 'o': 커피나 차 ('café o té'). 나 depois de vogal, 이나 depois de consoante.","wrongNote":"'o' unindo substantivos = (이)나 → 커피나 차."},
+  "gram-108": {"promptNative":"Nos fins de semana leio ou vejo filmes. ('ou', verbos)","explain":"'-거나' liga verbos/orações como 'o': 읽거나 봐요 ('leo o veo (películas)').","wrongNote":"'o' unindo verbos/orações = -거나 → 읽거나."},
+  "gram-109": {"promptNative":"Vamos juntos? (-(으)ㄹ까요?)","explain":"'-(으)ㄹ까요?' propõe ('¿…?'): 같이 갈까요? ('¿vamos juntos?').","wrongNote":"'¿vamos a …?' = -(으)ㄹ까요? → 갈까요?"},
+  "gram-110": {"promptNative":"Vamos juntos! (-(으)ㅂ시다)","explain":"'-(으)ㅂ시다' é um 'vamos a …' formal: 같이 갑시다. (Informal: 같이 가자.)","wrongNote":"'vamos a …' formal = -(으)ㅂ시다 → 갑시다."},
+  "gram-111": {"promptNative":"A paisagem é realmente linda! (exclamativo -네요)","explain":"'-네요' expressa uma constatação/exclamação leve ('¡ah, es …!'): 좋네요! ('¡qué bonito!').","wrongNote":"Descoberta/exclamação = -네요 → 좋네요."},
+  "gram-112": {"promptNative":"Eu te disse ontem, lembra! (-잖아요)","explain":"'-잖아요' lembra ao ouvinte algo que ele já sabe ('ya sabes / te lo dije'): 말했잖아요.","wrongNote":"Lembrar algo já sabido = -잖아요 → 말했잖아요."},
+  "gram-113": {"promptNative":"A mãe fez a criança comer. (causativo -게 하다)","explain":"'-게 하다' é o causativo ('hacer/dejar que alguien haga'): 먹게 했어요.","wrongNote":"Causativo = -게 하다 → 먹게 했어요."},
+  "gram-114": {"promptNative":"O tempo vai ficando frio aos poucos. (-아/어지다)","explain":"'-아/어지다' num adjetivo significa 'volverse / ponerse': 추워져요 ('se está poniendo frío').","wrongNote":"'volverse/ponerse' em um adjetivo = -아/어지다 → 추워져요."},
+  "gram-115": {"promptNative":"É tão alto quanto meu irmão mais velho. ('tão quanto')","explain":"'만큼' significa 'tanto como / al mismo grado que': 형만큼 커요 ('tan alto como mi hermano').","wrongNote":"'tanto como' = 만큼 → 형만큼."},
+  "gram-116": {"promptNative":"Está dormindo como um bebê. ('como')","explain":"'처럼' significa 'como': 아기처럼 자요 ('duerme como un bebé').","wrongNote":"'como' = 처럼 → 아기처럼."},
+  "gram-117": {"promptNative":"Só tem um pouco de tempo. (밖에 … 없다)","explain":"'밖에' + NEGATIVO significa 'solo / nada más que': 조금밖에 없어요. Sempre com negação.","wrongNote":"'solo' + NEGATIVO = 밖에 → 조금밖에 없어요."},
+  "gram-118": {"promptNative":"Faço trilha todo fim de semana. ('cada')","explain":"'마다' significa 'cada': 주말마다 ('cada fin de semana'), 날마다 ('cada día').","wrongNote":"'cada' = 마다 → 주말마다."},
+  "gram-119": {"promptNative":"Quando chego em casa, lavo as mãos. (-(으)ㄹ 때)","explain":"'-(으)ㄹ 때' significa 'cuando': 집에 갈 때. Com tempo no verbo para o 'cuando' de passado (갔을 때).","wrongNote":"'cuando (hacer)' = -(으)ㄹ 때 → 갈 때."},
+  "gram-120": {"promptNative":"Antes de comer, lave as mãos. (-기 전에)","explain":"'-기 전에' significa 'antes de (hacer)': 먹기 전에. Usa o nominalizador -기 + 전에.","wrongNote":"'antes de (hacer)' = -기 전에 → 먹기 전에."},
+  "gram-121": {"promptNative":"Depois de fazer a tarefa, brinquei. (-(으)ㄴ 후에)","explain":"'-(으)ㄴ 후에' significa 'después de (hacer)': 한 후에. Leva o modificador de passado -(으)ㄴ.","wrongNote":"'después de (hacer)' = -(으)ㄴ 후에 → 한 후에."},
+  "gram-122": {"promptNative":"Enquanto eu cozinho, por favor limpe. (-는 동안)","explain":"'-는 동안' significa 'mientras / durante': 요리하는 동안. Com o modificador de presente -는.","wrongNote":"'mientras / durante' = -는 동안 → 요리하는 동안."},
+  "gram-123": {"promptNative":"Assim que cheguei em casa, adormeci. (-자마자)","explain":"'-자마자' significa 'en cuanto / apenas': 도착하자마자 잤어요 ('dormí en cuanto llegué').","wrongNote":"'en cuanto' = -자마자 → 도착하자마자."},
+  "gram-124": {"promptNative":"Dei um presente à avó. (humilde 'dar')","explain":"'드리다' é a forma humilde de 주다 ('dar'), diante de alguém respeitado: 할머니께 드렸어요. 께 é o honorífico de 에게.","wrongNote":"'dar' humilde para um superior = 드리다 → 드렸어요."},
+  "gram-125": {"promptNative":"Faz três anos que vim para a Coreia. (-(으)ㄴ 지)","explain":"'-(으)ㄴ 지 + tiempo + 되다' diz há quanto tempo uma ação aconteceu: 온 지 3년 됐어요. Com o modificador de passado -(으)ㄴ.","wrongNote":"'hace (tiempo) que …' = -(으)ㄴ 지 … 되다 → 온 지."},
+  "gram-126": {"promptNative":"Quem dera eu tivesse muito dinheiro. (-았/었으면 좋겠다)","explain":"'-았/었으면 좋겠다' expressa um desejo ('ojalá'): 많았으면 좋겠어요. O ~았/었 aqui sinaliza o desejo, não o passado.","wrongNote":"Um desejo = -았/었으면 좋겠다 → 많았으면 좋겠어요."},
+  "gram-127": {"promptNative":"Depois de terminar de comer, vou lavar a louça. (-고 나서)","explain":"'-고 나서' significa 'después de terminar de (hacer)': 다 먹고 나서. Enfatiza a conclusão antes do passo seguinte.","wrongNote":"'tras terminar' = -고 나서 → 먹고 나서."},
+  "gram-128": {"promptNative":"Decidi estudar no exterior no ano que vem. (-기로 하다)","explain":"'-기로 하다' expressa uma decisão ('decidir'): 가기로 했어요 ('he decidido ir').","wrongNote":"Uma decisão = -기로 하다 → 가기로 했어요."},
+  "gram-129": {"promptNative":"Ouço música enquanto estudo. (-(으)면서)","explain":"'-(으)면서' significa fazer duas coisas AO MESMO TEMPO: 공부하면서 들어요 ('escucho mientras estudio').","wrongNote":"Duas coisas ao mesmo tempo = -(으)면서 → 공부하면서."},
+  "gram-130": {"promptNative":"Se quiser passar na prova, estude muito. (-(으)려면)","explain":"'-(으)려면' significa 'si quieres/piensas …': 붙으려면 ('si quieres aprobar'). Introduz um conselho para uma meta.","wrongNote":"'si pretendes/quieres …' = -(으)려면 → 붙으려면."},
+  "gram-131": {"promptNative":"É um lugar aonde eu costumava ir muito quando criança. (retrospectivo -던)","explain":"'-던' é o modificador retrospectivo — algo que você COSTUMAVA …: 자주 가던 곳 ('un lugar al que solía ir').","wrongNote":"Modificador retrospectivo 'solía' = -던 → 가던 곳."},
+  "gram-132": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '먹다' (comer) → '먹어요' (meogeoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"먹었어요 (meogeosseoyo)":"a forma cortês do passado (-았/었어요)","먹습니다 (meokseumnida)":"a forma formal do presente (-습니다)","먹어 (meogeo)":"a forma casual do presente (반말)"}},
+  "gram-133": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '가다' (ir) → '가요' (gayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"갔어요 (gasseoyo)":"a forma cortês do passado (-았/었어요)","갑니다 (gamnida)":"a forma formal do presente (-습니다)","가 (ga)":"a forma casual do presente (반말)"}},
+  "gram-134": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '듣다' (ouvir) → '들어요' (deureoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"들었어요 (deureosseoyo)":"a forma cortês do passado (-았/었어요)","듣습니다 (deutseumnida)":"a forma formal do presente (-습니다)","들어 (deureo)":"a forma casual do presente (반말)"}},
+  "gram-135": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '돕다' (ajudar) → '도와요' (dowayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"도왔어요 (dowasseoyo)":"a forma cortês do passado (-았/었어요)","돕습니다 (dopseumnida)":"a forma formal do presente (-습니다)","도와 (dowa)":"a forma casual do presente (반말)"}},
+  "gram-136": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '부르다' (chamar/cantar) → '불러요' (bulleoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"불렀어요 (bulleosseoyo)":"a forma cortês do passado (-았/었어요)","부릅니다 (bureumnida)":"a forma formal do presente (-습니다)","불러 (bulleo)":"a forma casual do presente (반말)"}},
+  "gram-137": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '살다' (viver) → '살아요' (sarayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"살았어요 (sarasseoyo)":"a forma cortês do passado (-았/었어요)","삽니다 (samnida)":"a forma formal do presente (-습니다)","살아 (sara)":"a forma casual do presente (반말)"}},
+  "gram-138": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '짓다' (construir) → '지어요' (jieoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"지었어요 (jieosseoyo)":"a forma cortês do passado (-았/었어요)","짓습니다 (jitseumnida)":"a forma formal do presente (-습니다)","지어 (jieo)":"a forma casual do presente (반말)"}},
+  "gram-139": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '걷다' (caminhar) → '걸어요' (georeoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"걸었어요 (georeosseoyo)":"a forma cortês do passado (-았/었어요)","걷습니다 (geotseumnida)":"a forma formal do presente (-습니다)","걸어 (georeo)":"a forma casual do presente (반말)"}},
+  "gram-140": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '오다' (vir) → '와요' (wayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"왔어요 (wasseoyo)":"a forma cortês do passado (-았/었어요)","옵니다 (omnida)":"a forma formal do presente (-습니다)","와 (wa)":"a forma casual do presente (반말)"}},
+  "gram-141": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '보다' (ver) → '봐요' (bwayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"봤어요 (bwasseoyo)":"a forma cortês do passado (-았/었어요)","봅니다 (bomnida)":"a forma formal do presente (-습니다)","봐 (bwa)":"a forma casual do presente (반말)"}},
+  "gram-142": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '주다' (dar) → '줘요' (jwoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"줬어요 (jwosseoyo)":"a forma cortês do passado (-았/었어요)","줍니다 (jumnida)":"a forma formal do presente (-습니다)","줘 (jwo)":"a forma casual do presente (반말)"}},
+  "gram-143": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '마시다' (beber) → '마셔요' (masyeoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"마셨어요 (masyeosseoyo)":"a forma cortês do passado (-았/었어요)","마십니다 (masimnida)":"a forma formal do presente (-습니다)","마셔 (masyeo)":"a forma casual do presente (반말)"}},
+  "gram-144": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '읽다' (ler) → '읽어요' (ilgeoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"읽었어요 (ilgeosseoyo)":"a forma cortês do passado (-았/었어요)","읽습니다 (ikseumnida)":"a forma formal do presente (-습니다)","읽어 (ilgeo)":"a forma casual do presente (반말)"}},
+  "gram-145": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '쓰다' (escrever) → '써요' (sseoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"썼어요 (sseosseoyo)":"a forma cortês do passado (-았/었어요)","씁니다 (sseumnida)":"a forma formal do presente (-습니다)","써 (sseo)":"a forma casual do presente (반말)"}},
+  "gram-146": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '놀다' (brincar) → '놀아요' (norayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"놀았어요 (norasseoyo)":"a forma cortês do passado (-았/었어요)","놉니다 (nomnida)":"a forma formal do presente (-습니다)","놀아 (nora)":"a forma casual do presente (반말)"}},
+  "gram-147": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '울다' (chorar) → '울어요' (ureoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"울었어요 (ureosseoyo)":"a forma cortês do passado (-았/었어요)","웁니다 (umnida)":"a forma formal do presente (-습니다)","울어 (ureo)":"a forma casual do presente (반말)"}},
+  "gram-148": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '열다' (abrir) → '열어요' (yeoreoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"열었어요 (yeoreosseoyo)":"a forma cortês do passado (-았/었어요)","엽니다 (yeomnida)":"a forma formal do presente (-습니다)","열어 (yeoreo)":"a forma casual do presente (반말)"}},
+  "gram-149": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '사다' (comprar) → '사요' (sayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"샀어요 (sasseoyo)":"a forma cortês do passado (-았/었어요)","삽니다 (samnida)":"a forma formal do presente (-습니다)","사 (sa)":"a forma casual do presente (반말)"}},
+  "gram-150": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '만나다' (encontrar-se) → '만나요' (mannayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"만났어요 (mannasseoyo)":"a forma cortês do passado (-았/었어요)","만납니다 (mannamnida)":"a forma formal do presente (-습니다)","만나 (manna)":"a forma casual do presente (반말)"}},
+  "gram-151": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '말하다' (falar) → '말해요' (malhaeyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"말했어요 (malhaesseoyo)":"a forma cortês do passado (-았/었어요)","말합니다 (malhamnida)":"a forma formal do presente (-습니다)","말해 (malhae)":"a forma casual do presente (반말)"}},
+  "gram-152": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '배우다' (aprender) → '배워요' (baewoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"배웠어요 (baewosseoyo)":"a forma cortês do passado (-았/었어요)","배웁니다 (baeumnida)":"a forma formal do presente (-습니다)","배워 (baewo)":"a forma casual do presente (반말)"}},
+  "gram-153": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '기다리다' (esperar) → '기다려요' (gidaryeoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"기다렸어요 (gidaryeosseoyo)":"a forma cortês do passado (-았/었어요)","기다립니다 (gidarimnida)":"a forma formal do presente (-습니다)","기다려 (gidaryeo)":"a forma casual do presente (반말)"}},
+  "gram-154": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '앉다' (sentar-se) → '앉아요' (anjayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"앉았어요 (anjasseoyo)":"a forma cortês do passado (-았/었어요)","앉습니다 (anseumnida)":"a forma formal do presente (-습니다)","앉아 (anja)":"a forma casual do presente (반말)"}},
+  "gram-155": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '웃다' (rir) → '웃어요' (useoyo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"웃었어요 (useosseoyo)":"a forma cortês do passado (-았/었어요)","웃습니다 (utseumnida)":"a forma formal do presente (-습니다)","웃어 (useo)":"a forma casual do presente (반말)"}},
+  "gram-156": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '받다' (receber) → '받아요' (badayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"받았어요 (badasseoyo)":"a forma cortês do passado (-았/었어요)","받습니다 (batseumnida)":"a forma formal do presente (-습니다)","받아 (bada)":"a forma casual do presente (반말)"}},
+  "gram-157": {"promptNative":"Toda manhã eu ___. (presente formal)","explain":"O presente cortês termina em -아/어요: '찾다' (procurar) → '찾아요' (chajayo).","wrongNote":"O presente cortês termina em -아/어요.","distractorNotes":{"찾았어요 (chajasseoyo)":"a forma cortês do passado (-았/었어요)","찾습니다 (chatseumnida)":"a forma formal do presente (-습니다)","찾아 (chaja)":"a forma casual do presente (반말)"}},
+  "gram-158": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '먹다' (comer) → '먹었어요' (meogeosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)","먹습니다 (meokseumnida)":"a forma formal do presente (-습니다)","먹을 거예요 (meogeul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-159": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '가다' (ir) → '갔어요' (gasseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"가요 (gayo)":"a forma cortês do presente (-아/어요)","갑니다 (gamnida)":"a forma formal do presente (-습니다)","갈 거예요 (gal geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-160": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '듣다' (ouvir) → '들었어요' (deureosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"들어요 (deureoyo)":"a forma cortês do presente (-아/어요)","듣습니다 (deutseumnida)":"a forma formal do presente (-습니다)","들을 거예요 (deureul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-161": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '돕다' (ajudar) → '도왔어요' (dowasseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"도와요 (dowayo)":"a forma cortês do presente (-아/어요)","돕습니다 (dopseumnida)":"a forma formal do presente (-습니다)","도울 거예요 (doul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-162": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '부르다' (chamar/cantar) → '불렀어요' (bulleosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)","부릅니다 (bureumnida)":"a forma formal do presente (-습니다)","부를 거예요 (bureul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-163": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '살다' (viver) → '살았어요' (sarasseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"살아요 (sarayo)":"a forma cortês do presente (-아/어요)","삽니다 (samnida)":"a forma formal do presente (-습니다)","살 거예요 (sal geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-164": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '짓다' (construir) → '지었어요' (jieosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"지어요 (jieoyo)":"a forma cortês do presente (-아/어요)","짓습니다 (jitseumnida)":"a forma formal do presente (-습니다)","지을 거예요 (jieul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-165": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '걷다' (caminhar) → '걸었어요' (georeosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)","걷습니다 (geotseumnida)":"a forma formal do presente (-습니다)","걸을 거예요 (georeul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-166": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '오다' (vir) → '왔어요' (wasseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"와요 (wayo)":"a forma cortês do presente (-아/어요)","옵니다 (omnida)":"a forma formal do presente (-습니다)","올 거예요 (ol geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-167": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '보다' (ver) → '봤어요' (bwasseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"봐요 (bwayo)":"a forma cortês do presente (-아/어요)","봅니다 (bomnida)":"a forma formal do presente (-습니다)","볼 거예요 (bol geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-168": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '주다' (dar) → '줬어요' (jwosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"줘요 (jwoyo)":"a forma cortês do presente (-아/어요)","줍니다 (jumnida)":"a forma formal do presente (-습니다)","줄 거예요 (jul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-169": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '마시다' (beber) → '마셨어요' (masyeosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)","마십니다 (masimnida)":"a forma formal do presente (-습니다)","마실 거예요 (masil geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-170": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '읽다' (ler) → '읽었어요' (ilgeosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)","읽습니다 (ikseumnida)":"a forma formal do presente (-습니다)","읽을 거예요 (ilgeul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-171": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '쓰다' (escrever) → '썼어요' (sseosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"써요 (sseoyo)":"a forma cortês do presente (-아/어요)","씁니다 (sseumnida)":"a forma formal do presente (-습니다)","쓸 거예요 (sseul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-172": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '놀다' (brincar) → '놀았어요' (norasseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"놀아요 (norayo)":"a forma cortês do presente (-아/어요)","놉니다 (nomnida)":"a forma formal do presente (-습니다)","놀 거예요 (nol geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-173": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '울다' (chorar) → '울었어요' (ureosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"울어요 (ureoyo)":"a forma cortês do presente (-아/어요)","웁니다 (umnida)":"a forma formal do presente (-습니다)","울 거예요 (ul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-174": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '열다' (abrir) → '열었어요' (yeoreosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"열어요 (yeoreoyo)":"a forma cortês do presente (-아/어요)","엽니다 (yeomnida)":"a forma formal do presente (-습니다)","열 거예요 (yeol geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-175": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '사다' (comprar) → '샀어요' (sasseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"사요 (sayo)":"a forma cortês do presente (-아/어요)","삽니다 (samnida)":"a forma formal do presente (-습니다)","살 거예요 (sal geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-176": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '만나다' (encontrar-se) → '만났어요' (mannasseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"만나요 (mannayo)":"a forma cortês do presente (-아/어요)","만납니다 (mannamnida)":"a forma formal do presente (-습니다)","만날 거예요 (mannal geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-177": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '말하다' (falar) → '말했어요' (malhaesseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"말해요 (malhaeyo)":"a forma cortês do presente (-아/어요)","말합니다 (malhamnida)":"a forma formal do presente (-습니다)","말할 거예요 (malhal geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-178": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '배우다' (aprender) → '배웠어요' (baewosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"배워요 (baewoyo)":"a forma cortês do presente (-아/어요)","배웁니다 (baeumnida)":"a forma formal do presente (-습니다)","배울 거예요 (baeul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-179": {"promptNative":"Ontem eu ___. (passado formal)","explain":"O passado cortês insere -았/었- antes de -어요: '기다리다' (esperar) → '기다렸어요' (gidaryeosseoyo).","wrongNote":"O passado cortês insere -았/었- antes de -어요.","distractorNotes":{"기다려요 (gidaryeoyo)":"a forma cortês do presente (-아/어요)","기다립니다 (gidarimnida)":"a forma formal do presente (-습니다)","기다릴 거예요 (gidaril geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-180": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '먹다' (comer) → '먹고' (meokgo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"먹으면 (meogeumyeon)":"o condicional -(으)면 ('si')","먹었어요 (meogeosseoyo)":"a forma cortês do passado (-았/었어요)","먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-181": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '가다' (ir) → '가고' (gago).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"가면 (gamyeon)":"o condicional -(으)면 ('si')","갔어요 (gasseoyo)":"a forma cortês do passado (-았/었어요)","가요 (gayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-182": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '듣다' (ouvir) → '듣고' (deutgo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"들으면 (deureumyeon)":"o condicional -(으)면 ('si')","들었어요 (deureosseoyo)":"a forma cortês do passado (-았/었어요)","들어요 (deureoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-183": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '돕다' (ajudar) → '돕고' (dopgo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"도우면 (doumyeon)":"o condicional -(으)면 ('si')","도왔어요 (dowasseoyo)":"a forma cortês do passado (-았/었어요)","도와요 (dowayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-184": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '부르다' (chamar/cantar) → '부르고' (bureugo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"부르면 (bureumyeon)":"o condicional -(으)면 ('si')","불렀어요 (bulleosseoyo)":"a forma cortês do passado (-았/었어요)","불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-185": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '살다' (viver) → '살고' (salgo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"살면 (salmyeon)":"o condicional -(으)면 ('si')","살았어요 (sarasseoyo)":"a forma cortês do passado (-았/었어요)","살아요 (sarayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-186": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '짓다' (construir) → '짓고' (jitgo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"지으면 (jieumyeon)":"o condicional -(으)면 ('si')","지었어요 (jieosseoyo)":"a forma cortês do passado (-았/었어요)","지어요 (jieoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-187": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '걷다' (caminhar) → '걷고' (geotgo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"걸으면 (georeumyeon)":"o condicional -(으)면 ('si')","걸었어요 (georeosseoyo)":"a forma cortês do passado (-았/었어요)","걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-188": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '오다' (vir) → '오고' (ogo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"오면 (omyeon)":"o condicional -(으)면 ('si')","왔어요 (wasseoyo)":"a forma cortês do passado (-았/었어요)","와요 (wayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-189": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '보다' (ver) → '보고' (bogo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"보면 (bomyeon)":"o condicional -(으)면 ('si')","봤어요 (bwasseoyo)":"a forma cortês do passado (-았/었어요)","봐요 (bwayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-190": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '주다' (dar) → '주고' (jugo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"주면 (jumyeon)":"o condicional -(으)면 ('si')","줬어요 (jwosseoyo)":"a forma cortês do passado (-았/었어요)","줘요 (jwoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-191": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '마시다' (beber) → '마시고' (masigo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"마시면 (masimyeon)":"o condicional -(으)면 ('si')","마셨어요 (masyeosseoyo)":"a forma cortês do passado (-았/었어요)","마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-192": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '읽다' (ler) → '읽고' (ikgo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"읽으면 (ilgeumyeon)":"o condicional -(으)면 ('si')","읽었어요 (ilgeosseoyo)":"a forma cortês do passado (-았/었어요)","읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-193": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '쓰다' (escrever) → '쓰고' (sseugo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"쓰면 (sseumyeon)":"o condicional -(으)면 ('si')","썼어요 (sseosseoyo)":"a forma cortês do passado (-았/었어요)","써요 (sseoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-194": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '놀다' (brincar) → '놀고' (nolgo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"놀면 (nolmyeon)":"o condicional -(으)면 ('si')","놀았어요 (norasseoyo)":"a forma cortês do passado (-았/었어요)","놀아요 (norayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-195": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '울다' (chorar) → '울고' (ulgo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"울면 (ulmyeon)":"o condicional -(으)면 ('si')","울었어요 (ureosseoyo)":"a forma cortês do passado (-았/었어요)","울어요 (ureoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-196": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '열다' (abrir) → '열고' (yeolgo).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"열면 (yeolmyeon)":"o condicional -(으)면 ('si')","열었어요 (yeoreosseoyo)":"a forma cortês do passado (-았/었어요)","열어요 (yeoreoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-197": {"promptNative":"Eu ___ e (depois) escovo os dentes. (-고 'e')","explain":"Para ligar verbos, acrescenta-se -고 ('y'): '사다' (comprar) → '사고' (sago).","wrongNote":"Para ligar verbos, acrescenta-se -고 ('y').","distractorNotes":{"사면 (samyeon)":"o condicional -(으)면 ('si')","샀어요 (sasseoyo)":"a forma cortês do passado (-았/었어요)","사요 (sayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-198": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '먹다' (comer) → '먹어' (meogeo).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)","먹고 (meokgo)":"o conectivo -고 ('y')","먹었어요 (meogeosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-199": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '가다' (ir) → '가' (ga).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"가요 (gayo)":"a forma cortês do presente (-아/어요)","가고 (gago)":"o conectivo -고 ('y')","갔어요 (gasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-200": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '듣다' (ouvir) → '들어' (deureo).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"들어요 (deureoyo)":"a forma cortês do presente (-아/어요)","듣고 (deutgo)":"o conectivo -고 ('y')","들었어요 (deureosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-201": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '돕다' (ajudar) → '도와' (dowa).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"도와요 (dowayo)":"a forma cortês do presente (-아/어요)","돕고 (dopgo)":"o conectivo -고 ('y')","도왔어요 (dowasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-202": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '부르다' (chamar/cantar) → '불러' (bulleo).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)","부르고 (bureugo)":"o conectivo -고 ('y')","불렀어요 (bulleosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-203": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '살다' (viver) → '살아' (sara).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"살아요 (sarayo)":"a forma cortês do presente (-아/어요)","살고 (salgo)":"o conectivo -고 ('y')","살았어요 (sarasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-204": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '짓다' (construir) → '지어' (jieo).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"지어요 (jieoyo)":"a forma cortês do presente (-아/어요)","짓고 (jitgo)":"o conectivo -고 ('y')","지었어요 (jieosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-205": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '걷다' (caminhar) → '걸어' (georeo).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)","걷고 (geotgo)":"o conectivo -고 ('y')","걸었어요 (georeosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-206": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '오다' (vir) → '와' (wa).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"와요 (wayo)":"a forma cortês do presente (-아/어요)","오고 (ogo)":"o conectivo -고 ('y')","왔어요 (wasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-207": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '보다' (ver) → '봐' (bwa).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"봐요 (bwayo)":"a forma cortês do presente (-아/어요)","보고 (bogo)":"o conectivo -고 ('y')","봤어요 (bwasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-208": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '주다' (dar) → '줘' (jwo).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"줘요 (jwoyo)":"a forma cortês do presente (-아/어요)","주고 (jugo)":"o conectivo -고 ('y')","줬어요 (jwosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-209": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '마시다' (beber) → '마셔' (masyeo).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)","마시고 (masigo)":"o conectivo -고 ('y')","마셨어요 (masyeosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-210": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '읽다' (ler) → '읽어' (ilgeo).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)","읽고 (ikgo)":"o conectivo -고 ('y')","읽었어요 (ilgeosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-211": {"promptNative":"Somos amigos, então fale de forma casual — eu ___. (반말)","explain":"A fala casual (반말) omite -요: '쓰다' (escrever) → '써' (sseo).","wrongNote":"A fala casual (반말) omite -요.","distractorNotes":{"써요 (sseoyo)":"a forma cortês do presente (-아/어요)","쓰고 (sseugo)":"o conectivo -고 ('y')","썼어요 (sseosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-212": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '먹다' (comer) → '먹을 거예요' (meogeul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)","먹었어요 (meogeosseoyo)":"a forma cortês do passado (-았/었어요)","먹으면 (meogeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-213": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '가다' (ir) → '갈 거예요' (gal geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"가요 (gayo)":"a forma cortês do presente (-아/어요)","갔어요 (gasseoyo)":"a forma cortês do passado (-았/었어요)","가면 (gamyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-214": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '듣다' (ouvir) → '들을 거예요' (deureul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"들어요 (deureoyo)":"a forma cortês do presente (-아/어요)","들었어요 (deureosseoyo)":"a forma cortês do passado (-았/었어요)","들으면 (deureumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-215": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '돕다' (ajudar) → '도울 거예요' (doul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"도와요 (dowayo)":"a forma cortês do presente (-아/어요)","도왔어요 (dowasseoyo)":"a forma cortês do passado (-았/었어요)","도우면 (doumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-216": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '부르다' (chamar/cantar) → '부를 거예요' (bureul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)","불렀어요 (bulleosseoyo)":"a forma cortês do passado (-았/었어요)","부르면 (bureumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-217": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '살다' (viver) → '살 거예요' (sal geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"살아요 (sarayo)":"a forma cortês do presente (-아/어요)","살았어요 (sarasseoyo)":"a forma cortês do passado (-았/었어요)","살면 (salmyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-218": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '짓다' (construir) → '지을 거예요' (jieul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"지어요 (jieoyo)":"a forma cortês do presente (-아/어요)","지었어요 (jieosseoyo)":"a forma cortês do passado (-았/었어요)","지으면 (jieumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-219": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '걷다' (caminhar) → '걸을 거예요' (georeul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)","걸었어요 (georeosseoyo)":"a forma cortês do passado (-았/었어요)","걸으면 (georeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-220": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '오다' (vir) → '올 거예요' (ol geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"와요 (wayo)":"a forma cortês do presente (-아/어요)","왔어요 (wasseoyo)":"a forma cortês do passado (-았/었어요)","오면 (omyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-221": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '보다' (ver) → '볼 거예요' (bol geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"봐요 (bwayo)":"a forma cortês do presente (-아/어요)","봤어요 (bwasseoyo)":"a forma cortês do passado (-았/었어요)","보면 (bomyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-222": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '주다' (dar) → '줄 거예요' (jul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"줘요 (jwoyo)":"a forma cortês do presente (-아/어요)","줬어요 (jwosseoyo)":"a forma cortês do passado (-았/었어요)","주면 (jumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-223": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '마시다' (beber) → '마실 거예요' (masil geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)","마셨어요 (masyeosseoyo)":"a forma cortês do passado (-았/었어요)","마시면 (masimyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-224": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '읽다' (ler) → '읽을 거예요' (ilgeul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)","읽었어요 (ilgeosseoyo)":"a forma cortês do passado (-았/었어요)","읽으면 (ilgeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-225": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '쓰다' (escrever) → '쓸 거예요' (sseul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"써요 (sseoyo)":"a forma cortês do presente (-아/어요)","썼어요 (sseosseoyo)":"a forma cortês do passado (-았/었어요)","쓰면 (sseumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-226": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '놀다' (brincar) → '놀 거예요' (nol geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"놀아요 (norayo)":"a forma cortês do presente (-아/어요)","놀았어요 (norasseoyo)":"a forma cortês do passado (-았/었어요)","놀면 (nolmyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-227": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '울다' (chorar) → '울 거예요' (ul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"울어요 (ureoyo)":"a forma cortês do presente (-아/어요)","울었어요 (ureosseoyo)":"a forma cortês do passado (-았/었어요)","울면 (ulmyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-228": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '열다' (abrir) → '열 거예요' (yeol geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"열어요 (yeoreoyo)":"a forma cortês do presente (-아/어요)","열었어요 (yeoreosseoyo)":"a forma cortês do passado (-았/었어요)","열면 (yeolmyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-229": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '사다' (comprar) → '살 거예요' (sal geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"사요 (sayo)":"a forma cortês do presente (-아/어요)","샀어요 (sasseoyo)":"a forma cortês do passado (-았/었어요)","사면 (samyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-230": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '만나다' (encontrar-se) → '만날 거예요' (mannal geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"만나요 (mannayo)":"a forma cortês do presente (-아/어요)","만났어요 (mannasseoyo)":"a forma cortês do passado (-았/었어요)","만나면 (mannamyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-231": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '말하다' (falar) → '말할 거예요' (malhal geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"말해요 (malhaeyo)":"a forma cortês do presente (-아/어요)","말했어요 (malhaesseoyo)":"a forma cortês do passado (-았/었어요)","말하면 (malhamyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-232": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '배우다' (aprender) → '배울 거예요' (baeul geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"배워요 (baewoyo)":"a forma cortês do presente (-아/어요)","배웠어요 (baewosseoyo)":"a forma cortês do passado (-았/었어요)","배우면 (baeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-233": {"promptNative":"Amanhã eu ___. (futuro)","explain":"O futuro é -(으)ㄹ 거예요: '기다리다' (esperar) → '기다릴 거예요' (gidaril geoyeyo).","wrongNote":"O futuro é -(으)ㄹ 거예요.","distractorNotes":{"기다려요 (gidaryeoyo)":"a forma cortês do presente (-아/어요)","기다렸어요 (gidaryeosseoyo)":"a forma cortês do passado (-았/었어요)","기다리면 (gidarimyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-234": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '먹다' (comer) → '먹으면' (meogeumyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"먹고 (meokgo)":"o conectivo -고 ('y')","먹었어요 (meogeosseoyo)":"a forma cortês do passado (-았/었어요)","먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-235": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '가다' (ir) → '가면' (gamyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"가고 (gago)":"o conectivo -고 ('y')","갔어요 (gasseoyo)":"a forma cortês do passado (-았/었어요)","가요 (gayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-236": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '듣다' (ouvir) → '들으면' (deureumyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"듣고 (deutgo)":"o conectivo -고 ('y')","들었어요 (deureosseoyo)":"a forma cortês do passado (-았/었어요)","들어요 (deureoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-237": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '돕다' (ajudar) → '도우면' (doumyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"돕고 (dopgo)":"o conectivo -고 ('y')","도왔어요 (dowasseoyo)":"a forma cortês do passado (-았/었어요)","도와요 (dowayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-238": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '부르다' (chamar/cantar) → '부르면' (bureumyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"부르고 (bureugo)":"o conectivo -고 ('y')","불렀어요 (bulleosseoyo)":"a forma cortês do passado (-았/었어요)","불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-239": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '살다' (viver) → '살면' (salmyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"살고 (salgo)":"o conectivo -고 ('y')","살았어요 (sarasseoyo)":"a forma cortês do passado (-았/었어요)","살아요 (sarayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-240": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '짓다' (construir) → '지으면' (jieumyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"짓고 (jitgo)":"o conectivo -고 ('y')","지었어요 (jieosseoyo)":"a forma cortês do passado (-았/었어요)","지어요 (jieoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-241": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '걷다' (caminhar) → '걸으면' (georeumyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"걷고 (geotgo)":"o conectivo -고 ('y')","걸었어요 (georeosseoyo)":"a forma cortês do passado (-았/었어요)","걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-242": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '오다' (vir) → '오면' (omyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"오고 (ogo)":"o conectivo -고 ('y')","왔어요 (wasseoyo)":"a forma cortês do passado (-았/었어요)","와요 (wayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-243": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '보다' (ver) → '보면' (bomyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"보고 (bogo)":"o conectivo -고 ('y')","봤어요 (bwasseoyo)":"a forma cortês do passado (-았/었어요)","봐요 (bwayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-244": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '주다' (dar) → '주면' (jumyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"주고 (jugo)":"o conectivo -고 ('y')","줬어요 (jwosseoyo)":"a forma cortês do passado (-았/었어요)","줘요 (jwoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-245": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '마시다' (beber) → '마시면' (masimyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"마시고 (masigo)":"o conectivo -고 ('y')","마셨어요 (masyeosseoyo)":"a forma cortês do passado (-았/었어요)","마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-246": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '읽다' (ler) → '읽으면' (ilgeumyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"읽고 (ikgo)":"o conectivo -고 ('y')","읽었어요 (ilgeosseoyo)":"a forma cortês do passado (-았/었어요)","읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-247": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '쓰다' (escrever) → '쓰면' (sseumyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"쓰고 (sseugo)":"o conectivo -고 ('y')","썼어요 (sseosseoyo)":"a forma cortês do passado (-았/었어요)","써요 (sseoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-248": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '놀다' (brincar) → '놀면' (nolmyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"놀고 (nolgo)":"o conectivo -고 ('y')","놀았어요 (norasseoyo)":"a forma cortês do passado (-았/었어요)","놀아요 (norayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-249": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '울다' (chorar) → '울면' (ulmyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"울고 (ulgo)":"o conectivo -고 ('y')","울었어요 (ureosseoyo)":"a forma cortês do passado (-았/었어요)","울어요 (ureoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-250": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '열다' (abrir) → '열면' (yeolmyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"열고 (yeolgo)":"o conectivo -고 ('y')","열었어요 (yeoreosseoyo)":"a forma cortês do passado (-았/었어요)","열어요 (yeoreoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-251": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '사다' (comprar) → '사면' (samyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"사고 (sago)":"o conectivo -고 ('y')","샀어요 (sasseoyo)":"a forma cortês do passado (-았/었어요)","사요 (sayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-252": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '만나다' (encontrar-se) → '만나면' (mannamyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"만나고 (mannago)":"o conectivo -고 ('y')","만났어요 (mannasseoyo)":"a forma cortês do passado (-았/었어요)","만나요 (mannayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-253": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '말하다' (falar) → '말하면' (malhamyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"말하고 (malhago)":"o conectivo -고 ('y')","말했어요 (malhaesseoyo)":"a forma cortês do passado (-았/었어요)","말해요 (malhaeyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-254": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '배우다' (aprender) → '배우면' (baeumyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"배우고 (baeugo)":"o conectivo -고 ('y')","배웠어요 (baewosseoyo)":"a forma cortês do passado (-았/었어요)","배워요 (baewoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-255": {"promptNative":"Se (você) ___ muito, seu estômago dói. (-(으)면 'se')","explain":"O condicional 'si' é -(으)면: '기다리다' (esperar) → '기다리면' (gidarimyeon).","wrongNote":"O condicional 'si' é -(으)면.","distractorNotes":{"기다리고 (gidarigo)":"o conectivo -고 ('y')","기다렸어요 (gidaryeosseoyo)":"a forma cortês do passado (-았/었어요)","기다려요 (gidaryeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-256": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '먹다' (comer) → '먹습니다' (meokseumnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)","먹었습니다 (meogeotseumnida)":"a forma formal do passado (-았/었습니다)","먹읍시다 (meogeupsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-257": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '가다' (ir) → '갑니다' (gamnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"가요 (gayo)":"a forma cortês do presente (-아/어요)","갔습니다 (gatseumnida)":"a forma formal do passado (-았/었습니다)","갑시다 (gapsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-258": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '듣다' (ouvir) → '듣습니다' (deutseumnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"들어요 (deureoyo)":"a forma cortês do presente (-아/어요)","들었습니다 (deureotseumnida)":"a forma formal do passado (-았/었습니다)","들읍시다 (deureupsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-259": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '돕다' (ajudar) → '돕습니다' (dopseumnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"도와요 (dowayo)":"a forma cortês do presente (-아/어요)","도왔습니다 (dowatseumnida)":"a forma formal do passado (-았/었습니다)","도웁시다 (doupsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-260": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '부르다' (chamar/cantar) → '부릅니다' (bureumnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)","불렀습니다 (bulleotseumnida)":"a forma formal do passado (-았/었습니다)","부릅시다 (bureupsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-261": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '살다' (viver) → '삽니다' (samnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"살아요 (sarayo)":"a forma cortês do presente (-아/어요)","살았습니다 (saratseumnida)":"a forma formal do passado (-았/었습니다)","삽시다 (sapsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-262": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '짓다' (construir) → '짓습니다' (jitseumnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"지어요 (jieoyo)":"a forma cortês do presente (-아/어요)","지었습니다 (jieotseumnida)":"a forma formal do passado (-았/었습니다)","지읍시다 (jieupsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-263": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '걷다' (caminhar) → '걷습니다' (geotseumnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)","걸었습니다 (georeotseumnida)":"a forma formal do passado (-았/었습니다)","걸읍시다 (georeupsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-264": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '오다' (vir) → '옵니다' (omnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"와요 (wayo)":"a forma cortês do presente (-아/어요)","왔습니다 (watseumnida)":"a forma formal do passado (-았/었습니다)","옵시다 (opsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-265": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '보다' (ver) → '봅니다' (bomnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"봐요 (bwayo)":"a forma cortês do presente (-아/어요)","봤습니다 (bwatseumnida)":"a forma formal do passado (-았/었습니다)","봅시다 (bopsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-266": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '주다' (dar) → '줍니다' (jumnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"줘요 (jwoyo)":"a forma cortês do presente (-아/어요)","줬습니다 (jwotseumnida)":"a forma formal do passado (-았/었습니다)","줍시다 (jupsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-267": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '마시다' (beber) → '마십니다' (masimnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)","마셨습니다 (masyeotseumnida)":"a forma formal do passado (-았/었습니다)","마십시다 (masipsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-268": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '읽다' (ler) → '읽습니다' (ikseumnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)","읽었습니다 (ilgeotseumnida)":"a forma formal do passado (-았/었습니다)","읽읍시다 (ilgeupsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-269": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '쓰다' (escrever) → '씁니다' (sseumnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"써요 (sseoyo)":"a forma cortês do presente (-아/어요)","썼습니다 (sseotseumnida)":"a forma formal do passado (-았/었습니다)","씁시다 (sseupsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-270": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '놀다' (brincar) → '놉니다' (nomnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"놀아요 (norayo)":"a forma cortês do presente (-아/어요)","놀았습니다 (noratseumnida)":"a forma formal do passado (-았/었습니다)","놉시다 (nopsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-271": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '울다' (chorar) → '웁니다' (umnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"울어요 (ureoyo)":"a forma cortês do presente (-아/어요)","울었습니다 (ureotseumnida)":"a forma formal do passado (-았/었습니다)","웁시다 (upsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-272": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '열다' (abrir) → '엽니다' (yeomnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"열어요 (yeoreoyo)":"a forma cortês do presente (-아/어요)","열었습니다 (yeoreotseumnida)":"a forma formal do passado (-았/었습니다)","엽시다 (yeopsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-273": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '사다' (comprar) → '삽니다' (samnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"사요 (sayo)":"a forma cortês do presente (-아/어요)","샀습니다 (satseumnida)":"a forma formal do passado (-았/었습니다)","삽시다 (sapsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-274": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '만나다' (encontrar-se) → '만납니다' (mannamnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"만나요 (mannayo)":"a forma cortês do presente (-아/어요)","만났습니다 (mannatseumnida)":"a forma formal do passado (-았/었습니다)","만납시다 (mannapsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-275": {"promptNative":"Eu ___ educadamente na reunião. (presente formal)","explain":"O presente formal termina em -습니다/-ㅂ니다: '말하다' (falar) → '말합니다' (malhamnida).","wrongNote":"O presente formal termina em -습니다/-ㅂ니다.","distractorNotes":{"말해요 (malhaeyo)":"a forma cortês do presente (-아/어요)","말했습니다 (malhaetseumnida)":"a forma formal do passado (-았/었습니다)","말합시다 (malhapsida)":"o propositivo formal (-읍시다 'vamos a')"}},
+  "gram-276": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '먹다' (comer) → '먹으세요' (meogeuseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)","먹습니다 (meokseumnida)":"a forma formal do presente (-습니다)","먹고 (meokgo)":"o conectivo -고 ('y')"}},
+  "gram-277": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '가다' (ir) → '가세요' (gaseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"가요 (gayo)":"a forma cortês do presente (-아/어요)","갑니다 (gamnida)":"a forma formal do presente (-습니다)","가고 (gago)":"o conectivo -고 ('y')"}},
+  "gram-278": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '듣다' (ouvir) → '들으세요' (deureuseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"들어요 (deureoyo)":"a forma cortês do presente (-아/어요)","듣습니다 (deutseumnida)":"a forma formal do presente (-습니다)","듣고 (deutgo)":"o conectivo -고 ('y')"}},
+  "gram-279": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '돕다' (ajudar) → '도우세요' (douseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"도와요 (dowayo)":"a forma cortês do presente (-아/어요)","돕습니다 (dopseumnida)":"a forma formal do presente (-습니다)","돕고 (dopgo)":"o conectivo -고 ('y')"}},
+  "gram-280": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '부르다' (chamar/cantar) → '부르세요' (bureuseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)","부릅니다 (bureumnida)":"a forma formal do presente (-습니다)","부르고 (bureugo)":"o conectivo -고 ('y')"}},
+  "gram-281": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '살다' (viver) → '사세요' (saseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"살아요 (sarayo)":"a forma cortês do presente (-아/어요)","삽니다 (samnida)":"a forma formal do presente (-습니다)","살고 (salgo)":"o conectivo -고 ('y')"}},
+  "gram-282": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '짓다' (construir) → '지으세요' (jieuseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"지어요 (jieoyo)":"a forma cortês do presente (-아/어요)","짓습니다 (jitseumnida)":"a forma formal do presente (-습니다)","짓고 (jitgo)":"o conectivo -고 ('y')"}},
+  "gram-283": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '걷다' (caminhar) → '걸으세요' (georeuseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)","걷습니다 (geotseumnida)":"a forma formal do presente (-습니다)","걷고 (geotgo)":"o conectivo -고 ('y')"}},
+  "gram-284": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '오다' (vir) → '오세요' (oseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"와요 (wayo)":"a forma cortês do presente (-아/어요)","옵니다 (omnida)":"a forma formal do presente (-습니다)","오고 (ogo)":"o conectivo -고 ('y')"}},
+  "gram-285": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '보다' (ver) → '보세요' (boseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"봐요 (bwayo)":"a forma cortês do presente (-아/어요)","봅니다 (bomnida)":"a forma formal do presente (-습니다)","보고 (bogo)":"o conectivo -고 ('y')"}},
+  "gram-286": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '주다' (dar) → '주세요' (juseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"줘요 (jwoyo)":"a forma cortês do presente (-아/어요)","줍니다 (jumnida)":"a forma formal do presente (-습니다)","주고 (jugo)":"o conectivo -고 ('y')"}},
+  "gram-287": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '마시다' (beber) → '마시세요' (masiseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)","마십니다 (masimnida)":"a forma formal do presente (-습니다)","마시고 (masigo)":"o conectivo -고 ('y')"}},
+  "gram-288": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '읽다' (ler) → '읽으세요' (ilgeuseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)","읽습니다 (ikseumnida)":"a forma formal do presente (-습니다)","읽고 (ikgo)":"o conectivo -고 ('y')"}},
+  "gram-289": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '쓰다' (escrever) → '쓰세요' (sseuseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"써요 (sseoyo)":"a forma cortês do presente (-아/어요)","씁니다 (sseumnida)":"a forma formal do presente (-습니다)","쓰고 (sseugo)":"o conectivo -고 ('y')"}},
+  "gram-290": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '놀다' (brincar) → '노세요' (noseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"놀아요 (norayo)":"a forma cortês do presente (-아/어요)","놉니다 (nomnida)":"a forma formal do presente (-습니다)","놀고 (nolgo)":"o conectivo -고 ('y')"}},
+  "gram-291": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '울다' (chorar) → '우세요' (useyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"울어요 (ureoyo)":"a forma cortês do presente (-아/어요)","웁니다 (umnida)":"a forma formal do presente (-습니다)","울고 (ulgo)":"o conectivo -고 ('y')"}},
+  "gram-292": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '열다' (abrir) → '여세요' (yeoseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"열어요 (yeoreoyo)":"a forma cortês do presente (-아/어요)","엽니다 (yeomnida)":"a forma formal do presente (-습니다)","열고 (yeolgo)":"o conectivo -고 ('y')"}},
+  "gram-293": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '사다' (comprar) → '사세요' (saseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"사요 (sayo)":"a forma cortês do presente (-아/어요)","삽니다 (samnida)":"a forma formal do presente (-습니다)","사고 (sago)":"o conectivo -고 ('y')"}},
+  "gram-294": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '만나다' (encontrar-se) → '만나세요' (mannaseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"만나요 (mannayo)":"a forma cortês do presente (-아/어요)","만납니다 (mannamnida)":"a forma formal do presente (-습니다)","만나고 (mannago)":"o conectivo -고 ('y')"}},
+  "gram-295": {"promptNative":"Professor, por favor ___. (pedido honorífico -(으)세요)","explain":"Um pedido cortês a um superior usa -(으)세요: '말하다' (falar) → '말하세요' (malhaseyo).","wrongNote":"Um pedido cortês a um superior usa -(으)세요.","distractorNotes":{"말해요 (malhaeyo)":"a forma cortês do presente (-아/어요)","말합니다 (malhamnida)":"a forma formal do presente (-습니다)","말하고 (malhago)":"o conectivo -고 ('y')"}},
+  "gram-296": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '먹다' (comer) → '먹읍시다' (meogeupsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)","먹습니다 (meokseumnida)":"a forma formal do presente (-습니다)","먹을 거예요 (meogeul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-297": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '가다' (ir) → '갑시다' (gapsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"가요 (gayo)":"a forma cortês do presente (-아/어요)","갑니다 (gamnida)":"a forma formal do presente (-습니다)","갈 거예요 (gal geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-298": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '듣다' (ouvir) → '들읍시다' (deureupsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"들어요 (deureoyo)":"a forma cortês do presente (-아/어요)","듣습니다 (deutseumnida)":"a forma formal do presente (-습니다)","들을 거예요 (deureul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-299": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '돕다' (ajudar) → '도웁시다' (doupsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"도와요 (dowayo)":"a forma cortês do presente (-아/어요)","돕습니다 (dopseumnida)":"a forma formal do presente (-습니다)","도울 거예요 (doul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-300": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '부르다' (chamar/cantar) → '부릅시다' (bureupsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)","부릅니다 (bureumnida)":"a forma formal do presente (-습니다)","부를 거예요 (bureul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-301": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '살다' (viver) → '삽시다' (sapsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"살아요 (sarayo)":"a forma cortês do presente (-아/어요)","삽니다 (samnida)":"a forma formal do presente (-습니다)","살 거예요 (sal geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-302": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '짓다' (construir) → '지읍시다' (jieupsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"지어요 (jieoyo)":"a forma cortês do presente (-아/어요)","짓습니다 (jitseumnida)":"a forma formal do presente (-습니다)","지을 거예요 (jieul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-303": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '걷다' (caminhar) → '걸읍시다' (georeupsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)","걷습니다 (geotseumnida)":"a forma formal do presente (-습니다)","걸을 거예요 (georeul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-304": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '오다' (vir) → '옵시다' (opsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"와요 (wayo)":"a forma cortês do presente (-아/어요)","옵니다 (omnida)":"a forma formal do presente (-습니다)","올 거예요 (ol geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-305": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '보다' (ver) → '봅시다' (bopsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"봐요 (bwayo)":"a forma cortês do presente (-아/어요)","봅니다 (bomnida)":"a forma formal do presente (-습니다)","볼 거예요 (bol geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-306": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '주다' (dar) → '줍시다' (jupsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"줘요 (jwoyo)":"a forma cortês do presente (-아/어요)","줍니다 (jumnida)":"a forma formal do presente (-습니다)","줄 거예요 (jul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-307": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '마시다' (beber) → '마십시다' (masipsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)","마십니다 (masimnida)":"a forma formal do presente (-습니다)","마실 거예요 (masil geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-308": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '읽다' (ler) → '읽읍시다' (ilgeupsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)","읽습니다 (ikseumnida)":"a forma formal do presente (-습니다)","읽을 거예요 (ilgeul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-309": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '쓰다' (escrever) → '씁시다' (sseupsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"써요 (sseoyo)":"a forma cortês do presente (-아/어요)","씁니다 (sseumnida)":"a forma formal do presente (-습니다)","쓸 거예요 (sseul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-310": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '놀다' (brincar) → '놉시다' (nopsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"놀아요 (norayo)":"a forma cortês do presente (-아/어요)","놉니다 (nomnida)":"a forma formal do presente (-습니다)","놀 거예요 (nol geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-311": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '울다' (chorar) → '웁시다' (upsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"울어요 (ureoyo)":"a forma cortês do presente (-아/어요)","웁니다 (umnida)":"a forma formal do presente (-습니다)","울 거예요 (ul geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-312": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '열다' (abrir) → '엽시다' (yeopsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"열어요 (yeoreoyo)":"a forma cortês do presente (-아/어요)","엽니다 (yeomnida)":"a forma formal do presente (-습니다)","열 거예요 (yeol geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-313": {"promptNative":"Vamos, ___ todos! (propositivo formal)","explain":"'Vamos a' (formal) é -(으)ㅂ시다: '사다' (comprar) → '삽시다' (sapsida).","wrongNote":"'Vamos a' (formal) é -(으)ㅂ시다.","distractorNotes":{"사요 (sayo)":"a forma cortês do presente (-아/어요)","삽니다 (samnida)":"a forma formal do presente (-습니다)","살 거예요 (sal geoyeyo)":"a forma do futuro (-(으)ㄹ 거예요)"}},
+  "gram-314": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '먹다' (comer) → '먹었습니다' (meogeotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"먹었어요 (meogeosseoyo)":"a forma cortês do passado (-았/었어요)","먹습니다 (meokseumnida)":"a forma formal do presente (-습니다)","먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-315": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '가다' (ir) → '갔습니다' (gatseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"갔어요 (gasseoyo)":"a forma cortês do passado (-았/었어요)","갑니다 (gamnida)":"a forma formal do presente (-습니다)","가요 (gayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-316": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '듣다' (ouvir) → '들었습니다' (deureotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"들었어요 (deureosseoyo)":"a forma cortês do passado (-았/었어요)","듣습니다 (deutseumnida)":"a forma formal do presente (-습니다)","들어요 (deureoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-317": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '돕다' (ajudar) → '도왔습니다' (dowatseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"도왔어요 (dowasseoyo)":"a forma cortês do passado (-았/었어요)","돕습니다 (dopseumnida)":"a forma formal do presente (-습니다)","도와요 (dowayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-318": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '부르다' (chamar/cantar) → '불렀습니다' (bulleotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"불렀어요 (bulleosseoyo)":"a forma cortês do passado (-았/었어요)","부릅니다 (bureumnida)":"a forma formal do presente (-습니다)","불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-319": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '살다' (viver) → '살았습니다' (saratseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"살았어요 (sarasseoyo)":"a forma cortês do passado (-았/었어요)","삽니다 (samnida)":"a forma formal do presente (-습니다)","살아요 (sarayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-320": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '짓다' (construir) → '지었습니다' (jieotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"지었어요 (jieosseoyo)":"a forma cortês do passado (-았/었어요)","짓습니다 (jitseumnida)":"a forma formal do presente (-습니다)","지어요 (jieoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-321": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '걷다' (caminhar) → '걸었습니다' (georeotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"걸었어요 (georeosseoyo)":"a forma cortês do passado (-았/었어요)","걷습니다 (geotseumnida)":"a forma formal do presente (-습니다)","걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-322": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '오다' (vir) → '왔습니다' (watseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"왔어요 (wasseoyo)":"a forma cortês do passado (-았/었어요)","옵니다 (omnida)":"a forma formal do presente (-습니다)","와요 (wayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-323": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '보다' (ver) → '봤습니다' (bwatseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"봤어요 (bwasseoyo)":"a forma cortês do passado (-았/었어요)","봅니다 (bomnida)":"a forma formal do presente (-습니다)","봐요 (bwayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-324": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '주다' (dar) → '줬습니다' (jwotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"줬어요 (jwosseoyo)":"a forma cortês do passado (-았/었어요)","줍니다 (jumnida)":"a forma formal do presente (-습니다)","줘요 (jwoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-325": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '마시다' (beber) → '마셨습니다' (masyeotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"마셨어요 (masyeosseoyo)":"a forma cortês do passado (-았/었어요)","마십니다 (masimnida)":"a forma formal do presente (-습니다)","마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-326": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '읽다' (ler) → '읽었습니다' (ilgeotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"읽었어요 (ilgeosseoyo)":"a forma cortês do passado (-았/었어요)","읽습니다 (ikseumnida)":"a forma formal do presente (-습니다)","읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-327": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '쓰다' (escrever) → '썼습니다' (sseotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"썼어요 (sseosseoyo)":"a forma cortês do passado (-았/었어요)","씁니다 (sseumnida)":"a forma formal do presente (-습니다)","써요 (sseoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-328": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '놀다' (brincar) → '놀았습니다' (noratseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"놀았어요 (norasseoyo)":"a forma cortês do passado (-았/었어요)","놉니다 (nomnida)":"a forma formal do presente (-습니다)","놀아요 (norayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-329": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '울다' (chorar) → '울었습니다' (ureotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"울었어요 (ureosseoyo)":"a forma cortês do passado (-았/었어요)","웁니다 (umnida)":"a forma formal do presente (-습니다)","울어요 (ureoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-330": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '열다' (abrir) → '열었습니다' (yeoreotseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"열었어요 (yeoreosseoyo)":"a forma cortês do passado (-았/었어요)","엽니다 (yeomnida)":"a forma formal do presente (-습니다)","열어요 (yeoreoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-331": {"promptNative":"Segundo o relatório, na semana passada eu ___. (passado formal)","explain":"O passado formal é -았/었습니다: '사다' (comprar) → '샀습니다' (satseumnida).","wrongNote":"O passado formal é -았/었습니다.","distractorNotes":{"샀어요 (sasseoyo)":"a forma cortês do passado (-았/었어요)","삽니다 (samnida)":"a forma formal do presente (-습니다)","사요 (sayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-332": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '먹다' (comer) → '먹음' (meogeum).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"먹고 (meokgo)":"o conectivo -고 ('y')","먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)","먹으면 (meogeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-333": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '가다' (ir) → '감' (gam).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"가고 (gago)":"o conectivo -고 ('y')","가요 (gayo)":"a forma cortês do presente (-아/어요)","가면 (gamyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-334": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '듣다' (ouvir) → '들음' (deureum).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"듣고 (deutgo)":"o conectivo -고 ('y')","들어요 (deureoyo)":"a forma cortês do presente (-아/어요)","들으면 (deureumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-335": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '돕다' (ajudar) → '도움' (doum).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"돕고 (dopgo)":"o conectivo -고 ('y')","도와요 (dowayo)":"a forma cortês do presente (-아/어요)","도우면 (doumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-336": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '부르다' (chamar/cantar) → '부름' (bureum).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"부르고 (bureugo)":"o conectivo -고 ('y')","불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)","부르면 (bureumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-337": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '살다' (viver) → '삶' (sam).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"살고 (salgo)":"o conectivo -고 ('y')","살아요 (sarayo)":"a forma cortês do presente (-아/어요)","살면 (salmyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-338": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '짓다' (construir) → '지음' (jieum).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"짓고 (jitgo)":"o conectivo -고 ('y')","지어요 (jieoyo)":"a forma cortês do presente (-아/어요)","지으면 (jieumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-339": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '걷다' (caminhar) → '걸음' (georeum).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"걷고 (geotgo)":"o conectivo -고 ('y')","걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)","걸으면 (georeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-340": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '오다' (vir) → '옴' (om).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"오고 (ogo)":"o conectivo -고 ('y')","와요 (wayo)":"a forma cortês do presente (-아/어요)","오면 (omyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-341": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '보다' (ver) → '봄' (bom).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"보고 (bogo)":"o conectivo -고 ('y')","봐요 (bwayo)":"a forma cortês do presente (-아/어요)","보면 (bomyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-342": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '주다' (dar) → '줌' (jum).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"주고 (jugo)":"o conectivo -고 ('y')","줘요 (jwoyo)":"a forma cortês do presente (-아/어요)","주면 (jumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-343": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '마시다' (beber) → '마심' (masim).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"마시고 (masigo)":"o conectivo -고 ('y')","마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)","마시면 (masimyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-344": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '읽다' (ler) → '읽음' (ilgeum).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"읽고 (ikgo)":"o conectivo -고 ('y')","읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)","읽으면 (ilgeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-345": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '쓰다' (escrever) → '씀' (sseum).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"쓰고 (sseugo)":"o conectivo -고 ('y')","써요 (sseoyo)":"a forma cortês do presente (-아/어요)","쓰면 (sseumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-346": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '놀다' (brincar) → '놂' (nom).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"놀고 (nolgo)":"o conectivo -고 ('y')","놀아요 (norayo)":"a forma cortês do presente (-아/어요)","놀면 (nolmyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-347": {"promptNative":"Escrevi no meu diário '___ muito hoje'. (nominalizado -(으)ㅁ)","explain":"Nominalizar um verbo usa -(으)ㅁ: '울다' (chorar) → '욺' (um).","wrongNote":"Nominalizar um verbo usa -(으)ㅁ.","distractorNotes":{"울고 (ulgo)":"o conectivo -고 ('y')","울어요 (ureoyo)":"a forma cortês do presente (-아/어요)","울면 (ulmyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-348": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '먹다' (comer) → '먹겠습니다' (meokgetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"먹습니다 (meokseumnida)":"a forma formal do presente (-습니다)","먹었습니다 (meogeotseumnida)":"a forma formal do passado (-았/었습니다)","먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-349": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '가다' (ir) → '가겠습니다' (gagetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"갑니다 (gamnida)":"a forma formal do presente (-습니다)","갔습니다 (gatseumnida)":"a forma formal do passado (-았/었습니다)","가요 (gayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-350": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '듣다' (ouvir) → '듣겠습니다' (deutgetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"듣습니다 (deutseumnida)":"a forma formal do presente (-습니다)","들었습니다 (deureotseumnida)":"a forma formal do passado (-았/었습니다)","들어요 (deureoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-351": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '돕다' (ajudar) → '돕겠습니다' (dopgetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"돕습니다 (dopseumnida)":"a forma formal do presente (-습니다)","도왔습니다 (dowatseumnida)":"a forma formal do passado (-았/었습니다)","도와요 (dowayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-352": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '부르다' (chamar/cantar) → '부르겠습니다' (bureugetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"부릅니다 (bureumnida)":"a forma formal do presente (-습니다)","불렀습니다 (bulleotseumnida)":"a forma formal do passado (-았/었습니다)","불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-353": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '살다' (viver) → '살겠습니다' (salgetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"삽니다 (samnida)":"a forma formal do presente (-습니다)","살았습니다 (saratseumnida)":"a forma formal do passado (-았/었습니다)","살아요 (sarayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-354": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '짓다' (construir) → '짓겠습니다' (jitgetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"짓습니다 (jitseumnida)":"a forma formal do presente (-습니다)","지었습니다 (jieotseumnida)":"a forma formal do passado (-았/었습니다)","지어요 (jieoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-355": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '걷다' (caminhar) → '걷겠습니다' (geotgetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"걷습니다 (geotseumnida)":"a forma formal do presente (-습니다)","걸었습니다 (georeotseumnida)":"a forma formal do passado (-았/었습니다)","걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-356": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '오다' (vir) → '오겠습니다' (ogetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"옵니다 (omnida)":"a forma formal do presente (-습니다)","왔습니다 (watseumnida)":"a forma formal do passado (-았/었습니다)","와요 (wayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-357": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '보다' (ver) → '보겠습니다' (bogetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"봅니다 (bomnida)":"a forma formal do presente (-습니다)","봤습니다 (bwatseumnida)":"a forma formal do passado (-았/었습니다)","봐요 (bwayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-358": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '주다' (dar) → '주겠습니다' (jugetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"줍니다 (jumnida)":"a forma formal do presente (-습니다)","줬습니다 (jwotseumnida)":"a forma formal do passado (-았/었습니다)","줘요 (jwoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-359": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '마시다' (beber) → '마시겠습니다' (masigetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"마십니다 (masimnida)":"a forma formal do presente (-습니다)","마셨습니다 (masyeotseumnida)":"a forma formal do passado (-았/었습니다)","마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-360": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '읽다' (ler) → '읽겠습니다' (ikgetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"읽습니다 (ikseumnida)":"a forma formal do presente (-습니다)","읽었습니다 (ilgeotseumnida)":"a forma formal do passado (-았/었습니다)","읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-361": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '쓰다' (escrever) → '쓰겠습니다' (sseugetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"씁니다 (sseumnida)":"a forma formal do presente (-습니다)","썼습니다 (sseotseumnida)":"a forma formal do passado (-았/었습니다)","써요 (sseoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-362": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '놀다' (brincar) → '놀겠습니다' (nolgetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"놉니다 (nomnida)":"a forma formal do presente (-습니다)","놀았습니다 (noratseumnida)":"a forma formal do passado (-았/었습니다)","놀아요 (norayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-363": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '울다' (chorar) → '울겠습니다' (ulgetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"웁니다 (umnida)":"a forma formal do presente (-습니다)","울었습니다 (ureotseumnida)":"a forma formal do passado (-았/었습니다)","울어요 (ureoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-364": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '열다' (abrir) → '열겠습니다' (yeolgetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"엽니다 (yeomnida)":"a forma formal do presente (-습니다)","열었습니다 (yeoreotseumnida)":"a forma formal do passado (-았/었습니다)","열어요 (yeoreoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-365": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '사다' (comprar) → '사겠습니다' (sagetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"삽니다 (samnida)":"a forma formal do presente (-습니다)","샀습니다 (satseumnida)":"a forma formal do passado (-았/었습니다)","사요 (sayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-366": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '만나다' (encontrar-se) → '만나겠습니다' (mannagetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"만납니다 (mannamnida)":"a forma formal do presente (-습니다)","만났습니다 (mannatseumnida)":"a forma formal do passado (-았/었습니다)","만나요 (mannayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-367": {"promptNative":"Eu prometo. Com certeza ___. (intenção formal -겠습니다)","explain":"A intenção/suposição formal é -겠습니다: '말하다' (falar) → '말하겠습니다' (malhagetseumnida).","wrongNote":"A intenção/suposição formal é -겠습니다.","distractorNotes":{"말합니다 (malhamnida)":"a forma formal do presente (-습니다)","말했습니다 (malhaetseumnida)":"a forma formal do passado (-았/었습니다)","말해요 (malhaeyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-368": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '먹다' (comer) → '먹습니까?' (meokseumnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"먹습니다 (meokseumnida)":"a forma formal do presente (-습니다)","먹었습니까? (meogeotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","먹어요 (meogeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-369": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '가다' (ir) → '갑니까?' (gamnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"갑니다 (gamnida)":"a forma formal do presente (-습니다)","갔습니까? (gatseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","가요 (gayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-370": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '듣다' (ouvir) → '듣습니까?' (deutseumnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"듣습니다 (deutseumnida)":"a forma formal do presente (-습니다)","들었습니까? (deureotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","들어요 (deureoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-371": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '돕다' (ajudar) → '돕습니까?' (dopseumnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"돕습니다 (dopseumnida)":"a forma formal do presente (-습니다)","도왔습니까? (dowatseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","도와요 (dowayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-372": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '부르다' (chamar/cantar) → '부릅니까?' (bureumnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"부릅니다 (bureumnida)":"a forma formal do presente (-습니다)","불렀습니까? (bulleotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","불러요 (bulleoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-373": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '살다' (viver) → '삽니까?' (samnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"삽니다 (samnida)":"a forma formal do presente (-습니다)","살았습니까? (saratseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","살아요 (sarayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-374": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '짓다' (construir) → '짓습니까?' (jitseumnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"짓습니다 (jitseumnida)":"a forma formal do presente (-습니다)","지었습니까? (jieotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","지어요 (jieoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-375": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '걷다' (caminhar) → '걷습니까?' (geotseumnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"걷습니다 (geotseumnida)":"a forma formal do presente (-습니다)","걸었습니까? (georeotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","걸어요 (georeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-376": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '오다' (vir) → '옵니까?' (omnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"옵니다 (omnida)":"a forma formal do presente (-습니다)","왔습니까? (watseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","와요 (wayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-377": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '보다' (ver) → '봅니까?' (bomnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"봅니다 (bomnida)":"a forma formal do presente (-습니다)","봤습니까? (bwatseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","봐요 (bwayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-378": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '주다' (dar) → '줍니까?' (jumnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"줍니다 (jumnida)":"a forma formal do presente (-습니다)","줬습니까? (jwotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","줘요 (jwoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-379": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '마시다' (beber) → '마십니까?' (masimnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"마십니다 (masimnida)":"a forma formal do presente (-습니다)","마셨습니까? (masyeotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","마셔요 (masyeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-380": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '읽다' (ler) → '읽습니까?' (ikseumnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"읽습니다 (ikseumnida)":"a forma formal do presente (-습니다)","읽었습니까? (ilgeotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","읽어요 (ilgeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-381": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '쓰다' (escrever) → '씁니까?' (sseumnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"씁니다 (sseumnida)":"a forma formal do presente (-습니다)","썼습니까? (sseotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","써요 (sseoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-382": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '놀다' (brincar) → '놉니까?' (nomnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"놉니다 (nomnida)":"a forma formal do presente (-습니다)","놀았습니까? (noratseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","놀아요 (norayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-383": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '울다' (chorar) → '웁니까?' (umnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"웁니다 (umnida)":"a forma formal do presente (-습니다)","울었습니까? (ureotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","울어요 (ureoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-384": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '열다' (abrir) → '엽니까?' (yeomnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"엽니다 (yeomnida)":"a forma formal do presente (-습니다)","열었습니까? (yeoreotseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","열어요 (yeoreoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-385": {"promptNative":"Com licença, o que o senhor ___? (pergunta formal -습니까?)","explain":"Uma pergunta formal termina em -습니까?: '사다' (comprar) → '삽니까?' (samnikka?).","wrongNote":"Uma pergunta formal termina em -습니까?.","distractorNotes":{"삽니다 (samnida)":"a forma formal do presente (-습니다)","샀습니까? (satseumnikka?)":"a forma formal interrogativa do passado (-었습니까?)","사요 (sayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-386": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '먹다' (comer) → '먹었습니까?' (meogeotseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"먹었습니다 (meogeotseumnida)":"a forma formal do passado (-았/었습니다)","먹습니까? (meokseumnikka?)":"a forma formal interrogativa (-습니까?)","먹었어요 (meogeosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-387": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '가다' (ir) → '갔습니까?' (gatseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"갔습니다 (gatseumnida)":"a forma formal do passado (-았/었습니다)","갑니까? (gamnikka?)":"a forma formal interrogativa (-습니까?)","갔어요 (gasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-388": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '듣다' (ouvir) → '들었습니까?' (deureotseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"들었습니다 (deureotseumnida)":"a forma formal do passado (-았/었습니다)","듣습니까? (deutseumnikka?)":"a forma formal interrogativa (-습니까?)","들었어요 (deureosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-389": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '돕다' (ajudar) → '도왔습니까?' (dowatseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"도왔습니다 (dowatseumnida)":"a forma formal do passado (-았/었습니다)","돕습니까? (dopseumnikka?)":"a forma formal interrogativa (-습니까?)","도왔어요 (dowasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-390": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '부르다' (chamar/cantar) → '불렀습니까?' (bulleotseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"불렀습니다 (bulleotseumnida)":"a forma formal do passado (-았/었습니다)","부릅니까? (bureumnikka?)":"a forma formal interrogativa (-습니까?)","불렀어요 (bulleosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-391": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '살다' (viver) → '살았습니까?' (saratseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"살았습니다 (saratseumnida)":"a forma formal do passado (-았/었습니다)","삽니까? (samnikka?)":"a forma formal interrogativa (-습니까?)","살았어요 (sarasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-392": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '짓다' (construir) → '지었습니까?' (jieotseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"지었습니다 (jieotseumnida)":"a forma formal do passado (-았/었습니다)","짓습니까? (jitseumnikka?)":"a forma formal interrogativa (-습니까?)","지었어요 (jieosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-393": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '걷다' (caminhar) → '걸었습니까?' (georeotseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"걸었습니다 (georeotseumnida)":"a forma formal do passado (-았/었습니다)","걷습니까? (geotseumnikka?)":"a forma formal interrogativa (-습니까?)","걸었어요 (georeosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-394": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '오다' (vir) → '왔습니까?' (watseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"왔습니다 (watseumnida)":"a forma formal do passado (-았/었습니다)","옵니까? (omnikka?)":"a forma formal interrogativa (-습니까?)","왔어요 (wasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-395": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '보다' (ver) → '봤습니까?' (bwatseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"봤습니다 (bwatseumnida)":"a forma formal do passado (-았/었습니다)","봅니까? (bomnikka?)":"a forma formal interrogativa (-습니까?)","봤어요 (bwasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-396": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '주다' (dar) → '줬습니까?' (jwotseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"줬습니다 (jwotseumnida)":"a forma formal do passado (-았/었습니다)","줍니까? (jumnikka?)":"a forma formal interrogativa (-습니까?)","줬어요 (jwosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-397": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '마시다' (beber) → '마셨습니까?' (masyeotseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"마셨습니다 (masyeotseumnida)":"a forma formal do passado (-았/었습니다)","마십니까? (masimnikka?)":"a forma formal interrogativa (-습니까?)","마셨어요 (masyeosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-398": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '읽다' (ler) → '읽었습니까?' (ilgeotseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"읽었습니다 (ilgeotseumnida)":"a forma formal do passado (-았/었습니다)","읽습니까? (ikseumnikka?)":"a forma formal interrogativa (-습니까?)","읽었어요 (ilgeosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-399": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '쓰다' (escrever) → '썼습니까?' (sseotseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"썼습니다 (sseotseumnida)":"a forma formal do passado (-았/었습니다)","씁니까? (sseumnikka?)":"a forma formal interrogativa (-습니까?)","썼어요 (sseosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-400": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '놀다' (brincar) → '놀았습니까?' (noratseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"놀았습니다 (noratseumnida)":"a forma formal do passado (-았/었습니다)","놉니까? (nomnikka?)":"a forma formal interrogativa (-습니까?)","놀았어요 (norasseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-401": {"promptNative":"O presidente ___ ontem? (pergunta formal no passado)","explain":"Uma pergunta formal no passado é -았/었습니까?: '울다' (chorar) → '울었습니까?' (ureotseumnikka?).","wrongNote":"Uma pergunta formal no passado é -았/었습니까?.","distractorNotes":{"울었습니다 (ureotseumnida)":"a forma formal do passado (-았/었습니다)","웁니까? (umnikka?)":"a forma formal interrogativa (-습니까?)","울었어요 (ureosseoyo)":"a forma cortês do passado (-았/었어요)"}},
+  "gram-402": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '좋다' (bom) → '좋아요' (joayo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"좋았어요 (joasseoyo)":"a forma cortês do passado (-았/었어요)","좋습니다 (josseumnida)":"a forma formal do presente (-습니다)","좋고 (joko)":"o conectivo -고 ('y')"}},
+  "gram-403": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '춥다' (frio) → '추워요' (chuwoyo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"추웠어요 (chuwosseoyo)":"a forma cortês do passado (-았/었어요)","춥습니다 (chupseumnida)":"a forma formal do presente (-습니다)","춥고 (chupgo)":"o conectivo -고 ('y')"}},
+  "gram-404": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '덥다' (quente) → '더워요' (deowoyo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"더웠어요 (deowosseoyo)":"a forma cortês do passado (-았/었어요)","덥습니다 (deopseumnida)":"a forma formal do presente (-습니다)","덥고 (deopgo)":"o conectivo -고 ('y')"}},
+  "gram-405": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '어렵다' (difícil) → '어려워요' (eoryeowoyo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"어려웠어요 (eoryeowosseoyo)":"a forma cortês do passado (-았/었어요)","어렵습니다 (eoryeopseumnida)":"a forma formal do presente (-습니다)","어렵고 (eoryeopgo)":"o conectivo -고 ('y')"}},
+  "gram-406": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '쉽다' (fácil) → '쉬워요' (swiwoyo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"쉬웠어요 (swiwosseoyo)":"a forma cortês do passado (-았/었어요)","쉽습니다 (swipseumnida)":"a forma formal do presente (-습니다)","쉽고 (swipgo)":"o conectivo -고 ('y')"}},
+  "gram-407": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '빠르다' (rápido) → '빨라요' (ppallayo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"빨랐어요 (ppallasseoyo)":"a forma cortês do passado (-았/었어요)","빠릅니다 (ppareumnida)":"a forma formal do presente (-습니다)","빠르고 (ppareugo)":"o conectivo -고 ('y')"}},
+  "gram-408": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '예쁘다' (bonito) → '예뻐요' (yeppeoyo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"예뻤어요 (yeppeosseoyo)":"a forma cortês do passado (-았/었어요)","예쁩니다 (yeppeumnida)":"a forma formal do presente (-습니다)","예쁘고 (yeppeugo)":"o conectivo -고 ('y')"}},
+  "gram-409": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '바쁘다' (ocupado) → '바빠요' (bappayo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"바빴어요 (bappasseoyo)":"a forma cortês do passado (-았/었어요)","바쁩니다 (bappeumnida)":"a forma formal do presente (-습니다)","바쁘고 (bappeugo)":"o conectivo -고 ('y')"}},
+  "gram-410": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '아프다' (doente/dolorido) → '아파요' (apayo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"아팠어요 (apasseoyo)":"a forma cortês do passado (-았/었어요)","아픕니다 (apeumnida)":"a forma formal do presente (-습니다)","아프고 (apeugo)":"o conectivo -고 ('y')"}},
+  "gram-411": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '나쁘다' (ruim) → '나빠요' (nappayo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"나빴어요 (nappasseoyo)":"a forma cortês do passado (-았/었어요)","나쁩니다 (nappeumnida)":"a forma formal do presente (-습니다)","나쁘고 (nappeugo)":"o conectivo -고 ('y')"}},
+  "gram-412": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '크다' (grande) → '커요' (keoyo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"컸어요 (keosseoyo)":"a forma cortês do passado (-았/었어요)","큽니다 (keumnida)":"a forma formal do presente (-습니다)","크고 (keugo)":"o conectivo -고 ('y')"}},
+  "gram-413": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '길다' (comprido) → '길어요' (gireoyo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"길었어요 (gireosseoyo)":"a forma cortês do passado (-았/었어요)","깁니다 (gimnida)":"a forma formal do presente (-습니다)","길고 (gilgo)":"o conectivo -고 ('y')"}},
+  "gram-414": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '멀다' (distante) → '멀어요' (meoreoyo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"멀었어요 (meoreosseoyo)":"a forma cortês do passado (-았/었어요)","멉니다 (meomnida)":"a forma formal do presente (-습니다)","멀고 (meolgo)":"o conectivo -고 ('y')"}},
+  "gram-415": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '작다' (pequeno) → '작아요' (jagayo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"작았어요 (jagasseoyo)":"a forma cortês do passado (-았/었어요)","작습니다 (jakseumnida)":"a forma formal do presente (-습니다)","작고 (jakgo)":"o conectivo -고 ('y')"}},
+  "gram-416": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '많다' (muito) → '많아요' (manayo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"많았어요 (manasseoyo)":"a forma cortês do passado (-았/었어요)","많습니다 (mansseumnida)":"a forma formal do presente (-습니다)","많고 (manko)":"o conectivo -고 ('y')"}},
+  "gram-417": {"promptNative":"Este filme é realmente ___. (adjetivo, presente formal)","explain":"O presente cortês do adjetivo também termina em -아/어요: '적다' (pouco) → '적어요' (jeogeoyo).","wrongNote":"O presente cortês do adjetivo também termina em -아/어요.","distractorNotes":{"적었어요 (jeogeosseoyo)":"a forma cortês do passado (-았/었어요)","적습니다 (jeokseumnida)":"a forma formal do presente (-습니다)","적고 (jeokgo)":"o conectivo -고 ('y')"}},
+  "gram-418": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '좋다' (bom) → '좋았어요' (joasseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"좋아요 (joayo)":"a forma cortês do presente (-아/어요)","좋습니다 (josseumnida)":"a forma formal do presente (-습니다)","좋으면 (joeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-419": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '춥다' (frio) → '추웠어요' (chuwosseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"추워요 (chuwoyo)":"a forma cortês do presente (-아/어요)","춥습니다 (chupseumnida)":"a forma formal do presente (-습니다)","추우면 (chuumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-420": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '덥다' (quente) → '더웠어요' (deowosseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"더워요 (deowoyo)":"a forma cortês do presente (-아/어요)","덥습니다 (deopseumnida)":"a forma formal do presente (-습니다)","더우면 (deoumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-421": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '어렵다' (difícil) → '어려웠어요' (eoryeowosseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"어려워요 (eoryeowoyo)":"a forma cortês do presente (-아/어요)","어렵습니다 (eoryeopseumnida)":"a forma formal do presente (-습니다)","어려우면 (eoryeoumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-422": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '쉽다' (fácil) → '쉬웠어요' (swiwosseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"쉬워요 (swiwoyo)":"a forma cortês do presente (-아/어요)","쉽습니다 (swipseumnida)":"a forma formal do presente (-습니다)","쉬우면 (swiumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-423": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '빠르다' (rápido) → '빨랐어요' (ppallasseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"빨라요 (ppallayo)":"a forma cortês do presente (-아/어요)","빠릅니다 (ppareumnida)":"a forma formal do presente (-습니다)","빠르면 (ppareumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-424": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '예쁘다' (bonito) → '예뻤어요' (yeppeosseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"예뻐요 (yeppeoyo)":"a forma cortês do presente (-아/어요)","예쁩니다 (yeppeumnida)":"a forma formal do presente (-습니다)","예쁘면 (yeppeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-425": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '바쁘다' (ocupado) → '바빴어요' (bappasseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"바빠요 (bappayo)":"a forma cortês do presente (-아/어요)","바쁩니다 (bappeumnida)":"a forma formal do presente (-습니다)","바쁘면 (bappeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-426": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '아프다' (doente/dolorido) → '아팠어요' (apasseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"아파요 (apayo)":"a forma cortês do presente (-아/어요)","아픕니다 (apeumnida)":"a forma formal do presente (-습니다)","아프면 (apeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-427": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '나쁘다' (ruim) → '나빴어요' (nappasseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"나빠요 (nappayo)":"a forma cortês do presente (-아/어요)","나쁩니다 (nappeumnida)":"a forma formal do presente (-습니다)","나쁘면 (nappeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-428": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '크다' (grande) → '컸어요' (keosseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"커요 (keoyo)":"a forma cortês do presente (-아/어요)","큽니다 (keumnida)":"a forma formal do presente (-습니다)","크면 (keumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-429": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '길다' (comprido) → '길었어요' (gireosseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"길어요 (gireoyo)":"a forma cortês do presente (-아/어요)","깁니다 (gimnida)":"a forma formal do presente (-습니다)","길면 (gilmyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-430": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '멀다' (distante) → '멀었어요' (meoreosseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"멀어요 (meoreoyo)":"a forma cortês do presente (-아/어요)","멉니다 (meomnida)":"a forma formal do presente (-습니다)","멀면 (meolmyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-431": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '작다' (pequeno) → '작았어요' (jagasseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"작아요 (jagayo)":"a forma cortês do presente (-아/어요)","작습니다 (jakseumnida)":"a forma formal do presente (-습니다)","작으면 (jageumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-432": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '많다' (muito) → '많았어요' (manasseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"많아요 (manayo)":"a forma cortês do presente (-아/어요)","많습니다 (mansseumnida)":"a forma formal do presente (-습니다)","많으면 (maneumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-433": {"promptNative":"Ontem o tempo estava ___. (adjetivo, passado formal)","explain":"O passado cortês do adjetivo é -았/었어요: '적다' (pouco) → '적었어요' (jeogeosseoyo).","wrongNote":"O passado cortês do adjetivo é -았/었어요.","distractorNotes":{"적어요 (jeogeoyo)":"a forma cortês do presente (-아/어요)","적습니다 (jeokseumnida)":"a forma formal do presente (-습니다)","적으면 (jeogeumyeon)":"o condicional -(으)면 ('si')"}},
+  "gram-434": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '좋다' (bom) → '좋습니다' (josseumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"좋아요 (joayo)":"a forma cortês do presente (-아/어요)","좋았어요 (joasseoyo)":"a forma cortês do passado (-았/었어요)","좋고 (joko)":"o conectivo -고 ('y')"}},
+  "gram-435": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '춥다' (frio) → '춥습니다' (chupseumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"추워요 (chuwoyo)":"a forma cortês do presente (-아/어요)","추웠어요 (chuwosseoyo)":"a forma cortês do passado (-았/었어요)","춥고 (chupgo)":"o conectivo -고 ('y')"}},
+  "gram-436": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '덥다' (quente) → '덥습니다' (deopseumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"더워요 (deowoyo)":"a forma cortês do presente (-아/어요)","더웠어요 (deowosseoyo)":"a forma cortês do passado (-았/었어요)","덥고 (deopgo)":"o conectivo -고 ('y')"}},
+  "gram-437": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '어렵다' (difícil) → '어렵습니다' (eoryeopseumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"어려워요 (eoryeowoyo)":"a forma cortês do presente (-아/어요)","어려웠어요 (eoryeowosseoyo)":"a forma cortês do passado (-았/었어요)","어렵고 (eoryeopgo)":"o conectivo -고 ('y')"}},
+  "gram-438": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '쉽다' (fácil) → '쉽습니다' (swipseumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"쉬워요 (swiwoyo)":"a forma cortês do presente (-아/어요)","쉬웠어요 (swiwosseoyo)":"a forma cortês do passado (-았/었어요)","쉽고 (swipgo)":"o conectivo -고 ('y')"}},
+  "gram-439": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '빠르다' (rápido) → '빠릅니다' (ppareumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"빨라요 (ppallayo)":"a forma cortês do presente (-아/어요)","빨랐어요 (ppallasseoyo)":"a forma cortês do passado (-았/었어요)","빠르고 (ppareugo)":"o conectivo -고 ('y')"}},
+  "gram-440": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '예쁘다' (bonito) → '예쁩니다' (yeppeumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"예뻐요 (yeppeoyo)":"a forma cortês do presente (-아/어요)","예뻤어요 (yeppeosseoyo)":"a forma cortês do passado (-았/었어요)","예쁘고 (yeppeugo)":"o conectivo -고 ('y')"}},
+  "gram-441": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '바쁘다' (ocupado) → '바쁩니다' (bappeumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"바빠요 (bappayo)":"a forma cortês do presente (-아/어요)","바빴어요 (bappasseoyo)":"a forma cortês do passado (-았/었어요)","바쁘고 (bappeugo)":"o conectivo -고 ('y')"}},
+  "gram-442": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '아프다' (doente/dolorido) → '아픕니다' (apeumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"아파요 (apayo)":"a forma cortês do presente (-아/어요)","아팠어요 (apasseoyo)":"a forma cortês do passado (-았/었어요)","아프고 (apeugo)":"o conectivo -고 ('y')"}},
+  "gram-443": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '나쁘다' (ruim) → '나쁩니다' (nappeumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"나빠요 (nappayo)":"a forma cortês do presente (-아/어요)","나빴어요 (nappasseoyo)":"a forma cortês do passado (-았/었어요)","나쁘고 (nappeugo)":"o conectivo -고 ('y')"}},
+  "gram-444": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '크다' (grande) → '큽니다' (keumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"커요 (keoyo)":"a forma cortês do presente (-아/어요)","컸어요 (keosseoyo)":"a forma cortês do passado (-았/었어요)","크고 (keugo)":"o conectivo -고 ('y')"}},
+  "gram-445": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '길다' (comprido) → '깁니다' (gimnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"길어요 (gireoyo)":"a forma cortês do presente (-아/어요)","길었어요 (gireosseoyo)":"a forma cortês do passado (-았/었어요)","길고 (gilgo)":"o conectivo -고 ('y')"}},
+  "gram-446": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '멀다' (distante) → '멉니다' (meomnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"멀어요 (meoreoyo)":"a forma cortês do presente (-아/어요)","멀었어요 (meoreosseoyo)":"a forma cortês do passado (-았/었어요)","멀고 (meolgo)":"o conectivo -고 ('y')"}},
+  "gram-447": {"promptNative":"A qualidade deste produto é ___. (adjetivo, formal)","explain":"O presente formal do adjetivo é -습니다/-ㅂ니다: '작다' (pequeno) → '작습니다' (jakseumnida).","wrongNote":"O presente formal do adjetivo é -습니다/-ㅂ니다.","distractorNotes":{"작아요 (jagayo)":"a forma cortês do presente (-아/어요)","작았어요 (jagasseoyo)":"a forma cortês do passado (-았/었어요)","작고 (jakgo)":"o conectivo -고 ('y')"}},
+  "gram-448": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '좋다' (bom) → '좋고' (joko).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"좋으면 (joeumyeon)":"o condicional -(으)면 ('si')","좋았어요 (joasseoyo)":"a forma cortês do passado (-았/었어요)","좋아요 (joayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-449": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '춥다' (frio) → '춥고' (chupgo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"추우면 (chuumyeon)":"o condicional -(으)면 ('si')","추웠어요 (chuwosseoyo)":"a forma cortês do passado (-았/었어요)","추워요 (chuwoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-450": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '덥다' (quente) → '덥고' (deopgo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"더우면 (deoumyeon)":"o condicional -(으)면 ('si')","더웠어요 (deowosseoyo)":"a forma cortês do passado (-았/었어요)","더워요 (deowoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-451": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '어렵다' (difícil) → '어렵고' (eoryeopgo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"어려우면 (eoryeoumyeon)":"o condicional -(으)면 ('si')","어려웠어요 (eoryeowosseoyo)":"a forma cortês do passado (-았/었어요)","어려워요 (eoryeowoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-452": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '쉽다' (fácil) → '쉽고' (swipgo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"쉬우면 (swiumyeon)":"o condicional -(으)면 ('si')","쉬웠어요 (swiwosseoyo)":"a forma cortês do passado (-았/었어요)","쉬워요 (swiwoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-453": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '빠르다' (rápido) → '빠르고' (ppareugo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"빠르면 (ppareumyeon)":"o condicional -(으)면 ('si')","빨랐어요 (ppallasseoyo)":"a forma cortês do passado (-았/었어요)","빨라요 (ppallayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-454": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '예쁘다' (bonito) → '예쁘고' (yeppeugo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"예쁘면 (yeppeumyeon)":"o condicional -(으)면 ('si')","예뻤어요 (yeppeosseoyo)":"a forma cortês do passado (-았/었어요)","예뻐요 (yeppeoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-455": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '바쁘다' (ocupado) → '바쁘고' (bappeugo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"바쁘면 (bappeumyeon)":"o condicional -(으)면 ('si')","바빴어요 (bappasseoyo)":"a forma cortês do passado (-았/었어요)","바빠요 (bappayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-456": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '아프다' (doente/dolorido) → '아프고' (apeugo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"아프면 (apeumyeon)":"o condicional -(으)면 ('si')","아팠어요 (apasseoyo)":"a forma cortês do passado (-았/었어요)","아파요 (apayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-457": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '나쁘다' (ruim) → '나쁘고' (nappeugo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"나쁘면 (nappeumyeon)":"o condicional -(으)면 ('si')","나빴어요 (nappasseoyo)":"a forma cortês do passado (-았/었어요)","나빠요 (nappayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-458": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '크다' (grande) → '크고' (keugo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"크면 (keumyeon)":"o condicional -(으)면 ('si')","컸어요 (keosseoyo)":"a forma cortês do passado (-았/었어요)","커요 (keoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-459": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '길다' (comprido) → '길고' (gilgo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"길면 (gilmyeon)":"o condicional -(으)면 ('si')","길었어요 (gireosseoyo)":"a forma cortês do passado (-았/었어요)","길어요 (gireoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-460": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '멀다' (distante) → '멀고' (meolgo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"멀면 (meolmyeon)":"o condicional -(으)면 ('si')","멀었어요 (meoreosseoyo)":"a forma cortês do passado (-았/었어요)","멀어요 (meoreoyo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-461": {"promptNative":"Esta casa é ___ e limpa. (adjetivo + -고)","explain":"Os adjetivos também se ligam com -고 ('y'): '작다' (pequeno) → '작고' (jakgo).","wrongNote":"Os adjetivos também se ligam com -고 ('y').","distractorNotes":{"작으면 (jageumyeon)":"o condicional -(으)면 ('si')","작았어요 (jagasseoyo)":"a forma cortês do passado (-았/었어요)","작아요 (jagayo)":"a forma cortês do presente (-아/어요)"}},
+  "gram-462": {"promptNative":"___ é estudante. (partícula de tema 은/는)","explain":"Marca o tópico ('en cuanto a'); termina em consoante (받침), então '책' leva -은 ('책은').","wrongNote":"책 termina em consoante (받침), então '책' leva -은.","distractorNotes":{"는 (neun)":"o alomorfe errado — usa-se depois de vogal","이/가 (i/ga)":"a partícula de sujeito","을/를 (eul/reul)":"a partícula de objeto"}},
+  "gram-463": {"promptNative":"___ é estudante. (partícula de tema 은/는)","explain":"Marca o tópico ('en cuanto a'); termina em vogal, então '사과' leva -는 ('사과는').","wrongNote":"사과 termina em vogal, então '사과' leva -는.","distractorNotes":{"은 (eun)":"o alomorfe errado — usa-se depois de consoante","이/가 (i/ga)":"a partícula de sujeito","을/를 (eul/reul)":"a partícula de objeto"}},
+  "gram-464": {"promptNative":"___ é estudante. (partícula de tema 은/는)","explain":"Marca o tópico ('en cuanto a'); termina em consoante (받침), então '학생' leva -은 ('학생은').","wrongNote":"학생 termina em consoante (받침), então '학생' leva -은.","distractorNotes":{"는 (neun)":"o alomorfe errado — usa-se depois de vogal","이/가 (i/ga)":"a partícula de sujeito","을/를 (eul/reul)":"a partícula de objeto"}},
+  "gram-465": {"promptNative":"___ é estudante. (partícula de tema 은/는)","explain":"Marca o tópico ('en cuanto a'); termina em vogal, então '친구' leva -는 ('친구는').","wrongNote":"친구 termina em vogal, então '친구' leva -는.","distractorNotes":{"은 (eun)":"o alomorfe errado — usa-se depois de consoante","이/가 (i/ga)":"a partícula de sujeito","을/를 (eul/reul)":"a partícula de objeto"}},
+  "gram-466": {"promptNative":"___ é estudante. (partícula de tema 은/는)","explain":"Marca o tópico ('en cuanto a'); termina em consoante (받침), então '물' leva -은 ('물은').","wrongNote":"물 termina em consoante (받침), então '물' leva -은.","distractorNotes":{"는 (neun)":"o alomorfe errado — usa-se depois de vogal","이/가 (i/ga)":"a partícula de sujeito","을/를 (eul/reul)":"a partícula de objeto"}},
+  "gram-467": {"promptNative":"___ é estudante. (partícula de tema 은/는)","explain":"Marca o tópico ('en cuanto a'); termina em consoante (받침), então '집' leva -은 ('집은').","wrongNote":"집 termina em consoante (받침), então '집' leva -은.","distractorNotes":{"는 (neun)":"o alomorfe errado — usa-se depois de vogal","이/가 (i/ga)":"a partícula de sujeito","을/를 (eul/reul)":"a partícula de objeto"}},
+  "gram-468": {"promptNative":"___ é estudante. (partícula de tema 은/는)","explain":"Marca o tópico ('en cuanto a'); termina em vogal, então '컴퓨터' leva -는 ('컴퓨터는').","wrongNote":"컴퓨터 termina em vogal, então '컴퓨터' leva -는.","distractorNotes":{"은 (eun)":"o alomorfe errado — usa-se depois de consoante","이/가 (i/ga)":"a partícula de sujeito","을/를 (eul/reul)":"a partícula de objeto"}},
+  "gram-469": {"promptNative":"___ é estudante. (partícula de tema 은/는)","explain":"Marca o tópico ('en cuanto a'); termina em consoante (받침), então '선생님' leva -은 ('선생님은').","wrongNote":"선생님 termina em consoante (받침), então '선생님' leva -은.","distractorNotes":{"는 (neun)":"o alomorfe errado — usa-se depois de vogal","이/가 (i/ga)":"a partícula de sujeito","을/를 (eul/reul)":"a partícula de objeto"}},
+  "gram-470": {"promptNative":"___ é bom. (partícula de sujeito 이/가)","explain":"Marca o sujeito; termina em consoante (받침), então '책' leva -이 ('책이').","wrongNote":"책 termina em consoante (받침), então '책' leva -이.","distractorNotes":{"가 (ga)":"o alomorfe errado — usa-se depois de vogal","은/는 (eun/neun)":"a partícula de tema","에 (e)":"a partícula de lugar/tempo"}},
+  "gram-471": {"promptNative":"___ é bom. (partícula de sujeito 이/가)","explain":"Marca o sujeito; termina em vogal, então '사과' leva -가 ('사과가').","wrongNote":"사과 termina em vogal, então '사과' leva -가.","distractorNotes":{"이 (i)":"o alomorfe errado — usa-se depois de consoante","은/는 (eun/neun)":"a partícula de tema","에 (e)":"a partícula de lugar/tempo"}},
+  "gram-472": {"promptNative":"___ é bom. (partícula de sujeito 이/가)","explain":"Marca o sujeito; termina em consoante (받침), então '학생' leva -이 ('학생이').","wrongNote":"학생 termina em consoante (받침), então '학생' leva -이.","distractorNotes":{"가 (ga)":"o alomorfe errado — usa-se depois de vogal","은/는 (eun/neun)":"a partícula de tema","에 (e)":"a partícula de lugar/tempo"}},
+  "gram-473": {"promptNative":"___ é bom. (partícula de sujeito 이/가)","explain":"Marca o sujeito; termina em vogal, então '친구' leva -가 ('친구가').","wrongNote":"친구 termina em vogal, então '친구' leva -가.","distractorNotes":{"이 (i)":"o alomorfe errado — usa-se depois de consoante","은/는 (eun/neun)":"a partícula de tema","에 (e)":"a partícula de lugar/tempo"}},
+  "gram-474": {"promptNative":"___ é bom. (partícula de sujeito 이/가)","explain":"Marca o sujeito; termina em consoante (받침), então '물' leva -이 ('물이').","wrongNote":"물 termina em consoante (받침), então '물' leva -이.","distractorNotes":{"가 (ga)":"o alomorfe errado — usa-se depois de vogal","은/는 (eun/neun)":"a partícula de tema","에 (e)":"a partícula de lugar/tempo"}},
+  "gram-475": {"promptNative":"___ é bom. (partícula de sujeito 이/가)","explain":"Marca o sujeito; termina em consoante (받침), então '집' leva -이 ('집이').","wrongNote":"집 termina em consoante (받침), então '집' leva -이.","distractorNotes":{"가 (ga)":"o alomorfe errado — usa-se depois de vogal","은/는 (eun/neun)":"a partícula de tema","에 (e)":"a partícula de lugar/tempo"}},
+  "gram-476": {"promptNative":"___ é bom. (partícula de sujeito 이/가)","explain":"Marca o sujeito; termina em vogal, então '컴퓨터' leva -가 ('컴퓨터가').","wrongNote":"컴퓨터 termina em vogal, então '컴퓨터' leva -가.","distractorNotes":{"이 (i)":"o alomorfe errado — usa-se depois de consoante","은/는 (eun/neun)":"a partícula de tema","에 (e)":"a partícula de lugar/tempo"}},
+  "gram-477": {"promptNative":"___ é bom. (partícula de sujeito 이/가)","explain":"Marca o sujeito; termina em consoante (받침), então '선생님' leva -이 ('선생님이').","wrongNote":"선생님 termina em consoante (받침), então '선생님' leva -이.","distractorNotes":{"가 (ga)":"o alomorfe errado — usa-se depois de vogal","은/는 (eun/neun)":"a partícula de tema","에 (e)":"a partícula de lugar/tempo"}},
+  "gram-478": {"promptNative":"Eu compro ___. (partícula de objeto 을/를)","explain":"Marca o objeto direto; termina em consoante (받침), então '책' leva -을 ('책을').","wrongNote":"책 termina em consoante (받침), então '책' leva -을.","distractorNotes":{"를 (reul)":"o alomorfe errado — usa-se depois de vogal","은/는 (eun/neun)":"a partícula de tema","이/가 (i/ga)":"a partícula de sujeito"}},
+  "gram-479": {"promptNative":"Eu compro ___. (partícula de objeto 을/를)","explain":"Marca o objeto direto; termina em vogal, então '사과' leva -를 ('사과를').","wrongNote":"사과 termina em vogal, então '사과' leva -를.","distractorNotes":{"을 (eul)":"o alomorfe errado — usa-se depois de consoante","은/는 (eun/neun)":"a partícula de tema","이/가 (i/ga)":"a partícula de sujeito"}},
+  "gram-480": {"promptNative":"Eu compro ___. (partícula de objeto 을/를)","explain":"Marca o objeto direto; termina em consoante (받침), então '학생' leva -을 ('학생을').","wrongNote":"학생 termina em consoante (받침), então '학생' leva -을.","distractorNotes":{"를 (reul)":"o alomorfe errado — usa-se depois de vogal","은/는 (eun/neun)":"a partícula de tema","이/가 (i/ga)":"a partícula de sujeito"}},
+  "gram-481": {"promptNative":"Eu compro ___. (partícula de objeto 을/를)","explain":"Marca o objeto direto; termina em vogal, então '친구' leva -를 ('친구를').","wrongNote":"친구 termina em vogal, então '친구' leva -를.","distractorNotes":{"을 (eul)":"o alomorfe errado — usa-se depois de consoante","은/는 (eun/neun)":"a partícula de tema","이/가 (i/ga)":"a partícula de sujeito"}},
+  "gram-482": {"promptNative":"Eu compro ___. (partícula de objeto 을/를)","explain":"Marca o objeto direto; termina em consoante (받침), então '물' leva -을 ('물을').","wrongNote":"물 termina em consoante (받침), então '물' leva -을.","distractorNotes":{"를 (reul)":"o alomorfe errado — usa-se depois de vogal","은/는 (eun/neun)":"a partícula de tema","이/가 (i/ga)":"a partícula de sujeito"}},
+  "gram-483": {"promptNative":"Eu compro ___. (partícula de objeto 을/를)","explain":"Marca o objeto direto; termina em consoante (받침), então '집' leva -을 ('집을').","wrongNote":"집 termina em consoante (받침), então '집' leva -을.","distractorNotes":{"를 (reul)":"o alomorfe errado — usa-se depois de vogal","은/는 (eun/neun)":"a partícula de tema","이/가 (i/ga)":"a partícula de sujeito"}},
+  "gram-484": {"promptNative":"Eu compro ___. (partícula de objeto 을/를)","explain":"Marca o objeto direto; termina em vogal, então '컴퓨터' leva -를 ('컴퓨터를').","wrongNote":"컴퓨터 termina em vogal, então '컴퓨터' leva -를.","distractorNotes":{"을 (eul)":"o alomorfe errado — usa-se depois de consoante","은/는 (eun/neun)":"a partícula de tema","이/가 (i/ga)":"a partícula de sujeito"}},
+  "gram-485": {"promptNative":"Eu compro ___. (partícula de objeto 을/를)","explain":"Marca o objeto direto; termina em consoante (받침), então '선생님' leva -을 ('선생님을').","wrongNote":"선생님 termina em consoante (받침), então '선생님' leva -을.","distractorNotes":{"를 (reul)":"o alomorfe errado — usa-se depois de vogal","은/는 (eun/neun)":"a partícula de tema","이/가 (i/ga)":"a partícula de sujeito"}},
+  "gram-486": {"promptNative":"Eu gosto de ___ e meu amigo. (과/와 'e')","explain":"Significa 'y/con' (liga substantivos); termina em consoante (받침), então '책' leva -과 ('책과').","wrongNote":"책 termina em consoante (받침), então '책' leva -과.","distractorNotes":{"와 (wa)":"o alomorfe errado — usa-se depois de vogal","도 (do)":"'también'","의 (ui)":"a partícula possessiva"}},
+  "gram-487": {"promptNative":"Eu gosto de ___ e meu amigo. (과/와 'e')","explain":"Significa 'y/con' (liga substantivos); termina em vogal, então '사과' leva -와 ('사과와').","wrongNote":"사과 termina em vogal, então '사과' leva -와.","distractorNotes":{"과 (gwa)":"o alomorfe errado — usa-se depois de consoante","도 (do)":"'también'","의 (ui)":"a partícula possessiva"}},
+  "gram-488": {"promptNative":"Eu gosto de ___ e meu amigo. (과/와 'e')","explain":"Significa 'y/con' (liga substantivos); termina em consoante (받침), então '학생' leva -과 ('학생과').","wrongNote":"학생 termina em consoante (받침), então '학생' leva -과.","distractorNotes":{"와 (wa)":"o alomorfe errado — usa-se depois de vogal","도 (do)":"'también'","의 (ui)":"a partícula possessiva"}},
+  "gram-489": {"promptNative":"Eu gosto de ___ e meu amigo. (과/와 'e')","explain":"Significa 'y/con' (liga substantivos); termina em vogal, então '친구' leva -와 ('친구와').","wrongNote":"친구 termina em vogal, então '친구' leva -와.","distractorNotes":{"과 (gwa)":"o alomorfe errado — usa-se depois de consoante","도 (do)":"'también'","의 (ui)":"a partícula possessiva"}},
+  "gram-490": {"promptNative":"Eu gosto de ___ e meu amigo. (과/와 'e')","explain":"Significa 'y/con' (liga substantivos); termina em consoante (받침), então '물' leva -과 ('물과').","wrongNote":"물 termina em consoante (받침), então '물' leva -과.","distractorNotes":{"와 (wa)":"o alomorfe errado — usa-se depois de vogal","도 (do)":"'también'","의 (ui)":"a partícula possessiva"}},
+  "gram-491": {"promptNative":"Eu gosto de ___ e meu amigo. (과/와 'e')","explain":"Significa 'y/con' (liga substantivos); termina em consoante (받침), então '집' leva -과 ('집과').","wrongNote":"집 termina em consoante (받침), então '집' leva -과.","distractorNotes":{"와 (wa)":"o alomorfe errado — usa-se depois de vogal","도 (do)":"'también'","의 (ui)":"a partícula possessiva"}},
+  "gram-492": {"promptNative":"Eu gosto de ___ e meu amigo. (과/와 'e')","explain":"Significa 'y/con' (liga substantivos); termina em vogal, então '컴퓨터' leva -와 ('컴퓨터와').","wrongNote":"컴퓨터 termina em vogal, então '컴퓨터' leva -와.","distractorNotes":{"과 (gwa)":"o alomorfe errado — usa-se depois de consoante","도 (do)":"'también'","의 (ui)":"a partícula possessiva"}},
+  "gram-493": {"promptNative":"Eu gosto de ___ e meu amigo. (과/와 'e')","explain":"Significa 'y/con' (liga substantivos); termina em consoante (받침), então '선생님' leva -과 ('선생님과').","wrongNote":"선생님 termina em consoante (받침), então '선생님' leva -과.","distractorNotes":{"와 (wa)":"o alomorfe errado — usa-se depois de vogal","도 (do)":"'también'","의 (ui)":"a partícula possessiva"}},
+  "trad-0": {"promptNative":"Diz-se antes de comer, para agradecer pela comida.","prompt":"Traduzir: 'Vou aproveitar esta refeição.' (frase fixa, dita antes de comer)","explain":"\"잘 먹겠습니다\" (literalmente \"comeré bien\") é a frase fixa que se diz antes de comer — o primo coreano do いただきます japonês. A resposta do anfitrião é \"맛있게 드세요\" (\"come bien/disfruta\")."},
+  "trad-1": {"promptNative":"Diz-se depois de comer.","prompt":"Traduzir: 'Obrigado pela comida.' (frase fixa, dita depois de comer)","explain":"\"잘 먹었습니다\" (literalmente \"comí bien\") é a dupla de depois de 잘 먹겠습니다 — o agradecimento fixo ao terminar de comer, como o ごちそうさまでした japonês. Note que a única coisa que muda é 겠 (futuro) → 었 (passado)."},
+  "trad-2": {"promptNative":"Tem muitos contatos.","prompt":"Traduzir: 'Conhece muita gente / é muito bem relacionado.'","explain":"\"발이 넓다\" (literalmente \"tener pies anchos\") é a expressão idiomática coreana padrão para ser bem relacionado socialmente — uma de muitas expressões de partes do corpo que projetam o caráter sobre a anatomia."},
+  "trad-3": {"promptNative":"Tem padrões muito altos.","prompt":"Traduzir: 'É muito exigente / tem padrões muito altos.'","explain":"\"눈이 높다\" (literalmente \"tener ojos altos\") é a expressão idiomática coreana do dia a dia para ter padrões altos, principalmente sobre as pessoas ou coisas que a gente escolhe."},
+  "trad-4": {"promptNative":"É algo impossível de alcançar.","prompt":"Traduzir: 'Isso é uma tarefa impossível.'","explain":"\"하늘의 별 따기\" (literalmente \"recoger una estrella del cielo\") é a expressão idiomática coreana padrão para algo impossivelmente difícil."},
+  "trad-5": {"promptNative":"Aparece justamente a pessoa de quem você falava.","prompt":"Traduzir: 'Falando no diabo.' (aparece a pessoa de quem você falava)","explain":"\"호랑이도 제 말 하면 온다\" (literalmente \"hasta el tigre viene cuando hablas de él\") é o equivalente coreano de \"hablando del rey de Roma\" — o tigre no lugar do rei."},
+  "trad-6": {"promptNative":"Uma boa palavra vale muito.","prompt":"Traduzir: 'As palavras certas podem fazer maravilhas.'","explain":"\"말 한마디에 천 냥 빚도 갚는다\" (literalmente \"con una sola palabra puedes saldar hasta una deuda de mil nyang\") é o provérbio coreano clássico sobre o poder das palavras certas — uma frase bem escolhida pode resolver o que o dinheiro não resolve."},
+  "trad-7": {"promptNative":"Serve com mão generosa.","prompt":"Traduzir: 'É muito generosa (com a comida / as porções).'","explain":"\"손이 크다\" (literalmente \"tener manos grandes\") descreve alguém generoso, principalmente conhecido por servir porções grandes ou dar sem economizar."},
+  "trad-8": {"promptNative":"Não crie expectativas antes da hora.","prompt":"Traduzir: 'Não cante vitória antes da hora.'","explain":"\"김칫국부터 마신다\" (literalmente \"beber primero la sopa de kimchi,\" antes de o prato principal chegar) é a expressão idiomática coreana para dar um resultado como certo antes de ele estar garantido."},
+  "trad-9": {"promptNative":"Não passei na prova.","prompt":"Traduzir: 'Reprovei na prova.'","explain":"\"미역국을 먹다\" (literalmente \"comer sopa de algas\") é uma expressão idiomática coreana colorida e bem característica para ser reprovado numa prova — as algas escorregadias evocando \"resbalar\" na prova."},
+  "trad-10": {"promptNative":"Está cego pelo amor.","prompt":"Traduzir: 'O amor o deixa cego.'","explain":"\"콩깍지가 씌었다\" (literalmente \"tener una vaina de frijol sobre los ojos\") é uma expressão idiomática coreana vívida e bem característica para estar cego de amor ou de paixão."},
+  "trad-11": {"promptNative":"O começo é metade do trabalho.","prompt":"Traduzir: 'Começar bem é já ter metade feito.'","explain":"\"시작이 반이다\" (literalmente \"el comienzo es la mitad\") é o provérbio coreano preferido para animar alguém a simplesmente começar — o mais difícil costuma ser dar a partida."},
+  "trad-12": {"promptNative":"Algo inalcançável.","prompt":"Traduzir: 'Está fora do meu alcance / é como pedir a lua.'","explain":"\"그림의 떡\" (literalmente \"un pastel de arroz en un cuadro\") é a expressão idiomática coreana para algo desejável mas inalcançável — dá para ver, mas nunca provar."},
+  "trad-13": {"promptNative":"Depois do amargo vem o doce.","prompt":"Traduzir: 'Depois do sofrimento vem a recompensa.' (expressão de quatro caracteres)","explain":"\"고진감래\" (literalmente \"acaba lo amargo, llega lo dulce\") é um 사자성어 — uma expressão sino-coreana de quatro caracteres, o análogo coreano do yojijukugo japonês. Toda essa classe de expressões clássicas comprimidas é um marcador de domínio C1+."},
+  "trad-14": {"promptNative":"Nunca se sabe como a sorte vai mudar.","prompt":"Traduzir: 'Há males que vêm para bem.'","explain":"\"새옹지마\" (literalmente \"el caballo del anciano de la frontera\") é um 사자성어 da parábola clássica em que cada virada da sorte, boa ou má, se transforma no seu oposto — a sorte e o azar não podem ser julgados na hora."},
+  "trad-15": {"promptNative":"Cada um interpreta a regra como quer.","prompt":"Traduzir: 'Uma regra pode ser torcida para dizer o que te convém.'","explain":"\"귀에 걸면 귀걸이, 코에 걸면 코걸이\" (literalmente \"cuélgalo en la oreja, es un arete; cuélgalo en la nariz, es un aro nasal\") é a expressão idiomática coreana para uma regra ou afirmação tão vaga que pode ser torcida para significar qualquer coisa."},
+  "trad-16": {"promptNative":"Ter uma visão muito limitada do mundo.","prompt":"Traduzir: 'A rã do poço não conhece o mar.' (visão estreita do mundo)","explain":"\"우물 안 개구리\" (literalmente \"una rana en un pozo\") é a expressão idiomática padrão para quem acha que já viu de tudo a partir do seu mundinho — compartilhada com o 井の中の蛙 japonês e a mesma fonte clássica chinesa."},
+  "trad-17": {"promptNative":"Escapa-nos o que temos mais perto.","prompt":"Traduzir: 'Às vezes não vemos o que está bem debaixo do nariz.'","explain":"\"등잔 밑이 어둡다\" (literalmente \"debajo de la lámpara está oscuro\") é o vívido provérbio coreano para deixar passar o que está mais perto de você — um lampião ilumina a sala inteira mas deixa sombra bem embaixo de si."},
+  "trad-18": {"promptNative":"Diz-se a alguém que acabou de terminar o trabalho.","prompt":"Traduzir: 'Obrigado pelo seu esforço / bom trabalho.' (frase fixa, dita a quem termina o trabalho)","explain":"\"수고하셨습니다\" (literalmente \"se ha esforzado/ha trabajado duro\") é a frase fixa para reconhecer o esforço de alguém ao fim de um trabalho, de um turno ou de uma tarefa — o \"gracias por tu esfuerzo / buen trabajo\" coreano de todo dia. 수고하세요 é a versão no presente, dita a quem ainda está trabalhando."},
+  "trad-19": {"promptNative":"Diz-se ao conhecer alguém pela primeira vez.","prompt":"Traduzir: 'Prazer em conhecê-lo.' (frase fixa, dita num primeiro encontro)","explain":"\"처음 뵙겠습니다\" (literalmente \"lo veré por primera vez,\" com 뵙다, o verbo humilde de 'ver/conocer') é a frase fixa e formal para uma primeira apresentação. 만나서 반가워요 também significa \"encantado de conocerte,\" mas é mais calorosa e informal — não é a fórmula ritual do primeiro encontro."},
+  "trad-20": {"promptNative":"Diz-se ao começar uma relação ou parceria.","prompt":"Traduzir: 'Espero que nos demos bem / conto com você.' (frase fixa)","explain":"\"잘 부탁드립니다\" (literalmente \"le pido humildemente\") é a cola social intraduzível que se diz ao entrar num time, começar um projeto ou pedir que cuidem de você — uma mistura de \"cuídame, por favor\" e \"espero trabajar bien contigo.\" 잘 도와주세요 (\"ayúdame bien, por favor\") é um pedido simples, não a frase fixa."},
+  "trad-21": {"promptNative":"Faz muito tempo que não nos vemos.","prompt":"Traduzir: 'Quanto tempo sem te ver.'","explain":"\"오랜만이에요\" (de 오랜만 \"un largo intervalo,\" literalmente \"un buen rato\") é a saudação padrão ao reencontrar alguém depois de muito tempo — o \"cuánto tiempo sin verte\" coreano. A pegadinha 오래 기다렸어요 significa \"esperé mucho tiempo,\" outro uso de 'largo.'"},
+  "trad-22": {"promptNative":"Uma expressão de incentivo.","prompt":"Traduzir: 'Você consegue! / Força!' (palavra de incentivo)","explain":"\"파이팅\" (do inglês \"fighting,\" uma invenção konglish) é o grito de incentivo coreano para tudo — gritado antes de uma prova, de um jogo ou de um dia duro para dizer \"¡tú puedes!\" Costuma vir com o punho erguido. 힘내세요 (\"saca fuerzas / ánimo\") chega perto, mas é mais consolo que grito de incentivo."},
+  "trad-23": {"promptNative":"Resposta humilde a um 'obrigado'.","prompt":"Traduzir: 'Não há de quê.' (resposta modesta a um agradecimento)","explain":"\"별말씀을요\" (literalmente \"qué cosa tan fuera de lo común dices\") é a resposta modesta e um pouco formal a um agradecimento ou elogio — o \"no es nada / muy amable\" coreano. A pegadinha 말하지 마세요 significa literalmente \"no hables,\" ou seja \"cállate\" — um falso amigo da expressão inglesa."},
+  "trad-24": {"promptNative":"Qualquer um pode cometer um erro.","prompt":"Traduzir: 'Até os especialistas erram.'","explain":"\"원숭이도 나무에서 떨어진다\" (literalmente \"hasta el mono se cae del árbol\") é o provérbio clássico para a verdade de que até o mais habilidoso pode escorregar. A pegadinha 원숭이가 나무를 잘 타요 (\"el mono trepa bien los árboles\") é uma afirmação literal sobre macacos, não a expressão."},
+  "trad-25": {"promptNative":"Sentir inveja da sorte alheia.","prompt":"Traduzir: 'Que inveja (da sorte do outro).'","explain":"\"배가 아프다\" (literalmente \"me duele la barriga\") é a expressão para a inveja da sorte alheia — do provérbio 사촌이 땅을 사면 배가 아프다 (\"cuando tu primo compra tierras, te duele la barriga\"). A pegadinha 배탈이 났어요 (\"tengo el estómago revuelto\") é o sentido literal e médico."},
+  "trad-26": {"promptNative":"Não deixa escapar um segredo.","prompt":"Traduzir: 'Sabe guardar um segredo / é muito reservado.'","explain":"\"입이 무겁다\" (literalmente \"tener la boca pesada\") significa ser confiável com segredos — as palavras não escapam fácil. Seu oposto, a pegadinha 입이 커요 (\"boca grande\"), sugeriria alguém que abre a boca — uma expressão corporal virada para a característica errada."},
+  "trad-27": {"promptNative":"Muitas coisas pequenas somam muito.","prompt":"Traduzir: 'De grão em grão a galinha enche o papo.'","explain":"\"티끌 모아 태산\" (literalmente \"junta motas de polvo y forma el monte Tai\") é o provérbio de que quantias mínimas, guardadas com constância, viram algo enorme — o \"grano a grano se llena el granero\" coreano. 태산 é a grande montanha chinesa, símbolo do imenso."},
+  "trad-28": {"promptNative":"Os velhos hábitos são difíceis de mudar.","prompt":"Traduzir: 'Pau que nasce torto, morre torto.'","explain":"\"세 살 버릇 여든까지 간다\" (literalmente \"la costumbre de los tres años dura hasta los ochenta\") é o provérbio de que os hábitos da infância ficam para a vida toda — o \"genio y figura hasta la sepultura\" coreano, e um empurrão para criar bons hábitos cedo."},
+  "trad-29": {"promptNative":"Bom trato gera bom trato.","prompt":"Traduzir: 'Se você fala com gentileza, com gentileza vão te responder.'","explain":"\"가는 말이 고와야 오는 말이 곱다\" (literalmente \"solo si las palabras que van son bonitas, las que vienen serán bonitas\") é o provérbio de que a cortesia é recíproca — trate bem as palavras dos outros e as suas voltam gentis. O primo coreano de \"como tratas, te tratan\" aplicado à fala."},
+  "trad-30": {"promptNative":"Cuidado, alguém pode estar escutando.","prompt":"Traduzir: 'As paredes têm ouvidos.'","explain":"\"낮말은 새가 듣고 밤말은 쥐가 듣는다\" (literalmente \"los pájaros oyen las palabras del día y los ratones las de la noche\") é o vívido provérbio de que nenhum segredo está a salvo — sempre tem alguém escutando. O \"las paredes oyen\" coreano, com animais como os eternos bisbilhoteiros."},
+  "trad-31": {"promptNative":"Remediar quando já é tarde.","prompt":"Traduzir: 'Depois da casa arrombada, trancas na porta.'","explain":"\"소 잃고 외양간 고친다\" (literalmente \"arreglar el establo después de perder el buey\") é o provérbio para agir só quando o estrago já está feito — o \"a buenas horas, mangas verdes\" coreano. A pegadinha descreve consertar bem o estábulo, perdendo o sentido de 'demasiado tarde.'"},
+  "trad-32": {"promptNative":"De estômago vazio não se aproveita nada.","prompt":"Traduzir: 'Primeiro o principal: comer antes de passear.' (primeiro encher o estômago)","explain":"\"금강산도 식후경\" (literalmente \"hasta el monte Geumgang es un paisaje para después de comer\") é o provérbio de que nada — nem a montanha mais bonita da Coreia — se aproveita de estômago vazio; primeiro se come. A pegadinha só elogia a montanha, perdendo o desfecho de 'comer primero.'"},
+  "trad-33": {"promptNative":"Os semelhantes se juntam.","prompt":"Traduzir: 'Os iguais se atraem / farinha do mesmo saco.'","explain":"\"가재는 게 편이다\" (literalmente \"el cangrejo de río se pone del lado del cangrejo\") é o provérbio de que as pessoas tomam o partido dos seus — os parecidos se juntam. O \"Dios los cría y ellos se juntan\" coreano. A pegadinha só diz que os dois animais se parecem, perdendo o sentido de 'tomar partido.'"},
+  "trad-34": {"promptNative":"Esquece de onde veio.","prompt":"Traduzir: 'Esqueceu suas origens humildes.'","explain":"\"개구리 올챙이 적 생각 못 한다\" (literalmente \"la rana no recuerda cuando era renacuajo\") é o provérbio para quem, tendo prosperado, esquece a origem humilde de onde veio. A pegadinha 개구리가 올챙이를 키워요 (\"una rana cría renacuajos\") é uma afirmação literal, não a expressão."},
+  "trad-35": {"promptNative":"Conseguir duas coisas de uma vez.","prompt":"Traduzir: 'Matar dois coelhos com uma cajadada só.' (expressão de quatro caracteres)","explain":"\"일석이조\" (literalmente \"una piedra, dos pájaros\") é o 사자성어 — uma expressão sino-coreana de quatro caracteres — para obter dois resultados de uma só ação, exatamente \"matar dos pájaros de un tiro.\" A pegadinha 돌 하나로 새 두 마리를 잡아요 é a paráfrase literal desdobrada, não a forma clássica compacta."},
+  "trad-36": {"promptNative":"Prevenir é melhor que remediar.","prompt":"Traduzir: 'Estar preparado evita problemas.' (expressão de quatro caracteres)","explain":"\"유비무환\" (literalmente \"teniendo preparación, sin preocupación\") é o 사자성어 de que a previsão elimina os problemas — prepare-se com antecedência e não terá nada a temer. A pegadinha 미리 준비하면 걱정이 없어요 diz a mesma coisa em coreano comum, não na forma de quatro caracteres."},
+  "trad-37": {"promptNative":"A gente colhe o que planta.","prompt":"Traduzir: 'Você colhe o que planta.' (expressão de quatro caracteres)","explain":"\"자업자득\" (literalmente \"acto propio, obtención propia\") é o 사자성어 para sofrer as consequências dos próprios atos — você mesmo se meteu nisso. Costuma ser dito de um resultado ruim merecido. A pegadinha 운이 나빴어요 (\"solo fue mala suerte\") culpa o acaso, o contrário do sentido da expressão."},
+  "trad-38": {"promptNative":"A inexperiência torna a pessoa temerária.","prompt":"Traduzir: 'O novato atrevido não teme nada.' (filhote de cachorro não teme tigres)","explain":"\"하룻강아지 범 무서운 줄 모른다\" (literalmente \"el cachorro de un día no sabe temer al tigre\") é o provérbio para o novato tão inexperiente que não percebe o perigo em que se mete. A pegadinha 강아지가 범을 무서워해요 (\"el cachorro le teme al tigre\") inverte tudo — o ponto é que o filhote NÃO teme o tigre."},
+  "trad-39": {"promptNative":"Coragem é o que não lhe falta.","prompt":"Traduzir: 'É muito audacioso / tem muita coragem.'","explain":"\"간이 크다\" (literalmente \"tener el hígado grande\") é a expressão corporal para ser audacioso, atrevido ou atirado — o coreano coloca a coragem no fígado, não no coração. A pegadinha 간이 안 좋아요 (\"tiene mal el hígado\") é o sentido literal e médico de 간."},
+  "trad-40": {"promptNative":"É muito fácil.","prompt":"Traduzir: 'É moleza / facílimo.'","explain":"\"식은 죽 먹기\" (sigeun juk meokgi, literalmente \"comer gachas frías\") é a expressão idiomática coreana do dia a dia para algo facílimo — não precisa nem mastigar, ou seja, nenhum esforço. As outras opções só dizem \"es fácil\" sem a metáfora."},
+  "trad-41": {"promptNative":"É muito influenciável.","prompt":"Traduzir: 'Se deixa levar facilmente / acredita em tudo que dizem.'","explain":"\"귀가 얇다\" (gwiga yalda, literalmente \"tener orejas finas\") descreve alguém fácil de convencer ou crédulo — orelhas finas deixam passar qualquer palavra. Mais uma expressão de partes do corpo que projeta o caráter sobre a anatomia."},
+  "trad-42": {"promptNative":"Paguei muito mais do que valia.","prompt":"Traduzir: 'Me passaram a perna / me cobraram a mais.'","explain":"\"바가지를 쓰다\" (bagajireul sseuda, literalmente \"ponerse un cuenco de calabaza\") é a expressão padrão para pagar caro demais ou ser passado para trás — a cuia virada enfiada na cabeça feito chapéu de bobo."},
+  "trad-43": {"promptNative":"Sabe guardar um segredo.","prompt":"Traduzir: 'É muito discreta / sabe guardar segredos.'","explain":"\"입이 무겁다\" (ibi mugeopda, literalmente \"tener la boca pesada\") significa discreto e confiável com segredos — uma boca pesada custa a abrir. Seu oposto, 입이 가볍다 (\"boca ligera\"), é o linguarudo."},
+  "trad-44": {"promptNative":"Ajudou com toda a vontade.","prompt":"Traduzir: 'Se dedicou de corpo e alma a ajudar / meteu a mão na massa de coração.'","explain":"\"발 벗고 나서다\" (bal beotgo naseoda, literalmente \"dar un paso al frente con los pies descalzos\") significa arregaçar as mangas de vez, sem reservas — você nem para para calçar os sapatos."},
+  "trad-45": {"promptNative":"O prazo está prestes a vencer.","prompt":"Traduzir: 'Agora sim é urgente / o prazo está em cima.'","explain":"\"발등에 불이 떨어지다\" (baldeunge buri tteoreojida, literalmente \"el fuego cae sobre el empeine del pie\") é a expressão vívida para um problema que de repente fica urgentíssimo — você larga tudo e corre."},
+  "trad-46": {"promptNative":"Coordenam-se com perfeição.","prompt":"Traduzir: 'Os dois trabalham em perfeita sintonia.'","explain":"\"손발이 맞다\" (sonbari matda, literalmente \"las manos y los pies coinciden\") descreve duas pessoas perfeitamente entrosadas, que trabalham como um só corpo — seus membros se movem em uníssono sem dizer palavra."},
+  "trad-47": {"promptNative":"Não tem vergonha de nada.","prompt":"Traduzir: 'É um cara de pau / um descarado.'","explain":"\"얼굴이 두껍다\" (eolguri dukkeopda, literalmente \"tener la cara gruesa\") é a expressão coreana para ser descarado ou sem-vergonha — uma cara grossa não cora. O inglês recorre à pele (\"thick-skinned\"); o coreano, ao rosto."},
+  "trad-48": {"promptNative":"Mais vale ver do que ouvir.","prompt":"Traduzir: 'Ver uma vez vale mais que ouvir cem vezes.'","explain":"\"백문이 불여일견\" (baengmuni buryeoilgyeon, 百聞不如一見, literalmente \"cien veces oír no equivale a una vez ver\") é o provérbio clássico por trás de \"ver para creer\" — um olhar pesa mais que um monte de relatos de terceiros."},
+  "trad-49": {"promptNative":"A determinação se apagou logo.","prompt":"Traduzir: 'A determinação dele durou três dias.' (expressão de quatro caracteres)","explain":"\"작심삼일\" (jaksimsamil, 作心三日, literalmente \"decisión tomada, tres días\") é o 사자성어 para uma resolução que desaba quase na hora — o plano de Ano-Novo que não chega à segunda semana. É descritivo, não uma bronca."},
+  "trad-50": {"promptNative":"Não há boato sem um fundo de verdade.","prompt":"Traduzir: 'Onde há fumaça, há fogo.'","explain":"\"아니 땐 굴뚝에 연기 날까\" (ani ttaen gulttuge yeongi nalkka, literalmente \"¿saldría humo de una chimenea que nadie encendió?\") é o gêmeo coreano exato de \"cuando el río suena, agua lleva\" — um boato raramente surge do nada."},
+  "trad-51": {"promptNative":"A origem humilde não impede de chegar longe.","prompt":"Traduzir: 'De berço humilde pode sair uma grande figura.'","explain":"\"개천에서 용 난다\" (gaecheoneseo yong nanda, literalmente \"del arroyo sale un dragón\") celebra quem alcança a grandeza apesar de origens pobres e humildes — o dragão, rei das feras, nascido num riacho de barro."},
+  "trad-52": {"promptNative":"O pequeno, somado, torna-se grande.","prompt":"Traduzir: 'Muitos poucos fazem um muito.'","explain":"\"티끌 모아 태산\" (tikkeul moa taesan, literalmente \"junta motas de polvo [y tendrás] el monte Tai\") é o \"muchos pocos hacen un mucho\" coreano — até a menor economia, acumulada, vira uma grande montanha."},
+  "trad-53": {"promptNative":"Os grandes demoram a brilhar.","prompt":"Traduzir: 'O grande talento amadurece tarde.' (expressão de quatro caracteres)","explain":"\"대기만성\" (daegimanseong, 大器晩成, literalmente \"la gran vasija se completa tarde\") é o 사자성어 de quem floresce tarde — a cerâmica mais grandiosa demora mais para queimar, então o talento de verdade amadurece devagar. Do Dao De Jing."},
+  "trad-54": {"promptNative":"O detalhe final que completa tudo.","prompt":"Traduzir: 'o toque final que dá vida a toda a obra' (expressão de quatro caracteres)","explain":"\"화룡점정\" (hwaryongjeomjeong, 畵龍點睛, literalmente \"pintar el dragón y ponerle las pupilas\") é o toque final que coroa a obra. Na lenda, um pintor acrescentou as pupilas ao seu dragão e ele saiu voando do muro — o último traço pequeno que dá vida a tudo."},
+  "trad-55": {"promptNative":"Encurralado por todos os lados.","prompt":"Traduzir: 'estar cercado de inimigos sem saída' (expressão de quatro caracteres)","explain":"\"사면초가\" (samyeonchoga, 四面楚歌, literalmente \"cantos de Chu por los cuatro costados\") significa cercado por todos os lados, totalmente isolado. Xiang Yu, sitiado, ouviu o inimigo cantar os cantos de Chu da sua terra e soube que tudo estava perdido."},
+  "trad-56": {"promptNative":"Compreender-se sem precisar falar.","prompt":"Traduzir: 'um entendimento de coração para coração, sem palavras' (expressão de quatro caracteres)","explain":"\"이심전심\" (isimjeonsim, 以心傳心, literalmente \"transmitir de corazón a corazón\") é o encontro sem palavras de duas mentes — o entendimento que passa de coração a coração sem nada ser dito. Nasce da transmissão budista zen (Seon)."},
+  "trad-57": {"promptNative":"Um truque que aparenta mudança sem mudar nada.","prompt":"Traduzir: 'enganar alguém com uma mudança superficial que não muda nada' (expressão de quatro caracteres)","explain":"\"조삼모사\" (josammosa, 朝三暮四, literalmente \"tres por la mañana, cuatro por la noche\") é um engodo mesquinho sobre o que no fundo é o mesmo acordo. Um tratador ofereceu aos seus macacos três castanhas ao amanhecer e quatro ao anoitecer; eles se enfureceram — até ele trocar para quatro e depois três, e eles aplaudiram."},
+  "trad-58": {"promptNative":"Usar alguém e depois descartá-lo.","prompt":"Traduzir: 'descartar alguém assim que deixa de ser útil' (expressão de quatro caracteres)","explain":"\"토사구팽\" (tosagupaeng, 兔死狗烹, literalmente \"muerto el conejo, se cuece al perro\") significa descartar um colaborador leal assim que ele deixa de ser necessário — acabada a caçada, até o bom cão de caça vai para a panela."},
+  "trad-59": {"promptNative":"Diz-se a quem fica enquanto a gente vai embora.","prompt":"Traduzir: 'Tchau / fique bem.' (frase fixa, dita a quem fica)","explain":"\"안녕히 계세요\" (literalmente \"quédese en paz\") é a despedida que você diz a quem fica enquanto você vai embora, como ao sair de uma loja ou da casa de um amigo."},
+  "trad-60": {"promptNative":"Diz-se a quem vai embora enquanto a gente fica.","prompt":"Traduzir: 'Tchau / boa viagem.' (frase fixa, dita a quem vai embora)","explain":"\"안녕히 가세요\" (literalmente \"vaya en paz\") é a despedida para quem vai embora enquanto você fica. O coreano tem duas despedidas: uma para quem vai e outra para quem fica."},
+  "trad-61": {"promptNative":"Diz-se ao atender o telefone.","prompt":"Traduzir: 'Alô?' (frase fixa, ao atender o telefone)","explain":"\"여보세요\" (yeoboseyo) é a forma padrão de dizer \"¿hola?\" ao atender o telefone. Pessoalmente se usa 안녕하세요."},
+  "trad-62": {"promptNative":"Saudação de um comerciante ao cliente.","prompt":"Traduzir: 'Bem-vindo!' (frase fixa, dita por um comerciante ao receber um cliente)","explain":"\"어서 오세요\" (literalmente \"pase enseguida\") é a saudação calorosa que o pessoal de lojas e restaurantes solta assim que você entra."},
+  "trad-63": {"promptNative":"Para chamar a atenção ou pedir passagem.","prompt":"Traduzir: 'Com licença / desculpe.' (frase fixa, para chamar a atenção ou passar)","explain":"\"실례합니다\" (literalmente \"cometo una descortesía\") é o \"disculpe\" cortês para passar por alguém ou chamar a atenção de alguém."},
+  "trad-64": {"promptNative":"Um pedido de desculpas formal.","prompt":"Traduzir: 'Sinto muito.' (pedido de desculpas formal)","explain":"\"죄송합니다\" (joesonghamnida) é a maneira cortês e formal de pedir desculpas, um degrau mais respeitosa que o informal 미안해요."},
+  "trad-65": {"promptNative":"Uma felicitação.","prompt":"Traduzir: 'Parabéns!'","explain":"\"축하합니다\" (chukhahamnida) é a forma de dar parabéns por um aniversário, um casamento, um emprego novo: qualquer conquista feliz."},
+  "trad-66": {"promptNative":"Desejo de sorte para o ano novo.","prompt":"Traduzir: 'Feliz Ano Novo!' (frase fixa, lit. receba muita sorte no ano novo)","explain":"\"새해 복 많이 받으세요\" (literalmente \"reciba mucha suerte en el año nuevo\") é a saudação padrão de Ano-Novo, tanto no 1º de janeiro quanto no Ano-Novo Lunar."},
+  "trad-67": {"promptNative":"Pedir que esperem um instante.","prompt":"Traduzir: 'Um momento, por favor.'","explain":"\"잠시만요\" (jamsimanyo) significa \"un momento, por favor\". Também serve como um cortês \"con permiso\" para passar por alguém."},
+  "trad-68": {"promptNative":"Diz-se a quem está prestes a comer.","prompt":"Traduzir: 'Bom apetite / aproveite a refeição.' (frase fixa, dita A quem vai comer)","explain":"\"맛있게 드세요\" (literalmente \"coma sabroso\") é o que um anfitrião ou garçom diz antes de você comer, a contraparte do 잘 먹겠습니다 que diz quem vai comer."},
+  "trad-69": {"promptNative":"Não ter nem um minuto livre.","prompt":"Traduzir: 'Estou tão ocupado que não consigo nem respirar.'","explain":"\"눈코 뜰 새 없다\" (literalmente \"sin tiempo ni para abrir los ojos o la nariz\") descreve estar tão ocupado que você não tem um segundo. Ideal para um dia de trabalho frenético."},
+  "trad-70": {"promptNative":"Fingiu não ver algo de propósito.","prompt":"Traduzir: 'Fez vista grossa / deixou passar.'","explain":"\"눈감아 주다\" (literalmente \"cerrar los ojos por alguien\") significa ignorar de propósito um erro e deixar passar."},
+  "trad-71": {"promptNative":"Percebe tudo na hora.","prompt":"Traduzir: 'Percebe o clima rápido / é muito perceptivo.'","explain":"\"눈치가 빠르다\" (literalmente \"rápido para captar las señales\") descreve quem percebe na hora o clima e o que os outros precisam. O 눈치 (radar social) é muito importante na vida coreana."},
+  "trad-72": {"promptNative":"Deixa escapar tudo o que sabe.","prompt":"Traduzir: 'É um linguarudo / não sabe guardar segredo.'","explain":"\"입이 가볍다\" (literalmente \"tener la boca ligera\") significa que alguém deixa escapar segredos com facilidade. Seu oposto, 입이 무겁다 (\"boca pesada\"), é ser discreto."},
+  "trad-73": {"promptNative":"Come pouco e é exigente com a comida.","prompt":"Traduzir: 'Come mal / come pouco e é cheio de frescura.'","explain":"\"입이 짧다\" (literalmente \"tener la boca corta\") descreve quem come pouco ou é exigente com a comida."},
+  "trad-74": {"promptNative":"Falta mais ajuda.","prompt":"Traduzir: 'Faltam mãos / precisamos de mais gente.'","explain":"\"손이 모자라다\" (literalmente \"faltar manos\") significa que não há gente suficiente para dar conta do trabalho."},
+  "trad-75": {"promptNative":"Cortou de vez com algo sujo.","prompt":"Traduzir: 'Lavou as mãos daquele assunto sujo para sempre.'","explain":"\"손을 씻다\" (literalmente \"lavarse las manos\") significa cortar de vez com uma atividade suja ou ruim, a mesma imagem que em português."},
+  "trad-76": {"promptNative":"Pensar juntos para achar a solução.","prompt":"Traduzir: 'Juntamos as cabeças para resolver.'","explain":"\"머리를 맞대다\" (literalmente \"juntar las cabezas\") significa se reunir para pensar juntos numa solução."},
+  "trad-77": {"promptNative":"Pensa muito para chegar a uma boa ideia.","prompt":"Traduzir: 'Quebra a cabeça atrás de uma ideia esperta.'","explain":"\"머리를 굴리다\" (literalmente \"hacer rodar la cabeza\") significa pensar muito, muitas vezes para tramar ou achar uma saída esperta."},
+  "trad-78": {"promptNative":"O rosto dele me parece familiar.","prompt":"Traduzir: 'O rosto dele me é familiar.'","explain":"\"낯이 익다\" (literalmente \"la cara está madura/conocida\") significa que alguém te parece familiar, como se você já o tivesse visto. Seu oposto é 낯이 설다."},
+  "trad-79": {"promptNative":"Ficar vermelho de vergonha.","prompt":"Traduzir: 'Estou morrendo de vergonha.'","explain":"\"얼굴이 화끈거리다\" (literalmente \"la cara arde\") é aquele rubor de vergonha que você sente nas bochechas."},
+  "trad-80": {"promptNative":"Sentir uma emoção que toca o coração.","prompt":"Traduzir: 'Fiquei profundamente comovido.'","explain":"\"가슴이 뭉클하다\" (literalmente \"el pecho se pone tierno\") é aquela sensação quente que sobe quando algo te emociona."},
+  "trad-81": {"promptNative":"Um susto repentino.","prompt":"Traduzir: 'Meu coração gelou / levei um baita susto.'","explain":"\"가슴이 철렁하다\" imita o baque do coração: aquele susto ao receber uma notícia preocupante."},
+  "trad-82": {"promptNative":"Sentir alívio depois de uma preocupação.","prompt":"Traduzir: 'Que alívio — pude respirar tranquilo de novo.'","explain":"\"가슴을 쓸어내리다\" (literalmente \"acariciarse el pecho hacia abajo\") é o gesto de alívio quando uma preocupação passa, como acalmar o coração."},
+  "trad-83": {"promptNative":"Carregar uma grande responsabilidade.","prompt":"Traduzir: 'Sinto o peso da responsabilidade sobre mim.'","explain":"\"어깨가 무겁다\" (literalmente \"los hombros pesan\") significa sentir o peso de uma grande responsabilidade. Quando ela sai, 어깨가 가벼워지다."},
+  "trad-84": {"promptNative":"Age com ares de superioridade.","prompt":"Traduzir: 'É metida / anda de nariz empinado.'","explain":"\"코가 높다\" (literalmente \"tener la nariz alta\") descreve alguém orgulhoso e arrogante, com o nariz apontado para cima."},
+  "trad-85": {"promptNative":"Fizeram ele perder a arrogância.","prompt":"Traduzir: 'Baixaram a bola dele / tiraram a arrogância dele.'","explain":"\"코가 납작해지다\" (literalmente \"aplanarse la nariz\") significa ficar humilhado depois de se gabar: o orgulho esmagado."},
+  "trad-86": {"promptNative":"Não presta atenção no que dizem.","prompt":"Traduzir: 'Entra por um ouvido e sai pelo outro.'","explain":"\"한 귀로 듣고 한 귀로 흘리다\" (literalmente \"oír por una oreja y dejarlo salir por la otra\") é exatamente a imagem em português: conselhos que entram e saem."},
+  "trad-87": {"promptNative":"O que a gente diz pode acabar se realizando.","prompt":"Traduzir: 'Cuidado com o que diz — as palavras podem se tornar realidade.'","explain":"\"말이 씨가 된다\" (literalmente \"las palabras se vuelven semillas\") avisa que o que você diz em voz alta pode criar raiz e acontecer, então não dê azar."},
+  "trad-88": {"promptNative":"A notícia corre muito rápido.","prompt":"Traduzir: 'Notícia ruim voa / boato vai longe.'","explain":"\"발 없는 말이 천 리 간다\" (literalmente \"una palabra sin pies viaja mil li\") significa que o boato se espalha longíssimo e rapidíssimo. Trocadilho: 말 é \"palabra\" e também \"caballo\"."},
+  "trad-89": {"promptNative":"Uma desgraça inesperada.","prompt":"Traduzir: 'Um raio caído do céu / um desastre repentino.'","explain":"\"마른하늘에 날벼락\" (literalmente \"un rayo de un cielo despejado\") é um baque que chega sem nenhum aviso: o equivalente coreano de \"un rayo caído del cielo\"."},
+  "trad-90": {"promptNative":"A situação piora cada vez mais.","prompt":"Traduzir: 'De mal a pior / sair da frigideira para cair no fogo.'","explain":"\"갈수록 태산\" (literalmente \"cuanto más avanzas, más grande la montaña\") significa que as coisas pioram quanto mais você insiste."},
+  "trad-91": {"promptNative":"As desgraças se acumulam.","prompt":"Traduzir: 'Para completar / uma desgraça atrás da outra.' (expressão de quatro caracteres)","explain":"\"설상가상\" (雪上加霜, literalmente \"escarcha sobre la nieve\") significa uma desgraça em cima da outra. Seu oposto alegre é 금상첨화."},
+  "trad-92": {"promptNative":"Algo bom que fica ainda melhor.","prompt":"Traduzir: 'A cereja do bolo / o bom feito ainda melhor.' (expressão de quatro caracteres)","explain":"\"금상첨화\" (錦上添花, literalmente \"añadir flores sobre el brocado\") é quando algo já belo ganha um extra: a cereja do bolo."},
+  "trad-93": {"promptNative":"Quanto mais, melhor.","prompt":"Traduzir: 'Quanto mais, melhor.' (expressão de quatro caracteres)","explain":"\"다다익선\" (多多益善, literalmente \"cuanto más, mejor\") significa que uma quantidade maior é sempre bem-vinda."},
+  "trad-94": {"promptNative":"O excesso é tão ruim quanto a falta.","prompt":"Traduzir: 'O excesso é tão ruim quanto a falta.' (expressão de quatro caracteres)","explain":"\"과유불급\" (過猶不及, literalmente \"pasarse es como no llegar\") ensina que o excesso é tão defeituoso quanto a falta: busque o equilíbrio."},
+  "trad-95": {"promptNative":"Quase com toda a certeza.","prompt":"Traduzir: 'Nove em cada dez vezes / o mais provável.' (expressão de quatro caracteres)","explain":"\"십중팔구\" (十中八九, literalmente \"ocho o nueve de cada diez\") significa que algo é muito provável: as chances estão bem a favor."},
+  "trad-96": {"promptNative":"Discutir por diferenças mínimas.","prompt":"Traduzir: 'Uma briga mesquinha entre iguais por diferenças insignificantes.'","explain":"\"도토리 키 재기\" (literalmente \"bellotas midiéndose la altura\") zomba de uma rivalidade inútil entre coisas que são praticamente iguais."},
+  "trad-97": {"promptNative":"Querer o resultado antes da hora.","prompt":"Traduzir: 'Exigir o resultado pronto cedo demais / impaciente sem remédio.'","explain":"\"우물에 가 숭늉 찾는다\" (literalmente \"ir al pozo a pedir té de arroz tostado\") zomba de quem exige o produto pronto onde o processo nem começou: o 숭늉 precisa ferver e cozinhar, não só água do poço."},
+  "trad-98": {"promptNative":"Dar o golpe e depois o consolo.","prompt":"Traduzir: 'Machucar alguém e depois se oferecer para ajudar.'","explain":"\"병 주고 약 준다\" (literalmente \"dar la enfermedad y luego la medicina\") descreve quem causa um dano e depois se mostra gentil ajudando a consertá-lo."},
+  "trad-99": {"promptNative":"Quem menos sabe é quem mais se gaba.","prompt":"Traduzir: 'Barril vazio é o que faz mais barulho.'","explain":"\"빈 수레가 요란하다\" (literalmente \"la carreta vacía hace más ruido\") significa que quem tem menos a oferecer costuma ser quem faz mais barulho."},
+  "trad-100": {"promptNative":"Gente demais estraga o trabalho.","prompt":"Traduzir: 'Cozinheiro demais estraga o caldo.'","explain":"\"사공이 많으면 배가 산으로 간다\" (literalmente \"con demasiados barqueros, el barco sube a la montaña\") significa que quando todo mundo manda, tudo sai do rumo."},
+  "trad-101": {"promptNative":"Aproveitar o momento oportuno.","prompt":"Traduzir: 'Malhe o ferro enquanto está quente.'","explain":"\"쇠뿔도 단김에 빼라\" (literalmente \"saca el cuerno del buey mientras está caliente\") pede que você aja no impulso do momento antes que ele esfrie."},
+  "trad-102": {"promptNative":"Entre vários, o trabalho rende mais.","prompt":"Traduzir: 'Muitas mãos aliviam o trabalho.'","explain":"\"백지장도 맞들면 낫다\" (literalmente \"hasta una hoja de papel pesa menos si dos la levantan\") significa que qualquer tarefa fica mais fácil com ajuda, por mais leve que seja."},
+  "trad-103": {"promptNative":"O que é dos outros sempre parece melhor.","prompt":"Traduzir: 'A galinha do vizinho sempre põe ovos maiores.'","explain":"\"남의 떡이 더 커 보인다\" (literalmente \"el pastel de arroz ajeno parece más grande\") capta aquela vontade de invejar o que os outros têm."},
+  "trad-104": {"promptNative":"Já tenho problemas demais meus.","prompt":"Traduzir: 'Tenho problemas demais para ajudar você agora.'","explain":"\"내 코가 석 자\" (literalmente \"mi propia nariz mide tres pies\") significa que estou tão afundado nos meus próprios problemas que não consigo ajudar com os seus."},
+  "trad-105": {"promptNative":"Contentar-se com um substituto.","prompt":"Traduzir: 'Um substituto improvisado — quem não tem cão caça com gato.'","explain":"\"꿩 대신 닭\" (literalmente \"un pollo en vez de un faisán\") significa se contentar com um substituto inferior mas útil quando falta o ideal."},
+  "trad-106": {"promptNative":"A traição veio de quem menos esperava.","prompt":"Traduzir: 'Traído pela pessoa em quem você confiava.'","explain":"\"믿는 도끼에 발등 찍힌다\" (literalmente \"que te golpee el pie el hacha en la que confiabas\") é a dor de ser traído por alguém em quem você confiava totalmente."},
+  "trad-107": {"promptNative":"Elogios com intenção de enganar.","prompt":"Traduzir: 'Palavras doces e melosas para enganar.' (expressão de quatro caracteres)","explain":"\"감언이설\" (甘言利說, literalmente \"palabras dulces y discurso ventajoso\") é uma fala bajuladora e boa demais para ser verdade, feita para enganar."},
+  "trad-108": {"promptNative":"Elogiar a si mesmo.","prompt":"Traduzir: 'Se autoelogiar / se gabar.' (expressão de quatro caracteres)","explain":"\"자화자찬\" (自畵自讚, literalmente \"alabar el propio cuadro\") significa se gabar do próprio trabalho ou das próprias qualidades."},
+  "trad-109": {"promptNative":"Alguém habilidoso em tudo.","prompt":"Traduzir: 'Um faz-tudo / bom para tudo.' (expressão de quatro caracteres)","explain":"\"팔방미인\" (八方美人, literalmente \"una belleza vista desde las ocho direcciones\") elogia quem se destaca em muitas áreas: bom em tudo, de qualquer ângulo."},
+  "trad-110": {"promptNative":"Considerar o ponto de vista do outro.","prompt":"Traduzir: 'Coloque-se no lugar do outro.' (expressão de quatro caracteres)","explain":"\"역지사지\" (易地思之, literalmente \"cambiar de lugar y pensarlo\") pede que você se coloque no lugar do outro e veja as coisas do lado dele."},
+  "trad-111": {"promptNative":"Outro se beneficia da briga alheia.","prompt":"Traduzir: 'Um terceiro leva vantagem enquanto dois brigam.' (expressão de quatro caracteres)","explain":"\"어부지리\" (漁夫之利, literalmente \"la ganancia del pescador\") vem de uma fábula: um marisco e uma narceja ficam presos um ao outro e o pescador leva os dois. É o que um terceiro ganha com o conflito alheio."},
+  "trad-112": {"promptNative":"Os fracos pagam pelas brigas dos poderosos.","prompt":"Traduzir: 'Quando os elefantes brigam, quem sofre é o capim.'","explain":"\"고래 싸움에 새우 등 터진다\" (literalmente \"en la pelea de ballenas, se revienta el lomo del camarón\") significa que o fraco sai machucado quando os poderosos se chocam."},
+  "trad-113": {"promptNative":"É impossível conhecer alguém por completo.","prompt":"Traduzir: 'Dá para medir a água funda, mas nunca o coração de uma pessoa.'","explain":"\"열 길 물속은 알아도 한 길 사람 속은 모른다\" (literalmente \"puedes sondear diez brazas de agua pero no una braza de una persona\") significa que o coração humano é mais insondável que o mar mais profundo."},
+  "trad-114": {"promptNative":"Agir com cautela e verificar tudo.","prompt":"Traduzir: 'Antes de atravessar, teste até a ponte de pedra.'","explain":"\"돌다리도 두들겨 보고 건너라\" (literalmente \"golpea incluso el puente de piedra antes de cruzarlo\") aconselha prudência: confira até o que parece totalmente seguro."},
+  "trad-115": {"promptNative":"As faltas pequenas viram grandes.","prompt":"Traduzir: 'Quem rouba uma agulha acaba roubando um boi.'","explain":"\"바늘 도둑이 소도둑 된다\" (literalmente \"el ladrón de agujas se hace ladrón de vacas\") avisa que pequenos delitos não corrigidos viram crimes graves."},
+  "trad-116": {"promptNative":"Os de cima devem dar o exemplo.","prompt":"Traduzir: 'Se a água de cima é limpa, a de baixo também será.'","explain":"\"윗물이 맑아야 아랫물이 맑다\" (literalmente \"el agua de arriba debe estar limpia para que la de abajo lo esté\") significa que os líderes devem ser retos, porque os de baixo seguem o exemplo deles."},
+  "trad-117": {"promptNative":"Sempre há quem te supere.","prompt":"Traduzir: 'Por melhor que você seja, sempre há alguém melhor.'","explain":"\"뛰는 놈 위에 나는 놈 있다\" (literalmente \"por encima del que corre, está el que vuela\") é um lembrete humilde de que sempre há alguém um nível acima."},
+  "trad-118": {"promptNative":"Um baita susto te deixa precavido.","prompt":"Traduzir: 'Gato escaldado tem medo de água fria.'","explain":"\"자라 보고 놀란 가슴 솥뚜껑 보고 놀란다\" (literalmente \"el corazón asustado por una tortuga se asusta también con la tapa de una olla\") significa que, depois de um susto, até algo inofensivo parecido assusta você."},
+  "trad-119": {"promptNative":"O aluno vai mais longe que o mestre.","prompt":"Traduzir: 'O discípulo supera o mestre.' (expressão de quatro caracteres)","explain":"\"청출어람\" (靑出於藍, literalmente \"el azul sale del índigo, pero es más azul que el índigo\") celebra o discípulo que supera o mestre."},
+  "trad-120": {"promptNative":"O culpado acusa o inocente.","prompt":"Traduzir: 'O culpado se vira contra a vítima / o sujo falando do mal lavado.' (expressão de quatro caracteres)","explain":"\"적반하장\" (賊反荷杖, literalmente \"el ladrón, al contrario, levanta el palo\") é quando o culpado, longe de se desculpar, culpa a vítima com raiva."},
+  "trad-121": {"promptNative":"Um argumento sem pé nem cabeça.","prompt":"Traduzir: 'Uma afirmação totalmente ilógica e sem sentido.' (expressão de quatro caracteres)","explain":"\"어불성설\" (語不成說, literalmente \"palabras que no forman un discurso\") qualifica um argumento como algo que não faz nenhum sentido lógico."},
+  "trad-122": {"promptNative":"Aparenta uma coisa e pensa outra.","prompt":"Traduzir: 'De duas caras — o trato aparente difere da verdadeira intenção.' (expressão de quatro caracteres)","explain":"\"표리부동\" (表裏不同, literalmente \"el exterior y el interior no coinciden\") descreve um hipócrita cuja simpatia superficial esconde outras intenções. Seu oposto virtuoso é 언행일치."},
+  "trad-123": {"promptNative":"Abusar com poder emprestado.","prompt":"Traduzir: 'Aproveitar-se da autoridade de um superior para se impor.' (expressão de quatro caracteres)","explain":"\"호가호위\" (狐假虎威, literalmente \"el zorro toma prestada la fiereza del tigre\") vem de uma fábula: a raposa se exibe usando o tigre que caminha atrás dela. É abusar com poder emprestado."},
+  "trad-124": {"promptNative":"Exagerar algo insignificante.","prompt":"Traduzir: 'Fazer tempestade em copo d'água — puro exagero.' (expressão de quatro caracteres)","explain":"\"침소봉대\" (針小棒大, literalmente \"algo del tamaño de una aguja agrandado al de un palo\") significa exagerar desmedidamente algo minúsculo."},
+  "trad-125": {"promptNative":"Não fazer ideia do que está acontecendo.","prompt":"Traduzir: 'Completamente às cegas — perdido numa névoa densa.' (expressão de quatro caracteres)","explain":"\"오리무중\" (五里霧中, literalmente \"en una niebla de cinco li de espesor\") descreve uma situação tão nebulosa que você não faz ideia do que está acontecendo nem para onde vai."},
+  "trad-126": {"promptNative":"Entre a cruz e a espada.","prompt":"Traduzir: 'Preso num dilema — faça o que fizer, você sai perdendo.' (expressão de quatro caracteres)","explain":"\"진퇴양난\" (進退兩難, literalmente \"tanto avanzar como retroceder es difícil\") é ficar preso entre duas opções ruins sem boa saída."},
+  "fvocab-0": {"promptNative":"'저 (jeo)' significa...","options":["eu/mim (formal)","aí (perto de você)","aqui","não"],"explain":"'저 (jeo)' significa eu/mim (cortês)."},
+  "fvocab-1": {"prompt":"'eu/mim (informal)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'eu/mim (informal)' em coreano?","explain":"'I/me (casual)' se diz '나 (na)'."},
+  "fvocab-2": {"promptNative":"'너 (neo)' significa...","options":["você (informal)","não","aqui","por que"],"explain":"'너 (neo)' significa você (casual)."},
+  "fvocab-3": {"prompt":"'nós/nosso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'nós/nosso' em coreano?","explain":"'we/our' se diz '우리 (uri)'."},
+  "fvocab-4": {"promptNative":"'이거 (igeo)' significa...","options":["isto (coisa)","quando","o que","eu/mim (formal)"],"explain":"'이거 (igeo)' significa isto (coisa)."},
+  "fvocab-5": {"prompt":"'isso (perto de você)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'isso (perto de você)' em coreano?","explain":"'that (near you)' se diz '그거 (geugeo)'."},
+  "fvocab-6": {"promptNative":"'저거 (jeogeo)' significa...","options":["aquilo (lá)","o que","lá","quem"],"explain":"'저거 (jeogeo)' significa aquilo (lá longe)."},
+  "fvocab-7": {"prompt":"'aqui', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'aqui' em coreano?","explain":"'here' se diz '여기 (yeogi)'."},
+  "fvocab-8": {"promptNative":"'거기 (geogi)' significa...","options":["aí (perto de você)","você (informal)","onde","sim (formal)"],"explain":"'거기 (geogi)' significa aí (perto de você)."},
+  "fvocab-9": {"prompt":"'lá', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'lá' em coreano?","explain":"'over there' se diz '저기 (jeogi)'."},
+  "fvocab-10": {"promptNative":"'뭐 (mwo)' significa...","options":["o que","quem","você (informal)","aquilo (lá)"],"explain":"'뭐 (mwo)' significa o quê."},
+  "fvocab-11": {"prompt":"'quem', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'quem' em coreano?","explain":"'who' se diz '누구 (nugu)'."},
+  "fvocab-12": {"promptNative":"'어디 (eodi)' significa...","options":["onde","eu/mim (informal)","isso (perto de você)","o que"],"explain":"'어디 (eodi)' significa onde."},
+  "fvocab-13": {"prompt":"'quando', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'quando' em coreano?","explain":"'when' se diz '언제 (eonje)'."},
+  "fvocab-14": {"promptNative":"'왜 (wae)' significa...","options":["por que","não","quantos/qual (número)","isso (perto de você)"],"explain":"'왜 (wae)' significa por que."},
+  "fvocab-15": {"prompt":"'como', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'como' em coreano?","explain":"'how' se diz '어떻게 (eotteoke)'."},
+  "fvocab-16": {"promptNative":"'몇 (myeot)' significa...","options":["quantos/qual (número)","não","aqui","o que"],"explain":"'몇 (myeot)' significa quantos/qual (número)."},
+  "fvocab-17": {"prompt":"'não', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'não' em coreano?","explain":"'no' se diz '아니요 (aniyo)'."},
+  "fvocab-18": {"promptNative":"'예 (ye)' significa...","options":["sim (formal)","isso (perto de você)","eu/mim (informal)","quando"],"explain":"'예 (ye)' significa sim (formal)."},
+  "fvocab-19": {"prompt":"'pessoa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'pessoa' em coreano?","explain":"'person' se diz '사람 (saram)'."},
+  "fvocab-20": {"promptNative":"'집 (jip)' significa...","options":["casa/lar","chá; carro (duas palavras, mesmo som)","livro","nome"],"explain":"'집 (jip)' significa casa/lar."},
+  "fvocab-21": {"prompt":"'estudante', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estudante' em coreano?","explain":"'student' se diz '학생 (haksaeng)'."},
+  "fvocab-22": {"promptNative":"'책 (chaek)' significa...","options":["livro","carne","pão","chá; carro (duas palavras, mesmo som)"],"explain":"'책 (chaek)' significa livro."},
+  "fvocab-23": {"prompt":"'café', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'café' em coreano?","explain":"'coffee' se diz '커피 (keopi)'."},
+  "fvocab-24": {"promptNative":"'차 (cha)' significa...","options":["chá; carro (duas palavras, mesmo som)","leite","cachorro","estudante"],"explain":"'차 (cha)' significa chá; carro (duas palavras, mesmo som)."},
+  "fvocab-25": {"prompt":"'leite', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'leite' em coreano?","explain":"'milk' se diz '우유 (uyu)'."},
+  "fvocab-26": {"promptNative":"'빵 (ppang)' significa...","options":["pão","amanhã","livro","cachorro"],"explain":"'빵 (ppang)' significa pão."},
+  "fvocab-27": {"prompt":"'carne', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'carne' em coreano?","explain":"'meat' se diz '고기 (gogi)'."},
+  "fvocab-28": {"promptNative":"'과일 (gwail)' significa...","options":["fruta","chá; carro (duas palavras, mesmo som)","casa/lar","mão"],"explain":"'과일 (gwail)' significa fruta."},
+  "fvocab-29": {"prompt":"'tempo/hora', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'tempo/hora' em coreano?","explain":"'time/hour' se diz '시간 (sigan)'."},
+  "fvocab-30": {"promptNative":"'오늘 (oneul)' significa...","options":["hoje","pessoa","tempo/hora","chá; carro (duas palavras, mesmo som)"],"explain":"'오늘 (oneul)' significa hoje."},
+  "fvocab-31": {"prompt":"'amanhã', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'amanhã' em coreano?","explain":"'tomorrow' se diz '내일 (naeil)'."},
+  "fvocab-32": {"promptNative":"'어제 (eoje)' significa...","options":["ontem","hoje","dinheiro","cabeça/cabelo"],"explain":"'어제 (eoje)' significa ontem."},
+  "fvocab-33": {"prompt":"'agora', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'agora' em coreano?","explain":"'now' se diz '지금 (jigeum)'."},
+  "fvocab-34": {"promptNative":"'이름 (ireum)' significa...","options":["nome","café","fruta","hoje"],"explain":"'이름 (ireum)' significa nome."},
+  "fvocab-35": {"prompt":"'gato', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'gato' em coreano?","explain":"'cat' se diz '고양이 (goyangi)'."},
+  "fvocab-36": {"promptNative":"'개 (gae)' significa...","options":["cachorro","estudante","fruta","pão"],"explain":"'개 (gae)' significa cachorro."},
+  "fvocab-37": {"prompt":"'mão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'mão' em coreano?","explain":"'hand' se diz '손 (son)'."},
+  "fvocab-38": {"promptNative":"'발 (bal)' significa...","options":["pé","fruta","tempo/hora","pão"],"explain":"'발 (bal)' significa pé."},
+  "fvocab-39": {"prompt":"'cabeça/cabelo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'cabeça/cabelo' em coreano?","explain":"'head/hair' se diz '머리 (meori)'."},
+  "fvocab-40": {"promptNative":"'입 (ip)' significa...","options":["boca","café","gato","nome"],"explain":"'입 (ip)' significa boca."},
+  "fvocab-41": {"prompt":"'dinheiro', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'dinheiro' em coreano?","explain":"'money' se diz '돈 (don)'."},
+  "fvocab-42": {"promptNative":"'하다 (hada)' significa...","options":["fazer","escutar/ouvir","falar/dizer","vir"],"explain":"'하다 (hada)' significa fazer."},
+  "fvocab-43": {"prompt":"'ir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ir' em coreano?","explain":"'to go' se diz '가다 (gada)'."},
+  "fvocab-44": {"promptNative":"'오다 (oda)' significa...","options":["vir","falar/dizer","dormir","beber"],"explain":"'오다 (oda)' significa vir."},
+  "fvocab-45": {"prompt":"'comer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'comer' em coreano?","explain":"'to eat' se diz '먹다 (meokda)'."},
+  "fvocab-46": {"promptNative":"'마시다 (masida)' significa...","options":["beber","falar/dizer","comer","fazer"],"explain":"'마시다 (masida)' significa beber."},
+  "fvocab-47": {"prompt":"'ver/olhar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ver/olhar' em coreano?","explain":"'to see/watch' se diz '보다 (boda)'."},
+  "fvocab-48": {"promptNative":"'듣다 (deutda)' significa...","options":["escutar/ouvir","ler","vir","saber"],"explain":"'듣다 (deutda)' significa ouvir/escutar."},
+  "fvocab-49": {"prompt":"'falar/dizer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'falar/dizer' em coreano?","explain":"'to speak/say' se diz '말하다 (malhada)'."},
+  "fvocab-50": {"promptNative":"'읽다 (ikda)' significa...","options":["ler","comprar","fazer","vir"],"explain":"'읽다 (ikda)' significa ler."},
+  "fvocab-51": {"prompt":"'escrever; usar (mesma palavra)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'escrever; usar (mesma palavra)' em coreano?","explain":"'to write; to use (same word)' se diz '쓰다 (sseuda)'."},
+  "fvocab-52": {"promptNative":"'사다 (sada)' significa...","options":["comprar","ver/olhar","dar","escrever; usar (mesma palavra)"],"explain":"'사다 (sada)' significa comprar."},
+  "fvocab-53": {"prompt":"'dormir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'dormir' em coreano?","explain":"'to sleep' se diz '자다 (jada)'."},
+  "fvocab-54": {"promptNative":"'주다 (juda)' significa...","options":["dar","vir","ver/olhar","fazer"],"explain":"'주다 (juda)' significa dar."},
+  "fvocab-55": {"prompt":"'saber', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'saber' em coreano?","explain":"'to know' se diz '알다 (alda)'."},
+  "fvocab-56": {"promptNative":"'크다 (keuda)' significa...","options":["ser grande","estar delicioso","ser muito/muitos","ser caro"],"explain":"'크다 (keuda)' significa ser grande."},
+  "fvocab-57": {"prompt":"'ser pequeno', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser pequeno' em coreano?","explain":"'to be small' se diz '작다 (jakda)'."},
+  "fvocab-58": {"promptNative":"'많다 (manta)' significa...","options":["ser muito/muitos","ser bom","ser pequeno","ser caro"],"explain":"'많다 (manta)' significa ser muito/muitos."},
+  "fvocab-59": {"prompt":"'ser bom', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser bom' em coreano?","explain":"'to be good' se diz '좋다 (jota)'."},
+  "fvocab-60": {"promptNative":"'나쁘다 (nappeuda)' significa...","options":["ser ruim","ser caro","estar delicioso","ser bom"],"explain":"'나쁘다 (nappeuda)' significa ser ruim."},
+  "fvocab-61": {"prompt":"'ser caro', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser caro' em coreano?","explain":"'to be expensive' se diz '비싸다 (bissada)'."},
+  "fvocab-62": {"promptNative":"'맛있다 (masitda)' significa...","options":["estar delicioso","ser caro","ser bom","ser muito/muitos"],"explain":"'맛있다 (masitda)' significa ser gostoso."},
+  "fvocab-63": {"prompt":"'bem', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'bem' em coreano?","explain":"'well' se diz '잘 (jal)'."},
+  "fvocab-64": {"promptNative":"'많이 (mani)' significa...","options":["muito","um pouco","demais/muito","bem"],"explain":"'많이 (mani)' significa muito."},
+  "fvocab-65": {"prompt":"'um pouco', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'um pouco' em coreano?","explain":"'a little' se diz '조금 (jogeum)'."},
+  "fvocab-66": {"promptNative":"'너무 (neomu)' significa...","options":["demais/muito","agora","um pouco","bem"],"explain":"'너무 (neomu)' significa demais/tão (muito)."},
+  "fvocab-67": {"prompt":"'Sr./Sra. (sufixo de nome)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'Sr./Sra. (sufixo de nome)' em coreano?","explain":"'Mr./Ms. (name suffix)' se diz '씨 (ssi)'."},
+  "fvocab-68": {"promptNative":"'분 (bun)' significa...","options":["pessoa (classificador honorífico)","três (número sino)","classificador para pessoas","um (número nativo)"],"explain":"'분 (bun)' significa pessoa (classificador honorífico)."},
+  "fvocab-69": {"prompt":"'classificador para pessoas', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'classificador para pessoas' em coreano?","explain":"'counter for people' se diz '명 (myeong)'."},
+  "fvocab-70": {"promptNative":"'마리 (mari)' significa...","options":["classificador para animais","um (número nativo)","pessoa (classificador honorífico)","três (número sino)"],"explain":"'마리 (mari)' significa classificador para animais."},
+  "fvocab-71": {"prompt":"'classificador para idade (anos)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'classificador para idade (anos)' em coreano?","explain":"'counter for age (years old)' se diz '살 (sal)'."},
+  "fvocab-72": {"promptNative":"'번 (beon)' significa...","options":["classificador para vezes/número","pessoa (classificador honorífico)","Sr./Sra. (sufixo de nome)","um (número nativo)"],"explain":"'번 (beon)' significa classificador para vezes/número."},
+  "fvocab-73": {"prompt":"'um (número nativo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'um (número nativo)' em coreano?","explain":"'one (native number)' se diz '하나 (hana)'."},
+  "fvocab-74": {"promptNative":"'둘 (dul)' significa...","options":["dois (número nativo)","três (número nativo)","classificador para animais","um (número nativo)"],"explain":"'둘 (dul)' significa dois (número nativo)."},
+  "fvocab-75": {"prompt":"'três (número nativo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'três (número nativo)' em coreano?","explain":"'three (native number)' se diz '셋 (set)'."},
+  "fvocab-76": {"promptNative":"'이 (i)' significa...","options":["dois (número sino)","pessoa (classificador honorífico)","classificador para idade (anos)","Sr./Sra. (sufixo de nome)"],"explain":"'이 (i)' significa dois (número sino-coreano)."},
+  "fvocab-77": {"prompt":"'três (número sino)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'três (número sino)' em coreano?","explain":"'three (Sino number)' se diz '삼 (sam)'."},
+  "fvocab-78": {"promptNative":"'엄마 (eomma)' significa...","options":["mãe","manhã; café da manhã","criança","metrô"],"explain":"'엄마 (eomma)' significa mãe."},
+  "fvocab-79": {"prompt":"'pai', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'pai' em coreano?","explain":"'dad' se diz '아빠 (appa)'."},
+  "fvocab-80": {"promptNative":"'형 (hyeong)' significa...","options":["irmão mais velho (de um homem)","papel","caminho/rua","almoço/meio-dia"],"explain":"'형 (hyeong)' significa irmão mais velho (de um homem)."},
+  "fvocab-81": {"prompt":"'irmão mais velho (de uma mulher)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'irmão mais velho (de uma mulher)' em coreano?","explain":"'older brother (of a female)' se diz '오빠 (oppa)'."},
+  "fvocab-82": {"promptNative":"'누나 (nuna)' significa...","options":["irmã mais velha (de um homem)","hora certa (classificador de hora)","país","restaurante"],"explain":"'누나 (nuna)' significa irmã mais velha (de um homem)."},
+  "fvocab-83": {"prompt":"'irmã mais velha (de uma mulher)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'irmã mais velha (de uma mulher)' em coreano?","explain":"'older sister (of a female)' se diz '언니 (eonni)'."},
+  "fvocab-84": {"promptNative":"'동생 (dongsaeng)' significa...","options":["irmão mais novo","país","chapéu/boné","sapatos/calçado"],"explain":"'동생 (dongsaeng)' significa irmão/irmã mais novo(a)."},
+  "fvocab-85": {"prompt":"'criança', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'criança' em coreano?","explain":"'child' se diz '아이 (ai)'."},
+  "fvocab-86": {"promptNative":"'여자 (yeoja)' significa...","options":["mulher","mercado; prefeito (mesmo som)","telefone/ligação","irmão mais velho (de um homem)"],"explain":"'여자 (yeoja)' significa mulher."},
+  "fvocab-87": {"prompt":"'homem', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'homem' em coreano?","explain":"'man' se diz '남자 (namja)'."},
+  "fvocab-88": {"promptNative":"'나라 (nara)' significa...","options":["país","porta","cadeira","cama"],"explain":"'나라 (nara)' significa país."},
+  "fvocab-89": {"prompt":"'cidade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'cidade' em coreano?","explain":"'city' se diz '도시 (dosi)'."},
+  "fvocab-90": {"promptNative":"'세상 (sesang)' significa...","options":["mundo","cadeira","restaurante","guarda-chuva"],"explain":"'세상 (sesang)' significa mundo."},
+  "fvocab-91": {"prompt":"'manhã; café da manhã', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'manhã; café da manhã' em coreano?","explain":"'morning; breakfast' se diz '아침 (achim)'."},
+  "fvocab-92": {"promptNative":"'점심 (jeomsim)' significa...","options":["almoço/meio-dia","mercado; prefeito (mesmo som)","restaurante","avião"],"explain":"'점심 (jeomsim)' significa almoço/meio-dia."},
+  "fvocab-93": {"prompt":"'fim de tarde/noite; jantar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'fim de tarde/noite; jantar' em coreano?","explain":"'evening; dinner' se diz '저녁 (jeonyeok)'."},
+  "fvocab-94": {"promptNative":"'밤 (bam)' significa...","options":["noite; castanha (mesmo som)","cidade","mulher","papel"],"explain":"'밤 (bam)' significa noite; castanha (mesmo som)."},
+  "fvocab-95": {"prompt":"'semana', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'semana' em coreano?","explain":"'week' se diz '주 (ju)'."},
+  "fvocab-96": {"promptNative":"'달 (dal)' significa...","options":["mês; lua (mesma palavra)","fim de tarde/noite; jantar","prato","restaurante"],"explain":"'달 (dal)' significa mês; lua (mesma palavra)."},
+  "fvocab-97": {"prompt":"'ano (classificador)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ano (classificador)' em coreano?","explain":"'year (counter)' se diz '년 (nyeon)'."},
+  "fvocab-98": {"promptNative":"'시 (si)' significa...","options":["hora certa (classificador de hora)","avião","semana","mãe"],"explain":"'시 (si)' significa hora (classificador de horas)."},
+  "fvocab-99": {"prompt":"'escola', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'escola' em coreano?","explain":"'school' se diz '학교 (hakgyo)'."},
+  "fvocab-100": {"promptNative":"'회사 (hoesa)' significa...","options":["empresa/escritório","semana","mulher","irmão mais velho (de um homem)"],"explain":"'회사 (hoesa)' significa empresa/escritório."},
+  "fvocab-101": {"prompt":"'hospital/clínica', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'hospital/clínica' em coreano?","explain":"'hospital/clinic' se diz '병원 (byeongwon)'."},
+  "fvocab-102": {"promptNative":"'가게 (gage)' significa...","options":["loja","lápis","relógio","óculos"],"explain":"'가게 (gage)' significa loja."},
+  "fvocab-103": {"prompt":"'restaurante', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'restaurante' em coreano?","explain":"'restaurant' se diz '식당 (sikdang)'."},
+  "fvocab-104": {"promptNative":"'방 (bang)' significa...","options":["quarto/cômodo","lápis","carteira","relógio"],"explain":"'방 (bang)' significa quarto."},
+  "fvocab-105": {"prompt":"'porta', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'porta' em coreano?","explain":"'door/gate' se diz '문 (mun)'."},
+  "fvocab-106": {"promptNative":"'길 (gil)' significa...","options":["caminho/rua","trem","semana","bolsa/mochila"],"explain":"'길 (gil)' significa estrada/caminho/rua."},
+  "fvocab-107": {"prompt":"'ônibus', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ônibus' em coreano?","explain":"'bus' se diz '버스 (beoseu)'."},
+  "fvocab-108": {"promptNative":"'지하철 (jihacheol)' significa...","options":["metrô","cama","cadeira","prato"],"explain":"'지하철 (jihacheol)' significa metrô."},
+  "fvocab-109": {"prompt":"'trem', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'trem' em coreano?","explain":"'train' se diz '기차 (gicha)'."},
+  "fvocab-110": {"promptNative":"'비행기 (bihaenggi)' significa...","options":["avião","caminho/rua","irmão mais novo","manhã; café da manhã"],"explain":"'비행기 (bihaenggi)' significa avião."},
+  "fvocab-111": {"prompt":"'telefone/ligação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'telefone/ligação' em coreano?","explain":"'telephone/phone call' se diz '전화 (jeonhwa)'."},
+  "fvocab-112": {"promptNative":"'음식 (eumsik)' significa...","options":["comida (gastronomia)","carteira","pai","chapéu/boné"],"explain":"'음식 (eumsik)' significa comida (culinária)."},
+  "fvocab-113": {"prompt":"'kimchi', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'kimchi' em coreano?","explain":"'kimchi' se diz '김치 (gimchi)'."},
+  "fvocab-114": {"promptNative":"'시장 (sijang)' significa...","options":["mercado; prefeito (mesmo som)","chapéu/boné","ano (classificador)","manhã; café da manhã"],"explain":"'시장 (sijang)' significa mercado; prefeito (mesmo som)."},
+  "fvocab-115": {"prompt":"'clima/tempo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'clima/tempo' em coreano?","explain":"'weather' se diz '날씨 (nalssi)'."},
+  "fvocab-116": {"promptNative":"'일하다 (ilhada)' significa...","options":["trabalhar","parar/deter-se","iniciar/começar","gostar"],"explain":"'일하다 (ilhada)' significa trabalhar."},
+  "fvocab-117": {"prompt":"'estudar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estudar' em coreano?","explain":"'to study' se diz '공부하다 (gongbuhada)'."},
+  "fvocab-118": {"promptNative":"'좋아하다 (joahada)' significa...","options":["gostar","estudar","chorar","não saber"],"explain":"'좋아하다 (joahada)' significa gostar (de)."},
+  "fvocab-119": {"prompt":"'detestar/odiar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'detestar/odiar' em coreano?","explain":"'to dislike/hate' se diz '싫어하다 (sireohada)'."},
+  "fvocab-120": {"promptNative":"'만나다 (mannada)' significa...","options":["encontrar-se","morrer","gostar","morar/residir"],"explain":"'만나다 (mannada)' significa encontrar (alguém)."},
+  "fvocab-121": {"prompt":"'esperar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'esperar' em coreano?","explain":"'to wait' se diz '기다리다 (gidarida)'."},
+  "fvocab-122": {"promptNative":"'시작하다 (sijakhada)' significa...","options":["iniciar/começar","brincar/passar o tempo","estudar","parar/deter-se"],"explain":"'시작하다 (sijakhada)' significa começar/iniciar."},
+  "fvocab-123": {"prompt":"'terminar/acabar (intransitivo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'terminar/acabar (intransitivo)' em coreano?","explain":"'to end/finish (intransitive)' se diz '끝나다 (kkeunnada)'."},
+  "fvocab-124": {"promptNative":"'살다 (salda)' significa...","options":["morar/residir","parar/deter-se","receber","brincar/passar o tempo"],"explain":"'살다 (salda)' significa morar/residir."},
+  "fvocab-125": {"prompt":"'morrer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'morrer' em coreano?","explain":"'to die' se diz '죽다 (jukda)'."},
+  "fvocab-126": {"promptNative":"'사용하다 (sayonghada)' significa...","options":["usar","terminar/acabar (intransitivo)","gostar","morar/residir"],"explain":"'사용하다 (sayonghada)' significa usar."},
+  "fvocab-127": {"prompt":"'levantar-se/ocorrer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'levantar-se/ocorrer' em coreano?","explain":"'to get up/happen' se diz '일어나다 (ireonada)'."},
+  "fvocab-128": {"promptNative":"'앉다 (anda)' significa...","options":["sentar-se","levantar-se/ocorrer","rir/sorrir","morar/residir"],"explain":"'앉다 (anda)' significa sentar-se."},
+  "fvocab-129": {"prompt":"'parar/deter-se', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'parar/deter-se' em coreano?","explain":"'to stand/stop' se diz '서다 (seoda)'."},
+  "fvocab-130": {"promptNative":"'받다 (batda)' significa...","options":["receber","brincar/passar o tempo","estudar","chorar"],"explain":"'받다 (batda)' significa receber/ganhar."},
+  "fvocab-131": {"prompt":"'não saber', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'não saber' em coreano?","explain":"'to not know' se diz '모르다 (moreuda)'."},
+  "fvocab-132": {"promptNative":"'웃다 (utda)' significa...","options":["rir/sorrir","gostar","esperar","iniciar/começar"],"explain":"'웃다 (utda)' significa rir/sorrir."},
+  "fvocab-133": {"prompt":"'chorar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'chorar' em coreano?","explain":"'to cry' se diz '울다 (ulda)'."},
+  "fvocab-134": {"promptNative":"'놀다 (nolda)' significa...","options":["brincar/passar o tempo","esperar","levantar-se/ocorrer","não saber"],"explain":"'놀다 (nolda)' significa brincar/passar o tempo."},
+  "fvocab-135": {"prompt":"'ser bonito', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser bonito' em coreano?","explain":"'to be pretty' se diz '예쁘다 (yeppeuda)'."},
+  "fvocab-136": {"promptNative":"'귀엽다 (gwiyeopda)' significa...","options":["ser terno","ser diferente","fazer calor (clima)","ser barato"],"explain":"'귀엽다 (gwiyeopda)' significa ser fofo."},
+  "fvocab-137": {"prompt":"'ser divertido/interessante', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser divertido/interessante' em coreano?","explain":"'to be fun/interesting' se diz '재미있다 (jaemiitda)'."},
+  "fvocab-138": {"promptNative":"'맛없다 (madeopda)' significa...","options":["estar sem graça/ter gosto ruim","ser diferente","ser comprido","ser curto"],"explain":"'맛없다 (madeopda)' significa ser sem gosto/ruim de sabor."},
+  "fvocab-139": {"prompt":"'ser barato', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser barato' em coreano?","explain":"'to be cheap' se diz '싸다 (ssada)'."},
+  "fvocab-140": {"promptNative":"'덥다 (deopda)' significa...","options":["fazer calor (clima)","ser lento","ser barato","ser baixo"],"explain":"'덥다 (deopda)' significa estar quente (clima)."},
+  "fvocab-141": {"prompt":"'fazer frio (clima)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'fazer frio (clima)' em coreano?","explain":"'to be cold (weather)' se diz '춥다 (chupda)'."},
+  "fvocab-142": {"promptNative":"'아프다 (apeuda)' significa...","options":["estar doente/doer","ser alto (coisas)","ser fácil","ser terno"],"explain":"'아프다 (apeuda)' significa estar doente/doer/sentir dor."},
+  "fvocab-143": {"prompt":"'estar ocupado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estar ocupado' em coreano?","explain":"'to be busy' se diz '바쁘다 (bappeuda)'."},
+  "fvocab-144": {"promptNative":"'쉽다 (swipda)' significa...","options":["ser fácil","estar sem graça/ter gosto ruim","estar doente/doer","ser comprido"],"explain":"'쉽다 (swipda)' significa ser fácil."},
+  "fvocab-145": {"prompt":"'ser difícil', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser difícil' em coreano?","explain":"'to be difficult' se diz '어렵다 (eoryeopda)'."},
+  "fvocab-146": {"promptNative":"'같다 (gatda)' significa...","options":["ser igual/parecido","ser baixo","ser comprido","ser rápido"],"explain":"'같다 (gatda)' significa ser igual/parecido."},
+  "fvocab-147": {"prompt":"'ser diferente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser diferente' em coreano?","explain":"'to be different' se diz '다르다 (dareuda)'."},
+  "fvocab-148": {"promptNative":"'빠르다 (ppareuda)' significa...","options":["ser rápido","fazer frio (clima)","ser alto (coisas)","estar doente/doer"],"explain":"'빠르다 (ppareuda)' significa ser rápido."},
+  "fvocab-149": {"prompt":"'ser lento', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser lento' em coreano?","explain":"'to be slow' se diz '느리다 (neurida)'."},
+  "fvocab-150": {"promptNative":"'높다 (nopda)' significa...","options":["ser alto (coisas)","ser barato","ser igual/parecido","ser rápido"],"explain":"'높다 (nopda)' significa ser alto (coisas)."},
+  "fvocab-151": {"prompt":"'ser baixo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser baixo' em coreano?","explain":"'to be low' se diz '낮다 (natda)'."},
+  "fvocab-152": {"promptNative":"'길다 (gilda)' significa...","options":["ser comprido","estar ocupado","ser diferente","fazer frio (clima)"],"explain":"'길다 (gilda)' significa ser comprido."},
+  "fvocab-153": {"prompt":"'ser curto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser curto' em coreano?","explain":"'to be short' se diz '짧다 (jjalda)'."},
+  "fvocab-154": {"promptNative":"'더 (deo)' significa...","options":["mais","ainda","juntos","o mais (superlativo)"],"explain":"'더 (deo)' significa mais."},
+  "fvocab-155": {"prompt":"'o mais (superlativo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'o mais (superlativo)' em coreano?","explain":"'most (superlative)' se diz '가장 (gajang)'."},
+  "fvocab-156": {"promptNative":"'아직 (ajik)' significa...","options":["ainda","juntos","rapidamente/rápido","mais"],"explain":"'아직 (ajik)' significa ainda."},
+  "fvocab-157": {"prompt":"'já', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'já' em coreano?","explain":"'already' se diz '벌써 (beolsseo)'."},
+  "fvocab-158": {"promptNative":"'빨리 (ppalli)' significa...","options":["rapidamente/rápido","de verdade/realmente","o mais (superlativo)","lentamente/devagar"],"explain":"'빨리 (ppalli)' significa rápido/depressa."},
+  "fvocab-159": {"prompt":"'lentamente/devagar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'lentamente/devagar' em coreano?","explain":"'slowly' se diz '천천히 (cheoncheonhi)'."},
+  "fvocab-160": {"promptNative":"'함께 (hamkke)' significa...","options":["juntos","tarde","lentamente/devagar","rapidamente/rápido"],"explain":"'함께 (hamkke)' significa juntos."},
+  "fvocab-161": {"prompt":"'outra vez/de novo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'outra vez/de novo' em coreano?","explain":"'again' se diz '다시 (dasi)'."},
+  "fvocab-162": {"promptNative":"'정말 (jeongmal)' significa...","options":["de verdade/realmente","tarde","cedo","já"],"explain":"'정말 (jeongmal)' significa realmente/de verdade."},
+  "fvocab-163": {"prompt":"'talvez/provavelmente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'talvez/provavelmente' em coreano?","explain":"'maybe/probably' se diz '아마 (ama)'."},
+  "fvocab-164": {"promptNative":"'일찍 (iljjik)' significa...","options":["cedo","juntos","o mais (superlativo)","já"],"explain":"'일찍 (iljjik)' significa cedo."},
+  "fvocab-165": {"prompt":"'tarde', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'tarde' em coreano?","explain":"'late' se diz '늦게 (neutge)'."},
+  "fvocab-166": {"promptNative":"'색깔 (saekkkal)' significa...","options":["cor","telefone/ligação","homem","quarto/cômodo"],"explain":"'색깔 (saekkkal)' significa cor."},
+  "fvocab-167": {"prompt":"'roupa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'roupa' em coreano?","explain":"'clothes/clothing' se diz '옷 (ot)'."},
+  "fvocab-168": {"promptNative":"'신발 (sinbal)' significa...","options":["sapatos/calçado","cor","porta","escola"],"explain":"'신발 (sinbal)' significa sapatos/calçados."},
+  "fvocab-169": {"prompt":"'bolsa/mochila', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'bolsa/mochila' em coreano?","explain":"'bag/backpack' se diz '가방 (gabang)'."},
+  "fvocab-170": {"promptNative":"'모자 (moja)' significa...","options":["chapéu/boné","restaurante","mercado; prefeito (mesmo som)","avião"],"explain":"'모자 (moja)' significa chapéu/boné."},
+  "fvocab-171": {"prompt":"'óculos', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'óculos' em coreano?","explain":"'glasses/eyeglasses' se diz '안경 (angyeong)'."},
+  "fvocab-172": {"promptNative":"'시계 (sigye)' significa...","options":["relógio","avião","hospital/clínica","número/dígito/cifra"],"explain":"'시계 (sigye)' significa relógio."},
+  "fvocab-173": {"prompt":"'guarda-chuva', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'guarda-chuva' em coreano?","explain":"'umbrella' se diz '우산 (usan)'."},
+  "fvocab-174": {"promptNative":"'지갑 (jigap)' significa...","options":["carteira","trem","telefone/ligação","almoço/meio-dia"],"explain":"'지갑 (jigap)' significa carteira."},
+  "fvocab-175": {"prompt":"'cadeira', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'cadeira' em coreano?","explain":"'chair' se diz '의자 (uija)'."},
+  "fvocab-176": {"promptNative":"'책상 (chaeksang)' significa...","options":["escrivaninha","hospital/clínica","restaurante","país"],"explain":"'책상 (chaeksang)' significa escrivaninha."},
+  "fvocab-177": {"prompt":"'cama', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'cama' em coreano?","explain":"'bed' se diz '침대 (chimdae)'."},
+  "fvocab-178": {"promptNative":"'접시 (jeopsi)' significa...","options":["prato","irmão mais velho (de um homem)","papel","aula/lição"],"explain":"'접시 (jeopsi)' significa prato."},
+  "fvocab-179": {"prompt":"'xícara/copo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'xícara/copo' em coreano?","explain":"'cup/glass' se diz '컵 (keop)'."},
+  "fvocab-180": {"promptNative":"'수업 (sueop)' significa...","options":["aula/lição","irmão mais velho (de um homem)","irmão mais novo","carteira"],"explain":"'수업 (sueop)' significa aula."},
+  "fvocab-181": {"prompt":"'papel', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'papel' em coreano?","explain":"'paper' se diz '종이 (jongi)'."},
+  "fvocab-182": {"promptNative":"'연필 (yeonpil)' significa...","options":["lápis","prato","almoço/meio-dia","número/dígito/cifra"],"explain":"'연필 (yeonpil)' significa lápis."},
+  "fvocab-183": {"prompt":"'número/dígito/cifra', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'número/dígito/cifra' em coreano?","explain":"'number/digit/figure' se diz '숫자 (sutja)'."},
+  "fvocab-184": {"promptNative":"'문제 (munje)' significa...","options":["problema; questão (de prova)","preocupação","desenho/quadro","árvore/madeira"],"explain":"'문제 (munje)' significa problema; questão (de prova)."},
+  "fvocab-185": {"prompt":"'pensamento/ideia', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'pensamento/ideia' em coreano?","explain":"'thought/idea' se diz '생각 (saenggak)'."},
+  "fvocab-186": {"promptNative":"'마음 (maeum)' significa...","options":["coração/mente (sentimentos)","resultado","vento; um desejo/esperança (mesmo som)","diferença/lacuna"],"explain":"'마음 (maeum)' significa coração/mente (sentimentos)."},
+  "fvocab-187": {"prompt":"'ânimo/estado de espírito', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ânimo/estado de espírito' em coreano?","explain":"'mood/feeling' se diz '기분 (gibun)'."},
+  "fvocab-188": {"promptNative":"'느낌 (neukkim)' significa...","options":["sensação/impressão","pássaro/ave","tarefa","pensamento/ideia"],"explain":"'느낌 (neukkim)' significa sensação/impressão."},
+  "fvocab-189": {"prompt":"'razão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'razão' em coreano?","explain":"'reason' se diz '이유 (iyu)'."},
+  "fvocab-190": {"promptNative":"'방법 (bangbeop)' significa...","options":["método/maneira","música","relação","passatempo"],"explain":"'방법 (bangbeop)' significa método/maneira."},
+  "fvocab-191": {"prompt":"'palavras/fala; cavalo (mesmo som)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'palavras/fala; cavalo (mesmo som)' em coreano?","explain":"'words/speech; horse (same sound)' se diz '말 (mal)'."},
+  "fvocab-192": {"promptNative":"'소리 (sori)' significa...","options":["som/ruído","riso/um sorriso","personalidade/caráter","problema; questão (de prova)"],"explain":"'소리 (sori)' significa som/barulho."},
+  "fvocab-193": {"prompt":"'história/conversa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'história/conversa' em coreano?","explain":"'story/talk' se diz '이야기 (iyagi)'."},
+  "fvocab-194": {"promptNative":"'그림 (geurim)' significa...","options":["desenho/quadro","promessa/compromisso","palavras/fala; cavalo (mesmo som)","reunião/conferência"],"explain":"'그림 (geurim)' significa quadro/desenho."},
+  "fvocab-195": {"prompt":"'foto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'foto' em coreano?","explain":"'photo' se diz '사진 (sajin)'."},
+  "fvocab-196": {"promptNative":"'노래 (norae)' significa...","options":["canção","música","celular","acompanhamento"],"explain":"'노래 (norae)' significa canção."},
+  "fvocab-197": {"prompt":"'filme', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'filme' em coreano?","explain":"'movie/film' se diz '영화 (yeonghwa)'."},
+  "fvocab-198": {"promptNative":"'음악 (eumak)' significa...","options":["música","assento/lugar","som/ruído","montanha"],"explain":"'음악 (eumak)' significa música."},
+  "fvocab-199": {"prompt":"'exercício/esporte', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'exercício/esporte' em coreano?","explain":"'exercise/sports' se diz '운동 (undong)'."},
+  "fvocab-200": {"promptNative":"'여행 (yeohaeng)' significa...","options":["viagem","erro/equívoco","problema; questão (de prova)","riso/um sorriso"],"explain":"'여행 (yeohaeng)' significa viagem."},
+  "fvocab-201": {"prompt":"'passatempo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'passatempo' em coreano?","explain":"'hobby' se diz '취미 (chwimi)'."},
+  "fvocab-202": {"promptNative":"'계획 (gyehoek)' significa...","options":["plano","erro/equívoco","proximidade/arredores","ânimo/estado de espírito"],"explain":"'계획 (gyehoek)' significa plano."},
+  "fvocab-203": {"prompt":"'promessa/compromisso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'promessa/compromisso' em coreano?","explain":"'promise/appointment' se diz '약속 (yaksok)'."},
+  "fvocab-204": {"promptNative":"'선물 (seonmul)' significa...","options":["presente","vento; um desejo/esperança (mesmo som)","desenho/quadro","cheiro"],"explain":"'선물 (seonmul)' significa presente."},
+  "fvocab-205": {"prompt":"'preocupação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'preocupação' em coreano?","explain":"'worry/concern' se diz '걱정 (geokjeong)'."},
+  "fvocab-206": {"promptNative":"'경험 (gyeongheom)' significa...","options":["experiência","relação","riso/um sorriso","hashi (pauzinhos)"],"explain":"'경험 (gyeongheom)' significa experiência."},
+  "fvocab-207": {"prompt":"'memória/lembrança', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'memória/lembrança' em coreano?","explain":"'memory' se diz '기억 (gieok)'."},
+  "fvocab-208": {"promptNative":"'꿈 (kkum)' significa...","options":["sono","memória/lembrança","riso/um sorriso","pássaro/ave"],"explain":"'꿈 (kkum)' significa sonho."},
+  "fvocab-209": {"prompt":"'hábito/costume', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'hábito/costume' em coreano?","explain":"'habit' se diz '습관 (seupgwan)'."},
+  "fvocab-210": {"promptNative":"'성격 (seonggyeok)' significa...","options":["personalidade/caráter","prédio","rua; distância (mesmo som)","experiência"],"explain":"'성격 (seonggyeok)' significa personalidade/caráter."},
+  "fvocab-211": {"prompt":"'erro/equívoco', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'erro/equívoco' em coreano?","explain":"'mistake/slip' se diz '실수 (silsu)'."},
+  "fvocab-212": {"promptNative":"'결과 (gyeolgwa)' significa...","options":["resultado","proximidade/arredores","plano","verão"],"explain":"'결과 (gyeolgwa)' significa resultado."},
+  "fvocab-213": {"prompt":"'meta/objetivo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'meta/objetivo' em coreano?","explain":"'goal/target' se diz '목표 (mokpyo)'."},
+  "fvocab-214": {"promptNative":"'차이 (chai)' significa...","options":["diferença/lacuna","classe/tipo","pássaro/ave","montanha"],"explain":"'차이 (chai)' significa diferença/distância."},
+  "fvocab-215": {"prompt":"'classe/tipo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'classe/tipo' em coreano?","explain":"'kind/type/sort' se diz '종류 (jongnyu)'."},
+  "fvocab-216": {"promptNative":"'관계 (gwangye)' significa...","options":["relação","celular","problema; questão (de prova)","estação (trem/metrô)"],"explain":"'관계 (gwangye)' significa relacionamento/relação."},
+  "fvocab-217": {"prompt":"'relação; o espaço entre', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'relação; o espaço entre' em coreano?","explain":"'relationship; the space between' se diz '사이 (sai)'."},
+  "fvocab-218": {"promptNative":"'근처 (geuncheo)' significa...","options":["proximidade/arredores","prédio","parque","foto"],"explain":"'근처 (geuncheo)' significa arredores/proximidades."},
+  "fvocab-219": {"prompt":"'rua; distância (mesmo som)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'rua; distância (mesmo som)' em coreano?","explain":"'street; distance (same sound)' se diz '거리 (geori)'."},
+  "fvocab-220": {"promptNative":"'자리 (jari)' significa...","options":["assento/lugar","reunião/conferência","relação; o espaço entre","meta/objetivo"],"explain":"'자리 (jari)' significa assento/lugar."},
+  "fvocab-221": {"prompt":"'aeroporto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'aeroporto' em coreano?","explain":"'airport' se diz '공항 (gonghang)'."},
+  "fvocab-222": {"promptNative":"'역 (yeok)' significa...","options":["estação (trem/metrô)","resultado","pássaro/ave","música"],"explain":"'역 (yeok)' significa estação (de trem/metrô)."},
+  "fvocab-223": {"prompt":"'parque', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'parque' em coreano?","explain":"'park' se diz '공원 (gongwon)'."},
+  "fvocab-224": {"promptNative":"'도서관 (doseogwan)' significa...","options":["biblioteca","método/maneira","pergunta (feita)","reunião/conferência"],"explain":"'도서관 (doseogwan)' significa biblioteca."},
+  "fvocab-225": {"prompt":"'banco (financeiro)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'banco (financeiro)' em coreano?","explain":"'bank (financial)' se diz '은행 (eunhaeng)'."},
+  "fvocab-226": {"promptNative":"'건물 (geonmul)' significa...","options":["prédio","vento; um desejo/esperança (mesmo som)","cheiro","hábito/costume"],"explain":"'건물 (geonmul)' significa prédio."},
+  "fvocab-227": {"prompt":"'computador', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'computador' em coreano?","explain":"'computer' se diz '컴퓨터 (keompyuteo)'."},
+  "fvocab-228": {"promptNative":"'휴대폰 (hyudaepon)' significa...","options":["celular","passatempo","ânimo/estado de espírito","nuvem"],"explain":"'휴대폰 (hyudaepon)' significa celular."},
+  "fvocab-229": {"prompt":"'sopa (caldo claro)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'sopa (caldo claro)' em coreano?","explain":"'soup (clear/broth)' se diz '국 (guk)'."},
+  "fvocab-230": {"promptNative":"'반찬 (banchan)' significa...","options":["acompanhamento","sopa (caldo claro)","celular","assento/lugar"],"explain":"'반찬 (banchan)' significa acompanhamento."},
+  "fvocab-231": {"prompt":"'hashi (pauzinhos)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'hashi (pauzinhos)' em coreano?","explain":"'chopsticks' se diz '젓가락 (jeotgarak)'."},
+  "fvocab-232": {"promptNative":"'회의 (hoeui)' significa...","options":["reunião/conferência","lágrimas","hashi (pauzinhos)","sono"],"explain":"'회의 (hoeui)' significa reunião/conferência."},
+  "fvocab-233": {"prompt":"'tarefa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'tarefa' em coreano?","explain":"'homework' se diz '숙제 (sukje)'."},
+  "fvocab-234": {"promptNative":"'시험 (siheom)' significa...","options":["exame/prova","proximidade/arredores","rio","riso/um sorriso"],"explain":"'시험 (siheom)' significa prova/exame."},
+  "fvocab-235": {"prompt":"'pergunta (feita)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'pergunta (feita)' em coreano?","explain":"'question (asked)' se diz '질문 (jilmun)'."},
+  "fvocab-236": {"promptNative":"'생각하다 (saenggakhada)' significa...","options":["pensar","entrar","ir embora/partir","levar (tempo); ficar preso/pendurado"],"explain":"'생각하다 (saenggakhada)' significa pensar."},
+  "fvocab-237": {"prompt":"'sentir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'sentir' em coreano?","explain":"'to feel' se diz '느끼다 (neukkida)'."},
+  "fvocab-238": {"promptNative":"'준비하다 (junbihada)' significa...","options":["preparar/aprontar-se","embarcar/subir (em)","procurar; encontrar","descer; baixar; (chuva) cair"],"explain":"'준비하다 (junbihada)' significa preparar/se aprontar."},
+  "fvocab-239": {"prompt":"'decidir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'decidir' em coreano?","explain":"'to decide' se diz '결정하다 (gyeoljeonghada)'."},
+  "fvocab-240": {"promptNative":"'설명하다 (seolmyeonghada)' significa...","options":["explicar","abrir","levar (tempo); ficar preso/pendurado","aprender"],"explain":"'설명하다 (seolmyeonghada)' significa explicar."},
+  "fvocab-241": {"prompt":"'entender/compreender', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'entender/compreender' em coreano?","explain":"'to understand' se diz '이해하다 (ihaehada)'."},
+  "fvocab-242": {"promptNative":"'기억하다 (gieokhada)' significa...","options":["lembrar","preparar/aprontar-se","esquecer","aprender"],"explain":"'기억하다 (gieokhada)' significa lembrar."},
+  "fvocab-243": {"prompt":"'esquecer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'esquecer' em coreano?","explain":"'to forget' se diz '잊어버리다 (ijeobeorida)'."},
+  "fvocab-244": {"promptNative":"'찾다 (chatda)' significa...","options":["procurar; encontrar","preparar/aprontar-se","ganhar/vencer","guardar/proteger/cuidar"],"explain":"'찾다 (chatda)' significa procurar; encontrar."},
+  "fvocab-245": {"prompt":"'trocar/intercambiar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'trocar/intercambiar' em coreano?","explain":"'to change/exchange' se diz '바꾸다 (bakkuda)'."},
+  "fvocab-246": {"promptNative":"'고치다 (gochida)' significa...","options":["consertar/reparar; corrigir","fazer","entrar","pedir um favor/solicitar"],"explain":"'고치다 (gochida)' significa consertar; corrigir."},
+  "fvocab-247": {"prompt":"'fazer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'fazer' em coreano?","explain":"'to make' se diz '만들다 (mandeulda)'."},
+  "fvocab-248": {"promptNative":"'열다 (yeolda)' significa...","options":["abrir","guardar/proteger/cuidar","pedir um favor/solicitar","esquecer"],"explain":"'열다 (yeolda)' significa abrir."},
+  "fvocab-249": {"prompt":"'fechar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'fechar' em coreano?","explain":"'to close/shut' se diz '닫다 (datda)'."},
+  "fvocab-250": {"promptNative":"'켜다 (kyeoda)' significa...","options":["acender/ligar","ajudar","pensar","entender/compreender"],"explain":"'켜다 (kyeoda)' significa ligar/acender."},
+  "fvocab-251": {"prompt":"'apagar; extinguir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'apagar; extinguir' em coreano?","explain":"'to turn off; to extinguish' se diz '끄다 (kkeuda)'."},
+  "fvocab-252": {"promptNative":"'걷다 (geotda)' significa...","options":["caminhar","entrar","apagar; extinguir","regressar/voltar"],"explain":"'걷다 (geotda)' significa caminhar."},
+  "fvocab-253": {"prompt":"'correr; pular', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'correr; pular' em coreano?","explain":"'to run; to jump' se diz '뛰다 (ttwida)'."},
+  "fvocab-254": {"promptNative":"'타다 (tada)' significa...","options":["embarcar/subir (em)","aguentar/conter-se","procurar; encontrar","consertar/reparar; corrigir"],"explain":"'타다 (tada)' significa andar de/embarcar."},
+  "fvocab-255": {"prompt":"'descer; baixar; (chuva) cair', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'descer; baixar; (chuva) cair' em coreano?","explain":"'to get off; to lower; (rain) to fall' se diz '내리다 (naerida)'."},
+  "fvocab-256": {"promptNative":"'도착하다 (dochakada)' significa...","options":["chegar","descer; baixar; (chuva) cair","ir embora/partir","ganhar/vencer"],"explain":"'도착하다 (dochakada)' significa chegar."},
+  "fvocab-257": {"prompt":"'ir embora/partir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ir embora/partir' em coreano?","explain":"'to leave/depart' se diz '떠나다 (tteonada)'."},
+  "fvocab-258": {"promptNative":"'돕다 (dopda)' significa...","options":["ajudar","esquecer","aguentar/conter-se","ir embora/partir"],"explain":"'돕다 (dopda)' significa ajudar."},
+  "fvocab-259": {"prompt":"'ensinar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ensinar' em coreano?","explain":"'to teach' se diz '가르치다 (gareuchida)'."},
+  "fvocab-260": {"promptNative":"'배우다 (baeuda)' significa...","options":["aprender","preparar/aprontar-se","ajudar","correr; pular"],"explain":"'배우다 (baeuda)' significa aprender."},
+  "fvocab-261": {"prompt":"'pegar emprestado; emprestar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'pegar emprestado; emprestar' em coreano?","explain":"'to borrow; to lend' se diz '빌리다 (billida)'."},
+  "fvocab-262": {"promptNative":"'부탁하다 (butakada)' significa...","options":["pedir um favor/solicitar","regressar/voltar","fazer","fechar"],"explain":"'부탁하다 (butakada)' significa pedir um favor/solicitar."},
+  "fvocab-263": {"prompt":"'responder/contestar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'responder/contestar' em coreano?","explain":"'to answer/reply' se diz '대답하다 (daedaphada)'."},
+  "fvocab-264": {"promptNative":"'팔다 (palda)' significa...","options":["vender","entrar","fazer","descer; baixar; (chuva) cair"],"explain":"'팔다 (palda)' significa vender."},
+  "fvocab-265": {"prompt":"'eleger/escolher', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'eleger/escolher' em coreano?","explain":"'to choose/pick' se diz '고르다 (goreuda)'."},
+  "fvocab-266": {"promptNative":"'지키다 (jikida)' significa...","options":["guardar/proteger/cuidar","apagar; extinguir","sentir","decidir"],"explain":"'지키다 (jikida)' significa guardar/proteger."},
+  "fvocab-267": {"prompt":"'ganhar/vencer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ganhar/vencer' em coreano?","explain":"'to win/beat' se diz '이기다 (igida)'."},
+  "fvocab-268": {"promptNative":"'참다 (chamda)' significa...","options":["aguentar/conter-se","lembrar","descer; baixar; (chuva) cair","guardar/proteger/cuidar"],"explain":"'참다 (chamda)' significa aguentar/segurar."},
+  "fvocab-269": {"prompt":"'entrar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'entrar' em coreano?","explain":"'to go in/enter' se diz '들어가다 (deureogada)'."},
+  "fvocab-270": {"promptNative":"'돌아오다 (doraoda)' significa...","options":["regressar/voltar","pensar","entender/compreender","consertar/reparar; corrigir"],"explain":"'돌아오다 (doraoda)' significa voltar/retornar."},
+  "fvocab-271": {"prompt":"'levar (tempo); ficar preso/pendurado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'levar (tempo); ficar preso/pendurado' em coreano?","explain":"'to take (time); to get caught/hung' se diz '걸리다 (geollida)'."},
+  "fvocab-272": {"promptNative":"'행복하다 (haengbokhada)' significa...","options":["ser feliz","ser bondoso","ser inteligente/esperto","estar cansado"],"explain":"'행복하다 (haengbokhada)' significa ser feliz."},
+  "fvocab-273": {"prompt":"'estar triste', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estar triste' em coreano?","explain":"'to be sad' se diz '슬프다 (seulpeuda)'."},
+  "fvocab-274": {"promptNative":"'기쁘다 (gippeuda)' significa...","options":["estar contente/alegre","ser difícil/exaustivo","estar são/saudável","estar frio ao toque"],"explain":"'기쁘다 (gippeuda)' significa estar contente/alegre."},
+  "fvocab-275": {"prompt":"'dar medo/ter medo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'dar medo/ter medo' em coreano?","explain":"'to be scary/afraid' se diz '무섭다 (museopda)'."},
+  "fvocab-276": {"promptNative":"'피곤하다 (pigonhada)' significa...","options":["estar cansado","ser difícil/exaustivo","estar são/saudável","estar quente ao toque"],"explain":"'피곤하다 (pigonhada)' significa estar cansado."},
+  "fvocab-277": {"prompt":"'ser difícil/exaustivo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser difícil/exaustivo' em coreano?","explain":"'to be hard/exhausting' se diz '힘들다 (himdeulda)'."},
+  "fvocab-278": {"promptNative":"'편하다 (pyeonhada)' significa...","options":["ser cômodo/conveniente","ser feliz","estar sujo","ser necessário"],"explain":"'편하다 (pyeonhada)' significa ser confortável/prático."},
+  "fvocab-279": {"prompt":"'ser silencioso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser silencioso' em coreano?","explain":"'to be quiet' se diz '조용하다 (joyonghada)'."},
+  "fvocab-280": {"promptNative":"'시끄럽다 (sikkeureopda)' significa...","options":["ser barulhento","ser difícil/exaustivo","ser gentil","estar contente/alegre"],"explain":"'시끄럽다 (sikkeureopda)' significa ser barulhento."},
+  "fvocab-281": {"prompt":"'estar limpo/arrumado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estar limpo/arrumado' em coreano?","explain":"'to be clean/tidy' se diz '깨끗하다 (kkaekkeutada)'."},
+  "fvocab-282": {"promptNative":"'더럽다 (deoreopda)' significa...","options":["estar sujo","ser raro/estranho","ser barulhento","ser famoso"],"explain":"'더럽다 (deoreopda)' significa estar sujo."},
+  "fvocab-283": {"prompt":"'ser pesado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser pesado' em coreano?","explain":"'to be heavy' se diz '무겁다 (mugeopda)'."},
+  "fvocab-284": {"promptNative":"'뜨겁다 (tteugeopda)' significa...","options":["estar quente ao toque","ser caloroso","estar são/saudável","ser raro/estranho"],"explain":"'뜨겁다 (tteugeopda)' significa estar quente ao toque."},
+  "fvocab-285": {"prompt":"'estar frio ao toque', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estar frio ao toque' em coreano?","explain":"'to be cold to the touch' se diz '차갑다 (chagapda)'."},
+  "fvocab-286": {"promptNative":"'따뜻하다 (ttatteutada)' significa...","options":["ser caloroso","dar medo/ter medo","estar quente ao toque","ser raro/estranho"],"explain":"'따뜻하다 (ttatteutada)' significa estar morno/quentinho."},
+  "fvocab-287": {"prompt":"'estar com fome', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estar com fome' em coreano?","explain":"'to be hungry' se diz '배고프다 (baegopeuda)'."},
+  "fvocab-288": {"promptNative":"'중요하다 (jungyohada)' significa...","options":["ser importante","ser pesado","ser inteligente/esperto","ser difícil/exaustivo"],"explain":"'중요하다 (jungyohada)' significa ser importante."},
+  "fvocab-289": {"prompt":"'ser necessário', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser necessário' em coreano?","explain":"'to be necessary/needed' se diz '필요하다 (piryohada)'."},
+  "fvocab-290": {"promptNative":"'유명하다 (yumyeonghada)' significa...","options":["ser famoso","ser especial","estar são/saudável","ser difícil/exaustivo"],"explain":"'유명하다 (yumyeonghada)' significa ser famoso."},
+  "fvocab-291": {"prompt":"'ser gentil', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser gentil' em coreano?","explain":"'to be kind/friendly' se diz '친절하다 (chinjeolhada)'."},
+  "fvocab-292": {"promptNative":"'착하다 (chakhada)' significa...","options":["ser bondoso","ser especial","ser silencioso","ser difícil/exaustivo"],"explain":"'착하다 (chakhada)' significa ser gentil/bondoso."},
+  "fvocab-293": {"prompt":"'ser inteligente/esperto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser inteligente/esperto' em coreano?","explain":"'to be smart/clever' se diz '똑똑하다 (ttokttokhada)'."},
+  "fvocab-294": {"promptNative":"'이상하다 (isanghada)' significa...","options":["ser raro/estranho","ser necessário","dar medo/ter medo","ser famoso"],"explain":"'이상하다 (isanghada)' significa ser estranho."},
+  "fvocab-295": {"prompt":"'ser perigoso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser perigoso' em coreano?","explain":"'to be dangerous' se diz '위험하다 (wiheomhada)'."},
+  "fvocab-296": {"promptNative":"'건강하다 (geonganghada)' significa...","options":["estar são/saudável","estar sujo","estar limpo/arrumado","ser importante"],"explain":"'건강하다 (geonganghada)' significa ser saudável."},
+  "fvocab-297": {"prompt":"'ser especial', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser especial' em coreano?","explain":"'to be special' se diz '특별하다 (teukbyeolhada)'."},
+  "fvocab-298": {"promptNative":"'갑자기 (gapjagi)' significa...","options":["de repente","sempre","diretamente/pessoalmente/em pessoa","por acaso/talvez"],"explain":"'갑자기 (gapjagi)' significa de repente."},
+  "fvocab-299": {"prompt":"'sempre', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'sempre' em coreano?","explain":"'always' se diz '항상 (hangsang)'."},
+  "fvocab-300": {"promptNative":"'자주 (jaju)' significa...","options":["com frequência/frequentemente","(de) jeito nenhum","como era de esperar/também","continuamente/seguir"],"explain":"'자주 (jaju)' significa muitas vezes/com frequência."},
+  "fvocab-301": {"prompt":"'às vezes/ocasionalmente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'às vezes/ocasionalmente' em coreano?","explain":"'sometimes/occasionally' se diz '가끔 (gakkeum)'."},
+  "fvocab-302": {"promptNative":"'거의 (geoui)' significa...","options":["quase","de repente","como era de esperar/também","claro"],"explain":"'거의 (geoui)' significa quase."},
+  "fvocab-303": {"prompt":"'nem tanto/não particularmente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'nem tanto/não particularmente' em coreano?","explain":"'not really/not particularly' se diz '별로 (byeollo)'."},
+  "fvocab-304": {"promptNative":"'전혀 (jeonhyeo)' significa...","options":["(de) jeito nenhum","por acaso/talvez","às vezes/ocasionalmente","nem tanto/não particularmente"],"explain":"'전혀 (jeonhyeo)' significa (não) de forma alguma."},
+  "fvocab-305": {"prompt":"'claro', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'claro' em coreano?","explain":"'of course' se diz '물론 (mullon)'."},
+  "fvocab-306": {"promptNative":"'특히 (teukhi)' significa...","options":["especialmente/em particular","primeiro/de antemão","diretamente/pessoalmente/em pessoa","muito (mais)"],"explain":"'특히 (teukhi)' significa especialmente/particularmente."},
+  "fvocab-307": {"prompt":"'por acaso/talvez', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'por acaso/talvez' em coreano?","explain":"'by any chance/perhaps' se diz '혹시 (hoksi)'."},
+  "fvocab-308": {"promptNative":"'역시 (yeoksi)' significa...","options":["como era de esperar/também","sempre","nem tanto/não particularmente","com frequência/frequentemente"],"explain":"'역시 (yeoksi)' significa como esperado/também."},
+  "fvocab-309": {"prompt":"'continuamente/seguir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'continuamente/seguir' em coreano?","explain":"'continuously/keep on' se diz '계속 (gyesok)'."},
+  "fvocab-310": {"promptNative":"'먼저 (meonjeo)' significa...","options":["primeiro/de antemão","depois/mais tarde","como era de esperar/também","sempre"],"explain":"'먼저 (meonjeo)' significa primeiro/de antemão."},
+  "fvocab-311": {"prompt":"'depois/mais tarde', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'depois/mais tarde' em coreano?","explain":"'later/afterward' se diz '나중에 (najunge)'."},
+  "fvocab-312": {"promptNative":"'직접 (jikjeop)' significa...","options":["diretamente/pessoalmente/em pessoa","especialmente/em particular","(de) jeito nenhum","quase"],"explain":"'직접 (jikjeop)' significa diretamente/pessoalmente."},
+  "fvocab-313": {"prompt":"'muito (mais)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'muito (mais)' em coreano?","explain":"'far/much (more)' se diz '훨씬 (hwolssin)'."},
+  "fvocab-314": {"promptNative":"'여러분 (yeoreobun)' significa...","options":["pessoal (para se dirigir ao público)","que tipo de (+ substantivo)","classificador para folhas planas","por causa de/por"],"explain":"'여러분 (yeoreobun)' significa todos (ao se dirigir a um público)."},
+  "fvocab-315": {"prompt":"'si mesmo; carinho/amor', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'si mesmo; carinho/amor' em coreano?","explain":"'oneself; honey/babe' se diz '자기 (jagi)'."},
+  "fvocab-316": {"promptNative":"'무슨 (museun)' significa...","options":["que tipo de (+ substantivo)","pessoal (para se dirigir ao público)","garrafa (classificador); doença (mesmo som)","por causa de/por"],"explain":"'무슨 (museun)' significa que tipo de (+ substantivo)."},
+  "fvocab-317": {"prompt":"'que tipo de; algum (+ substantivo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'que tipo de; algum (+ substantivo)' em coreano?","explain":"'what kind of; some (+ noun)' se diz '어떤 (eotteon)'."},
+  "fvocab-318": {"promptNative":"'잔 (jan)' significa...","options":["classificador para xícaras/copos","que tipo de (+ substantivo)","pessoal (para se dirigir ao público)","por causa de/por"],"explain":"'잔 (jan)' significa classificador para xícaras/copos."},
+  "fvocab-319": {"prompt":"'classificador para livros/volumes', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'classificador para livros/volumes' em coreano?","explain":"'counter for books/volumes' se diz '권 (gwon)'."},
+  "fvocab-320": {"promptNative":"'장 (jang)' significa...","options":["classificador para folhas planas","durante/por (um período)","garrafa (classificador); doença (mesmo som)","que tipo de; algum (+ substantivo)"],"explain":"'장 (jang)' significa classificador para folhas/objetos planos."},
+  "fvocab-321": {"prompt":"'classificador para máquinas/veículos', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'classificador para máquinas/veículos' em coreano?","explain":"'counter for machines/vehicles' se diz '대 (dae)'."},
+  "fvocab-322": {"promptNative":"'병 (byeong)' significa...","options":["garrafa (classificador); doença (mesmo som)","durante/por (um período)","que tipo de; algum (+ substantivo)","classificador para livros/volumes"],"explain":"'병 (byeong)' significa garrafa (classificador); doença (mesmo som)."},
+  "fvocab-323": {"prompt":"'durante/por (um período)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'durante/por (um período)' em coreano?","explain":"'during/for (a period)' se diz '동안 (dongan)'."},
+  "fvocab-324": {"promptNative":"'때문에 (ttaemune)' significa...","options":["por causa de/por","durante/por (um período)","pessoal (para se dirigir ao público)","que tipo de (+ substantivo)"],"explain":"'때문에 (ttaemune)' significa por causa de."},
+  "fvocab-325": {"prompt":"'estação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estação' em coreano?","explain":"'season' se diz '계절 (gyejeol)'."},
+  "fvocab-326": {"promptNative":"'봄 (bom)' significa...","options":["primavera","estação (trem/metrô)","passatempo","erro/equívoco"],"explain":"'봄 (bom)' significa primavera (estação)."},
+  "fvocab-327": {"prompt":"'verão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'verão' em coreano?","explain":"'summer' se diz '여름 (yeoreum)'."},
+  "fvocab-328": {"promptNative":"'가을 (gaeul)' significa...","options":["outono","inverno","primavera","computador"],"explain":"'가을 (gaeul)' significa outono."},
+  "fvocab-329": {"prompt":"'inverno', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'inverno' em coreano?","explain":"'winter' se diz '겨울 (gyeoul)'."},
+  "fvocab-330": {"promptNative":"'하늘 (haneul)' significa...","options":["céu","personalidade/caráter","passatempo","rio"],"explain":"'하늘 (haneul)' significa céu; paraíso."},
+  "fvocab-331": {"prompt":"'mar/oceano', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'mar/oceano' em coreano?","explain":"'sea/ocean' se diz '바다 (bada)'."},
+  "fvocab-332": {"promptNative":"'산 (san)' significa...","options":["montanha","computador","sopa (caldo claro)","estação"],"explain":"'산 (san)' significa montanha."},
+  "fvocab-333": {"prompt":"'rio', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'rio' em coreano?","explain":"'river' se diz '강 (gang)'."},
+  "fvocab-334": {"promptNative":"'나무 (namu)' significa...","options":["árvore/madeira","verão","experiência","rio"],"explain":"'나무 (namu)' significa árvore/madeira."},
+  "fvocab-335": {"prompt":"'flor', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'flor' em coreano?","explain":"'flower' se diz '꽃 (kkot)'."},
+  "fvocab-336": {"promptNative":"'새 (sae)' significa...","options":["pássaro/ave","filme","pensamento/ideia","história/conversa"],"explain":"'새 (sae)' significa pássaro."},
+  "fvocab-337": {"prompt":"'estrela', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estrela' em coreano?","explain":"'star' se diz '별 (byeol)'."},
+  "fvocab-338": {"promptNative":"'구름 (gureum)' significa...","options":["nuvem","vento; um desejo/esperança (mesmo som)","música","pergunta (feita)"],"explain":"'구름 (gureum)' significa nuvem."},
+  "fvocab-339": {"prompt":"'vento; um desejo/esperança (mesmo som)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'vento; um desejo/esperança (mesmo som)' em coreano?","explain":"'wind; a wish/hope (same sound)' se diz '바람 (baram)'."},
+  "fvocab-340": {"promptNative":"'비 (bi)' significa...","options":["chuva","música","biblioteca","história/conversa"],"explain":"'비 (bi)' significa chuva."},
+  "fvocab-341": {"prompt":"'voz', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'voz' em coreano?","explain":"'voice' se diz '목소리 (moksori)'."},
+  "fvocab-342": {"promptNative":"'웃음 (useum)' significa...","options":["riso/um sorriso","pássaro/ave","tarefa","prédio"],"explain":"'웃음 (useum)' significa riso/sorriso."},
+  "fvocab-343": {"prompt":"'lágrimas', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'lágrimas' em coreano?","explain":"'tears' se diz '눈물 (nunmul)'."},
+  "fvocab-344": {"promptNative":"'냄새 (naemsae)' significa...","options":["cheiro","mar/oceano","primavera","filme"],"explain":"'냄새 (naemsae)' significa cheiro/odor."},
+  "fvocab-345": {"prompt":"'sociedade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'sociedade' em coreano?","explain":"'society' se diz '사회 (sahoe)'."},
+  "fvocab-346": {"promptNative":"'문화 (munhwa)' significa...","options":["cultura","responsabilidade","colega/companheiro de trabalho","efeito/eficácia"],"explain":"'문화 (munhwa)' significa cultura."},
+  "fvocab-347": {"prompt":"'história', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'história' em coreano?","explain":"'history' se diz '역사 (yeoksa)'."},
+  "fvocab-348": {"promptNative":"'경제 (gyeongje)' significa...","options":["economia","preocupação/dilema/deliberação","propósito/finalidade","arte"],"explain":"'경제 (gyeongje)' significa economia."},
+  "fvocab-349": {"prompt":"'política', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'política' em coreano?","explain":"'politics' se diz '정치 (jeongchi)'."},
+  "fvocab-350": {"promptNative":"'환경 (hwangyeong)' significa...","options":["meio ambiente","política","processo/curso","vizinho"],"explain":"'환경 (hwangyeong)' significa meio ambiente."},
+  "fvocab-351": {"prompt":"'ciência', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ciência' em coreano?","explain":"'science' se diz '과학 (gwahak)'."},
+  "fvocab-352": {"promptNative":"'기술 (gisul)' significa...","options":["tecnologia/habilidade","história","clima/vibe","efeito/eficácia"],"explain":"'기술 (gisul)' significa tecnologia/técnica."},
+  "fvocab-353": {"prompt":"'informação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'informação' em coreano?","explain":"'information' se diz '정보 (jeongbo)'."},
+  "fvocab-354": {"promptNative":"'교육 (gyoyuk)' significa...","options":["educação","opinião","coragem/bravura","esforço"],"explain":"'교육 (gyoyuk)' significa educação."},
+  "fvocab-355": {"prompt":"'arte', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'arte' em coreano?","explain":"'art' se diz '예술 (yesul)'."},
+  "fvocab-356": {"promptNative":"'자연 (jayeon)' significa...","options":["natureza","efeito/eficácia","meio ambiente","estresse"],"explain":"'자연 (jayeon)' significa natureza."},
+  "fvocab-357": {"prompt":"'mundo/globo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'mundo/globo' em coreano?","explain":"'world/globe' se diz '세계 (segye)'."},
+  "fvocab-358": {"promptNative":"'정부 (jeongbu)' significa...","options":["governo","nível/padrão","sociedade","meio ambiente"],"explain":"'정부 (jeongbu)' significa governo."},
+  "fvocab-359": {"prompt":"'lei', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'lei' em coreano?","explain":"'law' se diz '법 (beop)'."},
+  "fvocab-360": {"promptNative":"'규칙 (gyuchik)' significa...","options":["regra","tecnologia/habilidade","história","emoção/sentimento"],"explain":"'규칙 (gyuchik)' significa regra."},
+  "fvocab-361": {"prompt":"'liberdade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'liberdade' em coreano?","explain":"'freedom' se diz '자유 (jayu)'."},
+  "fvocab-362": {"promptNative":"'평화 (pyeonghwa)' significa...","options":["paz","meio ambiente","atitude/postura","informação"],"explain":"'평화 (pyeonghwa)' significa paz."},
+  "fvocab-363": {"prompt":"'situação/circunstâncias', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'situação/circunstâncias' em coreano?","explain":"'situation/circumstances' se diz '상황 (sanghwang)'."},
+  "fvocab-364": {"promptNative":"'의견 (uigyeon)' significa...","options":["opinião","expressão facial","tecnologia/habilidade","economia"],"explain":"'의견 (uigyeon)' significa opinião."},
+  "fvocab-365": {"prompt":"'propósito/finalidade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'propósito/finalidade' em coreano?","explain":"'purpose/aim' se diz '목적 (mokjeok)'."},
+  "fvocab-366": {"promptNative":"'과정 (gwajeong)' significa...","options":["processo/curso","postura; atitude","sociedade","esposa"],"explain":"'과정 (gwajeong)' significa processo/percurso."},
+  "fvocab-367": {"prompt":"'nível/padrão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'nível/padrão' em coreano?","explain":"'level/standard' se diz '수준 (sujun)'."},
+  "fvocab-368": {"promptNative":"'내용 (naeyong)' significa...","options":["conteúdo","atitude/postura","coragem/bravura","charme/atrativo"],"explain":"'내용 (naeyong)' significa conteúdo."},
+  "fvocab-369": {"prompt":"'capacidade/aptidão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'capacidade/aptidão' em coreano?","explain":"'ability/capability' se diz '능력 (neungnyeok)'."},
+  "fvocab-370": {"promptNative":"'노력 (noryeok)' significa...","options":["esforço","atitude/postura","regra","propósito/finalidade"],"explain":"'노력 (noryeok)' significa esforço."},
+  "fvocab-371": {"prompt":"'mudança', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'mudança' em coreano?","explain":"'change' se diz '변화 (byeonhwa)'."},
+  "fvocab-372": {"promptNative":"'영향 (yeonghyang)' significa...","options":["influência/efeito","meio ambiente","mundo/globo","colega/companheiro de trabalho"],"explain":"'영향 (yeonghyang)' significa influência/efeito."},
+  "fvocab-373": {"prompt":"'efeito/eficácia', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'efeito/eficácia' em coreano?","explain":"'effect/efficacy' se diz '효과 (hyogwa)'."},
+  "fvocab-374": {"promptNative":"'감정 (gamjeong)' significa...","options":["emoção/sentimento","arrependimento","ocupação/trabalho","as impressões/pensamentos de alguém (sobre uma experiência)"],"explain":"'감정 (gamjeong)' significa emoção/sentimento."},
+  "fvocab-375": {"prompt":"'estresse', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estresse' em coreano?","explain":"'stress' se diz '스트레스 (seuteureseu)'."},
+  "fvocab-376": {"promptNative":"'고민 (gomin)' significa...","options":["preocupação/dilema/deliberação","política","situação/circunstâncias","esforço"],"explain":"'고민 (gomin)' significa preocupação/dilema/reflexão."},
+  "fvocab-377": {"prompt":"'arrependimento', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'arrependimento' em coreano?","explain":"'regret' se diz '후회 (huhoe)'."},
+  "fvocab-378": {"promptNative":"'책임 (chaegim)' significa...","options":["responsabilidade","influência/efeito","meio ambiente","liberdade"],"explain":"'책임 (chaegim)' significa responsabilidade."},
+  "fvocab-379": {"prompt":"'coragem/bravura', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'coragem/bravura' em coreano?","explain":"'courage' se diz '용기 (yonggi)'."},
+  "fvocab-380": {"promptNative":"'직업 (jigeop)' significa...","options":["ocupação/trabalho","liberdade","política","vizinho"],"explain":"'직업 (jigeop)' significa profissão/emprego."},
+  "fvocab-381": {"prompt":"'colega/companheiro de trabalho', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'colega/companheiro de trabalho' em coreano?","explain":"'colleague/coworker' se diz '동료 (dongnyo)'."},
+  "fvocab-382": {"promptNative":"'손님 (sonnim)' significa...","options":["convidado/cliente","situação/circunstâncias","emoção/sentimento","conteúdo"],"explain":"'손님 (sonnim)' significa convidado/cliente."},
+  "fvocab-383": {"prompt":"'vizinho', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'vizinho' em coreano?","explain":"'neighbor' se diz '이웃 (iut)'."},
+  "fvocab-384": {"promptNative":"'남편 (nampyeon)' significa...","options":["marido","vizinho","convidado/cliente","propósito/finalidade"],"explain":"'남편 (nampyeon)' significa marido."},
+  "fvocab-385": {"prompt":"'esposa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'esposa' em coreano?","explain":"'wife' se diz '아내 (anae)'."},
+  "fvocab-386": {"promptNative":"'결혼 (gyeolhon)' significa...","options":["casamento","cultura","nível/padrão","ciência"],"explain":"'결혼 (gyeolhon)' significa casamento."},
+  "fvocab-387": {"prompt":"'expressar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'expressar' em coreano?","explain":"'to express' se diz '표현하다 (pyohyeonhada)'."},
+  "fvocab-388": {"promptNative":"'발견하다 (balgyeonhada)' significa...","options":["descobrir/encontrar","surgir/originar-se/passar a ter","exigir/requerer","exceder/ultrapassar/cruzar"],"explain":"'발견하다 (balgyeonhada)' significa descobrir/encontrar."},
+  "fvocab-389": {"prompt":"'mudar (tornar-se diferente)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'mudar (tornar-se diferente)' em coreano?","explain":"'to change (become different)' se diz '변하다 (byeonhada)'."},
+  "fvocab-390": {"promptNative":"'늘다 (neulda)' significa...","options":["aumentar/melhorar","coletar/reunir (tr.)","expressar","exceder/ultrapassar/cruzar"],"explain":"'늘다 (neulda)' significa aumentar/melhorar."},
+  "fvocab-391": {"prompt":"'diminuir/encolher', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'diminuir/encolher' em coreano?","explain":"'to decrease/shrink' se diz '줄다 (julda)'."},
+  "fvocab-392": {"promptNative":"'나타나다 (natanada)' significa...","options":["aparecer/surgir","coletar/reunir (tr.)","exigir/requerer","jogar fora/abandonar"],"explain":"'나타나다 (natanada)' significa aparecer/surgir."},
+  "fvocab-393": {"prompt":"'surgir/originar-se/passar a ter', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'surgir/originar-se/passar a ter' em coreano?","explain":"'to arise/come to be/come to have' se diz '생기다 (saenggida)'."},
+  "fvocab-394": {"promptNative":"'포기하다 (pogihada)' significa...","options":["render-se/desistir","exigir/requerer","duvidar/desconfiar","cair; esgotar-se; reprovar (prova)"],"explain":"'포기하다 (pogihada)' significa desistir."},
+  "fvocab-395": {"prompt":"'comparecer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'comparecer' em coreano?","explain":"'to attend' se diz '참석하다 (chamseokhada)'."},
+  "fvocab-396": {"promptNative":"'반대하다 (bandaehada)' significa...","options":["opor-se/objetar","expressar","descobrir/encontrar","recusar/negar-se"],"explain":"'반대하다 (bandaehada)' significa opor-se/objetar."},
+  "fvocab-397": {"prompt":"'reconhecer/admitir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'reconhecer/admitir' em coreano?","explain":"'to acknowledge/admit' se diz '인정하다 (injeonghada)'."},
+  "fvocab-398": {"promptNative":"'거절하다 (geojeolhada)' significa...","options":["recusar/negar-se","elogiar/lisonjear","subir/ascender/escalar","parabenizar"],"explain":"'거절하다 (geojeolhada)' significa recusar/declinar."},
+  "fvocab-399": {"prompt":"'exigir/requerer', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'exigir/requerer' em coreano?","explain":"'to demand/require' se diz '요구하다 (yoguhada)'."},
+  "fvocab-400": {"promptNative":"'추천하다 (chucheonhada)' significa...","options":["recomendar","reconhecer/admitir","restar/sobrar","surgir/originar-se/passar a ter"],"explain":"'추천하다 (chucheonhada)' significa recomendar."},
+  "fvocab-401": {"prompt":"'apresentar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'apresentar' em coreano?","explain":"'to introduce' se diz '소개하다 (sogaehada)'."},
+  "fvocab-402": {"promptNative":"'초대하다 (chodaehada)' significa...","options":["convidar","dividir/compartilhar","surgir/originar-se/passar a ter","agarrar/pegar/segurar"],"explain":"'초대하다 (chodaehada)' significa convidar."},
+  "fvocab-403": {"prompt":"'parabenizar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'parabenizar' em coreano?","explain":"'to congratulate' se diz '축하하다 (chukahada)'."},
+  "fvocab-404": {"promptNative":"'칭찬하다 (chingchanhada)' significa...","options":["elogiar/lisonjear","diminuir/encolher","acreditar/confiar","cair; esgotar-se; reprovar (prova)"],"explain":"'칭찬하다 (chingchanhada)' significa elogiar."},
+  "fvocab-405": {"prompt":"'ignorar/menosprezar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ignorar/menosprezar' em coreano?","explain":"'to ignore/disregard/belittle' se diz '무시하다 (musihada)'."},
+  "fvocab-406": {"promptNative":"'믿다 (mitda)' significa...","options":["acreditar/confiar","duvidar/desconfiar","recomendar","descobrir/encontrar"],"explain":"'믿다 (mitda)' significa acreditar/confiar."},
+  "fvocab-407": {"prompt":"'duvidar/desconfiar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'duvidar/desconfiar' em coreano?","explain":"'to doubt/suspect' se diz '의심하다 (uisimhada)'."},
+  "fvocab-408": {"promptNative":"'버리다 (beorida)' significa...","options":["jogar fora/abandonar","exceder/ultrapassar/cruzar","dividir/compartilhar","exigir/requerer"],"explain":"'버리다 (beorida)' significa jogar fora/abandonar."},
+  "fvocab-409": {"prompt":"'restar/sobrar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'restar/sobrar' em coreano?","explain":"'to remain/be left over' se diz '남다 (namda)'."},
+  "fvocab-410": {"promptNative":"'모으다 (moeuda)' significa...","options":["coletar/reunir (tr.)","reconhecer/admitir","parabenizar","elogiar/lisonjear"],"explain":"'모으다 (moeuda)' significa juntar/reunir (tr.)."},
+  "fvocab-411": {"prompt":"'dividir/compartilhar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'dividir/compartilhar' em coreano?","explain":"'to divide/share' se diz '나누다 (nanuda)'."},
+  "fvocab-412": {"promptNative":"'풀다 (pulda)' significa...","options":["resolver/desatar/liberar","aparecer/surgir","subir/ascender/escalar","exceder/ultrapassar/cruzar"],"explain":"'풀다 (pulda)' significa resolver/desatar/soltar."},
+  "fvocab-413": {"prompt":"'agarrar/pegar/segurar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'agarrar/pegar/segurar' em coreano?","explain":"'to grab/catch/hold' se diz '잡다 (japda)'."},
+  "fvocab-414": {"promptNative":"'넘다 (neomda)' significa...","options":["exceder/ultrapassar/cruzar","render-se/desistir","agarrar/pegar/segurar","convidar"],"explain":"'넘다 (neomda)' significa exceder/ultrapassar/atravessar."},
+  "fvocab-415": {"prompt":"'grudar; passar (numa prova)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'grudar; passar (numa prova)' em coreano?","explain":"'to stick; to pass (an exam)' se diz '붙다 (butda)'."},
+  "fvocab-416": {"promptNative":"'떨어지다 (tteoreojida)' significa...","options":["cair; esgotar-se; reprovar (prova)","subir/ascender/escalar","acreditar/confiar","reconhecer/admitir"],"explain":"'떨어지다 (tteoreojida)' significa cair; acabar; ser reprovado (prova)."},
+  "fvocab-417": {"prompt":"'subir/ascender/escalar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'subir/ascender/escalar' em coreano?","explain":"'to rise/go up/climb' se diz '오르다 (oreuda)'."},
+  "fvocab-418": {"promptNative":"'심각하다 (simgakhada)' significa...","options":["ser sério/grave","estar envergonhado/constrangido","ser seguro/certo","ser similar/parecido"],"explain":"'심각하다 (simgakhada)' significa ser sério/grave."},
+  "fvocab-419": {"prompt":"'ser complicado/estar movimentado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser complicado/estar movimentado' em coreano?","explain":"'to be complicated/crowded' se diz '복잡하다 (bokjaphada)'."},
+  "fvocab-420": {"promptNative":"'간단하다 (gandanhada)' significa...","options":["ser simples/breve","ser claro/evidente","ser excelente/admirável","ser diverso/variado"],"explain":"'간단하다 (gandanhada)' significa ser simples/breve."},
+  "fvocab-421": {"prompt":"'ser preciso/exato', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser preciso/exato' em coreano?","explain":"'to be accurate/exact' se diz '정확하다 (jeonghwakada)'."},
+  "fvocab-422": {"promptNative":"'확실하다 (hwaksilhada)' significa...","options":["ser seguro/certo","ser chato/tedioso","ser sério/grave","estar familiarizado/acostumado"],"explain":"'확실하다 (hwaksilhada)' significa ser certo/ter certeza."},
+  "fvocab-423": {"prompt":"'ser claro/evidente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser claro/evidente' em coreano?","explain":"'to be clear/obvious' se diz '분명하다 (bunmyeonghada)'."},
+  "fvocab-424": {"promptNative":"'당연하다 (dangyeonhada)' significa...","options":["ser natural/óbvio/algo dado","estar envergonhado/constrangido","ser sério/grave","ser perfeito"],"explain":"'당연하다 (dangyeonhada)' significa ser natural/óbvio/evidente."},
+  "fvocab-425": {"prompt":"'ser suficiente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser suficiente' em coreano?","explain":"'to be enough/sufficient' se diz '충분하다 (chungbunhada)'."},
+  "fvocab-426": {"promptNative":"'부족하다 (bujokhada)' significa...","options":["ser insuficiente/faltar","ser simples/breve","ser chato/tedioso","ser complicado/estar movimentado"],"explain":"'부족하다 (bujokhada)' significa ser insuficiente/faltar."},
+  "fvocab-427": {"prompt":"'ser possível', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser possível' em coreano?","explain":"'to be possible' se diz '가능하다 (ganeunghada)'."},
+  "fvocab-428": {"promptNative":"'완벽하다 (wanbyeokhada)' significa...","options":["ser perfeito","ser excelente/admirável","ser diverso/variado","ser chato/tedioso"],"explain":"'완벽하다 (wanbyeokhada)' significa ser perfeito."},
+  "fvocab-429": {"prompt":"'ser diverso/variado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser diverso/variado' em coreano?","explain":"'to be diverse/various' se diz '다양하다 (dayanghada)'."},
+  "fvocab-430": {"promptNative":"'비슷하다 (biseutada)' significa...","options":["ser similar/parecido","ser simples/breve","ser diverso/variado","estar envergonhado/constrangido"],"explain":"'비슷하다 (biseutada)' significa ser parecido."},
+  "fvocab-431": {"prompt":"'estar familiarizado/acostumado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estar familiarizado/acostumado' em coreano?","explain":"'to be familiar/accustomed' se diz '익숙하다 (iksukhada)'."},
+  "fvocab-432": {"promptNative":"'훌륭하다 (hullyunghada)' significa...","options":["ser excelente/admirável","ser perfeito","sentir falta/ter saudade","ser simples/breve"],"explain":"'훌륭하다 (hullyunghada)' significa ser excelente/admirável."},
+  "fvocab-433": {"prompt":"'ser impressionante/assombroso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser impressionante/assombroso' em coreano?","explain":"'to be impressive/amazing' se diz '대단하다 (daedanhada)'."},
+  "fvocab-434": {"promptNative":"'소중하다 (sojunghada)' significa...","options":["ser precioso/querido","ser tímido/estar constrangido","ser chato/tedioso","estar familiarizado/acostumado"],"explain":"'소중하다 (sojunghada)' significa ser precioso/querido."},
+  "fvocab-435": {"prompt":"'ser chato/tedioso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser chato/tedioso' em coreano?","explain":"'to be boring/tedious' se diz '지루하다 (jiruhada)'."},
+  "fvocab-436": {"promptNative":"'부럽다 (bureopda)' significa...","options":["sentir inveja/ser invejável","ser similar/parecido","ser precioso/querido","ser claro/evidente"],"explain":"'부럽다 (bureopda)' significa ter inveja/ser invejável."},
+  "fvocab-437": {"prompt":"'estar envergonhado/constrangido', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estar envergonhado/constrangido' em coreano?","explain":"'to be embarrassed/ashamed' se diz '창피하다 (changpihada)'."},
+  "fvocab-438": {"promptNative":"'부끄럽다 (bukkeureopda)' significa...","options":["ser tímido/estar constrangido","ser natural/óbvio/algo dado","ser impressionante/assombroso","ser complicado/estar movimentado"],"explain":"'부끄럽다 (bukkeureopda)' significa ser tímido/ficar sem graça."},
+  "fvocab-439": {"prompt":"'ser lamentável/uma pena/nostálgico', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser lamentável/uma pena/nostálgico' em coreano?","explain":"'to be regrettable/a shame/wistful' se diz '아쉽다 (aswipda)'."},
+  "fvocab-440": {"promptNative":"'그립다 (geuripda)' significa...","options":["sentir falta/ter saudade","ser similar/parecido","ser chato/tedioso","ser tímido/estar constrangido"],"explain":"'그립다 (geuripda)' significa sentir saudade/ansiar por."},
+  "fvocab-441": {"prompt":"'finalmente/enfim', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'finalmente/enfim' em coreano?","explain":"'finally/at last' se diz '드디어 (deudieo)'."},
+  "fvocab-442": {"promptNative":"'결국 (gyeolguk)' significa...","options":["no fim/com o tempo","de preferência/prefiro","além disso/ainda por cima","só/simplesmente/sem motivo"],"explain":"'결국 (gyeolguk)' significa no fim das contas/afinal."},
+  "fvocab-443": {"prompt":"'pelo contrário/ao contrário', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'pelo contrário/ao contrário' em coreano?","explain":"'rather/on the contrary' se diz '오히려 (ohiryeo)'."},
+  "fvocab-444": {"promptNative":"'차라리 (charari)' significa...","options":["de preferência/prefiro","repetidamente/continuar (fazendo)","inclusive/a ponto de","só/simplesmente/sem motivo"],"explain":"'차라리 (charari)' significa antes/de preferência."},
+  "fvocab-445": {"prompt":"'só/simplesmente/sem motivo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'só/simplesmente/sem motivo' em coreano?","explain":"'just/simply/for no reason' se diz '그냥 (geunyang)'."},
+  "fvocab-446": {"promptNative":"'굳이 (guji)' significa...","options":["desnecessariamente/dando-se ao trabalho","finalmente/enfim","só/simplesmente/sem motivo","de todo jeito/em todo caso"],"explain":"'굳이 (guji)' significa sem necessidade/fazendo questão."},
+  "fvocab-447": {"prompt":"'de todo jeito/em todo caso', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'de todo jeito/em todo caso' em coreano?","explain":"'anyway/in any case' se diz '어차피 (eochapi)'."},
+  "fvocab-448": {"promptNative":"'게다가 (gedaga)' significa...","options":["além disso/ainda por cima","gradualmente/cada vez mais","só/simplesmente/sem motivo","corretamente/como se deve"],"explain":"'게다가 (gedaga)' significa além disso/ainda por cima."},
+  "fvocab-449": {"prompt":"'inclusive/a ponto de', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'inclusive/a ponto de' em coreano?","explain":"'even/to the point that' se diz '심지어 (simjieo)'."},
+  "fvocab-450": {"promptNative":"'점점 (jeomjeom)' significa...","options":["gradualmente/cada vez mais","de preferência/prefiro","no fim/com o tempo","finalmente/enfim"],"explain":"'점점 (jeomjeom)' significa aos poucos/cada vez mais."},
+  "fvocab-451": {"prompt":"'repetidamente/continuar (fazendo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'repetidamente/continuar (fazendo)' em coreano?","explain":"'repeatedly/keep (doing)' se diz '자꾸 (jakku)'."},
+  "fvocab-452": {"promptNative":"'제대로 (jedaero)' significa...","options":["corretamente/como se deve","finalmente/enfim","de todo jeito/em todo caso","pelo contrário/ao contrário"],"explain":"'제대로 (jedaero)' significa direito/corretamente."},
+  "fvocab-453": {"prompt":"'por si mesmo/por vontade própria', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'por si mesmo/por vontade própria' em coreano?","explain":"'by oneself/of one's own accord' se diz '스스로 (seuseuro)'."},
+  "fvocab-454": {"promptNative":"'각각 (gakgak)' significa...","options":["cada um/respectivamente","se/supondo","porções/rações (classificador)","vários/diversos (+ substantivo)"],"explain":"'각각 (gakgak)' significa cada um/respectivamente."},
+  "fvocab-455": {"prompt":"'se/supondo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'se/supondo' em coreano?","explain":"'if/supposing' se diz '만약 (manyak)'."},
+  "fvocab-456": {"promptNative":"'여러 (yeoreo)' significa...","options":["vários/diversos (+ substantivo)","andar (classificador/substantivo)","cada um/respectivamente","se/supondo"],"explain":"'여러 (yeoreo)' significa vários/diversos (+ substantivo)."},
+  "fvocab-457": {"prompt":"'andar (classificador/substantivo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'andar (classificador/substantivo)' em coreano?","explain":"'floor (counter/noun)' se diz '층 (cheung)'."},
+  "fvocab-458": {"promptNative":"'인분 (inbun)' significa...","options":["porções/rações (classificador)","andar (classificador/substantivo)","vários/diversos (+ substantivo)","se/supondo"],"explain":"'인분 (inbun)' significa porções (classificador)."},
+  "fvocab-459": {"prompt":"'clima/vibe', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'clima/vibe' em coreano?","explain":"'atmosphere/mood/vibe' se diz '분위기 (bunwigi)'."},
+  "fvocab-460": {"promptNative":"'인상 (insang)' significa...","options":["impressão","lei","expressão facial","modos/etiqueta/cortesia"],"explain":"'인상 (insang)' significa impressão."},
+  "fvocab-461": {"prompt":"'atitude/postura', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'atitude/postura' em coreano?","explain":"'attitude/manner' se diz '태도 (taedo)'."},
+  "fvocab-462": {"promptNative":"'매력 (maeryeok)' significa...","options":["charme/atrativo","as impressões/pensamentos de alguém (sobre uma experiência)","capacidade/aptidão","educação"],"explain":"'매력 (maeryeok)' significa charme/encanto."},
+  "fvocab-463": {"prompt":"'modos/etiqueta/cortesia', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'modos/etiqueta/cortesia' em coreano?","explain":"'manners/etiquette/courtesy' se diz '예의 (yeui)'."},
+  "fvocab-464": {"promptNative":"'표정 (pyojeong)' significa...","options":["expressão facial","estresse","influência/efeito","governo"],"explain":"'표정 (pyojeong)' significa expressão facial."},
+  "fvocab-465": {"prompt":"'gesto/linguagem corporal', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'gesto/linguagem corporal' em coreano?","explain":"'gesture/body language' se diz '몸짓 (momjit)'."},
+  "fvocab-466": {"promptNative":"'자세 (jase)' significa...","options":["postura; atitude","charme/atrativo","informação","marido"],"explain":"'자세 (jase)' significa postura; atitude."},
+  "fvocab-467": {"prompt":"'as impressões/pensamentos de alguém (sobre uma experiência)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'as impressões/pensamentos de alguém (sobre uma experiência)' em coreano?","explain":"'one's impressions/thoughts (on an experience)' se diz '소감 (sogam)'."},
+  "fvocab-468": {"promptNative":"'가치관 (gachigwan)' significa...","options":["os valores/sistema de valores de alguém","confiança","orgulho/amor-próprio (que pode ser ferido)","mal-entendido"],"explain":"'가치관 (gachigwan)' significa valores/sistema de valores."},
+  "fvocab-469": {"prompt":"'cosmovisão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'cosmovisão' em coreano?","explain":"'worldview' se diz '세계관 (segyegwan)'."},
+  "fvocab-470": {"promptNative":"'관점 (gwanjeom)' significa...","options":["ponto de vista/perspectiva","confiança","conflito/atrito","vínculo/laços (entre pessoas)"],"explain":"'관점 (gwanjeom)' significa ponto de vista/perspectiva."},
+  "fvocab-471": {"prompt":"'preconceito/viés', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'preconceito/viés' em coreano?","explain":"'prejudice/bias' se diz '편견 (pyeongyeon)'."},
+  "fvocab-472": {"promptNative":"'갈등 (galdeung)' significa...","options":["conflito/atrito","tensão/nervosismo","conceito/noção","compreensão/iluminação"],"explain":"'갈등 (galdeung)' significa conflito/atrito."},
+  "fvocab-473": {"prompt":"'mal-entendido', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'mal-entendido' em coreano?","explain":"'misunderstanding' se diz '오해 (ohae)'."},
+  "fvocab-474": {"promptNative":"'소통 (sotong)' significa...","options":["comunicação (mútua)","fator/causa","consideração/atenção","autenticidade/sinceridade"],"explain":"'소통 (sotong)' significa comunicação (mútua)."},
+  "fvocab-475": {"prompt":"'consideração/atenção', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'consideração/atenção' em coreano?","explain":"'consideration/thoughtfulness' se diz '배려 (baeryeo)'."},
+  "fvocab-476": {"promptNative":"'존중 (jonjung)' significa...","options":["respeito (por alguém)","contexto","sensação de recompensa/de que valeu a pena","os valores/sistema de valores de alguém"],"explain":"'존중 (jonjung)' significa respeito (por alguém)."},
+  "fvocab-477": {"prompt":"'confiança', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'confiança' em coreano?","explain":"'trust/confidence' se diz '신뢰 (silloe)'."},
+  "fvocab-478": {"promptNative":"'경쟁 (gyeongjaeng)' significa...","options":["competência","preconceito/viés","princípio/regra geral","essência/verdadeira natureza"],"explain":"'경쟁 (gyeongjaeng)' significa competição."},
+  "fvocab-479": {"prompt":"'sacrifício', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'sacrifício' em coreano?","explain":"'sacrifice' se diz '희생 (huisaeng)'."},
+  "fvocab-480": {"promptNative":"'열정 (yeoljeong)' significa...","options":["paixão/entusiasmo","sacrifício","fundamento/base/evidência","os valores/sistema de valores de alguém"],"explain":"'열정 (yeoljeong)' significa paixão/entusiasmo."},
+  "fvocab-481": {"prompt":"'orgulho/amor-próprio (que pode ser ferido)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'orgulho/amor-próprio (que pode ser ferido)' em coreano?","explain":"'pride/ego (that can be wounded)' se diz '자존심 (jajonsim)'."},
+  "fvocab-482": {"promptNative":"'불안 (buran)' significa...","options":["ansiedade/inquietação","comunicação (mútua)","cosmovisão","confiança"],"explain":"'불안 (buran)' significa ansiedade/inquietação."},
+  "fvocab-483": {"prompt":"'tensão/nervosismo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'tensão/nervosismo' em coreano?","explain":"'tension/nervousness' se diz '긴장 (ginjang)'."},
+  "fvocab-484": {"promptNative":"'여유 (yeoyu)' significa...","options":["folga/serenidade/tranquilidade","empatia/afinidade","contradição","equilíbrio"],"explain":"'여유 (yeoyu)' significa folga/tranquilidade/margem."},
+  "fvocab-485": {"prompt":"'equilíbrio', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'equilíbrio' em coreano?","explain":"'balance/equilibrium' se diz '균형 (gyunhyeong)'."},
+  "fvocab-486": {"promptNative":"'보람 (boram)' significa...","options":["sensação de recompensa/de que valeu a pena","consideração/atenção","ansiedade/inquietação","competência"],"explain":"'보람 (boram)' significa sensação de recompensa/de valer a pena."},
+  "fvocab-487": {"prompt":"'compreensão/iluminação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'compreensão/iluminação' em coreano?","explain":"'realization/enlightenment' se diz '깨달음 (kkaedareum)'."},
+  "fvocab-488": {"promptNative":"'지혜 (jihye)' significa...","options":["sabedoria","preconceito/viés","respeito (por alguém)","princípio/regra geral"],"explain":"'지혜 (jihye)' significa sabedoria."},
+  "fvocab-489": {"prompt":"'fundamento/base/evidência', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'fundamento/base/evidência' em coreano?","explain":"'basis/grounds/evidence' se diz '근거 (geungeo)'."},
+  "fvocab-490": {"promptNative":"'원칙 (wonchik)' significa...","options":["princípio/regra geral","fenômeno","paixão/entusiasmo","essência/verdadeira natureza"],"explain":"'원칙 (wonchik)' significa princípio/regra prática."},
+  "fvocab-491": {"prompt":"'núcleo/cerne/ponto-chave', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'núcleo/cerne/ponto-chave' em coreano?","explain":"'core/crux/key point' se diz '핵심 (haeksim)'."},
+  "fvocab-492": {"promptNative":"'본질 (bonjil)' significa...","options":["essência/verdadeira natureza","folga/serenidade/tranquilidade","sensação de recompensa/de que valeu a pena","preconceito/viés"],"explain":"'본질 (bonjil)' significa essência/verdadeira natureza."},
+  "fvocab-493": {"prompt":"'conceito/noção', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'conceito/noção' em coreano?","explain":"'concept/notion' se diz '개념 (gaenyeom)'."},
+  "fvocab-494": {"promptNative":"'현실 (hyeonsil)' significa...","options":["realidade","disposição/inclinação/tendência","os valores/sistema de valores de alguém","sabedoria"],"explain":"'현실 (hyeonsil)' significa realidade."},
+  "fvocab-495": {"prompt":"'contradição', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'contradição' em coreano?","explain":"'contradiction' se diz '모순 (mosun)'."},
+  "fvocab-496": {"promptNative":"'한계 (hangye)' significa...","options":["limite/limitação","folga/serenidade/tranquilidade","os valores/sistema de valores de alguém","ponto de vista/perspectiva"],"explain":"'한계 (hangye)' significa limite/limitação."},
+  "fvocab-497": {"prompt":"'tendência', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'tendência' em coreano?","explain":"'tendency/trend' se diz '경향 (gyeonghyang)'."},
+  "fvocab-498": {"promptNative":"'현상 (hyeonsang)' significa...","options":["fenômeno","orgulho/amor-próprio (que pode ser ferido)","competência","consideração/atenção"],"explain":"'현상 (hyeonsang)' significa fenômeno."},
+  "fvocab-499": {"prompt":"'fator/causa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'fator/causa' em coreano?","explain":"'factor/cause' se diz '요인 (yoin)'."},
+  "fvocab-500": {"promptNative":"'배경 (baegyeong)' significa...","options":["antecedentes/pano de fundo/respaldo","sabedoria","contexto","tensão/nervosismo"],"explain":"'배경 (baegyeong)' significa contexto/pano de fundo/respaldo."},
+  "fvocab-501": {"prompt":"'contexto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'contexto' em coreano?","explain":"'context' se diz '맥락 (maengnak)'."},
+  "fvocab-502": {"promptNative":"'깨닫다 (kkaedatda)' significa...","options":["dar-se conta/chegar a compreender","enfrentar/lidar com","comparar","incluir/conter"],"explain":"'깨닫다 (kkaedatda)' significa perceber/dar-se conta."},
+  "fvocab-503": {"prompt":"'captar/entender/lidar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'captar/entender/lidar' em coreano?","explain":"'to grasp/figure out/get a handle on' se diz '파악하다 (paakhada)'."},
+  "fvocab-504": {"promptNative":"'판단하다 (pandanhada)' significa...","options":["julgar/determinar","analisar","esconder/ocultar","suportar/resistir/aguentar"],"explain":"'판단하다 (pandanhada)' significa julgar/determinar."},
+  "fvocab-505": {"prompt":"'analisar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'analisar' em coreano?","explain":"'to analyze' se diz '분석하다 (bunseokhada)'."},
+  "fvocab-506": {"promptNative":"'평가하다 (pyeonggahada)' significa...","options":["avaliar/valorizar","apontar/criticar","distinguir/diferenciar","suportar/resistir/aguentar"],"explain":"'평가하다 (pyeonggahada)' significa avaliar."},
+  "fvocab-507": {"prompt":"'comparar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'comparar' em coreano?","explain":"'to compare' se diz '비교하다 (bigyohada)'."},
+  "fvocab-508": {"promptNative":"'구별하다 (gubyeolhada)' significa...","options":["distinguir/diferenciar","superar","enfrentar/lidar com","comparar"],"explain":"'구별하다 (gubyeolhada)' significa distinguir/diferenciar."},
+  "fvocab-509": {"prompt":"'enfatizar/reforçar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'enfatizar/reforçar' em coreano?","explain":"'to emphasize/stress' se diz '강조하다 (gangjohada)'."},
+  "fvocab-510": {"promptNative":"'지적하다 (jijeokhada)' significa...","options":["apontar/criticar","revelar-se/vir à tona","distinguir/diferenciar","revelar/esclarecer/declarar (abertamente)"],"explain":"'지적하다 (jijeokhada)' significa apontar/criticar."},
+  "fvocab-511": {"prompt":"'incluir/conter', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'incluir/conter' em coreano?","explain":"'to include/contain' se diz '포함하다 (pohamhada)'."},
+  "fvocab-512": {"promptNative":"'극복하다 (geukbokhada)' significa...","options":["superar","manter/conservar","avaliar/valorizar","revelar/esclarecer/declarar (abertamente)"],"explain":"'극복하다 (geukbokhada)' significa superar."},
+  "fvocab-513": {"prompt":"'suportar/resistir/aguentar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'suportar/resistir/aguentar' em coreano?","explain":"'to endure/withstand/bear' se diz '견디다 (gyeondida)'."},
+  "fvocab-514": {"promptNative":"'버티다 (beotida)' significa...","options":["resistir/aguentar/perseverar","distinguir/diferenciar","revelar-se/vir à tona","resolver/solucionar"],"explain":"'버티다 (beotida)' significa resistir/aguentar firme."},
+  "fvocab-515": {"prompt":"'esconder/ocultar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'esconder/ocultar' em coreano?","explain":"'to hide/conceal' se diz '감추다 (gamchuda)'."},
+  "fvocab-516": {"promptNative":"'드러나다 (deureonada)' significa...","options":["revelar-se/vir à tona","superar","avaliar/valorizar","esconder/ocultar"],"explain":"'드러나다 (deureonada)' significa ser revelado/vir à tona."},
+  "fvocab-517": {"prompt":"'revelar/esclarecer/declarar (abertamente)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'revelar/esclarecer/declarar (abertamente)' em coreano?","explain":"'to reveal/clarify/state (openly)' se diz '밝히다 (balkida)'."},
+  "fvocab-518": {"promptNative":"'무너지다 (muneojida)' significa...","options":["colapsar/desabar/desmoronar","adaptar-se/ajustar-se","repetir","suportar/resistir/aguentar"],"explain":"'무너지다 (muneojida)' significa desmoronar/desabar."},
+  "fvocab-519": {"prompt":"'manter/conservar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'manter/conservar' em coreano?","explain":"'to maintain/keep up' se diz '유지하다 (yujihada)'."},
+  "fvocab-520": {"promptNative":"'적응하다 (jeogeunghada)' significa...","options":["adaptar-se/ajustar-se","incluir/conter","enfatizar/reforçar","suportar/resistir/aguentar"],"explain":"'적응하다 (jeogeunghada)' significa adaptar-se/ajustar-se."},
+  "fvocab-521": {"prompt":"'enfrentar/lidar com', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'enfrentar/lidar com' em coreano?","explain":"'to cope/deal with' se diz '대처하다 (daecheohada)'."},
+  "fvocab-522": {"promptNative":"'해결하다 (haegyeolhada)' significa...","options":["resolver/solucionar","resistir/aguentar/perseverar","enfatizar/reforçar","comparar"],"explain":"'해결하다 (haegyeolhada)' significa resolver/solucionar."},
+  "fvocab-523": {"prompt":"'repetir', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'repetir' em coreano?","explain":"'to repeat' se diz '반복하다 (banbokhada)'."},
+  "fvocab-524": {"promptNative":"'뛰어나다 (ttwieonada)' significa...","options":["ser notável/destacar-se","ser frio/racional (sem se deixar levar)","ser prudente/cuidadoso/reflexivo","ser válido/razoável/fundamentado"],"explain":"'뛰어나다 (ttwieonada)' significa destacar-se/sobressair."},
+  "fvocab-525": {"prompt":"'ser apropriado/adequado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser apropriado/adequado' em coreano?","explain":"'to be appropriate/apt' se diz '적절하다 (jeokjeolhada)'."},
+  "fvocab-526": {"promptNative":"'타당하다 (tadanghada)' significa...","options":["ser válido/razoável/fundamentado","ser amargo/agridoce","sentir-se magoado/decepcionado (por alguém próximo)","ser honesto/franco/sincero"],"explain":"'타당하다 (tadanghada)' significa ser válido/razoável/coerente."},
+  "fvocab-527": {"prompt":"'ser claro/definido', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser claro/definido' em coreano?","explain":"'to be clear/definite' se diz '명확하다 (myeonghwakada)'."},
+  "fvocab-528": {"promptNative":"'모호하다 (mohohada)' significa...","options":["ser vago/ambíguo","ser estrito/rigoroso","sentir-se magoado/decepcionado (por alguém próximo)","ser prudente/cuidadoso/reflexivo"],"explain":"'모호하다 (mohohada)' significa ser vago/ambíguo."},
+  "fvocab-529": {"prompt":"'ser sutil/delicado/complicado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser sutil/delicado/complicado' em coreano?","explain":"'to be subtle/delicate/tricky' se diz '미묘하다 (mimyohada)'."},
+  "fvocab-530": {"promptNative":"'엄격하다 (eomgyeokhada)' significa...","options":["ser estrito/rigoroso","ser vago/ambíguo","ser sereno/tranquilo (sob pressão)","ser honesto/franco/sincero"],"explain":"'엄격하다 (eomgyeokhada)' significa ser rigoroso/rígido."},
+  "fvocab-531": {"prompt":"'ser frio/racional (sem se deixar levar)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser frio/racional (sem se deixar levar)' em coreano?","explain":"'to be cool-headed/coldly rational' se diz '냉정하다 (naengjeonghada)'."},
+  "fvocab-532": {"promptNative":"'침착하다 (chimchakhada)' significa...","options":["ser sereno/tranquilo (sob pressão)","estar orgulhoso/cheio de silenciosa satisfação","ser apropriado/adequado","ser estrito/rigoroso"],"explain":"'침착하다 (chimchakhada)' significa ser sereno/manter a calma (sob pressão)."},
+  "fvocab-533": {"prompt":"'ser prudente/cuidadoso/reflexivo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser prudente/cuidadoso/reflexivo' em coreano?","explain":"'to be prudent/careful/deliberate' se diz '신중하다 (sinjunghada)'."},
+  "fvocab-534": {"promptNative":"'솔직하다 (soljikhada)' significa...","options":["ser honesto/franco/sincero","ser válido/razoável/fundamentado","ser estrito/rigoroso","ser notável/destacar-se"],"explain":"'솔직하다 (soljikhada)' significa ser honesto/franco."},
+  "fvocab-535": {"prompt":"'ser humilde/modesto', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser humilde/modesto' em coreano?","explain":"'to be humble/modest' se diz '겸손하다 (gyeomsonhada)'."},
+  "fvocab-536": {"promptNative":"'씁쓸하다 (sseupsseulhada)' significa...","options":["ser amargo/agridoce","ser notável/destacar-se","ser sutil/delicado/complicado","ser sereno/tranquilo (sob pressão)"],"explain":"'씁쓸하다 (sseupsseulhada)' significa ser amargo/agridoce."},
+  "fvocab-537": {"prompt":"'estar orgulhoso/cheio de silenciosa satisfação', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'estar orgulhoso/cheio de silenciosa satisfação' em coreano?","explain":"'to be proud/full of quiet satisfaction' se diz '뿌듯하다 (ppudeutada)'."},
+  "fvocab-538": {"promptNative":"'서운하다 (seounhada)' significa...","options":["sentir-se magoado/decepcionado (por alguém próximo)","ser frio/racional (sem se deixar levar)","ser válido/razoável/fundamentado","ser notável/destacar-se"],"explain":"'서운하다 (seounhada)' significa sentir-se magoado/decepcionado (por alguém próximo)."},
+  "fvocab-539": {"prompt":"'ser sincero/aflito/de coração', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser sincero/aflito/de coração' em coreano?","explain":"'to be earnest/desperate/heartfelt' se diz '간절하다 (ganjeolhada)'."},
+  "fvocab-540": {"promptNative":"'어쩌면 (eojjeomyeon)' significa...","options":["talvez/possivelmente (quem sabe)","como se/tal como","de fato/efetivamente; (será que) de verdade","logo agora/por que justamente este"],"explain":"'어쩌면 (eojjeomyeon)' significa talvez/quem sabe."},
+  "fvocab-541": {"prompt":"'de fato/efetivamente; (será que) de verdade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'de fato/efetivamente; (será que) de verdade' em coreano?","explain":"'indeed/sure enough; (I wonder) really' se diz '과연 (gwayeon)'."},
+  "fvocab-542": {"promptNative":"'아무래도 (amuraedo)' significa...","options":["em todo caso/ao que parece/provavelmente","nada menos que","de fato/efetivamente; (será que) de verdade","felizmente/por sorte"],"explain":"'아무래도 (amuraedo)' significa de todo modo/parece que/provavelmente."},
+  "fvocab-543": {"prompt":"'logo agora/por que justamente este', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'logo agora/por que justamente este' em coreano?","explain":"'of all times/why this one' se diz '하필 (hapil)'."},
+  "fvocab-544": {"promptNative":"'비록 (birok)' significa...","options":["embora/apesar de que","nada menos que","talvez/possivelmente (quem sabe)","felizmente/por sorte"],"explain":"'비록 (birok)' significa embora/ainda que."},
+  "fvocab-545": {"prompt":"'felizmente/por sorte', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'felizmente/por sorte' em coreano?","explain":"'fortunately/luckily' se diz '다행히 (dahaenghi)'."},
+  "fvocab-546": {"promptNative":"'무려 (muryeo)' significa...","options":["nada menos que","talvez/possivelmente (quem sabe)","de fato/efetivamente; (será que) de verdade","logo agora/por que justamente este"],"explain":"'무려 (muryeo)' significa nada menos que."},
+  "fvocab-547": {"prompt":"'como se/tal como', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'como se/tal como' em coreano?","explain":"'as if/just like' se diz '마치 (machi)'."},
+  "fvocab-548": {"promptNative":"'도저히 (dojeohi)' significa...","options":["(não) de jeito nenhum/de forma alguma","nada menos que","de fato/efetivamente; (será que) de verdade","felizmente/por sorte"],"explain":"'도저히 (dojeohi)' significa (não) de jeito nenhum."},
+  "fvocab-549": {"prompt":"'ainda/como sempre/como antes', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ainda/como sempre/como antes' em coreano?","explain":"'still/as ever/as before' se diz '여전히 (yeojeonhi)'."},
+  "fvocab-550": {"promptNative":"'반드시 (bandeusi)' significa...","options":["sem falta/com certeza/obrigatoriamente","(não) de jeito nenhum/de forma alguma","como se/tal como","felizmente/por sorte"],"explain":"'반드시 (bandeusi)' significa sem falta/com certeza."},
+  "fvocab-551": {"prompt":"'constantemente/de forma consistente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'constantemente/de forma consistente' em coreano?","explain":"'steadily/consistently' se diz '꾸준히 (kkujunhi)'."},
+  "fvocab-552": {"promptNative":"'아무리 (amuri)' significa...","options":["por mais que/não importa o quanto","o chamado/o que se chama","mesmo que/supondo","quem"],"explain":"'아무리 (amuri)' significa por mais que."},
+  "fvocab-553": {"prompt":"'mesmo que/supondo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'mesmo que/supondo' em coreano?","explain":"'even if/supposing' se diz '설령 (seollyeong)'."},
+  "fvocab-554": {"promptNative":"'어쩐지 (eojjeonji)' significa...","options":["de algum modo/com razão","o chamado/o que se chama","mesmo que/supondo","naturalmente/como deve ser"],"explain":"'어쩐지 (eojjeonji)' significa de algum jeito/não é à toa."},
+  "fvocab-555": {"prompt":"'o chamado/o que se chama', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'o chamado/o que se chama' em coreano?","explain":"'so-called/what is called' se diz '이른바 (ireunba)'."},
+  "fvocab-556": {"promptNative":"'취향 (chwihyang)' significa...","options":["gosto/preferência","fundamento/base/evidência","fenômeno","competência"],"explain":"'취향 (chwihyang)' significa gosto/preferência."},
+  "fvocab-557": {"prompt":"'disposição/inclinação/tendência', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'disposição/inclinação/tendência' em coreano?","explain":"'disposition/inclination/leaning' se diz '성향 (seonghyang)'."},
+  "fvocab-558": {"promptNative":"'정성 (jeongseong)' significa...","options":["cuidado dedicado/esforço de todo o coração","fator/causa","autenticidade/sinceridade","paixão/entusiasmo"],"explain":"'정성 (jeongseong)' significa dedicação/empenho de coração."},
+  "fvocab-559": {"prompt":"'vínculo/laços (entre pessoas)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'vínculo/laços (entre pessoas)' em coreano?","explain":"'bond/ties (between people)' se diz '유대 (yudae)'."},
+  "fvocab-560": {"promptNative":"'공감 (gonggam)' significa...","options":["empatia/afinidade","os valores/sistema de valores de alguém","tendência","limite/limitação"],"explain":"'공감 (gonggam)' significa empatia/identificação."},
+  "fvocab-561": {"prompt":"'autenticidade/sinceridade', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'autenticidade/sinceridade' em coreano?","explain":"'authenticity/sincerity' se diz '진정성 (jinjeongseong)'."},
+  "fvocab-562": {"promptNative":"'포용력 (poyongnyeok)' significa...","options":["capacidade de acolher/aceitar os outros","vínculo/laços (entre pessoas)","sabedoria","antecedentes/pano de fundo/respaldo"],"explain":"'포용력 (poyongnyeok)' significa capacidade de acolher/aceitar os outros."},
+  "fvocab-563": {"prompt":"'sensibilidade emocional/sentimento', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'sensibilidade emocional/sentimento' em coreano?","explain":"'emotional sensibility/sentiment' se diz '정서 (jeongseo)'."},
+  "fvocab-564": {"promptNative":"'여운 (yeoun)' significa...","options":["ressonância persistente/gostinho residual (de um momento)","magnanimidade/tolerância generosa","autorreflexão/introspecção","paradoxo"],"explain":"'여운 (yeoun)' significa ressonância que fica/gostinho que permanece (de um momento)."},
+  "fvocab-565": {"prompt":"'apego persistente/relutância em largar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'apego persistente/relutância em largar' em coreano?","explain":"'lingering attachment/reluctance to let go' se diz '미련 (miryeon)'."},
+  "fvocab-566": {"promptNative":"'향수 (hyangsu)' significa...","options":["nostalgia/saudade de casa; perfume (mesmo som)","margem/espaço (para)","intuição","firme convicção pessoal"],"explain":"'향수 (hyangsu)' significa nostalgia/saudade de casa; perfume (mesmo som)."},
+  "fvocab-567": {"prompt":"'magnanimidade/tolerância generosa', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'magnanimidade/tolerância generosa' em coreano?","explain":"'magnanimity/generous tolerance' se diz '아량 (aryang)'."},
+  "fvocab-568": {"promptNative":"'절제 (jeolje)' significa...","options":["autocontrole/moderação","margem/espaço (para)","apego persistente/relutância em largar","metáfora"],"explain":"'절제 (jeolje)' significa autocontrole/moderação."},
+  "fvocab-569": {"prompt":"'autorreflexão/introspecção', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'autorreflexão/introspecção' em coreano?","explain":"'self-reflection/introspection' se diz '성찰 (seongchal)'."},
+  "fvocab-570": {"promptNative":"'안목 (anmok)' significa...","options":["bom olho/bom senso","nostalgia/saudade de casa; perfume (mesmo som)","um modelo/exemplo a seguir","apego persistente/relutância em largar"],"explain":"'안목 (anmok)' significa olho crítico/bom discernimento."},
+  "fvocab-571": {"prompt":"'firme convicção pessoal', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'firme convicção pessoal' em coreano?","explain":"'firm personal conviction' se diz '소신 (sosin)'."},
+  "fvocab-572": {"promptNative":"'신념 (sinnyeom)' significa...","options":["crença/convicção","margem/espaço (para)","nostalgia/saudade de casa; perfume (mesmo som)","ponto cego/brecha legal"],"explain":"'신념 (sinnyeom)' significa crença/convicção."},
+  "fvocab-573": {"prompt":"'identidade (senso de si mesmo)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'identidade (senso de si mesmo)' em coreano?","explain":"'identity (sense of self)' se diz '정체성 (jeongcheseong)'."},
+  "fvocab-574": {"promptNative":"'직관 (jikgwan)' significa...","options":["intuição","nuance/matiz de significado","firme convicção pessoal","costume/convenção"],"explain":"'직관 (jikgwan)' significa intuição."},
+  "fvocab-575": {"prompt":"'paradoxo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'paradoxo' em coreano?","explain":"'paradox' se diz '역설 (yeokseol)'."},
+  "fvocab-576": {"promptNative":"'은유 (eunyu)' significa...","options":["metáfora","bom olho/bom senso","autorreflexão/introspecção","um modelo/exemplo a seguir"],"explain":"'은유 (eunyu)' significa metáfora."},
+  "fvocab-577": {"prompt":"'nuance/matiz de significado', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'nuance/matiz de significado' em coreano?","explain":"'nuance/shade of meaning' se diz '뉘앙스 (nwiangseu)'."},
+  "fvocab-578": {"promptNative":"'관행 (gwanhaeng)' significa...","options":["prática estabelecida/costume (esp. institucional)","sensibilidade emocional/sentimento","metáfora","firme convicção pessoal"],"explain":"'관행 (gwanhaeng)' significa praxe/costume estabelecido (esp. institucional)."},
+  "fvocab-579": {"prompt":"'costume/convenção', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'costume/convenção' em coreano?","explain":"'custom/convention' se diz '관습 (gwanseup)'."},
+  "fvocab-580": {"promptNative":"'여지 (yeoji)' significa...","options":["margem/espaço (para)","ressonância persistente/gostinho residual (de um momento)","magnanimidade/tolerância generosa","paradoxo"],"explain":"'여지 (yeoji)' significa espaço/margem (para)."},
+  "fvocab-581": {"prompt":"'ponto cego/brecha legal', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ponto cego/brecha legal' em coreano?","explain":"'blind spot/loophole' se diz '맹점 (maengjeom)'."},
+  "fvocab-582": {"promptNative":"'귀감 (gwigam)' significa...","options":["um modelo/exemplo a seguir","metáfora","margem/espaço (para)","paradoxo"],"explain":"'귀감 (gwigam)' significa um modelo/exemplo a seguir."},
+  "fvocab-583": {"prompt":"'abarcar/reunir/englobar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'abarcar/reunir/englobar' em coreano?","explain":"'to encompass/bring together/embrace' se diz '아우르다 (aureuda)'."},
+  "fvocab-584": {"promptNative":"'좌우하다 (jwauhada)' significa...","options":["determinar/influenciar/ter domínio sobre","compreender/considerar/avaliar","estar enviesado/pender demais para um lado","abarcar/reunir/englobar"],"explain":"'좌우하다 (jwauhada)' significa determinar/influenciar decisivamente."},
+  "fvocab-585": {"prompt":"'evocar/suscitar (um sentimento)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'evocar/suscitar (um sentimento)' em coreano?","explain":"'to evoke/bring forth (a feeling)' se diz '자아내다 (jaanaeda)'."},
+  "fvocab-586": {"promptNative":"'되새기다 (doesaegida)' significa...","options":["ruminar/refletir/matutar","compreender/considerar/avaliar","deixar passar/negligenciar","ajustar-se/concordar/coincidir (com)"],"explain":"'되새기다 (doesaegida)' significa ruminar/matutar."},
+  "fvocab-587": {"prompt":"'compreender/considerar/avaliar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'compreender/considerar/avaliar' em coreano?","explain":"'to fathom/consider/take the measure of' se diz '헤아리다 (hearida)'."},
+  "fvocab-588": {"promptNative":"'가늠하다 (ganeumhada)' significa...","options":["calibrar/avaliar/estimar","compreender/considerar/avaliar","abarcar/reunir/englobar","determinar/influenciar/ter domínio sobre"],"explain":"'가늠하다 (ganeumhada)' significa avaliar/medir/estimar."},
+  "fvocab-589": {"prompt":"'deixar passar/negligenciar', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'deixar passar/negligenciar' em coreano?","explain":"'to overlook/neglect' se diz '간과하다 (gangwahada)'."},
+  "fvocab-590": {"promptNative":"'치우치다 (chiuchida)' significa...","options":["estar enviesado/pender demais para um lado","compreender/considerar/avaliar","originar-se/provir de","ruminar/refletir/matutar"],"explain":"'치우치다 (chiuchida)' significa ser tendencioso/pender demais para um lado."},
+  "fvocab-591": {"prompt":"'provocar/causar (ger. algo ruim)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'provocar/causar (ger. algo ruim)' em coreano?","explain":"'to bring about/cause (usu. bad)' se diz '초래하다 (chaerahada)'."},
+  "fvocab-592": {"promptNative":"'비롯되다 (birotdoeda)' significa...","options":["originar-se/provir de","calibrar/avaliar/estimar","estar enviesado/pender demais para um lado","ajustar-se/concordar/coincidir (com)"],"explain":"'비롯되다 (birotdoeda)' significa originar-se/decorrer de."},
+  "fvocab-593": {"prompt":"'ajustar-se/concordar/coincidir (com)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ajustar-se/concordar/coincidir (com)' em coreano?","explain":"'to conform/accord/match up (with)' se diz '부합하다 (buhaphada)'."},
+  "fvocab-594": {"promptNative":"'마땅하다 (mattanghada)' significa...","options":["ser apropriado/devido/o correto","ser especial/particular (de cuidado, laços)","ser imenso/profundo (de influência)","ser inútil/em vão"],"explain":"'마땅하다 (mattanghada)' significa ser cabível/apropriado/justo."},
+  "fvocab-595": {"prompt":"'ser excepcional/destacar-se', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser excepcional/destacar-se' em coreano?","explain":"'to be exceptional/set apart' se diz '남다르다 (namdareuda)'."},
+  "fvocab-596": {"promptNative":"'각별하다 (gakbyeolhada)' significa...","options":["ser especial/particular (de cuidado, laços)","ser inadequado/insuficiente","ser apropriado/devido/o correto","ser efêmero/passageiro/vão"],"explain":"'각별하다 (gakbyeolhada)' significa ser especial/particular (de cuidado, laços)."},
+  "fvocab-597": {"prompt":"'ser imenso/profundo (de influência)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser imenso/profundo (de influência)' em coreano?","explain":"'to be immense/profound (of influence)' se diz '지대하다 (jidaehada)'."},
+  "fvocab-598": {"promptNative":"'부질없다 (bujireopda)' significa...","options":["ser inútil/em vão","ser terno/comovente/nostalgicamente afetuoso","ser inadequado/insuficiente","ser excepcional/destacar-se"],"explain":"'부질없다 (bujireopda)' significa ser inútil/em vão."},
+  "fvocab-599": {"prompt":"'ser efêmero/passageiro/vão', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser efêmero/passageiro/vão' em coreano?","explain":"'to be fleeting/transient/vain' se diz '덧없다 (deodeopda)'."},
+  "fvocab-600": {"promptNative":"'애틋하다 (aeteutada)' significa...","options":["ser terno/comovente/nostalgicamente afetuoso","ser inadequado/insuficiente","ser especial/particular (de cuidado, laços)","ser imenso/profundo (de influência)"],"explain":"'애틋하다 (aeteutada)' significa ser terno/comovente/carinhosamente nostálgico."},
+  "fvocab-601": {"prompt":"'ser inadequado/insuficiente', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'ser inadequado/insuficiente' em coreano?","explain":"'to be inadequate/falling short' se diz '미흡하다 (miheupada)'."},
+  "fvocab-602": {"promptNative":"'좀처럼 (jomcheoreom)' significa...","options":["dificilmente/raramente","deliberadamente/fingindo","certamente/sem dúvida/com toda a probabilidade","no fim/finalmente (as coisas chegaram a)"],"explain":"'좀처럼 (jomcheoreom)' significa quase nunca/raramente."},
+  "fvocab-603": {"prompt":"'nunca/de jeito nenhum', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'nunca/de jeito nenhum' em coreano?","explain":"'never/by no means' se diz '결코 (gyeolko)'."},
+  "fvocab-604": {"promptNative":"'필시 (pilsi)' significa...","options":["certamente/sem dúvida/com toda a probabilidade","bastante/consideravelmente (literário)","dificilmente/raramente","deliberadamente/fingindo"],"explain":"'필시 (pilsi)' significa certamente/sem dúvida."},
+  "fvocab-605": {"prompt":"'deliberadamente/fingindo', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'deliberadamente/fingindo' em coreano?","explain":"'deliberately/putting on an air of' se diz '짐짓 (jimjit)'."},
+  "fvocab-606": {"promptNative":"'자못 (jamot)' significa...","options":["bastante/consideravelmente (literário)","nunca/de jeito nenhum","no fim/finalmente (as coisas chegaram a)","dificilmente/raramente"],"explain":"'자못 (jamot)' significa bastante/consideravelmente (literário)."},
+  "fvocab-607": {"prompt":"'no fim/finalmente (as coisas chegaram a)', 한국어로 뭐라고 해요? (hangugeoro mworago haeyo?)","promptNative":"Como se diz 'no fim/finalmente (as coisas chegaram a)' em coreano?","explain":"'in the end/finally (things came to)' se diz '급기야 (geupgiya)'."},
+  "fvocab-608": {"promptNative":"'응당 (eungdang)' significa...","options":["naturalmente/como deve ser","durante/por (um período)","classificador para folhas planas","você (informal)"],"explain":"'응당 (eungdang)' significa naturalmente/como convém."},
 };

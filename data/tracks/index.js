@@ -14,7 +14,8 @@ import ruForEn from "./ruForEn";
 import jaForEn from "./jaForEn";
 import zhForEn from "./zhForEn";
 import koForEn from "./koForEn";
-import enForIt from "./enForIt";
+import enUsForIt from "./enUsForIt";
+import enGbForIt from "./enGbForIt";
 import enUsForFr from "./enUsForFr";
 import enGbForFr from "./enGbForFr";
 
@@ -35,7 +36,8 @@ export const TRACKS = {
   [jaForEn.id]: jaForEn,
   [zhForEn.id]: zhForEn,
   [koForEn.id]: koForEn,
-  [enForIt.id]: enForIt,
+  [enUsForIt.id]: enUsForIt,
+  [enGbForIt.id]: enGbForIt,
   [enUsForFr.id]: enUsForFr,
   [enGbForFr.id]: enGbForFr,
 };
@@ -74,7 +76,7 @@ export function listNativeLanguages() {
 // experience. This grows by ONE per v3.x minor, matching the release roadmap:
 // v3.0 English · v3.1 Spanish · v3.2 Portuguese · v3.3 French · … (see
 // claude/squirrelingo_v3.x_to_v4.0.0_deployment_plan.md).
-const RELEASED_SOURCE_LANGS = new Set(["en", "es", "pt", "fr"]);
+const RELEASED_SOURCE_LANGS = new Set(["en", "es", "pt", "fr", "it"]);
 
 // Tracks available to learn, given the person's native language.
 //
@@ -85,7 +87,7 @@ const RELEASED_SOURCE_LANGS = new Set(["en", "es", "pt", "fr"]);
 //    released (RELEASED_SOURCE_LANGS) and whose base language differs from the
 //    target — you don't learn your own language.
 //  • SOURCE-SPECIFIC tracks (`sourceSpecific: true`, the bespoke English-teaching
-//    tracks enForIt/enUsForEs/enGbForEs) carry content authored for one native
+//    tracks enUsForIt/enGbForIt/enUsForEs/enGbForEs) carry content authored for one native
 //    audience and stay locked to that `nativeLang`.
 //
 // English speakers additionally get English (UK) as a genuinely comparative

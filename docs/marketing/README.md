@@ -18,6 +18,7 @@ imported by any component. App-facing brand files stay under `public/` (`faceboo
 | `v3.1.0-release-square.png` | 2048×2048 | v3.1.0 Spanish native-language release — square feed post. |
 | `v3.1.0-release-banner.png` | 960×501 | v3.1.0 Spanish release — wide/link-preview variant of the same post. |
 | `v3.2.0-release-square.png` | 1080×1080 | v3.2.0 Portuguese native-language release — square feed post. First release post using the rebranded duo mascots. |
+| `v3.3.0-release-square.png` | 1080×1080 | v3.3.0 French native-language release — square feed post. |
 | `brand-rebrand-announcement-square.png` | 1080×1080 | "New look · same nuts" rebrand announcement. Not tied to a version. |
 
 ### `covers/` — Facebook group covers
@@ -32,10 +33,17 @@ brand set.
 
 ### `sources/` — regenerable originals
 
+`sources/fonts/` holds the vendored webfonts (Baloo 2 500/600/700/800 and Nunito 600/700, latin
+subset, from the `@fontsource` npm packages). The sources reference them with relative
+`@font-face` rules instead of a Google Fonts `<link>`, so **the art renders identically offline and
+in any sandbox**. Do not reintroduce the remote link: where `fonts.googleapis.com` is unreachable
+the page silently falls back to a wider system face, and the release square overflows its card.
+
 | File | Produces |
 |---|---|
 | `forest-cover.html` | `covers/forest-cover-1640x856.png` |
 | `v3.2.0-release-square.html` | `social/v3.2.0-release-square.png` |
+| `v3.3.0-release-square.html` | `social/v3.3.0-release-square.png` |
 
 ## Naming convention
 
@@ -65,6 +73,20 @@ Open in a browser and screenshot the `#banner` div (1640×856) at `deviceScaleFa
 Update `FAMS` each time a language reaches native mode so the forest matches reality.
 This file is identical to the project-knowledge copy `claude/squirrelingo_forest_cover.html`;
 **this one is now canonical.**
+
+### `v3.<n>.0-release-square.html`
+Screenshot the `.card` div at 1080×1080. `v3.3.0` was made by copying `v3.2.0`'s source and
+changing only the version pill, flags, eyebrow, headline, subhead, regional card and CTA — the
+mascot SVGs are carried over byte-identically, so the art never drifts between releases.
+
+**Fonts are vendored (`sources/fonts/`), so no network is needed** — screenshot from anywhere.
+Headless Chromium works: point it at the file, wait for fonts, screenshot the `.card` element.
+
+⚠️ **`v3.2.0-release-square.html` does not reproduce its own PNG.** Its type is uniformly ~1.5×
+larger than whatever produced `social/v3.2.0-release-square.png`, so rendering it 1:1 overflows the
+card badly (headline wraps and collides with the URL pill). The committed PNG is correct; the
+source drifted after export. **Use `v3.3.0-release-square.html` as the template** — its layout is
+solved and verified to compose at 1080×1080, with a 22px gap between the CTA and the URL pill.
 
 ### `v3.2.0-release-square.html`
 Self-contained: brand gradient, inline duo-body and duo-heads SVGs, Baloo 2 pulled from

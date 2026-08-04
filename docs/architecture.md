@@ -383,11 +383,13 @@ manual** and are never merged as migration files for CI to pick up.
 
 ## 11. Client-side systems
 
-Five global widgets mount once in `app/layout.js`:
+Six global widgets mount once in `app/layout.js`:
 
 - **`VersionWatcher`** — polls `version.json` + the release-ready marker; surfaces "update available" only when both agree (§9).
 - **`RequireUsernameGate`** / **`RequireLegalGate`** — force username + ToS/PP acceptance before use.
-- **`WelcomePopup`** — versioned first-run welcome (`welcomeVersion.js`).
+- **`GuideOverlay`** — versioned first-run intro tour (`guideVersion.js`), running the `GuideTour`
+  carousel. Replaced `WelcomePopup` in v3.2.
+- **`NavDepthTracker`** — maintains the in-app back/home depth state (#92) via `navDepth.js`.
 - **`GlobalErrorLogger`** — captures crashes/unhandled errors into the same pipeline as bug reports (`errorReporting.js` → `/api/log-error`).
 
 Other notable client pieces: **`SettingsPanel.js`** (the whole settings surface —
