@@ -160,13 +160,26 @@ never guesses it**; it only refuses a version that isn't ahead of what's on `mai
 
 Add `--dry-run` to see every check without writing, archiving or pushing anything.
 
+**Before you get here, use the fast one:**
+
+```
+npm run release:preflight 3.5.0
+```
+
+Same structural checks, no build, one second, writes nothing. It names the changelog entry,
+the square, the cover acorn and the announcement copy if any are missing. **The art and the
+announcement are authored by Claude, so this is the command that belongs in the release work
+— not at release time.** By the time you run `beta-pre-release`, preflight should already be
+green.
+
 **What it asserts** (all must pass, or nothing is written):
 
 | | |
 |---|---|
 | changelog | every fragment in `unreleased/` declares a target version, and none targets a version older than this release |
 | `lib/version.js` | has a `CHANGELOG` **and** `INTERNAL_CHANGELOG` entry for the version, and **every user-facing bullet carries every released source language** (parsed with acorn, not regex) |
-| art | the release square exists, and when the release **adds a source language**, that language's acorn is `full` in `forest-cover.html` and the cover PNG changed |
+| square | exists for every X.Y release, with its HTML source alongside it |
+| forest cover | **every acorn matches what the repo ships** — released sources gold, shipping courses brown (never pale), nothing claiming more than the catalogue backs, no acorn on a sapling — and when this release added a source language *or a course*, the PNG was re-rendered. Checked against the catalogue, not just the diff, so the cover can't drift across releases that each looked fine. |
 | build | `npm run verify:l10n` · `eslint` 0 errors · `audit-i18n-columns` reporting *nothing skipped* · a full `next build` |
 
 **What it does:** bumps `CURRENT_VERSION`, runs `rollup-changelog --archive` for

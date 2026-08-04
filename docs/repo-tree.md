@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 564 tracked files.
+> 569 tracked files.
 
 ```
 .env.local.example
@@ -298,6 +298,9 @@ docs/language-review/pipeline/ingest.py
 docs/language-review/pipeline/render_email.mjs
 docs/manual-runbook.md
 docs/marketing/README.md
+docs/marketing/announcements/README.md
+docs/marketing/announcements/v3.3.0.md
+docs/marketing/announcements/v3.4.0.md
 docs/marketing/covers/forest-cover-1640x856.png
 docs/marketing/social/brand-rebrand-announcement-square.png
 docs/marketing/social/v3.0.0-what-the-app-offers.jpg
@@ -508,6 +511,8 @@ scripts/l10n-backfill/validate.py
 scripts/prune-local-tts.mjs
 scripts/publish-ready.mjs
 scripts/release-checks.js
+scripts/release-preflight.mjs
+scripts/render-marketing.mjs
 scripts/rollup-changelog.mjs
 scripts/smoke-check.mjs
 scripts/sweep-tts.mjs

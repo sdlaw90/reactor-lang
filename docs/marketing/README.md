@@ -32,6 +32,19 @@ Note: `public/facebook-banner.png` (1640×624) is a *different* asset — the pl
 banner from the icon/PWA rebrand pass. It stays in `public/` because it's part of the shipped
 brand set.
 
+### `announcements/` — the postable copy
+
+| File | Used for |
+|---|---|
+| `v3.3.0.md` | French release — posted 2026-08-03 |
+| `v3.4.0.md` | Italian release — **not yet posted** |
+
+**Canonical, and asserted.** The copy used to live only in project knowledge, where
+`deploy <tier>-pre-release` could not see it, so "the post exists" was a printed reminder.
+An X.Y release now refuses to proceed without `v<version>.md` here. Whether it has been
+*posted* is deliberately not gated — the repo has no signal for that, and asserting it would
+be a check that can never fail.
+
 ### `sources/` — regenerable originals
 
 `sources/fonts/` holds the vendored webfonts (Baloo 2 500/600/700/800 and Nunito 600/700, latin
@@ -62,17 +75,58 @@ Source HTML keeps the same stem as the PNG it produces, so the pair is obvious.
 
 ## Regenerating
 
+### Both, in one command
+
+```
+npm run art:render              # the forest cover
+npm run art:render 3.5.0        # the cover + that release's square
+```
+
+Vendored fonts, no network, deterministic — re-rendering the committed sources reproduces the
+committed PNGs byte-for-byte. It falls back to whatever Chromium build is on disk when the
+pinned Playwright browser is missing, so it works in a cloud sandbox too.
+
+**Rendering is not checking.** It reports the element's measured size, and size is not
+correctness — v3.4's "13" rendered as "1✦3" at a perfect 1080×1080. Open the PNG.
+
 ### `forest-cover.html`
 Open in a browser and screenshot the `#banner` div (1640×856) at `deviceScaleFactor`
 1 / 2 / 3 for FB-size / 2× / 3×. Everything data-driven lives in the inline `<script>`:
 
-- `FAMS` — one entry per language family. `built: 1` renders a full tree;
-  `leafs: [{ ab: "XX" }]` places a language acorn, `acorn: "full"` = gold (native mode)
-  vs. brown (learnable).
+- `FAMS` — one entry per language family. `built: 1` renders a full tree (a family with no
+  language yet stays a sapling — "family coming"); `leafs: [{ ab: "XX" }]` places a language
+  acorn. Three acorn states:
+
+  | `acorn:` | Looks like | Means |
+  |---|---|---|
+  | `"full"` | gold | **native mode** — the app itself speaks it (`RELEASED_SOURCE_LANGS`) |
+  | `"learnable"` *(the default — omit it)* | brown | **a course ships for it** |
+  | `"planned"` | pale, dashed rim | **named in this family, not available yet** |
+
+  `"planned"` exists because a family can hold more than one language while only some are
+  built — Germanic will hold Dutch and Swedish long before either is a course. Without it the
+  only options were "claim it ships" or "leave it off the map", and leaving it off makes the
+  family look finished.
 - The squirrel `items.push(...)` lines — placement of the mascot characters.
 - `SHOW_ALL_FULL` — toggle for a collision-preview render with every tree grown.
+- The legend is a one-line bar flush to the **top-right**. It sits there because Facebook's
+  narrow crop cuts it off — which is fine, it is a nicety rather than the message — and
+  because the canopy grows upward as families graduate, so anything lower gets covered.
 
-Update `FAMS` each time a language reaches native mode so the forest matches reality.
+**The cover changes more often than a native-language release.** Three distinct events oblige
+it, and only the first is a v3.x source release:
+
+| Event | What changes on the cover |
+|---|---|
+| a source language reaches native mode | its acorn brown → **gold** |
+| a new course ships | a **brown acorn** appears |
+| …and it is the first in its family | that family's sapling → **full tree** (`built: 1`) |
+
+None of this is on the honour system. `release:preflight` parses `FAMS` and compares every
+acorn against the repo — released sources must be gold, shipping courses must not be pale, an
+acorn may not claim more than the catalogue backs, and no acorn may hang on a sapling. It fails
+loudly when it cannot parse the table, rather than reporting clean on a file it never read.
+
 This file is identical to the project-knowledge copy `claude/squirrelingo_forest_cover.html`;
 **this one is now canonical.**
 
@@ -112,5 +166,17 @@ Palette, mascot geometry, and the reusable head/body SVG source of truth live in
 
 1. Drop the exported image in `social/` (or `covers/`) using the convention above.
 2. If it was built from HTML, drop that alongside it in `sources/` with the matching stem.
-3. Add a row to the table in this README.
-4. Commit with the release it belongs to.
+3. Write the post copy to `announcements/v<version>.md`.
+4. Add a row to the table in this README.
+5. Commit with the release it belongs to.
+
+## Checking what a release still owes
+
+```
+npm run release:preflight 3.5.0
+```
+
+One second, writes nothing, and names every missing piece — square, source, cover acorn,
+announcement copy, changelog entry. **Run it while the release work is being finished**, not
+at release time: `deploy <tier>-pre-release` ends by pushing, so anything authored after it
+misses the release by construction. That is exactly how v3.4.0's art got stranded.

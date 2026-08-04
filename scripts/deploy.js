@@ -187,7 +187,8 @@ if (IS_PRE) {
   console.log(
     `\nPreparing v${wanted} for ${TIER.target} (${TIER.label}) — ${shape.bump} bump from ` +
       `v${shape.previousVersion || "?"}` +
-      (shape.addedLangs.length ? `, adds source language(s): ${shape.addedLangs.join(", ")}` : "") +
+      (shape.addedLangs.length ? `, native mode: ${shape.addedLangs.join(", ")}` : "") +
+      (shape.addedTargets.length ? `, new courses: ${shape.addedTargets.join(", ")}` : "") +
       (DRY_RUN ? "   [DRY RUN — nothing will be written or pushed]" : "")
   );
 
@@ -236,9 +237,18 @@ if (IS_PRE) {
   console.log(`\n✓ v${wanted} is prepared and pushed to ${TIER.source}.`);
   console.log("\nREMAINING MANUAL STEPS — these cannot be automated:");
   if (shape.artRequired) {
-    console.log(`  • Post the announcement (claude/squirrelingo_v${wanted}_announcement.md) —`);
+    console.log(`  • Post the announcement — docs/marketing/announcements/v${wanted}.md`);
     console.log("    English broadly, the new language into that language's groups.");
-    console.log("  • Set the Facebook page cover to docs/marketing/covers/forest-cover-1640x856.png.");
+  }
+  // Only worth saying when the cover actually changed. Telling someone to re-upload an
+  // identical image every release is how a checklist item becomes background noise.
+  if (shape.coverRequired) {
+    const why = [
+      ...shape.addedLangs.map((l) => `${l.toUpperCase()} turned gold`),
+      ...shape.addedTargets.map((l) => `${l.toUpperCase()} became learnable`),
+    ].join(", ");
+    console.log(`  • Set the Facebook page cover — docs/marketing/covers/forest-cover-1640x856.png`);
+    console.log(`    (${why}; the live cover still says otherwise.)`);
   }
   console.log(`  • Wait for CI to go green on ${TIER.source}, then: npm run deploy ${TIER_NAME}`);
   console.log(`    (that stage checks CI itself and will refuse while it is red or running.)`);

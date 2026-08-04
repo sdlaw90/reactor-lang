@@ -27,9 +27,12 @@
   .headline .g{color:#BFF7D6;}
   .sub{position:absolute;left:52px;top:242px;z-index:5;font-family:'Nunito',system-ui,sans-serif;font-weight:700;font-size:15px;color:#EAFBF1;max-width:425px;line-height:1.4;text-shadow:0 2px 10px rgba(8,26,18,1);}
   .pill{position:absolute;left:52px;top:296px;z-index:5;display:inline-flex;align-items:center;gap:8px;font-family:'Nunito',system-ui,sans-serif;font-weight:700;font-size:15px;color:#FFFFFF;background:rgba(20,50,36,.5);border:2px solid rgba(255,255,255,.6);border-radius:999px;padding:6px 14px;}
-  .legend{position:absolute;right:30px;top:100px;z-index:5;display:flex;flex-direction:column;gap:8px;align-items:flex-start;font-family:'Nunito',system-ui,sans-serif;font-weight:700;font-size:15px;color:#FFFFFF;background:rgba(24,44,30,.72);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:11px 16px;}
+  /* One line, hard against the top edge on the right. Facebook's narrow banner crop cuts
+     the top of this image off entirely, and the canopy grows upward every release — a
+     stacked box parked mid-canvas was going to be swallowed by trees sooner or later. */
+  .legend{position:absolute;right:26px;top:0;z-index:5;display:flex;flex-direction:row;gap:22px;align-items:center;font-family:'Nunito',system-ui,sans-serif;font-weight:700;font-size:15px;color:#FFFFFF;background:rgba(24,44,30,.72);border:1px solid rgba(255,255,255,.22);border-top:none;border-radius:0 0 16px 16px;padding:8px 20px 9px;}
   .legend span{display:flex;align-items:center;gap:9px;white-space:nowrap;}
-  .legend .ic{position:static;width:30px;height:30px;flex:none;}
+  .legend .ic{position:static;width:26px;height:26px;flex:none;}
 </style>
 </head>
 <body>
@@ -44,9 +47,10 @@
   <div class="sub">Fast, friendly, ADHD-built practice — new languages sprouting every release. 🌱</div>
   <div class="pill">🌐 squirrelingo.vercel.app</div>
   <div class="legend">
-    <span><svg class="ic" viewBox="0 0 26 26"><rect x="12" y="3.4" width="2.2" height="3.4" rx="1.1" fill="#33220f"/><path d="M6.4 11 a6.6 7 0 0 0 13.2 0 Z" fill="#5E3E24" stroke="#33220f" stroke-width="0.7"/><ellipse cx="13" cy="10.4" rx="7.7" ry="3.9" fill="#4a3018"/><path d="M5.3 10.4 a7.7 3.9 0 0 1 15.4 0" fill="none" stroke="#D8B98A" stroke-width="1"/><text x="13" y="16.7" text-anchor="middle" font-family="'Baloo 2'" font-weight="800" font-size="9" fill="#ffffff">AB</text></svg> Brown acorn = learnable</span>
-    <span><svg class="ic" viewBox="0 0 26 26"><rect x="12" y="3.4" width="2.2" height="3.4" rx="1.1" fill="#b5820f"/><path d="M6.4 11 a6.6 7 0 0 0 13.2 0 Z" fill="#FFD23F" stroke="#B8860B" stroke-width="0.7"/><ellipse cx="13" cy="10.4" rx="7.7" ry="3.9" fill="#EDBE2A"/><path d="M5.3 10.4 a7.7 3.9 0 0 1 15.4 0" fill="none" stroke="#FCE486" stroke-width="1"/><text x="13" y="16.6" text-anchor="middle" font-family="'Baloo 2'" font-weight="800" font-size="8.4" fill="#5a3d10">AB</text></svg> Gold acorn = native mode</span>
-    <span><svg class="ic" viewBox="0 0 26 26"><path d="M13 23.5 L13 9" stroke="#8a5f37" stroke-width="2.4" stroke-linecap="round"/><path d="M13 15 Q8 14 5.5 9.5" stroke="#8a5f37" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M13 13 Q18 12 20.5 7.5" stroke="#8a5f37" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M5.5 9.5 Q3.4 4.8 6.6 3.4 Q8.6 7 5.5 9.5 Z" fill="#58c88a"/><path d="M20.5 7.5 Q22.6 2.8 19.4 1.4 Q17.4 5 20.5 7.5 Z" fill="#58c88a"/><path d="M13 9 Q11.4 4 13 1.4 Q14.6 4 13 9 Z" fill="#6bd096"/></svg> Baby tree = coming</span>
+    <span><svg class="ic" viewBox="0 0 26 26"><rect x="12" y="3.4" width="2.2" height="3.4" rx="1.1" fill="#33220f"/><path d="M6.4 11 a6.6 7 0 0 0 13.2 0 Z" fill="#5E3E24" stroke="#33220f" stroke-width="0.7"/><ellipse cx="13" cy="10.4" rx="7.7" ry="3.9" fill="#4a3018"/><path d="M5.3 10.4 a7.7 3.9 0 0 1 15.4 0" fill="none" stroke="#D8B98A" stroke-width="1"/><text x="13" y="16.7" text-anchor="middle" font-family="'Baloo 2'" font-weight="800" font-size="9" fill="#ffffff">AB</text></svg> learnable</span>
+    <span><svg class="ic" viewBox="0 0 26 26"><rect x="12" y="3.4" width="2.2" height="3.4" rx="1.1" fill="#b5820f"/><path d="M6.4 11 a6.6 7 0 0 0 13.2 0 Z" fill="#FFD23F" stroke="#B8860B" stroke-width="0.7"/><ellipse cx="13" cy="10.4" rx="7.7" ry="3.9" fill="#EDBE2A"/><path d="M5.3 10.4 a7.7 3.9 0 0 1 15.4 0" fill="none" stroke="#FCE486" stroke-width="1"/><text x="13" y="16.6" text-anchor="middle" font-family="'Baloo 2'" font-weight="800" font-size="8.4" fill="#5a3d10">AB</text></svg> native mode</span>
+    <span><svg class="ic" viewBox="0 0 26 26"><rect x="12" y="3.4" width="2.2" height="3.4" rx="1.1" fill="#7E8C74"/><path d="M6.4 11 a6.6 7 0 0 0 13.2 0 Z" fill="#CFD9C6" stroke="#7E8C74" stroke-width="0.7" stroke-dasharray="1.7,1.3"/><ellipse cx="13" cy="10.4" rx="7.7" ry="3.9" fill="#7E8C74"/><path d="M5.3 10.4 a7.7 3.9 0 0 1 15.4 0" fill="none" stroke="#EAF1E4" stroke-width="1"/><text x="13" y="16.7" text-anchor="middle" font-family="'Baloo 2'" font-weight="800" font-size="9" fill="#EAF1E4">AB</text></svg> planned</span>
+    <span><svg class="ic" viewBox="0 0 26 26"><path d="M13 23.5 L13 9" stroke="#8a5f37" stroke-width="2.4" stroke-linecap="round"/><path d="M13 15 Q8 14 5.5 9.5" stroke="#8a5f37" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M13 13 Q18 12 20.5 7.5" stroke="#8a5f37" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M5.5 9.5 Q3.4 4.8 6.6 3.4 Q8.6 7 5.5 9.5 Z" fill="#58c88a"/><path d="M20.5 7.5 Q22.6 2.8 19.4 1.4 Q17.4 5 20.5 7.5 Z" fill="#58c88a"/><path d="M13 9 Q11.4 4 13 1.4 Q14.6 4 13 9 Z" fill="#6bd096"/></svg> family coming</span>
   </div>
   </div>
 </div>
@@ -76,7 +80,8 @@ el("defs",{},svg).innerHTML=`
   <linearGradient id="goldPlate" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F9D585"/><stop offset="100%" stop-color="#D69A34"/></linearGradient>
   <radialGradient id="goldNut" cx="38%" cy="26%" r="74%"><stop offset="0%" stop-color="#FFF3AE"/><stop offset="48%" stop-color="#FFD23F"/><stop offset="100%" stop-color="#DFA015"/></radialGradient>
   <radialGradient id="greenNut" cx="38%" cy="26%" r="74%"><stop offset="0%" stop-color="#C5F5D6"/><stop offset="48%" stop-color="#57c68a"/><stop offset="100%" stop-color="#2c8f57"/></radialGradient>
-  <radialGradient id="brownNut" cx="38%" cy="26%" r="76%"><stop offset="0%" stop-color="#9A6E45"/><stop offset="46%" stop-color="#5E3E24"/><stop offset="100%" stop-color="#34220f"/></radialGradient>`;
+  <radialGradient id="brownNut" cx="38%" cy="26%" r="76%"><stop offset="0%" stop-color="#9A6E45"/><stop offset="46%" stop-color="#5E3E24"/><stop offset="100%" stop-color="#34220f"/></radialGradient>
+  <radialGradient id="paleNut" cx="38%" cy="26%" r="76%"><stop offset="0%" stop-color="#F2F6EE"/><stop offset="48%" stop-color="#CFD9C6"/><stop offset="100%" stop-color="#A7B49C"/></radialGradient>`;
 
 el("rect",{x:0,y:0,width:1640,height:856,fill:"url(#sky)"},svg);
 // SUN — moved to the LEFT (soft warm morning light)
@@ -115,14 +120,26 @@ const world=el("g",{},svg);
 const ABFLAG={ES:"🇪🇸",PT:"🇵🇹",FR:"🇫🇷",IT:"🇮🇹",EN:"🇬🇧",DE:"🇩🇪",RU:"🇷🇺",ZH:"🇨🇳",JA:"🇯🇵",KO:"🇰🇷"};
 function acorn(g,x,y,s){s=s||1;el("path",{d:`M${x-6*s},${y} a${6*s},${6.4*s} 0 0 0 ${12*s},0 Z`,fill:"url(#acorn)"},g);el("ellipse",{cx:x,cy:y-1*s,rx:7*s,ry:3.6*s,fill:"#7a4b2e"},g);el("rect",{x:x-0.9*s,y:y-7*s,width:1.8*s,height:3.4*s,rx:0.9*s,fill:"#7a4b2e"},g);}
 // language badge = an acorn with the abbreviation inside. green = learnable, gold = native mode available
-function langAcorn(g,x,y,s,ab,native){s=s||1;const R=18.5*s;
-  const nut=native?"url(#goldNut)":"url(#brownNut)";
-  const cap=native?"#B5820F":"#33220f", rim=native?"#FDE38A":"#D8B98A", txt=native?"#4a2f08":"#ffffff";
+// state: "full" = gold (native mode) · "learnable" = brown (studiable today)
+//      · "planned" = pale, dashed (named in the family, NOT learnable yet)
+//
+// The third state exists because a built tree could previously only say "learnable" or say
+// nothing at all. A language we intend to teach but haven't shipped had no honest way to
+// appear: adding it as a leaf claimed it was studiable, and leaving it out made the family
+// look smaller than it is. Pale + dashed reads as "the slot is there, it isn't filled yet",
+// and it is light against the canopy so it stays legible at cover size.
+function langAcorn(g,x,y,s,ab,state){s=s||1;const R=18.5*s;
+  const native=state==="full", planned=state==="planned";
+  const nut=native?"url(#goldNut)":planned?"url(#paleNut)":"url(#brownNut)";
+  const cap=native?"#B5820F":planned?"#7E8C74":"#33220f";
+  const rim=native?"#FDE38A":planned?"#EAF1E4":"#D8B98A";
+  const txt=native?"#4a2f08":planned?"#3F4A38":"#ffffff";
   el("rect",{x:x-1.7*s,y:y-R-9*s,width:3.4*s,height:7.5*s,rx:1.7*s,fill:cap},g);                       // stem
   el("path",{d:`M${x-R*1.16},${y-R*0.38} Q ${x},${y-R*1.24} ${x+R*1.16},${y-R*0.38} Z`,fill:cap},g);   // cap dome
   el("path",{d:`M${x-R*1.16},${y-R*0.38} Q ${x},${y-R*1.24} ${x+R*1.16},${y-R*0.38}`,fill:"none",stroke:rim,"stroke-width":1.4*s,opacity:.85},g);
   el("ellipse",{cx:x-R*0.3,cy:y-R*0.66,rx:R*0.34,ry:R*0.14,fill:"#ffffff",opacity:.3},g);              // small cap shine (clear of text)
-  el("path",{d:`M${x-R},${y-R*0.4} C ${x-R},${y+R*0.86} ${x-R*0.45},${y+R*1.22} ${x},${y+R*1.22} C ${x+R*0.45},${y+R*1.22} ${x+R},${y+R*0.86} ${x+R},${y-R*0.4} Z`,fill:nut,stroke:rim,"stroke-width":1.6*s},g);
+  el("path",Object.assign({d:`M${x-R},${y-R*0.4} C ${x-R},${y+R*0.86} ${x-R*0.45},${y+R*1.22} ${x},${y+R*1.22} C ${x+R*0.45},${y+R*1.22} ${x+R},${y+R*0.86} ${x+R},${y-R*0.4} Z`,fill:nut,stroke:rim,"stroke-width":1.6*s},
+    planned?{"stroke-dasharray":`${3.2*s},${2.6*s}`}:{}),g);
   el("text",{x,y:y+R*0.52,"text-anchor":"middle","font-family":"'Baloo 2'","font-weight":800,"font-size":16*s,fill:txt},g).textContent=ab;}
 function nameplate(g,x,y,s,text,leafy,gold){const fs=Math.max(13.5*s,12),w=text.length*(fs*0.6)+20,h=fs*1.75;
   el("rect",{x:x-w/2,y:y-h/2,width:w,height:h,rx:h/2,fill:gold?"url(#goldPlate)":(leafy?"rgba(24,66,45,.95)":"rgba(52,34,16,.96)"),stroke:gold?"#FFF3C4":(leafy?"#7BF0B6":"#D8B98A"),"stroke-width":gold?2.2:1.5},g);
@@ -155,7 +172,7 @@ function bigTree(g,x,gy,s,leafs,fam,hm,alt,leafy){
   crown(g,x,cyc,w,h,false,alt);
   const pos=TAGPOS[leafs.length]||TAGPOS[4];
   leafs.forEach((l,k)=>{const rel=pos[k%pos.length],tx=x+rel[0]*w*0.5,ty=cyc-rel[1]*h*0.5;
-    langAcorn(g,tx,ty,s,l.ab,l.acorn==="full");});
+    langAcorn(g,tx,ty,s,l.ab,l.acorn||"learnable");});
   PLATES.push({x:x,y:gy+18*s,s:Math.max(s,0.66),fam:fam,leafy:(leafy!==false)});
 }
 function leafShape(g,x,y,s,ang,alt){const gg=el("g",{transform:`translate(${x},${y}) rotate(${ang})`},g);
