@@ -125,17 +125,69 @@ sync on deploy" for the full behavior.
 
 ## 6. Cutting a release (beta-prod = `main`)
 
-The entire release is: bump + rollup (§6a) → `npm run deploy beta` (§6b) →
-watch for green (§6c). No manual merge, no manual prod uploads, no env swapping.
+The entire release is **two commands**:
+
+```
+npm run deploy beta-pre-release <version>     # checks + archive + receipt, then pushes dev
+npm run deploy beta                           # dev → main, then back-merge
+```
+
+Everything §6a used to ask you to do by hand is now inside the first one, and the
+second **refuses to run** unless the first one passed for that exact version.
 
 > Tier naming: `main` is the **beta-prod** tier (your beta testers). The real
-> live-prod branch isn't stood up yet — `npm run deploy prod` is reserved and
-> errors until it is.
+> live-prod branch isn't stood up yet — `npm run deploy live` and
+> `live-pre-release` are reserved and error until it is. Adding that tier is a
+> `TIERS` entry in `scripts/deploy.js`, not a second copy of the release logic.
 
-### 6a. Version bump + changelog rollup
+### Why there are two stages (added after v3.4.0)
 
-**Set `CURRENT_VERSION` in `lib/version.js` to the version being cut — a plain
-`X.Y.Z`, no suffix.** The `-beta.N` scheme is **retired**; v3.1.1 and v3.2.0 both
+v3.4.0 shipped with its announcement art stranded on `dev`. The square and the
+regenerated forest cover were written **after** the last `deploy dev`; `deploy beta`
+refuses a dirty tree, so its guard passed before those files existed and they never
+reached `main`. Nothing failed — the release was green and the art was simply gone.
+
+The fix isn't "remember to do the prep." A step you can forget is a step you will
+forget, and adding a script you can forget to run is just a longer runbook. So
+`beta-pre-release` **ends by pushing dev** — the release commit is the last thing
+written, by construction — and writes a **receipt** that `deploy beta` demands.
+
+### 6a. `npm run deploy beta-pre-release <version>`
+
+Pass the version as an argument — `npm run deploy beta-pre-release 3.5.0`. **Which
+digit moves is a judgement call about what the release contains, so the script
+never guesses it**; it only refuses a version that isn't ahead of what's on `main`.
+
+Add `--dry-run` to see every check without writing, archiving or pushing anything.
+
+**What it asserts** (all must pass, or nothing is written):
+
+| | |
+|---|---|
+| changelog | every fragment in `unreleased/` declares a target version, and none targets a version older than this release |
+| `lib/version.js` | has a `CHANGELOG` **and** `INTERNAL_CHANGELOG` entry for the version, and **every user-facing bullet carries every released source language** (parsed with acorn, not regex) |
+| art | the release square exists, and when the release **adds a source language**, that language's acorn is `full` in `forest-cover.html` and the cover PNG changed |
+| build | `npm run verify:l10n` · `eslint` 0 errors · `audit-i18n-columns` reporting *nothing skipped* · a full `next build` |
+
+**What it does:** bumps `CURRENT_VERSION`, runs `rollup-changelog --archive` for
+that version, writes `docs/changelog/released/v<version>/release-receipt.json`, then
+runs the normal dev push.
+
+**What it prints and cannot do:** the announcement post and the Facebook page cover.
+Those are listed as REMAINING MANUAL STEPS on every run, so what can't be automated
+is at least never invisible.
+
+Re-running it is safe and idempotent — that's also the escape hatch if a receipt
+ever gets lost.
+
+**Whether art is owed is derived, not declared:** the script diffs
+`RELEASED_SOURCE_LANGS` between your tree and `main`. A release that adds a source
+language owes a square *and* a regenerated cover; a minor/major bump owes a square;
+a pure patch owes neither.
+
+### 6a-bis. Reference — the version digits
+
+**`CURRENT_VERSION` is a plain `X.Y.Z`, no suffix.** The `-beta.N` scheme is **retired**; v3.1.1 and v3.2.0 both
 shipped as plain versions. `main` is still the *beta-prod tier* — that's a tier
 name for who's on the other end, not a version suffix.
 
@@ -160,8 +212,18 @@ folder wholesale.
 
 ### 6b. Release to main
 
-Prereqs: `lib/version.js` bumped, the cut version's `unreleased/` fragments rolled
-up, everything committed **and pushed** on `dev` (via §3). Then, from a clean tree:
+Prereqs are now **checked, not remembered**. `npm run deploy beta` refuses unless:
+
+- the working tree is clean and local `dev` == `origin/dev`;
+- the version isn't already on `main`;
+- **a receipt exists for this exact version** (i.e. §6a ran);
+- the structural checks still pass — catches anything that landed on `dev` *after*
+  the prep;
+- **CI is green for the exact commit being merged**, via the public GitHub Actions
+  API (`scripts/check-ci.mjs`). Red, still-running, and "couldn't reach the API" all
+  stop the release — *"I could not check" is not "it passed."*
+
+Then, from a clean tree:
 
 > **Cutting a Z while a Y is half-built on `dev`.** This is allowed and expected —
 > it's the whole point of small releases — but it merges *all* of `dev` to `main`,

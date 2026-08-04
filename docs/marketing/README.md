@@ -19,6 +19,7 @@ imported by any component. App-facing brand files stay under `public/` (`faceboo
 | `v3.1.0-release-banner.png` | 960×501 | v3.1.0 Spanish release — wide/link-preview variant of the same post. |
 | `v3.2.0-release-square.png` | 1080×1080 | v3.2.0 Portuguese native-language release — square feed post. First release post using the rebranded duo mascots. |
 | `v3.3.0-release-square.png` | 1080×1080 | v3.3.0 French native-language release — square feed post. |
+| `v3.4.0-release-square.png` | 1080×1080 | v3.4.0 Italian native-language release — square feed post. First square with **no variant pair**: Italian is single-variant, so the right-hand flag slot carries the course count (13) instead. |
 | `brand-rebrand-announcement-square.png` | 1080×1080 | "New look · same nuts" rebrand announcement. Not tied to a version. |
 
 ### `covers/` — Facebook group covers
@@ -44,6 +45,7 @@ the page silently falls back to a wider system face, and the release square over
 | `forest-cover.html` | `covers/forest-cover-1640x856.png` |
 | `v3.2.0-release-square.html` | `social/v3.2.0-release-square.png` |
 | `v3.3.0-release-square.html` | `social/v3.3.0-release-square.png` |
+| `v3.4.0-release-square.html` | `social/v3.4.0-release-square.png` |
 
 ## Naming convention
 
@@ -85,8 +87,13 @@ Headless Chromium works: point it at the file, wait for fonts, screenshot the `.
 ⚠️ **`v3.2.0-release-square.html` does not reproduce its own PNG.** Its type is uniformly ~1.5×
 larger than whatever produced `social/v3.2.0-release-square.png`, so rendering it 1:1 overflows the
 card badly (headline wraps and collides with the URL pill). The committed PNG is correct; the
-source drifted after export. **Use `v3.3.0-release-square.html` as the template** — its layout is
-solved and verified to compose at 1080×1080, with a 22px gap between the CTA and the URL pill.
+source drifted after export. **Use the most recent source as the template** — `v3.4.0-release-square.html` today, else
+`v3.3.0`'s. Both are solved and verified to compose at 1080×1080.
+
+⚠️ **Re-render and LOOK at the PNG before committing it.** The decorative `✨`/`🌰`/dot spans are
+absolutely positioned and know nothing about the copy above them: v3.4's course-count badge landed
+directly on top of the `✨` that had sat harmlessly behind v3.3's small 🇨🇭 flag, and the "13" read
+as "1✦3". The layout measuring 1080×1080 tells you nothing about collisions inside it.
 
 ### `v3.2.0-release-square.html`
 Self-contained: brand gradient, inline duo-body and duo-heads SVGs, Baloo 2 pulled from

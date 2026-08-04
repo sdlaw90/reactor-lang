@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 559 tracked files.
+> 564 tracked files.
 
 ```
 .env.local.example
@@ -240,6 +240,7 @@ docs/changelog/released/v3.4.0/2026-08-03-l10n-explain-channel.md
 docs/changelog/released/v3.4.0/2026-08-03-pt-fr-explanation-backfill.md
 docs/changelog/released/v3.4.0/2026-08-03-straggler-retirement.md
 docs/changelog/unreleased/.gitkeep
+docs/changelog/unreleased/2026-08-04-release-gate.md
 docs/codebase-reference.md
 docs/language-review/README.md
 docs/language-review/es-latam/STATUS.md
@@ -304,6 +305,7 @@ docs/marketing/social/v3.1.0-release-banner.png
 docs/marketing/social/v3.1.0-release-square.png
 docs/marketing/social/v3.2.0-release-square.png
 docs/marketing/social/v3.3.0-release-square.png
+docs/marketing/social/v3.4.0-release-square.png
 docs/marketing/sources/fonts/baloo-2-latin-500-normal.woff2
 docs/marketing/sources/fonts/baloo-2-latin-600-normal.woff2
 docs/marketing/sources/fonts/baloo-2-latin-700-normal.woff2
@@ -313,6 +315,7 @@ docs/marketing/sources/fonts/nunito-latin-700-normal.woff2
 docs/marketing/sources/forest-cover.html
 docs/marketing/sources/v3.2.0-release-square.html
 docs/marketing/sources/v3.3.0-release-square.html
+docs/marketing/sources/v3.4.0-release-square.html
 docs/repo-tree.md
 docs/squirrelingo-language-wishlist.md
 docs/squirrelingo_shipped_archive.md
@@ -469,6 +472,7 @@ public/splash.png
 public/version.json
 scripts/_it-parity-audit.mjs
 scripts/audit-i18n-columns.mjs
+scripts/check-ci.mjs
 scripts/deploy.js
 scripts/gen-repo-tree.mjs
 scripts/gen-track-item-counts.mjs
@@ -503,6 +507,7 @@ scripts/l10n-backfill/roundtrip.py
 scripts/l10n-backfill/validate.py
 scripts/prune-local-tts.mjs
 scripts/publish-ready.mjs
+scripts/release-checks.js
 scripts/rollup-changelog.mjs
 scripts/smoke-check.mjs
 scripts/sweep-tts.mjs
