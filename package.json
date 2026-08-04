@@ -19,6 +19,7 @@
     "changelog:rollup": "node scripts/rollup-changelog.mjs",
     "changelog:check": "node scripts/rollup-changelog.mjs --check",
     "art:render": "node scripts/render-marketing.mjs",
+    "art:check": "node docs/marketing/sources/check_collisions.mjs",
     "release:preflight": "node scripts/release-preflight.mjs",
     "verify:l10n": "node scripts/verify-l10n-explain.mjs && node scripts/verify-l10n-lazy.mjs && node scripts/verify-l10n-coverage.mjs"
   },

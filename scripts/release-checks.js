@@ -137,9 +137,11 @@ function parseCover(src) {
   for (const line of block[1].split("\n")) {
     const fm = line.match(/\{\s*fam:\s*"([^"]+)"/);
     if (!fm) continue;
-    const leafsRaw = (line.match(/leafs:\s*\[([^\]]*)\]/) || [, ""])[1];
+    // A multi-crown family (East Asian, Asia-Pacific, …) carries its acorns inside
+    // `arms:[{…,leafs:[…]}]`, not in the top-level `leafs:[]`. Scanning the whole
+    // entry line catches both — scoping to `leafs:[…]` made ZH/JA/KO invisible.
     const leafs = [];
-    for (const lm of leafsRaw.matchAll(/\{\s*ab:\s*"([A-Z]{2,3})"([^}]*)\}/g)) {
+    for (const lm of line.matchAll(/\{\s*ab:\s*"([A-Z]{2,3})"([^}]*)\}/g)) {
       const st = lm[2].match(/acorn:\s*"([a-z]+)"/);
       leafs.push({ ab: lm[1], state: st ? st[1] : "learnable" });
     }
@@ -270,6 +272,23 @@ function checkArt(version, shape, liveRef) {
     out.push(exists(html) ? ok("release square source", html) : bad("release square source", `missing ${html}`));
   }
 
+  // ── the forest cover's GEOMETRY: trunks, nameplates, paths, spread ──
+  // Separate gate, separate failure mode. The catalogue check below asks whether
+  // the cover claims the right languages; this one asks whether you can read it.
+  const geom = "docs/marketing/sources/check_collisions.mjs";
+  if (exists(geom)) {
+    let geomOut = "";
+    let geomOk = true;
+    try { geomOut = execSync(`node ${geom}`, { cwd: ROOT, encoding: "utf8" }); }
+    catch (e) { geomOk = false; geomOut = (e.stdout || "") + (e.stderr || ""); }
+    const lines = geomOut.split("\n").filter((l) => l.trim().startsWith("✗")).map((l) => l.trim().slice(1).trim());
+    out.push(geomOk
+      ? ok("forest cover geometry", (geomOut.match(/^forest cover — (.*)$/m) || [, "clean"])[1])
+      : bad("forest cover geometry", lines.slice(0, 6).join("; ") + (lines.length > 6 ? ` (+${lines.length - 6} more)` : "")));
+  } else {
+    out.push(bad("forest cover geometry", `missing ${geom} — the layout gate is not installed`));
+  }
+
   // ── the forest cover: a picture of the catalogue, so it is checked AGAINST the catalogue ──
   const coverSrc = "docs/marketing/sources/forest-cover.html";
   const coverPng = "docs/marketing/covers/forest-cover-1640x856.png";
@@ -305,7 +324,9 @@ function checkArt(version, shape, liveRef) {
     if (e.state === "full" && !sources.includes(lang)) wrong.push(`${lang.toUpperCase()} is gold but is not a released source language`);
     if (e.state === "learnable" && !targets.includes(lang)) wrong.push(`${lang.toUpperCase()} has a brown acorn but no track ships for it`);
     if (e.state === "planned" && targets.includes(lang)) wrong.push(`${lang.toUpperCase()} is pale but a track ships for it`);
-    if (!e.built) wrong.push(`${lang.toUpperCase()} hangs on ${e.fam}, which is still a sapling — set built:1`);
+    // A pale acorn on a sapling is the point — it names what is coming to that
+    // family. Only a real acorn (brown or gold) demands a grown tree.
+    if (!e.built && e.state !== "planned") wrong.push(`${lang.toUpperCase()} hangs on ${e.fam}, which is still a sapling — set built:1`);
   }
   out.push(wrong.length
     ? bad("forest cover matches the catalogue", wrong.join("; "))
