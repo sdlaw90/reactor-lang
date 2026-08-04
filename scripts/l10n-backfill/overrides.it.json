@@ -1,0 +1,6 @@
+{
+  "_why": "Per-item option overrides for the it source. The assembler refuses to write an item whose localized options are not all distinct, because a duplicate makes the question ambiguous AND collapses two distractorNotes keys into one. These are the cases where two different source words legitimately map to the same Italian word, so no amount of sense-disambiguation fixes them — the second one has to be re-chosen with the whole answer set in view. Key format: '<trackId> <itemId> <optionIndex>'.",
+  "ru-for-en vocab-40 1": "accurato",
+  "ru-for-en vocab-40 3": "esatto",
+  "ja-for-en vocab-96 2": "tiepido"
+}

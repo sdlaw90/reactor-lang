@@ -36,7 +36,8 @@ const TRACK_LABELS = {
   "ja-for-en": "Japanese",
   "zh-for-en": "Mandarin Chinese",
   "ko-for-en": "Korean",
-  "en-for-it": "English · for Italian speakers",
+  "en-us-for-it": "English (US) · for Italian speakers",
+  "en-gb-for-it": "English (UK) · for Italian speakers",
 };
 
 function extractObject(src, name) {

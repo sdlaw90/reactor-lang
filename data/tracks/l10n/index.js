@@ -62,10 +62,12 @@ const L10N = {
   "fr-for-en": {
     es: () => import("./frForEn.es"),
     pt: () => import("./frForEn.pt"),
+    it: () => import("./frForEn.it"),
   },
   "fr-ca-for-en": {
     es: () => import("./frCaForEn.es"),
     pt: () => import("./frCaForEn.pt"),
+    it: () => import("./frCaForEn.it"),
   },
   "it-for-en": {
     es: () => import("./itForEn.es"),
@@ -75,45 +77,54 @@ const L10N = {
   "pt-br-for-en": {
     es: () => import("./ptBrForEn.es"),
     fr: () => import("./ptBrForEn.fr"),
+    it: () => import("./ptBrForEn.it"),
   },
   "pt-pt-for-en": {
     es: () => import("./ptPtForEn.es"),
     fr: () => import("./ptPtForEn.fr"),
+    it: () => import("./ptPtForEn.it"),
   },
   "de-for-en": {
     es: () => import("./deForEn.es"),
     pt: () => import("./deForEn.pt"),
     fr: () => import("./deForEn.fr"),
+    it: () => import("./deForEn.it"),
   },
   "ru-for-en": {
     es: () => import("./ruForEn.es"),
     pt: () => import("./ruForEn.pt"),
     fr: () => import("./ruForEn.fr"),
+    it: () => import("./ruForEn.it"),
   },
   "ja-for-en": {
     es: () => import("./jaForEn.es"),
     pt: () => import("./jaForEn.pt"),
     fr: () => import("./jaForEn.fr"),
+    it: () => import("./jaForEn.it"),
   },
   "ko-for-en": {
     es: () => import("./koForEn.es"),
     pt: () => import("./koForEn.pt"),
     fr: () => import("./koForEn.fr"),
+    it: () => import("./koForEn.it"),
   },
   "zh-for-en": {
     es: () => import("./zhForEn.es"),
     pt: () => import("./zhForEn.pt"),
     fr: () => import("./zhForEn.fr"),
+    it: () => import("./zhForEn.it"),
   },
   // Spanish-target tables. es natives never learn Spanish, so these have no `es`
   // sibling — pt and fr natives are the only consumers.
   "es-latam-for-en": {
     pt: () => import("./esForEn.pt"),
     fr: () => import("./esForEn.fr"),
+    it: () => import("./esForEn.it"),
   },
   "es-spain-for-en": {
     pt: () => import("./esSpainForEn.pt"),
     fr: () => import("./esSpainForEn.fr"),
+    it: () => import("./esSpainForEn.it"),
   },
 };
 

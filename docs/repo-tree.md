@@ -5,7 +5,7 @@
 > output, or gitignored files. Pair with `docs/codebase-reference.md` for
 > per-file annotations; this file is the mechanical, always-current index.
 >
-> 534 tracked files.
+> 559 tracked files.
 
 ```
 .env.local.example
@@ -96,12 +96,13 @@ data/scripts/kanaJa.js
 data/scripts/mandarinZh.js
 data/tracks/deForEn.js
 data/tracks/deForEnTags.js
-data/tracks/enForIt.js
 data/tracks/enGbForEs.js
 data/tracks/enGbForFr.js
+data/tracks/enGbForIt.js
 data/tracks/enGbForPt.js
 data/tracks/enUsForEs.js
 data/tracks/enUsForFr.js
+data/tracks/enUsForIt.js
 data/tracks/enUsForPt.js
 data/tracks/esForEn.js
 data/tracks/esForEnTags.js
@@ -120,14 +121,19 @@ data/tracks/koForEn.js
 data/tracks/koForEnTags.js
 data/tracks/l10n/deForEn.es.js
 data/tracks/l10n/deForEn.fr.js
+data/tracks/l10n/deForEn.it.js
 data/tracks/l10n/deForEn.pt.js
 data/tracks/l10n/esForEn.fr.js
+data/tracks/l10n/esForEn.it.js
 data/tracks/l10n/esForEn.pt.js
 data/tracks/l10n/esSpainForEn.fr.js
+data/tracks/l10n/esSpainForEn.it.js
 data/tracks/l10n/esSpainForEn.pt.js
 data/tracks/l10n/frCaForEn.es.js
+data/tracks/l10n/frCaForEn.it.js
 data/tracks/l10n/frCaForEn.pt.js
 data/tracks/l10n/frForEn.es.js
+data/tracks/l10n/frForEn.it.js
 data/tracks/l10n/frForEn.pt.js
 data/tracks/l10n/index.js
 data/tracks/l10n/itForEn.es.js
@@ -135,20 +141,26 @@ data/tracks/l10n/itForEn.fr.js
 data/tracks/l10n/itForEn.pt.js
 data/tracks/l10n/jaForEn.es.js
 data/tracks/l10n/jaForEn.fr.js
+data/tracks/l10n/jaForEn.it.js
 data/tracks/l10n/jaForEn.pt.js
 data/tracks/l10n/koForEn.es.js
 data/tracks/l10n/koForEn.fr.js
+data/tracks/l10n/koForEn.it.js
 data/tracks/l10n/koForEn.pt.js
 data/tracks/l10n/ptBrForEn.es.js
 data/tracks/l10n/ptBrForEn.fr.js
+data/tracks/l10n/ptBrForEn.it.js
 data/tracks/l10n/ptPtForEn.es.js
 data/tracks/l10n/ptPtForEn.fr.js
+data/tracks/l10n/ptPtForEn.it.js
 data/tracks/l10n/regionalVariants.js
 data/tracks/l10n/ruForEn.es.js
 data/tracks/l10n/ruForEn.fr.js
+data/tracks/l10n/ruForEn.it.js
 data/tracks/l10n/ruForEn.pt.js
 data/tracks/l10n/zhForEn.es.js
 data/tracks/l10n/zhForEn.fr.js
+data/tracks/l10n/zhForEn.it.js
 data/tracks/l10n/zhForEn.pt.js
 data/tracks/ptBrForEn.js
 data/tracks/ptBrForEnTags.js
@@ -178,6 +190,7 @@ data/vocab/zhWords.js
 docs/INTEGRATION-NOTES.md
 docs/PACKAGING.md
 docs/_fr-offering-flip.md
+docs/_it-offering-flip.md
 docs/_run-log-v3.3.md
 docs/_v3.3-phase2-3-prompt.md
 docs/architecture.md
@@ -221,6 +234,8 @@ docs/changelog/released/v3.3.0/2026-08-02-fr-regional-variants.md
 docs/changelog/released/v3.3.0/2026-08-02-next16-react19-node24-upgrade.md
 docs/changelog/released/v3.3.0/2026-08-02-security-question-localization.md
 docs/changelog/unreleased/.gitkeep
+docs/changelog/unreleased/2026-08-03-italian-offering-flip.md
+docs/changelog/unreleased/2026-08-03-italian-source-build.md
 docs/changelog/unreleased/2026-08-03-italian-ui-layer-and-guided-tour.md
 docs/changelog/unreleased/2026-08-03-l10n-explain-channel.md
 docs/changelog/unreleased/2026-08-03-pt-fr-explanation-backfill.md
@@ -452,6 +467,7 @@ public/icon-512.png
 public/icon-maskable-512.png
 public/splash.png
 public/version.json
+scripts/_it-parity-audit.mjs
 scripts/audit-i18n-columns.mjs
 scripts/deploy.js
 scripts/gen-repo-tree.mjs
@@ -466,6 +482,7 @@ scripts/grammar-engines/ko_rules_gen.py
 scripts/grammar-engines/ru_pymorphy3_gen.py
 scripts/grammar-engines/zh_template_gen.py
 scripts/l10n-backfill/LANG-COLUMN-BRIEF.md
+scripts/l10n-backfill/NEW-SOURCE-BRIEF.md
 scripts/l10n-backfill/README.md
 scripts/l10n-backfill/TRANSLATE.md
 scripts/l10n-backfill/batch.py
@@ -473,6 +490,14 @@ scripts/l10n-backfill/extract.mjs
 scripts/l10n-backfill/frames.py
 scripts/l10n-backfill/inject.mjs
 scripts/l10n-backfill/lang-column.mjs
+scripts/l10n-backfill/new-source-assemble.py
+scripts/l10n-backfill/new-source-batch.py
+scripts/l10n-backfill/new-source-disambiguate.py
+scripts/l10n-backfill/new-source-extract.mjs
+scripts/l10n-backfill/new-source-frames.py
+scripts/l10n-backfill/new-source-roundtrip.py
+scripts/l10n-backfill/new-source-validate.py
+scripts/l10n-backfill/overrides.it.json
 scripts/l10n-backfill/repair.py
 scripts/l10n-backfill/roundtrip.py
 scripts/l10n-backfill/validate.py
